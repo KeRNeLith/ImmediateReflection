@@ -7,7 +7,7 @@ namespace ImmediateReflection
     /// <summary>
     /// Represents a field and provides access to its metadata in a faster way.
     /// </summary>
-    public class ImmediateField : IEquatable<ImmediateField>
+    public sealed class ImmediateField : IEquatable<ImmediateField>
     {
         /// <summary>
         /// Gets the wrapped <see cref="System.Reflection.FieldInfo"/>.

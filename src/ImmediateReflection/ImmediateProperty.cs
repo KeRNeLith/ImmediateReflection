@@ -7,7 +7,7 @@ namespace ImmediateReflection
     /// <summary>
     /// Represents a property and provides access to property metadata in a faster way.
     /// </summary>
-    public class ImmediateProperty : IEquatable<ImmediateProperty>
+    public sealed class ImmediateProperty : IEquatable<ImmediateProperty>
     {
         /// <summary>
         /// Gets the wrapped <see cref="System.Reflection.PropertyInfo"/>.

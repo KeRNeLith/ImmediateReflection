@@ -20,6 +20,7 @@ namespace ImmediateReflection.Tests
         protected int _protectedField;
         internal int _internalField;
         public int _publicField;
+        public int _publicField2;
         public static int _publicStaticField;
 
         public int PublicPropertyGetSet { get; set; }
@@ -40,6 +41,7 @@ namespace ImmediateReflection.Tests
         protected TestObject _protectedField;
         internal TestObject _internalField;
         public TestObject _publicField;
+        public TestObject _publicField2;
         public static TestObject _publicStaticField;
 
         public TestObject PublicPropertyGetSet { get; set; }
@@ -60,6 +62,7 @@ namespace ImmediateReflection.Tests
         protected int _protectedField;
         internal int _internalField;
         public int _publicField;
+        public int _publicField2;
         public static int _publicStaticField;
 
         public int PublicPropertyGetSet { get; set; }
@@ -80,6 +83,7 @@ namespace ImmediateReflection.Tests
         protected TestObject _protectedField;
         internal TestObject _internalField;
         public TestObject _publicField;
+        public TestObject _publicField2;
         public static TestObject _publicStaticField;
 
         public TestObject PublicPropertyGetSet { get; set; }

@@ -3,6 +3,9 @@ using NUnit.Framework;
 
 namespace ImmediateReflection.Tests
 {
+    /// <summary>
+    /// Tests related to <see cref="ImmediateType"/>.
+    /// </summary>
     [TestFixture]
     internal class ImmediateTypeTests
     {
@@ -21,6 +24,7 @@ namespace ImmediateReflection.Tests
         [Test]
         public void ImmediateTypeValueType()
         {
+            // Public class
             var immediateTypePublic = new ImmediateType(typeof(PublicValueTypeTestClass));
             Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateTypePublic.Type);
             Assert.AreEqual(nameof(PublicValueTypeTestClass), immediateTypePublic.Name);
@@ -30,7 +34,8 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(PublicValueTypeTestClass._publicField)
+                    nameof(PublicValueTypeTestClass._publicField),
+                    nameof(PublicValueTypeTestClass._publicField2)
                 },
                 immediateTypePublic.Fields.Select(field => field.Name));
             CollectionAssert.AreEquivalent(
@@ -43,7 +48,7 @@ namespace ImmediateReflection.Tests
                 },
                 immediateTypePublic.Properties.Select(property => property.Name));
 
-
+            // Internal class
             var immediateTypeInternal = new ImmediateType(typeof(InternalValueTypeTestClass));
             Assert.AreEqual(typeof(InternalValueTypeTestClass), immediateTypeInternal.Type);
             Assert.AreEqual(nameof(InternalValueTypeTestClass), immediateTypeInternal.Name);
@@ -53,7 +58,8 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(InternalValueTypeTestClass._publicField)
+                    nameof(InternalValueTypeTestClass._publicField),
+                    nameof(InternalValueTypeTestClass._publicField2)
                 },
                 immediateTypeInternal.Fields.Select(field => field.Name));
             CollectionAssert.AreEquivalent(
@@ -70,6 +76,7 @@ namespace ImmediateReflection.Tests
         [Test]
         public void ImmediateTypeReferenceType()
         {
+            // Public class
             var immediateTypePublic = new ImmediateType(typeof(PublicReferenceTypeTestClass));
             Assert.AreEqual(typeof(PublicReferenceTypeTestClass), immediateTypePublic.Type);
             Assert.AreEqual(nameof(PublicReferenceTypeTestClass), immediateTypePublic.Name);
@@ -79,7 +86,8 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(PublicReferenceTypeTestClass._publicField)
+                    nameof(PublicReferenceTypeTestClass._publicField),
+                    nameof(PublicReferenceTypeTestClass._publicField2)
                 },
                 immediateTypePublic.Fields.Select(field => field.Name));
             CollectionAssert.AreEquivalent(
@@ -92,7 +100,7 @@ namespace ImmediateReflection.Tests
                 },
                 immediateTypePublic.Properties.Select(property => property.Name));
 
-
+            // Internal class
             var immediateTypeInternal = new ImmediateType(typeof(InternalReferenceTypeTestClass));
             Assert.AreEqual(typeof(InternalReferenceTypeTestClass), immediateTypeInternal.Type);
             Assert.AreEqual(nameof(InternalReferenceTypeTestClass), immediateTypeInternal.Name);
@@ -102,7 +110,8 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(InternalReferenceTypeTestClass._publicField)
+                    nameof(InternalReferenceTypeTestClass._publicField),
+                    nameof(InternalReferenceTypeTestClass._publicField2)
                 },
                 immediateTypeInternal.Fields.Select(field => field.Name));
             CollectionAssert.AreEquivalent(
@@ -186,6 +195,40 @@ namespace ImmediateReflection.Tests
                     nameof(PrivateNestedClass.NestedTestValue)
                 },
                 nestedImmediateTypePrivate.Properties.Select(property => property.Name));
+        }
+
+        [Test]
+        public void ImmediateFieldEquality()
+        {
+            var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
+            var immediateType2 = new ImmediateType(typeof(PublicValueTypeTestClass));
+            Assert.AreEqual(immediateType1, immediateType2);
+            Assert.IsTrue(immediateType1.Equals((object)immediateType2));
+            Assert.IsFalse(immediateType1.Equals(null));
+
+            var immediateType3 = new ImmediateType(typeof(InternalValueTypeTestClass));
+            Assert.AreNotEqual(immediateType1, immediateType3);
+            Assert.IsFalse(immediateType1.Equals((object)immediateType3));
+        }
+
+        [Test]
+        public void ImmediateFieldHashCode()
+        {
+            var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
+            Assert.AreEqual(typeof(PublicValueTypeTestClass).GetHashCode(), immediateType1.GetHashCode());
+
+            var immediateType2 = new ImmediateType(typeof(InternalValueTypeTestClass));
+            Assert.AreNotEqual(immediateType1.GetHashCode(), immediateType2.GetHashCode());
+        }
+
+        [Test]
+        public void ImmediateFieldToString()
+        {
+            var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
+            Assert.AreEqual(typeof(PublicValueTypeTestClass).ToString(), immediateType1.ToString());
+
+            var immediateType2 = new ImmediateType(typeof(InternalValueTypeTestClass));
+            Assert.AreNotEqual(immediateType1.ToString(), immediateType2.ToString());
         }
     }
 }

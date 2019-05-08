@@ -9,7 +9,7 @@ namespace ImmediateReflection
     /// Represents type declarations: class types, interface types, array types, value types, enumeration types,
     /// type parameters, generic type definitions, and open or closed constructed generic types in a faster way.
     /// </summary>
-    public class ImmediateType : IEquatable<ImmediateType>
+    public sealed class ImmediateType : IEquatable<ImmediateType>
     {
         /// <summary>
         /// Gets the wrapped <see cref="System.Type"/>.
