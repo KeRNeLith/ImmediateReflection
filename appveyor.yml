@@ -1,0 +1,111 @@
+version: '0.0.{build}'
+image: Visual Studio 2017
+
+# Setup environment
+pull_requests:
+  do_not_increment_build_number: true
+
+environment:
+  SONARQUBE_TOKEN:
+    secure: IDwa0NHtLUrg2jV3JZetUqUCGTgv3/UcZyYtMGvo7Pro1s9OmYTPjGMd6Vmx7Ktx
+  NUnitConsoleVersion: 3.10.0
+  OpenCoverVersion: 4.7.922
+  CoverallsVersion: 1.0.0
+  COVERALLS_REPO_TOKEN:
+    secure: +DiJ+F7GIX0MMo/rtIRXO8GSdyYHa1CWKLw4H2Rx3AP27Shr6mZMC6l+muu2H/Dg
+
+# Setup build version
+init:
+- ps: >-
+    if ($env:APPVEYOR_REPO_TAG -eq "true")
+    {
+        $env:Build_Version = "$($env:APPVEYOR_REPO_TAG_NAME.Replace('v', ''))";
+    }
+    else
+    {
+        $env:Build_Version = "$($env:APPVEYOR_BUILD_VERSION)";
+    }
+
+# Assembly infos & csproj patching
+assembly_info:
+  patch: true
+  file: '**\\AssemblyInfo.*'
+  assembly_version: '$(Build_Version)'
+  assembly_file_version: '$(Build_Version)'
+  assembly_informational_version: '$(Build_Version)'
+
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '$(Build_Version)'
+  package_version: '$(Build_Version)'
+  assembly_version: '$(Build_Version)'
+  file_version: '$(Build_Version)'
+  informational_version: '$(Build_Version)'
+
+# Build configurations
+platform:
+  - Any CPU
+
+configuration:
+  - Debug
+  - Release
+
+matrix:
+  fast_finish: true
+
+# Build
+before_build:
+# Chocolatey SonarQube
+  - cinst msbuild-sonarqube-runner
+# NuGet restore
+  - nuget restore -verbosity detailed
+
+build:
+  verbosity: minimal
+
+build_script:
+  - ps: $analysisFile = (Convert-Path SonarQube.Analysis.xml).ToString()
+  - ps: SonarScanner.MSBuild.exe begin /k:"immediate_reflection" /s:$analysisFile /o:"kernelith-github" /d:sonar.host.url="https://sonarcloud.io" /d:"sonar.branch.name=$env:APPVEYOR_REPO_BRANCH" /d:sonar.cs.opencover.reportsPaths="coverage.xml" /d:sonar.login="$env:SONARQUBE_TOKEN"
+  - msbuild
+
+before_test:
+# NuGet packages for coverage
+  - ps: nuget install NUnit.Console -Version $env:NUnitConsoleVersion -OutputDirectory tools
+  - ps: nuget install OpenCover -Version $env:OpenCoverVersion -OutputDirectory tools
+# .Net tool for coverage
+  - ps: dotnet tool install --tool-path tools --version $env:CoverallsVersion coveralls.net
+
+after_test: 
+# Coverage
+# Setup variables
+  - ps: $opencover = (Resolve-Path "tools\OpenCover.*\tools\OpenCover.Console.exe").ToString()
+  - ps: $nunitConsole = (Resolve-Path "tools\NUnit.ConsoleRunner.*\tools\nunit3-console.exe").ToString()
+  - ps: $coveralls = (Resolve-Path "tools\csmacnz.Coveralls.exe").ToString()
+# Assemblies to test (only consider .NET Framework 4.5, because if taking those from target netcoreapp1.0 coverage fails)
+  - ps: $testAssemblies = (ls src\*.Tests\bin\$env:Configuration\net45\*Tests.dll | % FullName | sort-object -Unique)
+# Generate coverage report
+  - ps: >-
+      & $opencover -register:user -filter:"+[*]* -[*.Test*]* -[*]JetBrains.Annotations*" -target:"$nunitConsole" -targetargs:"$testAssemblies" -log:Warn -output:coverage.xml
+  - ps: SonarScanner.MSBuild.exe end /d:"sonar.login=$env:SONARQUBE_TOKEN"
+  - ps: >-
+      & $coveralls --opencover -i coverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --useRelativePaths --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_BUILD_NUMBER --serviceName appveyor
+
+on_success:
+  - ps: SonarScanner.MSBuild.exe end /d:"sonar.login=$env:SONARQUBE_TOKEN"
+
+# Artifact
+artifacts:  
+  - path: '**\bin\Release\*.nupkg'
+    name: NuGet
+
+# Deploy
+deploy:
+# MyGet
+  - provider: NuGet
+    server: https://www.myget.org/F/kernelith-ci/api/v2/package
+    api_key:
+      secure: ANF+joC2B+NahxCFbLPOjNvEAo36F2F4QJu6zLwoIf2I9KwkxKyCSuNxDpLmJmtU
+    skip_symbols: true
+    on:
+      configuration: Release
