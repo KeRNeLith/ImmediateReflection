@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <Title>ImmediateReflection</Title>
+    <RootNamespace>ImmediateReflection</RootNamespace>
+    <AssemblyName>ImmediateReflection</AssemblyName>
+
+    <!-- Overridden by CI -->
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Include PDB files in NuGet for Source Link because symbolsource.org does not support portable PDBs -->
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+
+    <Copyright>Copyright © 2018</Copyright>
+    <Description>.NET library that aims to provider faster usage of C# reflection features. Especially the usage of constructor and members accessors (get/set).
+
+Supported platforms:
+- .NET Standard 2.0+
+- .NET Core 2.0+
+
+Supports Source Link</Description>
+    <Owners>Alexandre Rabérin</Owners>
+    <Authors>Alexandre Rabérin</Authors>
+    <Company>Alexandre Rabérin</Company>
+
+    <IsPackable>true</IsPackable>
+    <PackageId>ImmediateReflection</PackageId>
+    <PackageReleaseNotes>➟ Release 1.0.0</PackageReleaseNotes>
+    <PackageTags>C# Reflection Fast Immediate Performance Delegate Dynamic</PackageTags>
+
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/KeRNeLith/ImmediateReflection</PackageProjectUrl>
+    <!-- <PackageIconUrl>https://raw.githubusercontent.com/KeRNeLith/ImmediateReflection/master/immediate_reflection_logo.png</PackageIconUrl> -->
+    <RepositoryType>GitHub</RepositoryType>
+    <RepositoryUrl>https://github.com/KeRNeLith/ImmediateReflection</RepositoryUrl>
+  </PropertyGroup>
+
+  <!-- C# configuration -->
+  <PropertyGroup>
+    <LangVersion>7</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <!-- Optimization configurations -->
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>JETBRAINS_ANNOTATIONS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+
+  <!-- Targets defines -->
+  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <AssemblyTitle>ImmediateReflection .NET Standard 2.0</AssemblyTitle>
+    <DefineConstants>$(DefineConstants);NETSTANDARD2_0;$(AdditionalConstants)</DefineConstants>
+  </PropertyGroup>
+
+  <!-- Dependencies -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
+  </ItemGroup>
+</Project>
