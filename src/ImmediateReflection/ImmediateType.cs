@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 
@@ -26,7 +25,7 @@ namespace ImmediateReflection
         /// <summary>
         /// Gets the fully qualified name of the <see cref="System.Type"/>, including its namespace but not its assembly.
         /// </summary>
-        /// <remarks>Fallback on the type name if fullname is null.</remarks>
+        /// <remarks>Fallback on the type name if full name is null.</remarks>
         [NotNull]
         public string FullName { get; }
 
@@ -34,13 +33,13 @@ namespace ImmediateReflection
         /// Gets all the fields of this <see cref="System.Type"/>.
         /// </summary>
         [NotNull, ItemNotNull]
-        public ImmediateField[] Fields { get; }
+        public ImmediateFields Fields { get; }
 
         /// <summary>
         /// Gets all the properties of this <see cref="System.Type"/>.
         /// </summary>
         [NotNull, ItemNotNull]
-        public ImmediateProperty[] Properties { get; }
+        public ImmediateProperties Properties { get; }
 
         /// <summary>
         /// Constructor.
@@ -54,13 +53,8 @@ namespace ImmediateReflection
             FullName = type.FullName ?? Name;
 
             const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
-            Fields = type.GetFields(flags)
-                .Select(field => new ImmediateField(field))
-                .ToArray();
-
-            Properties = type.GetProperties(flags)
-                .Select(property => new ImmediateProperty(property))
-                .ToArray();
+            Fields = new ImmediateFields(type.GetFields(flags));
+            Properties = new ImmediateProperties(type.GetProperties(flags));
         }
 
         #region Equality / IEquatable<T>

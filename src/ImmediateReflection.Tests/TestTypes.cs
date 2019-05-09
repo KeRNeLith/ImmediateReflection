@@ -11,7 +11,25 @@ namespace ImmediateReflection.Tests
 {
     public class TestObject
     {
-        private int TestValue { get; set; } = 42;
+        public int TestValue { get; set; } = 42;
+    }
+
+    public class SmallObject
+    {
+        public int _testField1 = 12;
+        public TestObject _testField2 = new TestObject { TestValue = 12 };
+
+        public int TestProperty1 { get; set; } = 21;
+        public TestObject TestProperty2 { get; set; } = new TestObject();
+    }
+
+    public class SecondSmallObject
+    {
+        public int _testField1 = 12;
+        public TestObject _testField2 = new TestObject { TestValue = 12 };
+
+        public int TestProperty1 { get; set; } = 21;
+        public TestObject TestProperty2 { get; set; } = new TestObject();
     }
 
     public class PublicValueTypeTestClass

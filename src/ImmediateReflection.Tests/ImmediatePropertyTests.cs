@@ -22,7 +22,8 @@ namespace ImmediateReflection.Tests
             Assert.AreNotEqual(immediateProperty1.PropertyInfo, immediateProperty2.PropertyInfo);
 
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() => { var _ = new ImmediateProperty(null); });
+            // ReSharper disable once ObjectCreationAsStatement
+            Assert.Throws<ArgumentNullException>(() => new ImmediateProperty(null));
         }
 
         [Test]
