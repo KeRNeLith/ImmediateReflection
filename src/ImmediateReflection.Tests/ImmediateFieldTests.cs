@@ -13,12 +13,10 @@ namespace ImmediateReflection.Tests
         [Test]
         public void ImmediateFieldInfo()
         {
-            FieldInfo fieldInfo1 = typeof(PublicValueTypeTestClass).GetField(nameof(PublicValueTypeTestClass._publicField));
-            var immediateField1 = new ImmediateField(fieldInfo1);
-            Assert.AreEqual(fieldInfo1, immediateField1.FieldInfo);
+            var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+            Assert.AreEqual(PublicValueTypePublicFieldFieldsInfo, immediateField1.FieldInfo);
 
-            FieldInfo fieldInfo2 = typeof(PublicValueTypeTestClass).GetField(nameof(PublicValueTypeTestClass._publicField2));
-            var immediateField2 = new ImmediateField(fieldInfo2);
+            var immediateField2 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
             Assert.AreNotEqual(immediateField1.FieldInfo, immediateField2.FieldInfo);
 
             // ReSharper disable once AssignNullToNotNullAttribute
@@ -29,15 +27,13 @@ namespace ImmediateReflection.Tests
         [Test]
         public void ImmediateFieldEquality()
         {
-            FieldInfo fieldInfo1 = typeof(PublicValueTypeTestClass).GetField(nameof(PublicValueTypeTestClass._publicField));
-            var immediateField1 = new ImmediateField(fieldInfo1);
-            var immediateField2 = new ImmediateField(fieldInfo1);
+            var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+            var immediateField2 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
             Assert.AreEqual(immediateField1, immediateField2);
             Assert.IsTrue(immediateField1.Equals((object)immediateField2));
             Assert.IsFalse(immediateField1.Equals(null));
 
-            FieldInfo fieldInfo2 = typeof(PublicValueTypeTestClass).GetField(nameof(PublicValueTypeTestClass._publicField2));
-            var immediateField3 = new ImmediateField(fieldInfo2);
+            var immediateField3 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
             Assert.AreNotEqual(immediateField1, immediateField3);
             Assert.IsFalse(immediateField1.Equals((object)immediateField3));
         }
@@ -45,24 +41,20 @@ namespace ImmediateReflection.Tests
         [Test]
         public void ImmediateFieldHashCode()
         {
-            FieldInfo fieldInfo1 = typeof(PublicValueTypeTestClass).GetField(nameof(PublicValueTypeTestClass._publicField));
-            var immediateField1 = new ImmediateField(fieldInfo1);
-            Assert.AreEqual(fieldInfo1.GetHashCode(), immediateField1.GetHashCode());
+            var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+            Assert.AreEqual(PublicValueTypePublicFieldFieldsInfo.GetHashCode(), immediateField1.GetHashCode());
 
-            FieldInfo fieldInfo2 = typeof(PublicValueTypeTestClass).GetField(nameof(PublicValueTypeTestClass._publicField2));
-            var immediateField2 = new ImmediateField(fieldInfo2);
+            var immediateField2 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
             Assert.AreNotEqual(immediateField1.GetHashCode(), immediateField2.GetHashCode());
         }
 
         [Test]
         public void ImmediateFieldToString()
         {
-            FieldInfo fieldInfo1 = typeof(PublicValueTypeTestClass).GetField(nameof(PublicValueTypeTestClass._publicField));
-            var immediateField1 = new ImmediateField(fieldInfo1);
-            Assert.AreEqual(fieldInfo1.ToString(), immediateField1.ToString());
+            var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+            Assert.AreEqual(PublicValueTypePublicFieldFieldsInfo.ToString(), immediateField1.ToString());
 
-            FieldInfo fieldInfo2 = typeof(PublicValueTypeTestClass).GetField(nameof(PublicValueTypeTestClass._publicField2));
-            var immediateField2 = new ImmediateField(fieldInfo2);
+            var immediateField2 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
             Assert.AreNotEqual(immediateField1.ToString(), immediateField2.ToString());
         }
     }
