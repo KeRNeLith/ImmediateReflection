@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+#if SUPPORTS_AGGRESSIVE_INLINING
+using System.Runtime.CompilerServices;
+#endif
 using JetBrains.Annotations;
 
 namespace ImmediateReflection
@@ -42,6 +45,18 @@ namespace ImmediateReflection
             _fields.TryGetValue(fieldName, out ImmediateField field)
                 ? field
                 : null;
+
+        /// <summary>
+        /// Gets the <see cref="ImmediateField"/> corresponding to the given <paramref name="fieldName"/>.
+        /// </summary>
+        /// <param name="fieldName">Field name.</param>
+        /// <returns>Found <see cref="ImmediateField"/>, otherwise null.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="fieldName"/> is null.</exception>
+        [CanBeNull]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public ImmediateField GetField([NotNull] string fieldName) => this[fieldName];
 
         #region Equality / IEquatable<T>
 

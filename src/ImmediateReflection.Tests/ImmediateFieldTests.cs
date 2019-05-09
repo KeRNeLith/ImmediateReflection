@@ -8,7 +8,7 @@ namespace ImmediateReflection.Tests
     /// Tests related to <see cref="ImmediateField"/>.
     /// </summary>
     [TestFixture]
-    internal class ImmediateFieldTests
+    internal class ImmediateFieldTests : ImmediateReflectionTestsBase
     {
         [Test]
         public void ImmediateFieldInfo()

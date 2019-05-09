@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Reflection;
 using NUnit.Framework;
 
 namespace ImmediateReflection.Tests
@@ -9,26 +8,24 @@ namespace ImmediateReflection.Tests
     /// Tests related to <see cref="ImmediateProperties"/>.
     /// </summary>
     [TestFixture]
-    internal class ImmediatePropertiesTests
+    internal class ImmediatePropertiesTests : ImmediateReflectionTestsBase
     {
         [Test]
         public void ImmediatePropertiesInfo()
         {
-            var immediateProperties1 = new ImmediateProperties(typeof(SmallObject).GetProperties());
+            var immediateProperties1 = new ImmediateProperties(SmallObjectPropertyInfos);
             CollectionAssert.AreEquivalent(
-                new []
+                new[]
                 {
-                    // ReSharper disable AssignNullToNotNullAttribute
-                    new ImmediateProperty(typeof(SmallObject).GetProperty(nameof(SmallObject.TestProperty1))),
-                    new ImmediateProperty(typeof(SmallObject).GetProperty(nameof(SmallObject.TestProperty2)))
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    new ImmediateProperty(SmallObjectTestProperty1PropertyInfo),
+                    new ImmediateProperty(SmallObjectTestProperty2PropertyInfo)
                 },
                 immediateProperties1);
 
-            var immediateProperties2 = new ImmediateProperties(typeof(SecondSmallObject).GetProperties());
+            var immediateProperties2 = new ImmediateProperties(SecondSmallObjectPropertyInfos);
             CollectionAssert.AreNotEquivalent(immediateProperties1, immediateProperties2);
 
-            var immediateProperties3 = new ImmediateProperties(new PropertyInfo[]{});
+            var immediateProperties3 = new ImmediateProperties(EmptyPropertyInfo);
             CollectionAssert.AreEqual(
                 Enumerable.Empty<ImmediateProperty>(),
                 immediateProperties3);
@@ -36,37 +33,39 @@ namespace ImmediateReflection.Tests
             // ReSharper disable once AssignNullToNotNullAttribute
             // ReSharper disable ObjectCreationAsStatement
             Assert.Throws<ArgumentNullException>(() => new ImmediateProperties(null));
-            Assert.Throws<ArgumentNullException>(() => new ImmediateProperties(new []{ typeof(SmallObject).GetProperty(nameof(SmallObject.TestProperty1)), null }));
+            Assert.Throws<ArgumentNullException>(() => new ImmediateProperties(new[] { SmallObjectTestProperty1PropertyInfo, null }));
             // ReSharper restore ObjectCreationAsStatement
         }
 
         [Test]
         public void GetProperty()
         {
-            var immediateProperties = new ImmediateProperties(typeof(SmallObject).GetProperties());
-            Assert.AreEqual(
-                // ReSharper disable once AssignNullToNotNullAttribute
-                new ImmediateProperty(typeof(SmallObject).GetProperty(nameof(SmallObject.TestProperty1))), 
-                immediateProperties[nameof(SmallObject.TestProperty1)]);
+            var immediateProperties = new ImmediateProperties(SmallObjectPropertyInfos);
+            var expectedProperty = new ImmediateProperty(SmallObjectTestProperty1PropertyInfo);
+            Assert.AreEqual(expectedProperty, immediateProperties[nameof(SmallObject.TestProperty1)]);
+            Assert.AreEqual(expectedProperty, immediateProperties.GetProperty(nameof(SmallObject.TestProperty1)));
 
             Assert.IsNull(immediateProperties["NotExists"]);
+            Assert.IsNull(immediateProperties.GetProperty("NotExists"));
 
-            // ReSharper disable once InconsistentNaming
-            // ReSharper disable once AssignNullToNotNullAttribute
+            // ReSharper disable InconsistentNaming
+            // ReSharper disable AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => { var _ = immediateProperties[null]; });
+            Assert.Throws<ArgumentNullException>(() => { var _ = immediateProperties.GetProperty(null); });
+            // ReSharper restore AssignNullToNotNullAttribute
+            // ReSharper restore InconsistentNaming
         }
 
         [Test]
         public void ImmediatePropertiesEquality()
         {
-            var properties = typeof(SmallObject).GetProperties();
-            var immediateProperties1 = new ImmediateProperties(properties);
-            var immediateProperties2 = new ImmediateProperties(properties);
+            var immediateProperties1 = new ImmediateProperties(SmallObjectPropertyInfos);
+            var immediateProperties2 = new ImmediateProperties(SmallObjectPropertyInfos);
             Assert.AreEqual(immediateProperties1, immediateProperties2);
             Assert.IsTrue(immediateProperties1.Equals((object)immediateProperties2));
             Assert.IsFalse(immediateProperties1.Equals(null));
 
-            var immediateProperties3 = new ImmediateProperties(typeof(SecondSmallObject).GetProperties());
+            var immediateProperties3 = new ImmediateProperties(SecondSmallObjectPropertyInfos);
             Assert.AreNotEqual(immediateProperties1, immediateProperties3);
             Assert.IsFalse(immediateProperties1.Equals((object)immediateProperties3));
         }
@@ -74,24 +73,22 @@ namespace ImmediateReflection.Tests
         [Test]
         public void ImmediatePropertiesHashCode()
         {
-            var properties = typeof(SmallObject).GetProperties();
-            var immediateProperties1 = new ImmediateProperties(properties);
-            var immediateProperties2 = new ImmediateProperties(properties);
+            var immediateProperties1 = new ImmediateProperties(SmallObjectPropertyInfos);
+            var immediateProperties2 = new ImmediateProperties(SmallObjectPropertyInfos);
             Assert.AreEqual(immediateProperties1.GetHashCode(), immediateProperties2.GetHashCode());
 
-            var immediateProperties3 = new ImmediateProperties(typeof(SecondSmallObject).GetProperties());
+            var immediateProperties3 = new ImmediateProperties(SecondSmallObjectPropertyInfos);
             Assert.AreNotEqual(immediateProperties1.GetHashCode(), immediateProperties3.GetHashCode());
         }
 
         [Test]
         public void ImmediatePropertyToString()
         {
-            var properties = typeof(SmallObject).GetProperties();
-            var immediateProperties1 = new ImmediateProperties(properties);
-            string expectedToString = $"[{string.Join(", ", properties.Select(p => p.ToString()))}]";
+            var immediateProperties1 = new ImmediateProperties(SmallObjectPropertyInfos);
+            string expectedToString = $"[{string.Join(", ", SmallObjectPropertyInfos.Select(p => p.ToString()))}]";
             Assert.AreEqual(expectedToString, immediateProperties1.ToString());
 
-            var immediateProperties2 = new ImmediateProperties(new PropertyInfo[]{});
+            var immediateProperties2 = new ImmediateProperties(EmptyPropertyInfo);
             Assert.AreEqual("[]", immediateProperties2.ToString());
         }
     }

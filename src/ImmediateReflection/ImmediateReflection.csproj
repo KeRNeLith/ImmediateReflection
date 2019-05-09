@@ -74,11 +74,11 @@ Supports Source Link</Description>
   <!-- Targets defines -->
   <PropertyGroup Condition="'$(TargetFramework)'=='net45'">
     <AssemblyTitle>ImmediateReflection .NET Framework 4.5</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NET45;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET45;SUPPORTS_AGGRESSIVE_INLINING;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <AssemblyTitle>ImmediateReflection .NET Standard 2.0</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NETSTANDARD2_0;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NETSTANDARD2_0;SUPPORTS_AGGRESSIVE_INLINING;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
 
   <!-- Dependencies -->

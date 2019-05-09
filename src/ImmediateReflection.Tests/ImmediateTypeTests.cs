@@ -7,7 +7,7 @@ namespace ImmediateReflection.Tests
     /// Tests related to <see cref="ImmediateType"/>.
     /// </summary>
     [TestFixture]
-    internal class ImmediateTypeTests
+    internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     {
         protected class ProtectedNestedClass
         {

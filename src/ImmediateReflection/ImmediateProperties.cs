@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+#if SUPPORTS_AGGRESSIVE_INLINING
+using System.Runtime.CompilerServices;
+#endif
 using JetBrains.Annotations;
 
 namespace ImmediateReflection
@@ -42,6 +45,18 @@ namespace ImmediateReflection
             _properties.TryGetValue(propertyName, out ImmediateProperty property) 
                 ? property 
                 : null;
+
+        /// <summary>
+        /// Gets the <see cref="ImmediateProperty"/> corresponding to the given <paramref name="propertyName"/>.
+        /// </summary>
+        /// <param name="propertyName">Property name.</param>
+        /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
+        [CanBeNull]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public ImmediateProperty GetProperty([NotNull] string propertyName) => this[propertyName];
 
         #region Equality / IEquatable<T>
 
