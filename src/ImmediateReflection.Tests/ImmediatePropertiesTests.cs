@@ -82,7 +82,7 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
-        public void ImmediatePropertyToString()
+        public void ImmediatePropertiesToString()
         {
             var immediateProperties1 = new ImmediateProperties(SmallObjectPropertyInfos);
             string expectedToString = $"[{string.Join(", ", SmallObjectPropertyInfos.Select(p => p.ToString()))}]";

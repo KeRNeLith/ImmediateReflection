@@ -22,6 +22,12 @@ namespace ImmediateReflection
         public string Name { get; }
 
         /// <summary>
+        /// Gets the <see cref="Type"/> of this property.
+        /// </summary>
+        [NotNull]
+        public Type PropertyType { get; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="property"><see cref="System.Reflection.PropertyInfo"/> to wrap.</param>
@@ -30,6 +36,30 @@ namespace ImmediateReflection
         {
             PropertyInfo = property ?? throw new ArgumentNullException(nameof(property));
             Name = property.Name;
+            PropertyType = property.PropertyType;
+        }
+
+        /// <summary>
+        /// Returns the property value of the specified object.
+        /// </summary>
+        /// <param name="obj">Object that property value will be returned.</param>
+        /// <returns>Property value of the specified object.</returns>
+        /// <exception cref="TargetException">If the given <paramref name="obj"/> is null.</exception>
+        [Pure]
+        public object GetValue([NotNull] object obj)
+        {
+            return PropertyInfo.GetValue(obj);
+        }
+
+        /// <summary>
+        /// Sets the property value of the specified object.
+        /// </summary>
+        /// <param name="obj">Object that property value will be set.</param>
+        /// <param name="value">New property value.</param>
+        /// <exception cref="TargetException">If the given <paramref name="obj"/> is null.</exception>
+        public void SetValue([NotNull] object obj, [CanBeNull] object value)
+        {
+            PropertyInfo.SetValue(obj, value);
         }
 
         #region Equality / IEquatable<T>
