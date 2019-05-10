@@ -312,6 +312,7 @@ namespace ImmediateReflection.Tests
         {
             var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
             var immediateType2 = new ImmediateType(typeof(PublicValueTypeTestClass));
+            Assert.AreEqual(immediateType1, immediateType1);
             Assert.AreEqual(immediateType1, immediateType2);
             Assert.IsTrue(immediateType1.Equals((object) immediateType2));
             Assert.IsFalse(immediateType1.Equals(null));
@@ -325,10 +326,12 @@ namespace ImmediateReflection.Tests
         public void ImmediateTypeHashCode()
         {
             var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
+            var immediateType2 = new ImmediateType(typeof(PublicValueTypeTestClass));
             Assert.AreEqual(typeof(PublicValueTypeTestClass).GetHashCode(), immediateType1.GetHashCode());
+            Assert.AreEqual(immediateType1.GetHashCode(), immediateType2.GetHashCode());
 
-            var immediateType2 = new ImmediateType(typeof(InternalValueTypeTestClass));
-            Assert.AreNotEqual(immediateType1.GetHashCode(), immediateType2.GetHashCode());
+            var immediateType3 = new ImmediateType(typeof(InternalValueTypeTestClass));
+            Assert.AreNotEqual(immediateType1.GetHashCode(), immediateType3.GetHashCode());
         }
 
         [Test]

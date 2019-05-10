@@ -61,6 +61,7 @@ namespace ImmediateReflection.Tests
         {
             var immediateFields1 = new ImmediateFields(SmallObjectFieldInfos);
             var immediateFields2 = new ImmediateFields(SmallObjectFieldInfos);
+            Assert.AreEqual(immediateFields1, immediateFields1);
             Assert.AreEqual(immediateFields1, immediateFields2);
             Assert.IsTrue(immediateFields1.Equals((object)immediateFields2));
             Assert.IsFalse(immediateFields1.Equals(null));

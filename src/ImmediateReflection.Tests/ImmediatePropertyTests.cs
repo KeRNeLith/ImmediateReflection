@@ -303,6 +303,7 @@ namespace ImmediateReflection.Tests
         {
             var immediateProperty1 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
             var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
+            Assert.AreEqual(immediateProperty1, immediateProperty1);
             Assert.AreEqual(immediateProperty1, immediateProperty2);
             Assert.IsTrue(immediateProperty1.Equals((object)immediateProperty2));
             Assert.IsFalse(immediateProperty1.Equals(null));
@@ -316,10 +317,12 @@ namespace ImmediateReflection.Tests
         public void ImmediatePropertyHashCode()
         {
             var immediateProperty1 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
+            var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
             Assert.AreEqual(PublicValueTypePublicGetSetPropertyPropertyInfo.GetHashCode(), immediateProperty1.GetHashCode());
+            Assert.AreEqual(immediateProperty1.GetHashCode(), immediateProperty2.GetHashCode());
 
-            var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
-            Assert.AreNotEqual(immediateProperty1.GetHashCode(), immediateProperty2.GetHashCode());
+            var immediateProperty3 = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
+            Assert.AreNotEqual(immediateProperty1.GetHashCode(), immediateProperty3.GetHashCode());
         }
 
         [Test]

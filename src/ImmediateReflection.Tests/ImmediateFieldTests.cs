@@ -220,6 +220,7 @@ namespace ImmediateReflection.Tests
         {
             var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
             var immediateField2 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+            Assert.AreEqual(immediateField1, immediateField1);
             Assert.AreEqual(immediateField1, immediateField2);
             Assert.IsTrue(immediateField1.Equals((object)immediateField2));
             Assert.IsFalse(immediateField1.Equals(null));
@@ -233,10 +234,12 @@ namespace ImmediateReflection.Tests
         public void ImmediateFieldHashCode()
         {
             var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+            var immediateField2 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
             Assert.AreEqual(PublicValueTypePublicFieldFieldsInfo.GetHashCode(), immediateField1.GetHashCode());
+            Assert.AreEqual(immediateField1.GetHashCode(), immediateField2.GetHashCode());
 
-            var immediateField2 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
-            Assert.AreNotEqual(immediateField1.GetHashCode(), immediateField2.GetHashCode());
+            var immediateField3 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
+            Assert.AreNotEqual(immediateField1.GetHashCode(), immediateField3.GetHashCode());
         }
 
         [Test]

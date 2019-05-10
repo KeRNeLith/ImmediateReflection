@@ -72,6 +72,8 @@ namespace ImmediateReflection
         {
             if (other is null)
                 return false;
+            if (ReferenceEquals(this, other))
+                return true;
             return _fields.Count == other._fields.Count
                    && !_fields.Except(other._fields).Any();
         }

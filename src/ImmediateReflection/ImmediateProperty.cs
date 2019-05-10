@@ -75,6 +75,8 @@ namespace ImmediateReflection
         {
             if (other is null)
                 return false;
+            if (ReferenceEquals(this, other))
+                return true;
             return PropertyInfo == other.PropertyInfo;
         }
 
