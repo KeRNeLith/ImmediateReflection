@@ -1,4 +1,7 @@
+using System;
 using System.Linq;
+using System.Reflection;
+using JetBrains.Annotations;
 using NUnit.Framework;
 
 namespace ImmediateReflection.Tests
@@ -21,6 +24,20 @@ namespace ImmediateReflection.Tests
             public int NestedTestValue { get; set; } = 25;
         }
 
+        #region Test helpers
+
+        // Properties //
+
+        [NotNull]
+        protected static PropertyInfo ProtectedNestedPublicGetSetPropertyPropertyInfo =
+            typeof(ProtectedNestedClass).GetProperty(nameof(ProtectedNestedClass.NestedTestValue)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static PropertyInfo PrivateNestedPublicGetSetPropertyPropertyInfo =
+            typeof(PrivateNestedClass).GetProperty(nameof(PrivateNestedClass.NestedTestValue)) ?? throw new AssertionException("Cannot find property.");
+
+        #endregion
+
         [Test]
         public void ImmediateTypeValueType()
         {
@@ -34,19 +51,19 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(PublicValueTypeTestClass._publicField),
-                    nameof(PublicValueTypeTestClass._publicField2)
+                    PublicValueTypePublicFieldFieldsInfo,
+                    PublicValueTypePublicField2FieldsInfo
                 },
-                immediateTypePublic.Fields.Select(field => field.Name));
+                immediateTypePublic.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(PublicValueTypeTestClass.PublicPropertyGetSet),
-                    nameof(PublicValueTypeTestClass.PublicPropertyGet),
-                    nameof(PublicValueTypeTestClass.PublicPropertyGetPrivateSet),
-                    nameof(PublicValueTypeTestClass.PublicPropertySet)
+                    PublicValueTypePublicGetSetPropertyPropertyInfo,
+                    PublicValueTypePublicGetPropertyPropertyInfo,
+                    PublicValueTypePublicGetPrivateSetPropertyPropertyInfo,
+                    PublicValueTypePublicSetPropertyPropertyInfo
                 },
-                immediateTypePublic.Properties.Select(property => property.Name));
+                immediateTypePublic.Properties.Select(property => property.PropertyInfo));
 
             // Internal class
             var immediateTypeInternal = new ImmediateType(typeof(InternalValueTypeTestClass));
@@ -58,19 +75,67 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(InternalValueTypeTestClass._publicField),
-                    nameof(InternalValueTypeTestClass._publicField2)
+                    InternalValueTypePublicFieldFieldsInfo,
+                    InternalValueTypePublicField2FieldsInfo
                 },
-                immediateTypeInternal.Fields.Select(field => field.Name));
+                immediateTypeInternal.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(InternalValueTypeTestClass.PublicPropertyGetSet),
-                    nameof(InternalValueTypeTestClass.PublicPropertyGet),
-                    nameof(InternalValueTypeTestClass.PublicPropertyGetPrivateSet),
-                    nameof(InternalValueTypeTestClass.PublicPropertySet)
+                    InternalValueTypePublicGetSetPropertyPropertyInfo,
+                    InternalValueTypePublicGetPropertyPropertyInfo,
+                    InternalValueTypePublicGetPrivateSetPropertyPropertyInfo,
+                    InternalValueTypePublicSetPropertyPropertyInfo
                 },
-                immediateTypeInternal.Properties.Select(property => property.Name));
+                immediateTypeInternal.Properties.Select(property => property.PropertyInfo));
+        }
+
+        [Test]
+        public void ImmediateTypeGetFields()
+        {
+            var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
+            CollectionAssert.AreEquivalent(immediateType1.Fields, immediateType1.GetFields());
+
+            var immediateType2 = new ImmediateType(typeof(PublicReferenceTypeTestClass));
+            CollectionAssert.AreNotEquivalent(immediateType1.GetFields(), immediateType2.GetFields());
+        }
+
+        [Test]
+        public void ImmediateTypeGetField()
+        {
+            var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
+            string fieldName = nameof(PublicValueTypeTestClass._publicField);
+            Assert.AreEqual(immediateType.Fields[fieldName], immediateType.GetField(fieldName));
+
+            fieldName = "NotExists";
+            Assert.IsNull(immediateType.GetField(fieldName));
+
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => immediateType.GetField(null));
+        }
+
+        [Test]
+        public void ImmediateTypeGetProperties()
+        {
+            var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
+            CollectionAssert.AreEquivalent(immediateType1.Properties, immediateType1.GetProperties());
+
+            var immediateType2 = new ImmediateType(typeof(PublicReferenceTypeTestClass));
+            CollectionAssert.AreNotEquivalent(immediateType1.GetProperties(), immediateType2.GetProperties());
+        }
+
+        [Test]
+        public void ImmediateTypeGetProperty()
+        {
+            var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
+            string propertyName = nameof(PublicValueTypeTestClass.PublicPropertyGetSet);
+            Assert.AreEqual(immediateType.Properties[propertyName], immediateType.GetProperty(propertyName));
+
+            propertyName = "NotExists";
+            Assert.IsNull(immediateType.GetProperty(propertyName));
+
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => immediateType.GetProperty(null));
         }
 
         [Test]
@@ -86,19 +151,19 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(PublicReferenceTypeTestClass._publicField),
-                    nameof(PublicReferenceTypeTestClass._publicField2)
+                    PublicReferenceTypePublicFieldFieldsInfo,
+                    PublicReferenceTypePublicField2FieldsInfo
                 },
-                immediateTypePublic.Fields.Select(field => field.Name));
+                immediateTypePublic.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(PublicReferenceTypeTestClass.PublicPropertyGetSet),
-                    nameof(PublicReferenceTypeTestClass.PublicPropertyGet),
-                    nameof(PublicReferenceTypeTestClass.PublicPropertyGetPrivateSet),
-                    nameof(PublicReferenceTypeTestClass.PublicPropertySet)
+                    PublicReferenceTypePublicGetSetPropertyPropertyInfo,
+                    PublicReferenceTypePublicGetPropertyPropertyInfo,
+                    PublicReferenceTypePublicGetPrivateSetPropertyPropertyInfo,
+                    PublicReferenceTypePublicSetPropertyPropertyInfo
                 },
-                immediateTypePublic.Properties.Select(property => property.Name));
+                immediateTypePublic.Properties.Select(property => property.PropertyInfo));
 
             // Internal class
             var immediateTypeInternal = new ImmediateType(typeof(InternalReferenceTypeTestClass));
@@ -110,19 +175,19 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(InternalReferenceTypeTestClass._publicField),
-                    nameof(InternalReferenceTypeTestClass._publicField2)
+                    InternalReferenceTypePublicFieldFieldsInfo,
+                    InternalReferenceTypePublicField2FieldsInfo
                 },
-                immediateTypeInternal.Fields.Select(field => field.Name));
+                immediateTypeInternal.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(InternalReferenceTypeTestClass.PublicPropertyGetSet),
-                    nameof(InternalReferenceTypeTestClass.PublicPropertyGet),
-                    nameof(InternalReferenceTypeTestClass.PublicPropertyGetPrivateSet),
-                    nameof(InternalReferenceTypeTestClass.PublicPropertySet)
+                    InternalReferenceTypePublicGetSetPropertyPropertyInfo,
+                    InternalReferenceTypePublicGetPropertyPropertyInfo,
+                    InternalReferenceTypePublicGetPrivateSetPropertyPropertyInfo,
+                    InternalReferenceTypePublicSetPropertyPropertyInfo
                 },
-                immediateTypeInternal.Properties.Select(property => property.Name));
+                immediateTypeInternal.Properties.Select(property => property.PropertyInfo));
         }
 
         [Test]
@@ -141,9 +206,9 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(PublicTestClass.PublicNestedClass.NestedTestValue)
+                    PublicNestedPublicGetSetPropertyPropertyInfo
                 },
-                nestedImmediateTypePublic.Properties.Select(property => property.Name));
+                nestedImmediateTypePublic.Properties.Select(property => property.PropertyInfo));
 
             // Internal class
             var nestedImmediateTypeInternal = new ImmediateType(typeof(PublicTestClass.InternalNestedClass));
@@ -158,9 +223,9 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(PublicTestClass.InternalNestedClass.NestedTestValue)
+                    InternalNestedPublicGetSetPropertyPropertyInfo
                 },
-                nestedImmediateTypeInternal.Properties.Select(property => property.Name));
+                nestedImmediateTypeInternal.Properties.Select(property => property.PropertyInfo));
 
             // Protected class
             var nestedImmediateTypeProtected = new ImmediateType(typeof(ProtectedNestedClass));
@@ -175,9 +240,9 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(ProtectedNestedClass.NestedTestValue)
+                    ProtectedNestedPublicGetSetPropertyPropertyInfo
                 },
-                nestedImmediateTypeProtected.Properties.Select(property => property.Name));
+                nestedImmediateTypeProtected.Properties.Select(property => property.PropertyInfo));
 
             // Private class
             var nestedImmediateTypePrivate = new ImmediateType(typeof(PrivateNestedClass));
@@ -192,9 +257,9 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    nameof(PrivateNestedClass.NestedTestValue)
+                    PrivateNestedPublicGetSetPropertyPropertyInfo
                 },
-                nestedImmediateTypePrivate.Properties.Select(property => property.Name));
+                nestedImmediateTypePrivate.Properties.Select(property => property.PropertyInfo));
         }
 
         [Test]

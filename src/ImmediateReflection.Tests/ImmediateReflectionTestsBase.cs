@@ -196,6 +196,18 @@ namespace ImmediateReflection.Tests
 
         #endregion
 
+        #region Nested class
+
+        [NotNull]
+        protected static PropertyInfo PublicNestedPublicGetSetPropertyPropertyInfo =
+            typeof(PublicTestClass.PublicNestedClass).GetProperty(nameof(PublicTestClass.PublicNestedClass.NestedTestValue)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static PropertyInfo InternalNestedPublicGetSetPropertyPropertyInfo =
+            typeof(PublicTestClass.InternalNestedClass).GetProperty(nameof(PublicTestClass.InternalNestedClass.NestedTestValue)) ?? throw new AssertionException("Cannot find property.");
+
+        #endregion
+
         #endregion
     }
 }

@@ -1,5 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
+#if SUPPORTS_AGGRESSIVE_INLINING
+using System.Runtime.CompilerServices;
+#endif
 using JetBrains.Annotations;
 
 namespace ImmediateReflection
@@ -56,6 +60,50 @@ namespace ImmediateReflection
             Fields = new ImmediateFields(type.GetFields(flags));
             Properties = new ImmediateProperties(type.GetProperties(flags));
         }
+
+        /// <summary>
+        /// Gets all the fields of this <see cref="System.Type"/>.
+        /// </summary>
+        /// <returns>All <see cref="ImmediateField"/>.</returns>
+        [NotNull, ItemNotNull]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public IEnumerable<ImmediateField> GetFields() => Fields;
+
+        /// <summary>
+        /// Gets the <see cref="ImmediateField"/> corresponding to the given <paramref name="fieldName"/>.
+        /// </summary>
+        /// <param name="fieldName">Property name.</param>
+        /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="fieldName"/> is null.</exception>
+        [CanBeNull]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public ImmediateField GetField([NotNull] string fieldName) => Fields[fieldName];
+
+        /// <summary>
+        /// Gets all the properties of this <see cref="System.Type"/>.
+        /// </summary>
+        /// <returns>All <see cref="ImmediateProperty"/>.</returns>
+        [NotNull, ItemNotNull]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public IEnumerable<ImmediateProperty> GetProperties() => Properties;
+
+        /// <summary>
+        /// Gets the <see cref="ImmediateProperty"/> corresponding to the given <paramref name="propertyName"/>.
+        /// </summary>
+        /// <param name="propertyName">Property name.</param>
+        /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
+        [CanBeNull]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public ImmediateProperty GetProperty([NotNull] string propertyName) => Properties[propertyName];
 
         #region Equality / IEquatable<T>
 
