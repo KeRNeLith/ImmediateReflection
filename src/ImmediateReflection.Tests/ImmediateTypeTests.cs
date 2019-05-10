@@ -111,6 +111,7 @@ namespace ImmediateReflection.Tests
             Assert.IsNull(immediateType.GetField(fieldName));
 
             // ReSharper disable once AssignNullToNotNullAttribute
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             Assert.Throws<ArgumentNullException>(() => immediateType.GetField(null));
         }
 
@@ -135,6 +136,7 @@ namespace ImmediateReflection.Tests
             Assert.IsNull(immediateType.GetProperty(propertyName));
 
             // ReSharper disable once AssignNullToNotNullAttribute
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             Assert.Throws<ArgumentNullException>(() => immediateType.GetProperty(null));
         }
 

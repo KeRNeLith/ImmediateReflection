@@ -52,6 +52,7 @@ namespace ImmediateReflection
         /// <param name="propertyName">Property name.</param>
         /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
+        [Pure]
         [CanBeNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

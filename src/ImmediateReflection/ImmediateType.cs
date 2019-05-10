@@ -65,6 +65,7 @@ namespace ImmediateReflection
         /// Gets all the fields of this <see cref="System.Type"/>.
         /// </summary>
         /// <returns>All <see cref="ImmediateField"/>.</returns>
+        [Pure]
         [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -77,6 +78,7 @@ namespace ImmediateReflection
         /// <param name="fieldName">Property name.</param>
         /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="fieldName"/> is null.</exception>
+        [Pure]
         [CanBeNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -87,6 +89,7 @@ namespace ImmediateReflection
         /// Gets all the properties of this <see cref="System.Type"/>.
         /// </summary>
         /// <returns>All <see cref="ImmediateProperty"/>.</returns>
+        [Pure]
         [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -99,6 +102,7 @@ namespace ImmediateReflection
         /// <param name="propertyName">Property name.</param>
         /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
+        [Pure]
         [CanBeNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

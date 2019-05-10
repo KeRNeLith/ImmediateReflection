@@ -52,6 +52,7 @@ namespace ImmediateReflection
         /// <param name="fieldName">Field name.</param>
         /// <returns>Found <see cref="ImmediateField"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="fieldName"/> is null.</exception>
+        [Pure]
         [CanBeNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
