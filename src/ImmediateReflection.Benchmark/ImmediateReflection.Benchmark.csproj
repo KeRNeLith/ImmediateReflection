@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net45;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+    <OutputType>Exe</OutputType>
 
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -13,7 +14,7 @@
     <FileVersion>1.0.0</FileVersion>
 
     <Copyright>Copyright © 2018</Copyright>
-    <Description>Tests for ImmediateReflection library.</Description>
+    <Description>Benchmark for ImmediateReflection library.</Description>
 
     <Authors>Alexandre Rabérin</Authors>
     <Owners>Alexandre Rabérin</Owners>
@@ -43,23 +44,16 @@
   </PropertyGroup>
 
   <!-- Targets defines -->
-  <PropertyGroup Condition="'$(TargetFramework)'=='net45'">
-    <DefineConstants>$(DefineConstants);NET45;$(AdditionalConstants)</DefineConstants>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">
     <DefineConstants>$(DefineConstants);NETCOREAPP2_0;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
 
   <!-- Dependencies -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.11.5" />
+    <PackageReference Include="FastMember" Version="1.4.1" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.11.0" />
-	<PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\ImmediateReflection\ImmediateReflection.csproj" />
   </ItemGroup>
