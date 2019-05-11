@@ -15,7 +15,7 @@ namespace ImmediateReflection.Benchmark
             Delegate.CreateDelegate(typeof(Func<BenchmarkObject, string>), null, PropertyInfo.GetGetMethod());
 
         [NotNull]
-        private static readonly Delegate DynamicSetterDelegate = Delegate.CreateDelegate(
+        private static readonly Delegate DynamicGetterDelegate = Delegate.CreateDelegate(
             typeof(Func<BenchmarkObject, string>), null, PropertyInfo.GetGetMethod());
 
         // Benchmark methods
@@ -34,7 +34,7 @@ namespace ImmediateReflection.Benchmark
         [Benchmark]
         public string GetDynamicDelegate_Property()
         {
-            return (string)DynamicSetterDelegate.DynamicInvoke(BenchmarkObject);
+            return (string)DynamicGetterDelegate.DynamicInvoke(BenchmarkObject);
         }
 
         [Benchmark]
