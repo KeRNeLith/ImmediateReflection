@@ -142,6 +142,42 @@ namespace ImmediateReflection.Tests
         protected static FieldInfo PublicReferenceTypePublicField2FieldsInfo =
             typeof(PublicReferenceTypeTestClass).GetField(nameof(PublicReferenceTypeTestClass._publicField2)) ?? throw new AssertionException("Cannot find field.");
 
+
+
+        // PublicObjectTypeTestClass
+
+        // Properties //
+
+        [NotNull]
+        protected static PropertyInfo PublicObjectTypePublicGetSetPropertyPropertyInfo =
+            typeof(PublicObjectTypeTestClass).GetProperty(nameof(PublicObjectTypeTestClass.PublicPropertyGetSet)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static PropertyInfo PublicObjectTypePublicGetPropertyPropertyInfo =
+            typeof(PublicObjectTypeTestClass).GetProperty(nameof(PublicObjectTypeTestClass.PublicPropertyGet)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static PropertyInfo PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo =
+            typeof(PublicObjectTypeTestClass).GetProperty(nameof(PublicObjectTypeTestClass.PublicPropertyPrivateGetSet)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static PropertyInfo PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo =
+            typeof(PublicObjectTypeTestClass).GetProperty(nameof(PublicObjectTypeTestClass.PublicPropertyGetPrivateSet)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static PropertyInfo PublicObjectTypePublicSetPropertyPropertyInfo =
+            typeof(PublicObjectTypeTestClass).GetProperty(nameof(PublicObjectTypeTestClass.PublicPropertySet)) ?? throw new AssertionException("Cannot find property.");
+
+        // Fields //
+
+        [NotNull]
+        protected static FieldInfo PublicObjectTypePublicFieldFieldsInfo =
+            typeof(PublicObjectTypeTestClass).GetField(nameof(PublicObjectTypeTestClass._publicField)) ?? throw new AssertionException("Cannot find field.");
+
+        [NotNull]
+        protected static FieldInfo PublicObjectTypePublicField2FieldsInfo =
+            typeof(PublicObjectTypeTestClass).GetField(nameof(PublicObjectTypeTestClass._publicField2)) ?? throw new AssertionException("Cannot find field.");
+
         #endregion
 
         #region Internal TestClass
@@ -215,6 +251,42 @@ namespace ImmediateReflection.Tests
         [NotNull]
         protected static FieldInfo InternalReferenceTypePublicField2FieldsInfo =
             typeof(InternalReferenceTypeTestClass).GetField(nameof(InternalReferenceTypeTestClass._publicField2)) ?? throw new AssertionException("Cannot find field.");
+
+
+
+        // InternalObjectTypeTestClass
+
+        // Properties //
+
+        [NotNull]
+        protected static PropertyInfo InternalObjectTypePublicGetSetPropertyPropertyInfo =
+            typeof(InternalObjectTypeTestClass).GetProperty(nameof(InternalObjectTypeTestClass.PublicPropertyGetSet)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static PropertyInfo InternalObjectTypePublicGetPropertyPropertyInfo =
+            typeof(InternalObjectTypeTestClass).GetProperty(nameof(InternalObjectTypeTestClass.PublicPropertyGet)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static PropertyInfo InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo =
+            typeof(InternalObjectTypeTestClass).GetProperty(nameof(InternalObjectTypeTestClass.PublicPropertyPrivateGetSet)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static PropertyInfo InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo =
+            typeof(InternalObjectTypeTestClass).GetProperty(nameof(InternalObjectTypeTestClass.PublicPropertyGetPrivateSet)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static PropertyInfo InternalObjectTypePublicSetPropertyPropertyInfo =
+            typeof(InternalObjectTypeTestClass).GetProperty(nameof(InternalObjectTypeTestClass.PublicPropertySet)) ?? throw new AssertionException("Cannot find property.");
+
+        // Fields //
+
+        [NotNull]
+        protected static FieldInfo InternalObjectTypePublicFieldFieldsInfo =
+            typeof(InternalObjectTypeTestClass).GetField(nameof(InternalObjectTypeTestClass._publicField)) ?? throw new AssertionException("Cannot find field.");
+
+        [NotNull]
+        protected static FieldInfo InternalObjectTypePublicField2FieldsInfo =
+            typeof(InternalObjectTypeTestClass).GetField(nameof(InternalObjectTypeTestClass._publicField2)) ?? throw new AssertionException("Cannot find field.");
 
         #endregion
 

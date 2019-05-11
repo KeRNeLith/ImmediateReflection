@@ -207,6 +207,60 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
+        public void ImmediateTypeObjectReferenceType()
+        {
+            // Public class
+            var immediateTypePublic = new ImmediateType(typeof(PublicObjectTypeTestClass));
+            Assert.AreEqual(typeof(PublicObjectTypeTestClass), immediateTypePublic.Type);
+            Assert.AreEqual(nameof(PublicObjectTypeTestClass), immediateTypePublic.Name);
+            Assert.AreEqual(
+                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(PublicObjectTypeTestClass)}",
+                immediateTypePublic.FullName);
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    PublicObjectTypePublicFieldFieldsInfo,
+                    PublicObjectTypePublicField2FieldsInfo
+                },
+                immediateTypePublic.Fields.Select(field => field.FieldInfo));
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    PublicObjectTypePublicGetSetPropertyPropertyInfo,
+                    PublicObjectTypePublicGetPropertyPropertyInfo,
+                    PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo,
+                    PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo,
+                    PublicObjectTypePublicSetPropertyPropertyInfo
+                },
+                immediateTypePublic.Properties.Select(property => property.PropertyInfo));
+
+            // Internal class
+            var immediateTypeInternal = new ImmediateType(typeof(InternalObjectTypeTestClass));
+            Assert.AreEqual(typeof(InternalObjectTypeTestClass), immediateTypeInternal.Type);
+            Assert.AreEqual(nameof(InternalObjectTypeTestClass), immediateTypeInternal.Name);
+            Assert.AreEqual(
+                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(InternalObjectTypeTestClass)}",
+                immediateTypeInternal.FullName);
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    InternalObjectTypePublicFieldFieldsInfo,
+                    InternalObjectTypePublicField2FieldsInfo
+                },
+                immediateTypeInternal.Fields.Select(field => field.FieldInfo));
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    InternalObjectTypePublicGetSetPropertyPropertyInfo,
+                    InternalObjectTypePublicGetPropertyPropertyInfo,
+                    InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo,
+                    InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo,
+                    InternalObjectTypePublicSetPropertyPropertyInfo
+                },
+                immediateTypeInternal.Properties.Select(property => property.PropertyInfo));
+        }
+
+        [Test]
         public void ImmediateTypeNestedType()
         {
             // Public class

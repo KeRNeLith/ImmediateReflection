@@ -5,8 +5,6 @@
 // ReSharper disable UnusedMember.Local
 // ReSharper disable NotAccessedField.Local
 
-using System;
-
 #pragma warning disable CS0649
 #pragma warning disable 169
 
@@ -101,6 +99,39 @@ namespace ImmediateReflection.Tests
         public static TestObject PublicStaticPropertyGetSet { get; set; }
     }
 
+    public class PublicObjectTypeTestClass
+    {
+        private object _privateField;
+        protected object _protectedField;
+        internal object _internalField;
+        public object _publicField;
+        public object _publicField2;
+        public static object _publicStaticField;
+
+        public PublicObjectTypeTestClass()
+        {
+        }
+
+        // Constructor for non publicly initializable members
+        public PublicObjectTypeTestClass(object publicGetProperty = null, object publicGetPrivateSetProperty = null)
+        {
+            PublicPropertyGet = publicGetProperty;
+            PublicPropertyGetPrivateSet = publicGetPrivateSetProperty;
+        }
+
+        public object PublicPropertyGetSet { get; set; }
+        internal object InternalPropertyGetSet { get; set; }
+        protected object ProtectedPropertyGetSet { get; set; }
+        private object PrivatePropertyGetSet { get; set; }
+
+        public object PublicPropertyGet { get; }
+        public object PublicPropertyPrivateGetSet { private get => _publicField; set => _publicField = value; }
+        public object PublicPropertyGetPrivateSet { get; private set; }
+        public object PublicPropertySet { set => _publicField2 = value; }
+
+        public static object PublicStaticPropertyGetSet { get; set; }
+    }
+
     internal class InternalValueTypeTestClass
     {
         private int _privateField;
@@ -165,6 +196,39 @@ namespace ImmediateReflection.Tests
         public TestObject PublicPropertySet { set => _publicField2 = value; }
 
         public static TestObject PublicStaticPropertyGetSet { get; set; }
+    }
+
+    internal class InternalObjectTypeTestClass
+    {
+        private object _privateField;
+        protected object _protectedField;
+        internal object _internalField;
+        public object _publicField;
+        public object _publicField2;
+        public static object _publicStaticField;
+
+        public InternalObjectTypeTestClass()
+        {
+        }
+
+        // Constructor for non publicly initializable members
+        public InternalObjectTypeTestClass(object publicGetProperty = null, object publicGetPrivateSetProperty = null)
+        {
+            PublicPropertyGet = publicGetProperty;
+            PublicPropertyGetPrivateSet = publicGetPrivateSetProperty;
+        }
+
+        public object PublicPropertyGetSet { get; set; }
+        internal object InternalPropertyGetSet { get; set; }
+        protected object ProtectedPropertyGetSet { get; set; }
+        private object PrivatePropertyGetSet { get; set; }
+
+        public object PublicPropertyGet { get; }
+        public object PublicPropertyPrivateGetSet { private get => _publicField; set => _publicField = value; }
+        public object PublicPropertyGetPrivateSet { get; private set; }
+        public object PublicPropertySet { set => _publicField2 = value; }
+
+        public static object PublicStaticPropertyGetSet { get; set; }
     }
 
     public class PublicTestClass
