@@ -49,6 +49,71 @@ namespace ImmediateReflection.Tests
             Assert.Throws<ArgumentNullException>(() => new ImmediateProperty(null));
         }
 
+        #region CanRead
+
+        private static IEnumerable<TestCaseData> CreateImmediatePropertyCanReadTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                // Value type
+                var publicValueTypeTestObject = new PublicValueTypeTestClass();
+
+                yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetPropertyPropertyInfo, true);
+                yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, true);    // Private Get but gettable via Reflection
+                yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicSetPropertyPropertyInfo, false);
+
+                var internalValueTypeTestObject = new InternalValueTypeTestClass();
+
+                yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetPropertyPropertyInfo, true);
+                yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetPrivateSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicPrivateGetSetPropertyPropertyInfo, true);    // Private Get but gettable via Reflection
+                yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicSetPropertyPropertyInfo, false);
+
+                // Reference type
+                var publicReferenceTypeTestObject = new PublicReferenceTypeTestClass();
+
+                yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicGetPropertyPropertyInfo, true);
+                yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicGetPrivateSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicPrivateGetSetPropertyPropertyInfo, true);  // Private Get but gettable via Reflection
+                yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicSetPropertyPropertyInfo, false);
+
+                var internalReferenceTypeTestObject = new InternalReferenceTypeTestClass();
+
+                yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicGetPropertyPropertyInfo, true);
+                yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicGetPrivateSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicPrivateGetSetPropertyPropertyInfo, true);  // Private Get but gettable via Reflection
+                yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicSetPropertyPropertyInfo, false);
+
+                // Nested type
+                var publicNestedTypeTestObject = new PublicTestClass.PublicNestedClass();
+                yield return new TestCaseData(publicNestedTypeTestObject, PublicNestedPublicGetSetPropertyPropertyInfo, true);
+
+                var internalNestedTypeTestObject = new PublicTestClass.InternalNestedClass();
+                yield return new TestCaseData(internalNestedTypeTestObject, InternalNestedPublicGetSetPropertyPropertyInfo, true);
+
+                var protectedNestedTypeTestObject = new ProtectedNestedClass();
+                yield return new TestCaseData(protectedNestedTypeTestObject, ProtectedNestedPublicGetSetPropertyPropertyInfo, true);
+
+                var privateNestedTypeTestObject = new PrivateNestedClass();
+                yield return new TestCaseData(privateNestedTypeTestObject, PrivateNestedPublicGetSetPropertyPropertyInfo, true);
+            }
+        }
+
+        [TestCaseSource(nameof(CreateImmediatePropertyCanReadTestCases))]
+        public void ImmediatePropertyCanRead([NotNull] object target, [NotNull] PropertyInfo property, bool expectedCanRead)
+        {
+            var immediateProperty = new ImmediateProperty(property);
+            Assert.AreEqual(expectedCanRead, immediateProperty.CanRead);
+        }
+
+        #endregion
+
         #region GetValue
 
         private static IEnumerable<TestCaseData> CreateImmediatePropertyGetValueTestCases
@@ -152,6 +217,71 @@ namespace ImmediateReflection.Tests
 
             // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             Assert.Throws<ArgumentException>(() => immediateProperty.GetValue(new PublicValueTypeTestClass()));
+        }
+
+        #endregion
+
+        #region CanWrite
+
+        private static IEnumerable<TestCaseData> CreateImmediatePropertyCanWriteTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                // Value type
+                var publicValueTypeTestObject = new PublicValueTypeTestClass();
+
+                yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetPropertyPropertyInfo, false);
+                yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
+                yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicSetPropertyPropertyInfo, true);
+
+                var internalValueTypeTestObject = new InternalValueTypeTestClass();
+
+                yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetPropertyPropertyInfo, false);
+                yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
+                yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicPrivateGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicSetPropertyPropertyInfo, true);
+
+                // Reference type
+                var publicReferenceTypeTestObject = new PublicReferenceTypeTestClass();
+
+                yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicGetPropertyPropertyInfo, false);
+                yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
+                yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicPrivateGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicSetPropertyPropertyInfo, true);
+
+                var internalReferenceTypeTestObject = new InternalReferenceTypeTestClass();
+
+                yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicGetPropertyPropertyInfo, false);
+                yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
+                yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicPrivateGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicSetPropertyPropertyInfo, true);
+
+                // Nested type
+                var publicNestedTypeTestObject = new PublicTestClass.PublicNestedClass();
+                yield return new TestCaseData(publicNestedTypeTestObject, PublicNestedPublicGetSetPropertyPropertyInfo, true);
+
+                var internalNestedTypeTestObject = new PublicTestClass.InternalNestedClass();
+                yield return new TestCaseData(internalNestedTypeTestObject, InternalNestedPublicGetSetPropertyPropertyInfo, true);
+
+                var protectedNestedTypeTestObject = new ProtectedNestedClass();
+                yield return new TestCaseData(protectedNestedTypeTestObject, ProtectedNestedPublicGetSetPropertyPropertyInfo, true);
+
+                var privateNestedTypeTestObject = new PrivateNestedClass();
+                yield return new TestCaseData(privateNestedTypeTestObject, PrivateNestedPublicGetSetPropertyPropertyInfo, true);
+            }
+        }
+
+        [TestCaseSource(nameof(CreateImmediatePropertyCanWriteTestCases))]
+        public void ImmediatePropertyCanWrite([NotNull] object target, [NotNull] PropertyInfo property, bool expectedCanWrite)
+        {
+            var immediateProperty = new ImmediateProperty(property);
+            Assert.AreEqual(expectedCanWrite, immediateProperty.CanWrite);
         }
 
         #endregion
@@ -279,14 +409,20 @@ namespace ImmediateReflection.Tests
         public void ImmediatePropertySetValue_WrongInstance()
         {
             var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
-            Assert.Throws<TargetException>(() => immediateProperty.SetValue(new PublicReferenceTypeTestClass(), null));
+            Assert.Throws<InvalidCastException>(() => immediateProperty.SetValue(new PublicReferenceTypeTestClass(), null));
         }
 
         [Test]
         public void ImmediatePropertySetValue_WrongValue()
         {
             var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
-            Assert.Throws<ArgumentException>(() => immediateProperty.SetValue(new PublicValueTypeTestClass(), new TestObject()));
+            Assert.Throws<InvalidCastException>(() => immediateProperty.SetValue(new PublicValueTypeTestClass(), new TestObject()));
+
+            var immediateProperty2 = new ImmediateProperty(PublicReferenceTypePublicGetSetPropertyPropertyInfo);
+            Assert.Throws<InvalidCastException>(() => immediateProperty2.SetValue(new PublicReferenceTypeTestClass(), 12));
+
+            var immediateProperty3 = new ImmediateProperty(PublicReferenceTypePublicGetSetPropertyPropertyInfo);
+            Assert.Throws<InvalidCastException>(() => immediateProperty3.SetValue(new PublicReferenceTypeTestClass(), new SmallObject()));
         }
 
         [Test]

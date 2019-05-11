@@ -28,15 +28,52 @@ namespace ImmediateReflection
         public Type PropertyType { get; }
 
         /// <summary>
+        /// Gets the readable state of this property.
+        /// </summary>
+        public bool CanRead { get; }
+
+        private readonly GetterDelegate _getter;
+
+        /// <summary>
+        /// Gets the writable state of this property.
+        /// </summary>
+        public bool CanWrite { get; }
+
+        private readonly SetterDelegate _setter;
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="property"><see cref="System.Reflection.PropertyInfo"/> to wrap.</param>
         /// <exception cref="ArgumentNullException">If the <paramref name="property"/> is null.</exception>
         internal ImmediateProperty([NotNull] PropertyInfo property)
         {
+            // General property info
             PropertyInfo = property ?? throw new ArgumentNullException(nameof(property));
             Name = property.Name;
             PropertyType = property.PropertyType;
+            CanRead = property.CanRead;
+            CanWrite = property.CanWrite;
+
+            // Getter
+            MethodInfo getMethod = property.GetGetMethod(true);
+            if (getMethod != null)
+            {
+                _getter = DelegatesFactory.CreateGetter(property, getMethod);
+            }
+
+            if (_getter is null)
+                _getter = target => throw new ArgumentException($"No getter for property {Name}.");
+
+            // Setter
+            MethodInfo setMethod = property.GetSetMethod(true);
+            if (setMethod != null)
+            {
+                _setter = DelegatesFactory.CreateSetter(property, setMethod);
+            }
+
+            if (_setter is null)
+                _setter = (target, value) => throw new ArgumentException($"No setter for property {Name}.");
         }
 
         /// <summary>
@@ -48,7 +85,9 @@ namespace ImmediateReflection
         [Pure]
         public object GetValue([NotNull] object obj)
         {
-            return PropertyInfo.GetValue(obj);
+            if (obj is null)
+                throw new TargetException();
+            return _getter(obj);
         }
 
         /// <summary>
@@ -59,7 +98,9 @@ namespace ImmediateReflection
         /// <exception cref="TargetException">If the given <paramref name="obj"/> is null.</exception>
         public void SetValue([NotNull] object obj, [CanBeNull] object value)
         {
-            PropertyInfo.SetValue(obj, value);
+            if (obj is null)
+                throw new TargetException();
+            _setter(obj, value);
         }
 
         #region Equality / IEquatable<T>
