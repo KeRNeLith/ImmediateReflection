@@ -13,6 +13,8 @@ namespace ImmediateReflection
     /// </summary>
     internal static class DelegatesFactory
     {
+        #region Property Get/Set
+
         [CanBeNull]
         public static GetterDelegate CreateGetter([NotNull] PropertyInfo propertyInfo, [NotNull] MethodInfo getMethod)
         {
@@ -24,11 +26,7 @@ namespace ImmediateReflection
             if (!propertyInfo.CanRead)
                 return null;
 
-            Type targetType = propertyInfo.DeclaringType
-                              ?? propertyInfo.ReflectedType
-                              ?? throw new InvalidOperationException($"Cannot retrieve owner type of property {propertyInfo.Name}.");
-
-            DynamicMethod dynamicGetter = CreateDynamicGetter(propertyInfo.Name, targetType);
+            DynamicMethod dynamicGetter = CreateDynamicGetter(propertyInfo, out Type targetType);
 
             ILGenerator generator = dynamicGetter.GetILGenerator();
 
@@ -56,11 +54,7 @@ namespace ImmediateReflection
             if (!propertyInfo.CanWrite)
                 return null;
 
-            Type targetType = propertyInfo.DeclaringType
-                              ?? propertyInfo.ReflectedType
-                              ?? throw new InvalidOperationException($"Cannot retrieve owner type of property {propertyInfo.Name}.");
-
-            DynamicMethod dynamicSetter = CreateDynamicSetter(propertyInfo.Name, targetType);
+            DynamicMethod dynamicSetter = CreateDynamicSetter(propertyInfo, out Type targetType);
 
             ILGenerator generator = dynamicSetter.GetILGenerator();
 
@@ -79,6 +73,8 @@ namespace ImmediateReflection
 
             return (SetterDelegate)dynamicSetter.CreateDelegate(typeof(SetterDelegate));
         }
+
+        #endregion
 
         #region Dynamic method helpers
 
@@ -117,14 +113,59 @@ namespace ImmediateReflection
             return CreateDynamicProcedure($"Set{name}", new[] { typeof(object), typeof(object) }, owner);
         }
 
+        /// <summary>
+        /// Gets the <see cref="Type"/> of the <paramref name="member"/> owner.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">If it's impossible to retrieve the owner <see cref="Type"/>.</exception>
+        [NotNull]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        private static Type GetOwnerType([NotNull] MemberInfo member)
+        {
+            return member.DeclaringType
+                   ?? member.ReflectedType
+                   ?? throw new InvalidOperationException($"Cannot retrieve owner type of member {member.Name}.");
+        }
+
+        [NotNull]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        private static DynamicMethod CreateDynamicGetter([NotNull] MemberInfo member, [NotNull] out Type targetType)
+        {
+            targetType = GetOwnerType(member);
+            return CreateDynamicGetter(member.Name, targetType);
+        }
+
+        [NotNull]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        private static DynamicMethod CreateDynamicSetter([NotNull] MemberInfo member, [NotNull] out Type targetType)
+        {
+            targetType = GetOwnerType(member);
+            return CreateDynamicSetter(member.Name, targetType);
+        }
+
         #endregion
 
         #region ILGenerator Helpers
+
+        private static void RegisterStaticTargetArgument([NotNull] ILGenerator generator, [NotNull] FieldInfo field)
+        {
+            // Load static field argument
+            generator.Emit(OpCodes.Ldsfld, field);
+        }
 
         private static void RegisterTargetArgument([NotNull] ILGenerator generator, [NotNull] Type targetType)
         {
             // Load first argument to the stack
             generator.Emit(OpCodes.Ldarg_0);
+
+            // Already the right type
+            if (targetType == typeof(object))
+                return;
 
             // Cast the object on the stack to the appropriate type
             generator.Emit(
@@ -145,21 +186,29 @@ namespace ImmediateReflection
 
         private static void BoxIfNeeded([NotNull] ILGenerator generator, [NotNull] Type valueType)
         {
+            // Already the right type
+            if (valueType == typeof(object))
+                return;
+
             // If the type is a value type (int/DateTime/..) box it, otherwise cast it
             generator.Emit(
-                valueType.IsValueType 
-                    ? OpCodes.Box 
-                    : OpCodes.Castclass, 
+                valueType.IsValueType
+                    ? OpCodes.Box
+                    : OpCodes.Castclass,
                 valueType);
         }
 
         private static void UnboxIfNeeded([NotNull] ILGenerator generator, [NotNull] Type valueType)
         {
+            // Already the right type
+            if (valueType == typeof(object))
+                return;
+
             // If the type is a value type (int/DateTime/..) unbox it, otherwise cast it
             generator.Emit(
-                valueType.IsValueType 
-                    ? OpCodes.Unbox_Any 
-                    : OpCodes.Castclass, 
+                valueType.IsValueType
+                    ? OpCodes.Unbox_Any
+                    : OpCodes.Castclass,
                 valueType);
         }
 
