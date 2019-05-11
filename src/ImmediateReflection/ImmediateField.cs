@@ -44,9 +44,9 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="obj">Object that field value will be returned.</param>
         /// <returns>Field value of the specified object.</returns>
-        /// <exception cref="TargetException">If the given <paramref name="obj"/> is null.</exception>
+        /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the field to get is not static.</exception>
         [Pure]
-        public object GetValue([NotNull] object obj)
+        public object GetValue([CanBeNull] object obj)
         {
             return FieldInfo.GetValue(obj);
         }
@@ -56,8 +56,8 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="obj">Object that field value will be set.</param>
         /// <param name="value">New field value.</param>
-        /// <exception cref="TargetException">If the given <paramref name="obj"/> is null.</exception>
-        public void SetValue([NotNull] object obj, [CanBeNull] object value)
+        /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the field to set is not static.</exception>
+        public void SetValue([CanBeNull] object obj, [CanBeNull] object value)
         {
             FieldInfo.SetValue(obj, value);
         }

@@ -81,9 +81,9 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="obj">Object that property value will be returned.</param>
         /// <returns>Property value of the specified object.</returns>
-        /// <exception cref="TargetException">If the given <paramref name="obj"/> is null.</exception>
+        /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the property to get is not static.</exception>
         [Pure]
-        public object GetValue([NotNull] object obj)
+        public object GetValue([CanBeNull] object obj)
         {
             if (obj is null)
                 throw new TargetException();
@@ -95,8 +95,8 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="obj">Object that property value will be set.</param>
         /// <param name="value">New property value.</param>
-        /// <exception cref="TargetException">If the given <paramref name="obj"/> is null.</exception>
-        public void SetValue([NotNull] object obj, [CanBeNull] object value)
+        /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the property to set is not static.</exception>
+        public void SetValue([CanBeNull] object obj, [CanBeNull] object value)
         {
             if (obj is null)
                 throw new TargetException();

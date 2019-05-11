@@ -164,6 +164,48 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
+        public void ImmediateFieldGetValue_Static()
+        {
+            var testObject1 = new TestObject { TestValue = 1 };
+            var testObject2 = new TestObject { TestValue = 2 };
+
+            // Value type
+            PublicValueTypeTestClass._publicStaticField = 12;
+            var immediateField = new ImmediateField(PublicValueTypeStaticPublicFieldFieldsInfo);
+            Assert.AreEqual(12, immediateField.GetValue(null));
+
+            InternalValueTypeTestClass._publicStaticField = 24;
+            immediateField = new ImmediateField(InternalValueTypeStaticPublicFieldFieldsInfo);
+            Assert.AreEqual(24, immediateField.GetValue(null));
+
+            // Reference type
+            PublicReferenceTypeTestClass._publicStaticField = testObject1;
+            immediateField = new ImmediateField(PublicReferenceTypeStaticPublicFieldFieldsInfo);
+            Assert.AreSame(testObject1, immediateField.GetValue(null));
+
+            InternalReferenceTypeTestClass._publicStaticField = testObject2;
+            immediateField = new ImmediateField(InternalReferenceTypeStaticPublicFieldFieldsInfo);
+            Assert.AreSame(testObject2, immediateField.GetValue(null));
+
+            // Object type
+            PublicObjectTypeTestClass._publicStaticField = 48;
+            immediateField = new ImmediateField(PublicObjectTypeStaticPublicFieldFieldsInfo);
+            Assert.AreEqual(48, immediateField.GetValue(null));
+
+            InternalObjectTypeTestClass._publicStaticField = 96;
+            immediateField = new ImmediateField(InternalObjectTypeStaticPublicFieldFieldsInfo);
+            Assert.AreEqual(96, immediateField.GetValue(null));
+
+            PublicObjectTypeTestClass._publicStaticField = testObject1;
+            immediateField = new ImmediateField(PublicObjectTypeStaticPublicFieldFieldsInfo);
+            Assert.AreEqual(testObject1, immediateField.GetValue(null));
+
+            InternalObjectTypeTestClass._publicStaticField = testObject2;
+            immediateField = new ImmediateField(InternalObjectTypeStaticPublicFieldFieldsInfo);
+            Assert.AreEqual(testObject2, immediateField.GetValue(null));
+        }
+
+        [Test]
         public void ImmediateFieldGetValue_NullInstance()
         {
             var immediateField = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
@@ -243,6 +285,47 @@ namespace ImmediateReflection.Tests
             immediateField = new ImmediateField(InternalObjectTypePublicFieldFieldsInfo);
             immediateField.SetValue(internalObjectTypeTestObject, testObject2);
             Assert.AreSame(testObject2, internalObjectTypeTestObject._publicField);
+        }
+
+        [Test]
+        public void ImmediateFieldSetValue_Static()
+        {
+            var testObject = new TestObject { TestValue = 1 };
+
+            // Value type
+            var immediateProperty = new ImmediateField(PublicValueTypeStaticPublicFieldFieldsInfo);
+            immediateProperty.SetValue(null, 12);
+            Assert.AreEqual(12, PublicValueTypeTestClass._publicStaticField);
+
+            immediateProperty = new ImmediateField(InternalValueTypeStaticPublicFieldFieldsInfo);
+            immediateProperty.SetValue(null, 24);
+            Assert.AreEqual(24, InternalValueTypeTestClass._publicStaticField);
+
+            // Reference type
+            immediateProperty = new ImmediateField(PublicReferenceTypeStaticPublicFieldFieldsInfo);
+            immediateProperty.SetValue(null, testObject);
+            Assert.AreSame(testObject, PublicReferenceTypeTestClass._publicStaticField);
+
+            immediateProperty = new ImmediateField(InternalReferenceTypeStaticPublicFieldFieldsInfo);
+            immediateProperty.SetValue(null, testObject);
+            Assert.AreSame(testObject, InternalReferenceTypeTestClass._publicStaticField);
+
+            // Object type
+            immediateProperty = new ImmediateField(PublicObjectTypeStaticPublicFieldFieldsInfo);
+            immediateProperty.SetValue(null, 48);
+            Assert.AreEqual(48, PublicObjectTypeTestClass._publicStaticField);
+
+            immediateProperty = new ImmediateField(InternalObjectTypeStaticPublicFieldFieldsInfo);
+            immediateProperty.SetValue(null, 96);
+            Assert.AreEqual(96, InternalObjectTypeTestClass._publicStaticField);
+
+            immediateProperty = new ImmediateField(PublicObjectTypeStaticPublicFieldFieldsInfo);
+            immediateProperty.SetValue(null, testObject);
+            Assert.AreSame(testObject, PublicObjectTypeTestClass._publicStaticField);
+
+            immediateProperty = new ImmediateField(InternalObjectTypeStaticPublicFieldFieldsInfo);
+            immediateProperty.SetValue(null, testObject);
+            Assert.AreSame(testObject, InternalObjectTypeTestClass._publicStaticField);
         }
 
         [Test]

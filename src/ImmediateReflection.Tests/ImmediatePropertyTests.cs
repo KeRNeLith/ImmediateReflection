@@ -107,6 +107,19 @@ namespace ImmediateReflection.Tests
 
                 #endregion
 
+                #region Static
+
+                yield return new TestCaseData(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(InternalValueTypeStaticPublicGetSetPropertyPropertyInfo, true);
+
+                yield return new TestCaseData(PublicReferenceTypeStaticPublicGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(InternalReferenceTypeStaticPublicGetSetPropertyPropertyInfo, true);
+
+                yield return new TestCaseData(PublicObjectTypeStaticPublicGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(InternalObjectTypeStaticPublicGetSetPropertyPropertyInfo, true);
+
+                #endregion
+
                 #region Nested types
 
                 // Nested types
@@ -276,6 +289,48 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
+        public void ImmediatePropertyGetValue_Static()
+        {
+            var testObject1 = new TestObject { TestValue = 1 };
+            var testObject2 = new TestObject { TestValue = 2 };
+
+            // Value type
+            PublicValueTypeTestClass.PublicStaticPropertyGetSet = 12;
+            var immediateProperty = new ImmediateProperty(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo);
+            Assert.AreEqual(12, immediateProperty.GetValue(null));
+
+            InternalValueTypeTestClass.PublicStaticPropertyGetSet = 24;
+            immediateProperty = new ImmediateProperty(InternalValueTypeStaticPublicGetSetPropertyPropertyInfo);
+            Assert.AreEqual(24, immediateProperty.GetValue(null));
+
+            // Reference type
+            PublicReferenceTypeTestClass.PublicStaticPropertyGetSet = testObject1;
+            immediateProperty = new ImmediateProperty(PublicReferenceTypeStaticPublicGetSetPropertyPropertyInfo);
+            Assert.AreSame(testObject1, immediateProperty.GetValue(null));
+
+            InternalReferenceTypeTestClass.PublicStaticPropertyGetSet = testObject2;
+            immediateProperty = new ImmediateProperty(InternalReferenceTypeStaticPublicGetSetPropertyPropertyInfo);
+            Assert.AreSame(testObject2, immediateProperty.GetValue(null));
+
+            // Object type
+            PublicObjectTypeTestClass.PublicStaticPropertyGetSet = 48;
+            immediateProperty = new ImmediateProperty(PublicObjectTypeStaticPublicGetSetPropertyPropertyInfo);
+            Assert.AreEqual(48, immediateProperty.GetValue(null));
+
+            InternalObjectTypeTestClass.PublicStaticPropertyGetSet = 96;
+            immediateProperty = new ImmediateProperty(InternalObjectTypeStaticPublicGetSetPropertyPropertyInfo);
+            Assert.AreEqual(96, immediateProperty.GetValue(null));
+
+            PublicObjectTypeTestClass.PublicStaticPropertyGetSet = testObject1;
+            immediateProperty = new ImmediateProperty(PublicObjectTypeStaticPublicGetSetPropertyPropertyInfo);
+            Assert.AreEqual(testObject1, immediateProperty.GetValue(null));
+
+            InternalObjectTypeTestClass.PublicStaticPropertyGetSet = testObject2;
+            immediateProperty = new ImmediateProperty(InternalObjectTypeStaticPublicGetSetPropertyPropertyInfo);
+            Assert.AreEqual(testObject2, immediateProperty.GetValue(null));
+        }
+
+        [Test]
         public void ImmediatePropertyGetValue_NullInstance()
         {
             var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
@@ -351,6 +406,19 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
                 yield return new TestCaseData(InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo, true);
                 yield return new TestCaseData(InternalObjectTypePublicSetPropertyPropertyInfo, true);
+
+                #endregion
+
+                #region Static
+
+                yield return new TestCaseData(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(InternalValueTypeStaticPublicGetSetPropertyPropertyInfo, true);
+
+                yield return new TestCaseData(PublicReferenceTypeStaticPublicGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(InternalReferenceTypeStaticPublicGetSetPropertyPropertyInfo, true);
+
+                yield return new TestCaseData(PublicObjectTypeStaticPublicGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(InternalObjectTypeStaticPublicGetSetPropertyPropertyInfo, true);
 
                 #endregion
 
@@ -544,6 +612,47 @@ namespace ImmediateReflection.Tests
             immediateProperty = new ImmediateProperty(InternalObjectTypePublicSetPropertyPropertyInfo);
             immediateProperty.SetValue(internalObjectTypeTestObject, testObject4);
             Assert.AreSame(testObject4, internalObjectTypeTestObject._publicField2);    // => Setter set the public field value (for check)
+        }
+
+        [Test]
+        public void ImmediatePropertySetValue_Static()
+        {
+            var testObject = new TestObject { TestValue = 1 };
+
+            // Value type
+            var immediateProperty = new ImmediateProperty(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo);
+            immediateProperty.SetValue(null, 12);
+            Assert.AreEqual(12, PublicValueTypeTestClass.PublicStaticPropertyGetSet);
+
+            immediateProperty = new ImmediateProperty(InternalValueTypeStaticPublicGetSetPropertyPropertyInfo);
+            immediateProperty.SetValue(null, 24);
+            Assert.AreEqual(24, InternalValueTypeTestClass.PublicStaticPropertyGetSet);
+
+            // Reference type
+            immediateProperty = new ImmediateProperty(PublicReferenceTypeStaticPublicGetSetPropertyPropertyInfo);
+            immediateProperty.SetValue(null, testObject);
+            Assert.AreSame(testObject, PublicReferenceTypeTestClass.PublicStaticPropertyGetSet);
+
+            immediateProperty = new ImmediateProperty(InternalReferenceTypeStaticPublicGetSetPropertyPropertyInfo);
+            immediateProperty.SetValue(null, testObject);
+            Assert.AreSame(testObject, InternalReferenceTypeTestClass.PublicStaticPropertyGetSet);
+
+            // Object type
+            immediateProperty = new ImmediateProperty(PublicObjectTypeStaticPublicGetSetPropertyPropertyInfo);
+            immediateProperty.SetValue(null, 48);
+            Assert.AreEqual(48, PublicObjectTypeTestClass.PublicStaticPropertyGetSet);
+
+            immediateProperty = new ImmediateProperty(InternalObjectTypeStaticPublicGetSetPropertyPropertyInfo);
+            immediateProperty.SetValue(null, 96);
+            Assert.AreEqual(96, InternalObjectTypeTestClass.PublicStaticPropertyGetSet);
+
+            immediateProperty = new ImmediateProperty(PublicObjectTypeStaticPublicGetSetPropertyPropertyInfo);
+            immediateProperty.SetValue(null, testObject);
+            Assert.AreSame(testObject, PublicObjectTypeTestClass.PublicStaticPropertyGetSet);
+
+            immediateProperty = new ImmediateProperty(InternalObjectTypeStaticPublicGetSetPropertyPropertyInfo);
+            immediateProperty.SetValue(null, testObject);
+            Assert.AreSame(testObject, InternalObjectTypeTestClass.PublicStaticPropertyGetSet);
         }
 
         [Test]
