@@ -40,7 +40,7 @@ Supports Source Link</Description>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/KeRNeLith/ImmediateReflection</PackageProjectUrl>
-    <!-- <PackageIconUrl>https://raw.githubusercontent.com/KeRNeLith/ImmediateReflection/master/immediate_reflection_logo.png</PackageIconUrl> -->
+    <PackageIconUrl>https://raw.githubusercontent.com/KeRNeLith/ImmediateReflection/master/immediate_reflection_logo.png</PackageIconUrl>
     <RepositoryType>GitHub</RepositoryType>
     <RepositoryUrl>https://github.com/KeRNeLith/ImmediateReflection</RepositoryUrl>
   </PropertyGroup>
