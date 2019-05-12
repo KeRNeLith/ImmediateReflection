@@ -1,8 +1,6 @@
 using System;
-using System.CodeDom;
 using System.Linq;
 using System.Reflection;
-using JetBrains.Annotations;
 using NUnit.Framework;
 
 namespace ImmediateReflection.Tests
@@ -106,5 +104,30 @@ namespace ImmediateReflection.Tests
 
             #endregion
         }
+
+        [Test]
+        public void Get_NullType()
+        {
+            // ReSharper disable AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null));
+            Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null, false));
+            Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null, true));
+            Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null, BindingFlags.Public | BindingFlags.Instance));
+            // ReSharper restore AssignNullToNotNullAttribute
+        }
+
+#if SUPPORTS_CACHING
+        [Test]
+        public void GetCached()
+        {
+            ImmediateType immediateType1 = TypeAccessor.Get(typeof(PublicValueTypeTestClass));
+            Assert.IsNotNull(immediateType1);
+
+            ImmediateType immediateType2 = TypeAccessor.Get<PublicValueTypeTestClass>();
+            Assert.IsNotNull(immediateType2);
+
+            Assert.AreSame(immediateType1, immediateType2);
+        }
+#endif
     }
 }
