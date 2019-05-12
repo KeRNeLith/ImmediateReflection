@@ -11,9 +11,16 @@
 
 namespace ImmediateReflection.Tests
 {
+    public struct TestStruct
+    {
+        public int _testValue;
+
+        public int TestValue { get; set; }
+    }
+
     public class TestObject
     {
-        public int TestValue { get; set; } = 42;
+        public int TestValue { get; set; }
     }
 
     public class SmallObject

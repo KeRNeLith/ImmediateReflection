@@ -56,6 +56,12 @@ namespace ImmediateReflection.Tests
             [UsedImplicitly]
             get
             {
+                #region Struct
+
+                yield return new TestCaseData(TestStructTestPropertyPropertyInfo, true);
+
+                #endregion
+
                 #region Value type
 
                 // Value type
@@ -172,6 +178,17 @@ namespace ImmediateReflection.Tests
             [UsedImplicitly]
             get
             {
+                #region Struct
+
+                var testStruct = new TestStruct
+                {
+                    TestValue = 42
+                };
+
+                yield return new TestCaseData(testStruct, TestStructTestPropertyPropertyInfo, 42);
+
+                #endregion
+
                 #region Value type
 
                 // Value type
@@ -531,6 +548,12 @@ namespace ImmediateReflection.Tests
             [UsedImplicitly]
             get
             {
+                #region Struct
+
+                yield return new TestCaseData(TestStructTestPropertyPropertyInfo, true);
+
+                #endregion
+
                 #region Value type
 
                 // Value type
@@ -641,6 +664,17 @@ namespace ImmediateReflection.Tests
         #endregion
 
         #region SetValue
+
+        [Test]
+        public void ImmediatePropertySetValue_Struct()
+        {
+            var testStruct = new TestStruct();
+
+            var immediateProperty = new ImmediateProperty(TestStructTestPropertyPropertyInfo);
+            immediateProperty.SetValue(testStruct, 51);
+            Assert.AreEqual(0, testStruct.TestValue);   // Not updated there (but on the shadow copy yes) since struct are immutable
+                                                                      // Limitation is the same with classic PropertyInfo
+        }
 
         [Test]
         public void ImmediatePropertySetValue_ValueType()

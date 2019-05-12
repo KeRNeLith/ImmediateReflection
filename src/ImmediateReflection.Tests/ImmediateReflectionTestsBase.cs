@@ -20,12 +20,34 @@ namespace ImmediateReflection.Tests
 
         #region Test Helpers
 
-        #region Small objects
+        // Properties //
+        [NotNull, ItemNotNull]
+        protected static PropertyInfo[] EmptyPropertyInfo = { };
+
+        // Fields //
+
+        [NotNull, ItemNotNull]
+        protected static FieldInfo[] EmptyFieldInfo = { };
+
+        #region Struct
 
         // Properties //
 
-        [NotNull, ItemNotNull]
-        protected static PropertyInfo[] EmptyPropertyInfo = { };
+        [NotNull]
+        protected static PropertyInfo TestStructTestPropertyPropertyInfo =
+            typeof(TestStruct).GetProperty(nameof(TestStruct.TestValue)) ?? throw new AssertionException("Cannot find property.");
+
+        // Fields //
+
+        [NotNull]
+        protected static FieldInfo TestStructTestFieldFieldInfo =
+            typeof(TestStruct).GetField(nameof(TestStruct._testValue)) ?? throw new AssertionException("Cannot find field.");
+
+        #endregion
+
+        #region Small objects
+
+        // Properties //
 
         // Small Object
         [NotNull, ItemNotNull]
@@ -46,8 +68,6 @@ namespace ImmediateReflection.Tests
 
 
         // Fields //
-        [NotNull, ItemNotNull]
-        protected static FieldInfo[] EmptyFieldInfo = { };
 
         // Small Object
         [NotNull, ItemNotNull]

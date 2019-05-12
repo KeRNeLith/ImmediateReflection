@@ -57,6 +57,17 @@ namespace ImmediateReflection.Tests
             [UsedImplicitly]
             get
             {
+                #region Struct
+
+                var testStruct = new TestStruct
+                {
+                    _testValue = 12
+                };
+
+                yield return new TestCaseData(testStruct, TestStructTestFieldFieldInfo, 12);
+
+                #endregion
+
                 #region Value type
 
                 // Value type
@@ -248,6 +259,17 @@ namespace ImmediateReflection.Tests
         #endregion
 
         #region SetValue
+
+        [Test]
+        public void ImmediateFieldSetValue_Struct()
+        {
+            var testStruct = new TestStruct();
+
+            var immediateField = new ImmediateField(TestStructTestFieldFieldInfo);
+            immediateField.SetValue(testStruct, 45);
+            Assert.AreEqual(0, testStruct._testValue);  // Not updated there (but on the shadow copy yes) since struct are immutable
+                                                                      // Limitation is the same with classic FieldInfo
+        }
 
         [Test]
         public void ImmediateFieldSetValue_ValueType()
