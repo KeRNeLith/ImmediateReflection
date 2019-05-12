@@ -1,6 +1,6 @@
 #if !SUPPORTS_STRING_FULL_FEATURES
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
 
 namespace ImmediateReflection.Utils
@@ -17,9 +17,22 @@ namespace ImmediateReflection.Utils
         /// <param name="values">Enumerable of values to concatenate.</param>
         /// <typeparam name="T">Element type.</typeparam>
         /// <returns>String composed of elements from <paramref name="values"/> separated by <paramref name="separator"/>.</returns>
-        public static string Join<T>([NotNull] string separator, [NotNull] IEnumerable<T> values)
+        [Pure]
+        [NotNull]
+        public static string Join<T>([NotNull] string separator, [NotNull, ItemNotNull] IEnumerable<T> values)
         {
-            return string.Join(separator, values.Select(value => value.ToString()).ToArray());
+            bool firstValue = true;
+            var stringBuilder = new StringBuilder();
+            foreach (T value in values)
+            {
+                if (!firstValue)
+                    stringBuilder.Append(separator);
+                firstValue = false;
+
+                stringBuilder.Append(value);
+            }
+
+            return stringBuilder.ToString();
         }
     }
 }

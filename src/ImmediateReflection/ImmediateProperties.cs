@@ -1,13 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+#if SUPPORTS_LINQ
 using System.Linq;
+#endif
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
 using JetBrains.Annotations;
-#if !SUPPORTS_STRING_FULL_FEATURES
+#if !SUPPORTS_STRING_FULL_FEATURES || !SUPPORTS_LINQ
 using ImmediateReflection.Utils;
 #endif
 
@@ -32,9 +34,18 @@ namespace ImmediateReflection
             if (properties is null)
                 throw new ArgumentNullException(nameof(properties));
 
+#if SUPPORTS_LINQ
             _properties = properties.ToDictionary(
                 property => property?.Name ?? throw new ArgumentNullException(nameof(property), "A property is null."),
                 property => new ImmediateProperty(property));
+#else
+            _properties = new Dictionary<string, ImmediateProperty>();
+            foreach (PropertyInfo property in properties)
+            {
+                string name = property?.Name ?? throw new ArgumentNullException(nameof(property), "A property is null.");
+                _properties[name] = new ImmediateProperty(property);
+            }
+#endif
         }
 
         /// <summary>
@@ -77,22 +88,29 @@ namespace ImmediateReflection
                 return false;
             if (ReferenceEquals(this, other))
                 return true;
-            return _properties.Count == other._properties.Count
-                && !_properties.Except(other._properties).Any();
+            if (_properties.Count != other._properties.Count)
+                return false;
+
+#if SUPPORTS_LINQ
+            return !_properties.Except(other._properties).Any();
+#else
+            return !EnumerableUtils.Except(_properties, other._properties)
+                .GetEnumerator()
+                .MoveNext();
+#endif
         }
 
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return _properties
-                .Aggregate(
-                    0,
-                    (hashCode, pair) =>
-                    {
-                        hashCode = (hashCode * 397) ^ pair.Key.GetHashCode();
-                        hashCode = (hashCode * 397) ^ pair.Value.GetHashCode();
-                        return hashCode;
-                    });
+            int hashCode = 0;
+            foreach (KeyValuePair<string, ImmediateProperty> pair in _properties)
+            {
+                hashCode = (hashCode * 397) ^ pair.Key.GetHashCode();
+                hashCode = (hashCode * 397) ^ pair.Value.GetHashCode();
+            }
+
+            return hashCode;
         }
 
         #endregion

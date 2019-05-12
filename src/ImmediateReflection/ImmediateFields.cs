@@ -1,13 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+#if SUPPORTS_LINQ
 using System.Linq;
+#endif
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
 using JetBrains.Annotations;
-#if !SUPPORTS_STRING_FULL_FEATURES
+#if !SUPPORTS_STRING_FULL_FEATURES || !SUPPORTS_LINQ
 using ImmediateReflection.Utils;
 #endif
 
@@ -32,9 +34,18 @@ namespace ImmediateReflection
             if (fields is null)
                 throw new ArgumentNullException(nameof(fields));
 
+#if SUPPORTS_LINQ
             _fields = fields.ToDictionary(
                 field => field?.Name ?? throw new ArgumentNullException(nameof(field), "A field is null."),
                 field => new ImmediateField(field));
+#else
+            _fields = new Dictionary<string, ImmediateField>();
+            foreach (FieldInfo field in fields)
+            {
+                string name = field?.Name ?? throw new ArgumentNullException(nameof(field), "A field is null.");
+                _fields[name] = new ImmediateField(field);
+            }
+#endif
         }
 
         /// <summary>
@@ -77,22 +88,29 @@ namespace ImmediateReflection
                 return false;
             if (ReferenceEquals(this, other))
                 return true;
-            return _fields.Count == other._fields.Count
-                   && !_fields.Except(other._fields).Any();
+            if (_fields.Count != other._fields.Count)
+                return false;
+
+#if SUPPORTS_LINQ
+            return !_fields.Except(other._fields).Any();
+#else
+            return !EnumerableUtils.Except(_fields, other._fields)
+                .GetEnumerator()
+                .MoveNext();
+#endif
         }
 
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return _fields
-                .Aggregate(
-                    0,
-                    (hashCode, pair) =>
-                    {
-                        hashCode = (hashCode * 397) ^ pair.Key.GetHashCode();
-                        hashCode = (hashCode * 397) ^ pair.Value.GetHashCode();
-                        return hashCode;
-                    });
+            int hashCode = 0;
+            foreach (KeyValuePair<string, ImmediateField> pair in _fields)
+            {
+                hashCode = (hashCode * 397) ^ pair.Key.GetHashCode();
+                hashCode = (hashCode * 397) ^ pair.Value.GetHashCode();
+            }
+
+            return hashCode;
         }
 
         #endregion
