@@ -49,60 +49,6 @@ namespace ImmediateReflection.Tests
         #endregion
 
         [Test]
-        public void ImmediateTypeValueType()
-        {
-            // Public class
-            var immediateTypePublic = new ImmediateType(typeof(PublicValueTypeTestClass));
-            Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateTypePublic.Type);
-            Assert.AreEqual(nameof(PublicValueTypeTestClass), immediateTypePublic.Name);
-            Assert.AreEqual(
-                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(PublicValueTypeTestClass)}",
-                immediateTypePublic.FullName);
-            CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    PublicValueTypePublicFieldFieldsInfo,
-                    PublicValueTypePublicField2FieldsInfo
-                },
-                immediateTypePublic.Fields.Select(field => field.FieldInfo));
-            CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    PublicValueTypePublicGetSetPropertyPropertyInfo,
-                    PublicValueTypePublicGetPropertyPropertyInfo,
-                    PublicValueTypePublicPrivateGetSetPropertyPropertyInfo,
-                    PublicValueTypePublicGetPrivateSetPropertyPropertyInfo,
-                    PublicValueTypePublicSetPropertyPropertyInfo
-                },
-                immediateTypePublic.Properties.Select(property => property.PropertyInfo));
-
-            // Internal class
-            var immediateTypeInternal = new ImmediateType(typeof(InternalValueTypeTestClass));
-            Assert.AreEqual(typeof(InternalValueTypeTestClass), immediateTypeInternal.Type);
-            Assert.AreEqual(nameof(InternalValueTypeTestClass), immediateTypeInternal.Name);
-            Assert.AreEqual(
-                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(InternalValueTypeTestClass)}",
-                immediateTypeInternal.FullName);
-            CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    InternalValueTypePublicFieldFieldsInfo,
-                    InternalValueTypePublicField2FieldsInfo
-                },
-                immediateTypeInternal.Fields.Select(field => field.FieldInfo));
-            CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    InternalValueTypePublicGetSetPropertyPropertyInfo,
-                    InternalValueTypePublicGetPropertyPropertyInfo,
-                    InternalValueTypePublicPrivateGetSetPropertyPropertyInfo,
-                    InternalValueTypePublicGetPrivateSetPropertyPropertyInfo,
-                    InternalValueTypePublicSetPropertyPropertyInfo
-                },
-                immediateTypeInternal.Properties.Select(property => property.PropertyInfo));
-        }
-
-        [Test]
         public void ImmediateTypeGetFields()
         {
             var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
@@ -153,6 +99,62 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
+        public void ImmediateTypeValueType()
+        {
+            // Public class
+            var immediateTypePublic = new ImmediateType(typeof(PublicValueTypeTestClass));
+            Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateTypePublic.Type);
+            Assert.AreEqual(nameof(PublicValueTypeTestClass), immediateTypePublic.Name);
+            Assert.AreEqual(
+                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(PublicValueTypeTestClass)}",
+                immediateTypePublic.FullName);
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    PublicValueTypePublicFieldFieldsInfo,
+                    PublicValueTypePublicField2FieldsInfo
+                },
+                immediateTypePublic.Fields.Select(field => field.FieldInfo));
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    PublicValueTypePublicGetSetPropertyPropertyInfo,
+                    PublicValueTypePublicVirtualGetSetPropertyPropertyInfo,
+                    PublicValueTypePublicGetPropertyPropertyInfo,
+                    PublicValueTypePublicPrivateGetSetPropertyPropertyInfo,
+                    PublicValueTypePublicGetPrivateSetPropertyPropertyInfo,
+                    PublicValueTypePublicSetPropertyPropertyInfo
+                },
+                immediateTypePublic.Properties.Select(property => property.PropertyInfo));
+
+            // Internal class
+            var immediateTypeInternal = new ImmediateType(typeof(InternalValueTypeTestClass));
+            Assert.AreEqual(typeof(InternalValueTypeTestClass), immediateTypeInternal.Type);
+            Assert.AreEqual(nameof(InternalValueTypeTestClass), immediateTypeInternal.Name);
+            Assert.AreEqual(
+                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(InternalValueTypeTestClass)}",
+                immediateTypeInternal.FullName);
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    InternalValueTypePublicFieldFieldsInfo,
+                    InternalValueTypePublicField2FieldsInfo
+                },
+                immediateTypeInternal.Fields.Select(field => field.FieldInfo));
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    InternalValueTypePublicGetSetPropertyPropertyInfo,
+                    InternalValueTypePublicVirtualGetSetPropertyPropertyInfo,
+                    InternalValueTypePublicGetPropertyPropertyInfo,
+                    InternalValueTypePublicPrivateGetSetPropertyPropertyInfo,
+                    InternalValueTypePublicGetPrivateSetPropertyPropertyInfo,
+                    InternalValueTypePublicSetPropertyPropertyInfo
+                },
+                immediateTypeInternal.Properties.Select(property => property.PropertyInfo));
+        }
+
+        [Test]
         public void ImmediateTypeReferenceType()
         {
             // Public class
@@ -173,6 +175,7 @@ namespace ImmediateReflection.Tests
                 new[]
                 {
                     PublicReferenceTypePublicGetSetPropertyPropertyInfo,
+                    PublicReferenceTypePublicVirtualGetSetPropertyPropertyInfo,
                     PublicReferenceTypePublicGetPropertyPropertyInfo,
                     PublicReferenceTypePublicPrivateGetSetPropertyPropertyInfo,
                     PublicReferenceTypePublicGetPrivateSetPropertyPropertyInfo,
@@ -198,6 +201,7 @@ namespace ImmediateReflection.Tests
                 new[]
                 {
                     InternalReferenceTypePublicGetSetPropertyPropertyInfo,
+                    InternalReferenceTypePublicVirtualGetSetPropertyPropertyInfo,
                     InternalReferenceTypePublicGetPropertyPropertyInfo,
                     InternalReferenceTypePublicPrivateGetSetPropertyPropertyInfo,
                     InternalReferenceTypePublicGetPrivateSetPropertyPropertyInfo,
@@ -227,6 +231,7 @@ namespace ImmediateReflection.Tests
                 new[]
                 {
                     PublicObjectTypePublicGetSetPropertyPropertyInfo,
+                    PublicObjectTypePublicVirtualGetSetPropertyPropertyInfo,
                     PublicObjectTypePublicGetPropertyPropertyInfo,
                     PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo,
                     PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo,
@@ -252,6 +257,7 @@ namespace ImmediateReflection.Tests
                 new[]
                 {
                     InternalObjectTypePublicGetSetPropertyPropertyInfo,
+                    InternalObjectTypePublicVirtualGetSetPropertyPropertyInfo,
                     InternalObjectTypePublicGetPropertyPropertyInfo,
                     InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo,
                     InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo,

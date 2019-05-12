@@ -63,6 +63,7 @@ namespace ImmediateReflection.Tests
         }
 
         public int PublicPropertyGetSet { get; set; }
+        public virtual int PublicVirtualPropertyGetSet { get; set; }
         internal int InternalPropertyGetSet { get => _publicField; set => _publicField = value; }
         protected int ProtectedPropertyGetSet { get => _publicField; set => _publicField = value; }
         private int PrivatePropertyGetSet { get => _publicField; set => _publicField = value; }
@@ -109,6 +110,7 @@ namespace ImmediateReflection.Tests
         }
 
         public TestObject PublicPropertyGetSet { get; set; }
+        public virtual TestObject PublicVirtualPropertyGetSet { get; set; }
         internal TestObject InternalPropertyGetSet { get => _publicField; set => _publicField = value; }
         protected TestObject ProtectedPropertyGetSet { get => _publicField; set => _publicField = value; }
         private TestObject PrivatePropertyGetSet { get => _publicField; set => _publicField = value; }
@@ -154,6 +156,7 @@ namespace ImmediateReflection.Tests
         }
 
         public object PublicPropertyGetSet { get; set; }
+        public virtual object PublicVirtualPropertyGetSet { get; set; }
         internal object InternalPropertyGetSet { get => _publicField; set => _publicField = value; }
         protected object ProtectedPropertyGetSet { get => _publicField; set => _publicField = value; }
         private object PrivatePropertyGetSet { get => _publicField; set => _publicField = value; }
@@ -199,6 +202,7 @@ namespace ImmediateReflection.Tests
         }
 
         public int PublicPropertyGetSet { get; set; }
+        public virtual int PublicVirtualPropertyGetSet { get; set; }
         internal int InternalPropertyGetSet { get => _publicField; set => _publicField = value; }
         protected int ProtectedPropertyGetSet { get => _publicField; set => _publicField = value; }
         private int PrivatePropertyGetSet { get => _publicField; set => _publicField = value; }
@@ -245,6 +249,7 @@ namespace ImmediateReflection.Tests
         }
 
         public TestObject PublicPropertyGetSet { get; set; }
+        public virtual TestObject PublicVirtualPropertyGetSet { get; set; }
         internal TestObject InternalPropertyGetSet { get => _publicField; set => _publicField = value; }
         protected TestObject ProtectedPropertyGetSet { get => _publicField; set => _publicField = value; }
         private TestObject PrivatePropertyGetSet { get => _publicField; set => _publicField = value; }
@@ -291,6 +296,7 @@ namespace ImmediateReflection.Tests
         }
 
         public object PublicPropertyGetSet { get; set; }
+        public virtual object PublicVirtualPropertyGetSet { get; set; }
         internal object InternalPropertyGetSet { get => _publicField; set => _publicField = value; }
         protected object ProtectedPropertyGetSet { get => _publicField; set => _publicField = value; }
         private object PrivatePropertyGetSet { get => _publicField; set => _publicField = value; }

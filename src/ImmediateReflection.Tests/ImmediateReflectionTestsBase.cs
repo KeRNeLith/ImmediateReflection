@@ -81,6 +81,10 @@ namespace ImmediateReflection.Tests
             typeof(PublicValueTypeTestClass).GetProperty(nameof(PublicValueTypeTestClass.PublicPropertyGetSet)) ?? throw new AssertionException("Cannot find property.");
 
         [NotNull]
+        protected static PropertyInfo PublicValueTypePublicVirtualGetSetPropertyPropertyInfo =
+            typeof(PublicValueTypeTestClass).GetProperty(nameof(PublicValueTypeTestClass.PublicVirtualPropertyGetSet)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
         protected static PropertyInfo PublicValueTypePublicGetPropertyPropertyInfo =
             typeof(PublicValueTypeTestClass).GetProperty(nameof(PublicValueTypeTestClass.PublicPropertyGet)) ?? throw new AssertionException("Cannot find property.");
 
@@ -149,6 +153,10 @@ namespace ImmediateReflection.Tests
             typeof(PublicReferenceTypeTestClass).GetProperty(nameof(PublicReferenceTypeTestClass.PublicPropertyGetSet)) ?? throw new AssertionException("Cannot find property.");
 
         [NotNull]
+        protected static PropertyInfo PublicReferenceTypePublicVirtualGetSetPropertyPropertyInfo =
+            typeof(PublicReferenceTypeTestClass).GetProperty(nameof(PublicReferenceTypeTestClass.PublicVirtualPropertyGetSet)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
         protected static PropertyInfo PublicReferenceTypePublicGetPropertyPropertyInfo =
             typeof(PublicReferenceTypeTestClass).GetProperty(nameof(PublicReferenceTypeTestClass.PublicPropertyGet)) ?? throw new AssertionException("Cannot find property.");
 
@@ -215,6 +223,10 @@ namespace ImmediateReflection.Tests
         [NotNull]
         protected static PropertyInfo PublicObjectTypePublicGetSetPropertyPropertyInfo =
             typeof(PublicObjectTypeTestClass).GetProperty(nameof(PublicObjectTypeTestClass.PublicPropertyGetSet)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static PropertyInfo PublicObjectTypePublicVirtualGetSetPropertyPropertyInfo =
+            typeof(PublicObjectTypeTestClass).GetProperty(nameof(PublicObjectTypeTestClass.PublicVirtualPropertyGetSet)) ?? throw new AssertionException("Cannot find property.");
 
         [NotNull]
         protected static PropertyInfo PublicObjectTypePublicGetPropertyPropertyInfo =
@@ -287,6 +299,10 @@ namespace ImmediateReflection.Tests
             typeof(InternalValueTypeTestClass).GetProperty(nameof(InternalValueTypeTestClass.PublicPropertyGetSet)) ?? throw new AssertionException("Cannot find property.");
 
         [NotNull]
+        protected static PropertyInfo InternalValueTypePublicVirtualGetSetPropertyPropertyInfo =
+            typeof(InternalValueTypeTestClass).GetProperty(nameof(InternalValueTypeTestClass.PublicVirtualPropertyGetSet)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
         protected static PropertyInfo InternalValueTypePublicGetPropertyPropertyInfo =
             typeof(InternalValueTypeTestClass).GetProperty(nameof(InternalValueTypeTestClass.PublicPropertyGet)) ?? throw new AssertionException("Cannot find property.");
 
@@ -355,6 +371,10 @@ namespace ImmediateReflection.Tests
             typeof(InternalReferenceTypeTestClass).GetProperty(nameof(InternalReferenceTypeTestClass.PublicPropertyGetSet)) ?? throw new AssertionException("Cannot find property.");
 
         [NotNull]
+        protected static PropertyInfo InternalReferenceTypePublicVirtualGetSetPropertyPropertyInfo =
+            typeof(InternalReferenceTypeTestClass).GetProperty(nameof(InternalReferenceTypeTestClass.PublicVirtualPropertyGetSet)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
         protected static PropertyInfo InternalReferenceTypePublicGetPropertyPropertyInfo =
             typeof(InternalReferenceTypeTestClass).GetProperty(nameof(InternalReferenceTypeTestClass.PublicPropertyGet)) ?? throw new AssertionException("Cannot find property.");
 
@@ -421,6 +441,10 @@ namespace ImmediateReflection.Tests
         [NotNull]
         protected static PropertyInfo InternalObjectTypePublicGetSetPropertyPropertyInfo =
             typeof(InternalObjectTypeTestClass).GetProperty(nameof(InternalObjectTypeTestClass.PublicPropertyGetSet)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static PropertyInfo InternalObjectTypePublicVirtualGetSetPropertyPropertyInfo =
+            typeof(InternalObjectTypeTestClass).GetProperty(nameof(InternalObjectTypeTestClass.PublicVirtualPropertyGetSet)) ?? throw new AssertionException("Cannot find property.");
 
         [NotNull]
         protected static PropertyInfo InternalObjectTypePublicGetPropertyPropertyInfo =
