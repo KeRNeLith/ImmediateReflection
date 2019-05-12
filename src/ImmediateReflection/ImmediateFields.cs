@@ -7,6 +7,9 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 #endif
 using JetBrains.Annotations;
+#if !SUPPORTS_STRING_FULL_FEATURES
+using ImmediateReflection.Utils;
+#endif
 
 namespace ImmediateReflection
 {
@@ -117,7 +120,11 @@ namespace ImmediateReflection
         /// <inheritdoc />
         public override string ToString()
         {
+#if SUPPORTS_STRING_FULL_FEATURES
             return $"[{string.Join(", ", _fields.Values)}]";
+#else
+            return $"[{StringUtils.Join(", ", _fields.Values)}]";
+#endif
         }
     }
 }
