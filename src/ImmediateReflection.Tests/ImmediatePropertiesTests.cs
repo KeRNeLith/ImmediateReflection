@@ -61,13 +61,13 @@ namespace ImmediateReflection.Tests
         {
             var immediateProperties1 = new ImmediateProperties(SmallObjectPropertyInfos);
             var immediateProperties2 = new ImmediateProperties(SmallObjectPropertyInfos);
-            Assert.AreEqual(immediateProperties1, immediateProperties1);
-            Assert.AreEqual(immediateProperties1, immediateProperties2);
+            Assert.IsTrue(immediateProperties1.Equals(immediateProperties1));
+            Assert.IsTrue(immediateProperties1.Equals(immediateProperties2));
             Assert.IsTrue(immediateProperties1.Equals((object)immediateProperties2));
             Assert.IsFalse(immediateProperties1.Equals(null));
 
             var immediateProperties3 = new ImmediateProperties(SecondSmallObjectPropertyInfos);
-            Assert.AreNotEqual(immediateProperties1, immediateProperties3);
+            Assert.IsFalse(immediateProperties1.Equals(immediateProperties3));
             Assert.IsFalse(immediateProperties1.Equals((object)immediateProperties3));
         }
 

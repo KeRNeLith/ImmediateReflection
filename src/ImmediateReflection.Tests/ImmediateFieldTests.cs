@@ -388,13 +388,13 @@ namespace ImmediateReflection.Tests
         {
             var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
             var immediateField2 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
-            Assert.AreEqual(immediateField1, immediateField1);
-            Assert.AreEqual(immediateField1, immediateField2);
+            Assert.IsTrue(immediateField1.Equals(immediateField1));
+            Assert.IsTrue(immediateField1.Equals(immediateField2));
             Assert.IsTrue(immediateField1.Equals((object)immediateField2));
             Assert.IsFalse(immediateField1.Equals(null));
 
             var immediateField3 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
-            Assert.AreNotEqual(immediateField1, immediateField3);
+            Assert.IsFalse(immediateField1.Equals(immediateField3));
             Assert.IsFalse(immediateField1.Equals((object)immediateField3));
         }
 

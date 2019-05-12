@@ -40,7 +40,7 @@ namespace ImmediateReflection.Tests
 
         // Properties //
 
-        [NotNull] 
+        [NotNull]
         protected static PropertyInfo PrivateNestedPublicGetSetPropertyPropertyInfo =
             typeof(PrivateNestedClass).GetProperty(nameof(PrivateNestedClass.NestedTestValue)) ?? throw new AssertionException("Cannot find property.");
 
@@ -366,14 +366,14 @@ namespace ImmediateReflection.Tests
         {
             var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
             var immediateType2 = new ImmediateType(typeof(PublicValueTypeTestClass));
-            Assert.AreEqual(immediateType1, immediateType1);
-            Assert.AreEqual(immediateType1, immediateType2);
-            Assert.IsTrue(immediateType1.Equals((object) immediateType2));
+            Assert.IsTrue(immediateType1.Equals(immediateType1));
+            Assert.IsTrue(immediateType1.Equals(immediateType2));
+            Assert.IsTrue(immediateType1.Equals((object)immediateType2));
             Assert.IsFalse(immediateType1.Equals(null));
 
             var immediateType3 = new ImmediateType(typeof(InternalValueTypeTestClass));
-            Assert.AreNotEqual(immediateType1, immediateType3);
-            Assert.IsFalse(immediateType1.Equals((object) immediateType3));
+            Assert.IsFalse(immediateType1.Equals(immediateType3));
+            Assert.IsFalse(immediateType1.Equals((object)immediateType3));
         }
 
         [Test]

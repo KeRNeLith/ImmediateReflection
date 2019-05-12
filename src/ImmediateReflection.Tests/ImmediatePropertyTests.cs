@@ -723,13 +723,13 @@ namespace ImmediateReflection.Tests
         {
             var immediateProperty1 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
             var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
-            Assert.AreEqual(immediateProperty1, immediateProperty1);
-            Assert.AreEqual(immediateProperty1, immediateProperty2);
+            Assert.IsTrue(immediateProperty1.Equals(immediateProperty1));
+            Assert.IsTrue(immediateProperty1.Equals(immediateProperty2));
             Assert.IsTrue(immediateProperty1.Equals((object)immediateProperty2));
             Assert.IsFalse(immediateProperty1.Equals(null));
 
             var immediateProperty3 = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
-            Assert.AreNotEqual(immediateProperty1, immediateProperty3);
+            Assert.IsFalse(immediateProperty1.Equals(immediateProperty3));
             Assert.IsFalse(immediateProperty1.Equals((object)immediateProperty3));
         }
 
