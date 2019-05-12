@@ -13,6 +13,8 @@
 This is .NET library that aims to provider faster usage of C# reflection features. 
 Especially the usage of constructor and members accessors (get/set).
 
+See some benchmarks of the library [here](https://github.com/KeRNeLith/ImmediateReflection/blob/master/Benchmarks.md).
+
 ---
 
 ## Target
