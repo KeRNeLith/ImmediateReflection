@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using NUnit.Framework;
@@ -28,6 +30,70 @@ namespace ImmediateReflection.Tests
 
         [NotNull, ItemNotNull]
         protected static FieldInfo[] EmptyFieldInfo = { };
+
+        #region Types members classifiers
+
+        [Pure]
+        [NotNull, ItemNotNull]
+        protected static IEnumerable<FieldInfo> IgnoreBackingFields([NotNull, ItemNotNull] IEnumerable<FieldInfo> fields)
+        {
+            const string backingFieldName = "BackingField";
+            return fields.Where(field => !field.Name.Contains(backingFieldName));
+        }
+
+        protected struct TypeClassifiedMembers
+        {
+            public FieldInfo[] PublicInstanceFields { get; set; }
+            public FieldInfo[] NonPublicInstanceFields { get; set; }
+            public FieldInfo[] StaticFields { get; set; }
+
+            public PropertyInfo[] PublicInstanceProperties { get; set; }
+            public PropertyInfo[] NonPublicInstanceProperties { get; set; }
+            public PropertyInfo[] StaticProperties { get; set; }
+
+            public static TypeClassifiedMembers GetForPublicValueTypeTestObject()
+            {
+                return new TypeClassifiedMembers
+                {
+                    PublicInstanceFields = new[]
+                    {
+                        PublicValueTypePublicFieldFieldsInfo,
+                        PublicValueTypePublicField2FieldsInfo
+                    },
+                    NonPublicInstanceFields = new[]
+                    {
+                        PublicValueTypeInternalFieldFieldsInfo,
+                        PublicValueTypeProtectedFieldFieldsInfo,
+                        PublicValueTypePrivateFieldFieldsInfo
+                    },
+                    StaticFields = new[]
+                    {
+                        PublicValueTypeStaticPublicFieldFieldsInfo
+                    },
+                    PublicInstanceProperties = new[]
+                    {
+                        PublicValueTypePublicGetSetPropertyPropertyInfo,
+                        PublicValueTypePublicVirtualGetSetPropertyPropertyInfo,
+                        PublicValueTypePublicGetPropertyPropertyInfo,
+                        PublicValueTypePublicPrivateGetSetPropertyPropertyInfo,
+                        PublicValueTypePublicGetPrivateSetPropertyPropertyInfo,
+                        PublicValueTypePublicSetPropertyPropertyInfo
+                    },
+                    NonPublicInstanceProperties = new[]
+                    {
+                        PublicValueTypeInternalGetSetPropertyPropertyInfo,
+                        PublicValueTypeProtectedGetSetPropertyPropertyInfo,
+                        PublicValueTypePrivateGetSetPropertyPropertyInfo
+                    },
+                    StaticProperties = new[]
+                    {
+                        PublicValueTypeStaticPublicGetSetPropertyPropertyInfo
+                    }
+                };
+            }
+        }
+
+        #endregion
 
         #region Struct
 

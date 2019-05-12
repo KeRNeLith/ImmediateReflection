@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -321,76 +320,38 @@ namespace ImmediateReflection.Tests
         [Test]
         public void ImmediateTypeWithFlags()
         {
-            FieldInfo[] publicInstanceFields =
-            {
-                PublicValueTypePublicFieldFieldsInfo,
-                PublicValueTypePublicField2FieldsInfo
-            };
-
-            FieldInfo[] nonPublicInstanceFields =
-            {
-                PublicValueTypeInternalFieldFieldsInfo,
-                PublicValueTypeProtectedFieldFieldsInfo,
-                PublicValueTypePrivateFieldFieldsInfo
-            };
-
-            FieldInfo[] staticFields =
-            {
-                PublicValueTypeStaticPublicFieldFieldsInfo
-            };
-
-            PropertyInfo[] publicInstanceProperties =
-            {
-                PublicValueTypePublicGetSetPropertyPropertyInfo,
-                PublicValueTypePublicVirtualGetSetPropertyPropertyInfo,
-                PublicValueTypePublicGetPropertyPropertyInfo,
-                PublicValueTypePublicPrivateGetSetPropertyPropertyInfo,
-                PublicValueTypePublicGetPrivateSetPropertyPropertyInfo,
-                PublicValueTypePublicSetPropertyPropertyInfo
-            };
-
-            PropertyInfo[] nonPublicInstanceProperties =
-            {
-                PublicValueTypeInternalGetSetPropertyPropertyInfo,
-                PublicValueTypeProtectedGetSetPropertyPropertyInfo,
-                PublicValueTypePrivateGetSetPropertyPropertyInfo
-            };
-
-            PropertyInfo[] staticProperties =
-            {
-                PublicValueTypeStaticPublicGetSetPropertyPropertyInfo
-            };
+            TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
             var testType = new ImmediateType(typeof(PublicValueTypeTestClass)); // BindingFlags.Public | BindingFlags.Instance
             CollectionAssert.AreEqual(
-                publicInstanceFields,
+                classifiedMembers.PublicInstanceFields,
                 testType.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
-                publicInstanceProperties,
+                classifiedMembers.PublicInstanceProperties,
                 testType.Properties.Select(property => property.PropertyInfo));
 
             testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.NonPublic | BindingFlags.Instance);
             CollectionAssert.AreEqual(
-                nonPublicInstanceFields,
+                classifiedMembers.NonPublicInstanceFields,
                 IgnoreBackingFields(testType.Fields.Select(field => field.FieldInfo)));
             CollectionAssert.AreEquivalent(
-                nonPublicInstanceProperties,
+                classifiedMembers.NonPublicInstanceProperties,
                 testType.Properties.Select(property => property.PropertyInfo));
 
             testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             CollectionAssert.AreEqual(
-                publicInstanceFields.Concat(nonPublicInstanceFields),
+                classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.NonPublicInstanceFields),
                 IgnoreBackingFields(testType.Fields.Select(field => field.FieldInfo)));
             CollectionAssert.AreEquivalent(
-                publicInstanceProperties.Concat(nonPublicInstanceProperties),
+                classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.NonPublicInstanceProperties),
                 testType.Properties.Select(property => property.PropertyInfo));
 
             testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
             CollectionAssert.AreEqual(
-                staticFields,
+                classifiedMembers.StaticFields,
                 IgnoreBackingFields(testType.Fields.Select(field => field.FieldInfo)));
             CollectionAssert.AreEquivalent(
-                staticProperties,
+                classifiedMembers.StaticProperties,
                 testType.Properties.Select(property => property.PropertyInfo));
 
             testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.IgnoreCase);
@@ -400,16 +361,6 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEqual(
                 Enumerable.Empty<PropertyInfo>(),
                 testType.Properties.Select(property => property.PropertyInfo));
-
-            #region Local function
-
-            IEnumerable<FieldInfo> IgnoreBackingFields(IEnumerable<FieldInfo> fields)
-            {
-                const string backingFieldName = "BackingField";
-                return fields.Where(field => !field.Name.Contains(backingFieldName));
-            }
-
-            #endregion
         }
 
         [Test]

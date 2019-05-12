@@ -1,6 +1,5 @@
 using System;
 using System.Reflection;
-using FastMember;
 using JetBrains.Annotations;
 
 namespace ImmediateReflection.Benchmark
@@ -29,7 +28,7 @@ namespace ImmediateReflection.Benchmark
         internal static readonly BenchmarkObject BenchmarkObject = new BenchmarkObject();
 
         [NotNull]
-        protected static readonly TypeAccessor TypeAccessor = TypeAccessor.Create(BenchmarkObjectType);
+        protected static readonly FastMember.TypeAccessor TypeAccessor = FastMember.TypeAccessor.Create(BenchmarkObjectType);
 
         [NotNull]
         protected static readonly ImmediateField ImmediateField = new ImmediateField(FieldInfo);
