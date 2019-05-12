@@ -49,14 +49,14 @@ namespace ImmediateReflection
         /// Constructor.
         /// </summary>
         /// <param name="type"><see cref="System.Type"/> to wrap.</param>
+        /// <param name="flags">Flags that must be taken into account to get members.</param>
         /// <exception cref="ArgumentNullException">If the <paramref name="type"/> is null.</exception>
-        internal ImmediateType([NotNull] Type type)
+        internal ImmediateType([NotNull] Type type, BindingFlags flags = TypeAccessor.DefaultFlags)
         {
             Type = type ?? throw new ArgumentNullException(nameof(type));
             Name = type.Name;
             FullName = type.FullName ?? Name;
 
-            const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
             Fields = new ImmediateFields(type.GetFields(flags));
             Properties = new ImmediateProperties(type.GetProperties(flags));
         }

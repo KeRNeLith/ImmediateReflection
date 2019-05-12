@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -49,53 +50,20 @@ namespace ImmediateReflection.Tests
         #endregion
 
         [Test]
-        public void ImmediateTypeGetFields()
+        public void ImmediateTypeEmptyType()
         {
-            var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
-            CollectionAssert.AreEquivalent(immediateType1.Fields, immediateType1.GetFields());
-
-            var immediateType2 = new ImmediateType(typeof(PublicReferenceTypeTestClass));
-            CollectionAssert.AreNotEquivalent(immediateType1.GetFields(), immediateType2.GetFields());
-        }
-
-        [Test]
-        public void ImmediateTypeGetField()
-        {
-            var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
-            string fieldName = nameof(PublicValueTypeTestClass._publicField);
-            Assert.AreEqual(immediateType.Fields[fieldName], immediateType.GetField(fieldName));
-
-            fieldName = "NotExists";
-            Assert.IsNull(immediateType.GetField(fieldName));
-
-            // ReSharper disable once AssignNullToNotNullAttribute
-            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-            Assert.Throws<ArgumentNullException>(() => immediateType.GetField(null));
-        }
-
-        [Test]
-        public void ImmediateTypeGetProperties()
-        {
-            var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
-            CollectionAssert.AreEquivalent(immediateType1.Properties, immediateType1.GetProperties());
-
-            var immediateType2 = new ImmediateType(typeof(PublicReferenceTypeTestClass));
-            CollectionAssert.AreNotEquivalent(immediateType1.GetProperties(), immediateType2.GetProperties());
-        }
-
-        [Test]
-        public void ImmediateTypeGetProperty()
-        {
-            var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
-            string propertyName = nameof(PublicValueTypeTestClass.PublicPropertyGetSet);
-            Assert.AreEqual(immediateType.Properties[propertyName], immediateType.GetProperty(propertyName));
-
-            propertyName = "NotExists";
-            Assert.IsNull(immediateType.GetProperty(propertyName));
-
-            // ReSharper disable once AssignNullToNotNullAttribute
-            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-            Assert.Throws<ArgumentNullException>(() => immediateType.GetProperty(null));
+            var emptyType = new ImmediateType(typeof(EmptyType));
+            Assert.AreEqual(typeof(EmptyType), emptyType.Type);
+            Assert.AreEqual(nameof(EmptyType), emptyType.Name);
+            Assert.AreEqual(
+                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(ImmediateTypeTests)}+{nameof(EmptyType)}",
+                emptyType.FullName);
+            CollectionAssert.AreEqual(
+                Enumerable.Empty<FieldInfo>(),
+                emptyType.Fields.Select(field => field.FieldInfo));
+            CollectionAssert.AreEqual(
+                Enumerable.Empty<PropertyInfo>(),
+                emptyType.Properties.Select(property => property.PropertyInfo));
         }
 
         [Test]
@@ -351,20 +319,147 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
-        public void ImmediateTypeEmptyType()
+        public void ImmediateTypeWithFlags()
         {
-            var emptyType = new ImmediateType(typeof(EmptyType));
-            Assert.AreEqual(typeof(EmptyType), emptyType.Type);
-            Assert.AreEqual(nameof(EmptyType), emptyType.Name);
-            Assert.AreEqual(
-                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(ImmediateTypeTests)}+{nameof(EmptyType)}",
-                emptyType.FullName);
+            FieldInfo[] publicInstanceFields =
+            {
+                PublicValueTypePublicFieldFieldsInfo,
+                PublicValueTypePublicField2FieldsInfo
+            };
+
+            FieldInfo[] nonPublicInstanceFields =
+            {
+                PublicValueTypeInternalFieldFieldsInfo,
+                PublicValueTypeProtectedFieldFieldsInfo,
+                PublicValueTypePrivateFieldFieldsInfo
+            };
+
+            FieldInfo[] staticFields =
+            {
+                PublicValueTypeStaticPublicFieldFieldsInfo
+            };
+
+            PropertyInfo[] publicInstanceProperties =
+            {
+                PublicValueTypePublicGetSetPropertyPropertyInfo,
+                PublicValueTypePublicVirtualGetSetPropertyPropertyInfo,
+                PublicValueTypePublicGetPropertyPropertyInfo,
+                PublicValueTypePublicPrivateGetSetPropertyPropertyInfo,
+                PublicValueTypePublicGetPrivateSetPropertyPropertyInfo,
+                PublicValueTypePublicSetPropertyPropertyInfo
+            };
+
+            PropertyInfo[] nonPublicInstanceProperties =
+            {
+                PublicValueTypeInternalGetSetPropertyPropertyInfo,
+                PublicValueTypeProtectedGetSetPropertyPropertyInfo,
+                PublicValueTypePrivateGetSetPropertyPropertyInfo
+            };
+
+            PropertyInfo[] staticProperties =
+            {
+                PublicValueTypeStaticPublicGetSetPropertyPropertyInfo
+            };
+
+            var testType = new ImmediateType(typeof(PublicValueTypeTestClass)); // BindingFlags.Public | BindingFlags.Instance
+            CollectionAssert.AreEqual(
+                publicInstanceFields,
+                testType.Fields.Select(field => field.FieldInfo));
+            CollectionAssert.AreEquivalent(
+                publicInstanceProperties,
+                testType.Properties.Select(property => property.PropertyInfo));
+
+            testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.NonPublic | BindingFlags.Instance);
+            CollectionAssert.AreEqual(
+                nonPublicInstanceFields,
+                IgnoreBackingFields(testType.Fields.Select(field => field.FieldInfo)));
+            CollectionAssert.AreEquivalent(
+                nonPublicInstanceProperties,
+                testType.Properties.Select(property => property.PropertyInfo));
+
+            testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            CollectionAssert.AreEqual(
+                publicInstanceFields.Concat(nonPublicInstanceFields),
+                IgnoreBackingFields(testType.Fields.Select(field => field.FieldInfo)));
+            CollectionAssert.AreEquivalent(
+                publicInstanceProperties.Concat(nonPublicInstanceProperties),
+                testType.Properties.Select(property => property.PropertyInfo));
+
+            testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+            CollectionAssert.AreEqual(
+                staticFields,
+                IgnoreBackingFields(testType.Fields.Select(field => field.FieldInfo)));
+            CollectionAssert.AreEquivalent(
+                staticProperties,
+                testType.Properties.Select(property => property.PropertyInfo));
+
+            testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.IgnoreCase);
             CollectionAssert.AreEqual(
                 Enumerable.Empty<FieldInfo>(),
-                emptyType.Fields.Select(field => field.FieldInfo));
+                testType.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEqual(
                 Enumerable.Empty<PropertyInfo>(),
-                emptyType.Properties.Select(property => property.PropertyInfo));
+                testType.Properties.Select(property => property.PropertyInfo));
+
+            #region Local function
+
+            IEnumerable<FieldInfo> IgnoreBackingFields(IEnumerable<FieldInfo> fields)
+            {
+                const string backingFieldName = "BackingField";
+                return fields.Where(field => !field.Name.Contains(backingFieldName));
+            }
+
+            #endregion
+        }
+
+        [Test]
+        public void ImmediateTypeGetFields()
+        {
+            var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
+            CollectionAssert.AreEquivalent(immediateType1.Fields, immediateType1.GetFields());
+
+            var immediateType2 = new ImmediateType(typeof(PublicReferenceTypeTestClass));
+            CollectionAssert.AreNotEquivalent(immediateType1.GetFields(), immediateType2.GetFields());
+        }
+
+        [Test]
+        public void ImmediateTypeGetField()
+        {
+            var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
+            string fieldName = nameof(PublicValueTypeTestClass._publicField);
+            Assert.AreEqual(immediateType.Fields[fieldName], immediateType.GetField(fieldName));
+
+            fieldName = "NotExists";
+            Assert.IsNull(immediateType.GetField(fieldName));
+
+            // ReSharper disable once AssignNullToNotNullAttribute
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+            Assert.Throws<ArgumentNullException>(() => immediateType.GetField(null));
+        }
+
+        [Test]
+        public void ImmediateTypeGetProperties()
+        {
+            var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
+            CollectionAssert.AreEquivalent(immediateType1.Properties, immediateType1.GetProperties());
+
+            var immediateType2 = new ImmediateType(typeof(PublicReferenceTypeTestClass));
+            CollectionAssert.AreNotEquivalent(immediateType1.GetProperties(), immediateType2.GetProperties());
+        }
+
+        [Test]
+        public void ImmediateTypeGetProperty()
+        {
+            var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
+            string propertyName = nameof(PublicValueTypeTestClass.PublicPropertyGetSet);
+            Assert.AreEqual(immediateType.Properties[propertyName], immediateType.GetProperty(propertyName));
+
+            propertyName = "NotExists";
+            Assert.IsNull(immediateType.GetProperty(propertyName));
+
+            // ReSharper disable once AssignNullToNotNullAttribute
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+            Assert.Throws<ArgumentNullException>(() => immediateType.GetProperty(null));
         }
 
         [Test]
