@@ -15,6 +15,7 @@ namespace ImmediateReflection
     {
         #region Field Get/Set
 
+        [Pure]
         [NotNull]
         public static GetterDelegate CreateGetter([NotNull] FieldInfo fieldInfo)
         {
@@ -41,6 +42,7 @@ namespace ImmediateReflection
             return (GetterDelegate)dynamicGetter.CreateDelegate(typeof(GetterDelegate));
         }
 
+        [Pure]
         [NotNull]
         public static SetterDelegate CreateSetter([NotNull] FieldInfo fieldInfo)
         {
@@ -74,16 +76,17 @@ namespace ImmediateReflection
 
         #region Property Get/Set
 
+        [Pure]
         [CanBeNull]
         public static GetterDelegate CreateGetter([NotNull] PropertyInfo propertyInfo, [NotNull] MethodInfo getMethod)
         {
             if (propertyInfo is null)
                 throw new ArgumentNullException(nameof(propertyInfo));
-            if (getMethod is null)
-                throw new ArgumentNullException(nameof(getMethod));
-
             if (!propertyInfo.CanRead)
                 return null;
+
+            if (getMethod is null)
+                throw new ArgumentNullException(nameof(getMethod));
 
             DynamicMethod dynamicGetter = CreateDynamicGetter(propertyInfo, out Type targetType);
 
@@ -102,16 +105,17 @@ namespace ImmediateReflection
             return (GetterDelegate)dynamicGetter.CreateDelegate(typeof(GetterDelegate));
         }
 
+        [Pure]
         [CanBeNull]
         public static SetterDelegate CreateSetter([NotNull] PropertyInfo propertyInfo, [NotNull] MethodInfo setMethod)
         {
             if (propertyInfo is null)
                 throw new ArgumentNullException(nameof(propertyInfo));
-            if (setMethod is null)
-                throw new ArgumentNullException(nameof(setMethod));
-
             if (!propertyInfo.CanWrite)
                 return null;
+
+            if (setMethod is null)
+                throw new ArgumentNullException(nameof(setMethod));
 
             DynamicMethod dynamicSetter = CreateDynamicSetter(propertyInfo, out Type targetType);
 
@@ -137,6 +141,7 @@ namespace ImmediateReflection
 
         #region Dynamic method helpers
 
+        [Pure]
         [NotNull]
         private static DynamicMethod CreateDynamicMethod([NotNull] string name, [CanBeNull] Type returnType, [CanBeNull] Type[] parameterTypes, [NotNull] Type owner)
         {
@@ -145,6 +150,7 @@ namespace ImmediateReflection
                 : new DynamicMethod(name, returnType, parameterTypes, owner, true);
         }
 
+        [Pure]
         [NotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -154,6 +160,7 @@ namespace ImmediateReflection
             return CreateDynamicMethod(name, typeof(void), parameterTypes, owner);
         }
 
+        [Pure]
         [NotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -163,6 +170,7 @@ namespace ImmediateReflection
             return CreateDynamicMethod($"Get{name}", typeof(object), new[] { typeof(object) }, owner);
         }
 
+        [Pure]
         [NotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -176,6 +184,7 @@ namespace ImmediateReflection
         /// Gets the <see cref="Type"/> of the <paramref name="member"/> owner.
         /// </summary>
         /// <exception cref="InvalidOperationException">If it's impossible to retrieve the owner <see cref="Type"/>.</exception>
+        [Pure]
         [NotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -187,6 +196,7 @@ namespace ImmediateReflection
                    ?? throw new InvalidOperationException($"Cannot retrieve owner type of member {member.Name}.");
         }
 
+        [Pure]
         [NotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -197,6 +207,7 @@ namespace ImmediateReflection
             return CreateDynamicGetter(member.Name, targetType);
         }
 
+        [Pure]
         [NotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -235,10 +246,6 @@ namespace ImmediateReflection
 
             // Load first argument to the stack
             generator.Emit(OpCodes.Ldarg_0);
-
-            // Already the right type
-            if (targetType == typeof(object))
-                return;
 
             // Cast the object on the stack to the appropriate type
             generator.Emit(

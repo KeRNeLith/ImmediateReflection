@@ -30,7 +30,7 @@ namespace ImmediateReflection
                 throw new ArgumentNullException(nameof(properties));
 
             _properties = properties.ToDictionary(
-                property => property?.Name ?? throw new ArgumentNullException(nameof(property), "A property is null."), 
+                property => property?.Name ?? throw new ArgumentNullException(nameof(property), "A property is null."),
                 property => new ImmediateProperty(property));
         }
 
@@ -42,8 +42,8 @@ namespace ImmediateReflection
         /// <exception cref="ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
         [CanBeNull]
         public ImmediateProperty this[[NotNull] string propertyName] =>
-            _properties.TryGetValue(propertyName, out ImmediateProperty property) 
-                ? property 
+            _properties.TryGetValue(propertyName, out ImmediateProperty property)
+                ? property
                 : null;
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace ImmediateReflection
         {
             return _properties
                 .Aggregate(
-                    0, 
+                    0,
                     (hashCode, pair) =>
                     {
                         hashCode = (hashCode * 397) ^ pair.Key.GetHashCode();
