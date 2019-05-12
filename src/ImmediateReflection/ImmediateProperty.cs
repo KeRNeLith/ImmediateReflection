@@ -32,6 +32,7 @@ namespace ImmediateReflection
         /// </summary>
         public bool CanRead { get; }
 
+        [NotNull]
         private readonly GetterDelegate _getter;
 
         /// <summary>
@@ -39,6 +40,7 @@ namespace ImmediateReflection
         /// </summary>
         public bool CanWrite { get; }
 
+        [NotNull]
         private readonly SetterDelegate _setter;
 
         /// <summary>
@@ -55,25 +57,39 @@ namespace ImmediateReflection
             CanRead = property.CanRead;
             CanWrite = property.CanWrite;
 
-            // Getter
-            MethodInfo getMethod = property.GetGetMethod(true);
-            if (getMethod != null)
+            // Getter / Setter
+            _getter = ConfigureGetter();
+            _setter = ConfigureSetter();
+
+            #region Local functions
+
+            GetterDelegate ConfigureGetter()
             {
-                _getter = DelegatesFactory.CreateGetter(property, getMethod);
+                GetterDelegate getter = null;
+                MethodInfo getMethod = property.GetGetMethod(true);
+                if (getMethod != null)
+                    getter = DelegatesFactory.CreateGetter(property, getMethod);
+
+                if (getter is null)
+                    return target => throw new ArgumentException($"No getter for property {Name}.");
+
+                return getter;
             }
 
-            if (_getter is null)
-                _getter = target => throw new ArgumentException($"No getter for property {Name}.");
-
-            // Setter
-            MethodInfo setMethod = property.GetSetMethod(true);
-            if (setMethod != null)
+            SetterDelegate ConfigureSetter()
             {
-                _setter = DelegatesFactory.CreateSetter(property, setMethod);
+                SetterDelegate setter = null;
+                MethodInfo setMethod = property.GetSetMethod(true);
+                if (setMethod != null)
+                    setter = DelegatesFactory.CreateSetter(property, setMethod);
+
+                if (setter is null)
+                    return (target, value) => throw new ArgumentException($"No setter for property {Name}.");
+
+                return setter;
             }
 
-            if (_setter is null)
-                _setter = (target, value) => throw new ArgumentException($"No setter for property {Name}.");
+            #endregion
         }
 
         /// <summary>
@@ -85,8 +101,6 @@ namespace ImmediateReflection
         [Pure]
         public object GetValue([CanBeNull] object obj)
         {
-            if (obj is null)
-                throw new TargetException();
             return _getter(obj);
         }
 
@@ -98,8 +112,6 @@ namespace ImmediateReflection
         /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the property to set is not static.</exception>
         public void SetValue([CanBeNull] object obj, [CanBeNull] object value)
         {
-            if (obj is null)
-                throw new TargetException();
             _setter(obj, value);
         }
 

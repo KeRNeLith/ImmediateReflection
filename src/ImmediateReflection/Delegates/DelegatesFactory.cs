@@ -158,8 +158,22 @@ namespace ImmediateReflection
             generator.Emit(OpCodes.Ldsfld, field);
         }
 
+        private static void NullCheckTarget([NotNull] ILGenerator generator)
+        {
+            Label notNull = generator.DefineLabel();
+            generator.Emit(OpCodes.Ldarg_0);
+            generator.Emit(OpCodes.Ldnull);
+            generator.Emit(OpCodes.Ceq);
+            generator.Emit(OpCodes.Brfalse, notNull);
+            generator.ThrowException(typeof(TargetException));
+            generator.MarkLabel(notNull);
+        }
+
         private static void RegisterTargetArgument([NotNull] ILGenerator generator, [NotNull] Type targetType)
         {
+            // If the target object is null throw TargetException
+            NullCheckTarget(generator);
+
             // Load first argument to the stack
             generator.Emit(OpCodes.Ldarg_0);
 
