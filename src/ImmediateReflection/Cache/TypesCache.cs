@@ -54,7 +54,7 @@ namespace ImmediateReflection
         #endregion
 
         [NotNull]
-        public ImmediateType GetImmediateType([NotNull] Type type, BindingFlags flags, DateTimeOffset? expirationTime = null)
+        public ImmediateType GetImmediateType([NotNull] Type type, BindingFlags flags, [CanBeNull] DateTimeOffset? expirationTime = null)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
