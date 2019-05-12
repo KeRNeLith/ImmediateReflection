@@ -365,20 +365,20 @@ namespace ImmediateReflection.Tests
         public void ImmediateFieldSetValue_WrongInstance()
         {
             var immediateField = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
-            Assert.Throws<ArgumentException>(() => immediateField.SetValue(new PublicReferenceTypeTestClass(), null));
+            Assert.Throws<InvalidCastException>(() => immediateField.SetValue(new PublicReferenceTypeTestClass(), null));
         }
 
         [Test]
         public void ImmediateFieldSetValue_WrongValue()
         {
             var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
-            Assert.Throws<ArgumentException>(() => immediateField1.SetValue(new PublicValueTypeTestClass(), new TestObject()));
+            Assert.Throws<InvalidCastException>(() => immediateField1.SetValue(new PublicValueTypeTestClass(), new TestObject()));
 
             var immediateField2 = new ImmediateField(PublicReferenceTypePublicFieldFieldsInfo);
-            Assert.Throws<ArgumentException>(() => immediateField2.SetValue(new PublicReferenceTypeTestClass(), 12));
+            Assert.Throws<InvalidCastException>(() => immediateField2.SetValue(new PublicReferenceTypeTestClass(), 12));
 
             var immediateField3 = new ImmediateField(PublicReferenceTypePublicFieldFieldsInfo);
-            Assert.Throws<ArgumentException>(() => immediateField3.SetValue(new PublicReferenceTypeTestClass(), new SmallObject()));
+            Assert.Throws<InvalidCastException>(() => immediateField3.SetValue(new PublicReferenceTypeTestClass(), new SmallObject()));
         }
 
         #endregion

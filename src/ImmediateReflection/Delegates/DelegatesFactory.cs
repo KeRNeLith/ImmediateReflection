@@ -13,6 +13,65 @@ namespace ImmediateReflection
     /// </summary>
     internal static class DelegatesFactory
     {
+        #region Field Get/Set
+
+        [NotNull]
+        public static GetterDelegate CreateGetter([NotNull] FieldInfo fieldInfo)
+        {
+            if (fieldInfo is null)
+                throw new ArgumentNullException(nameof(fieldInfo));
+
+            DynamicMethod dynamicGetter = CreateDynamicGetter(fieldInfo, out Type targetType);
+
+            ILGenerator generator = dynamicGetter.GetILGenerator();
+
+            if (fieldInfo.IsStatic)
+                RegisterStaticTargetArgument(generator, fieldInfo);
+            else
+                RegisterTargetArgument(generator, targetType);
+
+            // Load field value to the stack
+            generator.Emit(OpCodes.Ldfld, fieldInfo);
+
+            // Box the result if needed
+            BoxIfNeeded(generator, fieldInfo.FieldType);
+
+            MethodReturn(generator);
+
+            return (GetterDelegate)dynamicGetter.CreateDelegate(typeof(GetterDelegate));
+        }
+
+        [NotNull]
+        public static SetterDelegate CreateSetter([NotNull] FieldInfo fieldInfo)
+        {
+            if (fieldInfo is null)
+                throw new ArgumentNullException(nameof(fieldInfo));
+
+            DynamicMethod dynamicSetter = CreateDynamicSetter(fieldInfo, out Type targetType);
+
+            ILGenerator generator = dynamicSetter.GetILGenerator();
+
+            if (fieldInfo.IsStatic)
+                RegisterStaticTargetArgument(generator, fieldInfo);
+            else
+                RegisterTargetArgument(generator, targetType);
+
+            // Load second argument to the stack
+            generator.Emit(OpCodes.Ldarg_1);
+
+            // Unbox the set value if needed
+            UnboxIfNeeded(generator, fieldInfo.FieldType);
+
+            // Set field
+            generator.Emit(OpCodes.Stfld, fieldInfo);
+
+            MethodReturn(generator);
+
+            return (SetterDelegate)dynamicSetter.CreateDelegate(typeof(SetterDelegate));
+        }
+
+        #endregion
+
         #region Property Get/Set
 
         [CanBeNull]

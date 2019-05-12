@@ -27,6 +27,12 @@ namespace ImmediateReflection
         [NotNull]
         public Type FieldType { get; }
 
+        [NotNull]
+        private readonly GetterDelegate _getter;
+
+        [NotNull]
+        private readonly SetterDelegate _setter;
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -37,6 +43,10 @@ namespace ImmediateReflection
             FieldInfo = field ?? throw new ArgumentNullException(nameof(field));
             Name = field.Name;
             FieldType = field.FieldType;
+
+            // Getter / Setter
+            _getter = DelegatesFactory.CreateGetter(field);
+            _setter = DelegatesFactory.CreateSetter(field);
         }
 
         /// <summary>
@@ -48,7 +58,7 @@ namespace ImmediateReflection
         [Pure]
         public object GetValue([CanBeNull] object obj)
         {
-            return FieldInfo.GetValue(obj);
+            return _getter(obj);
         }
 
         /// <summary>
@@ -59,7 +69,7 @@ namespace ImmediateReflection
         /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the field to set is not static.</exception>
         public void SetValue([CanBeNull] object obj, [CanBeNull] object value)
         {
-            FieldInfo.SetValue(obj, value);
+            _setter(obj, value);
         }
 
         #region Equality / IEquatable<T>
