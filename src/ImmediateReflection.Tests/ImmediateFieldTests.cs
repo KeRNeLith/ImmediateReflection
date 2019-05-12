@@ -60,19 +60,25 @@ namespace ImmediateReflection.Tests
                 #region Value type
 
                 // Value type
-                var publicValueTypeTestObject = new PublicValueTypeTestClass
+                var publicValueTypeTestObject = new PublicValueTypeTestClass(2, 3, 4)
                 {
                     _publicField = 1
                 };
 
                 yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicFieldFieldsInfo, 1);
+                yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypeInternalFieldFieldsInfo, 2);
+                yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypeProtectedFieldFieldsInfo, 3);
+                yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePrivateFieldFieldsInfo, 4);
 
-                var internalValueTypeTestObject = new InternalValueTypeTestClass
+                var internalValueTypeTestObject = new InternalValueTypeTestClass(6, 7, 8)
                 {
-                    _publicField = 2
+                    _publicField = 5
                 };
 
-                yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicFieldFieldsInfo, 2);
+                yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicFieldFieldsInfo, 5);
+                yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypeInternalFieldFieldsInfo, 6);
+                yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypeProtectedFieldFieldsInfo, 7);
+                yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePrivateFieldFieldsInfo, 8);
 
                 #endregion
 
@@ -80,53 +86,77 @@ namespace ImmediateReflection.Tests
 
                 // Reference type
                 var testObject1 = new TestObject { TestValue = 1 };
-                var publicReferenceTypeTestObject = new PublicReferenceTypeTestClass
+                var testObject2 = new TestObject { TestValue = 2 };
+                var testObject3 = new TestObject { TestValue = 3 };
+                var testObject4 = new TestObject { TestValue = 4 };
+                var publicReferenceTypeTestObject = new PublicReferenceTypeTestClass(testObject2, testObject3, testObject4)
                 {
                     _publicField = testObject1
                 };
 
                 yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicFieldFieldsInfo, testObject1);
+                yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypeInternalFieldFieldsInfo, testObject2);
+                yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypeProtectedFieldFieldsInfo, testObject3);
+                yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePrivateFieldFieldsInfo, testObject4);
 
-                var testObject2 = new TestObject { TestValue = 2 };
-                var internalReferenceTypeTestObject = new InternalReferenceTypeTestClass
+                var testObject5 = new TestObject { TestValue = 5 };
+                var testObject6 = new TestObject { TestValue = 6 };
+                var testObject7 = new TestObject { TestValue = 7 };
+                var testObject8 = new TestObject { TestValue = 8 };
+                var internalReferenceTypeTestObject = new InternalReferenceTypeTestClass(testObject6, testObject7, testObject8)
                 {
-                    _publicField = testObject2
+                    _publicField = testObject5
                 };
 
-                yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicFieldFieldsInfo, testObject2);
+                yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicFieldFieldsInfo, testObject5);
+                yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypeInternalFieldFieldsInfo, testObject6);
+                yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypeProtectedFieldFieldsInfo, testObject7);
+                yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePrivateFieldFieldsInfo, testObject8);
 
                 #endregion
 
                 #region Object type
 
                 // Object type
-                var publicObjectTypeTestObject1 = new PublicObjectTypeTestClass
+                var publicObjectTypeTestObject1 = new PublicObjectTypeTestClass(24, 48, 96)
                 {
                     _publicField = 12
                 };
 
                 yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypePublicFieldFieldsInfo, 12);
+                yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypeInternalFieldFieldsInfo, 24);
+                yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypeProtectedFieldFieldsInfo, 48);
+                yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypePrivateFieldFieldsInfo, 96);
 
-                var publicObjectTypeTestObject2 = new PublicObjectTypeTestClass
+                var publicObjectTypeTestObject2 = new PublicObjectTypeTestClass(testObject2, testObject3, testObject4)
                 {
                     _publicField = testObject1
                 };
 
                 yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypePublicFieldFieldsInfo, testObject1);
+                yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypeInternalFieldFieldsInfo, testObject2);
+                yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypeProtectedFieldFieldsInfo, testObject3);
+                yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypePrivateFieldFieldsInfo, testObject4);
 
-                var internalObjectTypeTestObject1 = new InternalObjectTypeTestClass
+                var internalObjectTypeTestObject1 = new InternalObjectTypeTestClass(384, 768, 1536)
                 {
-                    _publicField = 24
+                    _publicField = 192
                 };
 
-                yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePublicFieldFieldsInfo, 24);
+                yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePublicFieldFieldsInfo, 192);
+                yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypeInternalFieldFieldsInfo, 384);
+                yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypeProtectedFieldFieldsInfo, 768);
+                yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePrivateFieldFieldsInfo, 1536);
 
-                var internalObjectTypeTestObject2 = new InternalObjectTypeTestClass
+                var internalObjectTypeTestObject2 = new InternalObjectTypeTestClass(testObject6, testObject7, testObject8)
                 {
-                    _publicField = testObject2
+                    _publicField = testObject5
                 };
 
-                yield return new TestCaseData(internalObjectTypeTestObject2, InternalObjectTypePublicFieldFieldsInfo, testObject2);
+                yield return new TestCaseData(internalObjectTypeTestObject2, InternalObjectTypePublicFieldFieldsInfo, testObject5);
+                yield return new TestCaseData(internalObjectTypeTestObject2, InternalObjectTypeInternalFieldFieldsInfo, testObject6);
+                yield return new TestCaseData(internalObjectTypeTestObject2, InternalObjectTypeProtectedFieldFieldsInfo, testObject7);
+                yield return new TestCaseData(internalObjectTypeTestObject2, InternalObjectTypePrivateFieldFieldsInfo, testObject8);
 
                 #endregion
 
@@ -229,12 +259,36 @@ namespace ImmediateReflection.Tests
             immediateField.SetValue(publicValueTypeTestObject, 12);
             Assert.AreEqual(12, publicValueTypeTestObject._publicField);
 
+            immediateField = new ImmediateField(PublicValueTypeInternalFieldFieldsInfo);
+            immediateField.SetValue(publicValueTypeTestObject, 24);
+            Assert.AreEqual(24, publicValueTypeTestObject._internalField);
+
+            immediateField = new ImmediateField(PublicValueTypeProtectedFieldFieldsInfo);
+            immediateField.SetValue(publicValueTypeTestObject, 48);
+            Assert.AreEqual(48, publicValueTypeTestObject.GetProtectedFieldValue());
+
+            immediateField = new ImmediateField(PublicValueTypePrivateFieldFieldsInfo);
+            immediateField.SetValue(publicValueTypeTestObject, 96);
+            Assert.AreEqual(96, publicValueTypeTestObject.GetPrivateFieldValue());
+
             // Value type / Internal
             var internalValueTypeTestObject = new InternalValueTypeTestClass();
 
             immediateField = new ImmediateField(InternalValueTypePublicFieldFieldsInfo);
-            immediateField.SetValue(internalValueTypeTestObject, 24);
-            Assert.AreEqual(24, internalValueTypeTestObject._publicField);
+            immediateField.SetValue(internalValueTypeTestObject, 192);
+            Assert.AreEqual(192, internalValueTypeTestObject._publicField);
+
+            immediateField = new ImmediateField(InternalValueTypeInternalFieldFieldsInfo);
+            immediateField.SetValue(internalValueTypeTestObject, 384);
+            Assert.AreEqual(384, internalValueTypeTestObject._internalField);
+
+            immediateField = new ImmediateField(InternalValueTypeProtectedFieldFieldsInfo);
+            immediateField.SetValue(internalValueTypeTestObject, 728);
+            Assert.AreEqual(728, internalValueTypeTestObject.GetProtectedFieldValue());
+
+            immediateField = new ImmediateField(InternalValueTypePrivateFieldFieldsInfo);
+            immediateField.SetValue(internalValueTypeTestObject, 1536);
+            Assert.AreEqual(1536, internalValueTypeTestObject.GetPrivateFieldValue());
         }
 
         [Test]
@@ -243,6 +297,12 @@ namespace ImmediateReflection.Tests
             // Reference type / Public
             var testObject1 = new TestObject { TestValue = 1 };
             var testObject2 = new TestObject { TestValue = 2 };
+            var testObject3 = new TestObject { TestValue = 3 };
+            var testObject4 = new TestObject { TestValue = 4 };
+            var testObject5 = new TestObject { TestValue = 5 };
+            var testObject6 = new TestObject { TestValue = 6 };
+            var testObject7 = new TestObject { TestValue = 7 };
+            var testObject8 = new TestObject { TestValue = 8 };
 
             var publicReferenceTypeTestObject = new PublicReferenceTypeTestClass();
 
@@ -250,12 +310,36 @@ namespace ImmediateReflection.Tests
             immediateField.SetValue(publicReferenceTypeTestObject, testObject1);
             Assert.AreSame(testObject1, publicReferenceTypeTestObject._publicField);
 
+            immediateField = new ImmediateField(PublicReferenceTypeInternalFieldFieldsInfo);
+            immediateField.SetValue(publicReferenceTypeTestObject, testObject2);
+            Assert.AreSame(testObject2, publicReferenceTypeTestObject._internalField);
+
+            immediateField = new ImmediateField(PublicReferenceTypeProtectedFieldFieldsInfo);
+            immediateField.SetValue(publicReferenceTypeTestObject, testObject3);
+            Assert.AreSame(testObject3, publicReferenceTypeTestObject.GetProtectedFieldValue());
+
+            immediateField = new ImmediateField(PublicReferenceTypePrivateFieldFieldsInfo);
+            immediateField.SetValue(publicReferenceTypeTestObject, testObject4);
+            Assert.AreSame(testObject4, publicReferenceTypeTestObject.GetPrivateFieldValue());
+
             // Reference type / Internal
             var internalReferenceTypeTestObject = new InternalReferenceTypeTestClass();
 
             immediateField = new ImmediateField(InternalReferenceTypePublicFieldFieldsInfo);
-            immediateField.SetValue(internalReferenceTypeTestObject, testObject2);
-            Assert.AreSame(testObject2, internalReferenceTypeTestObject._publicField);
+            immediateField.SetValue(internalReferenceTypeTestObject, testObject5);
+            Assert.AreSame(testObject5, internalReferenceTypeTestObject._publicField);
+
+            immediateField = new ImmediateField(InternalReferenceTypeInternalFieldFieldsInfo);
+            immediateField.SetValue(internalReferenceTypeTestObject, testObject6);
+            Assert.AreSame(testObject6, internalReferenceTypeTestObject._internalField);
+
+            immediateField = new ImmediateField(InternalReferenceTypeProtectedFieldFieldsInfo);
+            immediateField.SetValue(internalReferenceTypeTestObject, testObject7);
+            Assert.AreSame(testObject7, internalReferenceTypeTestObject.GetProtectedFieldValue());
+
+            immediateField = new ImmediateField(InternalReferenceTypePrivateFieldFieldsInfo);
+            immediateField.SetValue(internalReferenceTypeTestObject, testObject8);
+            Assert.AreSame(testObject8, internalReferenceTypeTestObject.GetPrivateFieldValue());
         }
 
         [Test]
@@ -263,6 +347,12 @@ namespace ImmediateReflection.Tests
         {
             var testObject1 = new TestObject { TestValue = 1 };
             var testObject2 = new TestObject { TestValue = 2 };
+            var testObject3 = new TestObject { TestValue = 3 };
+            var testObject4 = new TestObject { TestValue = 4 };
+            var testObject5 = new TestObject { TestValue = 5 };
+            var testObject6 = new TestObject { TestValue = 6 };
+            var testObject7 = new TestObject { TestValue = 7 };
+            var testObject8 = new TestObject { TestValue = 8 };
 
             // Object type / Public
             var publicObjectTypeTestObject = new PublicObjectTypeTestClass();
@@ -271,9 +361,35 @@ namespace ImmediateReflection.Tests
             immediateField.SetValue(publicObjectTypeTestObject, 1);
             Assert.AreEqual(1, publicObjectTypeTestObject._publicField);
 
+            immediateField = new ImmediateField(PublicObjectTypeInternalFieldFieldsInfo);
+            immediateField.SetValue(publicObjectTypeTestObject, 2);
+            Assert.AreEqual(2, publicObjectTypeTestObject._internalField);
+
+            immediateField = new ImmediateField(PublicObjectTypeProtectedFieldFieldsInfo);
+            immediateField.SetValue(publicObjectTypeTestObject, 3);
+            Assert.AreEqual(3, publicObjectTypeTestObject.GetProtectedFieldValue());
+
+            immediateField = new ImmediateField(PublicObjectTypePrivateFieldFieldsInfo);
+            immediateField.SetValue(publicObjectTypeTestObject, 4);
+            Assert.AreEqual(4, publicObjectTypeTestObject.GetPrivateFieldValue());
+
+
             immediateField = new ImmediateField(PublicObjectTypePublicFieldFieldsInfo);
             immediateField.SetValue(publicObjectTypeTestObject, testObject1);
             Assert.AreSame(testObject1, publicObjectTypeTestObject._publicField);
+
+            immediateField = new ImmediateField(PublicObjectTypeInternalFieldFieldsInfo);
+            immediateField.SetValue(publicObjectTypeTestObject, testObject2);
+            Assert.AreSame(testObject2, publicObjectTypeTestObject._internalField);
+
+            immediateField = new ImmediateField(PublicObjectTypeProtectedFieldFieldsInfo);
+            immediateField.SetValue(publicObjectTypeTestObject, testObject3);
+            Assert.AreSame(testObject3, publicObjectTypeTestObject.GetProtectedFieldValue());
+
+            immediateField = new ImmediateField(PublicObjectTypePrivateFieldFieldsInfo);
+            immediateField.SetValue(publicObjectTypeTestObject, testObject4);
+            Assert.AreSame(testObject4, publicObjectTypeTestObject.GetPrivateFieldValue());
+
 
             // Object type / Internal
             var internalObjectTypeTestObject = new InternalObjectTypeTestClass();
@@ -282,9 +398,34 @@ namespace ImmediateReflection.Tests
             immediateField.SetValue(internalObjectTypeTestObject, 1);
             Assert.AreEqual(1, internalObjectTypeTestObject._publicField);
 
+            immediateField = new ImmediateField(InternalObjectTypeInternalFieldFieldsInfo);
+            immediateField.SetValue(internalObjectTypeTestObject, 2);
+            Assert.AreEqual(2, internalObjectTypeTestObject._internalField);
+
+            immediateField = new ImmediateField(InternalObjectTypeProtectedFieldFieldsInfo);
+            immediateField.SetValue(internalObjectTypeTestObject, 3);
+            Assert.AreEqual(3, internalObjectTypeTestObject.GetProtectedFieldValue());
+
+            immediateField = new ImmediateField(InternalObjectTypePrivateFieldFieldsInfo);
+            immediateField.SetValue(internalObjectTypeTestObject, 4);
+            Assert.AreEqual(4, internalObjectTypeTestObject.GetPrivateFieldValue());
+
+
             immediateField = new ImmediateField(InternalObjectTypePublicFieldFieldsInfo);
-            immediateField.SetValue(internalObjectTypeTestObject, testObject2);
-            Assert.AreSame(testObject2, internalObjectTypeTestObject._publicField);
+            immediateField.SetValue(internalObjectTypeTestObject, testObject5);
+            Assert.AreSame(testObject5, internalObjectTypeTestObject._publicField);
+
+            immediateField = new ImmediateField(InternalObjectTypeInternalFieldFieldsInfo);
+            immediateField.SetValue(internalObjectTypeTestObject, testObject6);
+            Assert.AreSame(testObject6, internalObjectTypeTestObject._internalField);
+
+            immediateField = new ImmediateField(InternalObjectTypeProtectedFieldFieldsInfo);
+            immediateField.SetValue(internalObjectTypeTestObject, testObject7);
+            Assert.AreSame(testObject7, internalObjectTypeTestObject.GetProtectedFieldValue());
+
+            immediateField = new ImmediateField(InternalObjectTypePrivateFieldFieldsInfo);
+            immediateField.SetValue(internalObjectTypeTestObject, testObject8);
+            Assert.AreSame(testObject8, internalObjectTypeTestObject.GetPrivateFieldValue());
         }
 
         [Test]
