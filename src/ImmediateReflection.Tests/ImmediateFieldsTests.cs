@@ -86,7 +86,7 @@ namespace ImmediateReflection.Tests
         public void ImmediateFieldsToString()
         {
             var immediateFields1 = new ImmediateFields(SmallObjectFieldInfos);
-            string expectedToString = $"[{string.Join(", ", SmallObjectFieldInfos.Select(p => p.ToString()))}]";
+            string expectedToString = $"[{string.Join(", ", SmallObjectFieldInfos.Select(p => p.ToString()).ToArray())}]";
             Assert.AreEqual(expectedToString, immediateFields1.ToString());
 
             var immediateFields2 = new ImmediateFields(EmptyFieldInfo);

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net45;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net20;net30;net35;net40;net45;net451;net452;net46;net461;netcoreapp2.0</TargetFrameworks>
 
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -43,8 +43,32 @@
   </PropertyGroup>
 
   <!-- Targets defines -->
+  <PropertyGroup Condition="'$(TargetFramework)'=='net20'">
+    <DefineConstants>$(DefineConstants);NET20;$(AdditionalConstants)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net30'">
+    <DefineConstants>$(DefineConstants);NET30;$(AdditionalConstants)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net35'">
+    <DefineConstants>$(DefineConstants);NET35;$(AdditionalConstants)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net40'">
+    <DefineConstants>$(DefineConstants);NET40;$(AdditionalConstants)</DefineConstants>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net45'">
     <DefineConstants>$(DefineConstants);NET45;$(AdditionalConstants)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net451'">
+    <DefineConstants>$(DefineConstants);NET451;$(AdditionalConstants)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net452'">
+    <DefineConstants>$(DefineConstants);NET452;$(AdditionalConstants)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net46'">
+    <DefineConstants>$(DefineConstants);NET46;$(AdditionalConstants)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net461'">
+    <DefineConstants>$(DefineConstants);NET461;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">
     <DefineConstants>$(DefineConstants);NETCOREAPP2_0;$(AdditionalConstants)</DefineConstants>
@@ -57,9 +81,17 @@
 
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.11.0" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)' != 'net20' AND '$(TargetFramework)' != 'net30'">
 	<PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
   </ItemGroup>
 
+  <!-- Needed to have tests working without R# -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net20' OR '$(TargetFramework)' == 'net30'">
+	<PackageReference Include="NUnit3TestAdapter" Version="3.4.0" />
+  </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\ImmediateReflection\ImmediateReflection.csproj" />
   </ItemGroup>

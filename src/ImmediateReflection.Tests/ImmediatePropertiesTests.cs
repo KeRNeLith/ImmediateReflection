@@ -86,7 +86,7 @@ namespace ImmediateReflection.Tests
         public void ImmediatePropertiesToString()
         {
             var immediateProperties1 = new ImmediateProperties(SmallObjectPropertyInfos);
-            string expectedToString = $"[{string.Join(", ", SmallObjectPropertyInfos.Select(p => p.ToString()))}]";
+            string expectedToString = $"[{string.Join(", ", SmallObjectPropertyInfos.Select(p => p.ToString()).ToArray())}]";
             Assert.AreEqual(expectedToString, immediateProperties1.ToString());
 
             var immediateProperties2 = new ImmediateProperties(EmptyPropertyInfo);

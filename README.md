@@ -19,7 +19,7 @@ Especially the usage of constructor and members accessors (get/set).
 
 - .NET Standard 2.0+
 - .NET Core 2.0+
-- .NET Framework 4.5+
+- .NET Framework 2.0+
 
 Supports Source Link
 
