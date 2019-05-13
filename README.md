@@ -10,10 +10,84 @@
 
 ## What is **ImmediateReflection**?
 
-This is .NET library that aims to provider faster usage of C# reflection features. 
+This is .NET library that aims to provide a faster usage of C# reflection features. 
 Especially the usage of constructor and members accessors (get/set).
 
-See some benchmarks of the library [here](https://github.com/KeRNeLith/ImmediateReflection/blob/master/Benchmarks.md).
+It provides these features while trying to keep an API as similar as the standard Reflection API (Fully documented and ReSharper compliant).
+
+To see how powerful it can be [here](https://github.com/KeRNeLith/ImmediateReflection/blob/master/Benchmarks.md) are some benchmarks of the library.
+
+## Getting started
+
+### Getting a type
+
+The library is pretty simple to use, it has wrappers of standard `Type`, `FieldInfo` and `PropertyInfo` that are respectively called `ImmediateType`, `ImmediateField` and `ImmediateProperty`.
+
+The get access to fields and properties it is like the standard way, you get access to a `Type` and then request its fields and properties.
+The entry point of the library is the `TypeAccessor`.
+
+See following examples:
+
+```csharp
+ImmediateType type = TypeAccessor.Get(typeof(MySuperType));
+
+// or
+
+ImmediateType type = TypeAccessor.Get<MySuperType>();
+```
+
+Note that there are other access methods that allow to get an `ImmediateType` with non public member or by specifying `BindingFlags`.
+
+```csharp
+ImmediateType type = TypeAccessor.Get<MySuperType>(includeNonPublicMembers: true);
+
+// or
+
+// Flags allow to get a type with member that fulfill requested flags
+ImmediateType type = TypeAccessor.Get<MySuperType>(BindingFlags.Public | BindingFlags.Static);
+```
+
+IMPORTANT: In versions targeting .NET Framework 4.5 or higher and .NET Standard 2.0, there is a built-in cache behind the `TypeAccessor`, which can be configured via an optional additional parameter of the Get method.
+
+### Getting a field or a property
+
+```csharp
+ImmediateType type = TypeAccessor.Get<MySuperType>();
+
+// For fields
+ImmediateField field = type.GetField("FieldName");
+// or
+ImmediateField field = type.Fields["FieldName"];
+// There is also type.GetFields()
+
+// For properties
+ImmediateProperty property = type.GetProperty("PropertyName");
+// or
+ImmediateProperty property = type.Properties["PropertyName"];
+// There is also type.GetProperties()
+```
+
+When you have type wrapping a field or a property you are able to get or set it like in a standard way.
+
+```csharp
+object instance = new MySuperType();
+
+ImmediateProperty property = type.GetProperty("PropertyName");
+
+// Get
+object propertyValue = property.GetValue(instance);
+
+// Set
+property.SetValue(instance, "New Value");
+```
+
+To let the user of the library access eventual missing functionalities, each wrapping type from ImmediateReflection gives an access to the equivalent standard structure.
+
+```csharp
+ImmediateProperty property = type.GetProperty("PropertyName");
+
+PropertyInfo propertyInfo = property.PropertyInfo;
+```
 
 ---
 
@@ -29,7 +103,12 @@ Supports Source Link
 
 ## Dependencies
 
-**No package dependencies.**
+For targets higher than .NET Framework 4.5:
+- System.Runtime.Caching
+
+For targets higher than .NET Standard 2.0:
+- Microsoft.Extensions.Caching.Memory
+- System.Reflection.Emit.LightWeight
 
 ### Notes
 
