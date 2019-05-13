@@ -69,6 +69,10 @@ namespace ImmediateReflection.Tests
             var immediateProperties3 = new ImmediateProperties(SecondSmallObjectPropertyInfos);
             Assert.IsFalse(immediateProperties1.Equals(immediateProperties3));
             Assert.IsFalse(immediateProperties1.Equals((object)immediateProperties3));
+
+            var immediateProperties4 = new ImmediateProperties(PublicNestedPropertyInfos);
+            Assert.IsFalse(immediateProperties4.Equals(immediateProperties1));
+            Assert.IsFalse(immediateProperties4.Equals((object)immediateProperties1));
         }
 
         [Test]

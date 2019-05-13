@@ -69,6 +69,10 @@ namespace ImmediateReflection.Tests
             var immediateFields3 = new ImmediateFields(SecondSmallObjectFieldInfos);
             Assert.IsFalse(immediateFields1.Equals(immediateFields3));
             Assert.IsFalse(immediateFields1.Equals((object)immediateFields3));
+
+            var immediateFields4 = new ImmediateFields(PublicNestedFieldInfos);
+            Assert.IsFalse(immediateFields4.Equals(immediateFields1));
+            Assert.IsFalse(immediateFields4.Equals((object)immediateFields1));
         }
 
         [Test]

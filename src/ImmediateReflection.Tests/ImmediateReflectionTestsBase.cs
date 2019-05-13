@@ -610,6 +610,10 @@ namespace ImmediateReflection.Tests
         protected static FieldInfo ProtectedNestedPublicFieldFieldInfo =
             typeof(ProtectedNestedClass).GetField(nameof(ProtectedNestedClass._nestedTestValue)) ?? throw new AssertionException("Cannot find field.");
 
+
+        [NotNull, ItemNotNull]
+        protected static FieldInfo[] PublicNestedFieldInfos = typeof(PublicTestClass.PublicNestedClass).GetFields();
+
         // Properties //
 
         [NotNull]
@@ -623,6 +627,10 @@ namespace ImmediateReflection.Tests
         [NotNull]
         protected static PropertyInfo ProtectedNestedPublicGetSetPropertyPropertyInfo =
             typeof(ProtectedNestedClass).GetProperty(nameof(ProtectedNestedClass.NestedTestValue)) ?? throw new AssertionException("Cannot find property.");
+
+
+        [NotNull, ItemNotNull]
+        protected static PropertyInfo[] PublicNestedPropertyInfos = typeof(PublicTestClass.PublicNestedClass).GetProperties();
 
         #endregion
 
