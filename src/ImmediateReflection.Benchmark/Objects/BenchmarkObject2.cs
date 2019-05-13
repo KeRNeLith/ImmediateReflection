@@ -3,11 +3,11 @@ namespace ImmediateReflection.Benchmark
     /// <summary>
     /// Benchmark object.
     /// </summary>
-    internal class BenchmarkObject
+    internal class BenchmarkObject2
     {
         // ReSharper disable once InconsistentNaming
-        public int _benchmarkField = 42;
+        public float _benchmarkField = 42.5f;
 
-        public string BenchmarkProperty { get; set; } = "Benchmark Property string";
+        public int BenchmarkProperty { get; set; } = 45;
     }
 }

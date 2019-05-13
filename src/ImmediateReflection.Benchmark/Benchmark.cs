@@ -21,6 +21,14 @@ namespace ImmediateReflection.Benchmark
             BenchmarkRunner.Run<PropertyGetterBenchmark>(config);
             BenchmarkRunner.Run<FieldSetterBenchmark>(config);
             BenchmarkRunner.Run<PropertySetterBenchmark>(config);
+
+            if (args.Length <= 0 || !args[0].Contains("FullBenchmark"))
+                return;
+
+            BenchmarkRunner.Run<FieldMultiGetterBenchmark>(config);
+            BenchmarkRunner.Run<PropertyMultiGetterBenchmark>(config);
+            BenchmarkRunner.Run<FieldMultiSetterBenchmark>(config);
+            BenchmarkRunner.Run<PropertyMultiSetterBenchmark>(config);
         }
     }
 }
