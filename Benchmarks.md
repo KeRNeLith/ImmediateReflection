@@ -1,52 +1,66 @@
-## Benchmarks
+# Benchmarks
 
 Benchmarks have been implemented with [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet).
 
+## Configuration
+
+`BenchmarkDotNet=v0.11.5, OS=Windows 10.0.17134.706 (1803/April2018Update/Redstone4)
+Intel Core i7-4720HQ CPU 2.60GHz (Haswell), 1 CPU, 8 logical and 4 physical cores
+Frequency=2533210 Hz, Resolution=394.7561 ns, Timer=TSC
+  [Host]     : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3394.0
+  DefaultJob : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3394.0`
+
+## Results
+
 *Get a field value*
 
-|                  Method |          Mean |     Error |    StdDev |    Ratio | RatioSD |
-|------------------------ |--------------:|----------:|----------:|---------:|--------:|
-|         GetDirect_Field |     0.9082 ns | 0.0113 ns | 0.0101 ns |     1.00 |    0.00 |
-|      GetFieldInfo_Field | 1,068.2783 ns | 8.6150 ns | 7.6370 ns | 1,176.37 |   15.69 |
-| GetFieldInfoCache_Field |   989.5415 ns | 4.6663 ns | 3.6431 ns | 1,088.26 |   10.65 |
-|     GetFastMember_Field |    28.5185 ns | 0.3009 ns | 0.2513 ns |    31.41 |    0.50 |
-| **GetImmediateField_Field** |     **6.3111 ns** | **0.2211 ns** | **0.2715 ns** |     **7.05** |    **0.31** |
+|                  Method |        Mean |     Error |    StdDev |      Median | Ratio | RatioSD |
+|------------------------ |------------:|----------:|----------:|------------:|------:|--------:|
+|         GetDirect_Field |   0.0147 ns | 0.0254 ns | 0.0282 ns |   0.0000 ns |     ? |       ? |
+|      GetFieldInfo_Field | 155.9170 ns | 3.1413 ns | 2.9384 ns | 156.1697 ns |     ? |       ? |
+| GetFieldInfoCache_Field |  85.8316 ns | 0.8684 ns | 0.8123 ns |  85.9824 ns |     ? |       ? |
+|     GetFastMember_Field |  42.8260 ns | 0.4328 ns | 0.4049 ns |  43.0462 ns |     ? |       ? |
+| **GetImmediateField_Field** |   **7.2577 ns** | **0.0810 ns** | **0.0757 ns** |   **7.2758 ns** |     ? |       ? |
 
 *Set a field value*
 
-|                  Method |          Mean |     Error |    StdDev |    Ratio | RatioSD |
-|------------------------ |--------------:|----------:|----------:|---------:|--------:|
-|         SetDirect_Field |     0.8962 ns | 0.0101 ns | 0.0084 ns |     1.00 |    0.00 |
-|      SetFieldInfo_Field | 1,104.1402 ns | 9.9162 ns | 8.7905 ns | 1,233.05 |   13.84 |
-| SetFieldInfoCache_Field |   990.2330 ns | 2.4879 ns | 2.0775 ns | 1,105.00 |   11.56 |
-|     SetFastMember_Field |    27.8781 ns | 0.0877 ns | 0.0778 ns |    31.12 |    0.30 |
-| **SetImmediateField_Field** |     **5.7449 ns** | **0.1408 ns** | **0.2502 ns** |     **6.20** |    **0.16** |
+|                  Method |        Mean |     Error |    StdDev |      Median | Ratio | RatioSD |
+|------------------------ |------------:|----------:|----------:|------------:|------:|--------:|
+|         SetDirect_Field |   0.0103 ns | 0.0166 ns | 0.0155 ns |   0.0013 ns |     ? |       ? |
+|      SetFieldInfo_Field | 189.4856 ns | 5.7389 ns | 5.6364 ns | 187.7984 ns |     ? |       ? |
+| SetFieldInfoCache_Field | 124.1563 ns | 2.4189 ns | 2.4840 ns | 123.7972 ns |     ? |       ? |
+|     SetFastMember_Field |  43.6264 ns | 0.7829 ns | 0.6941 ns |  43.6652 ns |     ? |       ? |
+| **SetImmediateField_Field** |   **7.5640 ns** | **0.0830 ns** | **0.0776 ns** |   **7.5905 ns** |     ? |       ? |
 
 ---
 
 *Get a property value*
 
-|                        Method |        Mean |     Error |    StdDev |  Ratio | RatioSD |
-|------------------------------ |------------:|----------:|----------:|-------:|--------:|
-|            GetDirect_Property |   0.9181 ns | 0.0757 ns | 0.0671 ns |   1.00 |    0.00 |
-|          GetDelegate_Property |   2.7163 ns | 0.0630 ns | 0.0558 ns |   2.97 |    0.20 |
-|   GetDynamicDelegate_Property | 524.9968 ns | 3.3247 ns | 2.9473 ns | 574.53 |   39.39 |
-|      GetPropertyInfo_Property | 124.2704 ns | 0.3083 ns | 0.2884 ns | 135.99 |    9.51 |
-| GetPropertyInfoCache_Property |  63.1564 ns | 0.1596 ns | 0.1415 ns |  69.12 |    4.87 |
-|        GetFastMember_Property |  27.3103 ns | 0.1265 ns | 0.1183 ns |  29.90 |    2.07 |
-| **GetImmediateProperty_Property** |   **3.8488 ns** | **0.0334 ns** | **0.0279 ns** |   **4.23** |    **0.30** |
+|                        Method |        Mean |      Error |     StdDev | Ratio | RatioSD |
+|------------------------------ |------------:|-----------:|-----------:|------:|--------:|
+|            GetDirect_Property |   0.0123 ns |  0.0154 ns |  0.0134 ns |     ? |       ? |
+|          GetDelegate_Property |   6.6114 ns |  0.0519 ns |  0.0460 ns |     ? |       ? |
+|   GetDynamicDelegate_Property | 739.9169 ns | 15.5476 ns | 14.5432 ns |     ? |       ? |
+|      GetPropertyInfo_Property | 214.3223 ns |  2.6594 ns |  2.4876 ns |     ? |       ? |
+| GetPropertyInfoCache_Property | 130.9820 ns |  1.4167 ns |  1.3252 ns |     ? |       ? |
+|         GetSigilEmit_Property |   7.6240 ns |  0.0939 ns |  0.0878 ns |     ? |       ? |
+|        GetExpression_Property |  15.4046 ns |  0.3038 ns |  0.2983 ns |     ? |       ? |
+|        GetFastMember_Property |  44.1442 ns |  0.9606 ns |  1.7074 ns |     ? |       ? |
+| **GetImmediateProperty_Property** |   **5.2596 ns** |  **0.0826 ns** |  **0.0772 ns** |     ? |       ? |
 
-*Get a property value*
+*Set a property value*
 
 |                        Method |       Mean |     Error |    StdDev |  Ratio | RatioSD |
 |------------------------------ |-----------:|----------:|----------:|-------:|--------:|
-|            SetDirect_Property |   2.036 ns | 0.0151 ns | 0.0134 ns |   1.00 |    0.00 |
-|          SetDelegate_Property |   4.038 ns | 0.0368 ns | 0.0345 ns |   1.98 |    0.02 |
-|   SetDynamicDelegate_Property | 633.429 ns | 6.2525 ns | 5.8486 ns | 311.21 |    4.28 |
-|      SetPropertyInfo_Property | 190.114 ns | 2.8883 ns | 2.7017 ns |  93.32 |    1.71 |
-| SetPropertyInfoCache_Property | 121.591 ns | 0.7281 ns | 0.6080 ns |  59.76 |    0.48 |
-|        SetFastMember_Property |  28.747 ns | 0.0292 ns | 0.0273 ns |  14.12 |    0.09 |
-| **SetImmediateProperty_Property** |   **4.738 ns** | **0.0131 ns** | **0.0122 ns** |   **2.33** |    **0.02** |  
+|            SetDirect_Property |   2.106 ns | 0.0225 ns | 0.0211 ns |   1.00 |    0.00 |
+|          SetDelegate_Property |   6.200 ns | 0.0502 ns | 0.0469 ns |   2.94 |    0.04 |
+|   SetDynamicDelegate_Property | 794.723 ns | 4.4044 ns | 4.1199 ns | 377.41 |    4.49 |
+|      SetPropertyInfo_Property | 289.381 ns | 3.4420 ns | 3.2197 ns | 137.42 |    2.06 |
+| SetPropertyInfoCache_Property | 213.145 ns | 1.5090 ns | 1.3377 ns | 101.32 |    1.19 |
+|         SetSigilEmit_Property |   6.242 ns | 0.0198 ns | 0.0175 ns |   2.97 |    0.03 |
+|        SetExpression_Property |  11.445 ns | 0.1126 ns | 0.1053 ns |   5.43 |    0.05 |
+|        SetFastMember_Property |  45.380 ns | 0.4711 ns | 0.4407 ns |  21.55 |    0.34 |
+| **SetImmediateProperty_Property** |   **5.854 ns** | **0.0171 ns** | **0.0142 ns** |   2.79 |    0.03 |
 
 ---
 

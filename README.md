@@ -17,6 +17,8 @@ It provides these features while trying to keep an API as similar as the standar
 
 To see how powerful it can be [here](https://github.com/KeRNeLith/ImmediateReflection/blob/master/Benchmarks.md) are some benchmarks of the library.
 
+Other benchmarks made on multiple get/set of multiple types to avoid eventual processor caching issues, see [there](https://github.com/KeRNeLith/ImmediateReflection/blob/master/Benchmarks_Multi.md).
+
 ## Getting started
 
 ### Getting a type
