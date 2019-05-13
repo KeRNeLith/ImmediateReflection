@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net20;net35;net40;net45;net461;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net20;net35;net40;net45;netstandard2.0</TargetFrameworks>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -34,7 +34,7 @@ Supports Source Link</Description>
 
     <IsPackable>true</IsPackable>
     <PackageId>ImmediateReflection</PackageId>
-    <PackageReleaseNotes>➟ Release 1.0.0</PackageReleaseNotes>
+    <PackageReleaseNotes>➟ Release 0.1.0</PackageReleaseNotes>
     <PackageTags>C# Reflection Fast Immediate Performance Delegate Dynamic</PackageTags>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -88,10 +88,6 @@ Supports Source Link</Description>
     <AssemblyTitle>ImmediateReflection .NET Framework 4.5</AssemblyTitle>
     <DefineConstants>$(DefineConstants);NET45;SUPPORTS_AGGRESSIVE_INLINING;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_LINQ;SUPPORTS_SYSTEM_CACHING;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)'=='net461'">
-    <AssemblyTitle>ImmediateReflection .NET Framework 4.6.1</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NET461;SUPPORTS_AGGRESSIVE_INLINING;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_LINQ;SUPPORTS_MICROSOFT_CACHING;$(AdditionalConstants)</DefineConstants>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <AssemblyTitle>ImmediateReflection .NET Standard 2.0</AssemblyTitle>
     <DefineConstants>$(DefineConstants);NETSTANDARD2_0;SUPPORTS_AGGRESSIVE_INLINING;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_LINQ;SUPPORTS_MICROSOFT_CACHING;$(AdditionalConstants)</DefineConstants>
@@ -102,7 +98,7 @@ Supports Source Link</Description>
     <PackageReference Include="System.Runtime.Caching" Version="4.5.0" />
   </ItemGroup>
   
-  <ItemGroup Condition="'$(TargetFramework)'=='net461' Or '$(TargetFramework)'=='netstandard2.0'">
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
   </ItemGroup>
   
