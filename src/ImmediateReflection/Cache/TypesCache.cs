@@ -45,7 +45,7 @@ namespace ImmediateReflection
         /// </summary>
         public static TypesCache Instance { get; } = InstanceHandler.InternalInstance;
 
-        private sealed class InstanceHandler
+        private static class InstanceHandler
         {
             // Explicit static constructor to tell C# compiler
             // not to mark type as beforefieldinit
