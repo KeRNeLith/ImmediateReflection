@@ -24,8 +24,13 @@ namespace ImmediateReflection
         }
 
 #if SUPPORTS_SYSTEM_CACHING
-        private volatile MemoryCache _cachedTypes = new MemoryCache("ImmediateTypesCache");
+        [NotNull]
+        private const string CacheName = "ImmediateTypesCache";
+
+        [NotNull]
+        private volatile MemoryCache _cachedTypes = new MemoryCache(CacheName);
 #else
+        [NotNull]
         private volatile MemoryCache _cachedTypes = new MemoryCache(new MemoryCacheOptions());
 #endif
 
