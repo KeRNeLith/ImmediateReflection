@@ -20,21 +20,27 @@
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
 
     <Copyright>Copyright © 2018</Copyright>
-    <Description>.NET library that aims to provider faster usage of C# reflection features. Especially the usage of constructor and members accessors (get/set).
+    <Description>.NET library that aims to provide a faster usage of C# reflection features. Especially the usage of constructor and members accessors (get/set).
+It provides these features while trying to keep an API as similar as the standard Reflection API 
 
 Supported platforms:
 - .NET Standard 2.0+
 - .NET Core 2.0+
 - .NET Framework 2.0+
 
-Supports Source Link</Description>
+Supports Source Link
+
+See benchmarks here: https://github.com/KeRNeLith/ImmediateReflection/blob/master/Benchmarks.md</Description>
     <Owners>Alexandre Rabérin</Owners>
     <Authors>Alexandre Rabérin</Authors>
     <Company>Alexandre Rabérin</Company>
 
     <IsPackable>true</IsPackable>
     <PackageId>ImmediateReflection</PackageId>
-    <PackageReleaseNotes>➟ Release 0.1.0</PackageReleaseNotes>
+    <PackageReleaseNotes>➟ Release 0.1.0
+First implementation of a fast ("immediate") access and usage of C# Reflection features.
+
+Supports Type fields and properties getter/setter.</PackageReleaseNotes>
     <PackageTags>C# Reflection Fast Immediate Performance Delegate Dynamic</PackageTags>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
