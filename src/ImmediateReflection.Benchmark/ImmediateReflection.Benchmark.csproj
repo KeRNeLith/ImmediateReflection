@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net461</TargetFrameworks>
     <OutputType>Exe</OutputType>
 
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -44,14 +44,15 @@
   </PropertyGroup>
 
   <!-- Targets defines -->
-  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">
-    <DefineConstants>$(DefineConstants);NETCOREAPP2_0;$(AdditionalConstants)</DefineConstants>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net461'">
+    <DefineConstants>$(DefineConstants);NET461;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
 
   <!-- Dependencies -->
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.11.5" />
     <PackageReference Include="FastMember" Version="1.4.1" />
+    <PackageReference Include="Sigil" Version="4.7.0" />
   </ItemGroup>
   
   <ItemGroup>

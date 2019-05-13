@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
 using JetBrains.Annotations;
+using Sigil;
 
 namespace ImmediateReflection.Benchmark
 {
@@ -17,6 +18,17 @@ namespace ImmediateReflection.Benchmark
         [NotNull]
         private static readonly Delegate DynamicGetterDelegate = Delegate.CreateDelegate(
             typeof(Func<BenchmarkObject, string>), null, PropertyInfo.GetGetMethod());
+
+        [NotNull]
+        private static readonly Func<BenchmarkObject, string> SigilEmitGetter = Emit<Func<BenchmarkObject, string>>
+            .NewDynamicMethod("GetProperty")
+            .LoadArgument(0)
+            .Call(PropertyInfo.GetGetMethod())
+            .Return()
+            .CreateDelegate();
+
+        [NotNull]
+        private static readonly Func<BenchmarkObject, object> ExpressionGetter = ExpressionHelpers.CreateGetter<BenchmarkObject>(PropertyInfo);
 
         // Benchmark methods
         [Benchmark(Baseline = true)]
@@ -50,6 +62,18 @@ namespace ImmediateReflection.Benchmark
         public string GetPropertyInfoCache_Property()
         {
             return (string)PropertyInfo.GetValue(BenchmarkObject);
+        }
+
+        [Benchmark]
+        public string GetSigilEmit_Property()
+        {
+            return SigilEmitGetter(BenchmarkObject);
+        }
+
+        [Benchmark]
+        public string GetExpression_Property()
+        {
+            return (string)ExpressionGetter(BenchmarkObject);
         }
 
         [Benchmark]
