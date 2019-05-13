@@ -4,11 +4,14 @@ Benchmarks have been implemented with [BenchmarkDotNet](https://github.com/dotne
 
 ## Configuration
 
-`BenchmarkDotNet=v0.11.5, OS=Windows 10.0.17134.706 (1803/April2018Update/Redstone4)
-Intel Core i7-4720HQ CPU 2.60GHz (Haswell), 1 CPU, 8 logical and 4 physical cores
+```ini
+BenchmarkDotNet=v0.11.5
+OS=Windows 10.0.17134.706 (1803/April2018Update/Redstone4)
+Processor=Intel Core i7-4720HQ CPU 2.60GHz (Haswell), 1 CPU, 8 logical and 4 physical cores
 Frequency=2533210 Hz, Resolution=394.7561 ns, Timer=TSC
   [Host]     : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3394.0
-  DefaultJob : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3394.0`
+  DefaultJob : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3394.0
+```
 
 ## Results
 
