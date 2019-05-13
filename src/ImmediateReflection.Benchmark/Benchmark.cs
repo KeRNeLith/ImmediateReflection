@@ -17,14 +17,13 @@ namespace ImmediateReflection.Benchmark
             IConfig config = DefaultConfig.Instance;
 #endif
 
+            // Single get/set
             BenchmarkRunner.Run<FieldGetterBenchmark>(config);
             BenchmarkRunner.Run<PropertyGetterBenchmark>(config);
             BenchmarkRunner.Run<FieldSetterBenchmark>(config);
             BenchmarkRunner.Run<PropertySetterBenchmark>(config);
 
-            if (args.Length <= 0 || !args[0].Contains("FullBenchmark"))
-                return;
-
+            // Multi get/set
             BenchmarkRunner.Run<FieldMultiGetterBenchmark>(config);
             BenchmarkRunner.Run<PropertyMultiGetterBenchmark>(config);
             BenchmarkRunner.Run<FieldMultiSetterBenchmark>(config);
