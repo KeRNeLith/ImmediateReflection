@@ -54,6 +54,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="obj">Object that field value will be returned.</param>
         /// <returns>Field value of the specified object.</returns>
+        /// <exception cref="InvalidCastException">If the <paramref name="obj"/> is not the owner of this field.</exception>
         /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the field to get is not static.</exception>
         [Pure]
         public object GetValue([CanBeNull] object obj)
@@ -66,6 +67,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="obj">Object that field value will be set.</param>
         /// <param name="value">New field value.</param>
+        /// <exception cref="InvalidCastException">If the <paramref name="obj"/> is not the owner of this field or if the <paramref name="value"/> is of the wrong type.</exception>
         /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the field to set is not static.</exception>
         public void SetValue([CanBeNull] object obj, [CanBeNull] object value)
         {

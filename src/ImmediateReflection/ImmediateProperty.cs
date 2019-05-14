@@ -97,6 +97,8 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="obj">Object that property value will be returned.</param>
         /// <returns>Property value of the specified object.</returns>
+        /// <exception cref="ArgumentException">If this property has no getter.</exception>
+        /// <exception cref="InvalidCastException">If the <paramref name="obj"/> is not the owner of this property.</exception>
         /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the property to get is not static.</exception>
         [Pure]
         public object GetValue([CanBeNull] object obj)
@@ -109,6 +111,8 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="obj">Object that property value will be set.</param>
         /// <param name="value">New property value.</param>
+        /// <exception cref="ArgumentException">If this property has no setter.</exception>
+        /// <exception cref="InvalidCastException">If the <paramref name="obj"/> is not the owner of this property or if the <paramref name="value"/> is of the wrong type.</exception>
         /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the property to set is not static.</exception>
         public void SetValue([CanBeNull] object obj, [CanBeNull] object value)
         {
