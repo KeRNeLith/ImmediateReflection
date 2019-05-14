@@ -7,19 +7,13 @@ namespace ImmediateReflection
     /// <summary>
     /// Represents a field and provides access to its metadata in a faster way.
     /// </summary>
-    public sealed class ImmediateField : IEquatable<ImmediateField>
+    public sealed class ImmediateField : ImmediateMember, IEquatable<ImmediateField>
     {
         /// <summary>
         /// Gets the wrapped <see cref="System.Reflection.FieldInfo"/>.
         /// </summary>
         [NotNull]
         public FieldInfo FieldInfo { get; }
-
-        /// <summary>
-        /// Gets the <see cref="System.Reflection.FieldInfo"/> name.
-        /// </summary>
-        [NotNull]
-        public string Name { get; }
 
         /// <summary>
         /// Gets the <see cref="Type"/> of this field.
@@ -39,9 +33,9 @@ namespace ImmediateReflection
         /// <param name="field"><see cref="System.Reflection.FieldInfo"/> to wrap.</param>
         /// <exception cref="ArgumentNullException">If the <paramref name="field"/> is null.</exception>
         internal ImmediateField([NotNull] FieldInfo field)
+            : base(field)
         {
-            FieldInfo = field ?? throw new ArgumentNullException(nameof(field));
-            Name = field.Name;
+            FieldInfo = field;
             FieldType = field.FieldType;
 
             // Getter / Setter

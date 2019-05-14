@@ -7,19 +7,13 @@ namespace ImmediateReflection
     /// <summary>
     /// Represents a property and provides access to property metadata in a faster way.
     /// </summary>
-    public sealed class ImmediateProperty : IEquatable<ImmediateProperty>
+    public sealed class ImmediateProperty : ImmediateMember, IEquatable<ImmediateProperty>
     {
         /// <summary>
         /// Gets the wrapped <see cref="System.Reflection.PropertyInfo"/>.
         /// </summary>
         [NotNull]
         public PropertyInfo PropertyInfo { get; }
-
-        /// <summary>
-        /// Gets the <see cref="System.Reflection.PropertyInfo"/> name.
-        /// </summary>
-        [NotNull]
-        public string Name { get; }
 
         /// <summary>
         /// Gets the <see cref="Type"/> of this property.
@@ -49,10 +43,10 @@ namespace ImmediateReflection
         /// <param name="property"><see cref="System.Reflection.PropertyInfo"/> to wrap.</param>
         /// <exception cref="ArgumentNullException">If the <paramref name="property"/> is null.</exception>
         internal ImmediateProperty([NotNull] PropertyInfo property)
+            : base(property)
         {
             // General property info
-            PropertyInfo = property ?? throw new ArgumentNullException(nameof(property));
-            Name = property.Name;
+            PropertyInfo = property;
             PropertyType = property.PropertyType;
             CanRead = property.CanRead;
             CanWrite = property.CanWrite;
