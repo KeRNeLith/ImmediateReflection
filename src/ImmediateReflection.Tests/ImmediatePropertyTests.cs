@@ -1087,6 +1087,8 @@ namespace ImmediateReflection.Tests
 
         #endregion
 
+        #region Equals/HashCode/ToString
+
         [Test]
         public void ImmediatePropertyEquality()
         {
@@ -1123,5 +1125,7 @@ namespace ImmediateReflection.Tests
             var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
             Assert.AreNotEqual(immediateProperty1.ToString(), immediateProperty2.ToString());
         }
+
+        #endregion
     }
 }

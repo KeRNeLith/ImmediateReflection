@@ -56,6 +56,8 @@ namespace ImmediateReflection.Tests
             // ReSharper restore InconsistentNaming
         }
 
+        #region Equals/HashCode/ToString
+
         [Test]
         public void ImmediatePropertiesEquality()
         {
@@ -96,5 +98,7 @@ namespace ImmediateReflection.Tests
             var immediateProperties2 = new ImmediateProperties(EmptyPropertyInfo);
             Assert.AreEqual("[]", immediateProperties2.ToString());
         }
+
+        #endregion
     }
 }

@@ -62,6 +62,8 @@ namespace ImmediateReflection.Tests
             // ReSharper restore InconsistentNaming
         }
 
+        #region Equals/HashCode/ToString
+
         [Test]
         public void ImmediateFieldsEquality()
         {
@@ -102,5 +104,7 @@ namespace ImmediateReflection.Tests
             var immediateFields2 = new ImmediateFields(EmptyFieldInfo);
             Assert.AreEqual("[]", immediateFields2.ToString());
         }
+
+        #endregion
     }
 }

@@ -193,6 +193,20 @@ namespace ImmediateReflection
 #endif
         public ImmediateProperty GetProperty([NotNull] string propertyName) => Properties[propertyName];
 
+        /// <summary>
+        /// Creates an instance of this <see cref="Type"/> with that type's default constructor.
+        /// </summary>
+        /// <returns>A reference to the newly created object.</returns>
+        /// <exception cref="ArgumentException"><see cref="Type"/> a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
+        /// <exception cref="MissingMethodException">No matching public constructor was found.</exception>
+        /// <exception cref="TargetInvocationException">The constructor being called throws an exception.</exception>
+        [Pure]
+        [NotNull]
+        public object New()
+        {
+            return Activator.CreateInstance(Type);
+        }
+
         #region Equality / IEquatable<T>
 
         /// <inheritdoc />

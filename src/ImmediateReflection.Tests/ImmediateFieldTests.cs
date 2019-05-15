@@ -644,6 +644,8 @@ namespace ImmediateReflection.Tests
 
         #endregion
 
+        #region Equals/HashCode/ToString
+
         [Test]
         public void ImmediateFieldEquality()
         {
@@ -680,5 +682,7 @@ namespace ImmediateReflection.Tests
             var immediateField2 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
             Assert.AreNotEqual(immediateField1.ToString(), immediateField2.ToString());
         }
+
+        #endregion
     }
 }

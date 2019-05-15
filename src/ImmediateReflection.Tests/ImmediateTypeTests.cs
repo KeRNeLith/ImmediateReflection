@@ -13,6 +13,8 @@ namespace ImmediateReflection.Tests
     [TestFixture]
     internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     {
+        #region ImmediateType infos
+
         #region Test classes
 
         private class EmptyType
@@ -360,20 +362,9 @@ namespace ImmediateReflection.Tests
                 testType.Properties.Select(property => property.PropertyInfo));
         }
 
-        [Pure]
-        [NotNull, ItemNotNull]
-        private static IEnumerable<MemberInfo> SelectAllMemberInfos(IEnumerable<ImmediateMember> members)
-        {
-            return members.Select<ImmediateMember, MemberInfo>(member =>
-            {
-                if (member is ImmediateField field)
-                    return field.FieldInfo;
-                if (member is ImmediateProperty property)
-                    return property.PropertyInfo;
+        #endregion
 
-                throw new InvalidOperationException("Members contain an unexpected value");
-            });
-        }
+        #region Members
 
         [Test]
         public void ImmediateTypeGetMembers()
@@ -388,6 +379,23 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEquivalent(
                 classifiedMembers.AllMembers,
                 SelectAllMemberInfos(immediateType.GetMembers()));
+
+            #region Local function
+
+            IEnumerable<MemberInfo> SelectAllMemberInfos(IEnumerable<ImmediateMember> members)
+            {
+                return members.Select<ImmediateMember, MemberInfo>(member =>
+                {
+                    if (member is ImmediateField field)
+                        return field.FieldInfo;
+                    if (member is ImmediateProperty property)
+                        return property.PropertyInfo;
+
+                    throw new InvalidOperationException("Members contain an unexpected value");
+                });
+            }
+
+            #endregion
         }
 
         [Test]
@@ -412,6 +420,10 @@ namespace ImmediateReflection.Tests
             Assert.Throws<ArgumentNullException>(() => { ImmediateMember _ = immediateType[null]; });
             // ReSharper restore AssignNullToNotNullAttribute
         }
+
+        #endregion
+
+        #region Fields
 
         [Test]
         public void ImmediateTypeGetFields()
@@ -438,6 +450,10 @@ namespace ImmediateReflection.Tests
             Assert.Throws<ArgumentNullException>(() => immediateType.GetField(null));
         }
 
+        #endregion
+
+        #region Properties
+
         [Test]
         public void ImmediateTypeGetProperties()
         {
@@ -462,6 +478,129 @@ namespace ImmediateReflection.Tests
             // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             Assert.Throws<ArgumentNullException>(() => immediateType.GetProperty(null));
         }
+
+        #endregion
+
+        #region New/Constructor
+
+        #region Test classes
+
+        private class DefaultConstructor
+        {
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as DefaultConstructor);
+            }
+
+            private bool Equals(DefaultConstructor other)
+            {
+                if (other is null)
+                    return false;
+                return true;
+            }
+
+            public override int GetHashCode()
+            {
+                return 1;
+            }
+        }
+
+        private abstract class AbstractDefaultConstructor
+        {
+        }
+
+        private class NoDefaultConstructor
+        {
+            // ReSharper disable once UnusedParameter.Local
+            public NoDefaultConstructor(int value)
+            {
+            }
+        }
+
+        private class NotAccessibleDefaultConstructor
+        {
+            private NotAccessibleDefaultConstructor()
+            {
+            }
+        }
+
+        // ReSharper disable once UnusedTypeParameter
+        private class TemplateDefaultConstructor<TTemplate>
+        {
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as TemplateDefaultConstructor<TTemplate>);
+            }
+
+            private bool Equals(TemplateDefaultConstructor<TTemplate> other)
+            {
+                if (other is null)
+                    return false;
+                return true;
+            }
+
+            public override int GetHashCode()
+            {
+                return 1;
+            }
+        }
+
+        private class DefaultConstructorThrows
+        {
+            public DefaultConstructorThrows()
+            {
+                throw new InvalidOperationException("Constructor throws.");
+            }
+        }
+
+        #endregion
+
+        private static IEnumerable<TestCaseData> CreateDefaultConstructorTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                yield return new TestCaseData(typeof(int));
+                yield return new TestCaseData(typeof(TestStruct));
+                yield return new TestCaseData(typeof(DefaultConstructor));
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>));
+            }
+        }
+
+        [TestCaseSource(nameof(CreateDefaultConstructorTestCases))]
+        public void NewParameterLess([NotNull] Type type)
+        {
+            var immediateType = new ImmediateType(type);
+
+            object instance = immediateType.New();
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(Activator.CreateInstance(type), instance);
+        }
+
+        [Test]
+        public void NewParameterLess_Throws()
+        {
+            // ReSharper disable ReturnValueOfPureMethodIsNotUsed
+            var immediateType = new ImmediateType(typeof(NoDefaultConstructor));
+            Assert.Throws<MissingMethodException>(() => immediateType.New());
+
+            immediateType = new ImmediateType(typeof(NotAccessibleDefaultConstructor));
+            Assert.Throws<MissingMethodException>(() => immediateType.New());
+
+            immediateType = new ImmediateType(typeof(AbstractDefaultConstructor));
+            Assert.Throws<MissingMethodException>(() => immediateType.New());
+
+            immediateType = new ImmediateType(typeof(TemplateDefaultConstructor<>));
+            Assert.Throws<ArgumentException>(() => immediateType.New());
+
+            immediateType = new ImmediateType(typeof(DefaultConstructorThrows));
+            Assert.Throws<TargetInvocationException>(() => immediateType.New());
+            // ReSharper restore ReturnValueOfPureMethodIsNotUsed
+        }
+
+        #endregion
+
+        #region Equals/HashCode/ToString
 
         [Test]
         public void ImmediateTypeEquality()
@@ -499,5 +638,7 @@ namespace ImmediateReflection.Tests
             var immediateType2 = new ImmediateType(typeof(InternalValueTypeTestClass));
             Assert.AreNotEqual(immediateType1.ToString(), immediateType2.ToString());
         }
+
+        #endregion
     }
 }
