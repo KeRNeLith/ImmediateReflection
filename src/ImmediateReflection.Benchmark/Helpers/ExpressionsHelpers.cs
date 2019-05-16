@@ -12,6 +12,14 @@ namespace ImmediateReflection.Benchmark
     {
         [Pure]
         [NotNull]
+        public static Func<T> CreateConstructor<T>()
+        {
+            Expression body = Expression.New(typeof(T));
+            return (Func<T>)Expression.Lambda(body).Compile();
+        }
+
+        [Pure]
+        [NotNull]
         public static Func<T, object> CreateGetter<T>([NotNull] PropertyInfo property)
         {
             if (property is null)

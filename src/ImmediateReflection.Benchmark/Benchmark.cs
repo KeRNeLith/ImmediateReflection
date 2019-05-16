@@ -17,6 +17,9 @@ namespace ImmediateReflection.Benchmark
             IConfig config = DefaultConfig.Instance;
 #endif
 
+            // Constructor
+            BenchmarkRunner.Run<ConstructorBenchmark>(config);
+
             // Single get/set
             BenchmarkRunner.Run<FieldGetterBenchmark>(config);
             BenchmarkRunner.Run<PropertyGetterBenchmark>(config);

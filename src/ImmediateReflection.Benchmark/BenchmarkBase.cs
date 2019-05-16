@@ -116,6 +116,9 @@ namespace ImmediateReflection.Benchmark
         #region Immediate Reflection
 
         [NotNull]
+        protected static readonly ImmediateType ImmediateType = new ImmediateType(BenchmarkObjectType);
+
+        [NotNull]
         protected static readonly ImmediateField ImmediateField = new ImmediateField(FieldInfo);
 
         [NotNull]
