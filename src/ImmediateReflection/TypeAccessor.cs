@@ -38,6 +38,7 @@ namespace ImmediateReflection
         /// It gives access to all public instance members.
         /// </summary>
         /// <typeparam name="T"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</typeparam>
+        [Pure]
 #endif
         [NotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -81,6 +82,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="type"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</param>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        [Pure]
 #endif
         [NotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -124,6 +126,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <typeparam name="T"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</typeparam>
         /// <param name="includeNonPublicMembers">Indicates if non public members should be taken into account.</param>
+        [Pure]
 #endif
         [NotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -170,6 +173,7 @@ namespace ImmediateReflection
         /// <param name="type"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</param>
         /// <param name="includeNonPublicMembers">Indicates if non public members should be taken into account.</param>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        [Pure]
 #endif
         [NotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -214,6 +218,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <typeparam name="T"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</typeparam>
         /// <param name="flags">Flags that must be taken into account to get members.</param>
+        [Pure]
 #endif
         [NotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -257,6 +262,7 @@ namespace ImmediateReflection
         /// <param name="type"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</param>
         /// <param name="flags">Flags that must be taken into account to get members.</param>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        [Pure]
 #endif
         [NotNull]
 #if SUPPORTS_SYSTEM_CACHING || SUPPORTS_MICROSOFT_CACHING
