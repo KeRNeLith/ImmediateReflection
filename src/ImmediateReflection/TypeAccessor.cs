@@ -13,7 +13,7 @@ namespace ImmediateReflection
     /// </summary>
     public static class TypeAccessor
     {
-        internal const BindingFlags DefaultFlags = BindingFlags.Public | BindingFlags.Instance;
+        internal const BindingFlags DefaultFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
 
 #if SUPPORTS_MICROSOFT_CACHING
         /// <summary>

@@ -36,10 +36,10 @@ namespace ImmediateReflection.Tests
                 Assert.AreEqual(typeof(PublicValueTypeTestClass), type.Type);
                 // Public instance members
                 CollectionAssert.AreEqual(
-                    classifiedMembers.PublicInstanceFields,
+                    classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.StaticFields),
                     type.Fields.Select(field => field.FieldInfo));
                 CollectionAssert.AreEquivalent(
-                    classifiedMembers.PublicInstanceProperties,
+                    classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.StaticProperties),
                     type.Properties.Select(property => property.PropertyInfo));
             }
 
@@ -65,10 +65,10 @@ namespace ImmediateReflection.Tests
                 Assert.AreEqual(typeof(PublicValueTypeTestClass), type.Type);
                 // Public & Non Public instance members
                 CollectionAssert.AreEqual(
-                    classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.NonPublicInstanceFields),
+                    classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.NonPublicInstanceFields).Concat(classifiedMembers.StaticFields),
                     IgnoreBackingFields(immediateType.Fields.Select(field => field.FieldInfo)));
                 CollectionAssert.AreEquivalent(
-                    classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.NonPublicInstanceProperties),
+                    classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.NonPublicInstanceProperties).Concat(classifiedMembers.StaticProperties),
                     immediateType.Properties.Select(property => property.PropertyInfo));
             }
 

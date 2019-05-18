@@ -79,7 +79,8 @@ namespace ImmediateReflection.Tests
                 new[]
                 {
                     PublicValueTypePublicFieldFieldsInfo,
-                    PublicValueTypePublicField2FieldsInfo
+                    PublicValueTypePublicField2FieldsInfo,
+                    PublicValueTypeStaticPublicFieldFieldsInfo
                 },
                 immediateTypePublic.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
@@ -90,7 +91,8 @@ namespace ImmediateReflection.Tests
                     PublicValueTypePublicGetPropertyPropertyInfo,
                     PublicValueTypePublicPrivateGetSetPropertyPropertyInfo,
                     PublicValueTypePublicGetPrivateSetPropertyPropertyInfo,
-                    PublicValueTypePublicSetPropertyPropertyInfo
+                    PublicValueTypePublicSetPropertyPropertyInfo,
+                    PublicValueTypeStaticPublicGetSetPropertyPropertyInfo
                 },
                 immediateTypePublic.Properties.Select(property => property.PropertyInfo));
 
@@ -105,7 +107,8 @@ namespace ImmediateReflection.Tests
                 new[]
                 {
                     InternalValueTypePublicFieldFieldsInfo,
-                    InternalValueTypePublicField2FieldsInfo
+                    InternalValueTypePublicField2FieldsInfo,
+                    InternalValueTypeStaticPublicFieldFieldsInfo
                 },
                 immediateTypeInternal.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
@@ -116,7 +119,8 @@ namespace ImmediateReflection.Tests
                     InternalValueTypePublicGetPropertyPropertyInfo,
                     InternalValueTypePublicPrivateGetSetPropertyPropertyInfo,
                     InternalValueTypePublicGetPrivateSetPropertyPropertyInfo,
-                    InternalValueTypePublicSetPropertyPropertyInfo
+                    InternalValueTypePublicSetPropertyPropertyInfo,
+                    InternalValueTypeStaticPublicGetSetPropertyPropertyInfo
                 },
                 immediateTypeInternal.Properties.Select(property => property.PropertyInfo));
         }
@@ -135,7 +139,8 @@ namespace ImmediateReflection.Tests
                 new[]
                 {
                     PublicReferenceTypePublicFieldFieldsInfo,
-                    PublicReferenceTypePublicField2FieldsInfo
+                    PublicReferenceTypePublicField2FieldsInfo,
+                    PublicReferenceTypeStaticPublicFieldFieldsInfo
                 },
                 immediateTypePublic.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
@@ -146,7 +151,8 @@ namespace ImmediateReflection.Tests
                     PublicReferenceTypePublicGetPropertyPropertyInfo,
                     PublicReferenceTypePublicPrivateGetSetPropertyPropertyInfo,
                     PublicReferenceTypePublicGetPrivateSetPropertyPropertyInfo,
-                    PublicReferenceTypePublicSetPropertyPropertyInfo
+                    PublicReferenceTypePublicSetPropertyPropertyInfo,
+                    PublicReferenceTypeStaticPublicGetSetPropertyPropertyInfo
                 },
                 immediateTypePublic.Properties.Select(property => property.PropertyInfo));
 
@@ -161,7 +167,8 @@ namespace ImmediateReflection.Tests
                 new[]
                 {
                     InternalReferenceTypePublicFieldFieldsInfo,
-                    InternalReferenceTypePublicField2FieldsInfo
+                    InternalReferenceTypePublicField2FieldsInfo,
+                    InternalReferenceTypeStaticPublicFieldFieldsInfo
                 },
                 immediateTypeInternal.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
@@ -172,7 +179,8 @@ namespace ImmediateReflection.Tests
                     InternalReferenceTypePublicGetPropertyPropertyInfo,
                     InternalReferenceTypePublicPrivateGetSetPropertyPropertyInfo,
                     InternalReferenceTypePublicGetPrivateSetPropertyPropertyInfo,
-                    InternalReferenceTypePublicSetPropertyPropertyInfo
+                    InternalReferenceTypePublicSetPropertyPropertyInfo,
+                    InternalReferenceTypeStaticPublicGetSetPropertyPropertyInfo
                 },
                 immediateTypeInternal.Properties.Select(property => property.PropertyInfo));
         }
@@ -191,7 +199,8 @@ namespace ImmediateReflection.Tests
                 new[]
                 {
                     PublicObjectTypePublicFieldFieldsInfo,
-                    PublicObjectTypePublicField2FieldsInfo
+                    PublicObjectTypePublicField2FieldsInfo,
+                    PublicObjectTypeStaticPublicFieldFieldsInfo
                 },
                 immediateTypePublic.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
@@ -202,7 +211,8 @@ namespace ImmediateReflection.Tests
                     PublicObjectTypePublicGetPropertyPropertyInfo,
                     PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo,
                     PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo,
-                    PublicObjectTypePublicSetPropertyPropertyInfo
+                    PublicObjectTypePublicSetPropertyPropertyInfo,
+                    PublicObjectTypeStaticPublicGetSetPropertyPropertyInfo
                 },
                 immediateTypePublic.Properties.Select(property => property.PropertyInfo));
 
@@ -217,7 +227,8 @@ namespace ImmediateReflection.Tests
                 new[]
                 {
                     InternalObjectTypePublicFieldFieldsInfo,
-                    InternalObjectTypePublicField2FieldsInfo
+                    InternalObjectTypePublicField2FieldsInfo,
+                    InternalObjectTypeStaticPublicFieldFieldsInfo
                 },
                 immediateTypeInternal.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
@@ -228,7 +239,8 @@ namespace ImmediateReflection.Tests
                     InternalObjectTypePublicGetPropertyPropertyInfo,
                     InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo,
                     InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo,
-                    InternalObjectTypePublicSetPropertyPropertyInfo
+                    InternalObjectTypePublicSetPropertyPropertyInfo,
+                    InternalObjectTypeStaticPublicGetSetPropertyPropertyInfo
                 },
                 immediateTypeInternal.Properties.Select(property => property.PropertyInfo));
         }
@@ -322,12 +334,12 @@ namespace ImmediateReflection.Tests
         {
             TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
-            var testType = new ImmediateType(typeof(PublicValueTypeTestClass)); // BindingFlags.Public | BindingFlags.Instance
+            var testType = new ImmediateType(typeof(PublicValueTypeTestClass)); // BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static
             CollectionAssert.AreEqual(
-                classifiedMembers.PublicInstanceFields,
+                classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.StaticFields),
                 testType.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
-                classifiedMembers.PublicInstanceProperties,
+                classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.StaticProperties),
                 testType.Properties.Select(property => property.PropertyInfo));
 
             testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.NonPublic | BindingFlags.Instance);
