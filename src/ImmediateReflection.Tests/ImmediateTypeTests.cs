@@ -69,6 +69,8 @@ namespace ImmediateReflection.Tests
         public void ImmediateTypeValueType()
         {
             // Public class
+            TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
+
             var immediateTypePublic = new ImmediateType(typeof(PublicValueTypeTestClass));
             Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateTypePublic.Type);
             Assert.AreEqual(nameof(PublicValueTypeTestClass), immediateTypePublic.Name);
@@ -76,27 +78,15 @@ namespace ImmediateReflection.Tests
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(PublicValueTypeTestClass)}",
                 immediateTypePublic.FullName);
             CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    PublicValueTypePublicFieldFieldsInfo,
-                    PublicValueTypePublicField2FieldsInfo,
-                    PublicValueTypeStaticPublicFieldFieldsInfo
-                },
+                classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.StaticFields).Concat(classifiedMembers.ConstFields),
                 immediateTypePublic.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    PublicValueTypePublicGetSetPropertyPropertyInfo,
-                    PublicValueTypePublicVirtualGetSetPropertyPropertyInfo,
-                    PublicValueTypePublicGetPropertyPropertyInfo,
-                    PublicValueTypePublicPrivateGetSetPropertyPropertyInfo,
-                    PublicValueTypePublicGetPrivateSetPropertyPropertyInfo,
-                    PublicValueTypePublicSetPropertyPropertyInfo,
-                    PublicValueTypeStaticPublicGetSetPropertyPropertyInfo
-                },
+                classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.StaticProperties),
                 immediateTypePublic.Properties.Select(property => property.PropertyInfo));
 
             // Internal class
+            classifiedMembers = TypeClassifiedMembers.GetForInternalValueTypeTestObject();
+
             var immediateTypeInternal = new ImmediateType(typeof(InternalValueTypeTestClass));
             Assert.AreEqual(typeof(InternalValueTypeTestClass), immediateTypeInternal.Type);
             Assert.AreEqual(nameof(InternalValueTypeTestClass), immediateTypeInternal.Name);
@@ -104,24 +94,10 @@ namespace ImmediateReflection.Tests
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(InternalValueTypeTestClass)}",
                 immediateTypeInternal.FullName);
             CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    InternalValueTypePublicFieldFieldsInfo,
-                    InternalValueTypePublicField2FieldsInfo,
-                    InternalValueTypeStaticPublicFieldFieldsInfo
-                },
+                classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.StaticFields).Concat(classifiedMembers.ConstFields),
                 immediateTypeInternal.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    InternalValueTypePublicGetSetPropertyPropertyInfo,
-                    InternalValueTypePublicVirtualGetSetPropertyPropertyInfo,
-                    InternalValueTypePublicGetPropertyPropertyInfo,
-                    InternalValueTypePublicPrivateGetSetPropertyPropertyInfo,
-                    InternalValueTypePublicGetPrivateSetPropertyPropertyInfo,
-                    InternalValueTypePublicSetPropertyPropertyInfo,
-                    InternalValueTypeStaticPublicGetSetPropertyPropertyInfo
-                },
+                classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.StaticProperties),
                 immediateTypeInternal.Properties.Select(property => property.PropertyInfo));
         }
 
@@ -129,6 +105,8 @@ namespace ImmediateReflection.Tests
         public void ImmediateTypeReferenceType()
         {
             // Public class
+            TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicReferenceTypeTestObject();
+
             var immediateTypePublic = new ImmediateType(typeof(PublicReferenceTypeTestClass));
             Assert.AreEqual(typeof(PublicReferenceTypeTestClass), immediateTypePublic.Type);
             Assert.AreEqual(nameof(PublicReferenceTypeTestClass), immediateTypePublic.Name);
@@ -136,27 +114,15 @@ namespace ImmediateReflection.Tests
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(PublicReferenceTypeTestClass)}",
                 immediateTypePublic.FullName);
             CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    PublicReferenceTypePublicFieldFieldsInfo,
-                    PublicReferenceTypePublicField2FieldsInfo,
-                    PublicReferenceTypeStaticPublicFieldFieldsInfo
-                },
+                classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.StaticFields).Concat(classifiedMembers.ConstFields),
                 immediateTypePublic.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    PublicReferenceTypePublicGetSetPropertyPropertyInfo,
-                    PublicReferenceTypePublicVirtualGetSetPropertyPropertyInfo,
-                    PublicReferenceTypePublicGetPropertyPropertyInfo,
-                    PublicReferenceTypePublicPrivateGetSetPropertyPropertyInfo,
-                    PublicReferenceTypePublicGetPrivateSetPropertyPropertyInfo,
-                    PublicReferenceTypePublicSetPropertyPropertyInfo,
-                    PublicReferenceTypeStaticPublicGetSetPropertyPropertyInfo
-                },
+                classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.StaticProperties),
                 immediateTypePublic.Properties.Select(property => property.PropertyInfo));
 
             // Internal class
+            classifiedMembers = TypeClassifiedMembers.GetForInternalReferenceTypeTestObject();
+
             var immediateTypeInternal = new ImmediateType(typeof(InternalReferenceTypeTestClass));
             Assert.AreEqual(typeof(InternalReferenceTypeTestClass), immediateTypeInternal.Type);
             Assert.AreEqual(nameof(InternalReferenceTypeTestClass), immediateTypeInternal.Name);
@@ -164,24 +130,10 @@ namespace ImmediateReflection.Tests
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(InternalReferenceTypeTestClass)}",
                 immediateTypeInternal.FullName);
             CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    InternalReferenceTypePublicFieldFieldsInfo,
-                    InternalReferenceTypePublicField2FieldsInfo,
-                    InternalReferenceTypeStaticPublicFieldFieldsInfo
-                },
+                classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.StaticFields).Concat(classifiedMembers.ConstFields),
                 immediateTypeInternal.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    InternalReferenceTypePublicGetSetPropertyPropertyInfo,
-                    InternalReferenceTypePublicVirtualGetSetPropertyPropertyInfo,
-                    InternalReferenceTypePublicGetPropertyPropertyInfo,
-                    InternalReferenceTypePublicPrivateGetSetPropertyPropertyInfo,
-                    InternalReferenceTypePublicGetPrivateSetPropertyPropertyInfo,
-                    InternalReferenceTypePublicSetPropertyPropertyInfo,
-                    InternalReferenceTypeStaticPublicGetSetPropertyPropertyInfo
-                },
+                classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.StaticProperties),
                 immediateTypeInternal.Properties.Select(property => property.PropertyInfo));
         }
 
@@ -189,6 +141,8 @@ namespace ImmediateReflection.Tests
         public void ImmediateTypeObjectReferenceType()
         {
             // Public class
+            TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicObjectTypeTestObject();
+
             var immediateTypePublic = new ImmediateType(typeof(PublicObjectTypeTestClass));
             Assert.AreEqual(typeof(PublicObjectTypeTestClass), immediateTypePublic.Type);
             Assert.AreEqual(nameof(PublicObjectTypeTestClass), immediateTypePublic.Name);
@@ -196,27 +150,15 @@ namespace ImmediateReflection.Tests
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(PublicObjectTypeTestClass)}",
                 immediateTypePublic.FullName);
             CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    PublicObjectTypePublicFieldFieldsInfo,
-                    PublicObjectTypePublicField2FieldsInfo,
-                    PublicObjectTypeStaticPublicFieldFieldsInfo
-                },
+                classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.StaticFields).Concat(classifiedMembers.ConstFields),
                 immediateTypePublic.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    PublicObjectTypePublicGetSetPropertyPropertyInfo,
-                    PublicObjectTypePublicVirtualGetSetPropertyPropertyInfo,
-                    PublicObjectTypePublicGetPropertyPropertyInfo,
-                    PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo,
-                    PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo,
-                    PublicObjectTypePublicSetPropertyPropertyInfo,
-                    PublicObjectTypeStaticPublicGetSetPropertyPropertyInfo
-                },
+                classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.StaticProperties),
                 immediateTypePublic.Properties.Select(property => property.PropertyInfo));
 
             // Internal class
+            classifiedMembers = TypeClassifiedMembers.GetForInternalObjectTypeTestObject();
+
             var immediateTypeInternal = new ImmediateType(typeof(InternalObjectTypeTestClass));
             Assert.AreEqual(typeof(InternalObjectTypeTestClass), immediateTypeInternal.Type);
             Assert.AreEqual(nameof(InternalObjectTypeTestClass), immediateTypeInternal.Name);
@@ -224,24 +166,10 @@ namespace ImmediateReflection.Tests
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(InternalObjectTypeTestClass)}",
                 immediateTypeInternal.FullName);
             CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    InternalObjectTypePublicFieldFieldsInfo,
-                    InternalObjectTypePublicField2FieldsInfo,
-                    InternalObjectTypeStaticPublicFieldFieldsInfo
-                },
+                classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.StaticFields).Concat(classifiedMembers.ConstFields),
                 immediateTypeInternal.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
-                new[]
-                {
-                    InternalObjectTypePublicGetSetPropertyPropertyInfo,
-                    InternalObjectTypePublicVirtualGetSetPropertyPropertyInfo,
-                    InternalObjectTypePublicGetPropertyPropertyInfo,
-                    InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo,
-                    InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo,
-                    InternalObjectTypePublicSetPropertyPropertyInfo,
-                    InternalObjectTypeStaticPublicGetSetPropertyPropertyInfo
-                },
+                classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.StaticProperties),
                 immediateTypeInternal.Properties.Select(property => property.PropertyInfo));
         }
 
@@ -336,7 +264,7 @@ namespace ImmediateReflection.Tests
 
             var testType = new ImmediateType(typeof(PublicValueTypeTestClass)); // BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static
             CollectionAssert.AreEqual(
-                classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.StaticFields),
+                classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.StaticFields).Concat(classifiedMembers.ConstFields),
                 testType.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
                 classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.StaticProperties),
@@ -360,7 +288,7 @@ namespace ImmediateReflection.Tests
 
             testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
             CollectionAssert.AreEqual(
-                classifiedMembers.StaticFields,
+                classifiedMembers.StaticFields.Concat(classifiedMembers.ConstFields),
                 IgnoreBackingFields(testType.Fields.Select(field => field.FieldInfo)));
             CollectionAssert.AreEquivalent(
                 classifiedMembers.StaticProperties,

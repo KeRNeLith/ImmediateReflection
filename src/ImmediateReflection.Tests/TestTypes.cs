@@ -49,6 +49,8 @@ namespace ImmediateReflection.Tests
         public int _publicField;
         public int _publicField2;
         public static int _publicStaticField;
+        public static readonly int _publicStaticReadonlyField = 112;
+        public const int _publicConstField = 221;
 
         public PublicValueTypeTestClass()
         {
@@ -96,6 +98,7 @@ namespace ImmediateReflection.Tests
         public TestObject _publicField;
         public TestObject _publicField2;
         public static TestObject _publicStaticField;
+        public static readonly TestObject _publicStaticReadonlyField = new TestObject { TestValue = 112 };
 
         public PublicReferenceTypeTestClass()
         {
@@ -142,6 +145,8 @@ namespace ImmediateReflection.Tests
         public object _publicField;
         public object _publicField2;
         public static object _publicStaticField;
+        public static readonly object _publicStaticReadonlyField = 112;
+        public const object _publicConstField = null;
 
         public PublicObjectTypeTestClass()
         {
@@ -188,6 +193,8 @@ namespace ImmediateReflection.Tests
         public int _publicField;
         public int _publicField2;
         public static int _publicStaticField;
+        public static readonly int _publicStaticReadonlyField = 112;
+        public const int _publicConstField = 221;
 
         public InternalValueTypeTestClass()
         {
@@ -235,6 +242,7 @@ namespace ImmediateReflection.Tests
         public TestObject _publicField;
         public TestObject _publicField2;
         public static TestObject _publicStaticField;
+        public static readonly TestObject _publicStaticReadonlyField = new TestObject { TestValue = 221 };
 
         public InternalReferenceTypeTestClass()
         {
@@ -282,6 +290,8 @@ namespace ImmediateReflection.Tests
         public object _publicField;
         public object _publicField2;
         public static object _publicStaticField;
+        public static readonly object _publicStaticReadonlyField = new TestObject();
+        public const object _publicConstField = null;
 
         public InternalObjectTypeTestClass()
         {

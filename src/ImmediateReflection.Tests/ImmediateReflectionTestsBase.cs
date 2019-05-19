@@ -43,13 +43,39 @@ namespace ImmediateReflection.Tests
 
         protected struct TypeClassifiedMembers
         {
+            [NotNull, ItemNotNull]
             public FieldInfo[] PublicInstanceFields { get; set; }
+
+            [NotNull, ItemNotNull]
             public FieldInfo[] NonPublicInstanceFields { get; set; }
+
+            [NotNull, ItemNotNull]
             public FieldInfo[] StaticFields { get; set; }
 
+            [NotNull, ItemNotNull]
+            public FieldInfo[] ConstFields { get; set; }
+
+            [NotNull, ItemNotNull]
+            public IEnumerable<FieldInfo> AllFields => PublicInstanceFields
+                .Concat(NonPublicInstanceFields)
+                .Concat(StaticFields)
+                .Concat(ConstFields);
+
+            [NotNull, ItemNotNull]
             public PropertyInfo[] PublicInstanceProperties { get; set; }
+
+            [NotNull, ItemNotNull]
             public PropertyInfo[] NonPublicInstanceProperties { get; set; }
+
+            [NotNull, ItemNotNull]
             public PropertyInfo[] StaticProperties { get; set; }
+
+            [NotNull, ItemNotNull]
+            public IEnumerable<PropertyInfo> AllProperties => PublicInstanceProperties
+                .Concat(NonPublicInstanceProperties)
+                .Concat(StaticProperties);
+
+            #region Predefined classifiers
 
             public static TypeClassifiedMembers GetForPublicValueTypeTestObject()
             {
@@ -68,7 +94,12 @@ namespace ImmediateReflection.Tests
                     },
                     StaticFields = new[]
                     {
-                        PublicValueTypeStaticPublicFieldFieldsInfo
+                        PublicValueTypeStaticPublicFieldFieldsInfo,
+                        PublicValueTypeStaticReadonlyPublicFieldFieldsInfo
+                    },
+                    ConstFields = new[]
+                    {
+                        PublicValueTypeConstPublicFieldFieldsInfo
                     },
                     PublicInstanceProperties = new[]
                     {
@@ -91,6 +122,236 @@ namespace ImmediateReflection.Tests
                     }
                 };
             }
+
+            public static TypeClassifiedMembers GetForInternalValueTypeTestObject()
+            {
+                return new TypeClassifiedMembers
+                {
+                    PublicInstanceFields = new[]
+                    {
+                        InternalValueTypePublicFieldFieldsInfo,
+                        InternalValueTypePublicField2FieldsInfo
+                    },
+                    NonPublicInstanceFields = new[]
+                    {
+                        InternalValueTypeInternalFieldFieldsInfo,
+                        InternalValueTypeProtectedFieldFieldsInfo,
+                        InternalValueTypePrivateFieldFieldsInfo
+                    },
+                    StaticFields = new[]
+                    {
+                        InternalValueTypeStaticPublicFieldFieldsInfo,
+                        InternalValueTypeStaticReadonlyPublicFieldFieldsInfo
+                    },
+                    ConstFields = new[]
+                    {
+                        InternalValueTypeConstPublicFieldFieldsInfo
+                    },
+                    PublicInstanceProperties = new[]
+                    {
+                        InternalValueTypePublicGetSetPropertyPropertyInfo,
+                        InternalValueTypePublicVirtualGetSetPropertyPropertyInfo,
+                        InternalValueTypePublicGetPropertyPropertyInfo,
+                        InternalValueTypePublicPrivateGetSetPropertyPropertyInfo,
+                        InternalValueTypePublicGetPrivateSetPropertyPropertyInfo,
+                        InternalValueTypePublicSetPropertyPropertyInfo
+                    },
+                    NonPublicInstanceProperties = new[]
+                    {
+                        InternalValueTypeInternalGetSetPropertyPropertyInfo,
+                        InternalValueTypeProtectedGetSetPropertyPropertyInfo,
+                        InternalValueTypePrivateGetSetPropertyPropertyInfo
+                    },
+                    StaticProperties = new[]
+                    {
+                        InternalValueTypeStaticPublicGetSetPropertyPropertyInfo
+                    }
+                };
+            }
+
+            public static TypeClassifiedMembers GetForPublicReferenceTypeTestObject()
+            {
+                return new TypeClassifiedMembers
+                {
+                    PublicInstanceFields = new[]
+                    {
+                        PublicReferenceTypePublicFieldFieldsInfo,
+                        PublicReferenceTypePublicField2FieldsInfo
+                    },
+                    NonPublicInstanceFields = new[]
+                    {
+                        PublicReferenceTypeInternalFieldFieldsInfo,
+                        PublicReferenceTypeProtectedFieldFieldsInfo,
+                        PublicReferenceTypePrivateFieldFieldsInfo
+                    },
+                    StaticFields = new[]
+                    {
+                        PublicReferenceTypeStaticPublicFieldFieldsInfo,
+                        PublicReferenceTypeStaticReadonlyPublicFieldFieldsInfo
+                    },
+                    ConstFields = new FieldInfo[]
+                    {
+                    },
+                    PublicInstanceProperties = new[]
+                    {
+                        PublicReferenceTypePublicGetSetPropertyPropertyInfo,
+                        PublicReferenceTypePublicVirtualGetSetPropertyPropertyInfo,
+                        PublicReferenceTypePublicGetPropertyPropertyInfo,
+                        PublicReferenceTypePublicPrivateGetSetPropertyPropertyInfo,
+                        PublicReferenceTypePublicGetPrivateSetPropertyPropertyInfo,
+                        PublicReferenceTypePublicSetPropertyPropertyInfo
+                    },
+                    NonPublicInstanceProperties = new[]
+                    {
+                        PublicReferenceTypeInternalGetSetPropertyPropertyInfo,
+                        PublicReferenceTypeProtectedGetSetPropertyPropertyInfo,
+                        PublicReferenceTypePrivateGetSetPropertyPropertyInfo
+                    },
+                    StaticProperties = new[]
+                    {
+                        PublicReferenceTypeStaticPublicGetSetPropertyPropertyInfo
+                    }
+                };
+            }
+
+            public static TypeClassifiedMembers GetForInternalReferenceTypeTestObject()
+            {
+                return new TypeClassifiedMembers
+                {
+                    PublicInstanceFields = new[]
+                    {
+                        InternalReferenceTypePublicFieldFieldsInfo,
+                        InternalReferenceTypePublicField2FieldsInfo
+                    },
+                    NonPublicInstanceFields = new[]
+                    {
+                        InternalReferenceTypeInternalFieldFieldsInfo,
+                        InternalReferenceTypeProtectedFieldFieldsInfo,
+                        InternalReferenceTypePrivateFieldFieldsInfo
+                    },
+                    StaticFields = new[]
+                    {
+                        InternalReferenceTypeStaticPublicFieldFieldsInfo,
+                        InternalReferenceTypeStaticReadonlyPublicFieldFieldsInfo
+                    },
+                    ConstFields = new FieldInfo[]
+                    {
+                    },
+                    PublicInstanceProperties = new[]
+                    {
+                        InternalReferenceTypePublicGetSetPropertyPropertyInfo,
+                        InternalReferenceTypePublicVirtualGetSetPropertyPropertyInfo,
+                        InternalReferenceTypePublicGetPropertyPropertyInfo,
+                        InternalReferenceTypePublicPrivateGetSetPropertyPropertyInfo,
+                        InternalReferenceTypePublicGetPrivateSetPropertyPropertyInfo,
+                        InternalReferenceTypePublicSetPropertyPropertyInfo
+                    },
+                    NonPublicInstanceProperties = new[]
+                    {
+                        InternalReferenceTypeInternalGetSetPropertyPropertyInfo,
+                        InternalReferenceTypeProtectedGetSetPropertyPropertyInfo,
+                        InternalReferenceTypePrivateGetSetPropertyPropertyInfo
+                    },
+                    StaticProperties = new[]
+                    {
+                        InternalReferenceTypeStaticPublicGetSetPropertyPropertyInfo
+                    }
+                };
+            }
+
+            public static TypeClassifiedMembers GetForPublicObjectTypeTestObject()
+            {
+                return new TypeClassifiedMembers
+                {
+                    PublicInstanceFields = new[]
+                    {
+                        PublicObjectTypePublicFieldFieldsInfo,
+                        PublicObjectTypePublicField2FieldsInfo
+                    },
+                    NonPublicInstanceFields = new[]
+                    {
+                        PublicObjectTypeInternalFieldFieldsInfo,
+                        PublicObjectTypeProtectedFieldFieldsInfo,
+                        PublicObjectTypePrivateFieldFieldsInfo
+                    },
+                    StaticFields = new[]
+                    {
+                        PublicObjectTypeStaticPublicFieldFieldsInfo,
+                        PublicObjectTypeStaticReadonlyPublicFieldFieldsInfo
+                    },
+                    ConstFields = new[]
+                    {
+                        PublicObjectTypeConstPublicFieldFieldsInfo
+                    },
+                    PublicInstanceProperties = new[]
+                    {
+                        PublicObjectTypePublicGetSetPropertyPropertyInfo,
+                        PublicObjectTypePublicVirtualGetSetPropertyPropertyInfo,
+                        PublicObjectTypePublicGetPropertyPropertyInfo,
+                        PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo,
+                        PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo,
+                        PublicObjectTypePublicSetPropertyPropertyInfo
+                    },
+                    NonPublicInstanceProperties = new[]
+                    {
+                        PublicObjectTypeInternalGetSetPropertyPropertyInfo,
+                        PublicObjectTypeProtectedGetSetPropertyPropertyInfo,
+                        PublicObjectTypePrivateGetSetPropertyPropertyInfo
+                    },
+                    StaticProperties = new[]
+                    {
+                        PublicObjectTypeStaticPublicGetSetPropertyPropertyInfo
+                    }
+                };
+            }
+
+            public static TypeClassifiedMembers GetForInternalObjectTypeTestObject()
+            {
+                return new TypeClassifiedMembers
+                {
+                    PublicInstanceFields = new[]
+                    {
+                        InternalObjectTypePublicFieldFieldsInfo,
+                        InternalObjectTypePublicField2FieldsInfo
+                    },
+                    NonPublicInstanceFields = new[]
+                    {
+                        InternalObjectTypeInternalFieldFieldsInfo,
+                        InternalObjectTypeProtectedFieldFieldsInfo,
+                        InternalObjectTypePrivateFieldFieldsInfo
+                    },
+                    StaticFields = new[]
+                    {
+                        InternalObjectTypeStaticPublicFieldFieldsInfo,
+                        InternalObjectTypeStaticReadonlyPublicFieldFieldsInfo
+                    },
+                    ConstFields = new[]
+                    {
+                        InternalObjectTypeConstPublicFieldFieldsInfo
+                    },
+                    PublicInstanceProperties = new[]
+                    {
+                        InternalObjectTypePublicGetSetPropertyPropertyInfo,
+                        InternalObjectTypePublicVirtualGetSetPropertyPropertyInfo,
+                        InternalObjectTypePublicGetPropertyPropertyInfo,
+                        InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo,
+                        InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo,
+                        InternalObjectTypePublicSetPropertyPropertyInfo
+                    },
+                    NonPublicInstanceProperties = new[]
+                    {
+                        InternalObjectTypeInternalGetSetPropertyPropertyInfo,
+                        InternalObjectTypeProtectedGetSetPropertyPropertyInfo,
+                        InternalObjectTypePrivateGetSetPropertyPropertyInfo
+                    },
+                    StaticProperties = new[]
+                    {
+                        InternalObjectTypeStaticPublicGetSetPropertyPropertyInfo
+                    }
+                };
+            }
+
+            #endregion
         }
 
         #endregion
@@ -228,6 +489,13 @@ namespace ImmediateReflection.Tests
         protected static FieldInfo PublicValueTypeStaticPublicFieldFieldsInfo =
             typeof(PublicValueTypeTestClass).GetField(nameof(PublicValueTypeTestClass._publicStaticField)) ?? throw new AssertionException("Cannot find field.");
 
+        [NotNull]
+        protected static FieldInfo PublicValueTypeStaticReadonlyPublicFieldFieldsInfo =
+            typeof(PublicValueTypeTestClass).GetField(nameof(PublicValueTypeTestClass._publicStaticReadonlyField)) ?? throw new AssertionException("Cannot find field.");
+
+        [NotNull]
+        protected static FieldInfo PublicValueTypeConstPublicFieldFieldsInfo =
+            typeof(PublicValueTypeTestClass).GetField(nameof(PublicValueTypeTestClass._publicConstField)) ?? throw new AssertionException("Cannot find field.");
 
 
         // PublicReferenceTypeTestClass
@@ -300,6 +568,10 @@ namespace ImmediateReflection.Tests
         protected static FieldInfo PublicReferenceTypeStaticPublicFieldFieldsInfo =
             typeof(PublicReferenceTypeTestClass).GetField(nameof(PublicReferenceTypeTestClass._publicStaticField)) ?? throw new AssertionException("Cannot find field.");
 
+        [NotNull]
+        protected static FieldInfo PublicReferenceTypeStaticReadonlyPublicFieldFieldsInfo =
+            typeof(PublicReferenceTypeTestClass).GetField(nameof(PublicReferenceTypeTestClass._publicStaticReadonlyField)) ?? throw new AssertionException("Cannot find field.");
+
 
 
         // PublicObjectTypeTestClass
@@ -371,6 +643,14 @@ namespace ImmediateReflection.Tests
         [NotNull]
         protected static FieldInfo PublicObjectTypeStaticPublicFieldFieldsInfo =
             typeof(PublicObjectTypeTestClass).GetField(nameof(PublicObjectTypeTestClass._publicStaticField)) ?? throw new AssertionException("Cannot find field.");
+
+        [NotNull]
+        protected static FieldInfo PublicObjectTypeStaticReadonlyPublicFieldFieldsInfo =
+            typeof(PublicObjectTypeTestClass).GetField(nameof(PublicObjectTypeTestClass._publicStaticReadonlyField)) ?? throw new AssertionException("Cannot find field.");
+
+        [NotNull]
+        protected static FieldInfo PublicObjectTypeConstPublicFieldFieldsInfo =
+            typeof(PublicObjectTypeTestClass).GetField(nameof(PublicObjectTypeTestClass._publicConstField)) ?? throw new AssertionException("Cannot find field.");
 
         #endregion
 
@@ -446,6 +726,14 @@ namespace ImmediateReflection.Tests
         protected static FieldInfo InternalValueTypeStaticPublicFieldFieldsInfo =
             typeof(InternalValueTypeTestClass).GetField(nameof(InternalValueTypeTestClass._publicStaticField)) ?? throw new AssertionException("Cannot find field.");
 
+        [NotNull]
+        protected static FieldInfo InternalValueTypeStaticReadonlyPublicFieldFieldsInfo =
+            typeof(InternalValueTypeTestClass).GetField(nameof(InternalValueTypeTestClass._publicStaticReadonlyField)) ?? throw new AssertionException("Cannot find field.");
+
+        [NotNull]
+        protected static FieldInfo InternalValueTypeConstPublicFieldFieldsInfo =
+            typeof(InternalValueTypeTestClass).GetField(nameof(InternalValueTypeTestClass._publicConstField)) ?? throw new AssertionException("Cannot find field.");
+
 
 
         // InternalReferenceTypeTestClass
@@ -518,6 +806,9 @@ namespace ImmediateReflection.Tests
         protected static FieldInfo InternalReferenceTypeStaticPublicFieldFieldsInfo =
             typeof(InternalReferenceTypeTestClass).GetField(nameof(InternalReferenceTypeTestClass._publicStaticField)) ?? throw new AssertionException("Cannot find field.");
 
+        [NotNull]
+        protected static FieldInfo InternalReferenceTypeStaticReadonlyPublicFieldFieldsInfo =
+            typeof(InternalReferenceTypeTestClass).GetField(nameof(InternalReferenceTypeTestClass._publicStaticReadonlyField)) ?? throw new AssertionException("Cannot find field.");
 
 
         // InternalObjectTypeTestClass
@@ -589,6 +880,14 @@ namespace ImmediateReflection.Tests
         [NotNull]
         protected static FieldInfo InternalObjectTypeStaticPublicFieldFieldsInfo =
             typeof(InternalObjectTypeTestClass).GetField(nameof(InternalObjectTypeTestClass._publicStaticField)) ?? throw new AssertionException("Cannot find field.");
+
+        [NotNull]
+        protected static FieldInfo InternalObjectTypeStaticReadonlyPublicFieldFieldsInfo =
+            typeof(InternalObjectTypeTestClass).GetField(nameof(InternalObjectTypeTestClass._publicStaticReadonlyField)) ?? throw new AssertionException("Cannot find field.");
+
+        [NotNull]
+        protected static FieldInfo InternalObjectTypeConstPublicFieldFieldsInfo =
+            typeof(InternalObjectTypeTestClass).GetField(nameof(InternalObjectTypeTestClass._publicConstField)) ?? throw new AssertionException("Cannot find field.");
 
         #endregion
 

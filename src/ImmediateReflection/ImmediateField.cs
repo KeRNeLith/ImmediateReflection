@@ -39,8 +39,35 @@ namespace ImmediateReflection
             FieldType = field.FieldType;
 
             // Getter / Setter
-            _getter = DelegatesFactory.CreateGetter(field);
-            _setter = DelegatesFactory.CreateSetter(field);
+            _getter = ConfigureGetter();
+            _setter = ConfigureSetter();
+
+            #region Local functions
+
+            bool IsConstantField()
+            {
+                return field.IsLiteral || field.IsInitOnly;
+            }
+
+            GetterDelegate ConfigureGetter()
+            {
+                if (IsConstantField() && field.IsStatic)
+                {
+                    object fieldValue = field.GetValue(null);
+                    return target => fieldValue;
+                }
+
+                return DelegatesFactory.CreateGetter(field);
+            }
+
+            SetterDelegate ConfigureSetter()
+            {
+                if (IsConstantField())
+                    return (target, value) => throw new FieldAccessException($"Field {Name} cannot be set.");
+                return DelegatesFactory.CreateSetter(field);
+            }
+
+            #endregion
         }
 
         /// <summary>

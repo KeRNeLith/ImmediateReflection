@@ -36,7 +36,7 @@ namespace ImmediateReflection.Tests
                 Assert.AreEqual(typeof(PublicValueTypeTestClass), type.Type);
                 // Public instance members
                 CollectionAssert.AreEqual(
-                    classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.StaticFields),
+                    classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.StaticFields).Concat(classifiedMembers.ConstFields),
                     type.Fields.Select(field => field.FieldInfo));
                 CollectionAssert.AreEquivalent(
                     classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.StaticProperties),
@@ -65,7 +65,7 @@ namespace ImmediateReflection.Tests
                 Assert.AreEqual(typeof(PublicValueTypeTestClass), type.Type);
                 // Public & Non Public instance members
                 CollectionAssert.AreEqual(
-                    classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.NonPublicInstanceFields).Concat(classifiedMembers.StaticFields),
+                    classifiedMembers.AllFields,
                     IgnoreBackingFields(immediateType.Fields.Select(field => field.FieldInfo)));
                 CollectionAssert.AreEquivalent(
                     classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.NonPublicInstanceProperties).Concat(classifiedMembers.StaticProperties),
@@ -95,7 +95,7 @@ namespace ImmediateReflection.Tests
                 Assert.AreEqual(typeof(PublicValueTypeTestClass), type.Type);
                 // Static members
                 CollectionAssert.AreEqual(
-                    classifiedMembers.StaticFields,
+                    classifiedMembers.StaticFields.Concat(classifiedMembers.ConstFields),
                     immediateType.Fields.Select(field => field.FieldInfo));
                 CollectionAssert.AreEquivalent(
                     classifiedMembers.StaticProperties,
@@ -109,10 +109,12 @@ namespace ImmediateReflection.Tests
         public void Get_NullType()
         {
             // ReSharper disable AssignNullToNotNullAttribute
+            // ReSharper disable ReturnValueOfPureMethodIsNotUsed
             Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null));
             Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null, false));
             Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null, true));
             Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null, BindingFlags.Public | BindingFlags.Instance));
+            // ReSharper disable ReturnValueOfPureMethodIsNotUsed
             // ReSharper restore AssignNullToNotNullAttribute
         }
 
