@@ -10,6 +10,14 @@ namespace ImmediateReflection.Tests
     internal class DelegatesFactoryTests : ImmediateReflectionTestsBase
     {
         [Test]
+        public void CreateDefaultConstructor_NullType()
+        {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+            Assert.Throws<ArgumentNullException>(() => DelegatesFactory.CreateConstructor(null));
+        }
+
+        [Test]
         public void CreateFieldGetter_NullField()
         {
             // ReSharper disable once AssignNullToNotNullAttribute

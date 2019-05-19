@@ -3,6 +3,13 @@ using JetBrains.Annotations;
 namespace ImmediateReflection
 {
     /// <summary>
+    /// Default constructor delegate.
+    /// </summary>
+    /// <returns>Newly created object.</returns>
+    [NotNull]
+    public delegate object DefaultConstructorDelegate();
+
+    /// <summary>
     /// Getter delegate.
     /// </summary>
     /// <param name="target">Object instance to get a value, null if static.</param>

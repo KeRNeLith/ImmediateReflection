@@ -13,6 +13,54 @@ namespace ImmediateReflection
     /// </summary>
     internal static class DelegatesFactory
     {
+        #region Constructor
+
+        private const string RuntimeTypeName = "System.RuntimeType";
+        private static readonly Type RuntimeType = Type.GetType(RuntimeTypeName);
+
+        [Pure]
+        [NotNull]
+        public static DefaultConstructorDelegate CreateConstructor([NotNull] Type type)
+        {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+            if (type == RuntimeType)
+                return () => throw new ArgumentException($"Trying to call default constructor on {RuntimeTypeName}.");
+            if (type.ContainsGenericParameters)
+                return () => throw new ArgumentException($"Class {type.Name} has at least one template parameter not defined.");
+
+            DynamicMethod dynamicConstructor = CreateDynamicDefaultConstructor(type.Name, type);
+            dynamicConstructor.InitLocals = true;
+
+            ILGenerator generator = dynamicConstructor.GetILGenerator();
+
+            // Cannot get default constructor for value type, must declare a local
+            if (type.IsValueType)
+            {
+                generator.DeclareLocal(type);
+                generator.Emit(OpCodes.Ldloc_0);
+                generator.Emit(OpCodes.Box, type);
+            }
+            // Get the default constructor if available
+            else
+            {
+                if (type.IsAbstract)
+                    return () => throw new MissingMethodException($"Abstract class {type.Name} cannot be instantiated.");
+
+                ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes);
+                if (constructor is null)
+                    return () => throw new MissingMethodException($"Class {type.Name} does not contain any default constructor.");
+
+                generator.Emit(OpCodes.Newobj, constructor);
+            }
+
+            MethodReturn(generator);
+
+            return (DefaultConstructorDelegate)dynamicConstructor.CreateDelegate(typeof(DefaultConstructorDelegate));
+        }
+
+        #endregion
+
         #region Field Get/Set
 
         [Pure]
@@ -158,6 +206,16 @@ namespace ImmediateReflection
         private static DynamicMethod CreateDynamicProcedure([NotNull] string name, [CanBeNull] Type[] parameterTypes, [NotNull] Type owner)
         {
             return CreateDynamicMethod(name, typeof(void), parameterTypes, owner);
+        }
+
+        [Pure]
+        [NotNull]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        private static DynamicMethod CreateDynamicDefaultConstructor([NotNull] string name, [NotNull] Type owner)
+        {
+            return CreateDynamicMethod($"Constructor{name}", typeof(object), Type.EmptyTypes, owner);
         }
 
         [Pure]

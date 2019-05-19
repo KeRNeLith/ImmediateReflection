@@ -525,6 +525,11 @@ namespace ImmediateReflection.Tests
         }
 
         // ReSharper disable once UnusedTypeParameter
+        private struct TemplateStruct<TTemplate>
+        {
+        }
+
+        // ReSharper disable once UnusedTypeParameter
         private class TemplateDefaultConstructor<TTemplate>
         {
             public override bool Equals(object obj)
@@ -553,6 +558,10 @@ namespace ImmediateReflection.Tests
             }
         }
 
+        private static class StaticClass
+        {
+        }
+
         #endregion
 
         private static IEnumerable<TestCaseData> CreateDefaultConstructorTestCases
@@ -563,6 +572,7 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(int));
                 yield return new TestCaseData(typeof(TestStruct));
                 yield return new TestCaseData(typeof(DefaultConstructor));
+                yield return new TestCaseData(typeof(TemplateStruct<double>));
                 yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>));
             }
         }
@@ -590,11 +600,21 @@ namespace ImmediateReflection.Tests
             immediateType = new ImmediateType(typeof(AbstractDefaultConstructor));
             Assert.Throws<MissingMethodException>(() => immediateType.New());
 
+            immediateType = new ImmediateType(typeof(StaticClass));
+            Assert.Throws<MissingMethodException>(() => immediateType.New());
+
+            immediateType = new ImmediateType(typeof(TemplateStruct<>));
+            Assert.Throws<ArgumentException>(() => immediateType.New());
+
             immediateType = new ImmediateType(typeof(TemplateDefaultConstructor<>));
             Assert.Throws<ArgumentException>(() => immediateType.New());
 
+            // ReSharper disable once PossibleMistakenCallToGetType.2
+            immediateType = new ImmediateType(typeof(DefaultConstructor).GetType());
+            Assert.Throws<ArgumentException>(() => immediateType.New());
+
             immediateType = new ImmediateType(typeof(DefaultConstructorThrows));
-            Assert.Throws<TargetInvocationException>(() => immediateType.New());
+            Assert.Throws(Is.InstanceOf<Exception>(), () => immediateType.New());
             // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         }
 

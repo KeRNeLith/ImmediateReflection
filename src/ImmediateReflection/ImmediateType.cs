@@ -66,6 +66,9 @@ namespace ImmediateReflection
         [NotNull, ItemNotNull]
         public ImmediateProperties Properties { get; }
 
+        [NotNull]
+        private readonly DefaultConstructorDelegate _constructor;
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -77,6 +80,8 @@ namespace ImmediateReflection
             Type = type ?? throw new ArgumentNullException(nameof(type));
             Name = type.Name;
             FullName = type.FullName ?? Name;
+
+            _constructor = DelegatesFactory.CreateConstructor(Type);
 
             if (type.IsEnum)
             {
@@ -204,7 +209,7 @@ namespace ImmediateReflection
         [NotNull]
         public object New()
         {
-            return Activator.CreateInstance(Type);
+            return _constructor();
         }
 
         #region Equality / IEquatable<T>
