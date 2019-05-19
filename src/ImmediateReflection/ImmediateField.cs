@@ -71,6 +71,29 @@ namespace ImmediateReflection
         }
 
         /// <summary>
+        /// Constructor for an enum value.
+        /// </summary>
+        /// <param name="field"><see cref="System.Reflection.FieldInfo"/> to wrap.</param>
+        /// <param name="enumType"><see cref="Type"/> of the enumeration.</param>
+        /// <exception cref="ArgumentNullException">If the <paramref name="field"/> is null.</exception>
+        internal ImmediateField([NotNull] FieldInfo field, [NotNull] Type enumType)
+            : base(field)
+        {
+            if (enumType is null)
+                throw new ArgumentNullException(nameof(enumType));
+            if (!enumType.IsEnum)
+                throw new ArgumentException($"{nameof(enumType)} be must an {nameof(Enum)} type.");
+
+            FieldInfo = field;
+            FieldType = field.FieldType;
+
+            // Getter / No setter
+            object enumValue = field.GetValue(null);
+            _getter = target => enumValue;
+            _setter = (target, value) => throw new FieldAccessException("Cannot set an enumeration value.");
+        }
+
+        /// <summary>
         /// Returns the field value of the specified object.
         /// </summary>
         /// <param name="obj">Object that field value will be returned.</param>

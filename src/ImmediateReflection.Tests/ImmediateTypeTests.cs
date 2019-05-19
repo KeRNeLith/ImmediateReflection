@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -255,6 +256,62 @@ namespace ImmediateReflection.Tests
                     PrivateNestedPublicGetSetPropertyPropertyInfo
                 },
                 nestedImmediateTypePrivate.Properties.Select(property => property.PropertyInfo));
+        }
+
+        [Test]
+        public void ImmediateTypeEnumType()
+        {
+            // Simple test enum
+            CheckEnumType(
+                typeof(TestEnum),
+                new[]
+                {
+                    TestEnumFieldValueFieldInfo,
+                    TestEnumField1FieldInfo,
+                    TestEnumField2FieldInfo
+                });
+
+            // Test enum (inherit ulong)
+            CheckEnumType(
+                typeof(TestEnumULong),
+                new[]
+                {
+                    TestEnumULongFieldValueFieldInfo,
+                    TestEnumULongField1FieldInfo,
+                    TestEnumULongField2FieldInfo
+                });
+
+            // Flags test enum
+            CheckEnumType(
+                typeof(TestEnumFlags),
+                new[]
+                {
+                    TestEnumFlagsFieldValueFieldInfo,
+                    TestEnumFlagsField1FieldInfo,
+                    TestEnumFlagsField2FieldInfo,
+                    TestEnumFlagsField3FieldInfo
+                });
+
+            #region Local functions
+
+            void CheckEnumType(Type enumType, IEnumerable<FieldInfo> enumFields)
+            {
+                var immediateType = new ImmediateType(enumType);
+                Assert.AreEqual(enumType, immediateType.Type);
+                Assert.AreEqual(enumType.Name, immediateType.Name);
+                Assert.AreEqual(
+                    $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{enumType.Name}",
+                    immediateType.FullName);
+
+                CollectionAssert.AreEquivalent(
+                    enumFields,
+                    immediateType.Fields.Select(field => field.FieldInfo));
+                CollectionAssert.AreEquivalent(
+                    Enumerable.Empty<PropertyInfo>(),
+                    immediateType.Properties.Select(property => property.PropertyInfo));
+            }
+
+            #endregion
         }
 
         [Test]

@@ -49,6 +49,36 @@ namespace ImmediateReflection
         }
 
         /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="enumType"><see cref="Type"/> of the enumeration.</param>
+        /// <param name="enumValue">Field corresponding to the current enumeration value.</param>
+        /// <param name="enumValues">Enumerable of <see cref="FieldInfo"/> corresponding to enum values.</param>
+        /// <exception cref="ArgumentNullException">If the <paramref name="enumValue"/> or the <paramref name="enumValues"/> enumerable
+        /// is null, or if it contains a null <see cref="FieldInfo"/>.</exception>
+        internal ImmediateFields([NotNull] Type enumType, [NotNull] FieldInfo enumValue, [NotNull, ItemNotNull] IEnumerable<FieldInfo> enumValues)
+        {
+            if (enumValue is null)
+                throw new ArgumentNullException(nameof(enumValue));
+            if (enumValues is null)
+                throw new ArgumentNullException(nameof(enumValues));
+
+#if SUPPORTS_LINQ
+            _fields = enumValues.ToDictionary(
+                field => field?.Name ?? throw new ArgumentNullException(nameof(field), "An enum field is null."),
+                field => new ImmediateField(field, enumType));
+#else
+            _fields = new Dictionary<string, ImmediateField>();
+            foreach (FieldInfo field in enumValues)
+            {
+                string name = field?.Name ?? throw new ArgumentNullException(nameof(field), "An enum field is null.");
+                _fields[name] = new ImmediateField(field, enumType);
+            }
+#endif
+            _fields[enumValue.Name] = new ImmediateField(enumValue);
+        }
+
+        /// <summary>
         /// Gets the <see cref="ImmediateField"/> corresponding to the given <paramref name="fieldName"/>.
         /// </summary>
         /// <param name="fieldName">Field name.</param>

@@ -356,6 +356,58 @@ namespace ImmediateReflection.Tests
 
         #endregion
 
+        #region Enums
+
+        private const string EnumValueFieldName = "value__";
+
+        // TestEnum
+
+        [NotNull]
+        protected static FieldInfo TestEnumFieldValueFieldInfo =
+            typeof(TestEnum).GetField(EnumValueFieldName) ?? throw new AssertionException("Cannot find enum value field.");
+
+        [NotNull]
+        protected static FieldInfo TestEnumField1FieldInfo =
+            typeof(TestEnum).GetField(nameof(TestEnum.EnumValue1)) ?? throw new AssertionException("Cannot find enum field.");
+
+        [NotNull]
+        protected static FieldInfo TestEnumField2FieldInfo =
+            typeof(TestEnum).GetField(nameof(TestEnum.EnumValue2)) ?? throw new AssertionException("Cannot find enum field.");
+
+        // TestEnumULong
+
+        [NotNull]
+        protected static FieldInfo TestEnumULongFieldValueFieldInfo =
+            typeof(TestEnumULong).GetField(EnumValueFieldName) ?? throw new AssertionException("Cannot find enum value field.");
+
+        [NotNull]
+        protected static FieldInfo TestEnumULongField1FieldInfo =
+            typeof(TestEnumULong).GetField(nameof(TestEnumULong.EnumValue1)) ?? throw new AssertionException("Cannot find enum field.");
+
+        [NotNull]
+        protected static FieldInfo TestEnumULongField2FieldInfo =
+            typeof(TestEnumULong).GetField(nameof(TestEnumULong.EnumValue2)) ?? throw new AssertionException("Cannot find enum field.");
+
+        // TestEnumFlags
+
+        [NotNull]
+        protected static FieldInfo TestEnumFlagsFieldValueFieldInfo =
+            typeof(TestEnumFlags).GetField(EnumValueFieldName) ?? throw new AssertionException("Cannot find enum value field.");
+
+        [NotNull]
+        protected static FieldInfo TestEnumFlagsField1FieldInfo =
+            typeof(TestEnumFlags).GetField(nameof(TestEnumFlags.EnumValue1)) ?? throw new AssertionException("Cannot find enum field.");
+
+        [NotNull]
+        protected static FieldInfo TestEnumFlagsField2FieldInfo =
+            typeof(TestEnumFlags).GetField(nameof(TestEnumFlags.EnumValue2)) ?? throw new AssertionException("Cannot find enum field.");
+
+        [NotNull]
+        protected static FieldInfo TestEnumFlagsField3FieldInfo =
+            typeof(TestEnumFlags).GetField(nameof(TestEnumFlags.EnumValue3)) ?? throw new AssertionException("Cannot find enum field.");
+
+        #endregion
+
         #region Struct
 
         // Properties //

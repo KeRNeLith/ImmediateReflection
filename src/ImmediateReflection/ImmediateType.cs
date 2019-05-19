@@ -1,5 +1,10 @@
 using System;
 using System.Collections.Generic;
+#if SUPPORTS_LINQ
+using System.Linq;
+#else
+using static ImmediateReflection.Utils.EnumerableUtils;
+#endif
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
@@ -57,8 +62,29 @@ namespace ImmediateReflection
             Name = type.Name;
             FullName = type.FullName ?? Name;
 
-            Fields = new ImmediateFields(type.GetFields(flags));
-            Properties = new ImmediateProperties(type.GetProperties(flags));
+            if (type.IsEnum)
+            {
+                FieldInfo[] enumFields = type.GetFields();
+#if SUPPORTS_LINQ
+                FieldInfo enumValue = enumFields.First(field => !field.IsStatic);               // Current enum value field (not static)
+                IEnumerable<FieldInfo> enumValues = enumFields.Where(field => field.IsStatic);  // Enum values (static)
+#else
+                FieldInfo enumValue = First(enumFields, field => !field.IsStatic);               // Current enum value field (not static)
+                IEnumerable<FieldInfo> enumValues = Where(enumFields, field => field.IsStatic);  // Enum values (static)
+#endif
+                Fields = new ImmediateFields(type, enumValue, enumValues);
+
+#if SUPPORTS_LINQ
+                Properties = new ImmediateProperties(Enumerable.Empty<PropertyInfo>());
+#else
+                Properties = new ImmediateProperties(Empty<PropertyInfo>());
+#endif
+            }
+            else
+            {
+                Fields = new ImmediateFields(type.GetFields(flags));
+                Properties = new ImmediateProperties(type.GetProperties(flags));
+            }
         }
 
         /// <summary>

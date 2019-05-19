@@ -6,11 +6,33 @@
 // ReSharper disable NotAccessedField.Local
 // ReSharper disable FieldCanBeMadeReadOnly.Local
 
+using System;
+
 #pragma warning disable CS0649
 #pragma warning disable 169
 
 namespace ImmediateReflection.Tests
 {
+    public enum TestEnum
+    {
+        EnumValue1,
+        EnumValue2
+    }
+
+    public enum TestEnumULong : ulong
+    {
+        EnumValue1 = 10,
+        EnumValue2 = 20
+    }
+
+    [Flags]
+    public enum TestEnumFlags
+    {
+        EnumValue1,
+        EnumValue2,
+        EnumValue3
+    }
+
     public struct TestStruct
     {
         public int _testValue;

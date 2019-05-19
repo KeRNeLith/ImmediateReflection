@@ -247,6 +247,51 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
+        public void ImmediateFieldGetValue_Enum()
+        {
+            // Simple TestEnum
+            const TestEnum testEnum1 = TestEnum.EnumValue2;
+
+            var immediateField = new ImmediateField(TestEnumFieldValueFieldInfo);
+            Assert.AreEqual((int)TestEnum.EnumValue2, immediateField.GetValue(testEnum1));
+
+            immediateField = new ImmediateField(TestEnumField2FieldInfo, typeof(TestEnum));
+            Assert.AreEqual(TestEnum.EnumValue2, immediateField.GetValue(null));
+
+            // TestEnum (inherit ulong)
+            const TestEnumULong testEnum2 = TestEnumULong.EnumValue1;
+
+            immediateField = new ImmediateField(TestEnumULongFieldValueFieldInfo);
+            Assert.AreEqual((ulong)TestEnumULong.EnumValue1, immediateField.GetValue(testEnum2));
+
+            immediateField = new ImmediateField(TestEnumULongField1FieldInfo, typeof(TestEnumULong));
+            Assert.AreEqual(TestEnumULong.EnumValue1, immediateField.GetValue(null));
+
+            // TestEnumFlags
+            const TestEnumFlags testEnum3 = TestEnumFlags.EnumValue1 | TestEnumFlags.EnumValue2;
+
+            immediateField = new ImmediateField(TestEnumFlagsFieldValueFieldInfo);
+            Assert.AreEqual((int)(TestEnumFlags.EnumValue1 | TestEnumFlags.EnumValue2), immediateField.GetValue(testEnum3));
+
+            immediateField = new ImmediateField(TestEnumFlagsField3FieldInfo, typeof(TestEnumFlags));
+            Assert.AreEqual(TestEnumFlags.EnumValue3, immediateField.GetValue(null));
+        }
+
+        [Test]
+        public void ImmediateFieldGetValue_EnumThrows()
+        {
+            // ReSharper disable ObjectCreationAsStatement
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => new ImmediateField(null, typeof(TestEnum)));
+            Assert.Throws<ArgumentException>(() => new ImmediateField(TestEnumField1FieldInfo, typeof(PublicValueTypeTestClass)));
+            // ReSharper restore ObjectCreationAsStatement
+
+            var immediateField = new ImmediateField(TestEnumFieldValueFieldInfo);
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+            Assert.Throws<TargetException>(() => immediateField.GetValue(null));
+        }
+
+        [Test]
         public void ImmediateFieldGetValue_NullInstance()
         {
             var immediateField = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
@@ -489,6 +534,28 @@ namespace ImmediateReflection.Tests
             immediateProperty = new ImmediateField(InternalObjectTypeStaticPublicFieldFieldsInfo);
             immediateProperty.SetValue(null, testObject);
             Assert.AreSame(testObject, InternalObjectTypeTestClass._publicStaticField);
+        }
+
+        [Test]
+        public void ImmediateFieldSetValue_Enum()
+        {
+            // Simple TestEnum
+            TestEnum testEnum = TestEnum.EnumValue2;
+
+            var immediateField = new ImmediateField(TestEnumFieldValueFieldInfo);
+            immediateField.SetValue(testEnum, TestEnum.EnumValue1);
+            Assert.AreEqual(TestEnum.EnumValue2, testEnum);     // Enum internal value cannot be set
+        }
+
+        [Test]
+        public void ImmediateFieldSetValue_EnumThrows()
+        {
+            var immediateField = new ImmediateField(TestEnumFieldValueFieldInfo);
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+            Assert.Throws<TargetException>(() => immediateField.SetValue(null, TestEnum.EnumValue2));
+
+            immediateField = new ImmediateField(TestEnumField1FieldInfo);
+            Assert.Throws<FieldAccessException>(() => immediateField.SetValue(null, TestEnum.EnumValue2));
         }
 
         [Test]
