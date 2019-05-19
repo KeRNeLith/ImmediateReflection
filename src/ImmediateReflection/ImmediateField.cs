@@ -75,7 +75,8 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="field"><see cref="System.Reflection.FieldInfo"/> to wrap.</param>
         /// <param name="enumType"><see cref="Type"/> of the enumeration.</param>
-        /// <exception cref="ArgumentNullException">If the <paramref name="field"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">If the <paramref name="field"/> or <paramref name="enumType"/> is null.</exception>
+        /// <exception cref="ArgumentException">If the <paramref name="enumType"/> is not an enumeration type.</exception>
         internal ImmediateField([NotNull] FieldInfo field, [NotNull] Type enumType)
             : base(field)
         {
@@ -112,6 +113,7 @@ namespace ImmediateReflection
         /// <param name="obj">Object that field value will be set.</param>
         /// <param name="value">New field value.</param>
         /// <exception cref="InvalidCastException">If the <paramref name="obj"/> is not the owner of this field or if the <paramref name="value"/> is of the wrong type.</exception>
+        /// <exception cref="FieldAccessException">If the field is constant or read only.</exception>
         /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the field to set is not static.</exception>
         public void SetValue([CanBeNull] object obj, [CanBeNull] object value)
         {

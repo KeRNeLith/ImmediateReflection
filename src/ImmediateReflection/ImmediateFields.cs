@@ -54,10 +54,15 @@ namespace ImmediateReflection
         /// <param name="enumType"><see cref="Type"/> of the enumeration.</param>
         /// <param name="enumValue">Field corresponding to the current enumeration value.</param>
         /// <param name="enumValues">Enumerable of <see cref="FieldInfo"/> corresponding to enum values.</param>
-        /// <exception cref="ArgumentNullException">If the <paramref name="enumValue"/> or the <paramref name="enumValues"/> enumerable
+        /// <exception cref="ArgumentNullException">If the <paramref name="enumType"/> or <paramref name="enumValue"/> or the <paramref name="enumValues"/> enumerable
         /// is null, or if it contains a null <see cref="FieldInfo"/>.</exception>
+        /// <exception cref="ArgumentException">If the <paramref name="enumType"/> is not an enumeration type.</exception>
         internal ImmediateFields([NotNull] Type enumType, [NotNull] FieldInfo enumValue, [NotNull, ItemNotNull] IEnumerable<FieldInfo> enumValues)
         {
+            if (enumType is null)
+                throw new ArgumentNullException(nameof(enumType));
+            if (!enumType.IsEnum)
+                throw new ArgumentException($"{nameof(enumType)} be must an {nameof(Enum)} type.");
             if (enumValue is null)
                 throw new ArgumentNullException(nameof(enumValue));
             if (enumValues is null)
