@@ -119,6 +119,16 @@ namespace ImmediateReflection.Benchmark
         protected static readonly ImmediateType ImmediateType = new ImmediateType(BenchmarkObjectType);
 
         [NotNull]
+        protected static readonly ImmediateType ImmediateType2 = new ImmediateType(BenchmarkObjectType2);
+
+        [NotNull]
+        protected static readonly ImmediateType ImmediateType3 = new ImmediateType(BenchmarkObjectType3);
+
+        [NotNull]
+        protected static readonly ImmediateType ImmediateType4 = new ImmediateType(BenchmarkObjectType4);
+
+
+        [NotNull]
         protected static readonly ImmediateField ImmediateField = new ImmediateField(FieldInfo);
 
         [NotNull]
@@ -129,6 +139,7 @@ namespace ImmediateReflection.Benchmark
 
         [NotNull]
         protected static readonly ImmediateField ImmediateField4 = new ImmediateField(FieldInfo4);
+
 
 
         [NotNull]

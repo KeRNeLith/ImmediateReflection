@@ -19,6 +19,7 @@ namespace ImmediateReflection.Benchmark
 
             // Constructor
             BenchmarkRunner.Run<ConstructorBenchmark>(config);
+            BenchmarkRunner.Run<MultiConstructorBenchmark>(config);
 
             // Single get/set
             BenchmarkRunner.Run<FieldGetterBenchmark>(config);
