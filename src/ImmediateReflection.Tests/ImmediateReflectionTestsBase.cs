@@ -33,14 +33,6 @@ namespace ImmediateReflection.Tests
 
         #region Types members classifiers
 
-        [Pure]
-        [NotNull, ItemNotNull]
-        protected static IEnumerable<FieldInfo> IgnoreBackingFields([NotNull, ItemNotNull] IEnumerable<FieldInfo> fields)
-        {
-            const string backingFieldName = "BackingField";
-            return fields.Where(field => !field.Name.Contains(backingFieldName));
-        }
-
         protected struct TypeClassifiedMembers
         {
             [NotNull, ItemNotNull]
@@ -74,6 +66,18 @@ namespace ImmediateReflection.Tests
             public IEnumerable<PropertyInfo> AllProperties => PublicInstanceProperties
                 .Concat(NonPublicInstanceProperties)
                 .Concat(StaticProperties);
+
+            [NotNull, ItemNotNull]
+            public IEnumerable<MemberInfo> AllMembers
+            {
+                get
+                {
+                    foreach (FieldInfo field in AllFields)
+                        yield return field;
+                    foreach (PropertyInfo property in AllProperties)
+                        yield return property;
+                }
+            }
 
             #region Predefined classifiers
 

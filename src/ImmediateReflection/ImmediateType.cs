@@ -6,6 +6,7 @@ using System.Linq;
 using static ImmediateReflection.Utils.EnumerableUtils;
 #endif
 using System.Reflection;
+using static ImmediateReflection.Utils.FieldHelpers;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
@@ -37,6 +38,21 @@ namespace ImmediateReflection
         /// <remarks>Fallback on the type name if full name is null.</remarks>
         [NotNull]
         public string FullName { get; }
+
+        /// <summary>
+        /// Gets all the members of this <see cref="System.Type"/>.
+        /// </summary>
+        [NotNull, ItemNotNull]
+        public IEnumerable<ImmediateMember> Members
+        {
+            get
+            {
+                foreach (ImmediateField field in Fields)
+                    yield return field;
+                foreach (ImmediateProperty property in Properties)
+                    yield return property;
+            }
+        }
 
         /// <summary>
         /// Gets all the fields of this <see cref="System.Type"/>.
@@ -82,10 +98,52 @@ namespace ImmediateReflection
             }
             else
             {
-                Fields = new ImmediateFields(type.GetFields(flags));
+                Fields = new ImmediateFields(IgnoreBackingFields(type.GetFields(flags)));
                 Properties = new ImmediateProperties(type.GetProperties(flags));
             }
         }
+
+        /// <summary>
+        /// Gets all the members of this <see cref="System.Type"/>.
+        /// </summary>
+        /// <returns>All <see cref="ImmediateMember"/>.</returns>
+        [Pure]
+        [NotNull, ItemNotNull]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public IEnumerable<ImmediateMember> GetMembers() => Members;
+
+        /// <summary>
+        /// Gets the <see cref="ImmediateMember"/> corresponding to the given <paramref name="memberName"/>.
+        /// </summary>
+        /// <param name="memberName">Member name.</param>
+        /// <returns>Found <see cref="ImmediateMember"/>, otherwise null.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
+        [CanBeNull]
+        public ImmediateMember this[[NotNull] string memberName]
+        {
+            get
+            {
+                ImmediateField field = Fields[memberName];
+                if (field is null)
+                    return Properties[memberName];
+                return field;
+            }
+        }
+
+        /// <summary>
+        /// Gets the <see cref="ImmediateMember"/> corresponding to the given <paramref name="memberName"/>.
+        /// </summary>
+        /// <param name="memberName">Member name.</param>
+        /// <returns>Found <see cref="ImmediateMember"/>, otherwise null.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
+        [Pure]
+        [CanBeNull]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public ImmediateMember GetMember([NotNull] string memberName) => this[memberName];
 
         /// <summary>
         /// Gets all the fields of this <see cref="System.Type"/>.

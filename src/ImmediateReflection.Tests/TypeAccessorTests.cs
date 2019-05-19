@@ -66,7 +66,7 @@ namespace ImmediateReflection.Tests
                 // Public & Non Public instance members
                 CollectionAssert.AreEqual(
                     classifiedMembers.AllFields,
-                    IgnoreBackingFields(immediateType.Fields.Select(field => field.FieldInfo)));
+                    immediateType.Fields.Select(field => field.FieldInfo));
                 CollectionAssert.AreEquivalent(
                     classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.NonPublicInstanceProperties).Concat(classifiedMembers.StaticProperties),
                     immediateType.Properties.Select(property => property.PropertyInfo));

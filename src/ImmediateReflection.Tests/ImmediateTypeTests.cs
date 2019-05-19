@@ -330,7 +330,7 @@ namespace ImmediateReflection.Tests
             testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.NonPublic | BindingFlags.Instance);
             CollectionAssert.AreEqual(
                 classifiedMembers.NonPublicInstanceFields,
-                IgnoreBackingFields(testType.Fields.Select(field => field.FieldInfo)));
+                testType.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
                 classifiedMembers.NonPublicInstanceProperties,
                 testType.Properties.Select(property => property.PropertyInfo));
@@ -338,7 +338,7 @@ namespace ImmediateReflection.Tests
             testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             CollectionAssert.AreEqual(
                 classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.NonPublicInstanceFields),
-                IgnoreBackingFields(testType.Fields.Select(field => field.FieldInfo)));
+                testType.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
                 classifiedMembers.PublicInstanceProperties.Concat(classifiedMembers.NonPublicInstanceProperties),
                 testType.Properties.Select(property => property.PropertyInfo));
@@ -346,7 +346,7 @@ namespace ImmediateReflection.Tests
             testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
             CollectionAssert.AreEqual(
                 classifiedMembers.StaticFields.Concat(classifiedMembers.ConstFields),
-                IgnoreBackingFields(testType.Fields.Select(field => field.FieldInfo)));
+                testType.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
                 classifiedMembers.StaticProperties,
                 testType.Properties.Select(property => property.PropertyInfo));
@@ -358,6 +358,59 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEqual(
                 Enumerable.Empty<PropertyInfo>(),
                 testType.Properties.Select(property => property.PropertyInfo));
+        }
+
+        [Pure]
+        [NotNull, ItemNotNull]
+        private static IEnumerable<MemberInfo> SelectAllMemberInfos(IEnumerable<ImmediateMember> members)
+        {
+            return members.Select<ImmediateMember, MemberInfo>(member =>
+            {
+                if (member is ImmediateField field)
+                    return field.FieldInfo;
+                if (member is ImmediateProperty property)
+                    return property.PropertyInfo;
+
+                throw new InvalidOperationException("Members contain an unexpected value");
+            });
+        }
+
+        [Test]
+        public void ImmediateTypeGetMembers()
+        {
+            TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
+
+            var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass), TypeAccessor.DefaultFlags | BindingFlags.NonPublic);
+
+            CollectionAssert.AreEquivalent(
+                classifiedMembers.AllMembers,
+                SelectAllMemberInfos(immediateType.Members));
+            CollectionAssert.AreEquivalent(
+                classifiedMembers.AllMembers,
+                SelectAllMemberInfos(immediateType.GetMembers()));
+        }
+
+        [Test]
+        public void ImmediateTypeGetMember()
+        {
+            var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
+            string memberName = nameof(PublicValueTypeTestClass._publicField);
+            Assert.AreEqual(immediateType.Fields[memberName], immediateType.GetMember(memberName));
+            Assert.AreEqual(immediateType.Fields[memberName], immediateType[memberName]);
+
+            memberName = nameof(PublicValueTypeTestClass.PublicPropertyGet);
+            Assert.AreEqual(immediateType.Properties[memberName], immediateType.GetMember(memberName));
+            Assert.AreEqual(immediateType.Properties[memberName], immediateType[memberName]);
+
+            memberName = "NotExists";
+            Assert.IsNull(immediateType.GetMember(memberName));
+            Assert.IsNull(immediateType[memberName]);
+
+            // ReSharper disable AssignNullToNotNullAttribute
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+            Assert.Throws<ArgumentNullException>(() => immediateType.GetMember(null));
+            Assert.Throws<ArgumentNullException>(() => { ImmediateMember _ = immediateType[null]; });
+            // ReSharper restore AssignNullToNotNullAttribute
         }
 
         [Test]
