@@ -292,6 +292,22 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
+        public void ImmediateFieldGetValue_Constant()
+        {
+            var testObject = new PublicValueTypeTestClass();
+
+            // Static readonly
+            var immediateField = new ImmediateField(PublicValueTypeStaticReadonlyPublicFieldFieldsInfo);
+            Assert.AreEqual(112, immediateField.GetValue(testObject));
+            Assert.AreEqual(112, immediateField.GetValue(null));
+
+            // Constant
+            immediateField = new ImmediateField(PublicValueTypeConstPublicFieldFieldsInfo);
+            Assert.AreEqual(221, immediateField.GetValue(testObject));
+            Assert.AreEqual(221, immediateField.GetValue(null));
+        }
+
+        [Test]
         public void ImmediateFieldGetValue_NullInstance()
         {
             var immediateField = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
@@ -539,7 +555,6 @@ namespace ImmediateReflection.Tests
         [Test]
         public void ImmediateFieldSetValue_Enum()
         {
-            // Simple TestEnum
             TestEnum testEnum = TestEnum.EnumValue2;
 
             var immediateField = new ImmediateField(TestEnumFieldValueFieldInfo);
@@ -556,6 +571,22 @@ namespace ImmediateReflection.Tests
 
             immediateField = new ImmediateField(TestEnumField1FieldInfo);
             Assert.Throws<FieldAccessException>(() => immediateField.SetValue(null, TestEnum.EnumValue2));
+        }
+
+        [Test]
+        public void ImmediateFieldSetValue_Constant()
+        {
+            var testObject = new PublicValueTypeTestClass();
+
+            // Static readonly
+            var immediateField = new ImmediateField(PublicValueTypeStaticReadonlyPublicFieldFieldsInfo);
+            Assert.Throws<FieldAccessException>(() => immediateField.SetValue(testObject, 123456));
+            Assert.Throws<FieldAccessException>(() => immediateField.SetValue(null, 123456));
+
+            // Constant
+            immediateField = new ImmediateField(PublicValueTypeConstPublicFieldFieldsInfo);
+            Assert.Throws<FieldAccessException>(() => immediateField.SetValue(testObject, 123456));
+            Assert.Throws<FieldAccessException>(() => immediateField.SetValue(null, 123456));
         }
 
         [Test]
