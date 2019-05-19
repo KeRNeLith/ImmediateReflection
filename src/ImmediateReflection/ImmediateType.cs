@@ -212,6 +212,28 @@ namespace ImmediateReflection
             return _constructor();
         }
 
+        /// <summary>
+        /// Creates an instance of this <see cref="Type"/> with that type's default constructor.
+        /// </summary>
+        /// <remarks>This method will not throw if instantiation failed.</remarks>
+        /// <param name="exception">Caught exception if the instantiation failed, otherwise null.</param>
+        /// <returns>A reference to the newly created object, otherwise null.</returns>
+        [Pure]
+        [CanBeNull]
+        public object New(out Exception exception)
+        {
+            try
+            {
+                exception = null;
+                return _constructor();
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+                return null;
+            }
+        }
+
         #region Equality / IEquatable<T>
 
         /// <inheritdoc />

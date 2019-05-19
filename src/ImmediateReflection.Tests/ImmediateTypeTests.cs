@@ -417,7 +417,8 @@ namespace ImmediateReflection.Tests
             // ReSharper disable AssignNullToNotNullAttribute
             // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             Assert.Throws<ArgumentNullException>(() => immediateType.GetMember(null));
-            Assert.Throws<ArgumentNullException>(() => { ImmediateMember _ = immediateType[null]; });
+            // ReSharper disable once UnusedVariable
+            Assert.Throws<ArgumentNullException>(() => { ImmediateMember member = immediateType[null]; });
             // ReSharper restore AssignNullToNotNullAttribute
         }
 
@@ -616,6 +617,47 @@ namespace ImmediateReflection.Tests
             immediateType = new ImmediateType(typeof(DefaultConstructorThrows));
             Assert.Throws(Is.InstanceOf<Exception>(), () => immediateType.New());
             // ReSharper restore ReturnValueOfPureMethodIsNotUsed
+        }
+
+        private static IEnumerable<TestCaseData> CreateDefaultConstructorNoThrowTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                yield return new TestCaseData(typeof(int), false);
+                yield return new TestCaseData(typeof(TestStruct), false);
+                yield return new TestCaseData(typeof(DefaultConstructor), false);
+                yield return new TestCaseData(typeof(TemplateStruct<double>), false);
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), false);
+
+                yield return new TestCaseData(typeof(NoDefaultConstructor), true);
+                yield return new TestCaseData(typeof(NotAccessibleDefaultConstructor), true);
+                yield return new TestCaseData(typeof(AbstractDefaultConstructor), true);
+                yield return new TestCaseData(typeof(StaticClass), true);
+                yield return new TestCaseData(typeof(TemplateStruct<>), true);
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<>), true);
+                // ReSharper disable once PossibleMistakenCallToGetType.2
+                yield return new TestCaseData(typeof(DefaultConstructor).GetType(), true);
+                yield return new TestCaseData(typeof(DefaultConstructorThrows), true);
+            }
+        }
+
+        [TestCaseSource(nameof(CreateDefaultConstructorNoThrowTestCases))]
+        public void NewParameterLess_NoThrow([NotNull] Type type, bool expectedThrow)
+        {
+            var immediateType = new ImmediateType(type);
+
+            object instance = immediateType.New(out Exception ex);
+            if (!expectedThrow)
+            {
+                Assert.IsNotNull(instance);
+                Assert.AreEqual(Activator.CreateInstance(type), instance);
+            }
+            else
+            {
+                Assert.IsNull(instance);
+                Assert.IsNotNull(ex);
+            }
         }
 
         #endregion
