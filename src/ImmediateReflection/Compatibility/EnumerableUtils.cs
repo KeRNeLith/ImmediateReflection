@@ -21,6 +21,8 @@ namespace ImmediateReflection.Utils
         /// <param name="source">Source enumerable.</param>
         /// <param name="predicate">Predicate to check on each source element.</param>
         /// <returns>First element matching <paramref name="predicate"/>.</returns>
+        [Pure]
+        [NotNull]
         public static T First<T>([NotNull, ItemNotNull] IEnumerable<T> source, [NotNull, InstantHandle] Predicate<T> predicate)
         {
             foreach (T element in source)
@@ -69,6 +71,7 @@ namespace ImmediateReflection.Utils
 
         private static class EmptyEnumerable<TElement>
         {
+            [NotNull, ItemNotNull]
             public static readonly TElement[] Instance = new TElement[0];
         }
 
