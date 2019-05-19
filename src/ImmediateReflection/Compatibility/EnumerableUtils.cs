@@ -11,6 +11,45 @@ namespace ImmediateReflection.Utils
     /// </summary>
     internal static class EnumerableUtils
     {
+        // Predicate delegate
+        internal delegate bool Predicate<in T>(T param);
+
+        /// <summary>
+        /// Gets the first element in the <paramref name="source"/> enumerable that matches the given <paramref name="predicate"/>.
+        /// </summary>
+        /// <typeparam name="T">Element type.</typeparam>
+        /// <param name="source">Source enumerable.</param>
+        /// <param name="predicate">Predicate to check on each source element.</param>
+        /// <returns>First element matching <paramref name="predicate"/>.</returns>
+        public static T First<T>([NotNull, ItemNotNull] IEnumerable<T> source, [NotNull, InstantHandle] Predicate<T> predicate)
+        {
+            foreach (T element in source)
+            {
+                if (predicate(element))
+                    return element;
+            }
+
+            throw new InvalidOperationException("No element matching the given predicate.");
+        }
+
+        /// <summary>
+        /// Gets a sub set enumerable of <paramref name="source"/> elements matching the given <paramref name="predicate"/>.
+        /// </summary>
+        /// <typeparam name="T">Element type.</typeparam>
+        /// <param name="source">Source enumerable.</param>
+        /// <param name="predicate">Predicate to check on each source element.</param>
+        /// <returns>Enumerable of elements matching <paramref name="predicate"/>.</returns>
+        [Pure]
+        [NotNull, ItemNotNull]
+        public static IEnumerable<T> Where<T>([NotNull, ItemNotNull] IEnumerable<T> source, [NotNull, InstantHandle] Predicate<T> predicate)
+        {
+            foreach (T element in source)
+            {
+                if (predicate(element))
+                    yield return element;
+            }
+        }
+
         /// <summary>
         /// Gets a sub set enumerable of source elements cast to <typeparamref name="TResult"/>. 
         /// </summary>
@@ -23,12 +62,12 @@ namespace ImmediateReflection.Utils
         {
             foreach (object obj in source)
             {
-                if (obj is TResult)
-                    yield return (TResult)obj;
+                if (obj is TResult element)
+                    yield return element;
             }
         }
 
-        private class EmptyEnumerable<TElement>
+        private static class EmptyEnumerable<TElement>
         {
             public static readonly TElement[] Instance = new TElement[0];
         }
@@ -67,15 +106,14 @@ namespace ImmediateReflection.Utils
         /// <typeparam name="TElement">Element type.</typeparam>
         private struct Buffer<TElement>
         {
-            private TElement[] _items;
+            private readonly TElement[] _items;
             private readonly int _count;
 
             internal Buffer([NotNull, ItemNotNull] IEnumerable<TElement> source)
             {
                 TElement[] items = null;
                 int count = 0;
-                var collection = source as ICollection<TElement>;
-                if (collection != null)
+                if (source is ICollection<TElement> collection)
                 {
                     count = collection.Count;
                     if (count > 0)
@@ -94,7 +132,7 @@ namespace ImmediateReflection.Utils
                         }
                         else if (items.Length == count)
                         {
-                            TElement[] newItems = new TElement[checked(count * 2)];
+                            var newItems = new TElement[checked(count * 2)];
                             Array.Copy(items, 0, newItems, 0, count);
                             items = newItems;
                         }
@@ -116,7 +154,7 @@ namespace ImmediateReflection.Utils
                 if (_items.Length == _count)
                     return _items;
 
-                TElement[] result = new TElement[_count];
+                var result = new TElement[_count];
                 Array.Copy(_items, 0, result, 0, _count);
                 return result;
             }
