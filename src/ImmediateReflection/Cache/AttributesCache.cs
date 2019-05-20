@@ -26,6 +26,9 @@ namespace ImmediateReflection
 
         public AttributesCache([NotNull] MemberInfo member)
         {
+            if (member is null)
+                throw new ArgumentNullException(nameof(member));
+
 #if SUPPORTS_LINQ
             Attribute[] attributesNotInherited = member.GetCustomAttributes(false).OfType<Attribute>().ToArray();
             Attribute[] attributesInherited = member.GetCustomAttributes(true).OfType<Attribute>().ToArray();
@@ -67,7 +70,7 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public bool HasAttribute<TAttribute>(bool inherit = false)
+        public bool HasAttribute<TAttribute>(bool inherit)
             where TAttribute : Attribute
         {
             return GetAttribute<TAttribute>(inherit) != null;
@@ -85,7 +88,7 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public bool HasAttribute([NotNull] Type attributeType, bool inherit = false)
+        public bool HasAttribute([NotNull] Type attributeType, bool inherit)
         {
             return GetAttribute(attributeType, inherit) != null;
         }
@@ -98,7 +101,7 @@ namespace ImmediateReflection
         /// <returns>The first attribute matching requested type, otherwise null.</returns>
         [Pure]
         [CanBeNull]
-        public TAttribute GetAttribute<TAttribute>(bool inherit = false)
+        public TAttribute GetAttribute<TAttribute>(bool inherit)
             where TAttribute : Attribute
         {
             if (inherit)
@@ -127,7 +130,7 @@ namespace ImmediateReflection
         /// <exception cref="ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
         [Pure]
         [CanBeNull]
-        public Attribute GetAttribute([NotNull] Type attributeType, bool inherit = false)
+        public Attribute GetAttribute([NotNull] Type attributeType, bool inherit)
         {
             if (attributeType is null)
                 throw new ArgumentNullException(nameof(attributeType));
@@ -158,7 +161,7 @@ namespace ImmediateReflection
         /// <returns>Attributes matching requested type.</returns>
         [Pure]
         [CanBeNull]
-        public IEnumerable<TAttribute> GetAttributes<TAttribute>(bool inherit = false)
+        public IEnumerable<TAttribute> GetAttributes<TAttribute>(bool inherit)
             where TAttribute : Attribute
         {
             if (inherit)
@@ -190,7 +193,7 @@ namespace ImmediateReflection
         /// <returns>Attributes matching requested type.</returns>
         [Pure]
         [CanBeNull]
-        public IEnumerable<Attribute> GetAttributes([NotNull] Type attributeType, bool inherit = false)
+        public IEnumerable<Attribute> GetAttributes([NotNull] Type attributeType, bool inherit)
         {
             if (inherit)
                 return FindAttributes(_attributesWithInherited);
