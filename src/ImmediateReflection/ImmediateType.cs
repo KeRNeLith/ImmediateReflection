@@ -18,19 +18,13 @@ namespace ImmediateReflection
     /// Represents type declarations: class types, interface types, array types, value types, enumeration types,
     /// type parameters, generic type definitions, and open or closed constructed generic types in a faster way.
     /// </summary>
-    public sealed class ImmediateType : IEquatable<ImmediateType>
+    public sealed class ImmediateType : ImmediateMember, IEquatable<ImmediateType>
     {
         /// <summary>
         /// Gets the wrapped <see cref="System.Type"/>.
         /// </summary>
         [NotNull]
         public Type Type { get; }
-
-        /// <summary>
-        /// Gets the <see cref="System.Type"/> name.
-        /// </summary>
-        [NotNull]
-        public string Name { get; }
 
         /// <summary>
         /// Gets the fully qualified name of the <see cref="System.Type"/>, including its namespace but not its assembly.
@@ -76,9 +70,9 @@ namespace ImmediateReflection
         /// <param name="flags">Flags that must be taken into account to get members.</param>
         /// <exception cref="ArgumentNullException">If the <paramref name="type"/> is null.</exception>
         internal ImmediateType([NotNull] Type type, BindingFlags flags = TypeAccessor.DefaultFlags)
+            : base(type)
         {
             Type = type ?? throw new ArgumentNullException(nameof(type));
-            Name = type.Name;
             FullName = type.FullName ?? Name;
 
             _constructor = DelegatesFactory.CreateConstructor(Type);

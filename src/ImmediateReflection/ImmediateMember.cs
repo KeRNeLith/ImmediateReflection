@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 namespace ImmediateReflection
 {
     /// <summary>
-    /// Represents a member of a <see cref="Type"/> and provides access to its metadata in a faster way.
+    /// Represents information about the attributes of a member or <see cref="Type"/> and provides access to its metadata in a faster way.
     /// </summary>
     public abstract class ImmediateMember
     {
