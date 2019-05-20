@@ -160,7 +160,7 @@ namespace ImmediateReflection
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>Attributes matching requested type.</returns>
         [Pure]
-        [CanBeNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<TAttribute> GetAttributes<TAttribute>(bool inherit)
             where TAttribute : Attribute
         {
@@ -192,7 +192,7 @@ namespace ImmediateReflection
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>Attributes matching requested type.</returns>
         [Pure]
-        [CanBeNull]
+        [NotNull, ItemNotNull]
         public IEnumerable<Attribute> GetAttributes([NotNull] Type attributeType, bool inherit)
         {
             if (inherit)
@@ -211,6 +211,33 @@ namespace ImmediateReflection
                     return AsEnumerable(attributes);
                 return Empty<Attribute>();
 #endif
+            }
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Retrieves all custom attributes.
+        /// </summary>
+        /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
+        /// <returns>All attributes.</returns>
+        [Pure]
+        [NotNull, ItemNotNull]
+        public IEnumerable<Attribute> GetAllAttributes(bool inherit)
+        {
+            if (inherit)
+                return GetAllAttributes(_attributesWithInherited);
+            return GetAllAttributes(_attributesWithoutInherited);
+
+            #region Local function
+
+            IEnumerable<Attribute> GetAllAttributes(Dictionary<Type, List<Attribute>> attributesDictionary)
+            {
+                foreach (List<Attribute> attributes in attributesDictionary.Values)
+                {
+                    foreach (Attribute attribute in attributes)
+                        yield return attribute;
+                }
             }
 
             #endregion

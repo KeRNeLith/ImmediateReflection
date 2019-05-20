@@ -111,7 +111,7 @@ namespace ImmediateReflection
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>Attributes matching requested type.</returns>
         [Pure]
-        [CanBeNull]
+        [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -128,13 +128,28 @@ namespace ImmediateReflection
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>Attributes matching requested type.</returns>
         [Pure]
-        [CanBeNull]
+        [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public IEnumerable<Attribute> GetAttributes([NotNull] Type attributeType, bool inherit = false)
         {
             return _attributeCache.GetAttributes(attributeType, inherit);
+        }
+
+        /// <summary>
+        /// Retrieves all custom attributes that are applied to this member.
+        /// </summary>
+        /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
+        /// <returns>All attributes.</returns>
+        [Pure]
+        [NotNull, ItemNotNull]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public IEnumerable<Attribute> GetAllAttributes(bool inherit = false)
+        {
+            return _attributeCache.GetAllAttributes(inherit);
         }
     }
 }
