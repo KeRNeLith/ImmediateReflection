@@ -39,6 +39,8 @@ namespace ImmediateReflection.Tests
         private class TestClassNoAttribute
         {
             public int _testField = 42;
+
+            public virtual int TestProperty { get; set; } = 12;
         }
 
         [TestClass]
@@ -46,6 +48,9 @@ namespace ImmediateReflection.Tests
         {
             [TestClass]
             public int _testField = 42;
+
+            [TestClass]
+            public virtual int TestProperty { get; set; } = 12;
         }
 
         [TestClass]
@@ -55,19 +60,28 @@ namespace ImmediateReflection.Tests
             [TestClass]
             [TestClass]
             public int _testField = 42;
+
+            [TestClass]
+            [TestClass]
+            // ReSharper disable once UnusedAutoPropertyAccessor.Local
+            public int TestProperty { get; } = 12;
         }
 
         private class InheritedTestClassNoAttribute : TestClassNoAttribute
         {
+            public override int TestProperty { get; set; } = 45;
         }
 
         private class InheritedTestClassWithAttribute1 : TestClassWithAttribute
         {
+            public override int TestProperty { get; set; } = 45;
         }
 
         [TestClass]
         private class InheritedTestClassWithAttribute2 : TestClassWithAttribute
         {
+            [TestClass]
+            public override int TestProperty { get; set; } = 45;
         }
 
         [TestClass]
@@ -77,10 +91,15 @@ namespace ImmediateReflection.Tests
             [TestClass]
             [SecondTestClass]
             public int _testField = 42;
+
+            [TestClass]
+            [SecondTestClass]
+            public virtual int TestProperty { get; set; } = 12;
         }
 
         private class InheritedTestClassMultiAttributes : TestClassMultiAttributes
         {
+            public override int TestProperty { get; set; } = 45;
         }
 
         // ReSharper restore InconsistentNaming
@@ -88,6 +107,40 @@ namespace ImmediateReflection.Tests
         #endregion
 
         #region Fields & Property Info
+
+        // Properties //
+
+        [NotNull]
+        private static readonly PropertyInfo TestPropertyNoAttributePropertyInfo =
+            typeof(TestClassNoAttribute).GetProperty(nameof(TestClassNoAttribute.TestProperty)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        private static readonly PropertyInfo TestPropertyAttributePropertyInfo =
+            typeof(TestClassWithAttribute).GetProperty(nameof(TestClassWithAttribute.TestProperty)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        private static readonly PropertyInfo TestPropertyAttributesPropertyInfo =
+            typeof(TestClassWithAttributes).GetProperty(nameof(TestClassWithAttributes.TestProperty)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        private static readonly PropertyInfo TestPropertyInheritedNoAttributePropertyInfo =
+            typeof(InheritedTestClassNoAttribute).GetProperty(nameof(InheritedTestClassNoAttribute.TestProperty)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        private static readonly PropertyInfo TestPropertyInheritedAttribute1PropertyInfo =
+            typeof(InheritedTestClassWithAttribute1).GetProperty(nameof(InheritedTestClassWithAttribute1.TestProperty)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        private static readonly PropertyInfo TestPropertyInheritedAttribute2PropertyInfo =
+            typeof(InheritedTestClassWithAttribute2).GetProperty(nameof(InheritedTestClassWithAttribute2.TestProperty)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        private static readonly PropertyInfo TestPropertyMultiAttributesPropertyInfo =
+            typeof(TestClassMultiAttributes).GetProperty(nameof(TestClassMultiAttributes.TestProperty)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        private static readonly PropertyInfo TestPropertyInheritedMultiAttributesPropertyInfo =
+            typeof(InheritedTestClassMultiAttributes).GetProperty(nameof(InheritedTestClassMultiAttributes.TestProperty)) ?? throw new AssertionException("Cannot find property.");
 
         // Fields //
 
@@ -317,7 +370,120 @@ namespace ImmediateReflection.Tests
 
                 #region ImmediateProperty
 
-                // TODO
+                // No attribute
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    null);
+
+                // With attribute
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributePropertyInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    new TestClassAttribute());
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributePropertyInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new TestClassAttribute());
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributesPropertyInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    new TestClassAttribute());
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributesPropertyInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new TestClassAttribute());
+
+                // Without requested attribute
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributePropertyInfo),
+                    typeof(SecondTestClassAttribute),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributePropertyInfo),
+                    typeof(SecondTestClassAttribute),
+                    true,
+                    null);
+
+                // Attribute not inherited
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    null);
+
+                // Attribute inherited 1
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new TestClassAttribute());
+
+                // Attribute inherited 2
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    new TestClassAttribute());
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new TestClassAttribute());
+
+                // Several attributes
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    new TestClassAttribute());
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new TestClassAttribute());
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+                    typeof(SecondTestClassAttribute),
+                    false,
+                    new SecondTestClassAttribute());
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+                    typeof(SecondTestClassAttribute),
+                    true,
+                    new SecondTestClassAttribute());
 
                 #endregion
             }
@@ -346,6 +512,8 @@ namespace ImmediateReflection.Tests
             // With attribute
             CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassWithAttribute)), false, new TestClassAttribute());
             CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassWithAttribute)), true, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassWithAttributes)), false, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassWithAttributes)), true, new TestClassAttribute());
 
             // Without requested attribute
             CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateType(typeof(TestClassWithAttribute)), false, null);
@@ -397,7 +565,37 @@ namespace ImmediateReflection.Tests
 
             #region ImmediateProperty
 
-            // TODO
+            // No attribute
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyNoAttributePropertyInfo), false, null);
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyNoAttributePropertyInfo), true, null);
+
+            // With attribute
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyAttributePropertyInfo), false, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyAttributePropertyInfo), true, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyAttributesPropertyInfo), false, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyAttributesPropertyInfo), true, new TestClassAttribute());
+
+            // Without requested attribute
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateProperty(TestPropertyAttributePropertyInfo), false, null);
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateProperty(TestPropertyAttributePropertyInfo), true, null);
+
+            // Attribute not inherited
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo), false, null);
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo), true, null);
+
+            // Attribute inherited 1
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo), false, null);
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo), true, new TestClassAttribute());
+
+            // Attribute inherited 2
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), false, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), true, new TestClassAttribute());
+
+            // Several attributes
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, new TestClassAttribute());
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, new SecondTestClassAttribute());
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, new SecondTestClassAttribute());
 
             #endregion
 
@@ -416,7 +614,7 @@ namespace ImmediateReflection.Tests
             #endregion
         }
 
-        private static IEnumerable<TestCaseData> CreateWrongGetAttributeTestCases
+        private static IEnumerable<TestCaseData> CreateWrongAttributeTestCases
         {
             [UsedImplicitly]
             get
@@ -475,13 +673,33 @@ namespace ImmediateReflection.Tests
 
                 #region ImmediateProperty
 
-                // TODO
+                // No attribute
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+                    typeof(FakeTestClassAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+                    typeof(FakeTestClassAttribute),
+                    true);
+
+                // With attribute
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributePropertyInfo),
+                    typeof(FakeTestClassAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributePropertyInfo),
+                    typeof(FakeTestClassAttribute),
+                    true);
 
                 #endregion
             }
         }
 
-        [TestCaseSource(nameof(CreateWrongGetAttributeTestCases))]
+        [TestCaseSource(nameof(CreateWrongAttributeTestCases))]
         public void HasAndGetAttribute_WrongType([NotNull] ImmediateMember member, [NotNull] Type attributeType, bool inherit)
         {
             // ReSharper disable ReturnValueOfPureMethodIsNotUsed
@@ -721,7 +939,120 @@ namespace ImmediateReflection.Tests
 
                 #region ImmediateProperty
 
-                // TODO
+                // No attribute
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    null);
+
+                // With attribute
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributePropertyInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    new[] { new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributePropertyInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new[] { new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributesPropertyInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributesPropertyInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+
+                // Without requested attribute
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributePropertyInfo),
+                    typeof(SecondTestClassAttribute),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributePropertyInfo),
+                    typeof(SecondTestClassAttribute),
+                    true,
+                    null);
+
+                // Attribute not inherited
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    null);
+
+                // Attribute inherited 1
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new[] { new TestClassAttribute() });
+
+                // Attribute inherited 2
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    new[] { new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+
+                // Several attributes
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    new[] { new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new[] { new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+                    typeof(SecondTestClassAttribute),
+                    false,
+                    new[] { new SecondTestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+                    typeof(SecondTestClassAttribute),
+                    true,
+                    new[] { new SecondTestClassAttribute() });
 
                 #endregion
             }
@@ -807,7 +1138,38 @@ namespace ImmediateReflection.Tests
 
             #region ImmediateProperty
 
-            // TODO
+            // No attribute
+            CheckGetAttributes<TestClassAttribute>(new ImmediateProperty(TestPropertyNoAttributePropertyInfo), false, null);
+            CheckGetAttributes<TestClassAttribute>(new ImmediateProperty(TestPropertyNoAttributePropertyInfo), true, null);
+
+            // With attribute
+            CheckGetAttributes(new ImmediateProperty(TestPropertyAttributePropertyInfo), false, new[] { new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyAttributePropertyInfo), true, new[] { new TestClassAttribute() });
+
+            CheckGetAttributes(new ImmediateProperty(TestPropertyAttributesPropertyInfo), false, new[] { new TestClassAttribute(), new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyAttributesPropertyInfo), true, new[] { new TestClassAttribute(), new TestClassAttribute() });
+
+            // Without requested attribute
+            CheckGetAttributes<SecondTestClassAttribute>(new ImmediateProperty(TestPropertyAttributePropertyInfo), false, null);
+            CheckGetAttributes<SecondTestClassAttribute>(new ImmediateProperty(TestPropertyAttributePropertyInfo), true, null);
+
+            // Attribute not inherited
+            CheckGetAttributes<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo), false, null);
+            CheckGetAttributes<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo), true, null);
+
+            // Attribute inherited 1
+            CheckGetAttributes<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo), false, null);
+            CheckGetAttributes(new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo), true, new[] { new TestClassAttribute() });
+
+            // Attribute inherited 2
+            CheckGetAttributes(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), false, new[] { new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), true, new[] { new TestClassAttribute(), new TestClassAttribute() });
+
+            // Several attributes
+            CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, new[] { new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, new[] { new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, new[] { new SecondTestClassAttribute() });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, new[] { new SecondTestClassAttribute() });
 
             #endregion
 
@@ -825,72 +1187,7 @@ namespace ImmediateReflection.Tests
             #endregion
         }
 
-        private static IEnumerable<TestCaseData> CreateWrongGetAttributesTestCases
-        {
-            [UsedImplicitly]
-            get
-            {
-                #region ImmediateType
-
-                // No attribute
-                yield return new TestCaseData(
-                    new ImmediateType(typeof(TestClassNoAttribute)),
-                    typeof(FakeTestClassAttribute),
-                    false);
-
-                yield return new TestCaseData(
-                    new ImmediateType(typeof(TestClassNoAttribute)),
-                    typeof(FakeTestClassAttribute),
-                    true);
-
-                // With attribute
-                yield return new TestCaseData(
-                    new ImmediateType(typeof(TestClassWithAttribute)),
-                    typeof(FakeTestClassAttribute),
-                    false);
-
-                yield return new TestCaseData(
-                    new ImmediateType(typeof(TestClassWithAttribute)),
-                    typeof(FakeTestClassAttribute),
-                    true);
-
-                #endregion
-
-                #region ImmediateField
-
-                // No attribute
-                yield return new TestCaseData(
-                    new ImmediateField(TestFieldNoAttributeFieldInfo),
-                    typeof(FakeTestClassAttribute),
-                    false);
-
-                yield return new TestCaseData(
-                    new ImmediateField(TestFieldNoAttributeFieldInfo),
-                    typeof(FakeTestClassAttribute),
-                    true);
-
-                // With attribute
-                yield return new TestCaseData(
-                    new ImmediateField(TestFieldAttributeFieldInfo),
-                    typeof(FakeTestClassAttribute),
-                    false);
-
-                yield return new TestCaseData(
-                    new ImmediateField(TestFieldAttributeFieldInfo),
-                    typeof(FakeTestClassAttribute),
-                    true);
-
-                #endregion
-
-                #region ImmediateProperty
-
-                // TODO
-
-                #endregion
-            }
-        }
-
-        [TestCaseSource(nameof(CreateWrongGetAttributesTestCases))]
+        [TestCaseSource(nameof(CreateWrongAttributeTestCases))]
         public void GetAttributes_WrongType([NotNull] ImmediateMember member, [NotNull] Type attributeType, bool inherit)
         {
             // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
@@ -1060,7 +1357,91 @@ namespace ImmediateReflection.Tests
 
                 #region ImmediateProperty
 
-                // TODO
+                // No attribute
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+                    true,
+                    null);
+
+                // With attribute
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributePropertyInfo),
+                    false,
+                    new[] { new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributePropertyInfo),
+                    true,
+                    new[] { new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributesPropertyInfo),
+                    false,
+                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyAttributesPropertyInfo),
+                    true,
+                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+
+                // Attribute not inherited
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
+                    true,
+                    null);
+
+                // Attribute inherited 1
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
+                    true,
+                    new[] { new TestClassAttribute() });
+
+                // Attribute inherited 2
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
+                    false,
+                    new[] { new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
+                    true,
+                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+
+                // Several attributes
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+                    false,
+                    new Attribute[] { new TestClassAttribute(), new SecondTestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+                    true,
+                    new Attribute[] { new TestClassAttribute(), new SecondTestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedMultiAttributesPropertyInfo),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyInheritedMultiAttributesPropertyInfo),
+                    true,
+                    new Attribute[] { new TestClassAttribute(), new SecondTestClassAttribute() });
 
                 #endregion
             }
