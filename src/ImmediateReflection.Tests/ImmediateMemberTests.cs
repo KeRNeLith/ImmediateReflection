@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using JetBrains.Annotations;
 using NUnit.Framework;
 
@@ -33,19 +34,27 @@ namespace ImmediateReflection.Tests
 
         #region Classes
 
+        // ReSharper disable InconsistentNaming
+
         private class TestClassNoAttribute
         {
+            public int _testField = 42;
         }
 
         [TestClass]
         private class TestClassWithAttribute
         {
+            [TestClass]
+            public int _testField = 42;
         }
 
         [TestClass]
         [TestClass]
         private class TestClassWithAttributes
         {
+            [TestClass]
+            [TestClass]
+            public int _testField = 42;
         }
 
         private class InheritedTestClassNoAttribute : TestClassNoAttribute
@@ -65,11 +74,38 @@ namespace ImmediateReflection.Tests
         [SecondTestClass]
         private class TestClassMultiAttributes
         {
+            [TestClass]
+            [SecondTestClass]
+            public int _testField = 42;
         }
 
         private class InheritedTestClassMultiAttributes : TestClassMultiAttributes
         {
         }
+
+        // ReSharper restore InconsistentNaming
+
+        #endregion
+
+        #region Fields & Property Info
+
+        // Fields //
+
+        [NotNull]
+        private static readonly FieldInfo TestFieldNoAttributeFieldInfo =
+            typeof(TestClassNoAttribute).GetField(nameof(TestClassNoAttribute._testField)) ?? throw new AssertionException("Cannot find field.");
+
+        [NotNull]
+        private static readonly FieldInfo TestFieldAttributeFieldInfo =
+            typeof(TestClassWithAttribute).GetField(nameof(TestClassWithAttribute._testField)) ?? throw new AssertionException("Cannot find field.");
+
+        [NotNull]
+        private static readonly FieldInfo TestFieldAttributesFieldInfo =
+            typeof(TestClassWithAttributes).GetField(nameof(TestClassWithAttributes._testField)) ?? throw new AssertionException("Cannot find field.");
+
+        [NotNull]
+        private static readonly FieldInfo TestFieldMultiAttributesFieldInfo =
+            typeof(TestClassMultiAttributes).GetField(nameof(TestClassMultiAttributes._testField)) ?? throw new AssertionException("Cannot find field.");
 
         #endregion
 
@@ -201,7 +237,81 @@ namespace ImmediateReflection.Tests
 
                 #region ImmediateField
 
-                // TODO
+                // No attribute
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldNoAttributeFieldInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldNoAttributeFieldInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    null);
+
+                // With attribute
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributeFieldInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    new TestClassAttribute());
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributeFieldInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new TestClassAttribute());
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributesFieldInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    new TestClassAttribute());
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributesFieldInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new TestClassAttribute());
+
+                // Without requested attribute
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributeFieldInfo),
+                    typeof(SecondTestClassAttribute),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributeFieldInfo),
+                    typeof(SecondTestClassAttribute),
+                    true,
+                    null);
+
+                // Several attributes
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldMultiAttributesFieldInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    new TestClassAttribute());
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldMultiAttributesFieldInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new TestClassAttribute());
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldMultiAttributesFieldInfo),
+                    typeof(SecondTestClassAttribute),
+                    false,
+                    new SecondTestClassAttribute());
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldMultiAttributesFieldInfo),
+                    typeof(SecondTestClassAttribute),
+                    true,
+                    new SecondTestClassAttribute());
 
                 #endregion
 
@@ -263,7 +373,25 @@ namespace ImmediateReflection.Tests
 
             #region ImmediateField
 
-            // TODO
+            // No attribute
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldNoAttributeFieldInfo), false, null);
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldNoAttributeFieldInfo), true, null);
+
+            // With attribute
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), false, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), true, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldAttributesFieldInfo), false, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldAttributesFieldInfo), true, new TestClassAttribute());
+
+            // Without requested attribute
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), false, null);
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), true, null);
+
+            // Several attributes
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, new TestClassAttribute());
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, new SecondTestClassAttribute());
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, new SecondTestClassAttribute());
 
             #endregion
 
@@ -321,7 +449,27 @@ namespace ImmediateReflection.Tests
 
                 #region ImmediateField
 
-                // TODO
+                // No attribute
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldNoAttributeFieldInfo),
+                    typeof(FakeTestClassAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldNoAttributeFieldInfo),
+                    typeof(FakeTestClassAttribute),
+                    true);
+
+                // With attribute
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributeFieldInfo),
+                    typeof(FakeTestClassAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributeFieldInfo),
+                    typeof(FakeTestClassAttribute),
+                    true);
 
                 #endregion
 
@@ -493,7 +641,81 @@ namespace ImmediateReflection.Tests
 
                 #region ImmediateField
 
-                // TODO
+                // No attribute
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldNoAttributeFieldInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldNoAttributeFieldInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    null);
+
+                // With attribute
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributeFieldInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    new[] { new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributeFieldInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new[] { new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributesFieldInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributesFieldInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+
+                // Without requested attribute
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributeFieldInfo),
+                    typeof(SecondTestClassAttribute),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributeFieldInfo),
+                    typeof(SecondTestClassAttribute),
+                    true,
+                    null);
+
+                // Several attributes
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldMultiAttributesFieldInfo),
+                    typeof(TestClassAttribute),
+                    false,
+                    new[] { new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldMultiAttributesFieldInfo),
+                    typeof(TestClassAttribute),
+                    true,
+                    new[] { new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldMultiAttributesFieldInfo),
+                    typeof(SecondTestClassAttribute),
+                    false,
+                    new[] { new SecondTestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldMultiAttributesFieldInfo),
+                    typeof(SecondTestClassAttribute),
+                    true,
+                    new[] { new SecondTestClassAttribute() });
 
                 #endregion
 
@@ -560,7 +782,26 @@ namespace ImmediateReflection.Tests
 
             #region ImmediateField
 
-            // TODO
+            // No attribute
+            CheckGetAttributes<TestClassAttribute>(new ImmediateField(TestFieldNoAttributeFieldInfo), false, null);
+            CheckGetAttributes<TestClassAttribute>(new ImmediateField(TestFieldNoAttributeFieldInfo), true, null);
+
+            // With attribute
+            CheckGetAttributes(new ImmediateField(TestFieldAttributeFieldInfo), false, new[] { new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateField(TestFieldAttributeFieldInfo), true, new[] { new TestClassAttribute() });
+
+            CheckGetAttributes(new ImmediateField(TestFieldAttributesFieldInfo), false, new[] { new TestClassAttribute(), new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateField(TestFieldAttributesFieldInfo), true, new[] { new TestClassAttribute(), new TestClassAttribute() });
+
+            // Without requested attribute
+            CheckGetAttributes<SecondTestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), false, null);
+            CheckGetAttributes<SecondTestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), true, null);
+
+            // Several attributes
+            CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, new[] { new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, new[] { new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, new[] { new SecondTestClassAttribute() });
+            CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, new[] { new SecondTestClassAttribute() });
 
             #endregion
 
@@ -617,7 +858,27 @@ namespace ImmediateReflection.Tests
 
                 #region ImmediateField
 
-                // TODO
+                // No attribute
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldNoAttributeFieldInfo),
+                    typeof(FakeTestClassAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldNoAttributeFieldInfo),
+                    typeof(FakeTestClassAttribute),
+                    true);
+
+                // With attribute
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributeFieldInfo),
+                    typeof(FakeTestClassAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributeFieldInfo),
+                    typeof(FakeTestClassAttribute),
+                    true);
 
                 #endregion
 
@@ -752,7 +1013,48 @@ namespace ImmediateReflection.Tests
 
                 #region ImmediateField
 
-                // TODO
+                // No attribute
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldNoAttributeFieldInfo),
+                    false,
+                    null);
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldNoAttributeFieldInfo),
+                    true,
+                    null);
+
+                // With attribute
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributeFieldInfo),
+                    false,
+                    new[] { new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributeFieldInfo),
+                    true,
+                    new[] { new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributesFieldInfo),
+                    false,
+                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldAttributesFieldInfo),
+                    true,
+                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+
+                // Several attributes
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldMultiAttributesFieldInfo),
+                    false,
+                    new Attribute[] { new TestClassAttribute(), new SecondTestClassAttribute() });
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldMultiAttributesFieldInfo),
+                    true,
+                    new Attribute[] { new TestClassAttribute(), new SecondTestClassAttribute() });
 
                 #endregion
 
