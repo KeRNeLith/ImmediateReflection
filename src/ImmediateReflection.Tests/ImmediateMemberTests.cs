@@ -17,16 +17,72 @@ namespace ImmediateReflection.Tests
         #region Attributes
 
         [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
-        private class TestClassAttribute : Attribute
+        private sealed class TestClassAttribute : Attribute, IEquatable<TestClassAttribute>
         {
+            private readonly int _id;
+
+            public TestClassAttribute(int id)
+            {
+                _id = id;
+            }
+
+            public bool Equals(TestClassAttribute other)
+            {
+                if (other is null)
+                    return false;
+                if (ReferenceEquals(this, other))
+                    return true;
+                return _id == other._id;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as TestClassAttribute);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return (base.GetHashCode() * 397) ^ _id;
+                }
+            }
         }
 
         [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
-        private class SecondTestClassAttribute : Attribute
+        private sealed class SecondTestClassAttribute : Attribute, IEquatable<SecondTestClassAttribute>
         {
+            private readonly int _id;
+
+            public SecondTestClassAttribute(int id)
+            {
+                _id = id;
+            }
+
+            public bool Equals(SecondTestClassAttribute other)
+            {
+                if (other is null)
+                    return false;
+                if (ReferenceEquals(this, other))
+                    return true;
+                return _id == other._id;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as SecondTestClassAttribute);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return (base.GetHashCode() * 397) ^ _id;
+                }
+            }
         }
 
-        private class FakeTestClassAttribute
+        private sealed class FakeTestClassAttribute
         {
         }
 
@@ -43,26 +99,26 @@ namespace ImmediateReflection.Tests
             public virtual int TestProperty { get; set; } = 12;
         }
 
-        [TestClass]
+        [TestClass(1)]
         private class TestClassWithAttribute
         {
-            [TestClass]
+            [TestClass(2)]
             public int _testField = 42;
 
-            [TestClass]
+            [TestClass(3)]
             public virtual int TestProperty { get; set; } = 12;
         }
 
-        [TestClass]
-        [TestClass]
+        [TestClass(4)]
+        [TestClass(5)]
         private class TestClassWithAttributes
         {
-            [TestClass]
-            [TestClass]
+            [TestClass(7)]
+            [TestClass(8)]
             public int _testField = 42;
 
-            [TestClass]
-            [TestClass]
+            [TestClass(9)]
+            [TestClass(10)]
             // ReSharper disable once UnusedAutoPropertyAccessor.Local
             public int TestProperty { get; } = 12;
         }
@@ -77,23 +133,23 @@ namespace ImmediateReflection.Tests
             public override int TestProperty { get; set; } = 45;
         }
 
-        [TestClass]
+        [TestClass(11)]
         private class InheritedTestClassWithAttribute2 : TestClassWithAttribute
         {
-            [TestClass]
+            [TestClass(12)]
             public override int TestProperty { get; set; } = 45;
         }
 
-        [TestClass]
-        [SecondTestClass]
+        [TestClass(13)]
+        [SecondTestClass(1)]
         private class TestClassMultiAttributes
         {
-            [TestClass]
-            [SecondTestClass]
+            [TestClass(14)]
+            [SecondTestClass(2)]
             public int _testField = 42;
 
-            [TestClass]
-            [SecondTestClass]
+            [TestClass(15)]
+            [SecondTestClass(3)]
             public virtual int TestProperty { get; set; } = 12;
         }
 
@@ -189,25 +245,25 @@ namespace ImmediateReflection.Tests
                     new ImmediateType(typeof(TestClassWithAttribute)),
                     typeof(TestClassAttribute),
                     false,
-                    new TestClassAttribute());
+                    new TestClassAttribute(1));
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassWithAttribute)),
                     typeof(TestClassAttribute),
                     true,
-                    new TestClassAttribute());
+                    new TestClassAttribute(1));
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassWithAttributes)),
                     typeof(TestClassAttribute),
                     false,
-                    new TestClassAttribute());
+                    new TestClassAttribute(4));
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassWithAttributes)),
                     typeof(TestClassAttribute),
                     true,
-                    new TestClassAttribute());
+                    new TestClassAttribute(4));
 
                 // Without requested attribute
                 yield return new TestCaseData(
@@ -246,45 +302,45 @@ namespace ImmediateReflection.Tests
                     new ImmediateType(typeof(InheritedTestClassWithAttribute1)),
                     typeof(TestClassAttribute),
                     true,
-                    new TestClassAttribute());
+                    new TestClassAttribute(1));
 
                 // Attribute inherited 2
                 yield return new TestCaseData(
                     new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
                     typeof(TestClassAttribute),
                     false,
-                    new TestClassAttribute());
+                    new TestClassAttribute(11));
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
                     typeof(TestClassAttribute),
                     true,
-                    new TestClassAttribute());
+                    new TestClassAttribute(11));
 
                 // Several attributes
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassMultiAttributes)),
                     typeof(TestClassAttribute),
                     false,
-                    new TestClassAttribute());
+                    new TestClassAttribute(13));
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassMultiAttributes)),
                     typeof(TestClassAttribute),
                     true,
-                    new TestClassAttribute());
+                    new TestClassAttribute(13));
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassMultiAttributes)),
                     typeof(SecondTestClassAttribute),
                     false,
-                    new SecondTestClassAttribute());
+                    new SecondTestClassAttribute(1));
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassMultiAttributes)),
                     typeof(SecondTestClassAttribute),
                     true,
-                    new SecondTestClassAttribute());
+                    new SecondTestClassAttribute(1));
 
                 #endregion
 
@@ -308,25 +364,25 @@ namespace ImmediateReflection.Tests
                     new ImmediateField(TestFieldAttributeFieldInfo),
                     typeof(TestClassAttribute),
                     false,
-                    new TestClassAttribute());
+                    new TestClassAttribute(2));
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldAttributeFieldInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new TestClassAttribute());
+                    new TestClassAttribute(2));
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldAttributesFieldInfo),
                     typeof(TestClassAttribute),
                     false,
-                    new TestClassAttribute());
+                    new TestClassAttribute(7));
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldAttributesFieldInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new TestClassAttribute());
+                    new TestClassAttribute(7));
 
                 // Without requested attribute
                 yield return new TestCaseData(
@@ -346,25 +402,25 @@ namespace ImmediateReflection.Tests
                     new ImmediateField(TestFieldMultiAttributesFieldInfo),
                     typeof(TestClassAttribute),
                     false,
-                    new TestClassAttribute());
+                    new TestClassAttribute(14));
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldMultiAttributesFieldInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new TestClassAttribute());
+                    new TestClassAttribute(14));
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldMultiAttributesFieldInfo),
                     typeof(SecondTestClassAttribute),
                     false,
-                    new SecondTestClassAttribute());
+                    new SecondTestClassAttribute(2));
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldMultiAttributesFieldInfo),
                     typeof(SecondTestClassAttribute),
                     true,
-                    new SecondTestClassAttribute());
+                    new SecondTestClassAttribute(2));
 
                 #endregion
 
@@ -388,25 +444,25 @@ namespace ImmediateReflection.Tests
                     new ImmediateProperty(TestPropertyAttributePropertyInfo),
                     typeof(TestClassAttribute),
                     false,
-                    new TestClassAttribute());
+                    new TestClassAttribute(3));
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyAttributePropertyInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new TestClassAttribute());
+                    new TestClassAttribute(3));
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyAttributesPropertyInfo),
                     typeof(TestClassAttribute),
                     false,
-                    new TestClassAttribute());
+                    new TestClassAttribute(9));
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyAttributesPropertyInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new TestClassAttribute());
+                    new TestClassAttribute(9));
 
                 // Without requested attribute
                 yield return new TestCaseData(
@@ -445,45 +501,45 @@ namespace ImmediateReflection.Tests
                     new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new TestClassAttribute());
+                    new TestClassAttribute(3));
 
                 // Attribute inherited 2
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
                     typeof(TestClassAttribute),
                     false,
-                    new TestClassAttribute());
+                    new TestClassAttribute(12));
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new TestClassAttribute());
+                    new TestClassAttribute(12));
 
                 // Several attributes
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
                     typeof(TestClassAttribute),
                     false,
-                    new TestClassAttribute());
+                    new TestClassAttribute(15));
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new TestClassAttribute());
+                    new TestClassAttribute(15));
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
                     typeof(SecondTestClassAttribute),
                     false,
-                    new SecondTestClassAttribute());
+                    new SecondTestClassAttribute(3));
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
                     typeof(SecondTestClassAttribute),
                     true,
-                    new SecondTestClassAttribute());
+                    new SecondTestClassAttribute(3));
 
                 #endregion
             }
@@ -510,10 +566,10 @@ namespace ImmediateReflection.Tests
             CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassNoAttribute)), true, null);
 
             // With attribute
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassWithAttribute)), false, new TestClassAttribute());
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassWithAttribute)), true, new TestClassAttribute());
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassWithAttributes)), false, new TestClassAttribute());
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassWithAttributes)), true, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassWithAttribute)), false, new TestClassAttribute(1));
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassWithAttribute)), true, new TestClassAttribute(1));
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassWithAttributes)), false, new TestClassAttribute(4));
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassWithAttributes)), true, new TestClassAttribute(4));
 
             // Without requested attribute
             CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateType(typeof(TestClassWithAttribute)), false, null);
@@ -525,17 +581,17 @@ namespace ImmediateReflection.Tests
 
             // Attribute inherited 1
             CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(InheritedTestClassWithAttribute1)), false, null);
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(InheritedTestClassWithAttribute1)), true, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(InheritedTestClassWithAttribute1)), true, new TestClassAttribute(1));
 
             // Attribute inherited 2
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(InheritedTestClassWithAttribute2)), false, new TestClassAttribute());
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(InheritedTestClassWithAttribute2)), true, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(InheritedTestClassWithAttribute2)), false, new TestClassAttribute(11));
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(InheritedTestClassWithAttribute2)), true, new TestClassAttribute(11));
 
             // Several attributes
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassMultiAttributes)), false, new TestClassAttribute());
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassMultiAttributes)), true, new TestClassAttribute());
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateType(typeof(TestClassMultiAttributes)), false, new SecondTestClassAttribute());
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateType(typeof(TestClassMultiAttributes)), true, new SecondTestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassMultiAttributes)), false, new TestClassAttribute(13));
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateType(typeof(TestClassMultiAttributes)), true, new TestClassAttribute(13));
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateType(typeof(TestClassMultiAttributes)), false, new SecondTestClassAttribute(1));
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateType(typeof(TestClassMultiAttributes)), true, new SecondTestClassAttribute(1));
 
             #endregion
 
@@ -546,20 +602,20 @@ namespace ImmediateReflection.Tests
             CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldNoAttributeFieldInfo), true, null);
 
             // With attribute
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), false, new TestClassAttribute());
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), true, new TestClassAttribute());
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldAttributesFieldInfo), false, new TestClassAttribute());
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldAttributesFieldInfo), true, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), false, new TestClassAttribute(2));
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), true, new TestClassAttribute(2));
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldAttributesFieldInfo), false, new TestClassAttribute(7));
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldAttributesFieldInfo), true, new TestClassAttribute(7));
 
             // Without requested attribute
             CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), false, null);
             CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), true, null);
 
             // Several attributes
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, new TestClassAttribute());
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, new TestClassAttribute());
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, new SecondTestClassAttribute());
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, new SecondTestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, new TestClassAttribute(14));
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, new TestClassAttribute(14));
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, new SecondTestClassAttribute(2));
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, new SecondTestClassAttribute(2));
 
             #endregion
 
@@ -570,10 +626,10 @@ namespace ImmediateReflection.Tests
             CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyNoAttributePropertyInfo), true, null);
 
             // With attribute
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyAttributePropertyInfo), false, new TestClassAttribute());
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyAttributePropertyInfo), true, new TestClassAttribute());
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyAttributesPropertyInfo), false, new TestClassAttribute());
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyAttributesPropertyInfo), true, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyAttributePropertyInfo), false, new TestClassAttribute(3));
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyAttributePropertyInfo), true, new TestClassAttribute(3));
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyAttributesPropertyInfo), false, new TestClassAttribute(9));
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyAttributesPropertyInfo), true, new TestClassAttribute(9));
 
             // Without requested attribute
             CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateProperty(TestPropertyAttributePropertyInfo), false, null);
@@ -585,17 +641,17 @@ namespace ImmediateReflection.Tests
 
             // Attribute inherited 1
             CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo), false, null);
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo), true, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo), true, new TestClassAttribute(3));
 
             // Attribute inherited 2
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), false, new TestClassAttribute());
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), true, new TestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), false, new TestClassAttribute(12));
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), true, new TestClassAttribute(12));
 
             // Several attributes
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, new TestClassAttribute());
-            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, new TestClassAttribute());
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, new SecondTestClassAttribute());
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, new SecondTestClassAttribute());
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, new TestClassAttribute(15));
+            CheckHasAndGetAttribute<TestClassAttribute>(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, new TestClassAttribute(15));
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, new SecondTestClassAttribute(3));
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, new SecondTestClassAttribute(3));
 
             #endregion
 
@@ -758,25 +814,25 @@ namespace ImmediateReflection.Tests
                     new ImmediateType(typeof(TestClassWithAttribute)),
                     typeof(TestClassAttribute),
                     false,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(1) });
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassWithAttribute)),
                     typeof(TestClassAttribute),
                     true,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(1) });
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassWithAttributes)),
                     typeof(TestClassAttribute),
                     false,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassWithAttributes)),
                     typeof(TestClassAttribute),
                     true,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
 
                 // Without requested attribute
                 yield return new TestCaseData(
@@ -815,45 +871,45 @@ namespace ImmediateReflection.Tests
                     new ImmediateType(typeof(InheritedTestClassWithAttribute1)),
                     typeof(TestClassAttribute),
                     true,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(1) });
 
                 // Attribute inherited 2
                 yield return new TestCaseData(
                     new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
                     typeof(TestClassAttribute),
                     false,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(11) });
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
                     typeof(TestClassAttribute),
                     true,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(1), new TestClassAttribute(11) });
 
                 // Several attributes
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassMultiAttributes)),
                     typeof(TestClassAttribute),
                     false,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(13) });
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassMultiAttributes)),
                     typeof(TestClassAttribute),
                     true,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(13) });
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassMultiAttributes)),
                     typeof(SecondTestClassAttribute),
                     false,
-                    new[] { new SecondTestClassAttribute() });
+                    new[] { new SecondTestClassAttribute(1) });
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassMultiAttributes)),
                     typeof(SecondTestClassAttribute),
                     true,
-                    new[] { new SecondTestClassAttribute() });
+                    new[] { new SecondTestClassAttribute(1) });
 
                 #endregion
 
@@ -877,25 +933,25 @@ namespace ImmediateReflection.Tests
                     new ImmediateField(TestFieldAttributeFieldInfo),
                     typeof(TestClassAttribute),
                     false,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(2) });
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldAttributeFieldInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(2) });
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldAttributesFieldInfo),
                     typeof(TestClassAttribute),
                     false,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldAttributesFieldInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
 
                 // Without requested attribute
                 yield return new TestCaseData(
@@ -915,25 +971,25 @@ namespace ImmediateReflection.Tests
                     new ImmediateField(TestFieldMultiAttributesFieldInfo),
                     typeof(TestClassAttribute),
                     false,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(14) });
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldMultiAttributesFieldInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(14) });
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldMultiAttributesFieldInfo),
                     typeof(SecondTestClassAttribute),
                     false,
-                    new[] { new SecondTestClassAttribute() });
+                    new[] { new SecondTestClassAttribute(2) });
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldMultiAttributesFieldInfo),
                     typeof(SecondTestClassAttribute),
                     true,
-                    new[] { new SecondTestClassAttribute() });
+                    new[] { new SecondTestClassAttribute(2) });
 
                 #endregion
 
@@ -957,25 +1013,25 @@ namespace ImmediateReflection.Tests
                     new ImmediateProperty(TestPropertyAttributePropertyInfo),
                     typeof(TestClassAttribute),
                     false,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(3) });
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyAttributePropertyInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(3) });
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyAttributesPropertyInfo),
                     typeof(TestClassAttribute),
                     false,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyAttributesPropertyInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
 
                 // Without requested attribute
                 yield return new TestCaseData(
@@ -1014,45 +1070,45 @@ namespace ImmediateReflection.Tests
                     new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(3) });
 
                 // Attribute inherited 2
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
                     typeof(TestClassAttribute),
                     false,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(12) });
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(3), new TestClassAttribute(12) });
 
                 // Several attributes
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
                     typeof(TestClassAttribute),
                     false,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(15) });
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
                     typeof(TestClassAttribute),
                     true,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(15) });
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
                     typeof(SecondTestClassAttribute),
                     false,
-                    new[] { new SecondTestClassAttribute() });
+                    new[] { new SecondTestClassAttribute(3) });
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
                     typeof(SecondTestClassAttribute),
                     true,
-                    new[] { new SecondTestClassAttribute() });
+                    new[] { new SecondTestClassAttribute(3) });
 
                 #endregion
             }
@@ -1081,11 +1137,11 @@ namespace ImmediateReflection.Tests
             CheckGetAttributes<TestClassAttribute>(new ImmediateType(typeof(TestClassNoAttribute)), true, null);
 
             // With attribute
-            CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttribute)), false, new[] { new TestClassAttribute() });
-            CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttribute)), true, new[] { new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttribute)), false, new[] { new TestClassAttribute(1) });
+            CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttribute)), true, new[] { new TestClassAttribute(1) });
 
-            CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttributes)), false, new[] { new TestClassAttribute(), new TestClassAttribute() });
-            CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttributes)), true, new[] { new TestClassAttribute(), new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttributes)), false, new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
+            CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttributes)), true, new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
 
             // Without requested attribute
             CheckGetAttributes<SecondTestClassAttribute>(new ImmediateType(typeof(TestClassWithAttribute)), false, null);
@@ -1097,17 +1153,17 @@ namespace ImmediateReflection.Tests
 
             // Attribute inherited 1
             CheckGetAttributes<TestClassAttribute>(new ImmediateType(typeof(InheritedTestClassWithAttribute1)), false, null);
-            CheckGetAttributes(new ImmediateType(typeof(InheritedTestClassWithAttribute1)), true, new[] { new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateType(typeof(InheritedTestClassWithAttribute1)), true, new[] { new TestClassAttribute(1) });
 
             // Attribute inherited 2
-            CheckGetAttributes(new ImmediateType(typeof(InheritedTestClassWithAttribute2)), false, new[] { new TestClassAttribute() });
-            CheckGetAttributes(new ImmediateType(typeof(InheritedTestClassWithAttribute2)), true, new[] { new TestClassAttribute(), new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateType(typeof(InheritedTestClassWithAttribute2)), false, new[] { new TestClassAttribute(11) });
+            CheckGetAttributes(new ImmediateType(typeof(InheritedTestClassWithAttribute2)), true, new[] { new TestClassAttribute(1), new TestClassAttribute(11) });
 
             // Several attributes
-            CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), false, new[] { new TestClassAttribute() });
-            CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), true, new[] { new TestClassAttribute() });
-            CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), false, new[] { new SecondTestClassAttribute() });
-            CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), true, new[] { new SecondTestClassAttribute() });
+            CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), false, new[] { new TestClassAttribute(13) });
+            CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), true, new[] { new TestClassAttribute(13) });
+            CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), false, new[] { new SecondTestClassAttribute(1) });
+            CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), true, new[] { new SecondTestClassAttribute(1) });
 
             #endregion
 
@@ -1118,21 +1174,21 @@ namespace ImmediateReflection.Tests
             CheckGetAttributes<TestClassAttribute>(new ImmediateField(TestFieldNoAttributeFieldInfo), true, null);
 
             // With attribute
-            CheckGetAttributes(new ImmediateField(TestFieldAttributeFieldInfo), false, new[] { new TestClassAttribute() });
-            CheckGetAttributes(new ImmediateField(TestFieldAttributeFieldInfo), true, new[] { new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateField(TestFieldAttributeFieldInfo), false, new[] { new TestClassAttribute(2) });
+            CheckGetAttributes(new ImmediateField(TestFieldAttributeFieldInfo), true, new[] { new TestClassAttribute(2) });
 
-            CheckGetAttributes(new ImmediateField(TestFieldAttributesFieldInfo), false, new[] { new TestClassAttribute(), new TestClassAttribute() });
-            CheckGetAttributes(new ImmediateField(TestFieldAttributesFieldInfo), true, new[] { new TestClassAttribute(), new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateField(TestFieldAttributesFieldInfo), false, new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
+            CheckGetAttributes(new ImmediateField(TestFieldAttributesFieldInfo), true, new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
 
             // Without requested attribute
             CheckGetAttributes<SecondTestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), false, null);
             CheckGetAttributes<SecondTestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), true, null);
 
             // Several attributes
-            CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, new[] { new TestClassAttribute() });
-            CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, new[] { new TestClassAttribute() });
-            CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, new[] { new SecondTestClassAttribute() });
-            CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, new[] { new SecondTestClassAttribute() });
+            CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, new[] { new TestClassAttribute(14) });
+            CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, new[] { new TestClassAttribute(14) });
+            CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, new[] { new SecondTestClassAttribute(2) });
+            CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, new[] { new SecondTestClassAttribute(2) });
 
             #endregion
 
@@ -1143,11 +1199,11 @@ namespace ImmediateReflection.Tests
             CheckGetAttributes<TestClassAttribute>(new ImmediateProperty(TestPropertyNoAttributePropertyInfo), true, null);
 
             // With attribute
-            CheckGetAttributes(new ImmediateProperty(TestPropertyAttributePropertyInfo), false, new[] { new TestClassAttribute() });
-            CheckGetAttributes(new ImmediateProperty(TestPropertyAttributePropertyInfo), true, new[] { new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyAttributePropertyInfo), false, new[] { new TestClassAttribute(3) });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyAttributePropertyInfo), true, new[] { new TestClassAttribute(3) });
 
-            CheckGetAttributes(new ImmediateProperty(TestPropertyAttributesPropertyInfo), false, new[] { new TestClassAttribute(), new TestClassAttribute() });
-            CheckGetAttributes(new ImmediateProperty(TestPropertyAttributesPropertyInfo), true, new[] { new TestClassAttribute(), new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyAttributesPropertyInfo), false, new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyAttributesPropertyInfo), true, new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
 
             // Without requested attribute
             CheckGetAttributes<SecondTestClassAttribute>(new ImmediateProperty(TestPropertyAttributePropertyInfo), false, null);
@@ -1159,17 +1215,17 @@ namespace ImmediateReflection.Tests
 
             // Attribute inherited 1
             CheckGetAttributes<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo), false, null);
-            CheckGetAttributes(new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo), true, new[] { new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo), true, new[] { new TestClassAttribute(3) });
 
             // Attribute inherited 2
-            CheckGetAttributes(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), false, new[] { new TestClassAttribute() });
-            CheckGetAttributes(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), true, new[] { new TestClassAttribute(), new TestClassAttribute() });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), false, new[] { new TestClassAttribute(12) });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), true, new[] { new TestClassAttribute(3), new TestClassAttribute(12) });
 
             // Several attributes
-            CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, new[] { new TestClassAttribute() });
-            CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, new[] { new TestClassAttribute() });
-            CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, new[] { new SecondTestClassAttribute() });
-            CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, new[] { new SecondTestClassAttribute() });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, new[] { new TestClassAttribute(15) });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, new[] { new TestClassAttribute(15) });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, new[] { new SecondTestClassAttribute(3) });
+            CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, new[] { new SecondTestClassAttribute(3) });
 
             #endregion
 
@@ -1235,22 +1291,22 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassWithAttribute)),
                     false,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(1) });
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassWithAttribute)),
                     true,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(1) });
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassWithAttributes)),
                     false,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassWithAttributes)),
                     true,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
 
                 // Attribute not inherited
                 yield return new TestCaseData(
@@ -1272,29 +1328,29 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(
                     new ImmediateType(typeof(InheritedTestClassWithAttribute1)),
                     true,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(1) });
 
                 // Attribute inherited 2
                 yield return new TestCaseData(
                     new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
                     false,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(11) });
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
                     true,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(1), new TestClassAttribute(11) });
 
                 // Several attributes
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassMultiAttributes)),
                     false,
-                    new Attribute[] { new TestClassAttribute(), new SecondTestClassAttribute() });
+                    new Attribute[] { new TestClassAttribute(13), new SecondTestClassAttribute(1) });
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassMultiAttributes)),
                     true,
-                    new Attribute[] { new TestClassAttribute(), new SecondTestClassAttribute() });
+                    new Attribute[] { new TestClassAttribute(13), new SecondTestClassAttribute(1) });
 
                 yield return new TestCaseData(
                     new ImmediateType(typeof(InheritedTestClassMultiAttributes)),
@@ -1304,7 +1360,7 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(
                     new ImmediateType(typeof(InheritedTestClassMultiAttributes)),
                     true,
-                    new Attribute[] { new TestClassAttribute(), new SecondTestClassAttribute() });
+                    new Attribute[] { new TestClassAttribute(13), new SecondTestClassAttribute(1) });
 
                 #endregion
 
@@ -1325,33 +1381,33 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldAttributeFieldInfo),
                     false,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(2) });
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldAttributeFieldInfo),
                     true,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(2) });
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldAttributesFieldInfo),
                     false,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldAttributesFieldInfo),
                     true,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
 
                 // Several attributes
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldMultiAttributesFieldInfo),
                     false,
-                    new Attribute[] { new TestClassAttribute(), new SecondTestClassAttribute() });
+                    new Attribute[] { new TestClassAttribute(14), new SecondTestClassAttribute(2) });
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldMultiAttributesFieldInfo),
                     true,
-                    new Attribute[] { new TestClassAttribute(), new SecondTestClassAttribute() });
+                    new Attribute[] { new TestClassAttribute(14), new SecondTestClassAttribute(2) });
 
                 #endregion
 
@@ -1372,22 +1428,22 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyAttributePropertyInfo),
                     false,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(3) });
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyAttributePropertyInfo),
                     true,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(3) });
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyAttributesPropertyInfo),
                     false,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyAttributesPropertyInfo),
                     true,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
 
                 // Attribute not inherited
                 yield return new TestCaseData(
@@ -1409,29 +1465,29 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
                     true,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(3) });
 
                 // Attribute inherited 2
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
                     false,
-                    new[] { new TestClassAttribute() });
+                    new[] { new TestClassAttribute(12) });
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
                     true,
-                    new[] { new TestClassAttribute(), new TestClassAttribute() });
+                    new[] { new TestClassAttribute(3), new TestClassAttribute(12) });
 
                 // Several attributes
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
                     false,
-                    new Attribute[] { new TestClassAttribute(), new SecondTestClassAttribute() });
+                    new Attribute[] { new TestClassAttribute(15), new SecondTestClassAttribute(3) });
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
                     true,
-                    new Attribute[] { new TestClassAttribute(), new SecondTestClassAttribute() });
+                    new Attribute[] { new TestClassAttribute(15), new SecondTestClassAttribute(3) });
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyInheritedMultiAttributesPropertyInfo),
@@ -1441,7 +1497,7 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyInheritedMultiAttributesPropertyInfo),
                     true,
-                    new Attribute[] { new TestClassAttribute(), new SecondTestClassAttribute() });
+                    new Attribute[] { new TestClassAttribute(15), new SecondTestClassAttribute(3) });
 
                 #endregion
             }
