@@ -29,17 +29,11 @@ namespace ImmediateReflection
             if (member is null)
                 throw new ArgumentNullException(nameof(member));
 
-#if SUPPORTS_LINQ
-            Attribute[] attributesNotInherited = member.GetCustomAttributes(false).OfType<Attribute>().ToArray();
-            Attribute[] attributesInherited = member.GetCustomAttributes(true).OfType<Attribute>().ToArray();
-#else
-            Attribute[] attributesNotInherited = ToArray(OfType<Attribute>(member.GetCustomAttributes(false)));
-            Attribute[] attributesInherited = ToArray(OfType<Attribute>(member.GetCustomAttributes(true)));
-#endif
-
+            Attribute[] attributesNotInherited = Attribute.GetCustomAttributes(member, false);
             _attributesWithoutInherited = new Dictionary<Type, List<Attribute>>(attributesNotInherited.Length);
             FillAttributesDictionary(_attributesWithoutInherited, attributesNotInherited);
 
+            Attribute[] attributesInherited = Attribute.GetCustomAttributes(member, true);
             _attributesWithInherited = new Dictionary<Type, List<Attribute>>(attributesInherited.Length);
             FillAttributesDictionary(_attributesWithInherited, attributesInherited);
 
