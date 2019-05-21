@@ -281,9 +281,11 @@ namespace ImmediateReflection.Tests
         public void ImmediateFieldGetValue_EnumThrows()
         {
             // ReSharper disable ObjectCreationAsStatement
-            // ReSharper disable once AssignNullToNotNullAttribute
+            // ReSharper disable AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => new ImmediateField(null, typeof(TestEnum)));
+            Assert.Throws<ArgumentNullException>(() => new ImmediateField(TestEnumField1FieldInfo, null));
             Assert.Throws<ArgumentException>(() => new ImmediateField(TestEnumField1FieldInfo, typeof(PublicValueTypeTestClass)));
+            // ReSharper restore AssignNullToNotNullAttribute
             // ReSharper restore ObjectCreationAsStatement
 
             var immediateField = new ImmediateField(TestEnumFieldValueFieldInfo);
@@ -569,7 +571,7 @@ namespace ImmediateReflection.Tests
             // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             Assert.Throws<TargetException>(() => immediateField.SetValue(null, TestEnum.EnumValue2));
 
-            immediateField = new ImmediateField(TestEnumField1FieldInfo);
+            immediateField = new ImmediateField(TestEnumField1FieldInfo, typeof(TestEnum));
             Assert.Throws<FieldAccessException>(() => immediateField.SetValue(null, TestEnum.EnumValue2));
         }
 

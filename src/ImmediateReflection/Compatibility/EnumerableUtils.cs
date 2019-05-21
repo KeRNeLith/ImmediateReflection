@@ -141,7 +141,7 @@ namespace ImmediateReflection.Utils
                         }
 
                         items[count] = item;
-                        count++;
+                        ++count;
                     }
                 }
 
