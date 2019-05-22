@@ -2,9 +2,7 @@
 using System;
 using System.Reflection;
 using JetBrains.Annotations;
-#if SUPPORTS_SYSTEM_CACHING
-using System.Runtime.Caching;
-#else
+#if SUPPORTS_MICROSOFT_CACHING
 using Microsoft.Extensions.Caching.Memory;
 #endif
 
@@ -25,10 +23,7 @@ namespace ImmediateReflection
 
 #if SUPPORTS_SYSTEM_CACHING
         [NotNull]
-        private const string CacheName = "ImmediateTypesCache";
-
-        [NotNull]
-        private volatile MemoryCache _cachedTypes = new MemoryCache(CacheName);
+        private volatile MemoryCache<ImmediateType> _cachedTypes = new MemoryCache<ImmediateType>(CacheConstants.TypesCacheName);
 #else
         [NotNull]
         private volatile MemoryCache _cachedTypes = new MemoryCache(new MemoryCacheOptions());
@@ -67,17 +62,15 @@ namespace ImmediateReflection
             string key = GetCacheKey(type, flags);
 
 #if SUPPORTS_SYSTEM_CACHING
-            if (_cachedTypes.Contains(key))
+            return _cachedTypes.GetOrCreate(key, entry =>
             {
-                object cachedEntry = _cachedTypes.Get(key);
-                if (cachedEntry is null)
-                    throw new InvalidOperationException($"Cache must contains an entry for key {key}.");
-                return (ImmediateType) cachedEntry;
-            }
+                if (expirationTime.HasValue)
+                {
+                    entry.SlidingExpiration = expirationTime.Value.Offset;
+                }
 
-            var immediateType = new ImmediateType(type, flags);
-            _cachedTypes.Add(key, immediateType, expirationTime ?? DateTimeOffset.MaxValue);
-            return immediateType;
+                return new ImmediateType(type, flags);
+            });
 #else
             return _cachedTypes.GetOrCreate(key, entry =>
             {
