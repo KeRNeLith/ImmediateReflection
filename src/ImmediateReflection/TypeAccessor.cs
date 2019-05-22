@@ -44,7 +44,7 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-#if SUPPORTS_SYSTEM_CACHING || SUPPORTS_MICROSOFT_CACHING
+#if SUPPORTS_CACHING
         public static ImmediateType Get<T>([CanBeNull] DateTimeOffset? expirationTime = null)
         {
             return Get(typeof(T), expirationTime);
@@ -88,7 +88,7 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-#if SUPPORTS_SYSTEM_CACHING || SUPPORTS_MICROSOFT_CACHING
+#if SUPPORTS_CACHING
         public static ImmediateType Get([NotNull] Type type, [CanBeNull] DateTimeOffset? expirationTime = null)
         {
             return Get(type, DefaultFlags, expirationTime);
@@ -132,7 +132,7 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-#if SUPPORTS_SYSTEM_CACHING || SUPPORTS_MICROSOFT_CACHING
+#if SUPPORTS_CACHING
         public static ImmediateType Get<T>(bool includeNonPublicMembers, [CanBeNull] DateTimeOffset? expirationTime = null)
         {
             return Get(typeof(T), includeNonPublicMembers, expirationTime);
@@ -179,7 +179,7 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-#if SUPPORTS_SYSTEM_CACHING || SUPPORTS_MICROSOFT_CACHING
+#if SUPPORTS_CACHING
         public static ImmediateType Get([NotNull] Type type, bool includeNonPublicMembers, [CanBeNull] DateTimeOffset? expirationTime = null)
         {
             return !includeNonPublicMembers
@@ -224,7 +224,7 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-#if SUPPORTS_SYSTEM_CACHING || SUPPORTS_MICROSOFT_CACHING
+#if SUPPORTS_CACHING
         public static ImmediateType Get<T>(BindingFlags flags, [CanBeNull] DateTimeOffset? expirationTime = null)
         {
             return Get(typeof(T), flags, expirationTime);
@@ -265,13 +265,13 @@ namespace ImmediateReflection
         [Pure]
 #endif
         [NotNull]
-#if SUPPORTS_SYSTEM_CACHING || SUPPORTS_MICROSOFT_CACHING
+#if SUPPORTS_CACHING
         public static ImmediateType Get([NotNull] Type type, BindingFlags flags, [CanBeNull] DateTimeOffset? expirationTime = null)
 #else
         public static ImmediateType Get([NotNull] Type type, BindingFlags flags)
 #endif
         {
-#if SUPPORTS_SYSTEM_CACHING || SUPPORTS_MICROSOFT_CACHING
+#if SUPPORTS_CACHING
             return TypesCache.Instance.GetImmediateType(type, flags, expirationTime);
 #else
             return new ImmediateType(type, flags);

@@ -19,7 +19,7 @@ namespace ImmediateReflection
         /// <param name="obj">Object instance.</param>
         /// <returns>The corresponding <see cref="ImmediateType"/>.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="obj"/>is null.</exception>
-#if !SUPPORTS_SYSTEM_CACHING && !SUPPORTS_MICROSOFT_CACHING
+#if !SUPPORTS_CACHING
         [Pure]
 #endif
         [NotNull]
@@ -39,7 +39,7 @@ namespace ImmediateReflection
         /// <param name="type">A <see cref="Type"/>.</param>
         /// <returns>The corresponding <see cref="ImmediateType"/>.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/>is null.</exception>
-#if !SUPPORTS_SYSTEM_CACHING && !SUPPORTS_MICROSOFT_CACHING
+#if !SUPPORTS_CACHING
         [Pure]
 #endif
         [NotNull]

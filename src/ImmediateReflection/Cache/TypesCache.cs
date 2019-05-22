@@ -1,4 +1,4 @@
-#if SUPPORTS_SYSTEM_CACHING || SUPPORTS_MICROSOFT_CACHING
+#if SUPPORTS_CACHING
 using System;
 using System.Reflection;
 using JetBrains.Annotations;
