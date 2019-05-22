@@ -272,7 +272,7 @@ namespace ImmediateReflection
 #endif
         {
 #if SUPPORTS_CACHING
-            return TypesCache.Instance.GetImmediateType(type, flags, expirationTime);
+            return CachesHandler.Instance.GetImmediateType(type, flags, expirationTime);
 #else
             return new ImmediateType(type, flags);
 #endif

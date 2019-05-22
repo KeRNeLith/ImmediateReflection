@@ -10,6 +10,9 @@ namespace ImmediateReflection
     {
         [NotNull]
         public const string TypesCacheName = "ImmediateTypesCache";
+
+        [NotNull]
+        public const string AttributesCacheName = "AttributesCache";
     }
 }
 #endif

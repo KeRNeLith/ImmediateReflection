@@ -33,7 +33,11 @@ namespace ImmediateReflection
             Name = member.Name;
 
             // Attributes
+#if SUPPORTS_CACHING
+            _attributeCache = CachesHandler.Instance.GetAttributesCache(member);
+#else
             _attributeCache = new AttributesCache(member);
+#endif
         }
 
         /// <summary>

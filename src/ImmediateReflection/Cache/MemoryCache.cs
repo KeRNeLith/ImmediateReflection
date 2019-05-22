@@ -8,7 +8,7 @@ namespace ImmediateReflection
     /// <summary>
     /// Represents a type that implements a memory cache.
     /// </summary>
-    /// <typeparam name="TValue">Cache value.</typeparam>
+    /// <typeparam name="TValue">Cache value type.</typeparam>
     internal class MemoryCache<TValue>
     {
         [NotNull]
