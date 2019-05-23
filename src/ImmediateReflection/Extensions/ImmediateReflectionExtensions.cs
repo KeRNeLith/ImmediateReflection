@@ -48,8 +48,6 @@ namespace ImmediateReflection
 #endif
         public static ImmediateType GetImmediateType([NotNull] this Type type)
         {
-            if (type is null)
-                throw new ArgumentNullException(nameof(type));
             return TypeAccessor.Get(type);
         }
     }
