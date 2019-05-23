@@ -1,4 +1,3 @@
-#if !SUPPORTS_LINQ
 using System;
 using NUnit.Framework;
 
@@ -19,4 +18,3 @@ namespace ImmediateReflection.Tests
         }
     }
 }
-#endif

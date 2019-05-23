@@ -56,19 +56,19 @@
     <DefineConstants>$(DefineConstants);NET40;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net45'">
-    <DefineConstants>$(DefineConstants);NET45;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET45;SUPPORTS_CACHING;SUPPORTS_SYSTEM_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net451'">
-    <DefineConstants>$(DefineConstants);NET451;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET451;SUPPORTS_CACHING;SUPPORTS_SYSTEM_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net452'">
-    <DefineConstants>$(DefineConstants);NET452;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET452;SUPPORTS_CACHING;SUPPORTS_SYSTEM_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net46'">
-    <DefineConstants>$(DefineConstants);NET46;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET46;SUPPORTS_CACHING;SUPPORTS_SYSTEM_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net461'">
-    <DefineConstants>$(DefineConstants);NET461;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET461;SUPPORTS_CACHING;SUPPORTS_SYSTEM_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">
     <DefineConstants>$(DefineConstants);NETCOREAPP2_0;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
