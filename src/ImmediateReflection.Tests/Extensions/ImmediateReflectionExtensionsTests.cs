@@ -8,7 +8,7 @@ namespace ImmediateReflection.Tests
     /// Tests related to <see cref="ImmediateReflectionExtensions"/>.
     /// </summary>
     [TestFixture]
-    internal class ExtensionsTests : ImmediateReflectionTestsBase
+    internal class ImmediateReflectionExtensionsTests : ImmediateReflectionTestsBase
     {
         [Test]
         public void GetImmediateTypeFromObject()
