@@ -2,9 +2,6 @@
 using System;
 using System.Reflection;
 using JetBrains.Annotations;
-#if SUPPORTS_MICROSOFT_CACHING
-using Microsoft.Extensions.Caching.Memory;
-#endif
 
 namespace ImmediateReflection
 {
@@ -40,13 +37,42 @@ namespace ImmediateReflection
 
         #region ImmediateType cache
 
-#if SUPPORTS_SYSTEM_CACHING
+        private struct TypeCacheKey : IEquatable<TypeCacheKey>
+        {
+            [NotNull]
+            private readonly Type _type;
+
+            private readonly BindingFlags _flags;
+
+            public TypeCacheKey([NotNull] Type type, BindingFlags flags)
+            {
+                _type = type;
+                _flags = flags;
+            }
+
+            /// <inheritdoc />
+            public override bool Equals(object obj)
+            {
+                if (obj is null)
+                    return false;
+                return obj is TypeCacheKey other && Equals(other);
+            }
+
+            /// <inheritdoc />
+            public bool Equals(TypeCacheKey other)
+            {
+                return _type == other._type && _flags == other._flags;
+            }
+
+            /// <inheritdoc />
+            public override int GetHashCode()
+            {
+                return (_type.GetHashCode() * 397) ^ (int)_flags;
+            }
+        }
+
         [NotNull]
-        private volatile MemoryCache<ImmediateType> _cachedTypes = new MemoryCache<ImmediateType>(CacheConstants.TypesCacheName);
-#else
-        [NotNull]
-        private volatile MemoryCache _cachedTypes = new MemoryCache(new MemoryCacheOptions());
-#endif
+        private volatile MemoryCache<TypeCacheKey, ImmediateType> _cachedTypes = new MemoryCache<TypeCacheKey, ImmediateType>();
 
         [NotNull]
         public ImmediateType GetImmediateType([NotNull] Type type, BindingFlags flags, [CanBeNull] DateTimeOffset? expirationTime = null)
@@ -54,53 +80,17 @@ namespace ImmediateReflection
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
-            string key = GetCacheKey();
-
-#if SUPPORTS_SYSTEM_CACHING
-            return _cachedTypes.GetOrCreate(key, entry =>
-            {
-                if (expirationTime.HasValue)
-                {
-                    entry.SlidingExpiration = expirationTime.Value.Offset;
-                }
-
-                return new ImmediateType(type, flags);
-            });
-#else
-            return _cachedTypes.GetOrCreate(key, entry =>
-            {
-                if (expirationTime.HasValue)
-                {
-                    entry.SetOptions(new MemoryCacheEntryOptions
-                    {
-                        AbsoluteExpirationRelativeToNow = expirationTime.Value.Offset
-                    });
-                }
-                return new ImmediateType(type, flags);
-            });
-#endif
-
-            #region Local function
-
-            string GetCacheKey()
-            {
-                return $"{type.GetHashCode().ToString()};{flags.ToString()}";
-            }
-
-            #endregion
+            return _cachedTypes.GetOrCreate(
+                new TypeCacheKey(type, flags),
+                () => new ImmediateType(type, flags));
         }
 
         #endregion
 
         #region Attributes cache
 
-#if SUPPORTS_SYSTEM_CACHING
         [NotNull]
-        private volatile MemoryCache<AttributesCache> _cachedAttributes = new MemoryCache<AttributesCache>(CacheConstants.AttributesCacheName);
-#else
-        [NotNull]
-        private volatile MemoryCache _cachedAttributes = new MemoryCache(new MemoryCacheOptions());
-#endif
+        private volatile MemoryCache<MemberInfo, AttributesCache> _cachedAttributes = new MemoryCache<MemberInfo, AttributesCache>();
 
         [NotNull]
         public AttributesCache GetAttributesCache([NotNull] MemberInfo member, [CanBeNull] DateTimeOffset? expirationTime = null)
@@ -108,40 +98,7 @@ namespace ImmediateReflection
             if (member is null)
                 throw new ArgumentNullException(nameof(member));
 
-            string key = GetCacheKey();
-
-#if SUPPORTS_SYSTEM_CACHING
-            return _cachedAttributes.GetOrCreate(key, entry =>
-            {
-                if (expirationTime.HasValue)
-                {
-                    entry.SlidingExpiration = expirationTime.Value.Offset;
-                }
-
-                return new AttributesCache(member);
-            });
-#else
-            return _cachedAttributes.GetOrCreate(key, entry =>
-            {
-                if (expirationTime.HasValue)
-                {
-                    entry.SetOptions(new MemoryCacheEntryOptions
-                    {
-                        AbsoluteExpirationRelativeToNow = expirationTime.Value.Offset
-                    });
-                }
-                return new AttributesCache(member);
-            });
-#endif
-
-            #region Local function
-
-            string GetCacheKey()
-            {
-                return member.GetHashCode().ToString();
-            }
-
-            #endregion
+            return _cachedAttributes.GetOrCreate(member, () => new AttributesCache(member));
         }
 
         #endregion

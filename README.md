@@ -49,7 +49,7 @@ ImmediateType type = TypeAccessor.Get<MySuperType>(includeNonPublicMembers: true
 ImmediateType type = TypeAccessor.Get<MySuperType>(BindingFlags.Public | BindingFlags.Static);
 ```
 
-IMPORTANT: In versions targeting .NET Framework 4.5 or higher and .NET Standard 2.0, there is a built-in cache behind the `TypeAccessor`, which can be configured via an optional additional parameter of the Get method.
+IMPORTANT: In versions targeting .NET Framework 4.0 or higher and .NET Standard 2.0, there is a built-in cache behind the `TypeAccessor`.
 
 ### Getting a field or a property
 
@@ -105,11 +105,7 @@ Supports Source Link
 
 ## Dependencies
 
-For targets higher than .NET Framework 4.5:
-- System.Runtime.Caching
-
 For targets higher than .NET Standard 2.0:
-- Microsoft.Extensions.Caching.Memory
 - System.Reflection.Emit.LightWeight
 
 ### Notes

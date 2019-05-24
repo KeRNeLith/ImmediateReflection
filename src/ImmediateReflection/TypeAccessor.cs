@@ -15,23 +15,13 @@ namespace ImmediateReflection
     {
         internal const BindingFlags DefaultFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
 
-#if SUPPORTS_MICROSOFT_CACHING
+#if SUPPORTS_CACHING
         /// <summary>
         /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
         /// It gives access to all public instance members.
         /// </summary>
         /// <remarks>Returned <see cref="ImmediateType"/> is cached within the library.</remarks>
         /// <typeparam name="T"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</typeparam>
-        /// <param name="expirationTime">Cache expiration time.</param>
-#elif SUPPORTS_SYSTEM_CACHING
-        /// <summary>
-        /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
-        /// It gives access to all public instance members.
-        /// </summary>
-        /// <remarks>Returned <see cref="ImmediateType"/> is cached within the library.</remarks>
-        /// <typeparam name="T"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</typeparam>
-        /// <param name="expirationTime">Cache expiration time.</param>
-        /// <exception cref="InvalidOperationException">If the cache contains a null entry for the given type.</exception>
 #else
         /// <summary>
         /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
@@ -44,37 +34,19 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-#if SUPPORTS_CACHING
-        public static ImmediateType Get<T>([CanBeNull] DateTimeOffset? expirationTime = null)
-        {
-            return Get(typeof(T), expirationTime);
-        }
-#else
         public static ImmediateType Get<T>()
         {
             return Get(typeof(T));
         }
-#endif
 
-#if SUPPORTS_MICROSOFT_CACHING
+#if SUPPORTS_CACHING
         /// <summary>
         /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
         /// It gives access to all public instance members.
         /// </summary>
         /// <remarks>Returned <see cref="ImmediateType"/> is cached within the library.</remarks>
         /// <param name="type"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</param>
-        /// <param name="expirationTime">Cache expiration time.</param>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
-#elif SUPPORTS_SYSTEM_CACHING
-        /// <summary>
-        /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
-        /// It gives access to all public instance members.
-        /// </summary>
-        /// <remarks>Returned <see cref="ImmediateType"/> is cached within the library.</remarks>
-        /// <param name="type"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</param>
-        /// <param name="expirationTime">Cache expiration time.</param>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
-        /// <exception cref="InvalidOperationException">If the cache contains a null entry for the given type.</exception>
 #else
         /// <summary>
         /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
@@ -88,19 +60,12 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-#if SUPPORTS_CACHING
-        public static ImmediateType Get([NotNull] Type type, [CanBeNull] DateTimeOffset? expirationTime = null)
-        {
-            return Get(type, DefaultFlags, expirationTime);
-        }
-#else
         public static ImmediateType Get([NotNull] Type type)
         {
             return Get(type, DefaultFlags);
         }
-#endif
 
-#if SUPPORTS_MICROSOFT_CACHING
+#if SUPPORTS_CACHING
         /// <summary>
         /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
         /// If <paramref name="includeNonPublicMembers"/> is set to true it gives access to all public and not public instance members.
@@ -108,17 +73,6 @@ namespace ImmediateReflection
         /// <remarks>Returned <see cref="ImmediateType"/> is cached within the library.</remarks>
         /// <typeparam name="T"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</typeparam>
         /// <param name="includeNonPublicMembers">Indicates if non public members should be taken into account.</param>
-        /// <param name="expirationTime">Cache expiration time.</param>
-#elif SUPPORTS_SYSTEM_CACHING
-        /// <summary>
-        /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
-        /// If <paramref name="includeNonPublicMembers"/> is set to true it gives access to all public and not public instance members.
-        /// </summary>
-        /// <remarks>Returned <see cref="ImmediateType"/> is cached within the library.</remarks>
-        /// <typeparam name="T"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</typeparam>
-        /// <param name="includeNonPublicMembers">Indicates if non public members should be taken into account.</param>
-        /// <param name="expirationTime">Cache expiration time.</param>
-        /// <exception cref="InvalidOperationException">If the cache contains a null entry for the given type.</exception>
 #else
         /// <summary>
         /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
@@ -132,19 +86,12 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-#if SUPPORTS_CACHING
-        public static ImmediateType Get<T>(bool includeNonPublicMembers, [CanBeNull] DateTimeOffset? expirationTime = null)
-        {
-            return Get(typeof(T), includeNonPublicMembers, expirationTime);
-        }
-#else
         public static ImmediateType Get<T>(bool includeNonPublicMembers)
         {
             return Get(typeof(T), includeNonPublicMembers);
         }
-#endif
 
-#if SUPPORTS_MICROSOFT_CACHING
+#if SUPPORTS_CACHING
         /// <summary>
         /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
         /// If <paramref name="includeNonPublicMembers"/> is set to true it gives access to all public and not public instance members.
@@ -152,19 +99,7 @@ namespace ImmediateReflection
         /// <remarks>Returned <see cref="ImmediateType"/> is cached within the library.</remarks>
         /// <param name="type"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</param>
         /// <param name="includeNonPublicMembers">Indicates if non public members should be taken into account.</param>
-        /// <param name="expirationTime">Cache expiration time.</param>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
-#elif SUPPORTS_SYSTEM_CACHING
-        /// <summary>
-        /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
-        /// If <paramref name="includeNonPublicMembers"/> is set to true it gives access to all public and not public instance members.
-        /// </summary>
-        /// <remarks>Returned <see cref="ImmediateType"/> is cached within the library.</remarks>
-        /// <param name="type"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</param>
-        /// <param name="includeNonPublicMembers">Indicates if non public members should be taken into account.</param>
-        /// <param name="expirationTime">Cache expiration time.</param>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
-        /// <exception cref="InvalidOperationException">If the cache contains a null entry for the given type.</exception>
 #else
         /// <summary>
         /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
@@ -179,39 +114,20 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-#if SUPPORTS_CACHING
-        public static ImmediateType Get([NotNull] Type type, bool includeNonPublicMembers, [CanBeNull] DateTimeOffset? expirationTime = null)
-        {
-            return !includeNonPublicMembers
-                ? Get(type, expirationTime)
-                : Get(type, DefaultFlags | BindingFlags.NonPublic, expirationTime);
-        }
-#else
         public static ImmediateType Get([NotNull] Type type, bool includeNonPublicMembers)
         {
             return !includeNonPublicMembers 
                 ? Get(type) 
                 : Get(type, DefaultFlags | BindingFlags.NonPublic);
         }
-#endif
 
-#if SUPPORTS_MICROSOFT_CACHING
+#if SUPPORTS_CACHING
         /// <summary>
         /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
         /// </summary>
         /// <remarks>Returned <see cref="ImmediateType"/> is cached within the library.</remarks>
         /// <typeparam name="T"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</typeparam>
         /// <param name="flags">Flags that must be taken into account to get members.</param>
-        /// <param name="expirationTime">Cache expiration time.</param>
-#elif SUPPORTS_SYSTEM_CACHING
-        /// <summary>
-        /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
-        /// </summary>
-        /// <remarks>Returned <see cref="ImmediateType"/> is cached within the library.</remarks>
-        /// <typeparam name="T"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</typeparam>
-        /// <param name="flags">Flags that must be taken into account to get members.</param>
-        /// <param name="expirationTime">Cache expiration time.</param>
-        /// <exception cref="InvalidOperationException">If the cache contains a null entry for the given type.</exception>
 #else
         /// <summary>
         /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
@@ -224,37 +140,19 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-#if SUPPORTS_CACHING
-        public static ImmediateType Get<T>(BindingFlags flags, [CanBeNull] DateTimeOffset? expirationTime = null)
-        {
-            return Get(typeof(T), flags, expirationTime);
-        }
-#else
         public static ImmediateType Get<T>(BindingFlags flags)
         {
             return Get(typeof(T), flags);
         }
-#endif
 
-#if SUPPORTS_MICROSOFT_CACHING
+#if SUPPORTS_CACHING
         /// <summary>
         /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
         /// </summary>
         /// <remarks>Returned <see cref="ImmediateType"/> is cached within the library.</remarks>
         /// <param name="type"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</param>
         /// <param name="flags">Flags that must be taken into account to get members.</param>
-        /// <param name="expirationTime">Cache expiration time.</param>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
-#elif SUPPORTS_SYSTEM_CACHING
-        /// <summary>
-        /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
-        /// </summary>
-        /// <remarks>Returned <see cref="ImmediateType"/> is cached within the library.</remarks>
-        /// <param name="type"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</param>
-        /// <param name="flags">Flags that must be taken into account to get members.</param>
-        /// <param name="expirationTime">Cache expiration time.</param>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
-        /// <exception cref="InvalidOperationException">If the cache contains a null entry for the given type.</exception>
 #else
         /// <summary>
         /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
@@ -265,14 +163,10 @@ namespace ImmediateReflection
         [Pure]
 #endif
         [NotNull]
-#if SUPPORTS_CACHING
-        public static ImmediateType Get([NotNull] Type type, BindingFlags flags, [CanBeNull] DateTimeOffset? expirationTime = null)
-#else
         public static ImmediateType Get([NotNull] Type type, BindingFlags flags)
-#endif
         {
 #if SUPPORTS_CACHING
-            return CachesHandler.Instance.GetImmediateType(type, flags, expirationTime);
+            return CachesHandler.Instance.GetImmediateType(type, flags);
 #else
             return new ImmediateType(type, flags);
 #endif

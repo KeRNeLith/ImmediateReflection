@@ -88,26 +88,18 @@ Supports Type fields and properties getter/setter.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net40'">
     <AssemblyTitle>ImmediateReflection .NET Framework 4.0</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NET40;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_LINQ;SUPPORTS_EXTENSIONS;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET40;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_LINQ;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net45'">
     <AssemblyTitle>ImmediateReflection .NET Framework 4.5</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NET45;SUPPORTS_AGGRESSIVE_INLINING;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_LINQ;SUPPORTS_CACHING;SUPPORTS_SYSTEM_CACHING;SUPPORTS_EXTENSIONS;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET45;SUPPORTS_AGGRESSIVE_INLINING;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_LINQ;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <AssemblyTitle>ImmediateReflection .NET Standard 2.0</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NETSTANDARD2_0;SUPPORTS_AGGRESSIVE_INLINING;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_LINQ;SUPPORTS_CACHING;SUPPORTS_MICROSOFT_CACHING;SUPPORTS_EXTENSIONS;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NETSTANDARD2_0;SUPPORTS_AGGRESSIVE_INLINING;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_LINQ;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
 
-  <!-- Dependencies -->
-  <ItemGroup Condition="'$(TargetFramework)'=='net45'">
-    <PackageReference Include="System.Runtime.Caching" Version="4.5.0" />
-  </ItemGroup>
-  
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
-  </ItemGroup>
-  
+  <!-- Dependencies -->  
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="System.Reflection.Emit.LightWeight" Version="4.3.0" />
   </ItemGroup>

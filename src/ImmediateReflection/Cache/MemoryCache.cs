@@ -1,6 +1,6 @@
-#if SUPPORTS_SYSTEM_CACHING
+#if SUPPORTS_CACHING
 using System;
-using System.Runtime.Caching;
+using System.Collections.Concurrent;
 using JetBrains.Annotations;
 
 namespace ImmediateReflection
@@ -8,23 +8,12 @@ namespace ImmediateReflection
     /// <summary>
     /// Represents a type that implements a memory cache.
     /// </summary>
+    /// <typeparam name="TKey">Cache key type.</typeparam>
     /// <typeparam name="TValue">Cache value type.</typeparam>
-    internal class MemoryCache<TValue>
+    internal class MemoryCache<TKey, TValue>
     {
         [NotNull]
-        private readonly MemoryCache _cache;
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="name">Cache name.</param>
-        public MemoryCache([NotNull] string name)
-        {
-            if (name is null)
-                throw new ArgumentNullException(nameof(name));
-
-            _cache = new MemoryCache(name);
-        }
+        private readonly ConcurrentDictionary<TKey, Lazy<TValue>> _cache = new ConcurrentDictionary<TKey, Lazy<TValue>>();
 
         /// <summary>
         /// Gets the cached value corresponding to the given <paramref name="key"/> if already cached, or creates
@@ -34,19 +23,11 @@ namespace ImmediateReflection
         /// <param name="valueFactory">Factory method to create the value if it does not exist.</param>
         /// <returns>The value.</returns>
         [NotNull]
-        public TValue GetOrCreate([NotNull] string key, [NotNull, InstantHandle] Func<CacheItemPolicy, TValue> valueFactory)
+        public TValue GetOrCreate([NotNull] TKey key, [NotNull] Func<TValue> valueFactory)
         {
-            if (_cache.Get(key) is TValue cachedValue)
-                return cachedValue;
-
-            var cacheItemPolicy = new CacheItemPolicy();
-            TValue newValue = valueFactory(cacheItemPolicy);
-            if (newValue == null)
-                throw new InvalidOperationException("Cache must contains not null entries.");
-
-            if (!_cache.Add(key, newValue, cacheItemPolicy))
-                throw new InvalidOperationException($"Cache must contains an entry for key {key}.");
-            return newValue;
+            return _cache.GetOrAdd(
+                key,
+                k => new Lazy<TValue>(valueFactory)).Value;
         }
     }
 }
