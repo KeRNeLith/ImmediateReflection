@@ -29,7 +29,7 @@ namespace ImmediateReflection.Tests
             Assert.IsNotNull(field);
             Assert.AreEqual(PublicValueTypePublicFieldFieldsInfo, field.FieldInfo);
 
-            field = testType.GetImmediateField("_privateField", BindingFlags.NonPublic);
+            field = testType.GetImmediateField("_privateField", BindingFlags.NonPublic | BindingFlags.Instance);
             Assert.IsNotNull(field);
             Assert.AreEqual(PublicValueTypePrivateFieldFieldsInfo, field.FieldInfo);
 
@@ -49,7 +49,7 @@ namespace ImmediateReflection.Tests
                 classifiedMember.PublicInstanceFields.Concat(classifiedMember.StaticFields).Concat(classifiedMember.ConstFields), 
                 fields.Select(field => field.FieldInfo));
 
-            fields = testType.GetImmediateFields(BindingFlags.NonPublic);
+            fields = testType.GetImmediateFields(BindingFlags.NonPublic | BindingFlags.Instance);
             Assert.IsNotNull(fields);
             CollectionAssert.AreEquivalent(
                 classifiedMember.NonPublicInstanceFields,
@@ -98,12 +98,12 @@ namespace ImmediateReflection.Tests
             Assert.IsNotNull(property);
             Assert.AreEqual(PublicValueTypePublicGetSetPropertyPropertyInfo, property.PropertyInfo);
 
-            property = testType.GetImmediateProperty("PrivatePropertyGetSet", BindingFlags.NonPublic);
+            property = testType.GetImmediateProperty("PrivatePropertyGetSet", BindingFlags.NonPublic | BindingFlags.Instance);
             Assert.IsNotNull(property);
             Assert.AreEqual(PublicValueTypePrivateGetSetPropertyPropertyInfo, property.PropertyInfo);
 
             property = testType.GetImmediateProperty("NotExists");
-            Assert.IsNotNull(property);
+            Assert.IsNull(property);
         }
 
         [Test]
@@ -118,7 +118,7 @@ namespace ImmediateReflection.Tests
                 classifiedMember.PublicInstanceProperties.Concat(classifiedMember.StaticProperties),
                 properties.Select(property => property.PropertyInfo));
 
-            properties = testType.GetImmediateProperties(BindingFlags.NonPublic);
+            properties = testType.GetImmediateProperties(BindingFlags.NonPublic | BindingFlags.Instance);
             Assert.IsNotNull(properties);
             CollectionAssert.AreEquivalent(
                 classifiedMember.NonPublicInstanceProperties,
