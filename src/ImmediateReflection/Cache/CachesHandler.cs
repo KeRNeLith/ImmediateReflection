@@ -51,14 +51,6 @@ namespace ImmediateReflection
             }
 
             /// <inheritdoc />
-            public override bool Equals(object obj)
-            {
-                if (obj is null)
-                    return false;
-                return obj is TypeCacheKey other && Equals(other);
-            }
-
-            /// <inheritdoc />
             public bool Equals(TypeCacheKey other)
             {
                 return _type == other._type && _flags == other._flags;
@@ -75,7 +67,7 @@ namespace ImmediateReflection
         private volatile MemoryCache<TypeCacheKey, ImmediateType> _cachedTypes = new MemoryCache<TypeCacheKey, ImmediateType>();
 
         [NotNull]
-        public ImmediateType GetImmediateType([NotNull] Type type, BindingFlags flags, [CanBeNull] DateTimeOffset? expirationTime = null)
+        public ImmediateType GetImmediateType([NotNull] Type type, BindingFlags flags)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
@@ -93,7 +85,7 @@ namespace ImmediateReflection
         private volatile MemoryCache<MemberInfo, AttributesCache> _cachedAttributes = new MemoryCache<MemberInfo, AttributesCache>();
 
         [NotNull]
-        public AttributesCache GetAttributesCache([NotNull] MemberInfo member, [CanBeNull] DateTimeOffset? expirationTime = null)
+        public AttributesCache GetAttributesCache([NotNull] MemberInfo member)
         {
             if (member is null)
                 throw new ArgumentNullException(nameof(member));
