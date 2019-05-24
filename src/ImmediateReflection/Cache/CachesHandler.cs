@@ -51,6 +51,14 @@ namespace ImmediateReflection
             }
 
             /// <inheritdoc />
+            public override bool Equals(object obj)
+            {
+                if (obj is null)
+                    return false;
+                return obj is TypeCacheKey other && Equals(other);
+            }
+
+            /// <inheritdoc />
             public bool Equals(TypeCacheKey other)
             {
                 return _type == other._type && _flags == other._flags;
