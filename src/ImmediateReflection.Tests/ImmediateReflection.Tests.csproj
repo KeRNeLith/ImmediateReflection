@@ -53,7 +53,7 @@
     <DefineConstants>$(DefineConstants);NET35;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net40'">
-    <DefineConstants>$(DefineConstants);NET40;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET40;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net45'">
     <DefineConstants>$(DefineConstants);NET45;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
