@@ -210,21 +210,23 @@ namespace ImmediateReflection
         /// Creates an instance of this <see cref="Type"/> with that type's default constructor.
         /// </summary>
         /// <remarks>This method will not throw if instantiation failed.</remarks>
+        /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
         /// <param name="exception">Caught exception if the instantiation failed, otherwise null.</param>
-        /// <returns>A reference to the newly created object, otherwise null.</returns>
+        /// <returns>True if the new instance was successfully created, false otherwise.</returns>
         [Pure]
-        [CanBeNull]
-        public object New(out Exception exception)
+        public bool TryNew(out object newInstance, out Exception exception)
         {
             try
             {
                 exception = null;
-                return _constructor();
+                newInstance = _constructor();
+                return true;
             }
             catch (Exception ex)
             {
+                newInstance = null;
                 exception = ex;
-                return null;
+                return false;
             }
         }
 

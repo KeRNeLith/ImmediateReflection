@@ -647,16 +647,16 @@ namespace ImmediateReflection.Tests
         {
             var immediateType = new ImmediateType(type);
 
-            object instance = immediateType.New(out Exception ex);
-            if (!expectedThrow)
-            {
-                Assert.IsNotNull(instance);
-                Assert.AreEqual(Activator.CreateInstance(type), instance);
-            }
-            else
+            Assert.AreEqual(!expectedThrow, immediateType.TryNew(out object instance, out Exception ex));
+            if (expectedThrow)
             {
                 Assert.IsNull(instance);
                 Assert.IsNotNull(ex);
+            }
+            else
+            {
+                Assert.IsNotNull(instance);
+                Assert.AreEqual(Activator.CreateInstance(type), instance);
             }
         }
 
