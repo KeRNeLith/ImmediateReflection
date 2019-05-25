@@ -186,7 +186,7 @@ namespace ImmediateReflection.Tests
         public void CreateSetter_StronglyTyped_Throws()
         {
             PropertyInfo property = null;
-            
+
             // ReSharper disable ReturnValueOfPureMethodIsNotUsed
             // ReSharper disable AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => property.CreateSetter<PublicValueTypeTestClass, int>());
@@ -209,6 +209,89 @@ namespace ImmediateReflection.Tests
             Assert.IsFalse(PublicValueTypePublicGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicObjectTypeTestClass, int> _));
             Assert.IsFalse(PublicValueTypePublicGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicObjectTypeTestClass, int> _));
             Assert.IsFalse(PublicValueTypePublicGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicObjectTypeTestClass, int> _));
+        }
+
+        #endregion
+
+        #region Partially strongly typed
+
+        [Test]
+        public void TryCreateSetter()
+        {
+            Assert.IsTrue(PublicValueTypePublicGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, object> _));
+            Assert.IsFalse(PublicValueTypePublicGetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, object> _));
+            Assert.IsTrue(PublicValueTypePublicPrivateGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, object> _));
+            Assert.IsTrue(PublicValueTypePublicGetPrivateSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, object> _));
+            Assert.IsTrue(PublicValueTypePublicSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, object> _));
+            Assert.IsTrue(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, object> _));
+            Assert.IsTrue(PublicValueTypeInternalGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, object> _));
+            Assert.IsTrue(PublicValueTypeProtectedGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, object> _));
+            Assert.IsTrue(PublicValueTypePrivateGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, object> _));
+        }
+
+        [Test]
+        public void CreateSetter_ReferenceType()
+        {
+            var testObject = new PublicValueTypeTestClass();
+
+            Action<PublicValueTypeTestClass, object> setter = PublicValueTypePublicGetSetPropertyPropertyInfo.CreateSetter<PublicValueTypeTestClass>();
+            setter(testObject, 51);
+            Assert.AreEqual(51, testObject.PublicPropertyGetSet);
+
+            setter = PublicValueTypePublicGetPropertyPropertyInfo.CreateSetter<PublicValueTypeTestClass>();
+            setter(testObject, 45);
+            Assert.AreEqual(0, testObject.PublicPropertyGet);   // Not set
+
+            setter = PublicValueTypePublicPrivateGetSetPropertyPropertyInfo.CreateSetter<PublicValueTypeTestClass>();
+            setter(testObject, 25);
+            Assert.AreEqual(25, testObject._publicField);       // Store the result in the public field
+
+            setter = PublicValueTypePublicGetPrivateSetPropertyPropertyInfo.CreateSetter<PublicValueTypeTestClass>();
+            setter(testObject, 12);
+            Assert.AreEqual(12, testObject.PublicPropertyGetPrivateSet);
+
+            setter = PublicValueTypePublicSetPropertyPropertyInfo.CreateSetter<PublicValueTypeTestClass>();
+            setter(testObject, 42);
+            Assert.AreEqual(42, testObject._publicField);       // Store the result in the public field
+
+            setter = PublicValueTypeStaticPublicGetSetPropertyPropertyInfo.CreateSetter<PublicValueTypeTestClass>();
+            setter(null, 1);
+            Assert.AreEqual(1, PublicValueTypeTestClass.PublicStaticPropertyGetSet);
+            setter(testObject, 2);
+            Assert.AreEqual(2, PublicValueTypeTestClass.PublicStaticPropertyGetSet);
+
+            setter = PublicValueTypeInternalGetSetPropertyPropertyInfo.CreateSetter<PublicValueTypeTestClass>();
+            setter(testObject, 72);
+            Assert.AreEqual(72, testObject.InternalPropertyGetSet);
+
+            setter = PublicValueTypeProtectedGetSetPropertyPropertyInfo.CreateSetter<PublicValueTypeTestClass>();
+            setter(testObject, 92);
+            Assert.AreEqual(92, testObject._publicField);       // Store the result in the public field
+
+            setter = PublicValueTypePrivateGetSetPropertyPropertyInfo.CreateSetter<PublicValueTypeTestClass>();
+            setter(testObject, 112);
+            Assert.AreEqual(112, testObject._publicField);      // Store the result in the public field
+        }
+
+        [Test]
+        public void CreateSetter_Throws()
+        {
+            // ReSharper disable ReturnValueOfPureMethodIsNotUsed
+            // ReSharper disable AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => ((PropertyInfo)null).CreateSetter<PublicValueTypeTestClass>());
+            Assert.Throws<ArgumentNullException>(() => ((PropertyInfo)null).TryCreateSetter(out Action<PublicValueTypeTestClass, object> _));
+            // ReSharper restore AssignNullToNotNullAttribute
+            // ReSharper restore ReturnValueOfPureMethodIsNotUsed
+        }
+
+        [Test]
+        public void CreateSetter_WrongType()
+        {
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentException>(() => PublicValueTypePublicGetSetPropertyPropertyInfo.CreateSetter<PublicObjectTypeTestClass>());
+
+            Assert.IsFalse(PublicValueTypePublicGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicObjectTypeTestClass, object> _));
         }
 
         #endregion

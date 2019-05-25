@@ -194,6 +194,116 @@ namespace ImmediateReflection
 
         #endregion
 
+        #region Partially strongly typed
+
+        private static Action<TOwner, object> SetterHelper<TOwner, TValue>([NotNull] MethodInfo method)
+            where TOwner : class
+        {
+            if (method.IsStatic)
+            {
+                // Convert the MethodInfo into a strongly typed open delegate
+                var staticSetter = (Action<TValue>)
+                    Delegate.CreateDelegate(typeof(Action<TValue>), method);
+
+                // Create a more weakly typed delegate which will call the strongly typed one
+                return (target, param) => staticSetter((TValue)param);
+            }
+
+            var setter = (Action<TOwner, TValue>)
+                Delegate.CreateDelegate(typeof(Action<TOwner, TValue>), method);
+
+            return (target, param) => setter(target, (TValue)param);
+        }
+
+        private static Action<TOwner, object> CreateSetter<TOwner>([NotNull] MethodInfo method)
+            where TOwner : class
+        {
+            // Fetch the generic helper
+            MethodInfo genericHelper = typeof(MemberExtensions)
+                .GetMethod(
+                    nameof(SetterHelper),
+                    BindingFlags.Static | BindingFlags.NonPublic);
+
+            if (genericHelper is null)
+                throw new InvalidOperationException("Cannot find the generic setter helper.");
+
+            // Supply type arguments
+            MethodInfo delegateConstructor = genericHelper.MakeGenericMethod(
+                typeof(TOwner),
+                method.GetParameters()[0].ParameterType);
+
+            // Call the helper to generate the delegate
+            return (Action<TOwner, object>)delegateConstructor.Invoke(null, new object[] { method });
+        }
+
+        [Pure]
+        private static bool TryCreateSetterInternal<TOwner>([NotNull] this PropertyInfo property, out Action<TOwner, object> setter)
+            where TOwner : class
+        {
+            if (property is null)
+                throw new ArgumentNullException(nameof(property));
+            // ReSharper disable once PossibleNullReferenceException, Justification: PropertyInfo always have a declaring type.
+            if (!property.DeclaringType.IsAssignableFrom(typeof(TOwner)))
+                throw new ArgumentException("Template is not the owner type of this property.");
+
+            setter = null;
+            MethodInfo setMethod = property.GetSetMethod(true);
+            if (setMethod is null)
+                return false;
+
+            setter = CreateSetter<TOwner>(setMethod);
+            return true;
+        }
+
+        /// <summary>
+        /// Tries to create a delegate setter for this <see cref="PropertyInfo"/>, if the property has no set method
+        /// available then it returns false and a null <paramref name="setter"/>.
+        /// </summary>
+        /// <typeparam name="TOwner">Property owner type.</typeparam>
+        /// <param name="property">Property for which creating a setter.</param>
+        /// <param name="setter">Created setter delegate.</param>
+        /// <returns>True if the setter was successfully created, false otherwise.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/>is null.</exception>
+        [Pure]
+        public static bool TryCreateSetter<TOwner>([NotNull] this PropertyInfo property, out Action<TOwner, object> setter)
+            where TOwner : class
+        {
+            setter = null;
+
+            try
+            {
+                return property.TryCreateSetterInternal(out setter);
+            }
+            catch (Exception exception)
+            {
+                if (exception is ArgumentNullException)
+                    throw;
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Creates a delegate setter for this <see cref="PropertyInfo"/>, if the property has no set method
+        /// available then it creates a default delegate that does nothing.
+        /// </summary>
+        /// <typeparam name="TOwner">Property owner type.</typeparam>
+        /// <param name="property">Property for which creating a setter.</param>
+        /// <returns>The corresponding <see cref="Action{TOwner,Object}"/> delegate setter.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/>is null.</exception>
+        /// <exception cref="ArgumentException">If the given template type does not match owner type.</exception>
+        [Pure]
+        [NotNull]
+        public static Action<TOwner, object> CreateSetter<TOwner>([NotNull] this PropertyInfo property)
+            where TOwner : class
+        {
+            if (property.TryCreateSetterInternal(out Action<TOwner, object> setter))
+                return setter;
+            return (owner, value) => {};
+        }
+
+        #endregion
+
         #endregion
     }
 }
