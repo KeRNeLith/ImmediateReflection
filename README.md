@@ -51,6 +51,22 @@ ImmediateType type = TypeAccessor.Get<MySuperType>(BindingFlags.Public | Binding
 
 IMPORTANT: In versions targeting .NET Framework 4.0 or higher and .NET Standard 2.0, there is a built-in cache behind the `TypeAccessor`.
 
+### Instantiate a type
+
+The `ImmediateType` allows to instantiate types via their default constructor if available. This feature is faster than making a traditional call to `Activator.CreateInstance(Type)`.
+
+Here is a quick example:
+
+```csharp
+ImmediateType type = TypeAccessor.Get<MySuperType>();
+
+// Create a new instance of MySuperType
+object newInstance = type.New();
+
+// You can also use the version that not throws in case of failure
+bool succeed = type.TryNew(out object instance, out Exception _);
+```
+
 ### Getting a field or a property
 
 ```csharp
@@ -67,6 +83,16 @@ ImmediateProperty property = type.GetProperty("PropertyName");
 // or
 ImmediateProperty property = type.Properties["PropertyName"];
 // There is also type.GetProperties()
+
+// For all members
+IEnumerable<ImmediateMember> members = type.Members;
+// Or
+IEnumerable<ImmediateMember> members = type.GetMembers();
+
+// For a member
+ImmediateMember member = type.GetMember("MemberName");
+// Or
+ImmediateMember member = type["MemberName"];
 ```
 
 When you have type wrapping a field or a property you are able to get or set it like in a standard way.
@@ -89,6 +115,117 @@ To let the user of the library access eventual missing functionalities, each wra
 ImmediateProperty property = type.GetProperty("PropertyName");
 
 PropertyInfo propertyInfo = property.PropertyInfo;
+```
+
+### Getting attributes
+
+Both `ImmediateType`, `ImmediateField` and `ImmediateProperty` inherit from `ImmediateMember` which provide an API to check/get attributes that are applied respectively to a type, field or a property.
+
+All methods are accessible in their templated and not templated versions.
+Following some examples of methods accessibles:
+
+```csharp
+ImmediateType type = ...;
+bool hasAttribute = type.HasAttribute<MyAttribute>();
+
+ImmediateField field = ...;
+MyAttribute attribute = field.GetAttribute<MyAttribute>(inherit: true);
+
+ImmediateProperty property = ...;
+IEnumerable<Attribute> attributes = property.GetAttributes(typeof(MyAttribute));
+
+IEnumerable<Attribute> attributes = type.GetAllAttributes(inherit: true);
+```
+
+It is also possible to directly retrieve attributes of a given `MemberInfo` from the built in cache if target is higher than .NET Framework 4.0.
+
+```csharp
+PropertyInfo property = ...;
+bool hasAttribute = property.HasImmediateAttribute<MyAttribute>();
+
+FieldInfo field = ...;
+MyAttribute attribute = field.GetImmediateAttribute<MyAttribute>();
+```
+
+### Creating typed delegate (Open delegate)
+
+ImmediateReflection provides an API like standard one for `Type`, `FieldInfo` and `PropertyInfo`, this means get/set for properties use object both for target and parameter/return type.
+
+But in some cases you know the type owning a property, or better the type of the property too.
+
+To answer these cases ImmediateReflection provides extensions to `PropertyInfo` that allow you to create strongly typed delegates for an even faster get/set of properties.
+
+See some of the following examples:
+
+```csharp
+class MyType
+{
+    int MyProperty { get; set; }
+
+    string MyStringProperty { get; set; }
+}
+
+PropertyInfo myProperty = typeof(MyType).GetProperty(nameof(MyType.MyProperty));
+GetterDelegate<MyType, int> getter = myProperty.CreateGetter<MyType, int>();
+
+// Notice that this method can throw if passing invalid types
+// There is also a try version
+bool succeed = myProperty.TryCreateGetter(out GetterDelegate<MyType, int> getter);
+
+// Then you can use this getter simply like this
+MyType myObject = new MyType { MyProperty = 12 };
+int value = getter(myObject);  // 12
+
+
+// Note that the same exists for setter
+PropertyInfo myStringProperty = typeof(MyType).GetProperty(nameof(MyType.MyStringProperty));
+SetterDelegate<MyType, string> setter = myProperty.CreateSetter<MyType, string>();
+// Or
+bool succeed = myProperty.TryCreateSetter(out SetterDelegate<MyType, string> setter);
+
+// Then you can use this getter simply like this
+MyType myObject = new MyType { MyStringProperty = "Init" };
+setter(myObject, "New value");  // Sets myObject.MyStringProperty to "New value"
+```
+
+If you only knows the owner type then you can use the alternative version of these delegate helpers that will use object for the property value.
+
+```csharp
+PropertyInfo myProperty = typeof(MyType).GetProperty(nameof(MyType.MyProperty));
+GetterDelegate<MyType> getter = myProperty.CreateGetter<MyType>();
+
+// Notice that this method can throw if passing invalid types
+// There is also a try version
+bool succeed = myProperty.TryCreateGetter(out GetterDelegate<MyType> getter);
+
+// Then you can use this getter simply like this
+MyType myObject = new MyType { MyProperty = 12 };
+object value = getter(myObject);  // 12 wrapped in an object
+
+
+// Note that the same exists for setter
+PropertyInfo myStringProperty = typeof(MyType).GetProperty(nameof(MyType.MyStringProperty));
+SetterDelegate<MyType> setter = myProperty.CreateSetter<MyType>();
+// Or
+bool succeed = myProperty.TryCreateSetter(out SetterDelegate<MyType> setter);
+
+// Then you can use this getter simply like this
+MyType myObject = new MyType { MyStringProperty = "Init" };
+setter(myObject, "New value");  // Sets myObject.MyStringProperty to "New value"
+```
+
+You can then stores these delegate to boost your reflection get/set over properties.
+
+### Extensions
+
+The library also provides some extensions for standard types to easily get Immediate Reflection types.
+
+Like those:
+
+```csharp
+Type myType = ...;
+
+ImmediateType myImmediateType = myType.GetImmediateType();
 ```
 
 ---
