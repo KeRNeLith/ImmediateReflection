@@ -1,4 +1,3 @@
-#if SUPPORTS_EXTENSIONS
 using System;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -15,7 +14,7 @@ namespace ImmediateReflection
         #region Strongly typed
 
         [Pure]
-        private static bool TryCreateGetterInternal<TOwner, TProperty>([NotNull] this PropertyInfo property, out Func<TOwner, TProperty> getter)
+        private static bool TryCreateGetterInternal<TOwner, TProperty>([NotNull] PropertyInfo property, out GetterDelegate<TOwner, TProperty> getter)
         {
             if (property is null)
                 throw new ArgumentNullException(nameof(property));
@@ -27,9 +26,9 @@ namespace ImmediateReflection
 
             if (getMethod.IsStatic)
             {
-                var staticGetter = (Func<TProperty>)
+                var staticGetter = (StaticGetterDelegate<TProperty>)
                     Delegate.CreateDelegate(
-                        typeof(Func<TProperty>),
+                        typeof(StaticGetterDelegate<TProperty>),
                         null,
                         getMethod);
                 getter = owner => staticGetter();
@@ -48,9 +47,9 @@ namespace ImmediateReflection
                 }
                 else
                 {
-                    getter = (Func<TOwner, TProperty>)
+                    getter = (GetterDelegate<TOwner, TProperty>)
                         Delegate.CreateDelegate(
-                            typeof(Func<TOwner, TProperty>),
+                            typeof(GetterDelegate<TOwner, TProperty>),
                             null,
                             getMethod);
                 }
@@ -70,13 +69,19 @@ namespace ImmediateReflection
         /// <returns>True if the getter was successfully created, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         [Pure]
-        public static bool TryCreateGetter<TOwner, TProperty>([NotNull] this PropertyInfo property, out Func<TOwner, TProperty> getter)
+        public static bool TryCreateGetter<TOwner, TProperty>(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this PropertyInfo property,
+#else
+            [NotNull] PropertyInfo property,
+#endif
+            out GetterDelegate<TOwner, TProperty> getter)
         {
             getter = null;
 
             try
             {
-                return property.TryCreateGetterInternal(out getter);
+                return TryCreateGetterInternal(property, out getter);
             }
             catch (Exception exception)
             {
@@ -94,14 +99,20 @@ namespace ImmediateReflection
         /// <typeparam name="TOwner">Property owner type.</typeparam>
         /// <typeparam name="TProperty">Property type.</typeparam>
         /// <param name="property">Property for which creating a getter.</param>
-        /// <returns>The corresponding <see cref="Func{TOwner,TProperty}"/> delegate getter.</returns>
+        /// <returns>The corresponding <see cref="GetterDelegate{TOwner,TProperty}"/> delegate getter.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given template type does not match owner and property types.</exception>
         [Pure]
         [NotNull]
-        public static Func<TOwner, TProperty> CreateGetter<TOwner, TProperty>([NotNull] this PropertyInfo property)
+        public static GetterDelegate<TOwner, TProperty> CreateGetter<TOwner, TProperty>(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this PropertyInfo property
+#else
+            [NotNull] PropertyInfo property
+#endif
+            )
         {
-            if (property.TryCreateGetterInternal(out Func<TOwner, TProperty> getter))
+            if (TryCreateGetterInternal(property, out GetterDelegate<TOwner, TProperty> getter))
                 return getter;
             return owner => default(TProperty);
         }
@@ -112,13 +123,13 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
-        private static Func<TOwner, object> GetterHelper<TOwner, TValue>([NotNull] MethodInfo method)
+        private static GetterDelegate<TOwner> GetterHelper<TOwner, TValue>([NotNull] MethodInfo method)
         {
             if (method.IsStatic)
             {
                 // Convert the MethodInfo into a strongly typed open delegate
-                var staticGetter = (Func<TValue>)
-                    Delegate.CreateDelegate(typeof(Func<TValue>), method);
+                var staticGetter = (StaticGetterDelegate<TValue>)
+                    Delegate.CreateDelegate(typeof(StaticGetterDelegate<TValue>), method);
 
                 // Create a more weakly typed delegate which will call the strongly typed one
                 return target => staticGetter();
@@ -133,15 +144,15 @@ namespace ImmediateReflection
                 return target => refGetter(ref target);
             }
 
-            var getter = (Func<TOwner, TValue>)
-                Delegate.CreateDelegate(typeof(Func<TOwner, TValue>), method);
+            var getter = (GetterDelegate<TOwner, TValue>)
+                Delegate.CreateDelegate(typeof(GetterDelegate<TOwner, TValue>), method);
 
             return target => getter(target);
         }
 
         [Pure]
         [NotNull]
-        private static Func<TOwner, object> CreateGetter<TOwner>([NotNull] MethodInfo method)
+        private static GetterDelegate<TOwner> CreateGetter<TOwner>([NotNull] MethodInfo method)
         {
             // Fetch the generic helper
             MethodInfo genericHelper = typeof(MemberExtensions)
@@ -158,11 +169,11 @@ namespace ImmediateReflection
                 method.ReturnType);
 
             // Call the helper to generate the delegate
-            return (Func<TOwner, object>)delegateConstructor.Invoke(null, new object[] { method });
+            return (GetterDelegate<TOwner>)delegateConstructor.Invoke(null, new object[] { method });
         }
 
         [Pure]
-        private static bool TryCreateGetterInternal<TOwner>([NotNull] this PropertyInfo property, out Func<TOwner, object> getter)
+        private static bool TryCreateGetterInternal<TOwner>([NotNull] PropertyInfo property, out GetterDelegate<TOwner> getter)
         {
             if (property is null)
                 throw new ArgumentNullException(nameof(property));
@@ -189,13 +200,19 @@ namespace ImmediateReflection
         /// <returns>True if the getter was successfully created, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         [Pure]
-        public static bool TryCreateGetter<TOwner>([NotNull] this PropertyInfo property, out Func<TOwner, object> getter)
+        public static bool TryCreateGetter<TOwner>(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this PropertyInfo property,
+#else
+            [NotNull] PropertyInfo property,
+#endif
+            out GetterDelegate<TOwner> getter)
         {
             getter = null;
 
             try
             {
-                return property.TryCreateGetterInternal(out getter);
+                return TryCreateGetterInternal(property, out getter);
             }
             catch (Exception exception)
             {
@@ -212,14 +229,20 @@ namespace ImmediateReflection
         /// </summary>
         /// <typeparam name="TOwner">Property owner type.</typeparam>
         /// <param name="property">Property for which creating a getter.</param>
-        /// <returns>The corresponding <see cref="Func{TOwner,Object}"/> delegate getter.</returns>
+        /// <returns>The corresponding <see cref="GetterDelegate{TOwner}"/> delegate getter.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given template type does not match owner type.</exception>
         [Pure]
         [NotNull]
-        public static Func<TOwner, object> CreateGetter<TOwner>([NotNull] this PropertyInfo property)
+        public static GetterDelegate<TOwner> CreateGetter<TOwner>(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this PropertyInfo property
+#else
+            [NotNull] PropertyInfo property
+#endif
+            )
         {
-            if (property.TryCreateGetterInternal(out Func<TOwner, object> getter))
+            if (TryCreateGetterInternal(property, out GetterDelegate<TOwner> getter))
                 return getter;
 
             if (property.PropertyType.IsValueType)
@@ -236,7 +259,7 @@ namespace ImmediateReflection
         #region Strongly typed
 
         [Pure]
-        private static bool TryCreateSetterInternal<TOwner, TProperty>([NotNull] this PropertyInfo property, out Action<TOwner, TProperty> setter)
+        private static bool TryCreateSetterInternal<TOwner, TProperty>([NotNull] PropertyInfo property, out SetterDelegate<TOwner, TProperty> setter)
             where TOwner : class
         {
             if (property is null)
@@ -249,18 +272,18 @@ namespace ImmediateReflection
 
             if (setMethod.IsStatic)
             {
-                var staticSetter = (Action<TProperty>)
+                var staticSetter = (StaticSetterDelegate<TProperty>)
                     Delegate.CreateDelegate(
-                        typeof(Action<TProperty>),
+                        typeof(StaticSetterDelegate<TProperty>),
                         null,
                         setMethod);
                 setter = (owner, value) => staticSetter(value);
             }
             else
             {
-                setter = (Action<TOwner, TProperty>)
+                setter = (SetterDelegate<TOwner, TProperty>)
                     Delegate.CreateDelegate(
-                        typeof(Action<TOwner, TProperty>),
+                        typeof(SetterDelegate<TOwner, TProperty>),
                         null,
                         setMethod);
             }
@@ -279,14 +302,20 @@ namespace ImmediateReflection
         /// <returns>True if the setter was successfully created, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         [Pure]
-        public static bool TryCreateSetter<TOwner, TProperty>([NotNull] this PropertyInfo property, out Action<TOwner, TProperty> setter)
+        public static bool TryCreateSetter<TOwner, TProperty>(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this PropertyInfo property,
+#else
+            [NotNull] PropertyInfo property,
+#endif
+            out SetterDelegate<TOwner, TProperty> setter)
             where TOwner : class
         {
             setter = null;
 
             try
             {
-                return property.TryCreateSetterInternal(out setter);
+                return TryCreateSetterInternal(property, out setter);
             }
             catch (Exception exception)
             {
@@ -304,17 +333,23 @@ namespace ImmediateReflection
         /// <typeparam name="TOwner">Property owner type.</typeparam>
         /// <typeparam name="TProperty">Property type.</typeparam>
         /// <param name="property">Property for which creating a setter.</param>
-        /// <returns>The corresponding <see cref="Action{TOwner,TProperty}"/> delegate setter.</returns>
+        /// <returns>The corresponding <see cref="SetterDelegate{TOwner,TProperty}"/> delegate setter.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given template type does not match owner and property types.</exception>
         [Pure]
         [NotNull]
-        public static Action<TOwner, TProperty> CreateSetter<TOwner, TProperty>([NotNull] this PropertyInfo property)
+        public static SetterDelegate<TOwner, TProperty> CreateSetter<TOwner, TProperty>(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this PropertyInfo property
+#else
+            [NotNull] PropertyInfo property
+#endif
+            )
             where TOwner : class
         {
-            if (property.TryCreateSetterInternal(out Action<TOwner, TProperty> setter))
+            if (TryCreateSetterInternal(property, out SetterDelegate<TOwner, TProperty> setter))
                 return setter;
-            return (owner, value) => {};
+            return (owner, value) => { };
         }
 
         #endregion
@@ -323,28 +358,28 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
-        private static Action<TOwner, object> SetterHelper<TOwner, TValue>([NotNull] MethodInfo method)
+        private static SetterDelegate<TOwner> SetterHelper<TOwner, TValue>([NotNull] MethodInfo method)
             where TOwner : class
         {
             if (method.IsStatic)
             {
                 // Convert the MethodInfo into a strongly typed open delegate
-                var staticSetter = (Action<TValue>)
-                    Delegate.CreateDelegate(typeof(Action<TValue>), method);
+                var staticSetter = (StaticSetterDelegate<TValue>)
+                    Delegate.CreateDelegate(typeof(StaticSetterDelegate<TValue>), method);
 
                 // Create a more weakly typed delegate which will call the strongly typed one
                 return (target, param) => staticSetter((TValue)param);
             }
 
-            var setter = (Action<TOwner, TValue>)
-                Delegate.CreateDelegate(typeof(Action<TOwner, TValue>), method);
+            var setter = (SetterDelegate<TOwner, TValue>)
+                Delegate.CreateDelegate(typeof(SetterDelegate<TOwner, TValue>), method);
 
             return (target, param) => setter(target, (TValue)param);
         }
 
         [Pure]
         [NotNull]
-        private static Action<TOwner, object> CreateSetter<TOwner>([NotNull] MethodInfo method)
+        private static SetterDelegate<TOwner> CreateSetter<TOwner>([NotNull] MethodInfo method)
             where TOwner : class
         {
             // Fetch the generic helper
@@ -362,11 +397,11 @@ namespace ImmediateReflection
                 method.GetParameters()[0].ParameterType);
 
             // Call the helper to generate the delegate
-            return (Action<TOwner, object>)delegateConstructor.Invoke(null, new object[] { method });
+            return (SetterDelegate<TOwner>)delegateConstructor.Invoke(null, new object[] { method });
         }
 
         [Pure]
-        private static bool TryCreateSetterInternal<TOwner>([NotNull] this PropertyInfo property, out Action<TOwner, object> setter)
+        private static bool TryCreateSetterInternal<TOwner>([NotNull] PropertyInfo property, out SetterDelegate<TOwner> setter)
             where TOwner : class
         {
             if (property is null)
@@ -394,14 +429,20 @@ namespace ImmediateReflection
         /// <returns>True if the setter was successfully created, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         [Pure]
-        public static bool TryCreateSetter<TOwner>([NotNull] this PropertyInfo property, out Action<TOwner, object> setter)
+        public static bool TryCreateSetter<TOwner>(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this PropertyInfo property,
+#else
+            [NotNull] PropertyInfo property,
+#endif
+            out SetterDelegate<TOwner> setter)
             where TOwner : class
         {
             setter = null;
 
             try
             {
-                return property.TryCreateSetterInternal(out setter);
+                return TryCreateSetterInternal(property, out setter);
             }
             catch (Exception exception)
             {
@@ -418,17 +459,23 @@ namespace ImmediateReflection
         /// </summary>
         /// <typeparam name="TOwner">Property owner type.</typeparam>
         /// <param name="property">Property for which creating a setter.</param>
-        /// <returns>The corresponding <see cref="Action{TOwner,Object}"/> delegate setter.</returns>
+        /// <returns>The corresponding <see cref="SetterDelegate{TOwner}"/> delegate setter.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given template type does not match owner type.</exception>
         [Pure]
         [NotNull]
-        public static Action<TOwner, object> CreateSetter<TOwner>([NotNull] this PropertyInfo property)
+        public static SetterDelegate<TOwner> CreateSetter<TOwner>(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this PropertyInfo property
+#else
+            [NotNull] PropertyInfo property
+#endif
+            )
             where TOwner : class
         {
-            if (property.TryCreateSetterInternal(out Action<TOwner, object> setter))
+            if (TryCreateSetterInternal(property, out SetterDelegate<TOwner> setter))
                 return setter;
-            return (owner, value) => {};
+            return (owner, value) => { };
         }
 
         #endregion
@@ -436,4 +483,3 @@ namespace ImmediateReflection
         #endregion
     }
 }
-#endif
