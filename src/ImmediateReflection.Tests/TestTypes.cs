@@ -38,6 +38,8 @@ namespace ImmediateReflection.Tests
         public int _testValue;
 
         public int TestValue { get; set; }
+
+        public static int TestStaticValue { get; set; }
     }
 
     public class TestObject

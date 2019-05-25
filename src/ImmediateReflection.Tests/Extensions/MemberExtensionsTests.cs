@@ -14,7 +14,7 @@ namespace ImmediateReflection.Tests
         #region Getter
 
         [Test]
-        public void TryCreateGetter()
+        public void TryCreateGetter_StronglyTyped()
         {
             Assert.IsTrue(TestStructTestPropertyPropertyInfo.TryCreateGetter(out Func<TestStruct, int> _));
 
@@ -30,7 +30,7 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
-        public void CreateGetter_ValueType()
+        public void CreateGetter_StronglyTyped_ValueType()
         {
             var testObject = new TestStruct
             {
@@ -39,10 +39,14 @@ namespace ImmediateReflection.Tests
 
             Func<TestStruct, int> getter = TestStructTestPropertyPropertyInfo.CreateGetter<TestStruct, int>();
             Assert.AreEqual(12, getter(testObject));
+
+            getter = TestStructStaticTestPropertyPropertyInfo.CreateGetter<TestStruct, int>();
+            TestStruct.TestStaticValue = 25;
+            Assert.AreEqual(25, getter(default));
         }
 
         [Test]
-        public void CreateGetter_ReferenceType()
+        public void CreateGetter_StronglyTyped_ReferenceType()
         {
             var testObject = new PublicValueTypeTestClass(45, 12)
             {
@@ -86,18 +90,20 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
-        public void CreateGetter_Throws()
+        public void CreateGetter_StronglyTyped_Throws()
         {
+            PropertyInfo property = null;
+
             // ReSharper disable ReturnValueOfPureMethodIsNotUsed
             // ReSharper disable AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() => ((PropertyInfo)null).CreateGetter<TestStruct, int>());
-            Assert.Throws<ArgumentNullException>(() => ((PropertyInfo)null).TryCreateGetter(out Func<TestStruct, int> _));
+            Assert.Throws<ArgumentNullException>(() => property.CreateGetter<TestStruct, int>());
+            Assert.Throws<ArgumentNullException>(() => property.TryCreateGetter(out Func<TestStruct, int> _));
             // ReSharper restore AssignNullToNotNullAttribute
             // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         }
 
         [Test]
-        public void CreateGetter_WrongType()
+        public void CreateGetter_StronglyTyped_WrongType()
         {
             // ReSharper disable ReturnValueOfPureMethodIsNotUsed
             // ReSharper disable AssignNullToNotNullAttribute
@@ -116,8 +122,10 @@ namespace ImmediateReflection.Tests
 
         #region Setter
 
+        #region Strongly typed
+
         [Test]
-        public void TryCreateSetter()
+        public void TryCreateSetter_StronglyTyped()
         {
             Assert.IsTrue(PublicValueTypePublicGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, int> _));
             Assert.IsFalse(PublicValueTypePublicGetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, int> _));
@@ -131,7 +139,7 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
-        public void CreateSetter_ReferenceType()
+        public void CreateSetter_StronglyTyped_ReferenceType()
         {
             var testObject = new PublicValueTypeTestClass();
 
@@ -175,18 +183,20 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
-        public void CreateSetter_Throws()
+        public void CreateSetter_StronglyTyped_Throws()
         {
+            PropertyInfo property = null;
+            
             // ReSharper disable ReturnValueOfPureMethodIsNotUsed
             // ReSharper disable AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() => ((PropertyInfo)null).CreateSetter<PublicValueTypeTestClass, int>());
-            Assert.Throws<ArgumentNullException>(() => ((PropertyInfo)null).TryCreateSetter(out Action<PublicValueTypeTestClass, int> _));
+            Assert.Throws<ArgumentNullException>(() => property.CreateSetter<PublicValueTypeTestClass, int>());
+            Assert.Throws<ArgumentNullException>(() => property.TryCreateSetter(out Action<PublicValueTypeTestClass, int> _));
             // ReSharper restore AssignNullToNotNullAttribute
             // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         }
 
         [Test]
-        public void CreateSetter_WrongType()
+        public void CreateSetter_StronglyTyped_WrongType()
         {
             // ReSharper disable ReturnValueOfPureMethodIsNotUsed
             // ReSharper disable AssignNullToNotNullAttribute
@@ -200,6 +210,8 @@ namespace ImmediateReflection.Tests
             Assert.IsFalse(PublicValueTypePublicGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicObjectTypeTestClass, int> _));
             Assert.IsFalse(PublicValueTypePublicGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicObjectTypeTestClass, int> _));
         }
+
+        #endregion
 
         #endregion
     }

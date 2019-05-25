@@ -420,6 +420,10 @@ namespace ImmediateReflection.Tests
         protected static readonly PropertyInfo TestStructTestPropertyPropertyInfo =
             typeof(TestStruct).GetProperty(nameof(TestStruct.TestValue)) ?? throw new AssertionException("Cannot find property.");
 
+        [NotNull]
+        protected static readonly PropertyInfo TestStructStaticTestPropertyPropertyInfo =
+            typeof(TestStruct).GetProperty(nameof(TestStruct.TestStaticValue)) ?? throw new AssertionException("Cannot find property.");
+
         // Fields //
 
         [NotNull]

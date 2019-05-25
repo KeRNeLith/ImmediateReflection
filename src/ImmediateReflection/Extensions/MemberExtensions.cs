@@ -23,18 +23,6 @@ namespace ImmediateReflection
             if (getMethod is null)
                 return false;
 
-            // For value type use a ref delegate
-            if (typeof(TOwner).IsValueType)
-            {
-                var refGetter = (RefGetterDelegate<TOwner, TProperty>)
-                    Delegate.CreateDelegate(
-                        typeof(RefGetterDelegate<TOwner, TProperty>),
-                        null,
-                        getMethod);
-                getter = owner => refGetter(ref owner);
-                return true;
-            }
-
             if (getMethod.IsStatic)
             {
                 var staticGetter = (Func<TProperty>)
@@ -46,11 +34,24 @@ namespace ImmediateReflection
             }
             else
             {
-                getter = (Func<TOwner, TProperty>)
-                    Delegate.CreateDelegate(
-                        typeof(Func<TOwner, TProperty>),
-                        null,
-                        getMethod);
+                // For value type use a ref delegate
+                if (typeof(TOwner).IsValueType)
+                {
+                    var refGetter = (RefGetterDelegate<TOwner, TProperty>)
+                        Delegate.CreateDelegate(
+                            typeof(RefGetterDelegate<TOwner, TProperty>),
+                            null,
+                            getMethod);
+                    getter = owner => refGetter(ref owner);
+                }
+                else
+                {
+                    getter = (Func<TOwner, TProperty>)
+                        Delegate.CreateDelegate(
+                            typeof(Func<TOwner, TProperty>),
+                            null,
+                            getMethod);
+                }
             }
 
             return true;
@@ -106,6 +107,8 @@ namespace ImmediateReflection
         #endregion
 
         #region Setter
+
+        #region Strongly typed
 
         [Pure]
         private static bool TryCreateSetterInternal<TOwner, TProperty>([NotNull] this PropertyInfo property, out Action<TOwner, TProperty> setter)
@@ -188,6 +191,8 @@ namespace ImmediateReflection
                 return setter;
             return (owner, value) => {};
         }
+
+        #endregion
 
         #endregion
     }
