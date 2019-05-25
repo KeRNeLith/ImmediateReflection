@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+#if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
+#endif
 using JetBrains.Annotations;
 
 namespace ImmediateReflection

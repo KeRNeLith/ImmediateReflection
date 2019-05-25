@@ -109,6 +109,7 @@ namespace ImmediateReflection
 
         [Pure]
         private static bool TryCreateSetterInternal<TOwner, TProperty>([NotNull] this PropertyInfo property, out Action<TOwner, TProperty> setter)
+            where TOwner : class
         {
             if (property is null)
                 throw new ArgumentNullException(nameof(property));
@@ -117,9 +118,6 @@ namespace ImmediateReflection
             MethodInfo setMethod = property.GetSetMethod(true);
             if (setMethod is null)
                 return false;
-
-            if (typeof(TOwner).IsValueType)
-                return false;   // Cannot set on value type
 
             if (setMethod.IsStatic)
             {
@@ -154,6 +152,7 @@ namespace ImmediateReflection
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/>is null.</exception>
         [Pure]
         public static bool TryCreateSetter<TOwner, TProperty>([NotNull] this PropertyInfo property, out Action<TOwner, TProperty> setter)
+            where TOwner : class
         {
             setter = null;
 
@@ -183,6 +182,7 @@ namespace ImmediateReflection
         [Pure]
         [NotNull]
         public static Action<TOwner, TProperty> CreateSetter<TOwner, TProperty>([NotNull] this PropertyInfo property)
+            where TOwner : class
         {
             if (property.TryCreateSetterInternal(out Action<TOwner, TProperty> setter))
                 return setter;

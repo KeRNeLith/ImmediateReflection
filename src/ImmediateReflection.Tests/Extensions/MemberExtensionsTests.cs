@@ -88,9 +88,12 @@ namespace ImmediateReflection.Tests
         [Test]
         public void CreateGetter_Throws()
         {
-            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-            // ReSharper disable once AssignNullToNotNullAttribute
+            // ReSharper disable ReturnValueOfPureMethodIsNotUsed
+            // ReSharper disable AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => ((PropertyInfo)null).CreateGetter<TestStruct, int>());
+            Assert.Throws<ArgumentNullException>(() => ((PropertyInfo)null).TryCreateGetter(out Func<TestStruct, int> _));
+            // ReSharper restore AssignNullToNotNullAttribute
+            // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         }
 
         [Test]
@@ -116,8 +119,6 @@ namespace ImmediateReflection.Tests
         [Test]
         public void TryCreateSetter()
         {
-            Assert.IsFalse(TestStructTestPropertyPropertyInfo.TryCreateSetter(out Action<TestStruct, int> _));  // Cannot set on struct
-
             Assert.IsTrue(PublicValueTypePublicGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, int> _));
             Assert.IsFalse(PublicValueTypePublicGetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, int> _));
             Assert.IsTrue(PublicValueTypePublicPrivateGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, int> _));
@@ -127,19 +128,6 @@ namespace ImmediateReflection.Tests
             Assert.IsTrue(PublicValueTypeInternalGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, int> _));
             Assert.IsTrue(PublicValueTypeProtectedGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, int> _));
             Assert.IsTrue(PublicValueTypePrivateGetSetPropertyPropertyInfo.TryCreateSetter(out Action<PublicValueTypeTestClass, int> _));
-        }
-
-        [Test]
-        public void CreateSetter_ValueType()
-        {
-            var testObject = new TestStruct
-            {
-                TestValue = 12
-            };
-
-            Action<TestStruct, int> setter = TestStructTestPropertyPropertyInfo.CreateSetter<TestStruct, int>();
-            setter(testObject, 25);
-            Assert.AreEqual(12, testObject.TestValue);  // Value can't be set on struct
         }
 
         [Test]
@@ -189,9 +177,12 @@ namespace ImmediateReflection.Tests
         [Test]
         public void CreateSetter_Throws()
         {
-            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-            // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() => ((PropertyInfo)null).CreateSetter<TestStruct, int>());
+            // ReSharper disable ReturnValueOfPureMethodIsNotUsed
+            // ReSharper disable AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => ((PropertyInfo)null).CreateSetter<PublicValueTypeTestClass, int>());
+            Assert.Throws<ArgumentNullException>(() => ((PropertyInfo)null).TryCreateSetter(out Action<PublicValueTypeTestClass, int> _));
+            // ReSharper restore AssignNullToNotNullAttribute
+            // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         }
 
         [Test]
