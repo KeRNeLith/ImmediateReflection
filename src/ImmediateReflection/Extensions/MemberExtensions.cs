@@ -12,6 +12,8 @@ namespace ImmediateReflection
     {
         #region Getter
 
+        #region Strongly typed
+
         [Pure]
         private static bool TryCreateGetterInternal<TOwner, TProperty>([NotNull] this PropertyInfo property, out Func<TOwner, TProperty> getter)
         {
@@ -66,7 +68,7 @@ namespace ImmediateReflection
         /// <param name="property">Property for which creating a getter.</param>
         /// <param name="getter">Created getter delegate.</param>
         /// <returns>True if the getter was successfully created, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/>is null.</exception>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         [Pure]
         public static bool TryCreateGetter<TOwner, TProperty>([NotNull] this PropertyInfo property, out Func<TOwner, TProperty> getter)
         {
@@ -93,7 +95,7 @@ namespace ImmediateReflection
         /// <typeparam name="TProperty">Property type.</typeparam>
         /// <param name="property">Property for which creating a getter.</param>
         /// <returns>The corresponding <see cref="Func{TOwner,TProperty}"/> delegate getter.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/>is null.</exception>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given template type does not match owner and property types.</exception>
         [Pure]
         [NotNull]
@@ -103,6 +105,129 @@ namespace ImmediateReflection
                 return getter;
             return owner => default(TProperty);
         }
+
+        #endregion
+
+        #region Partially strongly typed
+
+        [Pure]
+        [NotNull]
+        private static Func<TOwner, object> GetterHelper<TOwner, TValue>([NotNull] MethodInfo method)
+        {
+            if (method.IsStatic)
+            {
+                // Convert the MethodInfo into a strongly typed open delegate
+                var staticGetter = (Func<TValue>)
+                    Delegate.CreateDelegate(typeof(Func<TValue>), method);
+
+                // Create a more weakly typed delegate which will call the strongly typed one
+                return target => staticGetter();
+            }
+
+            // For value type use a ref delegate
+            if (typeof(TOwner).IsValueType)
+            {
+                var refGetter = (RefGetterDelegate<TOwner, TValue>)
+                    Delegate.CreateDelegate(typeof(RefGetterDelegate<TOwner, TValue>), method);
+
+                return target => refGetter(ref target);
+            }
+
+            var getter = (Func<TOwner, TValue>)
+                Delegate.CreateDelegate(typeof(Func<TOwner, TValue>), method);
+
+            return target => getter(target);
+        }
+
+        [Pure]
+        [NotNull]
+        private static Func<TOwner, object> CreateGetter<TOwner>([NotNull] MethodInfo method)
+        {
+            // Fetch the generic helper
+            MethodInfo genericHelper = typeof(MemberExtensions)
+                .GetMethod(
+                    nameof(GetterHelper),
+                    BindingFlags.Static | BindingFlags.NonPublic);
+
+            if (genericHelper is null)
+                throw new InvalidOperationException("Cannot find the generic setter helper.");
+
+            // Supply type arguments
+            MethodInfo delegateConstructor = genericHelper.MakeGenericMethod(
+                typeof(TOwner),
+                method.ReturnType);
+
+            // Call the helper to generate the delegate
+            return (Func<TOwner, object>)delegateConstructor.Invoke(null, new object[] { method });
+        }
+
+        [Pure]
+        private static bool TryCreateGetterInternal<TOwner>([NotNull] this PropertyInfo property, out Func<TOwner, object> getter)
+        {
+            if (property is null)
+                throw new ArgumentNullException(nameof(property));
+            // ReSharper disable once PossibleNullReferenceException, Justification: PropertyInfo always have a declaring type.
+            if (!property.DeclaringType.IsAssignableFrom(typeof(TOwner)))
+                throw new ArgumentException("Template is not the owner type of this property.");
+
+            getter = null;
+            MethodInfo getMethod = property.GetGetMethod(true);
+            if (getMethod is null)
+                return false;
+
+            getter = CreateGetter<TOwner>(getMethod);
+            return true;
+        }
+
+        /// <summary>
+        /// Tries to create a delegate getter for this <see cref="PropertyInfo"/>, if the property has no get method
+        /// available then it returns false and a null <paramref name="getter"/>.
+        /// </summary>
+        /// <typeparam name="TOwner">Property owner type.</typeparam>
+        /// <param name="property">Property for which creating a setter.</param>
+        /// <param name="getter">Created getter delegate.</param>
+        /// <returns>True if the getter was successfully created, false otherwise.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
+        [Pure]
+        public static bool TryCreateGetter<TOwner>([NotNull] this PropertyInfo property, out Func<TOwner, object> getter)
+        {
+            getter = null;
+
+            try
+            {
+                return property.TryCreateGetterInternal(out getter);
+            }
+            catch (Exception exception)
+            {
+                if (exception is ArgumentNullException)
+                    throw;
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Creates a delegate setter for this <see cref="PropertyInfo"/>, if the property has no get method
+        /// available then it creates a default delegate that returns the default property type value.
+        /// </summary>
+        /// <typeparam name="TOwner">Property owner type.</typeparam>
+        /// <param name="property">Property for which creating a getter.</param>
+        /// <returns>The corresponding <see cref="Func{TOwner,Object}"/> delegate getter.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
+        /// <exception cref="ArgumentException">If the given template type does not match owner type.</exception>
+        [Pure]
+        [NotNull]
+        public static Func<TOwner, object> CreateGetter<TOwner>([NotNull] this PropertyInfo property)
+        {
+            if (property.TryCreateGetterInternal(out Func<TOwner, object> getter))
+                return getter;
+
+            if (property.PropertyType.IsValueType)
+                return owner => Activator.CreateInstance(property.PropertyType);
+            return owner => null;
+        }
+
+        #endregion
 
         #endregion
 
@@ -152,7 +277,7 @@ namespace ImmediateReflection
         /// <param name="property">Property for which creating a setter.</param>
         /// <param name="setter">Created setter delegate.</param>
         /// <returns>True if the setter was successfully created, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/>is null.</exception>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         [Pure]
         public static bool TryCreateSetter<TOwner, TProperty>([NotNull] this PropertyInfo property, out Action<TOwner, TProperty> setter)
             where TOwner : class
@@ -180,7 +305,7 @@ namespace ImmediateReflection
         /// <typeparam name="TProperty">Property type.</typeparam>
         /// <param name="property">Property for which creating a setter.</param>
         /// <returns>The corresponding <see cref="Action{TOwner,TProperty}"/> delegate setter.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/>is null.</exception>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given template type does not match owner and property types.</exception>
         [Pure]
         [NotNull]
@@ -196,6 +321,8 @@ namespace ImmediateReflection
 
         #region Partially strongly typed
 
+        [Pure]
+        [NotNull]
         private static Action<TOwner, object> SetterHelper<TOwner, TValue>([NotNull] MethodInfo method)
             where TOwner : class
         {
@@ -215,6 +342,8 @@ namespace ImmediateReflection
             return (target, param) => setter(target, (TValue)param);
         }
 
+        [Pure]
+        [NotNull]
         private static Action<TOwner, object> CreateSetter<TOwner>([NotNull] MethodInfo method)
             where TOwner : class
         {
@@ -263,7 +392,7 @@ namespace ImmediateReflection
         /// <param name="property">Property for which creating a setter.</param>
         /// <param name="setter">Created setter delegate.</param>
         /// <returns>True if the setter was successfully created, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/>is null.</exception>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         [Pure]
         public static bool TryCreateSetter<TOwner>([NotNull] this PropertyInfo property, out Action<TOwner, object> setter)
             where TOwner : class
@@ -290,7 +419,7 @@ namespace ImmediateReflection
         /// <typeparam name="TOwner">Property owner type.</typeparam>
         /// <param name="property">Property for which creating a setter.</param>
         /// <returns>The corresponding <see cref="Action{TOwner,Object}"/> delegate setter.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/>is null.</exception>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given template type does not match owner type.</exception>
         [Pure]
         [NotNull]
