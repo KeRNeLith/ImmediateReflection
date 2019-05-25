@@ -17,6 +17,15 @@ namespace ImmediateReflection
     public delegate object GetterDelegate([CanBeNull] object target);
 
     /// <summary>
+    /// Template getter delegate (ref).
+    /// </summary>
+    /// <typeparam name="TOwner">Owner object type.</typeparam>
+    /// <typeparam name="TValue">Value type.</typeparam>
+    /// <param name="target">Object instance to get a value, null if static.</param>
+    /// <returns>Got value.</returns>
+    public delegate TValue RefGetterDelegate<TOwner, out TValue>([CanBeNull] ref TOwner target);
+
+    /// <summary>
     /// Setter delegate.
     /// </summary>
     /// <param name="target">Object instance to set a value, null if static.</param>
