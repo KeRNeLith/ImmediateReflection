@@ -247,6 +247,8 @@ namespace ImmediateReflection
         [NotNull]
         public object New([CanBeNull, ItemCanBeNull] params object[] args)
         {
+            if (args is null || args.Length == 0)
+                return New();
             return Activator.CreateInstance(Type, args);
         }
 
@@ -267,12 +269,7 @@ namespace ImmediateReflection
             try
             {
                 exception = null;
-
-                if (args is null || args.Length == 0)
-                    newInstance = New();
-                else
-                    newInstance = New(args);
-
+                newInstance = New(args);
                 return true;
             }
             catch (Exception ex)
