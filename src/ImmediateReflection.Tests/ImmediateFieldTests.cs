@@ -50,6 +50,34 @@ namespace ImmediateReflection.Tests
             Assert.Throws<ArgumentNullException>(() => new ImmediateField(null));
         }
 
+#if SUPPORTS_IMMEDIATE_MEMBER_TYPE
+        #region FieldType
+
+        [Test]
+        public void FieldImmediateType()
+        {
+            CheckFieldImmediateType(new ImmediateField(PublicValueTypePublicFieldFieldsInfo));
+            CheckFieldImmediateType(new ImmediateField(PublicReferenceTypePublicFieldFieldsInfo));
+            CheckFieldImmediateType(new ImmediateField(PublicObjectTypePublicFieldFieldsInfo));
+
+            #region Local function
+
+            void CheckFieldImmediateType(ImmediateField field)
+            {
+                ImmediateType immediateType = field.FieldImmediateType;
+                Assert.IsNotNull(immediateType);
+                Assert.AreEqual(field.FieldType, immediateType.Type);
+
+                ImmediateType immediateType2 = field.FieldImmediateType;
+                Assert.AreSame(immediateType, immediateType2);
+            }
+
+            #endregion
+        }
+
+        #endregion
+#endif
+
         #region GetValue
 
         private static IEnumerable<TestCaseData> CreateImmediateFieldGetValueTestCases

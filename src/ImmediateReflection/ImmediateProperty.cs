@@ -21,6 +21,17 @@ namespace ImmediateReflection
         [NotNull]
         public Type PropertyType { get; }
 
+#if SUPPORTS_LAZY
+        [NotNull]
+        private readonly Lazy<ImmediateType> _propertyImmediateType;
+
+        /// <summary>
+        /// Gets the <see cref="ImmediateType"/> of this property.
+        /// </summary>
+        [NotNull]
+        public ImmediateType PropertyImmediateType => _propertyImmediateType.Value;
+#endif
+
         /// <summary>
         /// Gets the readable state of this property.
         /// </summary>
@@ -48,6 +59,9 @@ namespace ImmediateReflection
             // General property info
             PropertyInfo = property;
             PropertyType = property.PropertyType;
+#if SUPPORTS_LAZY
+            _propertyImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(PropertyType));
+#endif
             CanRead = property.CanRead;
             CanWrite = property.CanWrite;
 

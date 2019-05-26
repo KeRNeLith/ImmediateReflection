@@ -21,6 +21,17 @@ namespace ImmediateReflection
         [NotNull]
         public Type FieldType { get; }
 
+#if SUPPORTS_LAZY
+        [NotNull]
+        private readonly Lazy<ImmediateType> _fieldImmediateType;
+
+        /// <summary>
+        /// Gets the <see cref="ImmediateType"/> of this field.
+        /// </summary>
+        [NotNull]
+        public ImmediateType FieldImmediateType => _fieldImmediateType.Value;
+#endif
+
         [NotNull]
         private readonly GetterDelegate _getter;
 
@@ -37,7 +48,9 @@ namespace ImmediateReflection
         {
             FieldInfo = field;
             FieldType = field.FieldType;
-
+#if SUPPORTS_LAZY
+            _fieldImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(FieldType));
+#endif
             // Getter / Setter
             _getter = ConfigureGetter();
             _setter = ConfigureSetter();
@@ -87,6 +100,9 @@ namespace ImmediateReflection
 
             FieldInfo = field;
             FieldType = field.FieldType;
+#if SUPPORTS_LAZY
+            _fieldImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(FieldType));
+#endif
 
             // Getter / No setter
             object enumValue = field.GetValue(null);

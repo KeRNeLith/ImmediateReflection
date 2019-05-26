@@ -49,6 +49,34 @@ namespace ImmediateReflection.Tests
             Assert.Throws<ArgumentNullException>(() => new ImmediateProperty(null));
         }
 
+#if SUPPORTS_IMMEDIATE_MEMBER_TYPE
+        #region PropertyType
+
+        [Test]
+        public void PropertyImmediateType()
+        {
+            CheckFieldImmediateType(new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo));
+            CheckFieldImmediateType(new ImmediateProperty(PublicReferenceTypePublicGetSetPropertyPropertyInfo));
+            CheckFieldImmediateType(new ImmediateProperty(PublicObjectTypePublicGetSetPropertyPropertyInfo));
+
+            #region Local function
+
+            void CheckFieldImmediateType(ImmediateProperty property)
+            {
+                ImmediateType immediateType = property.PropertyImmediateType;
+                Assert.IsNotNull(immediateType);
+                Assert.AreEqual(property.PropertyType, immediateType.Type);
+
+                ImmediateType immediateType2 = property.PropertyImmediateType;
+                Assert.AreSame(immediateType, immediateType2);
+            }
+
+            #endregion
+        }
+
+        #endregion
+#endif
+
         #region CanRead
 
         private static IEnumerable<TestCaseData> CreateImmediatePropertyCanReadTestCases
