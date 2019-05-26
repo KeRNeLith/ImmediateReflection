@@ -51,7 +51,7 @@ namespace ImmediateReflection
                 if (constructor is null)
                 {
                     // Last possibility the class has at least one params constructor only
-                    if (TryGetParamsConstructorAsDefault(out constructor, out Type parameterType, out DefaultConstructorDelegate faultyConstructor))
+                    if (TryGetParamsConstructorAsDefault(type, out constructor, out Type parameterType, out DefaultConstructorDelegate faultyConstructor))
                     {
                         // Create an empty array to fill the params parameter
                         generator.Emit(OpCodes.Ldc_I4_0);
@@ -69,54 +69,55 @@ namespace ImmediateReflection
             MethodReturn(generator);
 
             return (DefaultConstructorDelegate)dynamicConstructor.CreateDelegate(typeof(DefaultConstructorDelegate));
+        }
 
-            #region Local function
+        [Pure]
+        private static bool TryGetParamsConstructorAsDefault(
+            [NotNull] Type type, 
+            out ConstructorInfo paramsConstructor, 
+            out Type parameterType, 
+            out DefaultConstructorDelegate faultyConstructor)
+        {
+            paramsConstructor = null;
+            parameterType = null;
+            faultyConstructor = null;
 
-            bool TryGetParamsConstructorAsDefault(out ConstructorInfo paramsConstructor, out Type parameterType, out DefaultConstructorDelegate faultyConstructor)
+            ConstructorInfo[] constructors = type.GetConstructors();
+            if (constructors.Length > 0)
             {
-                paramsConstructor = null;
-                parameterType = null;
-                faultyConstructor = null;
-
-                ConstructorInfo[] constructors = type.GetConstructors();
-                if (constructors.Length > 0)
+                for (int i = 0; i < constructors.Length; ++i)
                 {
-                    for (int i = 0; i < constructors.Length; ++i)
-                    {
-                        ParameterInfo[] parameters = constructors[i].GetParameters();
-                        // Skip constructors with more than one parameter
-                        if (parameters.Length > 1)
-                            continue;
+                    ParameterInfo[] parameters = constructors[i].GetParameters();
+                    // Skip constructors with more than one parameter
+                    if (parameters.Length > 1)
+                        continue;
 
-                        // Params constructor found
-                        if (IsParams(parameters[0]))
+                    // Params constructor found
+                    if (IsParams(parameters[0]))
+                    {
+                        if (paramsConstructor is null)
                         {
-                            if (paramsConstructor is null)
-                            {
-                                paramsConstructor = constructors[i];
-                                parameterType = parameters[0].ParameterType.GetElementType();
-                                // Continue the search to detect ambiguity with another constructor
-                            }
-                            else
-                            {
-                                // At least 2 constructors available => ambiguity
-                                faultyConstructor = () => throw new AmbiguousMatchException("There is at least 2 constructors accepting \"params\" parameter only.");
-                                return false;
-                            }
+                            paramsConstructor = constructors[i];
+                            parameterType = parameters[0].ParameterType.GetElementType();
+                            // Continue the search to detect ambiguity with another constructor
+                        }
+                        else
+                        {
+                            // At least 2 constructors available => ambiguity
+                            faultyConstructor = () => throw new AmbiguousMatchException("There is at least 2 constructors accepting \"params\" parameter only.");
+                            return false;
                         }
                     }
                 }
-
-                if (paramsConstructor is null)
-                {
-                    faultyConstructor = () => throw new MissingMethodException($"Class {type.Name} does not contain any default constructor.");
-                    return false;
-                }
-
-                return true;
             }
 
-            #endregion
+            if (paramsConstructor is null)
+            {
+                faultyConstructor = () => throw new MissingMethodException($"Class {type.Name} does not contain any default constructor.");
+                return false;
+            }
+
+            return true;
         }
 
         #endregion
