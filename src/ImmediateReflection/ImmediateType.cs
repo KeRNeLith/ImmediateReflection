@@ -231,6 +231,25 @@ namespace ImmediateReflection
             }
         }
 
+        /// <summary>
+        /// Creates an instance of this <see cref="Type"/> using the constructor that best matches the specified parameters.
+        /// </summary>
+        /// <param name="args">
+        /// An array of arguments that match in number, order, and type the parameters of the constructor to invoke.
+        /// If <paramref name="args"/> is an empty array or null, the constructor that takes no parameters (the default constructor) is invoked.
+        /// </param>
+        /// <returns>A reference to the newly created object.</returns>
+        /// <exception cref="ArgumentException"><see cref="Type"/> a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
+        /// <exception cref="MemberAccessException">Cannot create an instance of an abstract class, or this member was invoked with a late-binding mechanism.</exception>
+        /// <exception cref="MissingMethodException">No matching public constructor was found.</exception>
+        /// <exception cref="TargetInvocationException">The constructor being called throws an exception.</exception>
+        [Pure]
+        [NotNull]
+        public object New([CanBeNull, ItemCanBeNull] params object[] args)
+        {
+            return Activator.CreateInstance(Type, args);
+        }
+
         #region Equality / IEquatable<T>
 
         /// <inheritdoc />

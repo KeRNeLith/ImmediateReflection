@@ -486,6 +486,15 @@ namespace ImmediateReflection.Tests
 
         #region Test classes
 
+        private struct ParameterConstructorStruct
+        {
+            // ReSharper disable once UnusedParameter.Local
+            // ReSharper disable once UnusedMember.Local
+            public ParameterConstructorStruct(int value)
+            {
+            }
+        }
+
         private class DefaultConstructor
         {
             public override bool Equals(object obj)
@@ -510,17 +519,76 @@ namespace ImmediateReflection.Tests
         {
         }
 
+        private abstract class AbstractNoConstructor
+        {
+            // ReSharper disable once UnusedParameter.Local
+            public AbstractNoConstructor(int value)
+            {
+            }
+        }
+
         private class NoDefaultConstructor
         {
             // ReSharper disable once UnusedParameter.Local
             public NoDefaultConstructor(int value)
             {
             }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as NoDefaultConstructor);
+            }
+
+            private bool Equals(NoDefaultConstructor other)
+            {
+                if (other is null)
+                    return false;
+                return true;
+            }
+
+            public override int GetHashCode()
+            {
+                return 1;
+            }
+        }
+
+        private class MultiParametersConstructor
+        {
+            // ReSharper disable UnusedParameter.Local
+            public MultiParametersConstructor(int value, float value2)
+                // ReSharper restore UnusedParameter.Local
+            {
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as MultiParametersConstructor);
+            }
+
+            private bool Equals(MultiParametersConstructor other)
+            {
+                if (other is null)
+                    return false;
+                return true;
+            }
+
+            public override int GetHashCode()
+            {
+                return 1;
+            }
         }
 
         private class NotAccessibleDefaultConstructor
         {
             private NotAccessibleDefaultConstructor()
+            {
+            }
+        }
+
+        private class NotAccessibleConstructor
+        {
+            // ReSharper disable once UnusedParameter.Local
+            private NotAccessibleConstructor(int value)
             {
             }
         }
@@ -551,11 +619,81 @@ namespace ImmediateReflection.Tests
             }
         }
 
+        // ReSharper disable once UnusedTypeParameter
+        private class TemplateNoDefaultConstructor<TTemplate>
+        {
+            // ReSharper disable once UnusedParameter.Local
+            public TemplateNoDefaultConstructor(int value)
+            {
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as TemplateNoDefaultConstructor<TTemplate>);
+            }
+
+            private bool Equals(TemplateNoDefaultConstructor<TTemplate> other)
+            {
+                if (other is null)
+                    return false;
+                return true;
+            }
+
+            public override int GetHashCode()
+            {
+                return 1;
+            }
+        }
+
         private class DefaultConstructorThrows
         {
             public DefaultConstructorThrows()
             {
                 throw new InvalidOperationException("Constructor throws.");
+            }
+        }
+
+        private class NotDefaultConstructorThrows
+        {
+            // ReSharper disable once UnusedParameter.Local
+            public NotDefaultConstructorThrows(int value)
+            {
+                throw new InvalidOperationException("Constructor throws.");
+            }
+        }
+
+        private class MultipleConstructors
+        {
+            // ReSharper disable UnusedMember.Local
+            public MultipleConstructors()
+            {
+            }
+
+            // ReSharper disable UnusedParameter.Local
+            public MultipleConstructors(int value)
+            {
+            }
+
+            public MultipleConstructors(int value, float value2)
+            {
+            }
+            // ReSharper restore UnusedParameter.Local
+            // ReSharper restore UnusedMember.Local
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as MultipleConstructors);
+            }
+
+            private bool Equals(MultipleConstructors other)
+            {
+                if (other is null)
+                    return false;
+                return true;
+            }
+
+            public override int GetHashCode()
+            {
+                return 1;
             }
         }
 
@@ -744,6 +882,8 @@ namespace ImmediateReflection.Tests
 
         #endregion
 
+        #region New/TryNew
+
         private static IEnumerable<TestCaseData> CreateDefaultConstructorTestCases
         {
             [UsedImplicitly]
@@ -752,6 +892,7 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(int));
                 yield return new TestCaseData(typeof(TestStruct));
                 yield return new TestCaseData(typeof(DefaultConstructor));
+                yield return new TestCaseData(typeof(MultipleConstructors));
                 yield return new TestCaseData(typeof(TemplateStruct<double>));
                 yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>));
                 yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor));
@@ -832,6 +973,7 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(int), false);
                 yield return new TestCaseData(typeof(TestStruct), false);
                 yield return new TestCaseData(typeof(DefaultConstructor), false);
+                yield return new TestCaseData(typeof(MultipleConstructors), false);
                 yield return new TestCaseData(typeof(TemplateStruct<double>), false);
                 yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), false);
                 yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor), false);
@@ -884,6 +1026,77 @@ namespace ImmediateReflection.Tests
             Assert.IsNotNull(instance);
             Assert.AreEqual(new IntParamsOnlyConstructor(), instance);
         }
+
+        #endregion
+
+        #region New(params)
+
+        private static IEnumerable<TestCaseData> CreateNotDefaultConstructorTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                yield return new TestCaseData(typeof(int), null);
+                yield return new TestCaseData(typeof(int), new object[] { });
+                yield return new TestCaseData(typeof(TestStruct), null);
+                yield return new TestCaseData(typeof(TestStruct), new object[] { });
+                yield return new TestCaseData(typeof(DefaultConstructor), null);
+                yield return new TestCaseData(typeof(DefaultConstructor), new object[] { });
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), null);
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), new object[] { });
+                yield return new TestCaseData(typeof(ParamsOnlyConstructor), null);
+                yield return new TestCaseData(typeof(ParamsOnlyConstructor), new object[] { });
+
+                yield return new TestCaseData(typeof(ParameterConstructorStruct), new object[] { 12 });
+                yield return new TestCaseData(typeof(NoDefaultConstructor), new object[] { 12 });
+                yield return new TestCaseData(typeof(MultiParametersConstructor), new object[] { 12, 42.5f });
+                yield return new TestCaseData(typeof(MultipleConstructors), new object[] { 12 });
+                yield return new TestCaseData(typeof(MultipleConstructors), new object[] { 12, 42.5f });
+                yield return new TestCaseData(typeof(TemplateNoDefaultConstructor<int>), new object[] { 12 });
+                yield return new TestCaseData(typeof(ParamsOnlyConstructor), new object[] { 12 });
+                yield return new TestCaseData(typeof(ParamsOnlyConstructor), new object[] { 12, 15.4f });
+                yield return new TestCaseData(typeof(ParamsConstructor), new object[] { 12 });
+                yield return new TestCaseData(typeof(ParamsConstructor), new object[] { 12, 15.4f });
+            }
+        }
+
+        [TestCaseSource(nameof(CreateNotDefaultConstructorTestCases))]
+        public void NewWithParameters([NotNull] Type type, [CanBeNull, ItemCanBeNull] params object[] args)
+        {
+            var immediateType = new ImmediateType(type);
+
+            object instance = immediateType.New(args);
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(Activator.CreateInstance(type, args), instance);
+        }
+
+        [Test]
+        public void NewWithParameters_Throws()
+        {
+            // ReSharper disable ReturnValueOfPureMethodIsNotUsed
+            var immediateType = new ImmediateType(typeof(NoDefaultConstructor));
+            Assert.Throws<MissingMethodException>(() => immediateType.New(12, 42));
+
+            immediateType = new ImmediateType(typeof(NotAccessibleConstructor));
+            Assert.Throws<MissingMethodException>(() => immediateType.New(12));
+
+            immediateType = new ImmediateType(typeof(MultiParametersConstructor));
+            Assert.Throws<MissingMethodException>(() => immediateType.New(12f, 12));
+
+            immediateType = new ImmediateType(typeof(ParamsConstructor));
+            Assert.Throws<MissingMethodException>(() => immediateType.New(12f, 12));
+
+            immediateType = new ImmediateType(typeof(AbstractNoConstructor));
+            Assert.Throws<MemberAccessException>(() => immediateType.New(12));
+
+            immediateType = new ImmediateType(typeof(TemplateNoDefaultConstructor<>));
+            Assert.Throws<ArgumentException>(() => immediateType.New(12));
+
+            immediateType = new ImmediateType(typeof(NotDefaultConstructorThrows));
+            Assert.Throws<TargetInvocationException>(() => immediateType.New(12));
+        }
+
+        #endregion
 
         #endregion
 
