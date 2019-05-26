@@ -337,18 +337,18 @@ namespace ImmediateReflection.Tests
         }
 
         [TestCaseSource(nameof(CreateGetAttributeTestCases))]
-        public void HasAndGetAttribute([NotNull] ImmediateMember member, [NotNull] Type attributeType, bool inherit, [CanBeNull] Attribute expectedAttribute)
+        public void IsDefinedAndGetAttribute([NotNull] ImmediateMember member, [NotNull] Type attributeType, bool inherit, [CanBeNull] Attribute expectedAttribute)
         {
             if (expectedAttribute is null)
-                Assert.IsFalse(member.HasAttribute(attributeType, inherit));
+                Assert.IsFalse(member.IsDefined(attributeType, inherit));
             else
-                Assert.IsTrue(member.HasAttribute(attributeType, inherit));
+                Assert.IsTrue(member.IsDefined(attributeType, inherit));
 
             Assert.AreEqual(expectedAttribute, member.GetAttribute(attributeType, inherit));
         }
 
         [Test]
-        public void TemplateHasAndGetAttribute()
+        public void TemplateIsDefinedAndGetAttribute()
         {
             #region ImmediateType
 
@@ -452,9 +452,9 @@ namespace ImmediateReflection.Tests
                 where TAttribute : Attribute
             {
                 if (expectedAttribute is null)
-                    Assert.IsFalse(member.HasAttribute<TAttribute>(inherit));
+                    Assert.IsFalse(member.IsDefined<TAttribute>(inherit));
                 else
-                    Assert.IsTrue(member.HasAttribute<TAttribute>(inherit));
+                    Assert.IsTrue(member.IsDefined<TAttribute>(inherit));
                 Assert.AreEqual(expectedAttribute, member.GetAttribute<TAttribute>(inherit));
             }
 
@@ -547,16 +547,16 @@ namespace ImmediateReflection.Tests
         }
 
         [TestCaseSource(nameof(CreateWrongAttributeTestCases))]
-        public void HasAndGetAttribute_WrongType([NotNull] ImmediateMember member, [NotNull] Type attributeType, bool inherit)
+        public void IsDefinedAndGetAttribute_WrongType([NotNull] ImmediateMember member, [NotNull] Type attributeType, bool inherit)
         {
             // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-            Assert.Throws<ArgumentException>(() => member.HasAttribute(attributeType, inherit));
+            Assert.Throws<ArgumentException>(() => member.IsDefined(attributeType, inherit));
             Assert.Throws<ArgumentException>(() => member.GetAttribute(attributeType, inherit));
             // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         }
 
         [Test]
-        public void HasAndGetAttribute_Throws_NullType()
+        public void IsDefinedAndGetAttribute_Throws_NullType()
         {
             var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
             var immediateField = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
@@ -564,17 +564,17 @@ namespace ImmediateReflection.Tests
 
             // ReSharper disable AssignNullToNotNullAttribute
             // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-            Assert.Throws<ArgumentNullException>(() => immediateType.HasAttribute(null));
+            Assert.Throws<ArgumentNullException>(() => immediateType.IsDefined(null));
             Assert.Throws<ArgumentNullException>(() => immediateType.GetAttribute(null));
-            Assert.Throws<ArgumentNullException>(() => immediateType.HasAttribute(null, true));
+            Assert.Throws<ArgumentNullException>(() => immediateType.IsDefined(null, true));
             Assert.Throws<ArgumentNullException>(() => immediateType.GetAttribute(null, true));
-            Assert.Throws<ArgumentNullException>(() => immediateField.HasAttribute(null));
+            Assert.Throws<ArgumentNullException>(() => immediateField.IsDefined(null));
             Assert.Throws<ArgumentNullException>(() => immediateField.GetAttribute(null));
-            Assert.Throws<ArgumentNullException>(() => immediateField.HasAttribute(null, true));
+            Assert.Throws<ArgumentNullException>(() => immediateField.IsDefined(null, true));
             Assert.Throws<ArgumentNullException>(() => immediateField.GetAttribute(null, true));
-            Assert.Throws<ArgumentNullException>(() => immediateProperty.HasAttribute(null));
+            Assert.Throws<ArgumentNullException>(() => immediateProperty.IsDefined(null));
             Assert.Throws<ArgumentNullException>(() => immediateProperty.GetAttribute(null));
-            Assert.Throws<ArgumentNullException>(() => immediateProperty.HasAttribute(null, true));
+            Assert.Throws<ArgumentNullException>(() => immediateProperty.IsDefined(null, true));
             Assert.Throws<ArgumentNullException>(() => immediateProperty.GetAttribute(null, true));
             // ReSharper restore ReturnValueOfPureMethodIsNotUsed
             // ReSharper restore AssignNullToNotNullAttribute

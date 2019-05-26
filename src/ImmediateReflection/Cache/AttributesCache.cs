@@ -64,7 +64,7 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public bool HasAttribute<TAttribute>(bool inherit)
+        public bool IsDefined<TAttribute>(bool inherit)
             where TAttribute : Attribute
         {
             return GetAttribute<TAttribute>(inherit) != null;
@@ -82,7 +82,7 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public bool HasAttribute([NotNull] Type attributeType, bool inherit)
+        public bool IsDefined([NotNull] Type attributeType, bool inherit)
         {
             return GetAttribute(attributeType, inherit) != null;
         }

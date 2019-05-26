@@ -52,10 +52,10 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public bool HasAttribute<TAttribute>(bool inherit = false)
+        public bool IsDefined<TAttribute>(bool inherit = false)
             where TAttribute : Attribute
         {
-            return _attributeCache.HasAttribute<TAttribute>(inherit);
+            return _attributeCache.IsDefined<TAttribute>(inherit);
         }
 
         /// <summary>
@@ -70,9 +70,9 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public bool HasAttribute([NotNull] Type attributeType, bool inherit = false)
+        public bool IsDefined([NotNull] Type attributeType, bool inherit = false)
         {
-            return _attributeCache.HasAttribute(attributeType, inherit);
+            return _attributeCache.IsDefined(attributeType, inherit);
         }
 
         /// <summary>

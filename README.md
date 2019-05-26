@@ -126,7 +126,7 @@ Following some examples of methods accessibles:
 
 ```csharp
 ImmediateType type = ...;
-bool hasAttribute = type.HasAttribute<MyAttribute>();
+bool hasAttribute = type.IsDefined<MyAttribute>();
 
 ImmediateField field = ...;
 MyAttribute attribute = field.GetAttribute<MyAttribute>(inherit: true);
@@ -141,7 +141,7 @@ It is also possible to directly retrieve attributes of a given `MemberInfo` from
 
 ```csharp
 PropertyInfo property = ...;
-bool hasAttribute = property.HasImmediateAttribute<MyAttribute>();
+bool hasAttribute = property.IsDefinedImmediateAttribute<MyAttribute>();
 
 FieldInfo field = ...;
 MyAttribute attribute = field.GetImmediateAttribute<MyAttribute>();

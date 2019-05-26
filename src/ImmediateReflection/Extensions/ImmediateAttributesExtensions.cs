@@ -25,12 +25,12 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static bool HasImmediateAttribute<TAttribute>([NotNull] this MemberInfo member, bool inherit = false)
+        public static bool IsDefinedImmediateAttribute<TAttribute>([NotNull] this MemberInfo member, bool inherit = false)
             where TAttribute : Attribute
         {
             return CachesHandler.Instance
                 .GetAttributesCache(member)
-                .HasAttribute<TAttribute>(inherit);
+                .IsDefined<TAttribute>(inherit);
         }
 
         /// <summary>
@@ -46,11 +46,11 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static bool HasImmediateAttribute([NotNull] this MemberInfo member, [NotNull] Type attributeType, bool inherit = false)
+        public static bool IsDefinedImmediateAttribute([NotNull] this MemberInfo member, [NotNull] Type attributeType, bool inherit = false)
         {
             return CachesHandler.Instance
                 .GetAttributesCache(member)
-                .HasAttribute(attributeType, inherit);
+                .IsDefined(attributeType, inherit);
         }
 
         /// <summary>
