@@ -588,7 +588,7 @@ namespace ImmediateReflection.Tests
         {
             // ReSharper disable UnusedParameter.Local
             public ParamsConstructor(int value, params object[] args)
-                // ReSharper restore UnusedParameter.Local
+            // ReSharper restore UnusedParameter.Local
             {
             }
 
@@ -667,6 +667,77 @@ namespace ImmediateReflection.Tests
             }
         }
 
+        private class DefaultInheritedDefaultConstructor : DefaultConstructor
+        {
+        }
+
+        private class DefaultInheritedNoDefaultConstructor : NoDefaultConstructor
+        {
+            public DefaultInheritedNoDefaultConstructor() 
+                : base(777)
+            {
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as DefaultInheritedNoDefaultConstructor);
+            }
+
+            private bool Equals(DefaultInheritedNoDefaultConstructor other)
+            {
+                if (other is null)
+                    return false;
+                return true;
+            }
+
+            public override int GetHashCode()
+            {
+                return 1;
+            }
+        }
+
+        private class DefaultInheritedFromAbstractClass : AbstractDefaultConstructor
+        {
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as DefaultInheritedFromAbstractClass);
+            }
+
+            private bool Equals(DefaultInheritedFromAbstractClass other)
+            {
+                if (other is null)
+                    return false;
+                return true;
+            }
+
+            public override int GetHashCode()
+            {
+                return 1;
+            }
+        }
+
+        private class NoDefaultInheritedDefaultConstructor : DefaultConstructor
+        {
+            public NoDefaultInheritedDefaultConstructor(int value)
+            {
+            }
+        }
+
+        private class NoDefaultInheritedNoDefaultConstructor : NoDefaultConstructor
+        {
+            public NoDefaultInheritedNoDefaultConstructor(int value)
+                : base(value)
+            {
+            }
+        }
+
+        private class NoDefaultInheritedFromAbstractClass : AbstractDefaultConstructor
+        {
+            public NoDefaultInheritedFromAbstractClass(int value)
+            {
+            }
+        }
+
         private static class StaticClass
         {
         }
@@ -683,6 +754,9 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(DefaultConstructor));
                 yield return new TestCaseData(typeof(TemplateStruct<double>));
                 yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>));
+                yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor));
+                yield return new TestCaseData(typeof(DefaultInheritedNoDefaultConstructor));
+                yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass));
             }
         }
 
@@ -735,6 +809,9 @@ namespace ImmediateReflection.Tests
             immediateType = new ImmediateType(typeof(ParamsConstructor));
             Assert.Throws<MissingMethodException>(() => immediateType.New());
 
+            immediateType = new ImmediateType(typeof(NoDefaultInheritedDefaultConstructor));
+            Assert.Throws<MissingMethodException>(() => immediateType.New());
+
             immediateType = new ImmediateType(typeof(AmbiguousParamsOnlyConstructor));
             Assert.Throws<AmbiguousMatchException>(() => immediateType.New());
 
@@ -757,6 +834,9 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(DefaultConstructor), false);
                 yield return new TestCaseData(typeof(TemplateStruct<double>), false);
                 yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), false);
+                yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor), false);
+                yield return new TestCaseData(typeof(DefaultInheritedNoDefaultConstructor), false);
+                yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass), false);
 
                 yield return new TestCaseData(typeof(NoDefaultConstructor), true);
                 yield return new TestCaseData(typeof(NotAccessibleDefaultConstructor), true);
@@ -764,6 +844,9 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(StaticClass), true);
                 yield return new TestCaseData(typeof(TemplateStruct<>), true);
                 yield return new TestCaseData(typeof(TemplateDefaultConstructor<>), true);
+                yield return new TestCaseData(typeof(NoDefaultInheritedDefaultConstructor), true);
+                yield return new TestCaseData(typeof(NoDefaultInheritedNoDefaultConstructor), true);
+                yield return new TestCaseData(typeof(NoDefaultInheritedFromAbstractClass), true);
                 // ReSharper disable once PossibleMistakenCallToGetType.2
                 yield return new TestCaseData(typeof(DefaultConstructor).GetType(), true);
                 yield return new TestCaseData(typeof(DefaultConstructorThrows), true);
