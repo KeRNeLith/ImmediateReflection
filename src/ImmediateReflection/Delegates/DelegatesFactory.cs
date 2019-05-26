@@ -4,6 +4,7 @@ using System.Reflection.Emit;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
+using static ImmediateReflection.Utils.ReflectionHelpers;
 using JetBrains.Annotations;
 
 namespace ImmediateReflection
@@ -28,6 +29,8 @@ namespace ImmediateReflection
                 return () => throw new ArgumentException($"Trying to call default constructor on {RuntimeTypeName}.");
             if (type.ContainsGenericParameters)
                 return () => throw new ArgumentException($"Class {type.Name} has at least one template parameter not defined.");
+            if (type.IsAbstract)
+                return () => throw new MissingMethodException($"Abstract class {type.Name} cannot be instantiated.");
 
             DynamicMethod dynamicConstructor = CreateDynamicDefaultConstructor(type.Name, type);
             dynamicConstructor.InitLocals = true;
@@ -44,12 +47,21 @@ namespace ImmediateReflection
             // Get the default constructor if available
             else
             {
-                if (type.IsAbstract)
-                    return () => throw new MissingMethodException($"Abstract class {type.Name} cannot be instantiated.");
-
                 ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes);
                 if (constructor is null)
-                    return () => throw new MissingMethodException($"Class {type.Name} does not contain any default constructor.");
+                {
+                    // Last possibility the class has at least one params constructor only
+                    if (TryGetParamsConstructorAsDefault(out constructor, out Type parameterType, out DefaultConstructorDelegate faultyConstructor))
+                    {
+                        // Create an empty array to fill the params parameter
+                        generator.Emit(OpCodes.Ldc_I4_0);
+                        generator.Emit(OpCodes.Newarr, parameterType);
+                    }
+                    else
+                    {
+                        return faultyConstructor;
+                    }
+                }
 
                 generator.Emit(OpCodes.Newobj, constructor);
             }
@@ -57,6 +69,54 @@ namespace ImmediateReflection
             MethodReturn(generator);
 
             return (DefaultConstructorDelegate)dynamicConstructor.CreateDelegate(typeof(DefaultConstructorDelegate));
+
+            #region Local function
+
+            bool TryGetParamsConstructorAsDefault(out ConstructorInfo paramsConstructor, out Type parameterType, out DefaultConstructorDelegate faultyConstructor)
+            {
+                paramsConstructor = null;
+                parameterType = null;
+                faultyConstructor = null;
+
+                ConstructorInfo[] constructors = type.GetConstructors();
+                if (constructors.Length > 0)
+                {
+                    for (int i = 0; i < constructors.Length; ++i)
+                    {
+                        ParameterInfo[] parameters = constructors[i].GetParameters();
+                        // Skip constructors with more than one parameter
+                        if (parameters.Length > 1)
+                            continue;
+
+                        // Params constructor found
+                        if (IsParams(parameters[0]))
+                        {
+                            if (paramsConstructor is null)
+                            {
+                                paramsConstructor = constructors[i];
+                                parameterType = parameters[0].ParameterType.GetElementType();
+                                // Continue the search to detect ambiguity with another constructor
+                            }
+                            else
+                            {
+                                // At least 2 constructors available => ambiguity
+                                faultyConstructor = () => throw new AmbiguousMatchException("There is at least 2 constructors accepting \"params\" parameter only.");
+                                return false;
+                            }
+                        }
+                    }
+                }
+
+                if (paramsConstructor is null)
+                {
+                    faultyConstructor = () => throw new MissingMethodException($"Class {type.Name} does not contain any default constructor.");
+                    return false;
+                }
+
+                return true;
+            }
+
+            #endregion
         }
 
         #endregion

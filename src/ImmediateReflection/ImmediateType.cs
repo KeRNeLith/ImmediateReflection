@@ -197,6 +197,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <returns>A reference to the newly created object.</returns>
         /// <exception cref="ArgumentException"><see cref="Type"/> a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
+        /// <exception cref="AmbiguousMatchException"><see cref="Type"/> has several constructors defining "params" parameter only.</exception>
         /// <exception cref="MissingMethodException">No matching public constructor was found.</exception>
         /// <exception cref="TargetInvocationException">The constructor being called throws an exception.</exception>
         [Pure]

@@ -559,6 +559,114 @@ namespace ImmediateReflection.Tests
             }
         }
 
+        private class ParamsOnlyConstructor
+        {
+            // ReSharper disable once UnusedParameter.Local
+            public ParamsOnlyConstructor(params object[] args)
+            {
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as ParamsOnlyConstructor);
+            }
+
+            private bool Equals(ParamsOnlyConstructor other)
+            {
+                if (other is null)
+                    return false;
+                return true;
+            }
+
+            public override int GetHashCode()
+            {
+                return 1;
+            }
+        }
+
+        private class ParamsConstructor
+        {
+            // ReSharper disable UnusedParameter.Local
+            public ParamsConstructor(int value, params object[] args)
+                // ReSharper restore UnusedParameter.Local
+            {
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as ParamsConstructor);
+            }
+
+            private bool Equals(ParamsConstructor other)
+            {
+                if (other is null)
+                    return false;
+                return true;
+            }
+
+            public override int GetHashCode()
+            {
+                return 1;
+            }
+        }
+
+        private class AmbiguousParamsOnlyConstructor
+        {
+            // ReSharper disable once UnusedParameter.Local
+            // ReSharper disable once UnusedMember.Local
+            public AmbiguousParamsOnlyConstructor(params object[] args)
+            {
+            }
+
+            // ReSharper disable once UnusedParameter.Local
+            // ReSharper disable once UnusedMember.Local
+            public AmbiguousParamsOnlyConstructor(params int[] args)
+            {
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as ParamsOnlyConstructor);
+            }
+
+            private bool Equals(ParamsOnlyConstructor other)
+            {
+                if (other is null)
+                    return false;
+                return true;
+            }
+
+            public override int GetHashCode()
+            {
+                return 1;
+            }
+        }
+
+        private class IntParamsOnlyConstructor
+        {
+            // ReSharper disable once UnusedParameter.Local
+            public IntParamsOnlyConstructor(params int[] args)
+            {
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as IntParamsOnlyConstructor);
+            }
+
+            private bool Equals(IntParamsOnlyConstructor other)
+            {
+                if (other is null)
+                    return false;
+                return true;
+            }
+
+            public override int GetHashCode()
+            {
+                return 1;
+            }
+        }
+
         private static class StaticClass
         {
         }
@@ -589,6 +697,20 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
+        public void NewParamsOnly()
+        {
+            var immediateType = new ImmediateType(typeof(ParamsOnlyConstructor));
+            object instance = immediateType.New();
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(new ParamsOnlyConstructor(), instance);
+
+            immediateType = new ImmediateType(typeof(IntParamsOnlyConstructor));
+            instance = immediateType.New();
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(new IntParamsOnlyConstructor(), instance);
+        }
+
+        [Test]
         public void NewParameterLess_Throws()
         {
             // ReSharper disable ReturnValueOfPureMethodIsNotUsed
@@ -609,6 +731,12 @@ namespace ImmediateReflection.Tests
 
             immediateType = new ImmediateType(typeof(TemplateDefaultConstructor<>));
             Assert.Throws<ArgumentException>(() => immediateType.New());
+
+            immediateType = new ImmediateType(typeof(ParamsConstructor));
+            Assert.Throws<MissingMethodException>(() => immediateType.New());
+
+            immediateType = new ImmediateType(typeof(AmbiguousParamsOnlyConstructor));
+            Assert.Throws<AmbiguousMatchException>(() => immediateType.New());
 
             // ReSharper disable once PossibleMistakenCallToGetType.2
             immediateType = new ImmediateType(typeof(DefaultConstructor).GetType());
@@ -643,12 +771,12 @@ namespace ImmediateReflection.Tests
         }
 
         [TestCaseSource(nameof(CreateDefaultConstructorNoThrowTestCases))]
-        public void NewParameterLess_NoThrow([NotNull] Type type, bool expectedThrow)
+        public void NewParameterLess_NoThrow([NotNull] Type type, bool expectFail)
         {
             var immediateType = new ImmediateType(type);
 
-            Assert.AreEqual(!expectedThrow, immediateType.TryNew(out object instance, out Exception ex));
-            if (expectedThrow)
+            Assert.AreEqual(!expectFail, immediateType.TryNew(out object instance, out Exception ex));
+            if (expectFail)
             {
                 Assert.IsNull(instance);
                 Assert.IsNotNull(ex);
@@ -658,6 +786,20 @@ namespace ImmediateReflection.Tests
                 Assert.IsNotNull(instance);
                 Assert.AreEqual(Activator.CreateInstance(type), instance);
             }
+        }
+
+        [Test]
+        public void NewParameterLess_NoThrow()
+        {
+            var immediateType = new ImmediateType(typeof(ParamsOnlyConstructor));
+            Assert.IsTrue(immediateType.TryNew(out object instance, out Exception _));
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(new ParamsOnlyConstructor(), instance);
+
+            immediateType = new ImmediateType(typeof(IntParamsOnlyConstructor));
+            Assert.IsTrue(immediateType.TryNew(out instance, out Exception _));
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(new IntParamsOnlyConstructor(), instance);
         }
 
         #endregion
