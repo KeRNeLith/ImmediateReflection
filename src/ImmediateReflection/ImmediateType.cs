@@ -208,7 +208,7 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Creates an instance of this <see cref="Type"/> with that type's default constructor.
+        /// Tries to create an instance of this <see cref="Type"/> with that type's default constructor.
         /// </summary>
         /// <remarks>This method will not throw if instantiation failed.</remarks>
         /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
@@ -248,6 +248,39 @@ namespace ImmediateReflection
         public object New([CanBeNull, ItemCanBeNull] params object[] args)
         {
             return Activator.CreateInstance(Type, args);
+        }
+
+        /// <summary>
+        /// Tries to create an instance of this <see cref="Type"/> with the best matching constructor.
+        /// </summary>
+        /// <remarks>This method will not throw if instantiation failed.</remarks>
+        /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
+        /// <param name="exception">Caught exception if the instantiation failed, otherwise null.</param>
+        /// <param name="args">
+        /// An array of arguments that match in number, order, and type the parameters of the constructor to invoke.
+        /// If <paramref name="args"/> is an empty array or null, the constructor that takes no parameters (the default constructor) is invoked.
+        /// </param>
+        /// <returns>True if the new instance was successfully created, false otherwise.</returns>
+        [Pure]
+        public bool TryNew(out object newInstance, out Exception exception, [CanBeNull, ItemCanBeNull] params object[] args)
+        {
+            try
+            {
+                exception = null;
+
+                if (args is null || args.Length == 0)
+                    newInstance = New();
+                else
+                    newInstance = New(args);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                newInstance = null;
+                exception = ex;
+                return false;
+            }
         }
 
         #region Equality / IEquatable<T>

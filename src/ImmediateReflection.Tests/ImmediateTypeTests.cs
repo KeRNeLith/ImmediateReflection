@@ -647,9 +647,41 @@ namespace ImmediateReflection.Tests
 
         private class DefaultConstructorThrows
         {
+            // ReSharper disable once UnusedMember.Local
             public DefaultConstructorThrows()
             {
                 throw new InvalidOperationException("Constructor throws.");
+            }
+
+            // ReSharper disable once UnusedMember.Local
+            // ReSharper disable once UnusedParameter.Local
+            public DefaultConstructorThrows(int value)
+            {
+                throw new InvalidOperationException("Constructor throws (int).");
+            }
+
+            // ReSharper disable once UnusedMember.Local
+            // ReSharper disable UnusedParameter.Local
+            public DefaultConstructorThrows(int value, float value2)
+            // ReSharper restore UnusedParameter.Local
+            {
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as DefaultConstructorThrows);
+            }
+
+            private bool Equals(DefaultConstructorThrows other)
+            {
+                if (other is null)
+                    return false;
+                return true;
+            }
+
+            public override int GetHashCode()
+            {
+                return 1;
             }
         }
 
@@ -1029,7 +1061,7 @@ namespace ImmediateReflection.Tests
 
         #endregion
 
-        #region New(params)
+        #region New(params)/TryNew(params)
 
         private static IEnumerable<TestCaseData> CreateNotDefaultConstructorTestCases
         {
@@ -1094,6 +1126,72 @@ namespace ImmediateReflection.Tests
 
             immediateType = new ImmediateType(typeof(NotDefaultConstructorThrows));
             Assert.Throws<TargetInvocationException>(() => immediateType.New(12));
+        }
+
+        private static IEnumerable<TestCaseData> CreateNotDefaultConstructorNoThrowTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                yield return new TestCaseData(typeof(int), false, null);
+                yield return new TestCaseData(typeof(int), false, new object[] { });
+                yield return new TestCaseData(typeof(TestStruct), false, null);
+                yield return new TestCaseData(typeof(TestStruct), false, new object[] { });
+                yield return new TestCaseData(typeof(DefaultConstructor), false, null);
+                yield return new TestCaseData(typeof(DefaultConstructor), false, new object[] { });
+                yield return new TestCaseData(typeof(MultipleConstructors), false, null);
+                yield return new TestCaseData(typeof(MultipleConstructors), false, new object[] { });
+                yield return new TestCaseData(typeof(MultipleConstructors), false, new object[] { 12, 12.5f });
+                yield return new TestCaseData(typeof(TemplateStruct<double>), false, null);
+                yield return new TestCaseData(typeof(TemplateStruct<double>), false, new object[] { });
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), false, null);
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), false, new object[] { });
+                yield return new TestCaseData(typeof(DefaultConstructorThrows), false, new object[] { 45, 51.0f });
+
+                yield return new TestCaseData(typeof(int), true, new object[] { 12 });
+                yield return new TestCaseData(typeof(TestStruct), true, new object[] { 12 });
+                yield return new TestCaseData(typeof(DefaultConstructor), true, new object[] { 12 });
+                yield return new TestCaseData(typeof(MultipleConstructors), true, new object[] { 12.5f, 12 });
+                yield return new TestCaseData(typeof(TemplateStruct<double>), true, new object[] { 25 });
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), true, new object[] { 25 });
+                yield return new TestCaseData(typeof(NoDefaultConstructor), true, null);
+                yield return new TestCaseData(typeof(NoDefaultConstructor), true, new object[] { });
+                yield return new TestCaseData(typeof(NotAccessibleDefaultConstructor), true, null);
+                yield return new TestCaseData(typeof(NotAccessibleDefaultConstructor), true, new object[] { });
+                yield return new TestCaseData(typeof(AbstractDefaultConstructor), true, null);
+                yield return new TestCaseData(typeof(AbstractDefaultConstructor), true, new object[] { });
+                yield return new TestCaseData(typeof(StaticClass), true, null);
+                yield return new TestCaseData(typeof(StaticClass), true, new object[] { });
+                yield return new TestCaseData(typeof(TemplateStruct<>), true, null);
+                yield return new TestCaseData(typeof(TemplateStruct<>), true, new object[] { });
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<>), true, null);
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<>), true, new object[] { });
+                // ReSharper disable PossibleMistakenCallToGetType.2
+                yield return new TestCaseData(typeof(DefaultConstructor).GetType(), true, null);
+                yield return new TestCaseData(typeof(DefaultConstructor).GetType(), true, new object[] { });
+                // ReSharper restore PossibleMistakenCallToGetType.2
+                yield return new TestCaseData(typeof(DefaultConstructorThrows), true, null);
+                yield return new TestCaseData(typeof(DefaultConstructorThrows), true, new object[] { });
+                yield return new TestCaseData(typeof(DefaultConstructorThrows), true, new object[] { 12 });
+            }
+        }
+
+        [TestCaseSource(nameof(CreateNotDefaultConstructorNoThrowTestCases))]
+        public void NewWithParameters_NoThrow([NotNull] Type type, bool expectFail, [CanBeNull, ItemCanBeNull] params object[] args)
+        {
+            var immediateType = new ImmediateType(type);
+
+            Assert.AreEqual(!expectFail, immediateType.TryNew(out object instance, out Exception ex, args));
+            if (expectFail)
+            {
+                Assert.IsNull(instance);
+                Assert.IsNotNull(ex);
+            }
+            else
+            {
+                Assert.IsNotNull(instance);
+                Assert.AreEqual(Activator.CreateInstance(type, args), instance);
+            }
         }
 
         #endregion
