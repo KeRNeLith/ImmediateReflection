@@ -32,6 +32,9 @@ namespace ImmediateReflection.Benchmark
             BenchmarkRunner.Run<PropertyMultiGetterBenchmark>(config);
             BenchmarkRunner.Run<FieldMultiSetterBenchmark>(config);
             BenchmarkRunner.Run<PropertyMultiSetterBenchmark>(config);
+
+            // Attributes
+            BenchmarkRunner.Run<GetAttributesBenchmark>(config);
         }
     }
 }
