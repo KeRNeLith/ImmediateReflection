@@ -7,17 +7,20 @@ namespace ImmediateReflection
     /// <summary>
     /// Represents a field and provides access to its metadata in a faster way.
     /// </summary>
+    [PublicAPI]
     public sealed class ImmediateField : ImmediateMember, IEquatable<ImmediateField>
     {
         /// <summary>
         /// Gets the wrapped <see cref="System.Reflection.FieldInfo"/>.
         /// </summary>
+        [PublicAPI]
         [NotNull]
         public FieldInfo FieldInfo { get; }
 
         /// <summary>
         /// Gets the <see cref="Type"/> of this field.
         /// </summary>
+        [PublicAPI]
         [NotNull]
         public Type FieldType { get; }
 
@@ -28,6 +31,7 @@ namespace ImmediateReflection
         /// <summary>
         /// Gets the <see cref="ImmediateType"/> of this field.
         /// </summary>
+        [PublicAPI]
         [NotNull]
         public ImmediateType FieldImmediateType => _fieldImmediateType.Value;
 #endif
@@ -117,6 +121,7 @@ namespace ImmediateReflection
         /// <returns>Field value of the specified object.</returns>
         /// <exception cref="InvalidCastException">If the <paramref name="obj"/> is not the owner of this field.</exception>
         /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the field to get is not static.</exception>
+        [PublicAPI]
         [Pure]
         public object GetValue([CanBeNull] object obj)
         {
@@ -131,6 +136,7 @@ namespace ImmediateReflection
         /// <exception cref="InvalidCastException">If the <paramref name="obj"/> is not the owner of this field or if the <paramref name="value"/> is of the wrong type.</exception>
         /// <exception cref="FieldAccessException">If the field is constant or read only.</exception>
         /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the field to set is not static.</exception>
+        [PublicAPI]
         public void SetValue([CanBeNull] object obj, [CanBeNull] object value)
         {
             _setter(obj, value);

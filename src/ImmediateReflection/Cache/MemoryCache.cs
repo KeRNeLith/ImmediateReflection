@@ -23,6 +23,7 @@ namespace ImmediateReflection
         /// <param name="valueFactory">Factory method to create the value if it does not exist.</param>
         /// <returns>The value.</returns>
         [NotNull]
+        [ContractAnnotation("key:null => halt;valueFactory:null => halt")]
         public TValue GetOrCreate([NotNull] TKey key, [NotNull] Func<TValue> valueFactory)
         {
             return _cache.GetOrAdd(

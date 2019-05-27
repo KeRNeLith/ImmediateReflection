@@ -8,6 +8,7 @@ namespace ImmediateReflection
     /// Default constructor delegate.
     /// </summary>
     /// <returns>Newly created object.</returns>
+    [PublicAPI]
     [NotNull]
     public delegate object DefaultConstructorDelegate();
 
@@ -20,6 +21,7 @@ namespace ImmediateReflection
     /// </summary>
     /// <typeparam name="TValue">Value type.</typeparam>
     /// <returns>Got value.</returns>
+    [PublicAPI]
     public delegate TValue StaticGetterDelegate<out TValue>();
 
     /// <summary>
@@ -27,6 +29,7 @@ namespace ImmediateReflection
     /// </summary>
     /// <param name="target">Object instance to get a value, null if static.</param>
     /// <returns>Got value.</returns>
+    [PublicAPI]
     public delegate object GetterDelegate([CanBeNull] object target);
 
     /// <summary>
@@ -35,6 +38,7 @@ namespace ImmediateReflection
     /// <typeparam name="TOwner">Owner object type.</typeparam>
     /// <param name="target">Object instance to get a value, null if static.</param>
     /// <returns>Got value.</returns>
+    [PublicAPI]
     public delegate object GetterDelegate<in TOwner>([CanBeNull] TOwner target);
 
     /// <summary>
@@ -44,6 +48,7 @@ namespace ImmediateReflection
     /// <typeparam name="TValue">Value type.</typeparam>
     /// <param name="target">Object instance to get a value, null if static.</param>
     /// <returns>Got value.</returns>
+    [PublicAPI]
     public delegate TValue GetterDelegate<in TOwner, out TValue>([CanBeNull] TOwner target);
 
     /// <summary>
@@ -64,6 +69,7 @@ namespace ImmediateReflection
     /// </summary>
     /// <typeparam name="TValue">Value type.</typeparam>
     /// <param name="value">Value to set.</param>
+    [PublicAPI]
     public delegate void StaticSetterDelegate<in TValue>([CanBeNull] TValue value);
 
     /// <summary>
@@ -71,6 +77,7 @@ namespace ImmediateReflection
     /// </summary>
     /// <param name="target">Object instance to set a value, null if static.</param>
     /// <param name="value">Value to set.</param>
+    [PublicAPI]
     public delegate void SetterDelegate([CanBeNull] object target, [CanBeNull] object value);
 
     /// <summary>
@@ -79,6 +86,7 @@ namespace ImmediateReflection
     /// <typeparam name="TOwner">Owner object type.</typeparam>
     /// <param name="target">Object instance to set a value, null if static.</param>
     /// <param name="value">Value to set.</param>
+    [PublicAPI]
     public delegate void SetterDelegate<in TOwner>([CanBeNull] TOwner target, [CanBeNull] object value);
 
     /// <summary>
@@ -88,6 +96,7 @@ namespace ImmediateReflection
     /// <typeparam name="TValue">Value type.</typeparam>
     /// <param name="target">Object instance to set a value, null if static.</param>
     /// <param name="value">Value to set.</param>
+    [PublicAPI]
     public delegate void SetterDelegate<in TOwner, in TValue>([CanBeNull] TOwner target, [CanBeNull] TValue value);
 
     #endregion

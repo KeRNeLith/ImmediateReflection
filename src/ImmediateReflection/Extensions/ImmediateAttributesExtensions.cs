@@ -12,6 +12,7 @@ namespace ImmediateReflection
     /// <summary>
     /// Extensions to easily work with attributes.
     /// </summary>
+    [PublicAPI]
     public static class ImmediateAttributesExtensions
     {
         /// <summary>
@@ -21,7 +22,8 @@ namespace ImmediateReflection
         /// <param name="member">Member to get its custom attributes.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>True if an attribute matches requested type, otherwise false.</returns>
-        [Pure]
+        [PublicAPI]
+        [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -42,7 +44,8 @@ namespace ImmediateReflection
         /// <returns>True if an attribute matches requested type, otherwise false.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
-        [Pure]
+        [PublicAPI]
+        [ContractAnnotation("member:null => halt;attributeType:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -61,7 +64,9 @@ namespace ImmediateReflection
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>The first attribute matching requested type, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
+        [PublicAPI]
         [CanBeNull]
+        [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -82,7 +87,9 @@ namespace ImmediateReflection
         /// <returns>The first attribute matching requested type, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="member"/> or the <paramref name="attributeType"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
+        [PublicAPI]
         [CanBeNull]
+        [ContractAnnotation("member:null => halt;attributeType:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -100,7 +107,9 @@ namespace ImmediateReflection
         /// <param name="member">Member to get its custom attributes.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>Attributes matching requested type.</returns>
+        [PublicAPI]
         [NotNull, ItemNotNull]
+        [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -119,7 +128,9 @@ namespace ImmediateReflection
         /// <param name="attributeType">Type of the attribute to search.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>Attributes matching requested type.</returns>
+        [PublicAPI]
         [NotNull, ItemNotNull]
+        [ContractAnnotation("member:null => halt;attributeType:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -136,7 +147,9 @@ namespace ImmediateReflection
         /// <param name="member">Member to get its custom attributes.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>All attributes.</returns>
+        [PublicAPI]
         [NotNull, ItemNotNull]
+        [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif

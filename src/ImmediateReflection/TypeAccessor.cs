@@ -11,6 +11,7 @@ namespace ImmediateReflection
     /// Provides an access to a <see cref="Type"/> Reflection information via an <see cref="ImmediateType"/>.
     /// <see cref="ImmediateType"/> gives access to Reflection features in a faster way than standard stuff.
     /// </summary>
+    [PublicAPI]
     public static class TypeAccessor
     {
         internal const BindingFlags DefaultFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
@@ -30,6 +31,7 @@ namespace ImmediateReflection
         /// <typeparam name="T"><see cref="Type"/> to get a corresponding <see cref="ImmediateType"/>.</typeparam>
         [Pure]
 #endif
+        [PublicAPI]
         [NotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -56,7 +58,9 @@ namespace ImmediateReflection
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [Pure]
 #endif
+        [PublicAPI]
         [NotNull]
+        [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -82,6 +86,7 @@ namespace ImmediateReflection
         /// <param name="includeNonPublicMembers">Indicates if non public members should be taken into account.</param>
         [Pure]
 #endif
+        [PublicAPI]
         [NotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -110,7 +115,9 @@ namespace ImmediateReflection
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [Pure]
 #endif
+        [PublicAPI]
         [NotNull]
+        [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -136,6 +143,7 @@ namespace ImmediateReflection
         /// <param name="flags">Flags that must be taken into account to get members.</param>
         [Pure]
 #endif
+        [PublicAPI]
         [NotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -162,7 +170,9 @@ namespace ImmediateReflection
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [Pure]
 #endif
+        [PublicAPI]
         [NotNull]
+        [ContractAnnotation("type:null => halt")]
         public static ImmediateType Get([NotNull] Type type, BindingFlags flags)
         {
 #if SUPPORTS_CACHING

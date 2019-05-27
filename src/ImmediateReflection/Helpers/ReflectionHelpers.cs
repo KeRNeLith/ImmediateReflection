@@ -14,6 +14,8 @@ namespace ImmediateReflection.Utils
         /// </summary>
         /// <param name="param">A <see cref="ParameterInfo"/>.</param>
         /// <returns>True if the parameter correspond to a "params" parameter, false otherwise.</returns>
+        [Pure]
+        [ContractAnnotation("param:null => halt")]
         public static bool IsParams([NotNull] ParameterInfo param)
         {
             return param.IsDefined(typeof(ParamArrayAttribute), false);

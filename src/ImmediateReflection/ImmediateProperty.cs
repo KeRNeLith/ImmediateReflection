@@ -7,17 +7,20 @@ namespace ImmediateReflection
     /// <summary>
     /// Represents a property and provides access to property metadata in a faster way.
     /// </summary>
+    [PublicAPI]
     public sealed class ImmediateProperty : ImmediateMember, IEquatable<ImmediateProperty>
     {
         /// <summary>
         /// Gets the wrapped <see cref="System.Reflection.PropertyInfo"/>.
         /// </summary>
+        [PublicAPI]
         [NotNull]
         public PropertyInfo PropertyInfo { get; }
 
         /// <summary>
         /// Gets the <see cref="Type"/> of this property.
         /// </summary>
+        [PublicAPI]
         [NotNull]
         public Type PropertyType { get; }
 
@@ -28,6 +31,7 @@ namespace ImmediateReflection
         /// <summary>
         /// Gets the <see cref="ImmediateType"/> of this property.
         /// </summary>
+        [PublicAPI]
         [NotNull]
         public ImmediateType PropertyImmediateType => _propertyImmediateType.Value;
 #endif
@@ -35,6 +39,7 @@ namespace ImmediateReflection
         /// <summary>
         /// Gets the readable state of this property.
         /// </summary>
+        [PublicAPI]
         public bool CanRead { get; }
 
         [NotNull]
@@ -43,6 +48,7 @@ namespace ImmediateReflection
         /// <summary>
         /// Gets the writable state of this property.
         /// </summary>
+        [PublicAPI]
         public bool CanWrite { get; }
 
         [NotNull]
@@ -108,6 +114,7 @@ namespace ImmediateReflection
         /// <exception cref="ArgumentException">If this property has no getter.</exception>
         /// <exception cref="InvalidCastException">If the <paramref name="obj"/> is not the owner of this property.</exception>
         /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the property to get is not static.</exception>
+        [PublicAPI]
         [Pure]
         public object GetValue([CanBeNull] object obj)
         {
@@ -122,6 +129,7 @@ namespace ImmediateReflection
         /// <exception cref="ArgumentException">If this property has no setter.</exception>
         /// <exception cref="InvalidCastException">If the <paramref name="obj"/> is not the owner of this property or if the <paramref name="value"/> is of the wrong type.</exception>
         /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the property to set is not static.</exception>
+        [PublicAPI]
         public void SetValue([CanBeNull] object obj, [CanBeNull] object value)
         {
             _setter(obj, value);

@@ -79,6 +79,7 @@ namespace ImmediateReflection
         /// <exception cref="ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
         [Pure]
+        [ContractAnnotation("attributeType:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -124,6 +125,7 @@ namespace ImmediateReflection
         /// <exception cref="ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
         [Pure]
         [CanBeNull]
+        [ContractAnnotation("attributeType:null => halt")]
         public Attribute GetAttribute([NotNull] Type attributeType, bool inherit)
         {
             if (attributeType is null)
@@ -187,6 +189,7 @@ namespace ImmediateReflection
         /// <returns>Attributes matching requested type.</returns>
         [Pure]
         [NotNull, ItemNotNull]
+        [ContractAnnotation("attributeType:null => halt")]
         public IEnumerable<Attribute> GetAttributes([NotNull] Type attributeType, bool inherit)
         {
             if (inherit)

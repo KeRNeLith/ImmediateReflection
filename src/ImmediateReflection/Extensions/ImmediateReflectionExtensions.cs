@@ -10,6 +10,7 @@ namespace ImmediateReflection
     /// <summary>
     /// Extensions to easily work with Immediate Reflection.
     /// </summary>
+    [PublicAPI]
     public static class ImmediateReflectionExtensions
     {
         /// <summary>
@@ -19,10 +20,12 @@ namespace ImmediateReflection
         /// <param name="obj">Object instance.</param>
         /// <returns>The corresponding <see cref="ImmediateType"/>.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="obj"/>is null.</exception>
+        [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
 #endif
         [NotNull]
+        [ContractAnnotation("obj:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -39,10 +42,12 @@ namespace ImmediateReflection
         /// <param name="type">A <see cref="Type"/>.</param>
         /// <returns>The corresponding <see cref="ImmediateType"/>.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/>is null.</exception>
+        [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
 #endif
         [NotNull]
+        [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif

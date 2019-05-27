@@ -11,11 +11,13 @@ namespace ImmediateReflection
     /// <summary>
     /// Represents information about the attributes of a member or <see cref="Type"/> and provides access to its metadata in a faster way.
     /// </summary>
+    [PublicAPI]
     public abstract class ImmediateMember
     {
         /// <summary>
         /// Gets the name of the current member.
         /// </summary>
+        [PublicAPI]
         [NotNull]
         public string Name { get; }
 
@@ -48,6 +50,7 @@ namespace ImmediateReflection
         /// <typeparam name="TAttribute">Attribute type.</typeparam>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>True if an attribute matches requested type, otherwise false.</returns>
+        [PublicAPI]
         [Pure]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -66,7 +69,9 @@ namespace ImmediateReflection
         /// <returns>True if an attribute matches requested type, otherwise false.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
+        [PublicAPI]
         [Pure]
+        [ContractAnnotation("attributeType:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -81,6 +86,7 @@ namespace ImmediateReflection
         /// <typeparam name="TAttribute">Attribute type.</typeparam>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>The first attribute matching requested type, otherwise null.</returns>
+        [PublicAPI]
         [Pure]
         [CanBeNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -100,8 +106,10 @@ namespace ImmediateReflection
         /// <returns>The first attribute matching requested type, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
+        [PublicAPI]
         [Pure]
         [CanBeNull]
+        [ContractAnnotation("attributeType:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -116,6 +124,7 @@ namespace ImmediateReflection
         /// <typeparam name="TAttribute">Attribute type.</typeparam>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>Attributes matching requested type.</returns>
+        [PublicAPI]
         [Pure]
         [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -133,8 +142,10 @@ namespace ImmediateReflection
         /// <param name="attributeType">Type of the attribute to search.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>Attributes matching requested type.</returns>
+        [PublicAPI]
         [Pure]
         [NotNull, ItemNotNull]
+        [ContractAnnotation("attributeType:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -148,6 +159,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>All attributes.</returns>
+        [PublicAPI]
         [Pure]
         [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING

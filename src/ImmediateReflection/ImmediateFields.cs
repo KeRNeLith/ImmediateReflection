@@ -18,6 +18,7 @@ namespace ImmediateReflection
     /// <summary>
     /// Represents a collection of fields and provides access to its metadata in a faster way.
     /// </summary>
+    [PublicAPI]
     public sealed class ImmediateFields : IEnumerable<ImmediateField>, IEquatable<ImmediateFields>
     {
         [NotNull]
@@ -89,6 +90,7 @@ namespace ImmediateReflection
         /// <param name="fieldName">Field name.</param>
         /// <returns>Found <see cref="ImmediateField"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="fieldName"/> is null.</exception>
+        [PublicAPI]
         [CanBeNull]
         public ImmediateField this[[NotNull] string fieldName] =>
             _fields.TryGetValue(fieldName, out ImmediateField field)
@@ -101,8 +103,10 @@ namespace ImmediateReflection
         /// <param name="fieldName">Field name.</param>
         /// <returns>Found <see cref="ImmediateField"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="fieldName"/> is null.</exception>
+        [PublicAPI]
         [Pure]
         [CanBeNull]
+        [ContractAnnotation("fieldName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif

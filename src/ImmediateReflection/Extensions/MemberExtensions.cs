@@ -7,6 +7,7 @@ namespace ImmediateReflection
     /// <summary>
     /// Extensions to work with <see cref="MemberInfo"/>.
     /// </summary>
+    [PublicAPI]
     public static class MemberExtensions
     {
         #region Getter
@@ -14,6 +15,7 @@ namespace ImmediateReflection
         #region Strongly typed
 
         [Pure]
+        [ContractAnnotation("property:null => halt;=> true, getter:notnull;=> false, getter:null")]
         private static bool TryCreateGetterInternal<TOwner, TProperty>([NotNull] PropertyInfo property, out GetterDelegate<TOwner, TProperty> getter)
         {
             if (property is null)
@@ -68,7 +70,9 @@ namespace ImmediateReflection
         /// <param name="getter">Created getter delegate.</param>
         /// <returns>True if the getter was successfully created, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
+        [PublicAPI]
         [Pure]
+        [ContractAnnotation("property:null => halt;=> true, getter:notnull;=> false, getter:null")]
         public static bool TryCreateGetter<TOwner, TProperty>(
 #if SUPPORTS_EXTENSIONS
             [NotNull] this PropertyInfo property,
@@ -102,8 +106,10 @@ namespace ImmediateReflection
         /// <returns>The corresponding <see cref="GetterDelegate{TOwner,TProperty}"/> delegate getter.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given template type does not match owner and property types.</exception>
+        [PublicAPI]
         [Pure]
         [NotNull]
+        [ContractAnnotation("property:null => halt")]
         public static GetterDelegate<TOwner, TProperty> CreateGetter<TOwner, TProperty>(
 #if SUPPORTS_EXTENSIONS
             [NotNull] this PropertyInfo property
@@ -123,6 +129,7 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
+        [ContractAnnotation("method:null => halt")]
         private static GetterDelegate<TOwner> GetterHelper<TOwner, TValue>([NotNull] MethodInfo method)
         {
             if (method.IsStatic)
@@ -152,6 +159,7 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
+        [ContractAnnotation("method:null => halt")]
         private static GetterDelegate<TOwner> CreateGetter<TOwner>([NotNull] MethodInfo method)
         {
             // Fetch the generic helper
@@ -173,6 +181,7 @@ namespace ImmediateReflection
         }
 
         [Pure]
+        [ContractAnnotation("property:null => halt;=> true, getter:notnull;=> false, getter:null")]
         private static bool TryCreateGetterInternal<TOwner>([NotNull] PropertyInfo property, out GetterDelegate<TOwner> getter)
         {
             if (property is null)
@@ -199,7 +208,9 @@ namespace ImmediateReflection
         /// <param name="getter">Created getter delegate.</param>
         /// <returns>True if the getter was successfully created, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
+        [PublicAPI]
         [Pure]
+        [ContractAnnotation("property:null => halt;=> true, getter:notnull;=> false, getter:null")]
         public static bool TryCreateGetter<TOwner>(
 #if SUPPORTS_EXTENSIONS
             [NotNull] this PropertyInfo property,
@@ -232,8 +243,10 @@ namespace ImmediateReflection
         /// <returns>The corresponding <see cref="GetterDelegate{TOwner}"/> delegate getter.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given template type does not match owner type.</exception>
+        [PublicAPI]
         [Pure]
         [NotNull]
+        [ContractAnnotation("property:null => halt")]
         public static GetterDelegate<TOwner> CreateGetter<TOwner>(
 #if SUPPORTS_EXTENSIONS
             [NotNull] this PropertyInfo property
@@ -259,6 +272,7 @@ namespace ImmediateReflection
         #region Strongly typed
 
         [Pure]
+        [ContractAnnotation("property:null => halt;=> true, setter:notnull;=> false, setter:null")]
         private static bool TryCreateSetterInternal<TOwner, TProperty>([NotNull] PropertyInfo property, out SetterDelegate<TOwner, TProperty> setter)
             where TOwner : class
         {
@@ -301,7 +315,9 @@ namespace ImmediateReflection
         /// <param name="setter">Created setter delegate.</param>
         /// <returns>True if the setter was successfully created, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
+        [PublicAPI]
         [Pure]
+        [ContractAnnotation("property:null => halt;=> true, setter:notnull;=> false, setter:null")]
         public static bool TryCreateSetter<TOwner, TProperty>(
 #if SUPPORTS_EXTENSIONS
             [NotNull] this PropertyInfo property,
@@ -336,8 +352,10 @@ namespace ImmediateReflection
         /// <returns>The corresponding <see cref="SetterDelegate{TOwner,TProperty}"/> delegate setter.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given template type does not match owner and property types.</exception>
+        [PublicAPI]
         [Pure]
         [NotNull]
+        [ContractAnnotation("property:null => halt")]
         public static SetterDelegate<TOwner, TProperty> CreateSetter<TOwner, TProperty>(
 #if SUPPORTS_EXTENSIONS
             [NotNull] this PropertyInfo property
@@ -358,6 +376,7 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
+        [ContractAnnotation("method:null => halt")]
         private static SetterDelegate<TOwner> SetterHelper<TOwner, TValue>([NotNull] MethodInfo method)
             where TOwner : class
         {
@@ -379,6 +398,7 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
+        [ContractAnnotation("method:null => halt")]
         private static SetterDelegate<TOwner> CreateSetter<TOwner>([NotNull] MethodInfo method)
             where TOwner : class
         {
@@ -401,6 +421,7 @@ namespace ImmediateReflection
         }
 
         [Pure]
+        [ContractAnnotation("property:null => halt;=> true, setter:notnull;=> false, setter:null")]
         private static bool TryCreateSetterInternal<TOwner>([NotNull] PropertyInfo property, out SetterDelegate<TOwner> setter)
             where TOwner : class
         {
@@ -428,7 +449,9 @@ namespace ImmediateReflection
         /// <param name="setter">Created setter delegate.</param>
         /// <returns>True if the setter was successfully created, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
+        [PublicAPI]
         [Pure]
+        [ContractAnnotation("property:null => halt;=> true, setter:notnull;=> false, setter:null")]
         public static bool TryCreateSetter<TOwner>(
 #if SUPPORTS_EXTENSIONS
             [NotNull] this PropertyInfo property,
@@ -462,8 +485,10 @@ namespace ImmediateReflection
         /// <returns>The corresponding <see cref="SetterDelegate{TOwner}"/> delegate setter.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given template type does not match owner type.</exception>
+        [PublicAPI]
         [Pure]
         [NotNull]
+        [ContractAnnotation("property:null => halt")]
         public static SetterDelegate<TOwner> CreateSetter<TOwner>(
 #if SUPPORTS_EXTENSIONS
             [NotNull] this PropertyInfo property

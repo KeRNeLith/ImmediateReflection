@@ -75,6 +75,7 @@ namespace ImmediateReflection
         private volatile MemoryCache<TypeCacheKey, ImmediateType> _cachedTypes = new MemoryCache<TypeCacheKey, ImmediateType>();
 
         [NotNull]
+        [ContractAnnotation("type:null => halt")]
         public ImmediateType GetImmediateType([NotNull] Type type, BindingFlags flags)
         {
             if (type is null)
@@ -93,6 +94,7 @@ namespace ImmediateReflection
         private volatile MemoryCache<MemberInfo, AttributesCache> _cachedAttributes = new MemoryCache<MemberInfo, AttributesCache>();
 
         [NotNull]
+        [ContractAnnotation("member:null => halt")]
         public AttributesCache GetAttributesCache([NotNull] MemberInfo member)
         {
             if (member is null)

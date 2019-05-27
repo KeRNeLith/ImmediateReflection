@@ -14,6 +14,7 @@ namespace ImmediateReflection.Utils
     /// </summary>
     internal static class FieldHelpers
     {
+        [NotNull]
         private const string BackingFieldName = "BackingField";
 
         /// <summary>
@@ -22,6 +23,7 @@ namespace ImmediateReflection.Utils
         /// <param name="field">The <see cref="FieldInfo"/>.</param>
         /// <returns>True if the <see cref="FieldInfo"/> is a backing field, false otherwise.</returns>
         [Pure]
+        [ContractAnnotation("field:null => halt")]
         internal static bool IsBackingField([NotNull] FieldInfo field)
         {
             return field.Name.Contains(BackingFieldName);
@@ -34,6 +36,7 @@ namespace ImmediateReflection.Utils
         /// <returns>Filtered <see cref="FieldInfo"/>.</returns>
         [Pure]
         [NotNull, ItemNotNull]
+        [ContractAnnotation("fields:null => halt")]
         internal static IEnumerable<FieldInfo> IgnoreBackingFields([NotNull, ItemNotNull] IEnumerable<FieldInfo> fields)
         {
 #if SUPPORTS_LINQ

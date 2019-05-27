@@ -914,6 +914,7 @@ namespace ImmediateReflection.Tests
 
         private class NoDefaultInheritedDefaultConstructor : DefaultConstructor
         {
+            // ReSharper disable once UnusedParameter.Local
             public NoDefaultInheritedDefaultConstructor(int value)
             {
             }
@@ -929,6 +930,7 @@ namespace ImmediateReflection.Tests
 
         private class NoDefaultInheritedFromAbstractClass : AbstractDefaultConstructor
         {
+            // ReSharper disable once UnusedParameter.Local
             public NoDefaultInheritedFromAbstractClass(int value)
             {
             }

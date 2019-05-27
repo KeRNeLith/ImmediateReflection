@@ -18,6 +18,7 @@ namespace ImmediateReflection
     /// <summary>
     /// Represents a collection of properties and provides access to property metadata in a faster way.
     /// </summary>
+    [PublicAPI]
     public sealed class ImmediateProperties : IEnumerable<ImmediateProperty>, IEquatable<ImmediateProperties>
     {
         [NotNull]
@@ -54,6 +55,7 @@ namespace ImmediateReflection
         /// <param name="propertyName">Property name.</param>
         /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
+        [PublicAPI]
         [CanBeNull]
         public ImmediateProperty this[[NotNull] string propertyName] =>
             _properties.TryGetValue(propertyName, out ImmediateProperty property)
@@ -66,8 +68,10 @@ namespace ImmediateReflection
         /// <param name="propertyName">Property name.</param>
         /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
+        [PublicAPI]
         [Pure]
         [CanBeNull]
+        [ContractAnnotation("propertyName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif

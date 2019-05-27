@@ -23,6 +23,7 @@ namespace ImmediateReflection
         /// <summary>
         /// Gets the wrapped <see cref="System.Type"/>.
         /// </summary>
+        [PublicAPI]
         [NotNull]
         public Type Type { get; }
 
@@ -30,12 +31,14 @@ namespace ImmediateReflection
         /// Gets the fully qualified name of the <see cref="System.Type"/>, including its namespace but not its assembly.
         /// </summary>
         /// <remarks>Fallback on the type name if full name is null.</remarks>
+        [PublicAPI]
         [NotNull]
         public string FullName { get; }
 
         /// <summary>
         /// Gets all the members of this <see cref="System.Type"/>.
         /// </summary>
+        [PublicAPI]
         [NotNull, ItemNotNull]
         public IEnumerable<ImmediateMember> Members
         {
@@ -51,12 +54,14 @@ namespace ImmediateReflection
         /// <summary>
         /// Gets all the fields of this <see cref="System.Type"/>.
         /// </summary>
+        [PublicAPI]
         [NotNull, ItemNotNull]
         public ImmediateFields Fields { get; }
 
         /// <summary>
         /// Gets all the properties of this <see cref="System.Type"/>.
         /// </summary>
+        [PublicAPI]
         [NotNull, ItemNotNull]
         public ImmediateProperties Properties { get; }
 
@@ -106,6 +111,7 @@ namespace ImmediateReflection
         /// Gets all the members of this <see cref="System.Type"/>.
         /// </summary>
         /// <returns>All <see cref="ImmediateMember"/>.</returns>
+        [PublicAPI]
         [Pure]
         [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -119,6 +125,7 @@ namespace ImmediateReflection
         /// <param name="memberName">Member name.</param>
         /// <returns>Found <see cref="ImmediateMember"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
+        [PublicAPI]
         [CanBeNull]
         public ImmediateMember this[[NotNull] string memberName]
         {
@@ -137,8 +144,10 @@ namespace ImmediateReflection
         /// <param name="memberName">Member name.</param>
         /// <returns>Found <see cref="ImmediateMember"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
+        [PublicAPI]
         [Pure]
         [CanBeNull]
+        [ContractAnnotation("memberName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -148,6 +157,7 @@ namespace ImmediateReflection
         /// Gets all the fields of this <see cref="System.Type"/>.
         /// </summary>
         /// <returns>All <see cref="ImmediateField"/>.</returns>
+        [PublicAPI]
         [Pure]
         [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -161,8 +171,10 @@ namespace ImmediateReflection
         /// <param name="fieldName">Property name.</param>
         /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="fieldName"/> is null.</exception>
+        [PublicAPI]
         [Pure]
         [CanBeNull]
+        [ContractAnnotation("fieldName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -172,6 +184,7 @@ namespace ImmediateReflection
         /// Gets all the properties of this <see cref="System.Type"/>.
         /// </summary>
         /// <returns>All <see cref="ImmediateProperty"/>.</returns>
+        [PublicAPI]
         [Pure]
         [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -185,8 +198,10 @@ namespace ImmediateReflection
         /// <param name="propertyName">Property name.</param>
         /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
+        [PublicAPI]
         [Pure]
         [CanBeNull]
+        [ContractAnnotation("propertyName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -200,6 +215,7 @@ namespace ImmediateReflection
         /// <exception cref="AmbiguousMatchException"><see cref="Type"/> has several constructors defining "params" parameter only.</exception>
         /// <exception cref="MissingMethodException">No matching public constructor was found.</exception>
         /// <exception cref="TargetInvocationException">The constructor being called throws an exception.</exception>
+        [PublicAPI]
         [Pure]
         [NotNull]
         public object New()
@@ -214,7 +230,9 @@ namespace ImmediateReflection
         /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
         /// <param name="exception">Caught exception if the instantiation failed, otherwise null.</param>
         /// <returns>True if the new instance was successfully created, false otherwise.</returns>
+        [PublicAPI]
         [Pure]
+        [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
         public bool TryNew(out object newInstance, out Exception exception)
         {
             try
@@ -234,6 +252,7 @@ namespace ImmediateReflection
         /// <summary>
         /// Creates an instance of this <see cref="Type"/> using the constructor that best matches the specified parameters.
         /// </summary>
+        /// <remarks>Tries to use the <see cref="New()"/> if no parameter provided, otherwise fallback on <see cref="Activator.CreateInstance(System.Type,object[])"/>.</remarks>
         /// <param name="args">
         /// An array of arguments that match in number, order, and type the parameters of the constructor to invoke.
         /// If <paramref name="args"/> is an empty array or null, the constructor that takes no parameters (the default constructor) is invoked.
@@ -243,6 +262,7 @@ namespace ImmediateReflection
         /// <exception cref="MemberAccessException">Cannot create an instance of an abstract class, or this member was invoked with a late-binding mechanism.</exception>
         /// <exception cref="MissingMethodException">No matching public constructor was found.</exception>
         /// <exception cref="TargetInvocationException">The constructor being called throws an exception.</exception>
+        [PublicAPI]
         [Pure]
         [NotNull]
         public object New([CanBeNull, ItemCanBeNull] params object[] args)
@@ -255,7 +275,10 @@ namespace ImmediateReflection
         /// <summary>
         /// Tries to create an instance of this <see cref="Type"/> with the best matching constructor.
         /// </summary>
-        /// <remarks>This method will not throw if instantiation failed.</remarks>
+        /// <remarks>
+        /// This method will not throw if instantiation failed.
+        /// Tries to use the <see cref="New()"/> if no parameter provided, otherwise fallback on <see cref="Activator.CreateInstance(System.Type,object[])"/>.
+        /// </remarks>
         /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
         /// <param name="exception">Caught exception if the instantiation failed, otherwise null.</param>
         /// <param name="args">
@@ -263,7 +286,9 @@ namespace ImmediateReflection
         /// If <paramref name="args"/> is an empty array or null, the constructor that takes no parameters (the default constructor) is invoked.
         /// </param>
         /// <returns>True if the new instance was successfully created, false otherwise.</returns>
+        [PublicAPI]
         [Pure]
+        [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
         public bool TryNew(out object newInstance, out Exception exception, [CanBeNull, ItemCanBeNull] params object[] args)
         {
             try

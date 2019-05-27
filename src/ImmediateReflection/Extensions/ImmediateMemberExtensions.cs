@@ -12,6 +12,7 @@ namespace ImmediateReflection
     /// <summary>
     /// Extensions to easily work with <see cref="ImmediateProperty"/>.
     /// </summary>
+    [PublicAPI]
     public static class ImmediateMemberExtensions
     {
         #region Field
@@ -23,10 +24,12 @@ namespace ImmediateReflection
         /// <param name="fieldName">Field name.</param>
         /// <returns>The corresponding <see cref="ImmediateField"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> or <paramref name="fieldName"/> is null.</exception>
+        [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
 #endif
         [CanBeNull]
+        [ContractAnnotation("type:null => halt;fieldName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -43,10 +46,12 @@ namespace ImmediateReflection
         /// <param name="flags">Flags that must be taken into account to get members.</param>
         /// <returns>The corresponding <see cref="ImmediateField"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> or <paramref name="fieldName"/> is null.</exception>
+        [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
 #endif
         [CanBeNull]
+        [ContractAnnotation("type:null => halt;fieldName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -61,10 +66,12 @@ namespace ImmediateReflection
         /// <param name="type">A <see cref="Type"/>.</param>
         /// <returns>All <see cref="ImmediateField"/>.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
 #endif
         [NotNull, ItemNotNull]
+        [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -80,10 +87,12 @@ namespace ImmediateReflection
         /// <param name="flags">Flags that must be taken into account to get members.</param>
         /// <returns>All <see cref="ImmediateField"/>.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
 #endif
         [NotNull, ItemNotNull]
+        [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -103,10 +112,12 @@ namespace ImmediateReflection
         /// <param name="propertyName">Property name.</param>
         /// <returns>The corresponding <see cref="ImmediateProperty"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> or <paramref name="propertyName"/> is null.</exception>
+        [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
 #endif
         [CanBeNull]
+        [ContractAnnotation("type:null => halt;propertyName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -123,10 +134,12 @@ namespace ImmediateReflection
         /// <param name="flags">Flags that must be taken into account to get members.</param>
         /// <returns>The corresponding <see cref="ImmediateProperty"/>, otherwise null.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> or <paramref name="propertyName"/> is null.</exception>
+        [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
 #endif
         [CanBeNull]
+        [ContractAnnotation("type:null => halt;propertyName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -141,10 +154,12 @@ namespace ImmediateReflection
         /// <param name="type">A <see cref="Type"/>.</param>
         /// <returns>All <see cref="ImmediateProperty"/>.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
 #endif
         [NotNull, ItemNotNull]
+        [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -160,10 +175,12 @@ namespace ImmediateReflection
         /// <param name="flags">Flags that must be taken into account to get members.</param>
         /// <returns>All <see cref="ImmediateProperty"/>.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
 #endif
         [NotNull, ItemNotNull]
+        [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif

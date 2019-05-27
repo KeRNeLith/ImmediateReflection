@@ -16,11 +16,15 @@ namespace ImmediateReflection
     {
         #region Constructor
 
+        [NotNull]
         private const string RuntimeTypeName = "System.RuntimeType";
+
+        [NotNull]
         private static readonly Type RuntimeType = Type.GetType(RuntimeTypeName);
 
         [Pure]
         [NotNull]
+        [ContractAnnotation("type:null => halt")]
         public static DefaultConstructorDelegate CreateConstructor([NotNull] Type type)
         {
             if (type is null)
@@ -72,6 +76,8 @@ namespace ImmediateReflection
         }
 
         [Pure]
+        [ContractAnnotation("=> true, paramsConstructor:notnull,parameterType:notnull, faultyConstructor:null;" +
+                            "=> false, paramsConstructor:null,parameterType:null, faultyConstructor:notnull")]
         private static bool TryGetParamsConstructorAsDefault(
             [NotNull] Type type, 
             out ConstructorInfo paramsConstructor, 
@@ -126,6 +132,7 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
+        [ContractAnnotation("fieldInfo:null => halt")]
         public static GetterDelegate CreateGetter([NotNull] FieldInfo fieldInfo)
         {
             if (fieldInfo is null)
@@ -153,6 +160,7 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
+        [ContractAnnotation("fieldInfo:null => halt")]
         public static SetterDelegate CreateSetter([NotNull] FieldInfo fieldInfo)
         {
             if (fieldInfo is null)
@@ -187,6 +195,7 @@ namespace ImmediateReflection
 
         [Pure]
         [CanBeNull]
+        [ContractAnnotation("propertyInfo:null => halt;getMethod:null => halt")]
         public static GetterDelegate CreateGetter([NotNull] PropertyInfo propertyInfo, [NotNull] MethodInfo getMethod)
         {
             if (propertyInfo is null)
@@ -216,6 +225,7 @@ namespace ImmediateReflection
 
         [Pure]
         [CanBeNull]
+        [ContractAnnotation("propertyInfo:null => halt;setMethod:null => halt")]
         public static SetterDelegate CreateSetter([NotNull] PropertyInfo propertyInfo, [NotNull] MethodInfo setMethod)
         {
             if (propertyInfo is null)
@@ -252,6 +262,7 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
+        [ContractAnnotation("name:null => halt;owner:null => halt")]
         private static DynamicMethod CreateDynamicMethod([NotNull] string name, [CanBeNull] Type returnType, [CanBeNull] Type[] parameterTypes, [NotNull] Type owner)
         {
             return owner.IsInterface
@@ -261,6 +272,7 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
+        [ContractAnnotation("name:null => halt;owner:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -271,6 +283,7 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
+        [ContractAnnotation("name:null => halt;owner:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -281,6 +294,7 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
+        [ContractAnnotation("name:null => halt;owner:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -291,6 +305,7 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
+        [ContractAnnotation("name:null => halt;owner:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -305,6 +320,7 @@ namespace ImmediateReflection
         /// <exception cref="InvalidOperationException">If it's impossible to retrieve the owner <see cref="Type"/>.</exception>
         [Pure]
         [NotNull]
+        [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -317,6 +333,7 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
+        [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -328,6 +345,7 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
+        [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -341,12 +359,14 @@ namespace ImmediateReflection
 
         #region ILGenerator Helpers
 
+        [ContractAnnotation("generator:null => halt;field:null => halt")]
         private static void RegisterStaticTargetArgument([NotNull] ILGenerator generator, [NotNull] FieldInfo field)
         {
             // Load static field argument
             generator.Emit(OpCodes.Ldsfld, field);
         }
 
+        [ContractAnnotation("generator:null => halt")]
         private static void NullCheckTarget([NotNull] ILGenerator generator)
         {
             Label notNull = generator.DefineLabel();
@@ -358,6 +378,7 @@ namespace ImmediateReflection
             generator.MarkLabel(notNull);
         }
 
+        [ContractAnnotation("generator:null => halt;targetType:null => halt")]
         private static void RegisterTargetArgument([NotNull] ILGenerator generator, [NotNull] Type targetType)
         {
             // If the target object is null throw TargetException
@@ -374,6 +395,7 @@ namespace ImmediateReflection
                 targetType);
         }
 
+        [ContractAnnotation("generator:null => halt;method:null => halt")]
         private static void CallMethod([NotNull] ILGenerator generator, [NotNull] MethodInfo method)
         {
             // Call the method passing the object on the stack (only virtual if needed)
@@ -383,6 +405,7 @@ namespace ImmediateReflection
                 generator.Emit(OpCodes.Callvirt, method);
         }
 
+        [ContractAnnotation("generator:null => halt;valueType:null => halt")]
         private static void BoxIfNeeded([NotNull] ILGenerator generator, [NotNull] Type valueType)
         {
             // Already the right type
@@ -397,6 +420,7 @@ namespace ImmediateReflection
                 valueType);
         }
 
+        [ContractAnnotation("generator:null => halt;valueType:null => halt")]
         private static void UnboxIfNeeded([NotNull] ILGenerator generator, [NotNull] Type valueType)
         {
             // Already the right type
@@ -411,6 +435,7 @@ namespace ImmediateReflection
                 valueType);
         }
 
+        [ContractAnnotation("generator:null => halt")]
         private static void MethodReturn([NotNull] ILGenerator generator)
         {
             // Return
