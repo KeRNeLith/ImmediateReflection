@@ -58,7 +58,8 @@ New:
 - Provide helpers to easily create strongly typed delegate to get/set properties.
 
 Misc:
-- Improve library documentation.</PackageReleaseNotes>
+- Improve library documentation.
+- Library is fully ReSharper annotated.</PackageReleaseNotes>
     <PackageTags>C# Reflection Fast Immediate Performance Delegate Dynamic</PackageTags>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
