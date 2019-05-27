@@ -1,3 +1,4 @@
+#if SUPPORTS_CREATE_DELEGATE
 using System;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -508,3 +509,4 @@ namespace ImmediateReflection
         #endregion
     }
 }
+#endif

@@ -83,9 +83,15 @@ namespace ImmediateReflection
             _constructor = DelegatesFactory.CreateDefaultConstructor(Type, out bool hasConstructor);
             HasDefaultConstructor = hasConstructor;
 
+#if SUPPORTS_TYPE_FULL_FEATURES
             if (type.IsEnum)
             {
                 FieldInfo[] enumFields = type.GetFields();
+#else
+            if (type.GetTypeInfo().IsEnum)
+            {
+                FieldInfo[] enumFields = type.GetTypeInfo().GetFields();
+#endif
 #if SUPPORTS_LINQ
                 FieldInfo enumValue = enumFields.First(field => !field.IsStatic);               // Current enum value field (not static)
                 IEnumerable<FieldInfo> enumValues = enumFields.Where(field => field.IsStatic);  // Enum values (static)
@@ -103,8 +109,13 @@ namespace ImmediateReflection
             }
             else
             {
+#if SUPPORTS_TYPE_FULL_FEATURES
                 Fields = new ImmediateFields(IgnoreBackingFields(type.GetFields(flags)));
                 Properties = new ImmediateProperties(type.GetProperties(flags));
+#else
+                Fields = new ImmediateFields(IgnoreBackingFields(type.GetTypeInfo().GetFields(flags)));
+                Properties = new ImmediateProperties(type.GetTypeInfo().GetProperties(flags));
+#endif
             }
         }
 

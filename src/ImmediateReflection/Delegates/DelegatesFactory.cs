@@ -45,7 +45,11 @@ namespace ImmediateReflection
             ILGenerator generator = dynamicConstructor.GetILGenerator();
 
             // Cannot get default constructor for value type, must declare a local
+#if SUPPORTS_TYPE_FULL_FEATURES
             if (type.IsValueType)
+#else
+            if (type.GetTypeInfo().IsValueType)
+#endif
             {
                 generator.DeclareLocal(type);
                 generator.Emit(OpCodes.Ldloc_0);
@@ -54,7 +58,11 @@ namespace ImmediateReflection
             // Get the default constructor if available
             else
             {
+#if SUPPORTS_TYPE_FULL_FEATURES
                 ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes);
+#else
+                ConstructorInfo constructor = type.GetTypeInfo().GetConstructor(Type.EmptyTypes);
+#endif
                 if (constructor is null)
                 {
                     // Last possibility the class has at least one params constructor only
@@ -92,7 +100,11 @@ namespace ImmediateReflection
             parameterType = null;
             faultyConstructor = null;
 
+#if SUPPORTS_TYPE_FULL_FEATURES
             ConstructorInfo[] constructors = type.GetConstructors();
+#else
+            ConstructorInfo[] constructors = type.GetTypeInfo().GetConstructors();
+#endif
             if (constructors.Length > 0)
             {
                 for (int i = 0; i < constructors.Length; ++i)
@@ -331,7 +343,9 @@ namespace ImmediateReflection
         private static Type GetOwnerType([NotNull] MemberInfo member)
         {
             return member.DeclaringType
+#if SUPPORTS_TYPE_FULL_FEATURES
                    ?? member.ReflectedType
+#endif
                    ?? throw new InvalidOperationException($"Cannot retrieve owner type of member {member.Name}.");
         }
 
@@ -393,7 +407,11 @@ namespace ImmediateReflection
 
             // Cast the object on the stack to the appropriate type
             generator.Emit(
+#if SUPPORTS_TYPE_FULL_FEATURES
                 targetType.IsValueType
+#else
+                targetType.GetTypeInfo().IsValueType
+#endif
                     ? OpCodes.Unbox
                     : OpCodes.Castclass,
                 targetType);
@@ -418,7 +436,11 @@ namespace ImmediateReflection
 
             // If the type is a value type (int/DateTime/..) box it, otherwise cast it
             generator.Emit(
+#if SUPPORTS_TYPE_FULL_FEATURES
                 valueType.IsValueType
+#else
+                valueType.GetTypeInfo().IsValueType
+#endif
                     ? OpCodes.Box
                     : OpCodes.Castclass,
                 valueType);
@@ -433,7 +455,11 @@ namespace ImmediateReflection
 
             // If the type is a value type (int/DateTime/..) unbox it, otherwise cast it
             generator.Emit(
+#if SUPPORTS_TYPE_FULL_FEATURES
                 valueType.IsValueType
+#else
+                valueType.GetTypeInfo().IsValueType
+#endif
                     ? OpCodes.Unbox_Any
                     : OpCodes.Castclass,
                 valueType);
