@@ -14,7 +14,7 @@ namespace ImmediateReflection.Tests
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-            Assert.Throws<ArgumentNullException>(() => DelegatesFactory.CreateConstructor(null));
+            Assert.Throws<ArgumentNullException>(() => DelegatesFactory.CreateDefaultConstructor(null, out _));
         }
 
         [Test]

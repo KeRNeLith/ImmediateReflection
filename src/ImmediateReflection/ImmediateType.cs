@@ -80,7 +80,8 @@ namespace ImmediateReflection
             Type = type ?? throw new ArgumentNullException(nameof(type));
             FullName = type.FullName ?? Name;
 
-            _constructor = DelegatesFactory.CreateConstructor(Type);
+            _constructor = DelegatesFactory.CreateDefaultConstructor(Type, out bool hasConstructor);
+            HasDefaultConstructor = hasConstructor;
 
             if (type.IsEnum)
             {
@@ -206,6 +207,12 @@ namespace ImmediateReflection
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public ImmediateProperty GetProperty([NotNull] string propertyName) => Properties[propertyName];
+
+        /// <summary>
+        /// Indicates if this <see cref="Type"/> has a default constructor.
+        /// </summary>
+        [PublicAPI]
+        public bool HasDefaultConstructor { get; }
 
         /// <summary>
         /// Creates an instance of this <see cref="Type"/> with that type's default constructor.

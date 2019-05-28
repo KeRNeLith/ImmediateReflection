@@ -20,13 +20,16 @@ namespace ImmediateReflection
         private const string RuntimeTypeName = "System.RuntimeType";
 
         [NotNull]
+        // ReSharper disable once AssignNullToNotNullAttribute, Justification: This type must exists.
         private static readonly Type RuntimeType = Type.GetType(RuntimeTypeName);
 
         [Pure]
         [NotNull]
         [ContractAnnotation("type:null => halt")]
-        public static DefaultConstructorDelegate CreateConstructor([NotNull] Type type)
+        public static DefaultConstructorDelegate CreateDefaultConstructor([NotNull] Type type, out bool hasConstructor)
         {
+            hasConstructor = false;
+
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
             if (type == RuntimeType)
@@ -72,6 +75,7 @@ namespace ImmediateReflection
 
             MethodReturn(generator);
 
+            hasConstructor = true;
             return (DefaultConstructorDelegate)dynamicConstructor.CreateDelegate(typeof(DefaultConstructorDelegate));
         }
 

@@ -959,6 +959,48 @@ namespace ImmediateReflection.Tests
 
         #endregion
 
+        #region Has Default Constructor
+
+        private static IEnumerable<TestCaseData> CreateHasDefaultConstructorTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                yield return new TestCaseData(typeof(int)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(TestStruct)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(DefaultConstructor)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(MultipleConstructors)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(TemplateStruct<double>)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(DefaultInheritedNoDefaultConstructor)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(IntParamsOnlyConstructor)) { ExpectedResult = true };  // Considered as default
+                yield return new TestCaseData(typeof(DefaultConstructorThrows)) { ExpectedResult = true };
+
+                yield return new TestCaseData(typeof(NoDefaultConstructor)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(NotAccessibleDefaultConstructor)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(AbstractDefaultConstructor)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(StaticClass)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(TemplateStruct<>)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<>)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(ParamsConstructor)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(NoDefaultInheritedDefaultConstructor)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(AmbiguousParamsOnlyConstructor)) { ExpectedResult = false };
+                // ReSharper disable once PossibleMistakenCallToGetType.2
+                yield return new TestCaseData(typeof(DefaultConstructor).GetType()) { ExpectedResult = false };
+            }
+        }
+
+        [TestCaseSource(nameof(CreateHasDefaultConstructorTestCases))]
+        public bool HasDefaultConstructor([NotNull] Type type)
+        {
+            var immediateType = new ImmediateType(type);
+            return immediateType.HasDefaultConstructor;
+        }
+
+        #endregion
+
         #region New/TryNew
 
         private static IEnumerable<TestCaseData> CreateDefaultConstructorTestCases
