@@ -14,7 +14,7 @@ Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 ph
 
 ## Results
 
-* Single constructor call *
+*Single constructor call*
 
 |                    Method |      Mean |     Error |    StdDev | Ratio | RatioSD |
 |-------------------------- |----------:|----------:|----------:|------:|--------:|
@@ -24,7 +24,7 @@ Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 ph
 |    FastMember_Constructor |  8.535 ns | 0.1685 ns | 0.1655 ns |  2.20 |    0.15 |
 | **ImmediateType_Constructor** |  **6.911 ns** | **0.1938 ns** | **0.1903 ns** |  **1.78** |    **0.13** |
 
-* Multiple constructor calls*
+*Multiple constructor calls*
 
 |                    Method |      Mean |     Error |    StdDev | Ratio | RatioSD |
 |-------------------------- |----------:|----------:|----------:|------:|--------:|
