@@ -48,10 +48,13 @@ namespace ImmediateReflection.Tests
             public FieldInfo[] ConstFields { get; set; }
 
             [NotNull, ItemNotNull]
-            public IEnumerable<FieldInfo> AllFields => PublicInstanceFields
-                .Concat(NonPublicInstanceFields)
+            public IEnumerable<FieldInfo> AllPublicFields => PublicInstanceFields
                 .Concat(StaticFields)
                 .Concat(ConstFields);
+
+            [NotNull, ItemNotNull]
+            public IEnumerable<FieldInfo> AllFields => AllPublicFields
+                .Concat(NonPublicInstanceFields);
 
             [NotNull, ItemNotNull]
             public PropertyInfo[] PublicInstanceProperties { get; set; }
@@ -63,9 +66,24 @@ namespace ImmediateReflection.Tests
             public PropertyInfo[] StaticProperties { get; set; }
 
             [NotNull, ItemNotNull]
-            public IEnumerable<PropertyInfo> AllProperties => PublicInstanceProperties
-                .Concat(NonPublicInstanceProperties)
+            public IEnumerable<PropertyInfo> AllPublicProperties => PublicInstanceProperties
                 .Concat(StaticProperties);
+
+            [NotNull, ItemNotNull]
+            public IEnumerable<PropertyInfo> AllProperties => AllPublicProperties
+                .Concat(NonPublicInstanceProperties);
+
+            [NotNull, ItemNotNull]
+            public IEnumerable<MemberInfo> AllPublicMembers
+            {
+                get
+                {
+                    foreach (FieldInfo field in AllPublicFields)
+                        yield return field;
+                    foreach (PropertyInfo property in AllPublicProperties)
+                        yield return property;
+                }
+            }
 
             [NotNull, ItemNotNull]
             public IEnumerable<MemberInfo> AllMembers

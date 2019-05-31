@@ -64,7 +64,7 @@ namespace ImmediateReflection.Tests
                 Assert.IsNotNull(type);
                 Assert.AreEqual(typeof(PublicValueTypeTestClass), type.Type);
                 // Public & Non Public instance members
-                CollectionAssert.AreEqual(
+                CollectionAssert.AreEquivalent(
                     classifiedMembers.AllFields,
                     immediateType.Fields.Select(field => field.FieldInfo));
                 CollectionAssert.AreEquivalent(
