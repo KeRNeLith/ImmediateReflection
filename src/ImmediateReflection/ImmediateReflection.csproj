@@ -19,7 +19,7 @@
     <!-- Include PDB files in NuGet for Source Link because symbolsource.org does not support portable PDBs -->
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
 
-    <Copyright>Copyright © 2018</Copyright>
+    <Copyright>Copyright © 2019</Copyright>
     <Description>.NET library that aims to provide a faster usage of C# reflection features.
 Especially the usage of constructors, members accessors (get/set) and attributes.
 
@@ -47,6 +47,7 @@ Fixes:
 Changes:
 - Default flags taken into account when getting an ImmediateType are Public | Instance | Static
 - Get rid of cache system references replaced by a simpler internal caching system.
+- Extend caching support to target .NET Framework 4.0.
 
 New:
 - Add the possibility to call the default constructor of type in a faster way (with or without throw).
@@ -54,8 +55,8 @@ New:
 - ImmediateType, ImmediateField and ImmediateProperty provide a faster access to attributes.
 - Extensions to retrieve Immediate Reflection types from standard types.
 - Extensions to retrieve attributes from standard MemberInfo.
-- Extend caching support to target .NET Framework 4.0.
 - Provide helpers to easily create strongly typed delegate to get/set properties.
+- Add an object wrapper that allows to get/set value on a specific object instance.
 
 Misc:
 - Improve library documentation.
