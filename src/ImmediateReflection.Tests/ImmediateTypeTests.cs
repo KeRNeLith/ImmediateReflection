@@ -38,13 +38,13 @@ namespace ImmediateReflection.Tests
         // Fields //
 
         [NotNull]
-        protected static FieldInfo PrivateNestedPublicFieldFieldInfo =
+        private static readonly FieldInfo PrivateNestedPublicFieldFieldInfo =
             typeof(PrivateNestedClass).GetField(nameof(PrivateNestedClass._nestedTestValue)) ?? throw new AssertionException("Cannot find field.");
 
         // Properties //
 
         [NotNull]
-        protected static PropertyInfo PrivateNestedPublicGetSetPropertyPropertyInfo =
+        private static readonly PropertyInfo PrivateNestedPublicGetSetPropertyPropertyInfo =
             typeof(PrivateNestedClass).GetProperty(nameof(PrivateNestedClass.NestedTestValue)) ?? throw new AssertionException("Cannot find property.");
 
         #endregion

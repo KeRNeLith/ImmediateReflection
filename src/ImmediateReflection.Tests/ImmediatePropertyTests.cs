@@ -26,7 +26,7 @@ namespace ImmediateReflection.Tests
         // Properties //
 
         [NotNull]
-        protected static PropertyInfo PrivateNestedPublicGetSetPropertyPropertyInfo =
+        private static readonly PropertyInfo PrivateNestedPublicGetSetPropertyPropertyInfo =
             typeof(PrivateNestedClass).GetProperty(nameof(PrivateNestedClass.NestedTestValue)) ?? throw new AssertionException("Cannot find property.");
 
         #endregion
@@ -185,6 +185,13 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(InternalNestedPublicGetSetPropertyPropertyInfo, true);
                 yield return new TestCaseData(ProtectedNestedPublicGetSetPropertyPropertyInfo, true);
                 yield return new TestCaseData(PrivateNestedPublicGetSetPropertyPropertyInfo, true);
+
+                #endregion
+
+                #region Abstract
+
+                yield return new TestCaseData(PublicValueTypePublicAbstractGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(PublicValueTypePublicConcreteGetSetPropertyPropertyInfo, true);
 
                 #endregion
             }
@@ -355,6 +362,18 @@ namespace ImmediateReflection.Tests
 
                 var privateNestedTypeTestObject = new PrivateNestedClass { NestedTestValue = 4 };
                 yield return new TestCaseData(privateNestedTypeTestObject, PrivateNestedPublicGetSetPropertyPropertyInfo, 4);
+
+                #endregion
+
+                #region Abstract
+
+                var concreteTestObject = new ConcretePublicValueTypeTestClass
+                {
+                    PublicAbstractGetSetProperty = 88
+                };
+
+                yield return new TestCaseData(concreteTestObject, PublicValueTypePublicAbstractGetSetPropertyPropertyInfo, 88);
+                yield return new TestCaseData(concreteTestObject, PublicValueTypePublicConcreteGetSetPropertyPropertyInfo, 88);
 
                 #endregion
             }
@@ -677,6 +696,13 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(InternalNestedPublicGetSetPropertyPropertyInfo, true);
                 yield return new TestCaseData(ProtectedNestedPublicGetSetPropertyPropertyInfo, true);
                 yield return new TestCaseData(PrivateNestedPublicGetSetPropertyPropertyInfo, true);
+
+                #endregion
+
+                #region Abstract
+
+                yield return new TestCaseData(PublicValueTypePublicAbstractGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(PublicValueTypePublicConcreteGetSetPropertyPropertyInfo, true);
 
                 #endregion
             }
@@ -1009,6 +1035,20 @@ namespace ImmediateReflection.Tests
             immediateProperty = new ImmediateProperty(InternalObjectTypePrivateGetSetPropertyPropertyInfo);
             immediateProperty.SetValue(internalObjectTypeTestObject, testObject8);
             Assert.AreSame(testObject8, internalObjectTypeTestObject._publicField);    // => Setter set the public field value (for check)
+        }
+
+        [Test]
+        public void ImmediatePropertySetValue_Abstract()
+        {
+            var concreteTestObject = new ConcretePublicValueTypeTestClass();
+
+            var immediateProperty = new ImmediateProperty(PublicValueTypePublicAbstractGetSetPropertyPropertyInfo);
+            immediateProperty.SetValue(concreteTestObject, 123456);
+            Assert.AreEqual(123456, concreteTestObject.PublicAbstractGetSetProperty);
+
+            immediateProperty = new ImmediateProperty(PublicValueTypePublicConcreteGetSetPropertyPropertyInfo);
+            immediateProperty.SetValue(concreteTestObject, 456789);
+            Assert.AreEqual(456789, concreteTestObject.PublicAbstractGetSetProperty);
         }
 
         [Test]

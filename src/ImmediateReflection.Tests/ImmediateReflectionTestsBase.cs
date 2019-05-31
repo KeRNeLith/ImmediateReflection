@@ -541,6 +541,14 @@ namespace ImmediateReflection.Tests
         protected static readonly PropertyInfo PublicValueTypePrivateGetSetPropertyPropertyInfo =
             typeof(PublicValueTypeTestClass).GetProperty("PrivatePropertyGetSet", BindingFlags.Instance | BindingFlags.NonPublic) ?? throw new AssertionException("Cannot find property.");
 
+        [NotNull]
+        protected static readonly PropertyInfo PublicValueTypePublicAbstractGetSetPropertyPropertyInfo =
+            typeof(AbstractPublicValueTypeTestClass).GetProperty(nameof(AbstractPublicValueTypeTestClass.PublicAbstractGetSetProperty)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static readonly PropertyInfo PublicValueTypePublicConcreteGetSetPropertyPropertyInfo =
+            typeof(ConcretePublicValueTypeTestClass).GetProperty(nameof(ConcretePublicValueTypeTestClass.PublicAbstractGetSetProperty)) ?? throw new AssertionException("Cannot find property.");
+
         // Fields //
 
         [NotNull]

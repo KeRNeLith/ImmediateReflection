@@ -111,7 +111,16 @@ namespace ImmediateReflection.Tests
         // Test getters
         public int GetProtectedFieldValue() => _protectedField;
         public int GetPrivateFieldValue() => _privateField;
+    }
 
+    public abstract class AbstractPublicValueTypeTestClass : PublicValueTypeTestClass
+    {
+        public abstract int PublicAbstractGetSetProperty { get; set; }
+    }
+
+    public class ConcretePublicValueTypeTestClass : AbstractPublicValueTypeTestClass
+    {
+        public override int PublicAbstractGetSetProperty { get; set; }
     }
 
     public class PublicReferenceTypeTestClass
