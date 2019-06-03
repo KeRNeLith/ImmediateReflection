@@ -91,12 +91,12 @@ ImmediateProperty property = type.Properties["PropertyName"];
 
 // For all members
 IEnumerable<ImmediateMember> members = type.Members;
-// Or
+// or
 IEnumerable<ImmediateMember> members = type.GetMembers();
 
 // For a member
 ImmediateMember member = type.GetMember("MemberName");
-// Or
+// or
 ImmediateMember member = type["MemberName"];
 ```
 
@@ -127,7 +127,7 @@ PropertyInfo propertyInfo = property.PropertyInfo;
 Both `ImmediateType`, `ImmediateField` and `ImmediateProperty` inherit from `ImmediateMember` which provide an API to check/get attributes that are applied respectively to a type, field or a property.
 
 All methods are accessible in their templated and not templated versions.
-Following some examples of methods accessibles:
+Following some examples of accessible methods:
 
 ```csharp
 ImmediateType type = ...;
@@ -180,7 +180,7 @@ Note that the wrapper gives access to the wrapped object, its `Type`, `Immediate
 
 ### Creating typed delegate (Open delegate)
 
-ImmediateReflection provides an API like standard one for `Type`, `FieldInfo` and `PropertyInfo`, this means get/set for properties use object both for target and parameter/return type.
+ImmediateReflection provides an API like standard one for `Type`, `FieldInfo` and `PropertyInfo`, this means get/set for properties use `object` both for target and parameter/return type.
 
 But in some cases you know the type owning a property, or better the type of the property too.
 
@@ -261,7 +261,7 @@ ImmediateType myImmediateType = myType.GetImmediateType();
 
 ---
 
-## Target
+## Targets
 
 - .NET Standard 2.0+
 - .NET Core 2.0+
