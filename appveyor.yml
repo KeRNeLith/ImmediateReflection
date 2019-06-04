@@ -13,6 +13,10 @@ environment:
   CoverallsVersion: 1.0.0
   COVERALLS_REPO_TOKEN:
     secure: +DiJ+F7GIX0MMo/rtIRXO8GSdyYHa1CWKLw4H2Rx3AP27Shr6mZMC6l+muu2H/Dg
+  GITHUB_ACCESS_TOKEN:
+    secure: fLTTmcGOM55kigJC4vErpObFmybCtzQtwb4QN55BTNq3GDGaOCoHDoIPxexzO59d
+  GITHUB_EMAIL:
+    secure: wcfqCHOmeRLZf/BX6u6qQSV89Q4jFs9fHNDgMpKAcqE=
 
 # Setup build version
 init:
@@ -58,6 +62,8 @@ matrix:
 before_build:
 # Chocolatey SonarQube
   - cinst msbuild-sonarqube-runner
+# Chocolatey DocFX
+  - cinst docfx
 # NuGet restore
   - nuget restore -verbosity detailed
 
@@ -130,3 +136,11 @@ deploy:
       branch: master
       configuration: Release
       APPVEYOR_REPO_TAG: true
+
+# Documentation
+deploy_script:
+  - git config --global credential.helper store
+  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:GITHUB_ACCESS_TOKEN):x-oauth-basic@github.com`n"
+  - git config --global user.email %GITHUB_EMAIL%
+  - git config --global user.name "KeRNeLith"
+  - bash releaseDoc.sh
