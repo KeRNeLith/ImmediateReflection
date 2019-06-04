@@ -26,6 +26,8 @@ The library is highly tested to cover as much as possible real cases, because us
 
 ## Getting started
 
+See the library [documentation](https://kernelith.github.io/ImmediateReflection/).
+
 ### Getting a type
 
 The library is pretty simple to use, it has wrappers of standard `Type`, `FieldInfo` and `PropertyInfo` that are respectively called `ImmediateType`, `ImmediateField` and `ImmediateProperty`.
