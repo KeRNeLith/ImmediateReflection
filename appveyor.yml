@@ -136,8 +136,4 @@ deploy:
 
 # Documentation
 deploy_script:
-  - git config --global credential.helper store
-  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:GITHUB_ACCESS_TOKEN):x-oauth-basic@github.com`n"
-  - git config --global user.email %GITHUB_EMAIL%
-  - git config --global user.name "KeRNeLith"
-  - bash releaseDoc.sh
+  - ps: ./releaseDoc.ps1
