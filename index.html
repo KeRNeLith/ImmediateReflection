@@ -1,1 +1,164 @@
-The documentation will be here.
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>ImmediateReflection documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="ImmediateReflection documentation ">
+    <meta name="generator" content="docfx 2.42.4.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="immediatereflection-documentation">ImmediateReflection documentation</h1>
+
+<h2 id="badges">Badges</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Build</strong></td>
+<td><a href="https://ci.appveyor.com/project/KeRNeLith/ImmediateReflection"><img src="https://ci.appveyor.com/api/projects/status/github/KeRNeLith/ImmediateReflection?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></td>
+</tr>
+<tr>
+<td><strong>Coverage</strong></td>
+<td><sup>Coveralls</sup> <a href="https://coveralls.io/github/KeRNeLith/ImmediateReflection?branch=master"><img src="https://coveralls.io/repos/github/KeRNeLith/ImmediateReflection/badge.svg?branch=master" alt="Coverage Status"></a> <sup>SonarQube</sup> <a href="https://sonarcloud.io/component_measures/metric/coverage/list?id=immediate_reflection"><img src="https://sonarcloud.io/api/project_badges/measure?project=immediate_reflection&amp;metric=coverage" alt="SonarCloud Coverage"></a></td>
+</tr>
+<tr>
+<td><strong>Quality</strong></td>
+<td><a href="https://sonarcloud.io/dashboard?id=immediate_reflection"><img src="https://sonarcloud.io/api/project_badges/measure?project=immediate_reflection&amp;metric=alert_status" alt="Quality Gate"></a></td>
+</tr>
+<tr>
+<td><strong>Nuget</strong></td>
+<td><a href="https://www.nuget.org/packages/ImmediateReflection"><img src="https://img.shields.io/nuget/v/immediatereflection.svg" alt="Nuget downloads"></a></td>
+</tr>
+<tr>
+<td><strong>License</strong></td>
+<td><a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="GitHub license"></a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="introduction">Introduction</h2>
+<p>This is .NET library that aims to provide a <strong>faster</strong> usage of <strong>C# reflection</strong> features.
+Especially the usage of constructor, members accessors (get/set) and attributes.</p>
+<p>It provides these features while trying to keep an API as similar as the standard Reflection API (<strong>Fully documented</strong> and <strong>ReSharper compliant</strong>).</p>
+<p>To see how <strong>powerful</strong> it can be <strong><a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/Benchmarks.md">here</a></strong> are some benchmarks of the library.</p>
+<p>Other benchmarks:</p>
+<ul>
+<li>multiple get/set of multiple types to avoid eventual processor caching issues, see <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/Benchmarks_Multi.md">there</a>.</li>
+<li>constructor calls <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/Benchmarks_Constructor.md">there</a>.</li>
+<li>multiple get of attribute <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/Benchmarks_Attributes.md">there</a>.</li>
+</ul>
+<p>The library is highly tested to cover as much as possible real cases, because using Reflection is some kind of core code and must be reliable to build on it.</p>
+<p>You can find library sources on <a href="https://github.com/KeRNeLith/ImmediateReflection">GitHub</a>.</p>
+<h2 id="targets">Targets</h2>
+<ul>
+<li>.NET Standard 2.0+</li>
+<li>.NET Core 2.0+</li>
+<li>.NET Framework 2.0+</li>
+</ul>
+<p>Supports Source Link</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>For targets higher than .NET Standard 2.0:</p>
+<ul>
+<li>System.Reflection.Emit.LightWeight</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>ImmediateReflection is available on <a href="https://www.nuget.org/packages/ImmediateReflection">NuGet</a></p>
+<pre><code>PM&gt; Install-Package ImmediateReflection
+</code></pre>
+<img src="images/immediate_reflection_logo.png" width="128" height="128" style="display: block; margin-left: auto; margin-right: auto">
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/docs/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

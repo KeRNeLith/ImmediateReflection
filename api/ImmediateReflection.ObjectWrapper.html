@@ -1,0 +1,1161 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ObjectWrapper
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ObjectWrapper
+   ">
+    <meta name="generator" content="docfx 2.42.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="ImmediateReflection.ObjectWrapper">
+  
+  
+  <h1 id="ImmediateReflection_ObjectWrapper" data-uid="ImmediateReflection.ObjectWrapper" class="text-break">Class ObjectWrapper
+  </h1>
+  <div class="markdown level0 summary"><p>Provides a wrapper over an <span class="xref">System.Object</span> that gives access to its Reflection features in a faster way than standard stuff.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">ObjectWrapper</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="ImmediateReflection.ObjectWrapper.html">ObjectWrapper</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="ImmediateReflection.html">ImmediateReflection</a></h6>
+  <h6><strong>Assembly</strong>: ImmediateReflection.dll</h6>
+  <h5 id="ImmediateReflection_ObjectWrapper_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class ObjectWrapper : IEquatable&lt;ObjectWrapper&gt;</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper__ctor_System_Object_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.%23ctor(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L62">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper__ctor_" data-uid="ImmediateReflection.ObjectWrapper.#ctor*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper__ctor_System_Object_" data-uid="ImmediateReflection.ObjectWrapper.#ctor(System.Object)">ObjectWrapper(Object)</h4>
+  <div class="markdown level1 summary"><p>Constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ObjectWrapper(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">obj</span></td>
+        <td><p>Object to wrap.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p>If the <code data-dev-comment-type="paramref" class="paramref">obj</code> is null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_Fields.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.Fields%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L46">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_Fields_" data-uid="ImmediateReflection.ObjectWrapper.Fields*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_Fields" data-uid="ImmediateReflection.ObjectWrapper.Fields">Fields</h4>
+  <div class="markdown level1 summary"><p>Gets all the fields of this <a class="xref" href="ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Object">Object</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmediateFields Fields { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ImmediateReflection.ImmediateFields.html">ImmediateFields</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_ImmediateType.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.ImmediateType%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L32">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_ImmediateType_" data-uid="ImmediateReflection.ObjectWrapper.ImmediateType*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_ImmediateType" data-uid="ImmediateReflection.ObjectWrapper.ImmediateType">ImmediateType</h4>
+  <div class="markdown level1 summary"><p>Gets the wrapped object corresponding <a class="xref" href="ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_ImmediateType">ImmediateType</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmediateType ImmediateType { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ImmediateReflection.ImmediateType.html">ImmediateType</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_Item_System_String_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.Item(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L89">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_Item_" data-uid="ImmediateReflection.ObjectWrapper.Item*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_Item_System_String_" data-uid="ImmediateReflection.ObjectWrapper.Item(System.String)">Item[String]</h4>
+  <div class="markdown level1 summary"><p>Gets the <a class="xref" href="ImmediateReflection.ImmediateMember.html">ImmediateMember</a> corresponding to the given <code data-dev-comment-type="paramref" class="paramref">memberName</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmediateMember this[string memberName] { get; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">memberName</span></td>
+        <td><p>Member name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ImmediateReflection.ImmediateMember.html">ImmediateMember</a></td>
+        <td><p>Found <a class="xref" href="ImmediateReflection.ImmediateMember.html">ImmediateMember</a>, otherwise null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p>If the given <code data-dev-comment-type="paramref" class="paramref">memberName</code> is null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_Members.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.Members%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L39">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_Members_" data-uid="ImmediateReflection.ObjectWrapper.Members*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_Members" data-uid="ImmediateReflection.ObjectWrapper.Members">Members</h4>
+  <div class="markdown level1 summary"><p>Gets all the members of this <a class="xref" href="ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Object">Object</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ImmediateMember&gt; Members { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="ImmediateReflection.ImmediateMember.html">ImmediateMember</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_Object.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.Object%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L19">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_Object_" data-uid="ImmediateReflection.ObjectWrapper.Object*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_Object" data-uid="ImmediateReflection.ObjectWrapper.Object">Object</h4>
+  <div class="markdown level1 summary"><p>Gets the wrapped object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object Object { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_Properties.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.Properties%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L53">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_Properties_" data-uid="ImmediateReflection.ObjectWrapper.Properties*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_Properties" data-uid="ImmediateReflection.ObjectWrapper.Properties">Properties</h4>
+  <div class="markdown level1 summary"><p>Gets all the properties of this <a class="xref" href="ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Object">Object</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmediateProperties Properties { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ImmediateReflection.ImmediateProperties.html">ImmediateProperties</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_Type.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.Type%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L25">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_Type_" data-uid="ImmediateReflection.ObjectWrapper.Type*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_Type" data-uid="ImmediateReflection.ObjectWrapper.Type">Type</h4>
+  <div class="markdown level1 summary"><p>Gets the wrapped object <span class="xref">System.Type</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Type Type { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Type</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_Equals_ImmediateReflection_ObjectWrapper_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.Equals(ImmediateReflection.ObjectWrapper)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L255">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_Equals_" data-uid="ImmediateReflection.ObjectWrapper.Equals*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_Equals_ImmediateReflection_ObjectWrapper_" data-uid="ImmediateReflection.ObjectWrapper.Equals(ImmediateReflection.ObjectWrapper)">Equals(ObjectWrapper)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(ObjectWrapper other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ImmediateReflection.ObjectWrapper.html">ObjectWrapper</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_Equals_System_Object_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.Equals(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L249">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_Equals_" data-uid="ImmediateReflection.ObjectWrapper.Equals*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_Equals_System_Object_" data-uid="ImmediateReflection.ObjectWrapper.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.Equals(System.Object)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_GetField_System_String_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.GetField(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L130">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_GetField_" data-uid="ImmediateReflection.ObjectWrapper.GetField*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_GetField_System_String_" data-uid="ImmediateReflection.ObjectWrapper.GetField(System.String)">GetField(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the <a class="xref" href="ImmediateReflection.ImmediateField.html">ImmediateField</a> corresponding to the given <code data-dev-comment-type="paramref" class="paramref">fieldName</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmediateField GetField(string fieldName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">fieldName</span></td>
+        <td><p>Property name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ImmediateReflection.ImmediateField.html">ImmediateField</a></td>
+        <td><p>Found <a class="xref" href="ImmediateReflection.ImmediateProperty.html">ImmediateProperty</a>, otherwise null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p>If the given <code data-dev-comment-type="paramref" class="paramref">fieldName</code> is null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_GetFields.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.GetFields%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L116">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_GetFields_" data-uid="ImmediateReflection.ObjectWrapper.GetFields*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_GetFields" data-uid="ImmediateReflection.ObjectWrapper.GetFields">GetFields()</h4>
+  <div class="markdown level1 summary"><p>Gets all the fields of this <a class="xref" href="ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Object">Object</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ImmediateField&gt; GetFields()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="ImmediateReflection.ImmediateField.html">ImmediateField</a>&gt;</td>
+        <td><p>All <a class="xref" href="ImmediateReflection.ImmediateField.html">ImmediateField</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_GetFieldValue_System_String_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.GetFieldValue(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L147">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_GetFieldValue_" data-uid="ImmediateReflection.ObjectWrapper.GetFieldValue*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_GetFieldValue_System_String_" data-uid="ImmediateReflection.ObjectWrapper.GetFieldValue(System.String)">GetFieldValue(String)</h4>
+  <div class="markdown level1 summary"><p>Returns the field value of the wrapped <a class="xref" href="ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Object">Object</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object GetFieldValue(string fieldName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">fieldName</span></td>
+        <td><p>Field name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><p>Field value of the <a class="xref" href="ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Object">Object</a>.
+It can also returns null if there is no field corresponding to <code data-dev-comment-type="paramref" class="paramref">fieldName</code> in the object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_GetHashCode.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L265">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_GetHashCode_" data-uid="ImmediateReflection.ObjectWrapper.GetHashCode*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_GetHashCode" data-uid="ImmediateReflection.ObjectWrapper.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.GetHashCode()</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_GetMember_System_String_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.GetMember(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L99">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_GetMember_" data-uid="ImmediateReflection.ObjectWrapper.GetMember*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_GetMember_System_String_" data-uid="ImmediateReflection.ObjectWrapper.GetMember(System.String)">GetMember(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the <a class="xref" href="ImmediateReflection.ImmediateMember.html">ImmediateMember</a> corresponding to the given <code data-dev-comment-type="paramref" class="paramref">memberName</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmediateMember GetMember(string memberName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">memberName</span></td>
+        <td><p>Member name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ImmediateReflection.ImmediateMember.html">ImmediateMember</a></td>
+        <td><p>Found <a class="xref" href="ImmediateReflection.ImmediateMember.html">ImmediateMember</a>, otherwise null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p>If the given <code data-dev-comment-type="paramref" class="paramref">memberName</code> is null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_GetMembers.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.GetMembers%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L75">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_GetMembers_" data-uid="ImmediateReflection.ObjectWrapper.GetMembers*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_GetMembers" data-uid="ImmediateReflection.ObjectWrapper.GetMembers">GetMembers()</h4>
+  <div class="markdown level1 summary"><p>Gets all the members of this <span class="xref">System.Type</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ImmediateMember&gt; GetMembers()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="ImmediateReflection.ImmediateMember.html">ImmediateMember</a>&gt;</td>
+        <td><p>All <a class="xref" href="ImmediateReflection.ImmediateMember.html">ImmediateMember</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_GetProperties.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.GetProperties%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L183">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_GetProperties_" data-uid="ImmediateReflection.ObjectWrapper.GetProperties*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_GetProperties" data-uid="ImmediateReflection.ObjectWrapper.GetProperties">GetProperties()</h4>
+  <div class="markdown level1 summary"><p>Gets all the properties of this <a class="xref" href="ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Object">Object</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ImmediateProperty&gt; GetProperties()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="ImmediateReflection.ImmediateProperty.html">ImmediateProperty</a>&gt;</td>
+        <td><p>All <a class="xref" href="ImmediateReflection.ImmediateProperty.html">ImmediateProperty</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_GetProperty_System_String_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.GetProperty(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L197">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_GetProperty_" data-uid="ImmediateReflection.ObjectWrapper.GetProperty*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_GetProperty_System_String_" data-uid="ImmediateReflection.ObjectWrapper.GetProperty(System.String)">GetProperty(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the <a class="xref" href="ImmediateReflection.ImmediateProperty.html">ImmediateProperty</a> corresponding to the given <code data-dev-comment-type="paramref" class="paramref">propertyName</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImmediateProperty GetProperty(string propertyName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">propertyName</span></td>
+        <td><p>Property name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ImmediateReflection.ImmediateProperty.html">ImmediateProperty</a></td>
+        <td><p>Found <a class="xref" href="ImmediateReflection.ImmediateProperty.html">ImmediateProperty</a>, otherwise null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p>If the given <code data-dev-comment-type="paramref" class="paramref">propertyName</code> is null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_GetPropertyValue_System_String_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.GetPropertyValue(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L215">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_GetPropertyValue_" data-uid="ImmediateReflection.ObjectWrapper.GetPropertyValue*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_GetPropertyValue_System_String_" data-uid="ImmediateReflection.ObjectWrapper.GetPropertyValue(System.String)">GetPropertyValue(String)</h4>
+  <div class="markdown level1 summary"><p>Returns the property value of the wrapped <a class="xref" href="ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Object">Object</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object GetPropertyValue(string propertyName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">propertyName</span></td>
+        <td><p>Property name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><p>Property value of the <a class="xref" href="ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Object">Object</a>.
+It can also returns null if there is no property corresponding to <code data-dev-comment-type="paramref" class="paramref">propertyName</code> in the object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentException</span></td>
+        <td><p>If this property has no getter.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_SetFieldValue_System_String_System_Object_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.SetFieldValue(System.String%2CSystem.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L165">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_SetFieldValue_" data-uid="ImmediateReflection.ObjectWrapper.SetFieldValue*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_SetFieldValue_System_String_System_Object_" data-uid="ImmediateReflection.ObjectWrapper.SetFieldValue(System.String,System.Object)">SetFieldValue(String, Object)</h4>
+  <div class="markdown level1 summary"><p>Sets the field value of the wrapped <a class="xref" href="ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Object">Object</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetFieldValue(string fieldName, object value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">fieldName</span></td>
+        <td><p>Field name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>New field value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="ImmediateReflection_ObjectWrapper_SetFieldValue_System_String_System_Object__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>It will set nothing if there is no field corresponding to <code data-dev-comment-type="paramref" class="paramref">fieldName</code> in the object.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.InvalidCastException</span></td>
+        <td><p>If the <code data-dev-comment-type="paramref" class="paramref">value</code> is of the wrong type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_SetPropertyValue_System_String_System_Object_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.SetPropertyValue(System.String%2CSystem.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L234">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_SetPropertyValue_" data-uid="ImmediateReflection.ObjectWrapper.SetPropertyValue*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_SetPropertyValue_System_String_System_Object_" data-uid="ImmediateReflection.ObjectWrapper.SetPropertyValue(System.String,System.Object)">SetPropertyValue(String, Object)</h4>
+  <div class="markdown level1 summary"><p>Sets the property value of the wrapped <a class="xref" href="ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Object">Object</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetPropertyValue(string propertyName, object value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">propertyName</span></td>
+        <td><p>Property name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>New property value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="ImmediateReflection_ObjectWrapper_SetPropertyValue_System_String_System_Object__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>It will set nothing if there is no property corresponding to <code data-dev-comment-type="paramref" class="paramref">propertyName</code> in the object.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ArgumentException</span></td>
+        <td><p>If this property has no setter.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.InvalidCastException</span></td>
+        <td><p>If the <code data-dev-comment-type="paramref" class="paramref">value</code> is of the wrong type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper_ToString.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L273">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ObjectWrapper_ToString_" data-uid="ImmediateReflection.ObjectWrapper.ToString*"></a>
+  <h4 id="ImmediateReflection_ObjectWrapper_ToString" data-uid="ImmediateReflection.ObjectWrapper.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.ToString()</span></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">System.IEquatable&lt;T&gt;</span>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="ImmediateReflection.ImmediateReflectionExtensions.html#ImmediateReflection_ImmediateReflectionExtensions_GetImmediateType__1___0_">ImmediateReflectionExtensions.GetImmediateType&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ObjectWrapper.md&amp;value=---%0Auid%3A%20ImmediateReflection.ObjectWrapper%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ObjectWrapper.cs/#L13" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

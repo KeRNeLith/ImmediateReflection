@@ -1,0 +1,1587 @@
+### YamlMime:XRefMap
+sorted: true
+references:
+- uid: ImmediateReflection
+  name: ImmediateReflection
+  href: api/ImmediateReflection.html
+  commentId: N:ImmediateReflection
+  fullName: ImmediateReflection
+  nameWithType: ImmediateReflection
+- uid: ImmediateReflection.DefaultConstructorDelegate
+  name: DefaultConstructorDelegate
+  href: api/ImmediateReflection.DefaultConstructorDelegate.html
+  commentId: T:ImmediateReflection.DefaultConstructorDelegate
+  fullName: ImmediateReflection.DefaultConstructorDelegate
+  nameWithType: DefaultConstructorDelegate
+- uid: ImmediateReflection.GetterDelegate
+  name: GetterDelegate
+  href: api/ImmediateReflection.GetterDelegate.html
+  commentId: T:ImmediateReflection.GetterDelegate
+  fullName: ImmediateReflection.GetterDelegate
+  nameWithType: GetterDelegate
+- uid: ImmediateReflection.GetterDelegate`1
+  name: GetterDelegate<TOwner>
+  href: api/ImmediateReflection.GetterDelegate-1.html
+  commentId: T:ImmediateReflection.GetterDelegate`1
+  name.vb: GetterDelegate(Of TOwner)
+  fullName: ImmediateReflection.GetterDelegate<TOwner>
+  fullName.vb: ImmediateReflection.GetterDelegate(Of TOwner)
+  nameWithType: GetterDelegate<TOwner>
+  nameWithType.vb: GetterDelegate(Of TOwner)
+- uid: ImmediateReflection.GetterDelegate`2
+  name: GetterDelegate<TOwner, TValue>
+  href: api/ImmediateReflection.GetterDelegate-2.html
+  commentId: T:ImmediateReflection.GetterDelegate`2
+  name.vb: GetterDelegate(Of TOwner, TValue)
+  fullName: ImmediateReflection.GetterDelegate<TOwner, TValue>
+  fullName.vb: ImmediateReflection.GetterDelegate(Of TOwner, TValue)
+  nameWithType: GetterDelegate<TOwner, TValue>
+  nameWithType.vb: GetterDelegate(Of TOwner, TValue)
+- uid: ImmediateReflection.ImmediateAttributesExtensions
+  name: ImmediateAttributesExtensions
+  href: api/ImmediateReflection.ImmediateAttributesExtensions.html
+  commentId: T:ImmediateReflection.ImmediateAttributesExtensions
+  fullName: ImmediateReflection.ImmediateAttributesExtensions
+  nameWithType: ImmediateAttributesExtensions
+- uid: ImmediateReflection.ImmediateAttributesExtensions.GetAllImmediateAttributes(System.Reflection.MemberInfo,System.Boolean)
+  name: GetAllImmediateAttributes(MemberInfo, Boolean)
+  href: api/ImmediateReflection.ImmediateAttributesExtensions.html#ImmediateReflection_ImmediateAttributesExtensions_GetAllImmediateAttributes_System_Reflection_MemberInfo_System_Boolean_
+  commentId: M:ImmediateReflection.ImmediateAttributesExtensions.GetAllImmediateAttributes(System.Reflection.MemberInfo,System.Boolean)
+  fullName: ImmediateReflection.ImmediateAttributesExtensions.GetAllImmediateAttributes(System.Reflection.MemberInfo, System.Boolean)
+  nameWithType: ImmediateAttributesExtensions.GetAllImmediateAttributes(MemberInfo, Boolean)
+- uid: ImmediateReflection.ImmediateAttributesExtensions.GetAllImmediateAttributes*
+  name: GetAllImmediateAttributes
+  href: api/ImmediateReflection.ImmediateAttributesExtensions.html#ImmediateReflection_ImmediateAttributesExtensions_GetAllImmediateAttributes_
+  commentId: Overload:ImmediateReflection.ImmediateAttributesExtensions.GetAllImmediateAttributes
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateAttributesExtensions.GetAllImmediateAttributes
+  nameWithType: ImmediateAttributesExtensions.GetAllImmediateAttributes
+- uid: ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttribute(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  name: GetImmediateAttribute(MemberInfo, Type, Boolean)
+  href: api/ImmediateReflection.ImmediateAttributesExtensions.html#ImmediateReflection_ImmediateAttributesExtensions_GetImmediateAttribute_System_Reflection_MemberInfo_System_Type_System_Boolean_
+  commentId: M:ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttribute(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  fullName: ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttribute(System.Reflection.MemberInfo, System.Type, System.Boolean)
+  nameWithType: ImmediateAttributesExtensions.GetImmediateAttribute(MemberInfo, Type, Boolean)
+- uid: ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttribute*
+  name: GetImmediateAttribute
+  href: api/ImmediateReflection.ImmediateAttributesExtensions.html#ImmediateReflection_ImmediateAttributesExtensions_GetImmediateAttribute_
+  commentId: Overload:ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttribute
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttribute
+  nameWithType: ImmediateAttributesExtensions.GetImmediateAttribute
+- uid: ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttribute``1(System.Reflection.MemberInfo,System.Boolean)
+  name: GetImmediateAttribute<TAttribute>(MemberInfo, Boolean)
+  href: api/ImmediateReflection.ImmediateAttributesExtensions.html#ImmediateReflection_ImmediateAttributesExtensions_GetImmediateAttribute__1_System_Reflection_MemberInfo_System_Boolean_
+  commentId: M:ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttribute``1(System.Reflection.MemberInfo,System.Boolean)
+  name.vb: GetImmediateAttribute(Of TAttribute)(MemberInfo, Boolean)
+  fullName: ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttribute<TAttribute>(System.Reflection.MemberInfo, System.Boolean)
+  fullName.vb: ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttribute(Of TAttribute)(System.Reflection.MemberInfo, System.Boolean)
+  nameWithType: ImmediateAttributesExtensions.GetImmediateAttribute<TAttribute>(MemberInfo, Boolean)
+  nameWithType.vb: ImmediateAttributesExtensions.GetImmediateAttribute(Of TAttribute)(MemberInfo, Boolean)
+- uid: ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttributes(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  name: GetImmediateAttributes(MemberInfo, Type, Boolean)
+  href: api/ImmediateReflection.ImmediateAttributesExtensions.html#ImmediateReflection_ImmediateAttributesExtensions_GetImmediateAttributes_System_Reflection_MemberInfo_System_Type_System_Boolean_
+  commentId: M:ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttributes(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  fullName: ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttributes(System.Reflection.MemberInfo, System.Type, System.Boolean)
+  nameWithType: ImmediateAttributesExtensions.GetImmediateAttributes(MemberInfo, Type, Boolean)
+- uid: ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttributes*
+  name: GetImmediateAttributes
+  href: api/ImmediateReflection.ImmediateAttributesExtensions.html#ImmediateReflection_ImmediateAttributesExtensions_GetImmediateAttributes_
+  commentId: Overload:ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttributes
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttributes
+  nameWithType: ImmediateAttributesExtensions.GetImmediateAttributes
+- uid: ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttributes``1(System.Reflection.MemberInfo,System.Boolean)
+  name: GetImmediateAttributes<TAttribute>(MemberInfo, Boolean)
+  href: api/ImmediateReflection.ImmediateAttributesExtensions.html#ImmediateReflection_ImmediateAttributesExtensions_GetImmediateAttributes__1_System_Reflection_MemberInfo_System_Boolean_
+  commentId: M:ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttributes``1(System.Reflection.MemberInfo,System.Boolean)
+  name.vb: GetImmediateAttributes(Of TAttribute)(MemberInfo, Boolean)
+  fullName: ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttributes<TAttribute>(System.Reflection.MemberInfo, System.Boolean)
+  fullName.vb: ImmediateReflection.ImmediateAttributesExtensions.GetImmediateAttributes(Of TAttribute)(System.Reflection.MemberInfo, System.Boolean)
+  nameWithType: ImmediateAttributesExtensions.GetImmediateAttributes<TAttribute>(MemberInfo, Boolean)
+  nameWithType.vb: ImmediateAttributesExtensions.GetImmediateAttributes(Of TAttribute)(MemberInfo, Boolean)
+- uid: ImmediateReflection.ImmediateAttributesExtensions.IsDefinedImmediateAttribute(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  name: IsDefinedImmediateAttribute(MemberInfo, Type, Boolean)
+  href: api/ImmediateReflection.ImmediateAttributesExtensions.html#ImmediateReflection_ImmediateAttributesExtensions_IsDefinedImmediateAttribute_System_Reflection_MemberInfo_System_Type_System_Boolean_
+  commentId: M:ImmediateReflection.ImmediateAttributesExtensions.IsDefinedImmediateAttribute(System.Reflection.MemberInfo,System.Type,System.Boolean)
+  fullName: ImmediateReflection.ImmediateAttributesExtensions.IsDefinedImmediateAttribute(System.Reflection.MemberInfo, System.Type, System.Boolean)
+  nameWithType: ImmediateAttributesExtensions.IsDefinedImmediateAttribute(MemberInfo, Type, Boolean)
+- uid: ImmediateReflection.ImmediateAttributesExtensions.IsDefinedImmediateAttribute*
+  name: IsDefinedImmediateAttribute
+  href: api/ImmediateReflection.ImmediateAttributesExtensions.html#ImmediateReflection_ImmediateAttributesExtensions_IsDefinedImmediateAttribute_
+  commentId: Overload:ImmediateReflection.ImmediateAttributesExtensions.IsDefinedImmediateAttribute
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateAttributesExtensions.IsDefinedImmediateAttribute
+  nameWithType: ImmediateAttributesExtensions.IsDefinedImmediateAttribute
+- uid: ImmediateReflection.ImmediateAttributesExtensions.IsDefinedImmediateAttribute``1(System.Reflection.MemberInfo,System.Boolean)
+  name: IsDefinedImmediateAttribute<TAttribute>(MemberInfo, Boolean)
+  href: api/ImmediateReflection.ImmediateAttributesExtensions.html#ImmediateReflection_ImmediateAttributesExtensions_IsDefinedImmediateAttribute__1_System_Reflection_MemberInfo_System_Boolean_
+  commentId: M:ImmediateReflection.ImmediateAttributesExtensions.IsDefinedImmediateAttribute``1(System.Reflection.MemberInfo,System.Boolean)
+  name.vb: IsDefinedImmediateAttribute(Of TAttribute)(MemberInfo, Boolean)
+  fullName: ImmediateReflection.ImmediateAttributesExtensions.IsDefinedImmediateAttribute<TAttribute>(System.Reflection.MemberInfo, System.Boolean)
+  fullName.vb: ImmediateReflection.ImmediateAttributesExtensions.IsDefinedImmediateAttribute(Of TAttribute)(System.Reflection.MemberInfo, System.Boolean)
+  nameWithType: ImmediateAttributesExtensions.IsDefinedImmediateAttribute<TAttribute>(MemberInfo, Boolean)
+  nameWithType.vb: ImmediateAttributesExtensions.IsDefinedImmediateAttribute(Of TAttribute)(MemberInfo, Boolean)
+- uid: ImmediateReflection.ImmediateField
+  name: ImmediateField
+  href: api/ImmediateReflection.ImmediateField.html
+  commentId: T:ImmediateReflection.ImmediateField
+  fullName: ImmediateReflection.ImmediateField
+  nameWithType: ImmediateField
+- uid: ImmediateReflection.ImmediateField.Equals(ImmediateReflection.ImmediateField)
+  name: Equals(ImmediateField)
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_Equals_ImmediateReflection_ImmediateField_
+  commentId: M:ImmediateReflection.ImmediateField.Equals(ImmediateReflection.ImmediateField)
+  fullName: ImmediateReflection.ImmediateField.Equals(ImmediateReflection.ImmediateField)
+  nameWithType: ImmediateField.Equals(ImmediateField)
+- uid: ImmediateReflection.ImmediateField.Equals(System.Object)
+  name: Equals(Object)
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_Equals_System_Object_
+  commentId: M:ImmediateReflection.ImmediateField.Equals(System.Object)
+  fullName: ImmediateReflection.ImmediateField.Equals(System.Object)
+  nameWithType: ImmediateField.Equals(Object)
+- uid: ImmediateReflection.ImmediateField.Equals*
+  name: Equals
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_Equals_
+  commentId: Overload:ImmediateReflection.ImmediateField.Equals
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateField.Equals
+  nameWithType: ImmediateField.Equals
+- uid: ImmediateReflection.ImmediateField.FieldImmediateType
+  name: FieldImmediateType
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_FieldImmediateType
+  commentId: P:ImmediateReflection.ImmediateField.FieldImmediateType
+  fullName: ImmediateReflection.ImmediateField.FieldImmediateType
+  nameWithType: ImmediateField.FieldImmediateType
+- uid: ImmediateReflection.ImmediateField.FieldImmediateType*
+  name: FieldImmediateType
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_FieldImmediateType_
+  commentId: Overload:ImmediateReflection.ImmediateField.FieldImmediateType
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateField.FieldImmediateType
+  nameWithType: ImmediateField.FieldImmediateType
+- uid: ImmediateReflection.ImmediateField.FieldInfo
+  name: FieldInfo
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_FieldInfo
+  commentId: P:ImmediateReflection.ImmediateField.FieldInfo
+  fullName: ImmediateReflection.ImmediateField.FieldInfo
+  nameWithType: ImmediateField.FieldInfo
+- uid: ImmediateReflection.ImmediateField.FieldInfo*
+  name: FieldInfo
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_FieldInfo_
+  commentId: Overload:ImmediateReflection.ImmediateField.FieldInfo
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateField.FieldInfo
+  nameWithType: ImmediateField.FieldInfo
+- uid: ImmediateReflection.ImmediateField.FieldType
+  name: FieldType
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_FieldType
+  commentId: P:ImmediateReflection.ImmediateField.FieldType
+  fullName: ImmediateReflection.ImmediateField.FieldType
+  nameWithType: ImmediateField.FieldType
+- uid: ImmediateReflection.ImmediateField.FieldType*
+  name: FieldType
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_FieldType_
+  commentId: Overload:ImmediateReflection.ImmediateField.FieldType
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateField.FieldType
+  nameWithType: ImmediateField.FieldType
+- uid: ImmediateReflection.ImmediateField.GetHashCode
+  name: GetHashCode()
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_GetHashCode
+  commentId: M:ImmediateReflection.ImmediateField.GetHashCode
+  fullName: ImmediateReflection.ImmediateField.GetHashCode()
+  nameWithType: ImmediateField.GetHashCode()
+- uid: ImmediateReflection.ImmediateField.GetHashCode*
+  name: GetHashCode
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_GetHashCode_
+  commentId: Overload:ImmediateReflection.ImmediateField.GetHashCode
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateField.GetHashCode
+  nameWithType: ImmediateField.GetHashCode
+- uid: ImmediateReflection.ImmediateField.GetValue(System.Object)
+  name: GetValue(Object)
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_GetValue_System_Object_
+  commentId: M:ImmediateReflection.ImmediateField.GetValue(System.Object)
+  fullName: ImmediateReflection.ImmediateField.GetValue(System.Object)
+  nameWithType: ImmediateField.GetValue(Object)
+- uid: ImmediateReflection.ImmediateField.GetValue*
+  name: GetValue
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_GetValue_
+  commentId: Overload:ImmediateReflection.ImmediateField.GetValue
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateField.GetValue
+  nameWithType: ImmediateField.GetValue
+- uid: ImmediateReflection.ImmediateField.SetValue(System.Object,System.Object)
+  name: SetValue(Object, Object)
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_SetValue_System_Object_System_Object_
+  commentId: M:ImmediateReflection.ImmediateField.SetValue(System.Object,System.Object)
+  fullName: ImmediateReflection.ImmediateField.SetValue(System.Object, System.Object)
+  nameWithType: ImmediateField.SetValue(Object, Object)
+- uid: ImmediateReflection.ImmediateField.SetValue*
+  name: SetValue
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_SetValue_
+  commentId: Overload:ImmediateReflection.ImmediateField.SetValue
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateField.SetValue
+  nameWithType: ImmediateField.SetValue
+- uid: ImmediateReflection.ImmediateField.ToString
+  name: ToString()
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_ToString
+  commentId: M:ImmediateReflection.ImmediateField.ToString
+  fullName: ImmediateReflection.ImmediateField.ToString()
+  nameWithType: ImmediateField.ToString()
+- uid: ImmediateReflection.ImmediateField.ToString*
+  name: ToString
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_ToString_
+  commentId: Overload:ImmediateReflection.ImmediateField.ToString
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateField.ToString
+  nameWithType: ImmediateField.ToString
+- uid: ImmediateReflection.ImmediateFields
+  name: ImmediateFields
+  href: api/ImmediateReflection.ImmediateFields.html
+  commentId: T:ImmediateReflection.ImmediateFields
+  fullName: ImmediateReflection.ImmediateFields
+  nameWithType: ImmediateFields
+- uid: ImmediateReflection.ImmediateFields.Equals(ImmediateReflection.ImmediateFields)
+  name: Equals(ImmediateFields)
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_Equals_ImmediateReflection_ImmediateFields_
+  commentId: M:ImmediateReflection.ImmediateFields.Equals(ImmediateReflection.ImmediateFields)
+  fullName: ImmediateReflection.ImmediateFields.Equals(ImmediateReflection.ImmediateFields)
+  nameWithType: ImmediateFields.Equals(ImmediateFields)
+- uid: ImmediateReflection.ImmediateFields.Equals(System.Object)
+  name: Equals(Object)
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_Equals_System_Object_
+  commentId: M:ImmediateReflection.ImmediateFields.Equals(System.Object)
+  fullName: ImmediateReflection.ImmediateFields.Equals(System.Object)
+  nameWithType: ImmediateFields.Equals(Object)
+- uid: ImmediateReflection.ImmediateFields.Equals*
+  name: Equals
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_Equals_
+  commentId: Overload:ImmediateReflection.ImmediateFields.Equals
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateFields.Equals
+  nameWithType: ImmediateFields.Equals
+- uid: ImmediateReflection.ImmediateFields.GetEnumerator
+  name: GetEnumerator()
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_GetEnumerator
+  commentId: M:ImmediateReflection.ImmediateFields.GetEnumerator
+  fullName: ImmediateReflection.ImmediateFields.GetEnumerator()
+  nameWithType: ImmediateFields.GetEnumerator()
+- uid: ImmediateReflection.ImmediateFields.GetEnumerator*
+  name: GetEnumerator
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_GetEnumerator_
+  commentId: Overload:ImmediateReflection.ImmediateFields.GetEnumerator
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateFields.GetEnumerator
+  nameWithType: ImmediateFields.GetEnumerator
+- uid: ImmediateReflection.ImmediateFields.GetField(System.String)
+  name: GetField(String)
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_GetField_System_String_
+  commentId: M:ImmediateReflection.ImmediateFields.GetField(System.String)
+  fullName: ImmediateReflection.ImmediateFields.GetField(System.String)
+  nameWithType: ImmediateFields.GetField(String)
+- uid: ImmediateReflection.ImmediateFields.GetField*
+  name: GetField
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_GetField_
+  commentId: Overload:ImmediateReflection.ImmediateFields.GetField
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateFields.GetField
+  nameWithType: ImmediateFields.GetField
+- uid: ImmediateReflection.ImmediateFields.GetHashCode
+  name: GetHashCode()
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_GetHashCode
+  commentId: M:ImmediateReflection.ImmediateFields.GetHashCode
+  fullName: ImmediateReflection.ImmediateFields.GetHashCode()
+  nameWithType: ImmediateFields.GetHashCode()
+- uid: ImmediateReflection.ImmediateFields.GetHashCode*
+  name: GetHashCode
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_GetHashCode_
+  commentId: Overload:ImmediateReflection.ImmediateFields.GetHashCode
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateFields.GetHashCode
+  nameWithType: ImmediateFields.GetHashCode
+- uid: ImmediateReflection.ImmediateFields.Item(System.String)
+  name: Item[String]
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_Item_System_String_
+  commentId: P:ImmediateReflection.ImmediateFields.Item(System.String)
+  name.vb: Item(String)
+  fullName: ImmediateReflection.ImmediateFields.Item[System.String]
+  fullName.vb: ImmediateReflection.ImmediateFields.Item(System.String)
+  nameWithType: ImmediateFields.Item[String]
+  nameWithType.vb: ImmediateFields.Item(String)
+- uid: ImmediateReflection.ImmediateFields.Item*
+  name: Item
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_Item_
+  commentId: Overload:ImmediateReflection.ImmediateFields.Item
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateFields.Item
+  nameWithType: ImmediateFields.Item
+- uid: ImmediateReflection.ImmediateFields.System#Collections#IEnumerable#GetEnumerator
+  name: IEnumerable.GetEnumerator()
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_System_Collections_IEnumerable_GetEnumerator
+  commentId: M:ImmediateReflection.ImmediateFields.System#Collections#IEnumerable#GetEnumerator
+  name.vb: System.Collections.IEnumerable.GetEnumerator()
+  fullName: ImmediateReflection.ImmediateFields.System.Collections.IEnumerable.GetEnumerator()
+  nameWithType: ImmediateFields.IEnumerable.GetEnumerator()
+  nameWithType.vb: ImmediateFields.System.Collections.IEnumerable.GetEnumerator()
+- uid: ImmediateReflection.ImmediateFields.System#Collections#IEnumerable#GetEnumerator*
+  name: IEnumerable.GetEnumerator
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_System_Collections_IEnumerable_GetEnumerator_
+  commentId: Overload:ImmediateReflection.ImmediateFields.System#Collections#IEnumerable#GetEnumerator
+  isSpec: "True"
+  name.vb: System.Collections.IEnumerable.GetEnumerator
+  fullName: ImmediateReflection.ImmediateFields.System.Collections.IEnumerable.GetEnumerator
+  nameWithType: ImmediateFields.IEnumerable.GetEnumerator
+  nameWithType.vb: ImmediateFields.System.Collections.IEnumerable.GetEnumerator
+- uid: ImmediateReflection.ImmediateFields.ToString
+  name: ToString()
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_ToString
+  commentId: M:ImmediateReflection.ImmediateFields.ToString
+  fullName: ImmediateReflection.ImmediateFields.ToString()
+  nameWithType: ImmediateFields.ToString()
+- uid: ImmediateReflection.ImmediateFields.ToString*
+  name: ToString
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_ToString_
+  commentId: Overload:ImmediateReflection.ImmediateFields.ToString
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateFields.ToString
+  nameWithType: ImmediateFields.ToString
+- uid: ImmediateReflection.ImmediateMember
+  name: ImmediateMember
+  href: api/ImmediateReflection.ImmediateMember.html
+  commentId: T:ImmediateReflection.ImmediateMember
+  fullName: ImmediateReflection.ImmediateMember
+  nameWithType: ImmediateMember
+- uid: ImmediateReflection.ImmediateMember.#ctor(System.Reflection.MemberInfo)
+  name: ImmediateMember(MemberInfo)
+  href: api/ImmediateReflection.ImmediateMember.html#ImmediateReflection_ImmediateMember__ctor_System_Reflection_MemberInfo_
+  commentId: M:ImmediateReflection.ImmediateMember.#ctor(System.Reflection.MemberInfo)
+  fullName: ImmediateReflection.ImmediateMember.ImmediateMember(System.Reflection.MemberInfo)
+  nameWithType: ImmediateMember.ImmediateMember(MemberInfo)
+- uid: ImmediateReflection.ImmediateMember.#ctor*
+  name: ImmediateMember
+  href: api/ImmediateReflection.ImmediateMember.html#ImmediateReflection_ImmediateMember__ctor_
+  commentId: Overload:ImmediateReflection.ImmediateMember.#ctor
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateMember.ImmediateMember
+  nameWithType: ImmediateMember.ImmediateMember
+- uid: ImmediateReflection.ImmediateMember.GetAllAttributes(System.Boolean)
+  name: GetAllAttributes(Boolean)
+  href: api/ImmediateReflection.ImmediateMember.html#ImmediateReflection_ImmediateMember_GetAllAttributes_System_Boolean_
+  commentId: M:ImmediateReflection.ImmediateMember.GetAllAttributes(System.Boolean)
+  fullName: ImmediateReflection.ImmediateMember.GetAllAttributes(System.Boolean)
+  nameWithType: ImmediateMember.GetAllAttributes(Boolean)
+- uid: ImmediateReflection.ImmediateMember.GetAllAttributes*
+  name: GetAllAttributes
+  href: api/ImmediateReflection.ImmediateMember.html#ImmediateReflection_ImmediateMember_GetAllAttributes_
+  commentId: Overload:ImmediateReflection.ImmediateMember.GetAllAttributes
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateMember.GetAllAttributes
+  nameWithType: ImmediateMember.GetAllAttributes
+- uid: ImmediateReflection.ImmediateMember.GetAttribute(System.Type,System.Boolean)
+  name: GetAttribute(Type, Boolean)
+  href: api/ImmediateReflection.ImmediateMember.html#ImmediateReflection_ImmediateMember_GetAttribute_System_Type_System_Boolean_
+  commentId: M:ImmediateReflection.ImmediateMember.GetAttribute(System.Type,System.Boolean)
+  fullName: ImmediateReflection.ImmediateMember.GetAttribute(System.Type, System.Boolean)
+  nameWithType: ImmediateMember.GetAttribute(Type, Boolean)
+- uid: ImmediateReflection.ImmediateMember.GetAttribute*
+  name: GetAttribute
+  href: api/ImmediateReflection.ImmediateMember.html#ImmediateReflection_ImmediateMember_GetAttribute_
+  commentId: Overload:ImmediateReflection.ImmediateMember.GetAttribute
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateMember.GetAttribute
+  nameWithType: ImmediateMember.GetAttribute
+- uid: ImmediateReflection.ImmediateMember.GetAttribute``1(System.Boolean)
+  name: GetAttribute<TAttribute>(Boolean)
+  href: api/ImmediateReflection.ImmediateMember.html#ImmediateReflection_ImmediateMember_GetAttribute__1_System_Boolean_
+  commentId: M:ImmediateReflection.ImmediateMember.GetAttribute``1(System.Boolean)
+  name.vb: GetAttribute(Of TAttribute)(Boolean)
+  fullName: ImmediateReflection.ImmediateMember.GetAttribute<TAttribute>(System.Boolean)
+  fullName.vb: ImmediateReflection.ImmediateMember.GetAttribute(Of TAttribute)(System.Boolean)
+  nameWithType: ImmediateMember.GetAttribute<TAttribute>(Boolean)
+  nameWithType.vb: ImmediateMember.GetAttribute(Of TAttribute)(Boolean)
+- uid: ImmediateReflection.ImmediateMember.GetAttributes(System.Type,System.Boolean)
+  name: GetAttributes(Type, Boolean)
+  href: api/ImmediateReflection.ImmediateMember.html#ImmediateReflection_ImmediateMember_GetAttributes_System_Type_System_Boolean_
+  commentId: M:ImmediateReflection.ImmediateMember.GetAttributes(System.Type,System.Boolean)
+  fullName: ImmediateReflection.ImmediateMember.GetAttributes(System.Type, System.Boolean)
+  nameWithType: ImmediateMember.GetAttributes(Type, Boolean)
+- uid: ImmediateReflection.ImmediateMember.GetAttributes*
+  name: GetAttributes
+  href: api/ImmediateReflection.ImmediateMember.html#ImmediateReflection_ImmediateMember_GetAttributes_
+  commentId: Overload:ImmediateReflection.ImmediateMember.GetAttributes
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateMember.GetAttributes
+  nameWithType: ImmediateMember.GetAttributes
+- uid: ImmediateReflection.ImmediateMember.GetAttributes``1(System.Boolean)
+  name: GetAttributes<TAttribute>(Boolean)
+  href: api/ImmediateReflection.ImmediateMember.html#ImmediateReflection_ImmediateMember_GetAttributes__1_System_Boolean_
+  commentId: M:ImmediateReflection.ImmediateMember.GetAttributes``1(System.Boolean)
+  name.vb: GetAttributes(Of TAttribute)(Boolean)
+  fullName: ImmediateReflection.ImmediateMember.GetAttributes<TAttribute>(System.Boolean)
+  fullName.vb: ImmediateReflection.ImmediateMember.GetAttributes(Of TAttribute)(System.Boolean)
+  nameWithType: ImmediateMember.GetAttributes<TAttribute>(Boolean)
+  nameWithType.vb: ImmediateMember.GetAttributes(Of TAttribute)(Boolean)
+- uid: ImmediateReflection.ImmediateMember.IsDefined(System.Type,System.Boolean)
+  name: IsDefined(Type, Boolean)
+  href: api/ImmediateReflection.ImmediateMember.html#ImmediateReflection_ImmediateMember_IsDefined_System_Type_System_Boolean_
+  commentId: M:ImmediateReflection.ImmediateMember.IsDefined(System.Type,System.Boolean)
+  fullName: ImmediateReflection.ImmediateMember.IsDefined(System.Type, System.Boolean)
+  nameWithType: ImmediateMember.IsDefined(Type, Boolean)
+- uid: ImmediateReflection.ImmediateMember.IsDefined*
+  name: IsDefined
+  href: api/ImmediateReflection.ImmediateMember.html#ImmediateReflection_ImmediateMember_IsDefined_
+  commentId: Overload:ImmediateReflection.ImmediateMember.IsDefined
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateMember.IsDefined
+  nameWithType: ImmediateMember.IsDefined
+- uid: ImmediateReflection.ImmediateMember.IsDefined``1(System.Boolean)
+  name: IsDefined<TAttribute>(Boolean)
+  href: api/ImmediateReflection.ImmediateMember.html#ImmediateReflection_ImmediateMember_IsDefined__1_System_Boolean_
+  commentId: M:ImmediateReflection.ImmediateMember.IsDefined``1(System.Boolean)
+  name.vb: IsDefined(Of TAttribute)(Boolean)
+  fullName: ImmediateReflection.ImmediateMember.IsDefined<TAttribute>(System.Boolean)
+  fullName.vb: ImmediateReflection.ImmediateMember.IsDefined(Of TAttribute)(System.Boolean)
+  nameWithType: ImmediateMember.IsDefined<TAttribute>(Boolean)
+  nameWithType.vb: ImmediateMember.IsDefined(Of TAttribute)(Boolean)
+- uid: ImmediateReflection.ImmediateMember.Name
+  name: Name
+  href: api/ImmediateReflection.ImmediateMember.html#ImmediateReflection_ImmediateMember_Name
+  commentId: P:ImmediateReflection.ImmediateMember.Name
+  fullName: ImmediateReflection.ImmediateMember.Name
+  nameWithType: ImmediateMember.Name
+- uid: ImmediateReflection.ImmediateMember.Name*
+  name: Name
+  href: api/ImmediateReflection.ImmediateMember.html#ImmediateReflection_ImmediateMember_Name_
+  commentId: Overload:ImmediateReflection.ImmediateMember.Name
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateMember.Name
+  nameWithType: ImmediateMember.Name
+- uid: ImmediateReflection.ImmediateMemberExtensions
+  name: ImmediateMemberExtensions
+  href: api/ImmediateReflection.ImmediateMemberExtensions.html
+  commentId: T:ImmediateReflection.ImmediateMemberExtensions
+  fullName: ImmediateReflection.ImmediateMemberExtensions
+  nameWithType: ImmediateMemberExtensions
+- uid: ImmediateReflection.ImmediateMemberExtensions.GetImmediateField(System.Type,System.String)
+  name: GetImmediateField(Type, String)
+  href: api/ImmediateReflection.ImmediateMemberExtensions.html#ImmediateReflection_ImmediateMemberExtensions_GetImmediateField_System_Type_System_String_
+  commentId: M:ImmediateReflection.ImmediateMemberExtensions.GetImmediateField(System.Type,System.String)
+  fullName: ImmediateReflection.ImmediateMemberExtensions.GetImmediateField(System.Type, System.String)
+  nameWithType: ImmediateMemberExtensions.GetImmediateField(Type, String)
+- uid: ImmediateReflection.ImmediateMemberExtensions.GetImmediateField(System.Type,System.String,System.Reflection.BindingFlags)
+  name: GetImmediateField(Type, String, BindingFlags)
+  href: api/ImmediateReflection.ImmediateMemberExtensions.html#ImmediateReflection_ImmediateMemberExtensions_GetImmediateField_System_Type_System_String_System_Reflection_BindingFlags_
+  commentId: M:ImmediateReflection.ImmediateMemberExtensions.GetImmediateField(System.Type,System.String,System.Reflection.BindingFlags)
+  fullName: ImmediateReflection.ImmediateMemberExtensions.GetImmediateField(System.Type, System.String, System.Reflection.BindingFlags)
+  nameWithType: ImmediateMemberExtensions.GetImmediateField(Type, String, BindingFlags)
+- uid: ImmediateReflection.ImmediateMemberExtensions.GetImmediateField*
+  name: GetImmediateField
+  href: api/ImmediateReflection.ImmediateMemberExtensions.html#ImmediateReflection_ImmediateMemberExtensions_GetImmediateField_
+  commentId: Overload:ImmediateReflection.ImmediateMemberExtensions.GetImmediateField
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateMemberExtensions.GetImmediateField
+  nameWithType: ImmediateMemberExtensions.GetImmediateField
+- uid: ImmediateReflection.ImmediateMemberExtensions.GetImmediateFields(System.Type)
+  name: GetImmediateFields(Type)
+  href: api/ImmediateReflection.ImmediateMemberExtensions.html#ImmediateReflection_ImmediateMemberExtensions_GetImmediateFields_System_Type_
+  commentId: M:ImmediateReflection.ImmediateMemberExtensions.GetImmediateFields(System.Type)
+  fullName: ImmediateReflection.ImmediateMemberExtensions.GetImmediateFields(System.Type)
+  nameWithType: ImmediateMemberExtensions.GetImmediateFields(Type)
+- uid: ImmediateReflection.ImmediateMemberExtensions.GetImmediateFields(System.Type,System.Reflection.BindingFlags)
+  name: GetImmediateFields(Type, BindingFlags)
+  href: api/ImmediateReflection.ImmediateMemberExtensions.html#ImmediateReflection_ImmediateMemberExtensions_GetImmediateFields_System_Type_System_Reflection_BindingFlags_
+  commentId: M:ImmediateReflection.ImmediateMemberExtensions.GetImmediateFields(System.Type,System.Reflection.BindingFlags)
+  fullName: ImmediateReflection.ImmediateMemberExtensions.GetImmediateFields(System.Type, System.Reflection.BindingFlags)
+  nameWithType: ImmediateMemberExtensions.GetImmediateFields(Type, BindingFlags)
+- uid: ImmediateReflection.ImmediateMemberExtensions.GetImmediateFields*
+  name: GetImmediateFields
+  href: api/ImmediateReflection.ImmediateMemberExtensions.html#ImmediateReflection_ImmediateMemberExtensions_GetImmediateFields_
+  commentId: Overload:ImmediateReflection.ImmediateMemberExtensions.GetImmediateFields
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateMemberExtensions.GetImmediateFields
+  nameWithType: ImmediateMemberExtensions.GetImmediateFields
+- uid: ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperties(System.Type)
+  name: GetImmediateProperties(Type)
+  href: api/ImmediateReflection.ImmediateMemberExtensions.html#ImmediateReflection_ImmediateMemberExtensions_GetImmediateProperties_System_Type_
+  commentId: M:ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperties(System.Type)
+  fullName: ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperties(System.Type)
+  nameWithType: ImmediateMemberExtensions.GetImmediateProperties(Type)
+- uid: ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperties(System.Type,System.Reflection.BindingFlags)
+  name: GetImmediateProperties(Type, BindingFlags)
+  href: api/ImmediateReflection.ImmediateMemberExtensions.html#ImmediateReflection_ImmediateMemberExtensions_GetImmediateProperties_System_Type_System_Reflection_BindingFlags_
+  commentId: M:ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperties(System.Type,System.Reflection.BindingFlags)
+  fullName: ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperties(System.Type, System.Reflection.BindingFlags)
+  nameWithType: ImmediateMemberExtensions.GetImmediateProperties(Type, BindingFlags)
+- uid: ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperties*
+  name: GetImmediateProperties
+  href: api/ImmediateReflection.ImmediateMemberExtensions.html#ImmediateReflection_ImmediateMemberExtensions_GetImmediateProperties_
+  commentId: Overload:ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperties
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperties
+  nameWithType: ImmediateMemberExtensions.GetImmediateProperties
+- uid: ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperty(System.Type,System.String)
+  name: GetImmediateProperty(Type, String)
+  href: api/ImmediateReflection.ImmediateMemberExtensions.html#ImmediateReflection_ImmediateMemberExtensions_GetImmediateProperty_System_Type_System_String_
+  commentId: M:ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperty(System.Type,System.String)
+  fullName: ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperty(System.Type, System.String)
+  nameWithType: ImmediateMemberExtensions.GetImmediateProperty(Type, String)
+- uid: ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperty(System.Type,System.String,System.Reflection.BindingFlags)
+  name: GetImmediateProperty(Type, String, BindingFlags)
+  href: api/ImmediateReflection.ImmediateMemberExtensions.html#ImmediateReflection_ImmediateMemberExtensions_GetImmediateProperty_System_Type_System_String_System_Reflection_BindingFlags_
+  commentId: M:ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperty(System.Type,System.String,System.Reflection.BindingFlags)
+  fullName: ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperty(System.Type, System.String, System.Reflection.BindingFlags)
+  nameWithType: ImmediateMemberExtensions.GetImmediateProperty(Type, String, BindingFlags)
+- uid: ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperty*
+  name: GetImmediateProperty
+  href: api/ImmediateReflection.ImmediateMemberExtensions.html#ImmediateReflection_ImmediateMemberExtensions_GetImmediateProperty_
+  commentId: Overload:ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperty
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateMemberExtensions.GetImmediateProperty
+  nameWithType: ImmediateMemberExtensions.GetImmediateProperty
+- uid: ImmediateReflection.ImmediateProperties
+  name: ImmediateProperties
+  href: api/ImmediateReflection.ImmediateProperties.html
+  commentId: T:ImmediateReflection.ImmediateProperties
+  fullName: ImmediateReflection.ImmediateProperties
+  nameWithType: ImmediateProperties
+- uid: ImmediateReflection.ImmediateProperties.Equals(ImmediateReflection.ImmediateProperties)
+  name: Equals(ImmediateProperties)
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_Equals_ImmediateReflection_ImmediateProperties_
+  commentId: M:ImmediateReflection.ImmediateProperties.Equals(ImmediateReflection.ImmediateProperties)
+  fullName: ImmediateReflection.ImmediateProperties.Equals(ImmediateReflection.ImmediateProperties)
+  nameWithType: ImmediateProperties.Equals(ImmediateProperties)
+- uid: ImmediateReflection.ImmediateProperties.Equals(System.Object)
+  name: Equals(Object)
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_Equals_System_Object_
+  commentId: M:ImmediateReflection.ImmediateProperties.Equals(System.Object)
+  fullName: ImmediateReflection.ImmediateProperties.Equals(System.Object)
+  nameWithType: ImmediateProperties.Equals(Object)
+- uid: ImmediateReflection.ImmediateProperties.Equals*
+  name: Equals
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_Equals_
+  commentId: Overload:ImmediateReflection.ImmediateProperties.Equals
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperties.Equals
+  nameWithType: ImmediateProperties.Equals
+- uid: ImmediateReflection.ImmediateProperties.GetEnumerator
+  name: GetEnumerator()
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_GetEnumerator
+  commentId: M:ImmediateReflection.ImmediateProperties.GetEnumerator
+  fullName: ImmediateReflection.ImmediateProperties.GetEnumerator()
+  nameWithType: ImmediateProperties.GetEnumerator()
+- uid: ImmediateReflection.ImmediateProperties.GetEnumerator*
+  name: GetEnumerator
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_GetEnumerator_
+  commentId: Overload:ImmediateReflection.ImmediateProperties.GetEnumerator
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperties.GetEnumerator
+  nameWithType: ImmediateProperties.GetEnumerator
+- uid: ImmediateReflection.ImmediateProperties.GetHashCode
+  name: GetHashCode()
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_GetHashCode
+  commentId: M:ImmediateReflection.ImmediateProperties.GetHashCode
+  fullName: ImmediateReflection.ImmediateProperties.GetHashCode()
+  nameWithType: ImmediateProperties.GetHashCode()
+- uid: ImmediateReflection.ImmediateProperties.GetHashCode*
+  name: GetHashCode
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_GetHashCode_
+  commentId: Overload:ImmediateReflection.ImmediateProperties.GetHashCode
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperties.GetHashCode
+  nameWithType: ImmediateProperties.GetHashCode
+- uid: ImmediateReflection.ImmediateProperties.GetProperty(System.String)
+  name: GetProperty(String)
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_GetProperty_System_String_
+  commentId: M:ImmediateReflection.ImmediateProperties.GetProperty(System.String)
+  fullName: ImmediateReflection.ImmediateProperties.GetProperty(System.String)
+  nameWithType: ImmediateProperties.GetProperty(String)
+- uid: ImmediateReflection.ImmediateProperties.GetProperty*
+  name: GetProperty
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_GetProperty_
+  commentId: Overload:ImmediateReflection.ImmediateProperties.GetProperty
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperties.GetProperty
+  nameWithType: ImmediateProperties.GetProperty
+- uid: ImmediateReflection.ImmediateProperties.Item(System.String)
+  name: Item[String]
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_Item_System_String_
+  commentId: P:ImmediateReflection.ImmediateProperties.Item(System.String)
+  name.vb: Item(String)
+  fullName: ImmediateReflection.ImmediateProperties.Item[System.String]
+  fullName.vb: ImmediateReflection.ImmediateProperties.Item(System.String)
+  nameWithType: ImmediateProperties.Item[String]
+  nameWithType.vb: ImmediateProperties.Item(String)
+- uid: ImmediateReflection.ImmediateProperties.Item*
+  name: Item
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_Item_
+  commentId: Overload:ImmediateReflection.ImmediateProperties.Item
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperties.Item
+  nameWithType: ImmediateProperties.Item
+- uid: ImmediateReflection.ImmediateProperties.System#Collections#IEnumerable#GetEnumerator
+  name: IEnumerable.GetEnumerator()
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_System_Collections_IEnumerable_GetEnumerator
+  commentId: M:ImmediateReflection.ImmediateProperties.System#Collections#IEnumerable#GetEnumerator
+  name.vb: System.Collections.IEnumerable.GetEnumerator()
+  fullName: ImmediateReflection.ImmediateProperties.System.Collections.IEnumerable.GetEnumerator()
+  nameWithType: ImmediateProperties.IEnumerable.GetEnumerator()
+  nameWithType.vb: ImmediateProperties.System.Collections.IEnumerable.GetEnumerator()
+- uid: ImmediateReflection.ImmediateProperties.System#Collections#IEnumerable#GetEnumerator*
+  name: IEnumerable.GetEnumerator
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_System_Collections_IEnumerable_GetEnumerator_
+  commentId: Overload:ImmediateReflection.ImmediateProperties.System#Collections#IEnumerable#GetEnumerator
+  isSpec: "True"
+  name.vb: System.Collections.IEnumerable.GetEnumerator
+  fullName: ImmediateReflection.ImmediateProperties.System.Collections.IEnumerable.GetEnumerator
+  nameWithType: ImmediateProperties.IEnumerable.GetEnumerator
+  nameWithType.vb: ImmediateProperties.System.Collections.IEnumerable.GetEnumerator
+- uid: ImmediateReflection.ImmediateProperties.ToString
+  name: ToString()
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_ToString
+  commentId: M:ImmediateReflection.ImmediateProperties.ToString
+  fullName: ImmediateReflection.ImmediateProperties.ToString()
+  nameWithType: ImmediateProperties.ToString()
+- uid: ImmediateReflection.ImmediateProperties.ToString*
+  name: ToString
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_ToString_
+  commentId: Overload:ImmediateReflection.ImmediateProperties.ToString
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperties.ToString
+  nameWithType: ImmediateProperties.ToString
+- uid: ImmediateReflection.ImmediateProperty
+  name: ImmediateProperty
+  href: api/ImmediateReflection.ImmediateProperty.html
+  commentId: T:ImmediateReflection.ImmediateProperty
+  fullName: ImmediateReflection.ImmediateProperty
+  nameWithType: ImmediateProperty
+- uid: ImmediateReflection.ImmediateProperty.CanRead
+  name: CanRead
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_CanRead
+  commentId: P:ImmediateReflection.ImmediateProperty.CanRead
+  fullName: ImmediateReflection.ImmediateProperty.CanRead
+  nameWithType: ImmediateProperty.CanRead
+- uid: ImmediateReflection.ImmediateProperty.CanRead*
+  name: CanRead
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_CanRead_
+  commentId: Overload:ImmediateReflection.ImmediateProperty.CanRead
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperty.CanRead
+  nameWithType: ImmediateProperty.CanRead
+- uid: ImmediateReflection.ImmediateProperty.CanWrite
+  name: CanWrite
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_CanWrite
+  commentId: P:ImmediateReflection.ImmediateProperty.CanWrite
+  fullName: ImmediateReflection.ImmediateProperty.CanWrite
+  nameWithType: ImmediateProperty.CanWrite
+- uid: ImmediateReflection.ImmediateProperty.CanWrite*
+  name: CanWrite
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_CanWrite_
+  commentId: Overload:ImmediateReflection.ImmediateProperty.CanWrite
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperty.CanWrite
+  nameWithType: ImmediateProperty.CanWrite
+- uid: ImmediateReflection.ImmediateProperty.Equals(ImmediateReflection.ImmediateProperty)
+  name: Equals(ImmediateProperty)
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_Equals_ImmediateReflection_ImmediateProperty_
+  commentId: M:ImmediateReflection.ImmediateProperty.Equals(ImmediateReflection.ImmediateProperty)
+  fullName: ImmediateReflection.ImmediateProperty.Equals(ImmediateReflection.ImmediateProperty)
+  nameWithType: ImmediateProperty.Equals(ImmediateProperty)
+- uid: ImmediateReflection.ImmediateProperty.Equals(System.Object)
+  name: Equals(Object)
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_Equals_System_Object_
+  commentId: M:ImmediateReflection.ImmediateProperty.Equals(System.Object)
+  fullName: ImmediateReflection.ImmediateProperty.Equals(System.Object)
+  nameWithType: ImmediateProperty.Equals(Object)
+- uid: ImmediateReflection.ImmediateProperty.Equals*
+  name: Equals
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_Equals_
+  commentId: Overload:ImmediateReflection.ImmediateProperty.Equals
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperty.Equals
+  nameWithType: ImmediateProperty.Equals
+- uid: ImmediateReflection.ImmediateProperty.GetHashCode
+  name: GetHashCode()
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_GetHashCode
+  commentId: M:ImmediateReflection.ImmediateProperty.GetHashCode
+  fullName: ImmediateReflection.ImmediateProperty.GetHashCode()
+  nameWithType: ImmediateProperty.GetHashCode()
+- uid: ImmediateReflection.ImmediateProperty.GetHashCode*
+  name: GetHashCode
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_GetHashCode_
+  commentId: Overload:ImmediateReflection.ImmediateProperty.GetHashCode
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperty.GetHashCode
+  nameWithType: ImmediateProperty.GetHashCode
+- uid: ImmediateReflection.ImmediateProperty.GetValue(System.Object)
+  name: GetValue(Object)
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_GetValue_System_Object_
+  commentId: M:ImmediateReflection.ImmediateProperty.GetValue(System.Object)
+  fullName: ImmediateReflection.ImmediateProperty.GetValue(System.Object)
+  nameWithType: ImmediateProperty.GetValue(Object)
+- uid: ImmediateReflection.ImmediateProperty.GetValue*
+  name: GetValue
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_GetValue_
+  commentId: Overload:ImmediateReflection.ImmediateProperty.GetValue
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperty.GetValue
+  nameWithType: ImmediateProperty.GetValue
+- uid: ImmediateReflection.ImmediateProperty.PropertyImmediateType
+  name: PropertyImmediateType
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_PropertyImmediateType
+  commentId: P:ImmediateReflection.ImmediateProperty.PropertyImmediateType
+  fullName: ImmediateReflection.ImmediateProperty.PropertyImmediateType
+  nameWithType: ImmediateProperty.PropertyImmediateType
+- uid: ImmediateReflection.ImmediateProperty.PropertyImmediateType*
+  name: PropertyImmediateType
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_PropertyImmediateType_
+  commentId: Overload:ImmediateReflection.ImmediateProperty.PropertyImmediateType
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperty.PropertyImmediateType
+  nameWithType: ImmediateProperty.PropertyImmediateType
+- uid: ImmediateReflection.ImmediateProperty.PropertyInfo
+  name: PropertyInfo
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_PropertyInfo
+  commentId: P:ImmediateReflection.ImmediateProperty.PropertyInfo
+  fullName: ImmediateReflection.ImmediateProperty.PropertyInfo
+  nameWithType: ImmediateProperty.PropertyInfo
+- uid: ImmediateReflection.ImmediateProperty.PropertyInfo*
+  name: PropertyInfo
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_PropertyInfo_
+  commentId: Overload:ImmediateReflection.ImmediateProperty.PropertyInfo
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperty.PropertyInfo
+  nameWithType: ImmediateProperty.PropertyInfo
+- uid: ImmediateReflection.ImmediateProperty.PropertyType
+  name: PropertyType
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_PropertyType
+  commentId: P:ImmediateReflection.ImmediateProperty.PropertyType
+  fullName: ImmediateReflection.ImmediateProperty.PropertyType
+  nameWithType: ImmediateProperty.PropertyType
+- uid: ImmediateReflection.ImmediateProperty.PropertyType*
+  name: PropertyType
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_PropertyType_
+  commentId: Overload:ImmediateReflection.ImmediateProperty.PropertyType
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperty.PropertyType
+  nameWithType: ImmediateProperty.PropertyType
+- uid: ImmediateReflection.ImmediateProperty.SetValue(System.Object,System.Object)
+  name: SetValue(Object, Object)
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_SetValue_System_Object_System_Object_
+  commentId: M:ImmediateReflection.ImmediateProperty.SetValue(System.Object,System.Object)
+  fullName: ImmediateReflection.ImmediateProperty.SetValue(System.Object, System.Object)
+  nameWithType: ImmediateProperty.SetValue(Object, Object)
+- uid: ImmediateReflection.ImmediateProperty.SetValue*
+  name: SetValue
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_SetValue_
+  commentId: Overload:ImmediateReflection.ImmediateProperty.SetValue
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperty.SetValue
+  nameWithType: ImmediateProperty.SetValue
+- uid: ImmediateReflection.ImmediateProperty.ToString
+  name: ToString()
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_ToString
+  commentId: M:ImmediateReflection.ImmediateProperty.ToString
+  fullName: ImmediateReflection.ImmediateProperty.ToString()
+  nameWithType: ImmediateProperty.ToString()
+- uid: ImmediateReflection.ImmediateProperty.ToString*
+  name: ToString
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_ToString_
+  commentId: Overload:ImmediateReflection.ImmediateProperty.ToString
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperty.ToString
+  nameWithType: ImmediateProperty.ToString
+- uid: ImmediateReflection.ImmediateReflectionExtensions
+  name: ImmediateReflectionExtensions
+  href: api/ImmediateReflection.ImmediateReflectionExtensions.html
+  commentId: T:ImmediateReflection.ImmediateReflectionExtensions
+  fullName: ImmediateReflection.ImmediateReflectionExtensions
+  nameWithType: ImmediateReflectionExtensions
+- uid: ImmediateReflection.ImmediateReflectionExtensions.GetImmediateType(System.Type)
+  name: GetImmediateType(Type)
+  href: api/ImmediateReflection.ImmediateReflectionExtensions.html#ImmediateReflection_ImmediateReflectionExtensions_GetImmediateType_System_Type_
+  commentId: M:ImmediateReflection.ImmediateReflectionExtensions.GetImmediateType(System.Type)
+  fullName: ImmediateReflection.ImmediateReflectionExtensions.GetImmediateType(System.Type)
+  nameWithType: ImmediateReflectionExtensions.GetImmediateType(Type)
+- uid: ImmediateReflection.ImmediateReflectionExtensions.GetImmediateType*
+  name: GetImmediateType
+  href: api/ImmediateReflection.ImmediateReflectionExtensions.html#ImmediateReflection_ImmediateReflectionExtensions_GetImmediateType_
+  commentId: Overload:ImmediateReflection.ImmediateReflectionExtensions.GetImmediateType
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateReflectionExtensions.GetImmediateType
+  nameWithType: ImmediateReflectionExtensions.GetImmediateType
+- uid: ImmediateReflection.ImmediateReflectionExtensions.GetImmediateType``1(``0)
+  name: GetImmediateType<T>(T)
+  href: api/ImmediateReflection.ImmediateReflectionExtensions.html#ImmediateReflection_ImmediateReflectionExtensions_GetImmediateType__1___0_
+  commentId: M:ImmediateReflection.ImmediateReflectionExtensions.GetImmediateType``1(``0)
+  name.vb: GetImmediateType(Of T)(T)
+  fullName: ImmediateReflection.ImmediateReflectionExtensions.GetImmediateType<T>(T)
+  fullName.vb: ImmediateReflection.ImmediateReflectionExtensions.GetImmediateType(Of T)(T)
+  nameWithType: ImmediateReflectionExtensions.GetImmediateType<T>(T)
+  nameWithType.vb: ImmediateReflectionExtensions.GetImmediateType(Of T)(T)
+- uid: ImmediateReflection.ImmediateType
+  name: ImmediateType
+  href: api/ImmediateReflection.ImmediateType.html
+  commentId: T:ImmediateReflection.ImmediateType
+  fullName: ImmediateReflection.ImmediateType
+  nameWithType: ImmediateType
+- uid: ImmediateReflection.ImmediateType.Equals(ImmediateReflection.ImmediateType)
+  name: Equals(ImmediateType)
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Equals_ImmediateReflection_ImmediateType_
+  commentId: M:ImmediateReflection.ImmediateType.Equals(ImmediateReflection.ImmediateType)
+  fullName: ImmediateReflection.ImmediateType.Equals(ImmediateReflection.ImmediateType)
+  nameWithType: ImmediateType.Equals(ImmediateType)
+- uid: ImmediateReflection.ImmediateType.Equals(System.Object)
+  name: Equals(Object)
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Equals_System_Object_
+  commentId: M:ImmediateReflection.ImmediateType.Equals(System.Object)
+  fullName: ImmediateReflection.ImmediateType.Equals(System.Object)
+  nameWithType: ImmediateType.Equals(Object)
+- uid: ImmediateReflection.ImmediateType.Equals*
+  name: Equals
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Equals_
+  commentId: Overload:ImmediateReflection.ImmediateType.Equals
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.Equals
+  nameWithType: ImmediateType.Equals
+- uid: ImmediateReflection.ImmediateType.Fields
+  name: Fields
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Fields
+  commentId: P:ImmediateReflection.ImmediateType.Fields
+  fullName: ImmediateReflection.ImmediateType.Fields
+  nameWithType: ImmediateType.Fields
+- uid: ImmediateReflection.ImmediateType.Fields*
+  name: Fields
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Fields_
+  commentId: Overload:ImmediateReflection.ImmediateType.Fields
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.Fields
+  nameWithType: ImmediateType.Fields
+- uid: ImmediateReflection.ImmediateType.FullName
+  name: FullName
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_FullName
+  commentId: P:ImmediateReflection.ImmediateType.FullName
+  fullName: ImmediateReflection.ImmediateType.FullName
+  nameWithType: ImmediateType.FullName
+- uid: ImmediateReflection.ImmediateType.FullName*
+  name: FullName
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_FullName_
+  commentId: Overload:ImmediateReflection.ImmediateType.FullName
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.FullName
+  nameWithType: ImmediateType.FullName
+- uid: ImmediateReflection.ImmediateType.GetField(System.String)
+  name: GetField(String)
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetField_System_String_
+  commentId: M:ImmediateReflection.ImmediateType.GetField(System.String)
+  fullName: ImmediateReflection.ImmediateType.GetField(System.String)
+  nameWithType: ImmediateType.GetField(String)
+- uid: ImmediateReflection.ImmediateType.GetField*
+  name: GetField
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetField_
+  commentId: Overload:ImmediateReflection.ImmediateType.GetField
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.GetField
+  nameWithType: ImmediateType.GetField
+- uid: ImmediateReflection.ImmediateType.GetFields
+  name: GetFields()
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetFields
+  commentId: M:ImmediateReflection.ImmediateType.GetFields
+  fullName: ImmediateReflection.ImmediateType.GetFields()
+  nameWithType: ImmediateType.GetFields()
+- uid: ImmediateReflection.ImmediateType.GetFields*
+  name: GetFields
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetFields_
+  commentId: Overload:ImmediateReflection.ImmediateType.GetFields
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.GetFields
+  nameWithType: ImmediateType.GetFields
+- uid: ImmediateReflection.ImmediateType.GetHashCode
+  name: GetHashCode()
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetHashCode
+  commentId: M:ImmediateReflection.ImmediateType.GetHashCode
+  fullName: ImmediateReflection.ImmediateType.GetHashCode()
+  nameWithType: ImmediateType.GetHashCode()
+- uid: ImmediateReflection.ImmediateType.GetHashCode*
+  name: GetHashCode
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetHashCode_
+  commentId: Overload:ImmediateReflection.ImmediateType.GetHashCode
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.GetHashCode
+  nameWithType: ImmediateType.GetHashCode
+- uid: ImmediateReflection.ImmediateType.GetMember(System.String)
+  name: GetMember(String)
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetMember_System_String_
+  commentId: M:ImmediateReflection.ImmediateType.GetMember(System.String)
+  fullName: ImmediateReflection.ImmediateType.GetMember(System.String)
+  nameWithType: ImmediateType.GetMember(String)
+- uid: ImmediateReflection.ImmediateType.GetMember*
+  name: GetMember
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetMember_
+  commentId: Overload:ImmediateReflection.ImmediateType.GetMember
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.GetMember
+  nameWithType: ImmediateType.GetMember
+- uid: ImmediateReflection.ImmediateType.GetMembers
+  name: GetMembers()
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetMembers
+  commentId: M:ImmediateReflection.ImmediateType.GetMembers
+  fullName: ImmediateReflection.ImmediateType.GetMembers()
+  nameWithType: ImmediateType.GetMembers()
+- uid: ImmediateReflection.ImmediateType.GetMembers*
+  name: GetMembers
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetMembers_
+  commentId: Overload:ImmediateReflection.ImmediateType.GetMembers
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.GetMembers
+  nameWithType: ImmediateType.GetMembers
+- uid: ImmediateReflection.ImmediateType.GetProperties
+  name: GetProperties()
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetProperties
+  commentId: M:ImmediateReflection.ImmediateType.GetProperties
+  fullName: ImmediateReflection.ImmediateType.GetProperties()
+  nameWithType: ImmediateType.GetProperties()
+- uid: ImmediateReflection.ImmediateType.GetProperties*
+  name: GetProperties
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetProperties_
+  commentId: Overload:ImmediateReflection.ImmediateType.GetProperties
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.GetProperties
+  nameWithType: ImmediateType.GetProperties
+- uid: ImmediateReflection.ImmediateType.GetProperty(System.String)
+  name: GetProperty(String)
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetProperty_System_String_
+  commentId: M:ImmediateReflection.ImmediateType.GetProperty(System.String)
+  fullName: ImmediateReflection.ImmediateType.GetProperty(System.String)
+  nameWithType: ImmediateType.GetProperty(String)
+- uid: ImmediateReflection.ImmediateType.GetProperty*
+  name: GetProperty
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetProperty_
+  commentId: Overload:ImmediateReflection.ImmediateType.GetProperty
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.GetProperty
+  nameWithType: ImmediateType.GetProperty
+- uid: ImmediateReflection.ImmediateType.HasDefaultConstructor
+  name: HasDefaultConstructor
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_HasDefaultConstructor
+  commentId: P:ImmediateReflection.ImmediateType.HasDefaultConstructor
+  fullName: ImmediateReflection.ImmediateType.HasDefaultConstructor
+  nameWithType: ImmediateType.HasDefaultConstructor
+- uid: ImmediateReflection.ImmediateType.HasDefaultConstructor*
+  name: HasDefaultConstructor
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_HasDefaultConstructor_
+  commentId: Overload:ImmediateReflection.ImmediateType.HasDefaultConstructor
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.HasDefaultConstructor
+  nameWithType: ImmediateType.HasDefaultConstructor
+- uid: ImmediateReflection.ImmediateType.Item(System.String)
+  name: Item[String]
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Item_System_String_
+  commentId: P:ImmediateReflection.ImmediateType.Item(System.String)
+  name.vb: Item(String)
+  fullName: ImmediateReflection.ImmediateType.Item[System.String]
+  fullName.vb: ImmediateReflection.ImmediateType.Item(System.String)
+  nameWithType: ImmediateType.Item[String]
+  nameWithType.vb: ImmediateType.Item(String)
+- uid: ImmediateReflection.ImmediateType.Item*
+  name: Item
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Item_
+  commentId: Overload:ImmediateReflection.ImmediateType.Item
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.Item
+  nameWithType: ImmediateType.Item
+- uid: ImmediateReflection.ImmediateType.Members
+  name: Members
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Members
+  commentId: P:ImmediateReflection.ImmediateType.Members
+  fullName: ImmediateReflection.ImmediateType.Members
+  nameWithType: ImmediateType.Members
+- uid: ImmediateReflection.ImmediateType.Members*
+  name: Members
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Members_
+  commentId: Overload:ImmediateReflection.ImmediateType.Members
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.Members
+  nameWithType: ImmediateType.Members
+- uid: ImmediateReflection.ImmediateType.New
+  name: New()
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_New
+  commentId: M:ImmediateReflection.ImmediateType.New
+  fullName: ImmediateReflection.ImmediateType.New()
+  nameWithType: ImmediateType.New()
+- uid: ImmediateReflection.ImmediateType.New(System.Object[])
+  name: New(Object[])
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_New_System_Object___
+  commentId: M:ImmediateReflection.ImmediateType.New(System.Object[])
+  name.vb: New(Object())
+  fullName: ImmediateReflection.ImmediateType.New(System.Object[])
+  fullName.vb: ImmediateReflection.ImmediateType.New(System.Object())
+  nameWithType: ImmediateType.New(Object[])
+  nameWithType.vb: ImmediateType.New(Object())
+- uid: ImmediateReflection.ImmediateType.New*
+  name: New
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_New_
+  commentId: Overload:ImmediateReflection.ImmediateType.New
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.New
+  nameWithType: ImmediateType.New
+- uid: ImmediateReflection.ImmediateType.Properties
+  name: Properties
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Properties
+  commentId: P:ImmediateReflection.ImmediateType.Properties
+  fullName: ImmediateReflection.ImmediateType.Properties
+  nameWithType: ImmediateType.Properties
+- uid: ImmediateReflection.ImmediateType.Properties*
+  name: Properties
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Properties_
+  commentId: Overload:ImmediateReflection.ImmediateType.Properties
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.Properties
+  nameWithType: ImmediateType.Properties
+- uid: ImmediateReflection.ImmediateType.ToString
+  name: ToString()
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_ToString
+  commentId: M:ImmediateReflection.ImmediateType.ToString
+  fullName: ImmediateReflection.ImmediateType.ToString()
+  nameWithType: ImmediateType.ToString()
+- uid: ImmediateReflection.ImmediateType.ToString*
+  name: ToString
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_ToString_
+  commentId: Overload:ImmediateReflection.ImmediateType.ToString
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.ToString
+  nameWithType: ImmediateType.ToString
+- uid: ImmediateReflection.ImmediateType.TryNew(System.Object@,System.Exception@)
+  name: TryNew(out Object, out Exception)
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_TryNew_System_Object__System_Exception__
+  commentId: M:ImmediateReflection.ImmediateType.TryNew(System.Object@,System.Exception@)
+  name.vb: TryNew(ByRef Object, ByRef Exception)
+  fullName: ImmediateReflection.ImmediateType.TryNew(out System.Object, out System.Exception)
+  fullName.vb: ImmediateReflection.ImmediateType.TryNew(ByRef System.Object, ByRef System.Exception)
+  nameWithType: ImmediateType.TryNew(out Object, out Exception)
+  nameWithType.vb: ImmediateType.TryNew(ByRef Object, ByRef Exception)
+- uid: ImmediateReflection.ImmediateType.TryNew(System.Object@,System.Exception@,System.Object[])
+  name: TryNew(out Object, out Exception, Object[])
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_TryNew_System_Object__System_Exception__System_Object___
+  commentId: M:ImmediateReflection.ImmediateType.TryNew(System.Object@,System.Exception@,System.Object[])
+  name.vb: TryNew(ByRef Object, ByRef Exception, Object())
+  fullName: ImmediateReflection.ImmediateType.TryNew(out System.Object, out System.Exception, System.Object[])
+  fullName.vb: ImmediateReflection.ImmediateType.TryNew(ByRef System.Object, ByRef System.Exception, System.Object())
+  nameWithType: ImmediateType.TryNew(out Object, out Exception, Object[])
+  nameWithType.vb: ImmediateType.TryNew(ByRef Object, ByRef Exception, Object())
+- uid: ImmediateReflection.ImmediateType.TryNew*
+  name: TryNew
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_TryNew_
+  commentId: Overload:ImmediateReflection.ImmediateType.TryNew
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.TryNew
+  nameWithType: ImmediateType.TryNew
+- uid: ImmediateReflection.ImmediateType.Type
+  name: Type
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type
+  commentId: P:ImmediateReflection.ImmediateType.Type
+  fullName: ImmediateReflection.ImmediateType.Type
+  nameWithType: ImmediateType.Type
+- uid: ImmediateReflection.ImmediateType.Type*
+  name: Type
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type_
+  commentId: Overload:ImmediateReflection.ImmediateType.Type
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.Type
+  nameWithType: ImmediateType.Type
+- uid: ImmediateReflection.MemberExtensions
+  name: MemberExtensions
+  href: api/ImmediateReflection.MemberExtensions.html
+  commentId: T:ImmediateReflection.MemberExtensions
+  fullName: ImmediateReflection.MemberExtensions
+  nameWithType: MemberExtensions
+- uid: ImmediateReflection.MemberExtensions.CreateGetter*
+  name: CreateGetter
+  href: api/ImmediateReflection.MemberExtensions.html#ImmediateReflection_MemberExtensions_CreateGetter_
+  commentId: Overload:ImmediateReflection.MemberExtensions.CreateGetter
+  isSpec: "True"
+  fullName: ImmediateReflection.MemberExtensions.CreateGetter
+  nameWithType: MemberExtensions.CreateGetter
+- uid: ImmediateReflection.MemberExtensions.CreateGetter``1(System.Reflection.PropertyInfo)
+  name: CreateGetter<TOwner>(PropertyInfo)
+  href: api/ImmediateReflection.MemberExtensions.html#ImmediateReflection_MemberExtensions_CreateGetter__1_System_Reflection_PropertyInfo_
+  commentId: M:ImmediateReflection.MemberExtensions.CreateGetter``1(System.Reflection.PropertyInfo)
+  name.vb: CreateGetter(Of TOwner)(PropertyInfo)
+  fullName: ImmediateReflection.MemberExtensions.CreateGetter<TOwner>(System.Reflection.PropertyInfo)
+  fullName.vb: ImmediateReflection.MemberExtensions.CreateGetter(Of TOwner)(System.Reflection.PropertyInfo)
+  nameWithType: MemberExtensions.CreateGetter<TOwner>(PropertyInfo)
+  nameWithType.vb: MemberExtensions.CreateGetter(Of TOwner)(PropertyInfo)
+- uid: ImmediateReflection.MemberExtensions.CreateGetter``2(System.Reflection.PropertyInfo)
+  name: CreateGetter<TOwner, TProperty>(PropertyInfo)
+  href: api/ImmediateReflection.MemberExtensions.html#ImmediateReflection_MemberExtensions_CreateGetter__2_System_Reflection_PropertyInfo_
+  commentId: M:ImmediateReflection.MemberExtensions.CreateGetter``2(System.Reflection.PropertyInfo)
+  name.vb: CreateGetter(Of TOwner, TProperty)(PropertyInfo)
+  fullName: ImmediateReflection.MemberExtensions.CreateGetter<TOwner, TProperty>(System.Reflection.PropertyInfo)
+  fullName.vb: ImmediateReflection.MemberExtensions.CreateGetter(Of TOwner, TProperty)(System.Reflection.PropertyInfo)
+  nameWithType: MemberExtensions.CreateGetter<TOwner, TProperty>(PropertyInfo)
+  nameWithType.vb: MemberExtensions.CreateGetter(Of TOwner, TProperty)(PropertyInfo)
+- uid: ImmediateReflection.MemberExtensions.CreateSetter*
+  name: CreateSetter
+  href: api/ImmediateReflection.MemberExtensions.html#ImmediateReflection_MemberExtensions_CreateSetter_
+  commentId: Overload:ImmediateReflection.MemberExtensions.CreateSetter
+  isSpec: "True"
+  fullName: ImmediateReflection.MemberExtensions.CreateSetter
+  nameWithType: MemberExtensions.CreateSetter
+- uid: ImmediateReflection.MemberExtensions.CreateSetter``1(System.Reflection.PropertyInfo)
+  name: CreateSetter<TOwner>(PropertyInfo)
+  href: api/ImmediateReflection.MemberExtensions.html#ImmediateReflection_MemberExtensions_CreateSetter__1_System_Reflection_PropertyInfo_
+  commentId: M:ImmediateReflection.MemberExtensions.CreateSetter``1(System.Reflection.PropertyInfo)
+  name.vb: CreateSetter(Of TOwner)(PropertyInfo)
+  fullName: ImmediateReflection.MemberExtensions.CreateSetter<TOwner>(System.Reflection.PropertyInfo)
+  fullName.vb: ImmediateReflection.MemberExtensions.CreateSetter(Of TOwner)(System.Reflection.PropertyInfo)
+  nameWithType: MemberExtensions.CreateSetter<TOwner>(PropertyInfo)
+  nameWithType.vb: MemberExtensions.CreateSetter(Of TOwner)(PropertyInfo)
+- uid: ImmediateReflection.MemberExtensions.CreateSetter``2(System.Reflection.PropertyInfo)
+  name: CreateSetter<TOwner, TProperty>(PropertyInfo)
+  href: api/ImmediateReflection.MemberExtensions.html#ImmediateReflection_MemberExtensions_CreateSetter__2_System_Reflection_PropertyInfo_
+  commentId: M:ImmediateReflection.MemberExtensions.CreateSetter``2(System.Reflection.PropertyInfo)
+  name.vb: CreateSetter(Of TOwner, TProperty)(PropertyInfo)
+  fullName: ImmediateReflection.MemberExtensions.CreateSetter<TOwner, TProperty>(System.Reflection.PropertyInfo)
+  fullName.vb: ImmediateReflection.MemberExtensions.CreateSetter(Of TOwner, TProperty)(System.Reflection.PropertyInfo)
+  nameWithType: MemberExtensions.CreateSetter<TOwner, TProperty>(PropertyInfo)
+  nameWithType.vb: MemberExtensions.CreateSetter(Of TOwner, TProperty)(PropertyInfo)
+- uid: ImmediateReflection.MemberExtensions.TryCreateGetter*
+  name: TryCreateGetter
+  href: api/ImmediateReflection.MemberExtensions.html#ImmediateReflection_MemberExtensions_TryCreateGetter_
+  commentId: Overload:ImmediateReflection.MemberExtensions.TryCreateGetter
+  isSpec: "True"
+  fullName: ImmediateReflection.MemberExtensions.TryCreateGetter
+  nameWithType: MemberExtensions.TryCreateGetter
+- uid: ImmediateReflection.MemberExtensions.TryCreateGetter``1(System.Reflection.PropertyInfo,ImmediateReflection.GetterDelegate{``0}@)
+  name: TryCreateGetter<TOwner>(PropertyInfo, out GetterDelegate<TOwner>)
+  href: api/ImmediateReflection.MemberExtensions.html#ImmediateReflection_MemberExtensions_TryCreateGetter__1_System_Reflection_PropertyInfo_ImmediateReflection_GetterDelegate___0___
+  commentId: M:ImmediateReflection.MemberExtensions.TryCreateGetter``1(System.Reflection.PropertyInfo,ImmediateReflection.GetterDelegate{``0}@)
+  name.vb: TryCreateGetter(Of TOwner)(PropertyInfo, ByRef GetterDelegate(Of TOwner))
+  fullName: ImmediateReflection.MemberExtensions.TryCreateGetter<TOwner>(System.Reflection.PropertyInfo, out ImmediateReflection.GetterDelegate<TOwner>)
+  fullName.vb: ImmediateReflection.MemberExtensions.TryCreateGetter(Of TOwner)(System.Reflection.PropertyInfo, ByRef ImmediateReflection.GetterDelegate(Of TOwner))
+  nameWithType: MemberExtensions.TryCreateGetter<TOwner>(PropertyInfo, out GetterDelegate<TOwner>)
+  nameWithType.vb: MemberExtensions.TryCreateGetter(Of TOwner)(PropertyInfo, ByRef GetterDelegate(Of TOwner))
+- uid: ImmediateReflection.MemberExtensions.TryCreateGetter``2(System.Reflection.PropertyInfo,ImmediateReflection.GetterDelegate{``0,``1}@)
+  name: TryCreateGetter<TOwner, TProperty>(PropertyInfo, out GetterDelegate<TOwner, TProperty>)
+  href: api/ImmediateReflection.MemberExtensions.html#ImmediateReflection_MemberExtensions_TryCreateGetter__2_System_Reflection_PropertyInfo_ImmediateReflection_GetterDelegate___0___1___
+  commentId: M:ImmediateReflection.MemberExtensions.TryCreateGetter``2(System.Reflection.PropertyInfo,ImmediateReflection.GetterDelegate{``0,``1}@)
+  name.vb: TryCreateGetter(Of TOwner, TProperty)(PropertyInfo, ByRef GetterDelegate(Of TOwner, TProperty))
+  fullName: ImmediateReflection.MemberExtensions.TryCreateGetter<TOwner, TProperty>(System.Reflection.PropertyInfo, out ImmediateReflection.GetterDelegate<TOwner, TProperty>)
+  fullName.vb: ImmediateReflection.MemberExtensions.TryCreateGetter(Of TOwner, TProperty)(System.Reflection.PropertyInfo, ByRef ImmediateReflection.GetterDelegate(Of TOwner, TProperty))
+  nameWithType: MemberExtensions.TryCreateGetter<TOwner, TProperty>(PropertyInfo, out GetterDelegate<TOwner, TProperty>)
+  nameWithType.vb: MemberExtensions.TryCreateGetter(Of TOwner, TProperty)(PropertyInfo, ByRef GetterDelegate(Of TOwner, TProperty))
+- uid: ImmediateReflection.MemberExtensions.TryCreateSetter*
+  name: TryCreateSetter
+  href: api/ImmediateReflection.MemberExtensions.html#ImmediateReflection_MemberExtensions_TryCreateSetter_
+  commentId: Overload:ImmediateReflection.MemberExtensions.TryCreateSetter
+  isSpec: "True"
+  fullName: ImmediateReflection.MemberExtensions.TryCreateSetter
+  nameWithType: MemberExtensions.TryCreateSetter
+- uid: ImmediateReflection.MemberExtensions.TryCreateSetter``1(System.Reflection.PropertyInfo,ImmediateReflection.SetterDelegate{``0}@)
+  name: TryCreateSetter<TOwner>(PropertyInfo, out SetterDelegate<TOwner>)
+  href: api/ImmediateReflection.MemberExtensions.html#ImmediateReflection_MemberExtensions_TryCreateSetter__1_System_Reflection_PropertyInfo_ImmediateReflection_SetterDelegate___0___
+  commentId: M:ImmediateReflection.MemberExtensions.TryCreateSetter``1(System.Reflection.PropertyInfo,ImmediateReflection.SetterDelegate{``0}@)
+  name.vb: TryCreateSetter(Of TOwner)(PropertyInfo, ByRef SetterDelegate(Of TOwner))
+  fullName: ImmediateReflection.MemberExtensions.TryCreateSetter<TOwner>(System.Reflection.PropertyInfo, out ImmediateReflection.SetterDelegate<TOwner>)
+  fullName.vb: ImmediateReflection.MemberExtensions.TryCreateSetter(Of TOwner)(System.Reflection.PropertyInfo, ByRef ImmediateReflection.SetterDelegate(Of TOwner))
+  nameWithType: MemberExtensions.TryCreateSetter<TOwner>(PropertyInfo, out SetterDelegate<TOwner>)
+  nameWithType.vb: MemberExtensions.TryCreateSetter(Of TOwner)(PropertyInfo, ByRef SetterDelegate(Of TOwner))
+- uid: ImmediateReflection.MemberExtensions.TryCreateSetter``2(System.Reflection.PropertyInfo,ImmediateReflection.SetterDelegate{``0,``1}@)
+  name: TryCreateSetter<TOwner, TProperty>(PropertyInfo, out SetterDelegate<TOwner, TProperty>)
+  href: api/ImmediateReflection.MemberExtensions.html#ImmediateReflection_MemberExtensions_TryCreateSetter__2_System_Reflection_PropertyInfo_ImmediateReflection_SetterDelegate___0___1___
+  commentId: M:ImmediateReflection.MemberExtensions.TryCreateSetter``2(System.Reflection.PropertyInfo,ImmediateReflection.SetterDelegate{``0,``1}@)
+  name.vb: TryCreateSetter(Of TOwner, TProperty)(PropertyInfo, ByRef SetterDelegate(Of TOwner, TProperty))
+  fullName: ImmediateReflection.MemberExtensions.TryCreateSetter<TOwner, TProperty>(System.Reflection.PropertyInfo, out ImmediateReflection.SetterDelegate<TOwner, TProperty>)
+  fullName.vb: ImmediateReflection.MemberExtensions.TryCreateSetter(Of TOwner, TProperty)(System.Reflection.PropertyInfo, ByRef ImmediateReflection.SetterDelegate(Of TOwner, TProperty))
+  nameWithType: MemberExtensions.TryCreateSetter<TOwner, TProperty>(PropertyInfo, out SetterDelegate<TOwner, TProperty>)
+  nameWithType.vb: MemberExtensions.TryCreateSetter(Of TOwner, TProperty)(PropertyInfo, ByRef SetterDelegate(Of TOwner, TProperty))
+- uid: ImmediateReflection.ObjectWrapper
+  name: ObjectWrapper
+  href: api/ImmediateReflection.ObjectWrapper.html
+  commentId: T:ImmediateReflection.ObjectWrapper
+  fullName: ImmediateReflection.ObjectWrapper
+  nameWithType: ObjectWrapper
+- uid: ImmediateReflection.ObjectWrapper.#ctor(System.Object)
+  name: ObjectWrapper(Object)
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper__ctor_System_Object_
+  commentId: M:ImmediateReflection.ObjectWrapper.#ctor(System.Object)
+  fullName: ImmediateReflection.ObjectWrapper.ObjectWrapper(System.Object)
+  nameWithType: ObjectWrapper.ObjectWrapper(Object)
+- uid: ImmediateReflection.ObjectWrapper.#ctor*
+  name: ObjectWrapper
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper__ctor_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.#ctor
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.ObjectWrapper
+  nameWithType: ObjectWrapper.ObjectWrapper
+- uid: ImmediateReflection.ObjectWrapper.Equals(ImmediateReflection.ObjectWrapper)
+  name: Equals(ObjectWrapper)
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Equals_ImmediateReflection_ObjectWrapper_
+  commentId: M:ImmediateReflection.ObjectWrapper.Equals(ImmediateReflection.ObjectWrapper)
+  fullName: ImmediateReflection.ObjectWrapper.Equals(ImmediateReflection.ObjectWrapper)
+  nameWithType: ObjectWrapper.Equals(ObjectWrapper)
+- uid: ImmediateReflection.ObjectWrapper.Equals(System.Object)
+  name: Equals(Object)
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Equals_System_Object_
+  commentId: M:ImmediateReflection.ObjectWrapper.Equals(System.Object)
+  fullName: ImmediateReflection.ObjectWrapper.Equals(System.Object)
+  nameWithType: ObjectWrapper.Equals(Object)
+- uid: ImmediateReflection.ObjectWrapper.Equals*
+  name: Equals
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Equals_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.Equals
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.Equals
+  nameWithType: ObjectWrapper.Equals
+- uid: ImmediateReflection.ObjectWrapper.Fields
+  name: Fields
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Fields
+  commentId: P:ImmediateReflection.ObjectWrapper.Fields
+  fullName: ImmediateReflection.ObjectWrapper.Fields
+  nameWithType: ObjectWrapper.Fields
+- uid: ImmediateReflection.ObjectWrapper.Fields*
+  name: Fields
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Fields_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.Fields
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.Fields
+  nameWithType: ObjectWrapper.Fields
+- uid: ImmediateReflection.ObjectWrapper.GetField(System.String)
+  name: GetField(String)
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetField_System_String_
+  commentId: M:ImmediateReflection.ObjectWrapper.GetField(System.String)
+  fullName: ImmediateReflection.ObjectWrapper.GetField(System.String)
+  nameWithType: ObjectWrapper.GetField(String)
+- uid: ImmediateReflection.ObjectWrapper.GetField*
+  name: GetField
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetField_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.GetField
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.GetField
+  nameWithType: ObjectWrapper.GetField
+- uid: ImmediateReflection.ObjectWrapper.GetFields
+  name: GetFields()
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetFields
+  commentId: M:ImmediateReflection.ObjectWrapper.GetFields
+  fullName: ImmediateReflection.ObjectWrapper.GetFields()
+  nameWithType: ObjectWrapper.GetFields()
+- uid: ImmediateReflection.ObjectWrapper.GetFields*
+  name: GetFields
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetFields_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.GetFields
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.GetFields
+  nameWithType: ObjectWrapper.GetFields
+- uid: ImmediateReflection.ObjectWrapper.GetFieldValue(System.String)
+  name: GetFieldValue(String)
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetFieldValue_System_String_
+  commentId: M:ImmediateReflection.ObjectWrapper.GetFieldValue(System.String)
+  fullName: ImmediateReflection.ObjectWrapper.GetFieldValue(System.String)
+  nameWithType: ObjectWrapper.GetFieldValue(String)
+- uid: ImmediateReflection.ObjectWrapper.GetFieldValue*
+  name: GetFieldValue
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetFieldValue_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.GetFieldValue
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.GetFieldValue
+  nameWithType: ObjectWrapper.GetFieldValue
+- uid: ImmediateReflection.ObjectWrapper.GetHashCode
+  name: GetHashCode()
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetHashCode
+  commentId: M:ImmediateReflection.ObjectWrapper.GetHashCode
+  fullName: ImmediateReflection.ObjectWrapper.GetHashCode()
+  nameWithType: ObjectWrapper.GetHashCode()
+- uid: ImmediateReflection.ObjectWrapper.GetHashCode*
+  name: GetHashCode
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetHashCode_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.GetHashCode
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.GetHashCode
+  nameWithType: ObjectWrapper.GetHashCode
+- uid: ImmediateReflection.ObjectWrapper.GetMember(System.String)
+  name: GetMember(String)
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetMember_System_String_
+  commentId: M:ImmediateReflection.ObjectWrapper.GetMember(System.String)
+  fullName: ImmediateReflection.ObjectWrapper.GetMember(System.String)
+  nameWithType: ObjectWrapper.GetMember(String)
+- uid: ImmediateReflection.ObjectWrapper.GetMember*
+  name: GetMember
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetMember_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.GetMember
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.GetMember
+  nameWithType: ObjectWrapper.GetMember
+- uid: ImmediateReflection.ObjectWrapper.GetMembers
+  name: GetMembers()
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetMembers
+  commentId: M:ImmediateReflection.ObjectWrapper.GetMembers
+  fullName: ImmediateReflection.ObjectWrapper.GetMembers()
+  nameWithType: ObjectWrapper.GetMembers()
+- uid: ImmediateReflection.ObjectWrapper.GetMembers*
+  name: GetMembers
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetMembers_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.GetMembers
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.GetMembers
+  nameWithType: ObjectWrapper.GetMembers
+- uid: ImmediateReflection.ObjectWrapper.GetProperties
+  name: GetProperties()
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetProperties
+  commentId: M:ImmediateReflection.ObjectWrapper.GetProperties
+  fullName: ImmediateReflection.ObjectWrapper.GetProperties()
+  nameWithType: ObjectWrapper.GetProperties()
+- uid: ImmediateReflection.ObjectWrapper.GetProperties*
+  name: GetProperties
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetProperties_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.GetProperties
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.GetProperties
+  nameWithType: ObjectWrapper.GetProperties
+- uid: ImmediateReflection.ObjectWrapper.GetProperty(System.String)
+  name: GetProperty(String)
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetProperty_System_String_
+  commentId: M:ImmediateReflection.ObjectWrapper.GetProperty(System.String)
+  fullName: ImmediateReflection.ObjectWrapper.GetProperty(System.String)
+  nameWithType: ObjectWrapper.GetProperty(String)
+- uid: ImmediateReflection.ObjectWrapper.GetProperty*
+  name: GetProperty
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetProperty_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.GetProperty
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.GetProperty
+  nameWithType: ObjectWrapper.GetProperty
+- uid: ImmediateReflection.ObjectWrapper.GetPropertyValue(System.String)
+  name: GetPropertyValue(String)
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetPropertyValue_System_String_
+  commentId: M:ImmediateReflection.ObjectWrapper.GetPropertyValue(System.String)
+  fullName: ImmediateReflection.ObjectWrapper.GetPropertyValue(System.String)
+  nameWithType: ObjectWrapper.GetPropertyValue(String)
+- uid: ImmediateReflection.ObjectWrapper.GetPropertyValue*
+  name: GetPropertyValue
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_GetPropertyValue_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.GetPropertyValue
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.GetPropertyValue
+  nameWithType: ObjectWrapper.GetPropertyValue
+- uid: ImmediateReflection.ObjectWrapper.ImmediateType
+  name: ImmediateType
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_ImmediateType
+  commentId: P:ImmediateReflection.ObjectWrapper.ImmediateType
+  fullName: ImmediateReflection.ObjectWrapper.ImmediateType
+  nameWithType: ObjectWrapper.ImmediateType
+- uid: ImmediateReflection.ObjectWrapper.ImmediateType*
+  name: ImmediateType
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_ImmediateType_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.ImmediateType
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.ImmediateType
+  nameWithType: ObjectWrapper.ImmediateType
+- uid: ImmediateReflection.ObjectWrapper.Item(System.String)
+  name: Item[String]
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Item_System_String_
+  commentId: P:ImmediateReflection.ObjectWrapper.Item(System.String)
+  name.vb: Item(String)
+  fullName: ImmediateReflection.ObjectWrapper.Item[System.String]
+  fullName.vb: ImmediateReflection.ObjectWrapper.Item(System.String)
+  nameWithType: ObjectWrapper.Item[String]
+  nameWithType.vb: ObjectWrapper.Item(String)
+- uid: ImmediateReflection.ObjectWrapper.Item*
+  name: Item
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Item_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.Item
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.Item
+  nameWithType: ObjectWrapper.Item
+- uid: ImmediateReflection.ObjectWrapper.Members
+  name: Members
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Members
+  commentId: P:ImmediateReflection.ObjectWrapper.Members
+  fullName: ImmediateReflection.ObjectWrapper.Members
+  nameWithType: ObjectWrapper.Members
+- uid: ImmediateReflection.ObjectWrapper.Members*
+  name: Members
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Members_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.Members
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.Members
+  nameWithType: ObjectWrapper.Members
+- uid: ImmediateReflection.ObjectWrapper.Object
+  name: Object
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Object
+  commentId: P:ImmediateReflection.ObjectWrapper.Object
+  fullName: ImmediateReflection.ObjectWrapper.Object
+  nameWithType: ObjectWrapper.Object
+- uid: ImmediateReflection.ObjectWrapper.Object*
+  name: Object
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Object_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.Object
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.Object
+  nameWithType: ObjectWrapper.Object
+- uid: ImmediateReflection.ObjectWrapper.Properties
+  name: Properties
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Properties
+  commentId: P:ImmediateReflection.ObjectWrapper.Properties
+  fullName: ImmediateReflection.ObjectWrapper.Properties
+  nameWithType: ObjectWrapper.Properties
+- uid: ImmediateReflection.ObjectWrapper.Properties*
+  name: Properties
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Properties_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.Properties
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.Properties
+  nameWithType: ObjectWrapper.Properties
+- uid: ImmediateReflection.ObjectWrapper.SetFieldValue(System.String,System.Object)
+  name: SetFieldValue(String, Object)
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_SetFieldValue_System_String_System_Object_
+  commentId: M:ImmediateReflection.ObjectWrapper.SetFieldValue(System.String,System.Object)
+  fullName: ImmediateReflection.ObjectWrapper.SetFieldValue(System.String, System.Object)
+  nameWithType: ObjectWrapper.SetFieldValue(String, Object)
+- uid: ImmediateReflection.ObjectWrapper.SetFieldValue*
+  name: SetFieldValue
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_SetFieldValue_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.SetFieldValue
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.SetFieldValue
+  nameWithType: ObjectWrapper.SetFieldValue
+- uid: ImmediateReflection.ObjectWrapper.SetPropertyValue(System.String,System.Object)
+  name: SetPropertyValue(String, Object)
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_SetPropertyValue_System_String_System_Object_
+  commentId: M:ImmediateReflection.ObjectWrapper.SetPropertyValue(System.String,System.Object)
+  fullName: ImmediateReflection.ObjectWrapper.SetPropertyValue(System.String, System.Object)
+  nameWithType: ObjectWrapper.SetPropertyValue(String, Object)
+- uid: ImmediateReflection.ObjectWrapper.SetPropertyValue*
+  name: SetPropertyValue
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_SetPropertyValue_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.SetPropertyValue
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.SetPropertyValue
+  nameWithType: ObjectWrapper.SetPropertyValue
+- uid: ImmediateReflection.ObjectWrapper.ToString
+  name: ToString()
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_ToString
+  commentId: M:ImmediateReflection.ObjectWrapper.ToString
+  fullName: ImmediateReflection.ObjectWrapper.ToString()
+  nameWithType: ObjectWrapper.ToString()
+- uid: ImmediateReflection.ObjectWrapper.ToString*
+  name: ToString
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_ToString_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.ToString
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.ToString
+  nameWithType: ObjectWrapper.ToString
+- uid: ImmediateReflection.ObjectWrapper.Type
+  name: Type
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Type
+  commentId: P:ImmediateReflection.ObjectWrapper.Type
+  fullName: ImmediateReflection.ObjectWrapper.Type
+  nameWithType: ObjectWrapper.Type
+- uid: ImmediateReflection.ObjectWrapper.Type*
+  name: Type
+  href: api/ImmediateReflection.ObjectWrapper.html#ImmediateReflection_ObjectWrapper_Type_
+  commentId: Overload:ImmediateReflection.ObjectWrapper.Type
+  isSpec: "True"
+  fullName: ImmediateReflection.ObjectWrapper.Type
+  nameWithType: ObjectWrapper.Type
+- uid: ImmediateReflection.SetterDelegate
+  name: SetterDelegate
+  href: api/ImmediateReflection.SetterDelegate.html
+  commentId: T:ImmediateReflection.SetterDelegate
+  fullName: ImmediateReflection.SetterDelegate
+  nameWithType: SetterDelegate
+- uid: ImmediateReflection.SetterDelegate`1
+  name: SetterDelegate<TOwner>
+  href: api/ImmediateReflection.SetterDelegate-1.html
+  commentId: T:ImmediateReflection.SetterDelegate`1
+  name.vb: SetterDelegate(Of TOwner)
+  fullName: ImmediateReflection.SetterDelegate<TOwner>
+  fullName.vb: ImmediateReflection.SetterDelegate(Of TOwner)
+  nameWithType: SetterDelegate<TOwner>
+  nameWithType.vb: SetterDelegate(Of TOwner)
+- uid: ImmediateReflection.SetterDelegate`2
+  name: SetterDelegate<TOwner, TValue>
+  href: api/ImmediateReflection.SetterDelegate-2.html
+  commentId: T:ImmediateReflection.SetterDelegate`2
+  name.vb: SetterDelegate(Of TOwner, TValue)
+  fullName: ImmediateReflection.SetterDelegate<TOwner, TValue>
+  fullName.vb: ImmediateReflection.SetterDelegate(Of TOwner, TValue)
+  nameWithType: SetterDelegate<TOwner, TValue>
+  nameWithType.vb: SetterDelegate(Of TOwner, TValue)
+- uid: ImmediateReflection.StaticGetterDelegate`1
+  name: StaticGetterDelegate<TValue>
+  href: api/ImmediateReflection.StaticGetterDelegate-1.html
+  commentId: T:ImmediateReflection.StaticGetterDelegate`1
+  name.vb: StaticGetterDelegate(Of TValue)
+  fullName: ImmediateReflection.StaticGetterDelegate<TValue>
+  fullName.vb: ImmediateReflection.StaticGetterDelegate(Of TValue)
+  nameWithType: StaticGetterDelegate<TValue>
+  nameWithType.vb: StaticGetterDelegate(Of TValue)
+- uid: ImmediateReflection.StaticSetterDelegate`1
+  name: StaticSetterDelegate<TValue>
+  href: api/ImmediateReflection.StaticSetterDelegate-1.html
+  commentId: T:ImmediateReflection.StaticSetterDelegate`1
+  name.vb: StaticSetterDelegate(Of TValue)
+  fullName: ImmediateReflection.StaticSetterDelegate<TValue>
+  fullName.vb: ImmediateReflection.StaticSetterDelegate(Of TValue)
+  nameWithType: StaticSetterDelegate<TValue>
+  nameWithType.vb: StaticSetterDelegate(Of TValue)
+- uid: ImmediateReflection.TypeAccessor
+  name: TypeAccessor
+  href: api/ImmediateReflection.TypeAccessor.html
+  commentId: T:ImmediateReflection.TypeAccessor
+  fullName: ImmediateReflection.TypeAccessor
+  nameWithType: TypeAccessor
+- uid: ImmediateReflection.TypeAccessor.Get(System.Type)
+  name: Get(Type)
+  href: api/ImmediateReflection.TypeAccessor.html#ImmediateReflection_TypeAccessor_Get_System_Type_
+  commentId: M:ImmediateReflection.TypeAccessor.Get(System.Type)
+  fullName: ImmediateReflection.TypeAccessor.Get(System.Type)
+  nameWithType: TypeAccessor.Get(Type)
+- uid: ImmediateReflection.TypeAccessor.Get(System.Type,System.Boolean)
+  name: Get(Type, Boolean)
+  href: api/ImmediateReflection.TypeAccessor.html#ImmediateReflection_TypeAccessor_Get_System_Type_System_Boolean_
+  commentId: M:ImmediateReflection.TypeAccessor.Get(System.Type,System.Boolean)
+  fullName: ImmediateReflection.TypeAccessor.Get(System.Type, System.Boolean)
+  nameWithType: TypeAccessor.Get(Type, Boolean)
+- uid: ImmediateReflection.TypeAccessor.Get(System.Type,System.Reflection.BindingFlags)
+  name: Get(Type, BindingFlags)
+  href: api/ImmediateReflection.TypeAccessor.html#ImmediateReflection_TypeAccessor_Get_System_Type_System_Reflection_BindingFlags_
+  commentId: M:ImmediateReflection.TypeAccessor.Get(System.Type,System.Reflection.BindingFlags)
+  fullName: ImmediateReflection.TypeAccessor.Get(System.Type, System.Reflection.BindingFlags)
+  nameWithType: TypeAccessor.Get(Type, BindingFlags)
+- uid: ImmediateReflection.TypeAccessor.Get*
+  name: Get
+  href: api/ImmediateReflection.TypeAccessor.html#ImmediateReflection_TypeAccessor_Get_
+  commentId: Overload:ImmediateReflection.TypeAccessor.Get
+  isSpec: "True"
+  fullName: ImmediateReflection.TypeAccessor.Get
+  nameWithType: TypeAccessor.Get
+- uid: ImmediateReflection.TypeAccessor.Get``1
+  name: Get<T>()
+  href: api/ImmediateReflection.TypeAccessor.html#ImmediateReflection_TypeAccessor_Get__1
+  commentId: M:ImmediateReflection.TypeAccessor.Get``1
+  name.vb: Get(Of T)()
+  fullName: ImmediateReflection.TypeAccessor.Get<T>()
+  fullName.vb: ImmediateReflection.TypeAccessor.Get(Of T)()
+  nameWithType: TypeAccessor.Get<T>()
+  nameWithType.vb: TypeAccessor.Get(Of T)()
+- uid: ImmediateReflection.TypeAccessor.Get``1(System.Boolean)
+  name: Get<T>(Boolean)
+  href: api/ImmediateReflection.TypeAccessor.html#ImmediateReflection_TypeAccessor_Get__1_System_Boolean_
+  commentId: M:ImmediateReflection.TypeAccessor.Get``1(System.Boolean)
+  name.vb: Get(Of T)(Boolean)
+  fullName: ImmediateReflection.TypeAccessor.Get<T>(System.Boolean)
+  fullName.vb: ImmediateReflection.TypeAccessor.Get(Of T)(System.Boolean)
+  nameWithType: TypeAccessor.Get<T>(Boolean)
+  nameWithType.vb: TypeAccessor.Get(Of T)(Boolean)
+- uid: ImmediateReflection.TypeAccessor.Get``1(System.Reflection.BindingFlags)
+  name: Get<T>(BindingFlags)
+  href: api/ImmediateReflection.TypeAccessor.html#ImmediateReflection_TypeAccessor_Get__1_System_Reflection_BindingFlags_
+  commentId: M:ImmediateReflection.TypeAccessor.Get``1(System.Reflection.BindingFlags)
+  name.vb: Get(Of T)(BindingFlags)
+  fullName: ImmediateReflection.TypeAccessor.Get<T>(System.Reflection.BindingFlags)
+  fullName.vb: ImmediateReflection.TypeAccessor.Get(Of T)(System.Reflection.BindingFlags)
+  nameWithType: TypeAccessor.Get<T>(BindingFlags)
+  nameWithType.vb: TypeAccessor.Get(Of T)(BindingFlags)
