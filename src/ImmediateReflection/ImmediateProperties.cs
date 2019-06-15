@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-#if SUPPORTS_LINQ
+#if SUPPORTS_SYSTEM_CORE
 using System.Linq;
 #endif
 using System.Reflection;
@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 #endif
 using JetBrains.Annotations;
-#if !SUPPORTS_STRING_FULL_FEATURES || !SUPPORTS_LINQ
+#if !SUPPORTS_STRING_FULL_FEATURES || !SUPPORTS_SYSTEM_CORE
 using ImmediateReflection.Utils;
 #endif
 
@@ -35,7 +35,7 @@ namespace ImmediateReflection
             if (properties is null)
                 throw new ArgumentNullException(nameof(properties));
 
-#if SUPPORTS_LINQ
+#if SUPPORTS_SYSTEM_CORE
             _properties = properties.ToDictionary(
                 property => property?.Name ?? throw new ArgumentNullException(nameof(property), "A property is null."),
                 property => new ImmediateProperty(property));
@@ -95,7 +95,7 @@ namespace ImmediateReflection
             if (_properties.Count != other._properties.Count)
                 return false;
 
-#if SUPPORTS_LINQ
+#if SUPPORTS_SYSTEM_CORE
             return !_properties.Except(other._properties).Any();
 #else
             return !EnumerableUtils.Except(_properties, other._properties)

@@ -1,6 +1,10 @@
 #if SUPPORTS_CACHING
+#if SUPPORTS_SYSTEM_CORE
 using System;
-using System.Collections.Concurrent;
+#else
+using ImmediateReflection.Utils;
+#endif
+using System.Collections;
 using JetBrains.Annotations;
 
 namespace ImmediateReflection
@@ -13,7 +17,7 @@ namespace ImmediateReflection
     internal class MemoryCache<TKey, TValue>
     {
         [NotNull]
-        private readonly ConcurrentDictionary<TKey, Lazy<TValue>> _cache = new ConcurrentDictionary<TKey, Lazy<TValue>>();
+        private readonly Hashtable _cache = new Hashtable();
 
         /// <summary>
         /// Gets the cached value corresponding to the given <paramref name="key"/> if already cached, or creates
@@ -26,9 +30,22 @@ namespace ImmediateReflection
         [ContractAnnotation("key:null => halt;valueFactory:null => halt")]
         public TValue GetOrCreate([NotNull] TKey key, [NotNull] Func<TValue> valueFactory)
         {
-            return _cache.GetOrAdd(
-                key,
-                k => new Lazy<TValue>(valueFactory)).Value;
+            // ReSharper disable once InconsistentlySynchronizedField, Justification: HashTable is thread safe for reading
+            var cachedValue = (TValue)_cache[key];
+            if (cachedValue != null)
+                return cachedValue;
+
+            lock (_cache)
+            {
+                // Double check (init during lock wait)
+                cachedValue = (TValue)_cache[key];
+                if (cachedValue != null)
+                    return cachedValue;
+
+                cachedValue = valueFactory();
+                _cache[key] = cachedValue;
+                return cachedValue;
+            }
         }
     }
 }

@@ -100,23 +100,23 @@ Misc:
   <!-- Targets defines -->
   <PropertyGroup Condition="'$(TargetFramework)'=='net20'">
     <AssemblyTitle>ImmediateReflection .NET Framework 2.0</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NET20;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET20;SUPPORTS_CACHING;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net35'">
     <AssemblyTitle>ImmediateReflection .NET Framework 3.5</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NET35;SUPPORTS_LINQ;SUPPORTS_EXTENSIONS;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET35;SUPPORTS_SYSTEM_CORE;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net40'">
     <AssemblyTitle>ImmediateReflection .NET Framework 4.0</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NET40;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_LINQ;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LAZY;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET40;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_SYSTEM_CORE;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LAZY;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net45'">
     <AssemblyTitle>ImmediateReflection .NET Framework 4.5</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NET45;SUPPORTS_AGGRESSIVE_INLINING;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_LINQ;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LAZY;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET45;SUPPORTS_AGGRESSIVE_INLINING;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_SYSTEM_CORE;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LAZY;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <AssemblyTitle>ImmediateReflection .NET Standard 2.0</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NETSTANDARD2_0;SUPPORTS_AGGRESSIVE_INLINING;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_LINQ;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LAZY;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NETSTANDARD2_0;SUPPORTS_AGGRESSIVE_INLINING;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_SYSTEM_CORE;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LAZY;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
 
   <!-- Dependencies -->  

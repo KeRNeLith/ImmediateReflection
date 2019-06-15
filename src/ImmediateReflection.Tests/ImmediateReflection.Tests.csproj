@@ -50,40 +50,40 @@
     <DefineConstants>$(DefineConstants);NET30;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net35'">
-    <DefineConstants>$(DefineConstants);NET35;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET35;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net40'">
-    <DefineConstants>$(DefineConstants);NET40;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET40;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net45'">
-    <DefineConstants>$(DefineConstants);NET45;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET45;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net451'">
-    <DefineConstants>$(DefineConstants);NET451;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET451;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net452'">
-    <DefineConstants>$(DefineConstants);NET452;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET452;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net46'">
-    <DefineConstants>$(DefineConstants);NET46;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET46;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net461'">
-    <DefineConstants>$(DefineConstants);NET461;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET461;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net462'">
-    <DefineConstants>$(DefineConstants);NET462;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET462;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net47'">
-    <DefineConstants>$(DefineConstants);NET47;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET47;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net471'">
-    <DefineConstants>$(DefineConstants);NET471;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET471;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net472'">
-    <DefineConstants>$(DefineConstants);NET472;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET472;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">
-    <DefineConstants>$(DefineConstants);NETCOREAPP2_0;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LINQ;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NETCOREAPP2_0;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
 
   <!-- Dependencies -->

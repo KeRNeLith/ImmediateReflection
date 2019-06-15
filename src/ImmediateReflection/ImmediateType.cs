@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-#if SUPPORTS_LINQ
+#if SUPPORTS_SYSTEM_CORE
 using System.Linq;
 #else
 using static ImmediateReflection.Utils.EnumerableUtils;
@@ -86,7 +86,7 @@ namespace ImmediateReflection
             if (type.IsEnum)
             {
                 FieldInfo[] enumFields = type.GetFields();
-#if SUPPORTS_LINQ
+#if SUPPORTS_SYSTEM_CORE
                 FieldInfo enumValue = enumFields.First(field => !field.IsStatic);               // Current enum value field (not static)
                 IEnumerable<FieldInfo> enumValues = enumFields.Where(field => field.IsStatic);  // Enum values (static)
 #else
@@ -95,7 +95,7 @@ namespace ImmediateReflection
 #endif
                 Fields = new ImmediateFields(type, enumValue, enumValues);
 
-#if SUPPORTS_LINQ
+#if SUPPORTS_SYSTEM_CORE
                 Properties = new ImmediateProperties(Enumerable.Empty<PropertyInfo>());
 #else
                 Properties = new ImmediateProperties(Empty<PropertyInfo>());

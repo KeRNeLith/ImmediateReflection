@@ -1,4 +1,4 @@
-#if !SUPPORTS_LINQ
+#if !SUPPORTS_SYSTEM_CORE
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;

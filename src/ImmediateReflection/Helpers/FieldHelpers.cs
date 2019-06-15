@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-#if SUPPORTS_LINQ
+#if SUPPORTS_SYSTEM_CORE
 using System.Linq;
 #else
 using static ImmediateReflection.Utils.EnumerableUtils;
@@ -39,7 +39,7 @@ namespace ImmediateReflection.Utils
         [ContractAnnotation("fields:null => halt")]
         internal static IEnumerable<FieldInfo> IgnoreBackingFields([NotNull, ItemNotNull] IEnumerable<FieldInfo> fields)
         {
-#if SUPPORTS_LINQ
+#if SUPPORTS_SYSTEM_CORE
             return fields.Where(field => !IsBackingField(field));
 #else
             return Where(fields, field => !IsBackingField(field));

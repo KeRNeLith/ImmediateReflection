@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-#if SUPPORTS_LINQ
+#if SUPPORTS_SYSTEM_CORE
 using System.Linq;
 #else
 using static ImmediateReflection.Utils.EnumerableUtils;
@@ -169,7 +169,7 @@ namespace ImmediateReflection
             IEnumerable<TAttribute> FindAttributes(Dictionary<Type, List<Attribute>> attributesDictionary)
             {
                 if (attributesDictionary.TryGetValue(typeof(TAttribute), out List<Attribute> attributes))
-#if SUPPORTS_LINQ
+#if SUPPORTS_SYSTEM_CORE
                     return attributes.OfType<TAttribute>();
                 return Enumerable.Empty<TAttribute>();
 #else
@@ -201,7 +201,7 @@ namespace ImmediateReflection
             IEnumerable<Attribute> FindAttributes(Dictionary<Type, List<Attribute>> attributesDictionary)
             {
                 if (attributesDictionary.TryGetValue(attributeType, out List<Attribute> attributes))
-#if SUPPORTS_LINQ
+#if SUPPORTS_SYSTEM_CORE
                     return attributes.AsEnumerable();
                 return Enumerable.Empty<Attribute>();
 #else

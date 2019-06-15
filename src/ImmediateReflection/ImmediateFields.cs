@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-#if SUPPORTS_LINQ
+#if SUPPORTS_SYSTEM_CORE
 using System.Linq;
 #endif
 using System.Reflection;
@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 #endif
 using JetBrains.Annotations;
-#if !SUPPORTS_STRING_FULL_FEATURES || !SUPPORTS_LINQ
+#if !SUPPORTS_STRING_FULL_FEATURES || !SUPPORTS_SYSTEM_CORE
 using ImmediateReflection.Utils;
 #endif
 
@@ -35,7 +35,7 @@ namespace ImmediateReflection
             if (fields is null)
                 throw new ArgumentNullException(nameof(fields));
 
-#if SUPPORTS_LINQ
+#if SUPPORTS_SYSTEM_CORE
             _fields = fields.ToDictionary(
                 field => field?.Name ?? throw new ArgumentNullException(nameof(field), "A field is null."),
                 field => new ImmediateField(field));
@@ -69,7 +69,7 @@ namespace ImmediateReflection
             if (enumValues is null)
                 throw new ArgumentNullException(nameof(enumValues));
 
-#if SUPPORTS_LINQ
+#if SUPPORTS_SYSTEM_CORE
             _fields = enumValues.ToDictionary(
                 field => field?.Name ?? throw new ArgumentNullException(nameof(field), "An enum field is null."),
                 field => new ImmediateField(field, enumType));
@@ -130,7 +130,7 @@ namespace ImmediateReflection
             if (_fields.Count != other._fields.Count)
                 return false;
 
-#if SUPPORTS_LINQ
+#if SUPPORTS_SYSTEM_CORE
             return !_fields.Except(other._fields).Any();
 #else
             return !EnumerableUtils.Except(_fields, other._fields)
