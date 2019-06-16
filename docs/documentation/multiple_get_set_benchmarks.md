@@ -20,7 +20,7 @@ The Field or Property cache implementations consider as a cache the fact of havi
 
 ## Results
 
-*Get a field value*
+### Get a field value
 
 |                  Method |       Mean |     Error |    StdDev | Ratio | RatioSD |
 |------------------------ |-----------:|----------:|----------:|------:|--------:|
@@ -30,7 +30,7 @@ The Field or Property cache implementations consider as a cache the fact of havi
 |     GetFastMember_Field |   757.3 ns | 14.700 ns | 21.082 ns |  1.34 |    0.05 |
 | **GetImmediateField_Field** |   **585.8 ns** |  **4.471 ns** |  **3.734 ns** |  **1.03** |    **0.02** |
 
-*Set a field value*
+### Set a field value
 
 |                  Method |       Mean |     Error |    StdDev |  Ratio | RatioSD |
 |------------------------ |-----------:|----------:|----------:|-------:|--------:|
@@ -42,7 +42,7 @@ The Field or Property cache implementations consider as a cache the fact of havi
 
 ---
 
-*Get a property value*
+### Get a property value
 
 |                        Method |       Mean |     Error |    StdDev | Ratio | RatioSD |
 |------------------------------ |-----------:|----------:|----------:|------:|--------:|
@@ -59,7 +59,7 @@ The Field or Property cache implementations consider as a cache the fact of havi
 Note that **ImmediateReflection** performs really well if we take into account that the only better benchmark concern implementation using strong types considered as known which is in fact not the case in the mindset of **ImmediateReflection**.
 Indeed **ImmediateReflection** must work with `object` in a first approach and not the real property type (see `PropertyInfo.GetValue` as reference).
 
-*Set a property value*
+### Set a property value
 
 |                        Method |         Mean |     Error |    StdDev |    Ratio | RatioSD |
 |------------------------------ |-------------:|----------:|----------:|---------:|--------:|

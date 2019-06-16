@@ -15,12 +15,7 @@ Especially the usage of constructor, members accessors (get/set) and attributes.
 
 It provides these features while trying to keep an API as similar as the standard Reflection API (**Fully documented** and **ReSharper compliant**).
 
-To see how **powerful** it can be **[here](https://github.com/KeRNeLith/ImmediateReflection/blob/master/Benchmarks.md)** are some benchmarks of the library.
-
-Other benchmarks:
-- multiple get/set of multiple types to avoid eventual processor caching issues, see [there](https://github.com/KeRNeLith/ImmediateReflection/blob/master/Benchmarks_Multi.md).
-- constructor calls [there](https://github.com/KeRNeLith/ImmediateReflection/blob/master/Benchmarks_Constructor.md).
-- multiple get of attribute [there](https://github.com/KeRNeLith/ImmediateReflection/blob/master/Benchmarks_Attributes.md).
+To see how **powerful** the library is you can consult some benchmarks **[there](https://kernelith.github.io/ImmediateReflection/documentation/benchmarks.html)**.
 
 The library is highly tested to cover as much as possible real cases, because using Reflection is some kind of core code and must be reliable to build on it.
 

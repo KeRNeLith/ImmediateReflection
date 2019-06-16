@@ -18,7 +18,7 @@ The Field or Property cache implementations consider as a cache the fact of havi
 
 ## Results
 
-*Get a field value*
+### Get a field value
 
 |                  Method |        Mean |     Error |    StdDev |      Median | Ratio | RatioSD |
 |------------------------ |------------:|----------:|----------:|------------:|------:|--------:|
@@ -30,7 +30,7 @@ The Field or Property cache implementations consider as a cache the fact of havi
 
 **GetDirect_Field** is a too quick action to be benchmark, considering it as immediate!
 
-*Set a field value*
+### Set a field value
 
 |                  Method |        Mean |     Error |    StdDev | Ratio | RatioSD |
 |------------------------ |------------:|----------:|----------:|------:|--------:|
@@ -42,7 +42,7 @@ The Field or Property cache implementations consider as a cache the fact of havi
 
 ---
 
-*Get a property value*
+### Get a property value
 
 |                        Method |        Mean |      Error |     StdDev | Ratio | RatioSD |
 |------------------------------ |------------:|-----------:|-----------:|------:|--------:|
@@ -58,7 +58,7 @@ The Field or Property cache implementations consider as a cache the fact of havi
 
 **GetDirect_Property** is a too quick action to be benchmark, considering it as immediate!
 
-*Set a property value*
+### Set a property value
 
 |                        Method |       Mean |     Error |    StdDev |  Ratio | RatioSD |
 |------------------------------ |-----------:|----------:|----------:|-------:|--------:|
