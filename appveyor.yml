@@ -8,6 +8,7 @@ pull_requests:
 environment:
   SONARQUBE_TOKEN:
     secure: IDwa0NHtLUrg2jV3JZetUqUCGTgv3/UcZyYtMGvo7Pro1s9OmYTPjGMd6Vmx7Ktx
+  DocFXVersion: 2.42.4
   NUnitConsoleVersion: 3.10.0
   OpenCoverVersion: 4.7.922
   CoverallsVersion: 1.0.0
@@ -63,7 +64,7 @@ before_build:
 # Chocolatey SonarQube
   - cinst msbuild-sonarqube-runner
 # Chocolatey DocFX
-  - cinst docfx
+  - ps: cinst docfx --version $env:DocFXVersion
 # NuGet restore
   - nuget restore -verbosity detailed
 
