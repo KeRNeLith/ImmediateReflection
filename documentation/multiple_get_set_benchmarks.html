@@ -1,0 +1,413 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Benchmarks </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Benchmarks ">
+    <meta name="generator" content="docfx 2.42.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="benchmarks">Benchmarks</h1>
+
+<p>Benchmarks have been implemented with <a href="https://github.com/dotnet/BenchmarkDotNet">BenchmarkDotNet</a>.</p>
+<p>These benchmarks have been done by making multiple get or set on multiple types to avoid caching of the same operation.</p>
+<h2 id="configuration">Configuration</h2>
+<pre><code class="lang-ini">BenchmarkDotNet=v0.11.5
+OS=Windows 10.0.17134.765 (1803/April2018Update/Redstone4)
+Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
+  [Host]     : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3416.0
+  DefaultJob : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3416.0
+</code></pre>
+<h2 id="implementation-details">Implementation details</h2>
+<p>The Field or Property cache implementations consider as a cache the fact of having the right <code>PropertyInfo</code> ready to use with GetValue/SetValue.</p>
+<h2 id="results">Results</h2>
+<h3 id="get-a-field-value">Get a field value</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">StdDev</th>
+<th style="text-align: right;">Ratio</th>
+<th style="text-align: right;">RatioSD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GetDirect_Field</td>
+<td style="text-align: right;">570.0 ns</td>
+<td style="text-align: right;">10.163 ns</td>
+<td style="text-align: right;">9.506 ns</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr>
+<td>GetFieldInfo_Field</td>
+<td style="text-align: right;">1,010.4 ns</td>
+<td style="text-align: right;">30.228 ns</td>
+<td style="text-align: right;">32.344 ns</td>
+<td style="text-align: right;">1.78</td>
+<td style="text-align: right;">0.07</td>
+</tr>
+<tr>
+<td>GetFieldInfoCache_Field</td>
+<td style="text-align: right;">836.6 ns</td>
+<td style="text-align: right;">10.933 ns</td>
+<td style="text-align: right;">10.227 ns</td>
+<td style="text-align: right;">1.47</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr>
+<td>GetFastMember_Field</td>
+<td style="text-align: right;">757.3 ns</td>
+<td style="text-align: right;">14.700 ns</td>
+<td style="text-align: right;">21.082 ns</td>
+<td style="text-align: right;">1.34</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr>
+<td><strong>GetImmediateField_Field</strong></td>
+<td style="text-align: right;"><strong>585.8 ns</strong></td>
+<td style="text-align: right;"><strong>4.471 ns</strong></td>
+<td style="text-align: right;"><strong>3.734 ns</strong></td>
+<td style="text-align: right;"><strong>1.03</strong></td>
+<td style="text-align: right;"><strong>0.02</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="set-a-field-value">Set a field value</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">StdDev</th>
+<th style="text-align: right;">Ratio</th>
+<th style="text-align: right;">RatioSD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SetDirect_Field</td>
+<td style="text-align: right;">1.228 ns</td>
+<td style="text-align: right;">0.0028 ns</td>
+<td style="text-align: right;">0.0027 ns</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr>
+<td>SetFieldInfo_Field</td>
+<td style="text-align: right;">527.551 ns</td>
+<td style="text-align: right;">0.9556 ns</td>
+<td style="text-align: right;">0.8471 ns</td>
+<td style="text-align: right;">429.50</td>
+<td style="text-align: right;">1.26</td>
+</tr>
+<tr>
+<td>SetFieldInfoCache_Field</td>
+<td style="text-align: right;">349.815 ns</td>
+<td style="text-align: right;">0.6424 ns</td>
+<td style="text-align: right;">0.5695 ns</td>
+<td style="text-align: right;">284.80</td>
+<td style="text-align: right;">0.85</td>
+</tr>
+<tr>
+<td>SetFastMember_Field</td>
+<td style="text-align: right;">156.822 ns</td>
+<td style="text-align: right;">1.6745 ns</td>
+<td style="text-align: right;">1.5663 ns</td>
+<td style="text-align: right;">127.69</td>
+<td style="text-align: right;">1.36</td>
+</tr>
+<tr>
+<td><strong>SetImmediateField_Field</strong></td>
+<td style="text-align: right;"><strong>19.925 ns</strong></td>
+<td style="text-align: right;"><strong>0.3469 ns</strong></td>
+<td style="text-align: right;"><strong>0.3075 ns</strong></td>
+<td style="text-align: right;"><strong>16.22</strong></td>
+<td style="text-align: right;"><strong>0.25</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="get-a-property-value">Get a property value</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">StdDev</th>
+<th style="text-align: right;">Ratio</th>
+<th style="text-align: right;">RatioSD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GetDirect_Property</td>
+<td style="text-align: right;">597.3 ns</td>
+<td style="text-align: right;">16.650 ns</td>
+<td style="text-align: right;">16.352 ns</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr>
+<td>GetDelegate_Property</td>
+<td style="text-align: right;">592.1 ns</td>
+<td style="text-align: right;">2.049 ns</td>
+<td style="text-align: right;">1.600 ns</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr>
+<td>GetDynamicDelegate_Property</td>
+<td style="text-align: right;">3,221.4 ns</td>
+<td style="text-align: right;">29.153 ns</td>
+<td style="text-align: right;">25.843 ns</td>
+<td style="text-align: right;">5.38</td>
+<td style="text-align: right;">0.15</td>
+</tr>
+<tr>
+<td>GetPropertyInfo_Property</td>
+<td style="text-align: right;">1,313.1 ns</td>
+<td style="text-align: right;">2.735 ns</td>
+<td style="text-align: right;">2.424 ns</td>
+<td style="text-align: right;">2.19</td>
+<td style="text-align: right;">0.06</td>
+</tr>
+<tr>
+<td>GetPropertyInfoCache_Property</td>
+<td style="text-align: right;">1,087.3 ns</td>
+<td style="text-align: right;">19.480 ns</td>
+<td style="text-align: right;">17.269 ns</td>
+<td style="text-align: right;">1.82</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr>
+<td>GetSigilEmit_Property</td>
+<td style="text-align: right;">598.7 ns</td>
+<td style="text-align: right;">3.547 ns</td>
+<td style="text-align: right;">2.962 ns</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr>
+<td>GetExpression_Property</td>
+<td style="text-align: right;">638.6 ns</td>
+<td style="text-align: right;">3.694 ns</td>
+<td style="text-align: right;">3.456 ns</td>
+<td style="text-align: right;">1.07</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr>
+<td>GetFastMember_Property</td>
+<td style="text-align: right;">771.0 ns</td>
+<td style="text-align: right;">2.561 ns</td>
+<td style="text-align: right;">2.395 ns</td>
+<td style="text-align: right;">1.29</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr>
+<td><strong>GetImmediateProperty_Property</strong></td>
+<td style="text-align: right;"><strong>620.8 ns</strong></td>
+<td style="text-align: right;"><strong>4.857 ns</strong></td>
+<td style="text-align: right;"><strong>4.056 ns</strong></td>
+<td style="text-align: right;"><strong>1.04</strong></td>
+<td style="text-align: right;"><strong>0.03</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Note that <strong>ImmediateReflection</strong> performs really well if we take into account that the only better benchmark concern implementation using strong types considered as known which is in fact not the case in the mindset of <strong>ImmediateReflection</strong>.
+Indeed <strong>ImmediateReflection</strong> must work with <code>object</code> in a first approach and not the real property type (see <code>PropertyInfo.GetValue</code> as reference).</p>
+<h3 id="set-a-property-value">Set a property value</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">StdDev</th>
+<th style="text-align: right;">Ratio</th>
+<th style="text-align: right;">RatioSD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SetDirect_Property</td>
+<td style="text-align: right;">1.238 ns</td>
+<td style="text-align: right;">0.0032 ns</td>
+<td style="text-align: right;">0.0029 ns</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr>
+<td>SetDelegate_Property</td>
+<td style="text-align: right;">9.552 ns</td>
+<td style="text-align: right;">0.0900 ns</td>
+<td style="text-align: right;">0.0841 ns</td>
+<td style="text-align: right;">7.71</td>
+<td style="text-align: right;">0.08</td>
+</tr>
+<tr>
+<td>SetDynamicDelegate_Property</td>
+<td style="text-align: right;">2,565.402 ns</td>
+<td style="text-align: right;">9.1200 ns</td>
+<td style="text-align: right;">8.0847 ns</td>
+<td style="text-align: right;">2,071.69</td>
+<td style="text-align: right;">9.37</td>
+</tr>
+<tr>
+<td>SetPropertyInfo_Property</td>
+<td style="text-align: right;">889.661 ns</td>
+<td style="text-align: right;">7.2569 ns</td>
+<td style="text-align: right;">6.4331 ns</td>
+<td style="text-align: right;">718.44</td>
+<td style="text-align: right;">4.80</td>
+</tr>
+<tr>
+<td>SetPropertyInfoCache_Property</td>
+<td style="text-align: right;">644.607 ns</td>
+<td style="text-align: right;">2.8729 ns</td>
+<td style="text-align: right;">2.5467 ns</td>
+<td style="text-align: right;">520.55</td>
+<td style="text-align: right;">2.79</td>
+</tr>
+<tr>
+<td>SetSigilEmit_Property</td>
+<td style="text-align: right;">9.148 ns</td>
+<td style="text-align: right;">0.0526 ns</td>
+<td style="text-align: right;">0.0492 ns</td>
+<td style="text-align: right;">7.38</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr>
+<td>SetExpression_Property</td>
+<td style="text-align: right;">33.259 ns</td>
+<td style="text-align: right;">0.2909 ns</td>
+<td style="text-align: right;">0.2578 ns</td>
+<td style="text-align: right;">26.86</td>
+<td style="text-align: right;">0.24</td>
+</tr>
+<tr>
+<td>SetFastMember_Property</td>
+<td style="text-align: right;">173.049 ns</td>
+<td style="text-align: right;">1.0150 ns</td>
+<td style="text-align: right;">0.8998 ns</td>
+<td style="text-align: right;">139.75</td>
+<td style="text-align: right;">0.91</td>
+</tr>
+<tr>
+<td><strong>SetImmediateProperty_Property</strong></td>
+<td style="text-align: right;"><strong>20.275 ns</strong></td>
+<td style="text-align: right;"><strong>0.1285 ns</strong></td>
+<td style="text-align: right;"><strong>0.1202 ns</strong></td>
+<td style="text-align: right;"><strong>16.38</strong></td>
+<td style="text-align: right;"><strong>0.08</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Note that <strong>ImmediateReflection</strong> performs really well if we take into account that the only better benchmark concern implementation using strong types considered as known which is in fact not the case in the mindset of <strong>ImmediateReflection</strong>.
+Indeed <strong>ImmediateReflection</strong> must work with <code>object</code> in a first approach and not the real property type (see <code>PropertyInfo.SetValue</code> as reference).</p>
+<hr>
+<p>As expected <strong>ImmediateReflection</strong> library provides get/set access in a very fast way, while also keeping the standard interface of .NET Reflection.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/docs/documentation/multiple_get_set_benchmarks.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

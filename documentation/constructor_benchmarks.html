@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Benchmarks </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Benchmarks ">
+    <meta name="generator" content="docfx 2.42.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="benchmarks">Benchmarks</h1>
+
+<p>Benchmarks have been implemented with <a href="https://github.com/dotnet/BenchmarkDotNet">BenchmarkDotNet</a>.</p>
+<h2 id="configuration">Configuration</h2>
+<pre><code class="lang-ini">BenchmarkDotNet=v0.11.5
+OS=Windows 10.0.17134.765 (1803/April2018Update/Redstone4)
+Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
+  [Host]     : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3416.0
+  DefaultJob : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3416.0
+</code></pre>
+<h2 id="results">Results</h2>
+<h3 id="single-constructor-call">Single constructor call</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">StdDev</th>
+<th style="text-align: right;">Ratio</th>
+<th style="text-align: right;">RatioSD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Direct_Constructor</td>
+<td style="text-align: right;">3.828 ns</td>
+<td style="text-align: right;">0.1630 ns</td>
+<td style="text-align: right;">0.2538 ns</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr>
+<td>Activator_Constructor</td>
+<td style="text-align: right;">41.936 ns</td>
+<td style="text-align: right;">0.8829 ns</td>
+<td style="text-align: right;">0.9447 ns</td>
+<td style="text-align: right;">10.84</td>
+<td style="text-align: right;">0.73</td>
+</tr>
+<tr>
+<td>Expression_Constructor</td>
+<td style="text-align: right;">11.170 ns</td>
+<td style="text-align: right;">0.2850 ns</td>
+<td style="text-align: right;">0.4352 ns</td>
+<td style="text-align: right;">2.93</td>
+<td style="text-align: right;">0.22</td>
+</tr>
+<tr>
+<td>FastMember_Constructor</td>
+<td style="text-align: right;">8.535 ns</td>
+<td style="text-align: right;">0.1685 ns</td>
+<td style="text-align: right;">0.1655 ns</td>
+<td style="text-align: right;">2.20</td>
+<td style="text-align: right;">0.15</td>
+</tr>
+<tr>
+<td><strong>ImmediateType_Constructor</strong></td>
+<td style="text-align: right;"><strong>6.911 ns</strong></td>
+<td style="text-align: right;"><strong>0.1938 ns</strong></td>
+<td style="text-align: right;"><strong>0.1903 ns</strong></td>
+<td style="text-align: right;"><strong>1.78</strong></td>
+<td style="text-align: right;"><strong>0.13</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="multiple-constructor-calls">Multiple constructor calls</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">StdDev</th>
+<th style="text-align: right;">Ratio</th>
+<th style="text-align: right;">RatioSD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Direct_Constructor</td>
+<td style="text-align: right;">14.32 ns</td>
+<td style="text-align: right;">0.3072 ns</td>
+<td style="text-align: right;">0.4205 ns</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr>
+<td>Activator_Constructor</td>
+<td style="text-align: right;">210.04 ns</td>
+<td style="text-align: right;">2.8246 ns</td>
+<td style="text-align: right;">2.6422 ns</td>
+<td style="text-align: right;">14.55</td>
+<td style="text-align: right;">0.48</td>
+</tr>
+<tr>
+<td>Expression_Constructor</td>
+<td style="text-align: right;">44.76 ns</td>
+<td style="text-align: right;">0.7928 ns</td>
+<td style="text-align: right;">0.7028 ns</td>
+<td style="text-align: right;">3.11</td>
+<td style="text-align: right;">0.11</td>
+</tr>
+<tr>
+<td>FastMember_Constructor</td>
+<td style="text-align: right;">24.61 ns</td>
+<td style="text-align: right;">0.5150 ns</td>
+<td style="text-align: right;">0.6697 ns</td>
+<td style="text-align: right;">1.72</td>
+<td style="text-align: right;">0.07</td>
+</tr>
+<tr>
+<td><strong>ImmediateType_Constructor</strong></td>
+<td style="text-align: right;"><strong>26.29</strong> ns</td>
+<td style="text-align: right;"><strong>0.5082 ns</strong></td>
+<td style="text-align: right;"><strong>0.4754 ns</strong></td>
+<td style="text-align: right;"><strong>1.82</strong></td>
+<td style="text-align: right;"><strong>0.05</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Results demonstrate that <strong>ImmediateReflection</strong> is really faster than using the classic <code>Activator.CreateInstance()</code>.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/docs/documentation/constructor_benchmarks.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -86,7 +86,7 @@ ImmediateType type = TypeAccessor.Get&lt;MySuperType&gt;();
 // Flags allow to get a type with member that fulfill requested flags
 ImmediateType type = TypeAccessor.Get&lt;MySuperType&gt;(BindingFlags.Public | BindingFlags.Static);
 </code></pre>
-<p><strong>IMPORTANT: In versions targeting .NET Framework 4.0 or higher and .NET Standard 2.0, there is a built-in cache behind the <code>TypeAccessor</code>.</strong></p>
+<p>Note: there is a built-in cache behind the <code>TypeAccessor</code>.</p>
 <h2 id="instantiate-a-type">Instantiate a type</h2>
 <p>The <code>ImmediateType</code> allows to instantiate types via their default constructor if available. This feature is faster than making a traditional call to <code>Activator.CreateInstance(Type)</code>.</p>
 <p>Here is a quick example:</p>

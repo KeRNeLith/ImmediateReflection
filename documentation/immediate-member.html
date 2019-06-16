@@ -98,7 +98,7 @@ IEnumerable&lt;Attribute&gt; attributes = property.GetAttributes(typeof(MyAttrib
 
 IEnumerable&lt;Attribute&gt; attributes = type.GetAllAttributes(inherit: true);
 </code></pre>
-<p>It is also possible to directly retrieve attributes of a given <code>MemberInfo</code> from the built in cache if target is higher than .NET Framework 4.0.</p>
+<p>It is also possible to directly retrieve attributes of a given <code>MemberInfo</code> from the built in cache.</p>
 <pre><code class="lang-csharp">PropertyInfo property = ...;
 bool hasAttribute = property.IsDefinedImmediateAttribute&lt;MyAttribute&gt;();
 
