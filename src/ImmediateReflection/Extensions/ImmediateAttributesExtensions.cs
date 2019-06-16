@@ -1,4 +1,4 @@
-#if SUPPORTS_EXTENSIONS && SUPPORTS_CACHING
+#if SUPPORTS_CACHING
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -27,7 +27,13 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static bool IsDefinedImmediateAttribute<TAttribute>([NotNull] this MemberInfo member, bool inherit = false)
+        public static bool IsDefinedImmediateAttribute<TAttribute>(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this MemberInfo member,
+#else
+            [NotNull] MemberInfo member,
+#endif
+            bool inherit = false)
             where TAttribute : Attribute
         {
             return CachesHandler.Instance
@@ -49,7 +55,14 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static bool IsDefinedImmediateAttribute([NotNull] this MemberInfo member, [NotNull] Type attributeType, bool inherit = false)
+        public static bool IsDefinedImmediateAttribute(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this MemberInfo member,
+#else
+            [NotNull] MemberInfo member,
+#endif
+            [NotNull] Type attributeType,
+            bool inherit = false)
         {
             return CachesHandler.Instance
                 .GetAttributesCache(member)
@@ -70,7 +83,13 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static TAttribute GetImmediateAttribute<TAttribute>([NotNull] this MemberInfo member, bool inherit = false)
+        public static TAttribute GetImmediateAttribute<TAttribute>(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this MemberInfo member,
+#else
+            [NotNull] MemberInfo member,
+#endif
+            bool inherit = false)
             where TAttribute : Attribute
         {
             return CachesHandler.Instance
@@ -93,7 +112,14 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static Attribute GetImmediateAttribute([NotNull] this MemberInfo member, [NotNull] Type attributeType, bool inherit = false)
+        public static Attribute GetImmediateAttribute(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this MemberInfo member,
+#else
+            [NotNull] MemberInfo member,
+#endif 
+            [NotNull] Type attributeType,
+            bool inherit = false)
         {
             return CachesHandler.Instance
                 .GetAttributesCache(member)
@@ -113,7 +139,13 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static IEnumerable<TAttribute> GetImmediateAttributes<TAttribute>([NotNull] this MemberInfo member, bool inherit = false)
+        public static IEnumerable<TAttribute> GetImmediateAttributes<TAttribute>(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this MemberInfo member,
+#else
+            [NotNull] MemberInfo member,
+#endif
+            bool inherit = false)
             where TAttribute : Attribute
         {
             return CachesHandler.Instance
@@ -134,7 +166,14 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static IEnumerable<Attribute> GetImmediateAttributes([NotNull] this MemberInfo member, [NotNull] Type attributeType, bool inherit = false)
+        public static IEnumerable<Attribute> GetImmediateAttributes(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this MemberInfo member,
+#else
+            [NotNull] MemberInfo member,
+#endif
+            [NotNull] Type attributeType,
+            bool inherit = false)
         {
             return CachesHandler.Instance
                 .GetAttributesCache(member)
@@ -153,7 +192,13 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static IEnumerable<Attribute> GetAllImmediateAttributes([NotNull] this MemberInfo member, bool inherit = false)
+        public static IEnumerable<Attribute> GetAllImmediateAttributes(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this MemberInfo member,
+#else
+            [NotNull] MemberInfo member,
+# endif
+            bool inherit = false)
         {
             return CachesHandler.Instance
                 .GetAttributesCache(member)

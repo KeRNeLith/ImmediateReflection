@@ -1,4 +1,3 @@
-#if SUPPORTS_EXTENSIONS
 using System;
 using NUnit.Framework;
 
@@ -14,19 +13,19 @@ namespace ImmediateReflection.Tests
         public void GetImmediateTypeFromObject()
         {
             object testObject1 = new PublicValueTypeTestClass();
-            ImmediateType immediateType = testObject1.GetImmediateType();
+            ImmediateType immediateType = ImmediateReflectionExtensions.GetImmediateType(testObject1);
             Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateType.Type);
 
             PublicValueTypeTestClass testObject2 = new PublicValueTypeTestClass();
-            immediateType = testObject2.GetImmediateType();
+            immediateType = ImmediateReflectionExtensions.GetImmediateType(testObject2);
             Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateType.Type);
 
             TestStruct testObject3 = new TestStruct();
-            immediateType = testObject3.GetImmediateType();
+            immediateType = ImmediateReflectionExtensions.GetImmediateType(testObject3);
             Assert.AreEqual(typeof(TestStruct), immediateType.Type);
 
             int testObject4 = 12;
-            immediateType = testObject4.GetImmediateType();
+            immediateType = ImmediateReflectionExtensions.GetImmediateType(testObject4);
             Assert.AreEqual(typeof(int), immediateType.Type);
         }
 
@@ -37,9 +36,10 @@ namespace ImmediateReflection.Tests
 
             // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() => testObject.GetImmediateType());
+            Assert.Throws<ArgumentNullException>(() => ImmediateReflectionExtensions.GetImmediateType(testObject));
         }
 
+#if SUPPORTS_EXTENSIONS
         [Test]
         public void GetImmediateTypeFromType()
         {
@@ -69,6 +69,6 @@ namespace ImmediateReflection.Tests
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => testType.GetImmediateType());
         }
+#endif
     }
 }
-#endif

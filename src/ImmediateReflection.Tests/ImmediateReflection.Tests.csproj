@@ -44,13 +44,13 @@
 
   <!-- Targets defines -->
   <PropertyGroup Condition="'$(TargetFramework)'=='net20'">
-    <DefineConstants>$(DefineConstants);NET20;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET20;SUPPORTS_CACHING;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net30'">
-    <DefineConstants>$(DefineConstants);NET30;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET30;SUPPORTS_CACHING;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net35'">
-    <DefineConstants>$(DefineConstants);NET35;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET35;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net40'">
     <DefineConstants>$(DefineConstants);NET40;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>

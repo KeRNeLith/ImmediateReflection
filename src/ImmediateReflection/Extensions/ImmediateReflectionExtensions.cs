@@ -1,4 +1,3 @@
-#if SUPPORTS_EXTENSIONS
 using System;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
@@ -29,13 +28,20 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static ImmediateType GetImmediateType<T>([NotNull] this T obj)
+        public static ImmediateType GetImmediateType<T>(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this T obj
+#else
+            [NotNull] T obj
+#endif
+            )
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
             return TypeAccessor.Get(obj.GetType());
         }
 
+#if SUPPORTS_EXTENSIONS
         /// <summary>
         /// Gets the <see cref="ImmediateType"/> corresponding to this <see cref="Type"/>.
         /// </summary>
@@ -55,6 +61,6 @@ namespace ImmediateReflection
         {
             return TypeAccessor.Get(type);
         }
+#endif
     }
 }
-#endif
