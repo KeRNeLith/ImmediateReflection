@@ -56,7 +56,7 @@ ImmediateType type = TypeAccessor.Get<MySuperType>(includeNonPublicMembers: true
 ImmediateType type = TypeAccessor.Get<MySuperType>(BindingFlags.Public | BindingFlags.Static);
 ```
 
-IMPORTANT: In versions targeting .NET Framework 4.0 or higher and .NET Standard 2.0, there is a built-in cache behind the `TypeAccessor`.
+Note: There is a built-in cache behind the `TypeAccessor`.
 
 ### Instantiate a type
 
@@ -144,7 +144,7 @@ IEnumerable<Attribute> attributes = property.GetAttributes(typeof(MyAttribute));
 IEnumerable<Attribute> attributes = type.GetAllAttributes(inherit: true);
 ```
 
-It is also possible to directly retrieve attributes of a given `MemberInfo` from the built in cache if target is higher than .NET Framework 4.0.
+It is also possible to directly retrieve attributes of a given `MemberInfo` from the built in cache.
 
 ```csharp
 PropertyInfo property = ...;

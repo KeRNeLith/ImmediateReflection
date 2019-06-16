@@ -9,7 +9,7 @@ The entry point of the library is the `TypeAccessor` which allows to get an `Imm
 
 See the [ImmediateType](immediate-type.md) section for more details.
 
-## Delegates
+## Open delegates
 
 The library also provides the possibility to create strongly typed get/set "open" delegates.
 

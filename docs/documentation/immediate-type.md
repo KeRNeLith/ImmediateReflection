@@ -25,7 +25,7 @@ ImmediateType type = TypeAccessor.Get<MySuperType>(includeNonPublicMembers: true
 ImmediateType type = TypeAccessor.Get<MySuperType>(BindingFlags.Public | BindingFlags.Static);
 ```
 
-**IMPORTANT: In versions targeting .NET Framework 4.0 or higher and .NET Standard 2.0, there is a built-in cache behind the `TypeAccessor`.**
+Note: there is a built-in cache behind the `TypeAccessor`.
 
 ## Instantiate a type
 
