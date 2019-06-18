@@ -5,18 +5,18 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Getting a field </title>
+    <title>ImmediateMember </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Getting a field ">
+    <meta name="title" content="ImmediateMember ">
     <meta name="generator" content="docfx 2.42.4.0">
     
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="stylesheet" href="../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../styles/docfx.css">
-    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
-    <meta property="docfx:navrel" content="../toc.html">
-    <meta property="docfx:tocrel" content="toc.html">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
     
     
     
@@ -34,8 +34,8 @@
                 <span class="icon-bar"></span>
               </button>
               
-              <a class="navbar-brand" href="../index.html">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
               </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar">
@@ -67,30 +67,43 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="getting-a-field">Getting a field</h1>
+<h1 id="immediatemember">ImmediateMember</h1>
 
+<p>Both <code>ImmediateType</code>, <code>ImmediateField</code> and <code>ImmediateProperty</code> inherit from <code>ImmediateMember</code> which provide an API to check/get attributes that are applied respectively to a type, field or a property.</p>
+<h2 id="get-a-member">Get a member</h2>
+<p>An <code>ImmediateType</code> gives access to its members meaning fields and properties.</p>
+<p>Here are some examples:</p>
 <pre><code class="lang-csharp">ImmediateType type = TypeAccessor.Get&lt;MySuperType&gt;();
 
-ImmediateField field = type.GetField(&quot;_fieldName&quot;);
+IEnumerable&lt;ImmediateMember&gt; members = type.Members;
 // or
-ImmediateField field = type.Fields[&quot;_fieldName&quot;];
-// There is also type.GetFields()
+IEnumerable&lt;ImmediateMember&gt; members = type.GetMembers();
+
+// For a member
+ImmediateMember member = type.GetMember(&quot;MemberName&quot;);
+// or
+ImmediateMember member = type[&quot;MemberName&quot;];
 </code></pre>
-<p>When you have type wrapping a field you are able to get or set it like in a standard way.</p>
-<pre><code class="lang-csharp">object instance = new MySuperType();
+<h2 id="get-attributes">Get attributes</h2>
+<p>All methods are accessible in their templated and not templated versions.
+Following some examples of accessible methods:</p>
+<pre><code class="lang-csharp">ImmediateType type = ...;
+bool hasAttribute = type.IsDefined&lt;MyAttribute&gt;();
 
-ImmediateField field = type.GetField(&quot;_fieldName&quot;);
+ImmediateField field = ...;
+MyAttribute attribute = field.GetAttribute&lt;MyAttribute&gt;(inherit: true);
 
-// Get
-object fieldValue = field.GetValue(instance);
+ImmediateProperty property = ...;
+IEnumerable&lt;Attribute&gt; attributes = property.GetAttributes(typeof(MyAttribute));
 
-// Set
-field.SetValue(instance, &quot;New Value&quot;);
+IEnumerable&lt;Attribute&gt; attributes = type.GetAllAttributes(inherit: true);
 </code></pre>
-<p>To let the user of the library access eventual missing functionalities, each wrapping type from ImmediateReflection gives an access to the equivalent standard structure.</p>
-<pre><code class="lang-csharp">ImmediateField field = type.GetField(&quot;_fieldName&quot;);
+<p>It is also possible to directly retrieve attributes of a given <code>MemberInfo</code> from the built in cache.</p>
+<pre><code class="lang-csharp">PropertyInfo property = ...;
+bool hasAttribute = property.IsDefinedImmediateAttribute&lt;MyAttribute&gt;();
 
-FieldInfo fieldInfo = field.FieldInfo;
+FieldInfo field = ...;
+MyAttribute attribute = field.GetImmediateAttribute&lt;MyAttribute&gt;();
 </code></pre>
 </article>
           </div>
@@ -100,7 +113,7 @@ FieldInfo fieldInfo = field.FieldInfo;
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/docs/documentation/immediate-field.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/docs/documentation/tutorials/immediate-member.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>
@@ -126,8 +139,8 @@ FieldInfo fieldInfo = field.FieldInfo;
       </footer>
     </div>
     
-    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
-    <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
   </body>
 </html>

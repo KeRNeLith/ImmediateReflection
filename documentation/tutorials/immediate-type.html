@@ -5,18 +5,18 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Object wrapper </title>
+    <title>ImmediateType and TypeAccessor </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Object wrapper ">
+    <meta name="title" content="ImmediateType and TypeAccessor ">
     <meta name="generator" content="docfx 2.42.4.0">
     
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="stylesheet" href="../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../styles/docfx.css">
-    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
-    <meta property="docfx:navrel" content="../toc.html">
-    <meta property="docfx:tocrel" content="toc.html">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
     
     
     
@@ -34,8 +34,8 @@
                 <span class="icon-bar"></span>
               </button>
               
-              <a class="navbar-brand" href="../index.html">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
               </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar">
@@ -67,26 +67,37 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="object-wrapper">Object wrapper</h1>
+<h1 id="immediatetype-and-typeaccessor">ImmediateType and TypeAccessor</h1>
 
-<p>By using <code>ImmediateType</code> API you can manipulate get/set on object via &quot;open&quot; methods, meaning you can specify the instance on which applying the method.</p>
-<p>ImmediateReflection also provides an <code>ObjectWrapper</code> that does the same job as <code>ImmediateType</code> but on a &quot;closed&quot; way. It means that get/set will be applied only on the wrapped instance.</p>
-<p>Following a quick example:</p>
-<pre><code class="lang-csharp">MyClass myObject = new MyClass();
+<h2 id="getting-a-type">Getting a type</h2>
+<p>The entry point of the library is the <code>TypeAccessor</code>.</p>
+<p>See following examples:</p>
+<pre><code class="lang-csharp">ImmediateType type = TypeAccessor.Get(typeof(MySuperType));
 
-ObjectWrapper wrapper = new ObjectWrapper(myObject);
+// or
 
-// Properties/Fields
-ImmediateField field = wrapper.GetField(&quot;_myField&quot;);
-ImmediateProperty property = wrapper.GetProperty(&quot;MyProperty&quot;);
-
-// Get
-object propertyValue = wrapper.GetPropertyValue(&quot;MyProperty&quot;);
-
-// Set
-wrapper.SetPropertyValue(&quot;MyOtherProperty&quot;, 42);    // myObject.MyOtherProperty = 42
+ImmediateType type = TypeAccessor.Get&lt;MySuperType&gt;();
 </code></pre>
-<p>Note that the wrapper gives access to the wrapped object, its <code>Type</code>, <code>ImmediateType</code> and public members.</p>
+<p>Note that there are other access methods that allow to get an <code>ImmediateType</code> with non public member or by specifying <code>BindingFlags</code>.</p>
+<pre><code class="lang-csharp">ImmediateType type = TypeAccessor.Get&lt;MySuperType&gt;(includeNonPublicMembers: true);
+
+// or
+
+// Flags allow to get a type with member that fulfill requested flags
+ImmediateType type = TypeAccessor.Get&lt;MySuperType&gt;(BindingFlags.Public | BindingFlags.Static);
+</code></pre>
+<p>Note: there is a built-in cache behind the <code>TypeAccessor</code>.</p>
+<h2 id="instantiate-a-type">Instantiate a type</h2>
+<p>The <code>ImmediateType</code> allows to instantiate types via their default constructor if available. This feature is faster than making a traditional call to <code>Activator.CreateInstance(Type)</code>.</p>
+<p>Here is a quick example:</p>
+<pre><code class="lang-csharp">ImmediateType type = TypeAccessor.Get&lt;MySuperType&gt;();
+
+// Create a new instance of MySuperType
+object newInstance = type.New();
+
+// You can also use the version that not throws in case of failure
+bool succeed = type.TryNew(out object instance, out Exception _);
+</code></pre>
 </article>
           </div>
           
@@ -95,7 +106,7 @@ wrapper.SetPropertyValue(&quot;MyOtherProperty&quot;, 42);    // myObject.MyOthe
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/docs/documentation/object-wrapper.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/docs/documentation/tutorials/immediate-type.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>
@@ -121,8 +132,8 @@ wrapper.SetPropertyValue(&quot;MyOtherProperty&quot;, 42);    // myObject.MyOthe
       </footer>
     </div>
     
-    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
-    <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
   </body>
 </html>

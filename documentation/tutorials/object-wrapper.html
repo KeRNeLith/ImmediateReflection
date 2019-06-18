@@ -5,18 +5,18 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>ImmediateMember </title>
+    <title>Object wrapper </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="ImmediateMember ">
+    <meta name="title" content="Object wrapper ">
     <meta name="generator" content="docfx 2.42.4.0">
     
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="stylesheet" href="../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../styles/docfx.css">
-    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
-    <meta property="docfx:navrel" content="../toc.html">
-    <meta property="docfx:tocrel" content="toc.html">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
     
     
     
@@ -34,8 +34,8 @@
                 <span class="icon-bar"></span>
               </button>
               
-              <a class="navbar-brand" href="../index.html">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
               </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar">
@@ -67,44 +67,26 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="immediatemember">ImmediateMember</h1>
+<h1 id="object-wrapper">Object wrapper</h1>
 
-<p>Both <code>ImmediateType</code>, <code>ImmediateField</code> and <code>ImmediateProperty</code> inherit from <code>ImmediateMember</code> which provide an API to check/get attributes that are applied respectively to a type, field or a property.</p>
-<h2 id="get-a-member">Get a member</h2>
-<p>An <code>ImmediateType</code> gives access to its members meaning fields and properties.</p>
-<p>Here are some examples:</p>
-<pre><code class="lang-csharp">ImmediateType type = TypeAccessor.Get&lt;MySuperType&gt;();
+<p>By using <code>ImmediateType</code> API you can manipulate get/set on object via &quot;open&quot; methods, meaning you can specify the instance on which applying the method.</p>
+<p>ImmediateReflection also provides an <code>ObjectWrapper</code> that does the same job as <code>ImmediateType</code> but on a &quot;closed&quot; way. It means that get/set will be applied only on the wrapped instance.</p>
+<p>Following a quick example:</p>
+<pre><code class="lang-csharp">MyClass myObject = new MyClass();
 
-IEnumerable&lt;ImmediateMember&gt; members = type.Members;
-// or
-IEnumerable&lt;ImmediateMember&gt; members = type.GetMembers();
+ObjectWrapper wrapper = new ObjectWrapper(myObject);
 
-// For a member
-ImmediateMember member = type.GetMember(&quot;MemberName&quot;);
-// or
-ImmediateMember member = type[&quot;MemberName&quot;];
+// Properties/Fields
+ImmediateField field = wrapper.GetField(&quot;_myField&quot;);
+ImmediateProperty property = wrapper.GetProperty(&quot;MyProperty&quot;);
+
+// Get
+object propertyValue = wrapper.GetPropertyValue(&quot;MyProperty&quot;);
+
+// Set
+wrapper.SetPropertyValue(&quot;MyOtherProperty&quot;, 42);    // myObject.MyOtherProperty = 42
 </code></pre>
-<h2 id="get-attributes">Get attributes</h2>
-<p>All methods are accessible in their templated and not templated versions.
-Following some examples of accessible methods:</p>
-<pre><code class="lang-csharp">ImmediateType type = ...;
-bool hasAttribute = type.IsDefined&lt;MyAttribute&gt;();
-
-ImmediateField field = ...;
-MyAttribute attribute = field.GetAttribute&lt;MyAttribute&gt;(inherit: true);
-
-ImmediateProperty property = ...;
-IEnumerable&lt;Attribute&gt; attributes = property.GetAttributes(typeof(MyAttribute));
-
-IEnumerable&lt;Attribute&gt; attributes = type.GetAllAttributes(inherit: true);
-</code></pre>
-<p>It is also possible to directly retrieve attributes of a given <code>MemberInfo</code> from the built in cache.</p>
-<pre><code class="lang-csharp">PropertyInfo property = ...;
-bool hasAttribute = property.IsDefinedImmediateAttribute&lt;MyAttribute&gt;();
-
-FieldInfo field = ...;
-MyAttribute attribute = field.GetImmediateAttribute&lt;MyAttribute&gt;();
-</code></pre>
+<p>Note that the wrapper gives access to the wrapped object, its <code>Type</code>, <code>ImmediateType</code> and public members.</p>
 </article>
           </div>
           
@@ -113,7 +95,7 @@ MyAttribute attribute = field.GetImmediateAttribute&lt;MyAttribute&gt;();
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/docs/documentation/immediate-member.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/docs/documentation/tutorials/object-wrapper.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>
@@ -139,8 +121,8 @@ MyAttribute attribute = field.GetImmediateAttribute&lt;MyAttribute&gt;();
       </footer>
     </div>
     
-    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
-    <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
   </body>
 </html>
