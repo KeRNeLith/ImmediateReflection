@@ -7,10 +7,10 @@ The library is pretty simple to use, it has wrappers of standard `Type`, `FieldI
 The get access to fields and properties it is like the standard way, you get access to a `Type` and then request its fields and properties.
 The entry point of the library is the `TypeAccessor` which allows to get an `ImmediateType`.
 
-See the [ImmediateType](immediate-type.md) section for more details.
+See the [ImmediateType](tutorials/immediate-type.md) section for more details.
 
 ## Open delegates
 
 The library also provides the possibility to create strongly typed get/set "open" delegates.
 
-See the [Open delegates](open-delegates.md) section for more details.
+See the [Open delegates](tutorials/open-delegates.md) section for more details.

@@ -1,0 +1,12 @@
+- name: ImmediateType
+  href: immediate-type.md
+- name: ImmediateMember
+  href: immediate-member.md
+- name: ImmediateField
+  href: immediate-field.md
+- name: ImmediateProperty
+  href: immediate-property.md
+- name: ObjectWrapper
+  href: object-wrapper.md
+- name: Open delegates
+  href: open-delegates.md

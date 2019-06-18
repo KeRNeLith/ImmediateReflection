@@ -1,28 +1,6 @@
 - name: Getting started
-  href: getting-started.md
-  items:
-  - name: ImmediateType
-    href: immediate-type.md
-  - name: ImmediateMember
-    href: immediate-member.md
-  - name: ImmediateField
-    href: immediate-field.md
-  - name: ImmediateProperty
-    href: immediate-property.md
-  - name: ObjectWrapper
-    href: object-wrapper.md
-  - name: Open delegates
-    href: open-delegates.md
+  href: tutorials/toc.yml
+  topicHref: getting-started.md
 - name: Benchmarks
-  href: benchmarks.md
-  items:
-  - name: Get/Set
-    href: get_set_benchmarks.md
-  - name: Multiple Get/Set
-    href: multiple_get_set_benchmarks.md
-  - name: Get/Set multiple objects
-    href: get_set_multiple_objects_benchmarks.md
-  - name: Constructor
-    href: constructor_benchmarks.md
-  - name: Get Attributes
-    href: attributes_benchmarks.md
+  href: benchmarks/toc.yml
+  topicHref: benchmarks.md

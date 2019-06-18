@@ -1,0 +1,10 @@
+- name: Get/Set
+  href: get_set_benchmarks.md
+- name: Multiple Get/Set
+  href: multiple_get_set_benchmarks.md
+- name: Get/Set multiple objects
+  href: get_set_multiple_objects_benchmarks.md
+- name: Constructor
+  href: constructor_benchmarks.md
+- name: Get Attributes
+  href: attributes_benchmarks.md
