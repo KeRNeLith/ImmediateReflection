@@ -83,9 +83,9 @@ namespace ImmediateReflection
         [ContractAnnotation("=> true, paramsConstructor:notnull,parameterType:notnull, faultyConstructor:null;" +
                             "=> false, paramsConstructor:null,parameterType:null, faultyConstructor:notnull")]
         private static bool TryGetParamsConstructorAsDefault(
-            [NotNull] Type type, 
-            out ConstructorInfo paramsConstructor, 
-            out Type parameterType, 
+            [NotNull] Type type,
+            out ConstructorInfo paramsConstructor,
+            out Type parameterType,
             out DefaultConstructorDelegate faultyConstructor)
         {
             paramsConstructor = null;
@@ -264,14 +264,16 @@ namespace ImmediateReflection
 
         #region Dynamic method helpers
 
+        private const string DynamicMethodPrefix = "Immediate";
+
         [Pure]
         [NotNull]
         [ContractAnnotation("name:null => halt;owner:null => halt")]
         private static DynamicMethod CreateDynamicMethod([NotNull] string name, [CanBeNull] Type returnType, [CanBeNull] Type[] parameterTypes, [NotNull] Type owner)
         {
             return owner.IsInterface
-                ? new DynamicMethod(name, returnType, parameterTypes, owner.Assembly.ManifestModule, true)
-                : new DynamicMethod(name, returnType, parameterTypes, owner, true);
+                ? new DynamicMethod($"{DynamicMethodPrefix}{name}", returnType, parameterTypes, owner.Assembly.ManifestModule, true)
+                : new DynamicMethod($"{DynamicMethodPrefix}{name}", returnType, parameterTypes, owner, true);
         }
 
         [Pure]
@@ -293,7 +295,7 @@ namespace ImmediateReflection
 #endif
         private static DynamicMethod CreateDynamicDefaultConstructor([NotNull] string name, [NotNull] Type owner)
         {
-            return CreateDynamicMethod($"Constructor{name}", typeof(object), Type.EmptyTypes, owner);
+            return CreateDynamicMethod($"Constructor_{name}", typeof(object), Type.EmptyTypes, owner);
         }
 
         [Pure]
@@ -304,7 +306,7 @@ namespace ImmediateReflection
 #endif
         private static DynamicMethod CreateDynamicGetter([NotNull] string name, [NotNull] Type owner)
         {
-            return CreateDynamicMethod($"Get{name}", typeof(object), new[] { typeof(object) }, owner);
+            return CreateDynamicMethod($"Get_{name}", typeof(object), new[] { typeof(object) }, owner);
         }
 
         [Pure]
@@ -315,7 +317,7 @@ namespace ImmediateReflection
 #endif
         private static DynamicMethod CreateDynamicSetter([NotNull] string name, [NotNull] Type owner)
         {
-            return CreateDynamicProcedure($"Set{name}", new[] { typeof(object), typeof(object) }, owner);
+            return CreateDynamicProcedure($"Set_{name}", new[] { typeof(object), typeof(object) }, owner);
         }
 
         /// <summary>
