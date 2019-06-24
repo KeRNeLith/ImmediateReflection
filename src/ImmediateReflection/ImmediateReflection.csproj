@@ -32,35 +32,22 @@ Supported platforms:
 
 Supports Source Link
 
-See benchmarks here: https://github.com/KeRNeLith/ImmediateReflection/blob/master/Benchmarks.md</Description>
+See benchmarks here: https://kernelith.github.io/ImmediateReflection/documentation/benchmarks.html.</Description>
     <Owners>Alexandre Rabérin</Owners>
     <Authors>Alexandre Rabérin</Authors>
     <Company>Alexandre Rabérin</Company>
 
     <IsPackable>true</IsPackable>
     <PackageId>ImmediateReflection</PackageId>
-    <PackageReleaseNotes>➟ Release 1.0.0
-Fixes:
-- Properly supports static readonly and constant fields.
-- Properly handle reflection on enumeration types.
-
+    <PackageReleaseNotes>➟ Release 1.1.0
 Changes:
-- Default flags taken into account when getting an ImmediateType are Public | Instance | Static
-- Get rid of cache system references replaced by a simpler internal caching system.
-- Extend caching support to target .NET Framework 4.0.
-
-New:
-- Add the possibility to call the default constructor of type in a faster way (with or without throw).
-- ImmediateType provides access to every members via Members/GetMembers()/indexed member APIs.
-- ImmediateType, ImmediateField and ImmediateProperty provide a faster access to attributes.
-- Extensions to retrieve Immediate Reflection types from standard types.
-- Extensions to retrieve attributes from standard MemberInfo.
-- Provide helpers to easily create strongly typed delegate to get/set properties.
-- Add an object wrapper that allows to get/set value on a specific object instance.
+- Improve performances of memory caching within the library.
+- Extend support of built-in cache to every target.
+- Make some methods only available as extensions accessible as normal methods on targets not supporting extensions.
+- IL generated methods are now prefixed to help identify them.
 
 Misc:
-- Improve library documentation.
-- Library is fully ReSharper annotated.</PackageReleaseNotes>
+- API Reference and documentation generated based on sources.</PackageReleaseNotes>
     <PackageTags>C# Reflection Fast Immediate Performance Delegate Dynamic</PackageTags>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -123,7 +110,8 @@ Misc:
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="System.Reflection.Emit.LightWeight" Version="4.3.0" />
   </ItemGroup>
-  
+
+  <!-- Source Link -->
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
   </ItemGroup>
