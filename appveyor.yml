@@ -102,6 +102,10 @@ artifacts:
   - path: '**\bin\Release\*.nupkg'
     name: NuGet
 
+# Documentation
+before_deploy:
+  - ps: ./releaseDoc.ps1
+
 # Deploy
 deploy:
 # MyGet
@@ -134,7 +138,3 @@ deploy:
       branch: master
       configuration: Release
       APPVEYOR_REPO_TAG: true
-
-# Documentation
-deploy_script:
-  - ps: ./releaseDoc.ps1
