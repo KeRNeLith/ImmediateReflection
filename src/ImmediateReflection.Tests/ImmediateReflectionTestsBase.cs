@@ -1019,6 +1019,18 @@ namespace ImmediateReflection.Tests
 
         #endregion
 
+        #region New keyword
+
+        [NotNull]
+        protected static readonly PropertyInfo BaseClassPublicGetPropertyPropertyInfo =
+            typeof(BaseTestClass).GetProperty(nameof(BaseTestClass.Property)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static readonly PropertyInfo ChildClassPublicGetPropertyPropertyInfo =
+            typeof(ChildTestClass).GetProperty(nameof(ChildTestClass.Property)) ?? throw new AssertionException("Cannot find property.");
+
+        #endregion
+
         #endregion
     }
 }

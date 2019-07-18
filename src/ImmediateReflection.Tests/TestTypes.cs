@@ -394,6 +394,16 @@ namespace ImmediateReflection.Tests
             public int NestedTestValue { get; set; } = 12;
         }
     }
+
+    public class BaseTestClass
+    {
+        public string Property { get; } = "Parent";
+    }
+
+    public class ChildTestClass : BaseTestClass
+    {
+        public new string Property { get; } = "Child";
+    }
 }
 
 #pragma warning restore 169

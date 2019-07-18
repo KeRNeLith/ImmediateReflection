@@ -362,6 +362,42 @@ namespace ImmediateReflection.Tests
                 testType.Properties.Select(property => property.PropertyInfo));
         }
 
+        [Test]
+        public void ImmediateTypeNewKeyword()
+        {
+            var immediateType = new ImmediateType(typeof(BaseTestClass));
+            Assert.AreEqual(typeof(BaseTestClass), immediateType.Type);
+            Assert.AreEqual(nameof(BaseTestClass), immediateType.Name);
+            Assert.AreEqual(
+                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(BaseTestClass)}",
+                immediateType.FullName);
+            CollectionAssert.AreEquivalent(
+                Enumerable.Empty<FieldInfo>(),
+                immediateType.Fields.Select(field => field.FieldInfo));
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    BaseClassPublicGetPropertyPropertyInfo
+                },
+                immediateType.Properties.Select(property => property.PropertyInfo));
+
+            immediateType = new ImmediateType(typeof(ChildTestClass));
+            Assert.AreEqual(typeof(ChildTestClass), immediateType.Type);
+            Assert.AreEqual(nameof(ChildTestClass), immediateType.Name);
+            Assert.AreEqual(
+                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(ChildTestClass)}",
+                immediateType.FullName);
+            CollectionAssert.AreEquivalent(
+                Enumerable.Empty<FieldInfo>(),
+                immediateType.Fields.Select(field => field.FieldInfo));
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    ChildClassPublicGetPropertyPropertyInfo
+                },
+                immediateType.Properties.Select(property => property.PropertyInfo));
+        }
+
         #endregion
 
         #region Members

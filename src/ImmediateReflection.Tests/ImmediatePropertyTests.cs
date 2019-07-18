@@ -376,6 +376,17 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(concreteTestObject, PublicValueTypePublicConcreteGetSetPropertyPropertyInfo, 88);
 
                 #endregion
+
+                #region New keyword
+
+                var baseObject = new BaseTestClass();
+                yield return new TestCaseData(baseObject, BaseClassPublicGetPropertyPropertyInfo, "Parent");
+
+                var childObject = new ChildTestClass();
+                yield return new TestCaseData(childObject, ChildClassPublicGetPropertyPropertyInfo, "Child");
+                yield return new TestCaseData(childObject, BaseClassPublicGetPropertyPropertyInfo, "Parent");
+
+                #endregion
             }
         }
 
