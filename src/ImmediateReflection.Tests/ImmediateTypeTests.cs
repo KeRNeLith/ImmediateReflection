@@ -398,6 +398,27 @@ namespace ImmediateReflection.Tests
                 immediateType.Properties.Select(property => property.PropertyInfo));
         }
 
+        [Test]
+        public void ImmediateTypeIndexedProperties()
+        {
+            var immediateType = new ImmediateType(typeof(ChildItemTestClass));
+            Assert.AreEqual(typeof(ChildItemTestClass), immediateType.Type);
+            Assert.AreEqual(nameof(ChildItemTestClass), immediateType.Name);
+            Assert.AreEqual(
+                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(ChildItemTestClass)}",
+                immediateType.FullName);
+            CollectionAssert.AreEquivalent(
+                Enumerable.Empty<FieldInfo>(),
+                immediateType.Fields.Select(field => field.FieldInfo));
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    ChildItemClassPublicGetPropertyPropertyInfo
+                    // Indexed properties ignored
+                },
+                immediateType.Properties.Select(property => property.PropertyInfo));
+        }
+
         #endregion
 
         #region Members

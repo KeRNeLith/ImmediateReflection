@@ -404,6 +404,17 @@ namespace ImmediateReflection.Tests
     {
         public new string Property { get; } = "Child";
     }
+
+    public class BaseItemTestClass
+    {
+        public string Item { get; }
+    }
+
+    public class ChildItemTestClass : BaseItemTestClass
+    {
+        public int this[int index] => 0;
+        public int this[float value] => 0;
+    }
 }
 
 #pragma warning restore 169

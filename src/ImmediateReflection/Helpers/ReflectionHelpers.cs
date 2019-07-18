@@ -20,5 +20,17 @@ namespace ImmediateReflection.Utils
         {
             return param.IsDefined(typeof(ParamArrayAttribute), false);
         }
+
+        /// <summary>
+        /// Checks if the given <paramref name="property"/> is an indexed one.
+        /// </summary>
+        /// <param name="property">A <see cref="PropertyInfo"/>.</param>
+        /// <returns>True if the <paramref name="property"/> is an indexed property, false otherwise.</returns>
+        [Pure]
+        [ContractAnnotation("property:null => halt")]
+        public static bool IsIndexed([NotNull] PropertyInfo property)
+        {
+            return property.GetIndexParameters().Length != 0;
+        }
     }
 }

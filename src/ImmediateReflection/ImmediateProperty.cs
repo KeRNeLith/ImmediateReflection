@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using JetBrains.Annotations;
+using static ImmediateReflection.Utils.ReflectionHelpers;
 
 namespace ImmediateReflection
 {
@@ -62,6 +63,9 @@ namespace ImmediateReflection
         internal ImmediateProperty([NotNull] PropertyInfo property)
             : base(property)
         {
+            if (IsIndexed(property))
+                throw new ArgumentException($"Cannot initialize an {nameof(ImmediateProperty)} with an indexed property.");
+
             // General property info
             PropertyInfo = property;
             PropertyType = property.PropertyType;

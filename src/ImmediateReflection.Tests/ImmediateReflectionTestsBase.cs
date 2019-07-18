@@ -1031,6 +1031,22 @@ namespace ImmediateReflection.Tests
 
         #endregion
 
+        #region Item & indexed property
+
+        [NotNull]
+        protected static readonly PropertyInfo ChildItemClassPublicGetPropertyPropertyInfo =
+            typeof(ChildItemTestClass).GetProperties().FirstOrDefault(
+                p => p.Name == nameof(ChildItemTestClass.Item) && p.GetIndexParameters().Length == 0) 
+            ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static readonly PropertyInfo ChildIndexedItemClassPublicGetPropertyPropertyInfo =
+            typeof(ChildItemTestClass).GetProperties().FirstOrDefault(
+                p => p.Name == "Item" && p.GetIndexParameters().Length > 0) 
+            ?? throw new AssertionException("Cannot find property.");
+
+        #endregion
+
         #endregion
     }
 }

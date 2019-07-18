@@ -9,8 +9,12 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 #endif
 using JetBrains.Annotations;
-#if !SUPPORTS_STRING_FULL_FEATURES || !SUPPORTS_SYSTEM_CORE
-using ImmediateReflection.Utils;
+#if !SUPPORTS_SYSTEM_CORE
+using static ImmediateReflection.Utils.EnumerableUtils;
+#endif
+using static ImmediateReflection.Utils.ReflectionHelpers;
+#if !SUPPORTS_STRING_FULL_FEATURES
+using static ImmediateReflection.Utils.StringUtils;
 #endif
 
 namespace ImmediateReflection
@@ -36,17 +40,29 @@ namespace ImmediateReflection
                 throw new ArgumentNullException(nameof(properties));
 
 #if SUPPORTS_SYSTEM_CORE
-            _properties = properties.ToDictionary(
-                property => property?.Name ?? throw new ArgumentNullException(nameof(property), "A property is null."),
-                property => new ImmediateProperty(property));
+            _properties = properties
+                .Where(IsNotIndexed)
+                .ToDictionary(
+                    property => property.Name, 
+                    property => new ImmediateProperty(property));
 #else
             _properties = new Dictionary<string, ImmediateProperty>();
-            foreach (PropertyInfo property in properties)
+            foreach (PropertyInfo property in Where(properties, IsNotIndexed))
             {
-                string name = property?.Name ?? throw new ArgumentNullException(nameof(property), "A property is null.");
-                _properties[name] = new ImmediateProperty(property);
+                _properties.Add(property.Name, new ImmediateProperty(property));
             }
 #endif
+
+            #region Local function
+
+            bool IsNotIndexed(PropertyInfo property)
+            {
+                if (property is null)
+                    throw new ArgumentNullException(nameof(property), "A property is null.");
+                return !IsIndexed(property);
+            }
+
+            #endregion
         }
 
         /// <summary>
@@ -98,7 +114,7 @@ namespace ImmediateReflection
 #if SUPPORTS_SYSTEM_CORE
             return !_properties.Except(other._properties).Any();
 #else
-            return !EnumerableUtils.Except(_properties, other._properties)
+            return !Except(_properties, other._properties)
                 .GetEnumerator()
                 .MoveNext();
 #endif
@@ -145,7 +161,7 @@ namespace ImmediateReflection
 #if SUPPORTS_STRING_FULL_FEATURES
             return $"[{string.Join(", ", _properties.Values)}]";
 #else
-            return $"[{StringUtils.Join(", ", _properties.Values)}]";
+            return $"[{Join(", ", _properties.Values)}]";
 #endif
         }
     }
