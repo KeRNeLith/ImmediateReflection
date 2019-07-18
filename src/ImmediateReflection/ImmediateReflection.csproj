@@ -39,15 +39,15 @@ See benchmarks here: https://kernelith.github.io/ImmediateReflection/documentati
 
     <IsPackable>true</IsPackable>
     <PackageId>ImmediateReflection</PackageId>
-    <PackageReleaseNotes>➟ Release 1.1.0
-Changes:
-- Improve performances of memory caching within the library.
-- Extend support of built-in cache to every target.
-- Make some methods only available as extensions accessible as normal methods on targets not supporting extensions.
-- IL generated methods are now prefixed to help identify them.
+    <PackageReleaseNotes>➟ Release 1.2.0
+New:
+- Add ConstructorDelegate delegate.
 
-Misc:
-- API Reference and documentation generated based on sources.</PackageReleaseNotes>
+Fixes:
+- Classes with indexed properties does not crash anymore.
+
+Changes:
+- Lazily initialize fields property of ImmediateType.</PackageReleaseNotes>
     <PackageTags>C# Reflection Fast Immediate Performance Delegate Dynamic</PackageTags>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
