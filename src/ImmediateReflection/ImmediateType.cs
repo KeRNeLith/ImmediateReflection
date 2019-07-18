@@ -51,12 +51,21 @@ namespace ImmediateReflection
             }
         }
 
+#if SUPPORTS_LAZY
+        [NotNull]
+        private readonly Lazy<ImmediateFields> _fields;
+#endif
+
         /// <summary>
         /// Gets all the fields of this <see cref="System.Type"/>.
         /// </summary>
         [PublicAPI]
         [NotNull, ItemNotNull]
+#if SUPPORTS_LAZY
+        public ImmediateFields Fields => _fields.Value;
+#else
         public ImmediateFields Fields { get; }
+#endif
 
         /// <summary>
         /// Gets all the properties of this <see cref="System.Type"/>.
@@ -85,15 +94,11 @@ namespace ImmediateReflection
 
             if (type.IsEnum)
             {
-                FieldInfo[] enumFields = type.GetFields();
-#if SUPPORTS_SYSTEM_CORE
-                FieldInfo enumValue = enumFields.First(field => !field.IsStatic);               // Current enum value field (not static)
-                IEnumerable<FieldInfo> enumValues = enumFields.Where(field => field.IsStatic);  // Enum values (static)
+#if SUPPORTS_LAZY
+                _fields = new Lazy<ImmediateFields>(GetImmediateFieldsForEnum);
 #else
-                FieldInfo enumValue = First(enumFields, field => !field.IsStatic);               // Current enum value field (not static)
-                IEnumerable<FieldInfo> enumValues = Where(enumFields, field => field.IsStatic);  // Enum values (static)
+                Fields = GetImmediateFieldsForEnum();
 #endif
-                Fields = new ImmediateFields(type, enumValue, enumValues);
 
 #if SUPPORTS_SYSTEM_CORE
                 Properties = new ImmediateProperties(Enumerable.Empty<PropertyInfo>());
@@ -103,9 +108,31 @@ namespace ImmediateReflection
             }
             else
             {
+#if SUPPORTS_LAZY
+                _fields = new Lazy<ImmediateFields>(() => new ImmediateFields(IgnoreBackingFields(type.GetFields(flags))));
+#else
                 Fields = new ImmediateFields(IgnoreBackingFields(type.GetFields(flags)));
+#endif
+
                 Properties = new ImmediateProperties(type.GetProperties(flags));
             }
+
+            #region Local function
+
+            ImmediateFields GetImmediateFieldsForEnum()
+            {
+                FieldInfo[] enumFields = type.GetFields();
+#if SUPPORTS_SYSTEM_CORE
+                FieldInfo enumValue = enumFields.First(field => !field.IsStatic);               // Current enum value field (not static)
+                IEnumerable<FieldInfo> enumValues = enumFields.Where(field => field.IsStatic);  // Enum values (static)
+#else
+                FieldInfo enumValue = First(enumFields, field => !field.IsStatic);               // Current enum value field (not static)
+                IEnumerable<FieldInfo> enumValues = Where(enumFields, field => field.IsStatic);  // Enum values (static)
+#endif
+                return new ImmediateFields(type, enumValue, enumValues);
+            }
+
+            #endregion
         }
 
         /// <summary>
