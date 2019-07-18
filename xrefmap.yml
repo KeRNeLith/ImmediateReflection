@@ -7,6 +7,12 @@ references:
   commentId: N:ImmediateReflection
   fullName: ImmediateReflection
   nameWithType: ImmediateReflection
+- uid: ImmediateReflection.ConstructorDelegate
+  name: ConstructorDelegate
+  href: api/ImmediateReflection.ConstructorDelegate.html
+  commentId: T:ImmediateReflection.ConstructorDelegate
+  fullName: ImmediateReflection.ConstructorDelegate
+  nameWithType: ConstructorDelegate
 - uid: ImmediateReflection.DefaultConstructorDelegate
   name: DefaultConstructorDelegate
   href: api/ImmediateReflection.DefaultConstructorDelegate.html
