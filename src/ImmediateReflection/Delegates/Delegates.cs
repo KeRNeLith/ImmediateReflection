@@ -12,6 +12,15 @@ namespace ImmediateReflection
     [NotNull]
     public delegate object DefaultConstructorDelegate();
 
+    /// <summary>
+    /// Constructor delegate.
+    /// </summary>
+    /// <param name="arguments">Constructor arguments.</param>
+    /// <returns>Newly created object.</returns>
+    [PublicAPI]
+    [NotNull]
+    public delegate object ConstructorDelegate([CanBeNull, ItemCanBeNull] params object[] arguments);
+
     #endregion
 
     #region Getters
