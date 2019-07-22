@@ -38,13 +38,21 @@ namespace ImmediateReflection
 #if SUPPORTS_SYSTEM_CORE
             _fields = fields.ToDictionary(
                 field => field?.Name ?? throw new ArgumentNullException(nameof(field), "A field is null."),
+#if SUPPORTS_CACHING
+                field => CachesHandler.Instance.GetField(field));
+#else
                 field => new ImmediateField(field));
+#endif
 #else
             _fields = new Dictionary<string, ImmediateField>();
             foreach (FieldInfo field in fields)
             {
                 string name = field?.Name ?? throw new ArgumentNullException(nameof(field), "A field is null.");
-                _fields[name] = new ImmediateField(field);
+#if SUPPORTS_CACHING
+                _fields.Add(name, CachesHandler.Instance.GetField(field));
+#else
+                _fields.Add(name, new ImmediateField(field));
+#endif
             }
 #endif
         }
@@ -72,13 +80,22 @@ namespace ImmediateReflection
 #if SUPPORTS_SYSTEM_CORE
             _fields = enumValues.ToDictionary(
                 field => field?.Name ?? throw new ArgumentNullException(nameof(field), "An enum field is null."),
+#if SUPPORTS_CACHING
+                field => CachesHandler.Instance.GetField(field, enumType));
+#else
                 field => new ImmediateField(field, enumType));
+#endif
 #else
             _fields = new Dictionary<string, ImmediateField>();
             foreach (FieldInfo field in enumValues)
             {
                 string name = field?.Name ?? throw new ArgumentNullException(nameof(field), "An enum field is null.");
-                _fields[name] = new ImmediateField(field, enumType);
+
+#if SUPPORTS_CACHING
+                _fields.Add(name, CachesHandler.Instance.GetField(field, enumType));
+#else
+                _fields.Add(name, new ImmediateField(field, enumType));
+#endif
             }
 #endif
             _fields[enumValue.Name] = new ImmediateField(enumValue);

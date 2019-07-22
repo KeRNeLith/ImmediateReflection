@@ -127,6 +127,35 @@ namespace ImmediateReflection
 
         #endregion
 
+        #region Field cache
+
+        [NotNull]
+        private volatile MemoryCache<FieldInfo, ImmediateField> _cachedFields = new MemoryCache<FieldInfo, ImmediateField>();
+
+        [NotNull]
+        [ContractAnnotation("field:null => halt")]
+        public ImmediateField GetField([NotNull] FieldInfo field)
+        {
+            if (field is null)
+                throw new ArgumentNullException(nameof(field));
+
+            return _cachedFields.GetOrCreate(field, () => new ImmediateField(field));
+        }
+
+        [NotNull]
+        [ContractAnnotation("field:null => halt;enumType:null => halt")]
+        public ImmediateField GetField([NotNull] FieldInfo field, [NotNull] Type enumType)
+        {
+            if (field is null)
+                throw new ArgumentNullException(nameof(field));
+            if (enumType is null)
+                throw new ArgumentNullException(nameof(enumType));
+
+            return _cachedFields.GetOrCreate(field, () => new ImmediateField(field, enumType));
+        }
+
+        #endregion
+
         #region Property cache
 
         [NotNull]
