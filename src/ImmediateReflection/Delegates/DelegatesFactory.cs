@@ -38,6 +38,9 @@ namespace ImmediateReflection
                 return () => throw new ArgumentException($"Class {type.Name} has at least one template parameter not defined.");
             if (type.IsAbstract)
                 return () => throw new MissingMethodException($"Abstract class {type.Name} cannot be instantiated.");
+            if (type.IsArray)
+                // ReSharper disable once PossibleNullReferenceException, Justification: Type is an array so it must have an element type.
+                return () => throw new MissingMethodException($"There is no default constructor for array of {type.GetElementType().Name}.");
 
             DynamicMethod dynamicConstructor = CreateDynamicDefaultConstructor(type.Name, type);
             dynamicConstructor.InitLocals = true;

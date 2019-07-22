@@ -1074,6 +1074,8 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor));
                 yield return new TestCaseData(typeof(DefaultInheritedNoDefaultConstructor));
                 yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass));
+                yield return new TestCaseData(typeof(List<int>));
+                yield return new TestCaseData(typeof(Dictionary<int, string>));
             }
         }
 
@@ -1116,6 +1118,12 @@ namespace ImmediateReflection.Tests
             immediateType = new ImmediateType(typeof(NotAccessibleDefaultConstructor));
             Assert.Throws<MissingMethodException>(() => immediateType.New());
 
+            immediateType = new ImmediateType(typeof(IList<int>));
+            Assert.Throws<MissingMethodException>(() => immediateType.New());
+
+            immediateType = new ImmediateType(typeof(IDictionary<int, string>));
+            Assert.Throws<MissingMethodException>(() => immediateType.New());
+
             immediateType = new ImmediateType(typeof(AbstractDefaultConstructor));
             Assert.Throws<MissingMethodException>(() => immediateType.New());
 
@@ -1143,6 +1151,9 @@ namespace ImmediateReflection.Tests
 
             immediateType = new ImmediateType(typeof(DefaultConstructorThrows));
             Assert.Throws(Is.InstanceOf<Exception>(), () => immediateType.New());
+
+            immediateType = new ImmediateType(typeof(int[]));
+            Assert.Throws<MissingMethodException>(() => immediateType.New());
             // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         }
 
@@ -1160,9 +1171,13 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor), false);
                 yield return new TestCaseData(typeof(DefaultInheritedNoDefaultConstructor), false);
                 yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass), false);
+                yield return new TestCaseData(typeof(List<int>), false);
+                yield return new TestCaseData(typeof(Dictionary<int, string>), false);
 
                 yield return new TestCaseData(typeof(NoDefaultConstructor), true);
                 yield return new TestCaseData(typeof(NotAccessibleDefaultConstructor), true);
+                yield return new TestCaseData(typeof(IList<int>), true);
+                yield return new TestCaseData(typeof(IDictionary<int, string>), true);
                 yield return new TestCaseData(typeof(AbstractDefaultConstructor), true);
                 yield return new TestCaseData(typeof(StaticClass), true);
                 yield return new TestCaseData(typeof(TemplateStruct<>), true);
@@ -1242,6 +1257,10 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(DefaultInheritedNoDefaultConstructor), new object[] { });
                 yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass), null);
                 yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass), new object[] { });
+                yield return new TestCaseData(typeof(List<int>), null);
+                yield return new TestCaseData(typeof(List<int>), new object[] { });
+                yield return new TestCaseData(typeof(Dictionary<int, string>), null);
+                yield return new TestCaseData(typeof(Dictionary<int, string>), new object[] { });
 
                 yield return new TestCaseData(typeof(ParameterConstructorStruct), new object[] { 12 });
                 yield return new TestCaseData(typeof(NoDefaultConstructor), new object[] { 12 });
@@ -1260,6 +1279,10 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(NoDefaultInheritedDefaultConstructor), new object[] { 12 });
                 yield return new TestCaseData(typeof(NoDefaultInheritedNoDefaultConstructor), new object[] { 42 });
                 yield return new TestCaseData(typeof(NoDefaultInheritedFromAbstractClass), new object[] { 25 });
+                yield return new TestCaseData(typeof(int[]), new object[] { 5 });
+                yield return new TestCaseData(typeof(List<int>), new object[] { 2 });
+                yield return new TestCaseData(typeof(List<int>), new object[] { Enumerable.Range(0, 5) });
+                yield return new TestCaseData(typeof(Dictionary<int, string>), new object[] { 3 });
             }
         }
 
@@ -1339,6 +1362,14 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(NoDefaultInheritedDefaultConstructor), false, new object[] { 12 });
                 yield return new TestCaseData(typeof(NoDefaultInheritedNoDefaultConstructor), false, new object[] { 42 });
                 yield return new TestCaseData(typeof(NoDefaultInheritedFromAbstractClass), false, new object[] { 25 });
+                yield return new TestCaseData(typeof(int[]), false, new object[] { 5 });
+                yield return new TestCaseData(typeof(List<int>), false, null);
+                yield return new TestCaseData(typeof(List<int>), false, new object[] { });
+                yield return new TestCaseData(typeof(List<int>), false, new object[] { 2 });
+                yield return new TestCaseData(typeof(List<int>), false, new object[] { Enumerable.Range(0, 5) });
+                yield return new TestCaseData(typeof(Dictionary<int, string>), false, null);
+                yield return new TestCaseData(typeof(Dictionary<int, string>), false, new object[] { });
+                yield return new TestCaseData(typeof(Dictionary<int, string>), false, new object[] { 3 });
 
                 yield return new TestCaseData(typeof(int), true, new object[] { 12 });
                 yield return new TestCaseData(typeof(TestStruct), true, new object[] { 12 });
@@ -1371,6 +1402,8 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(DefaultConstructorThrows), true, null);
                 yield return new TestCaseData(typeof(DefaultConstructorThrows), true, new object[] { });
                 yield return new TestCaseData(typeof(DefaultConstructorThrows), true, new object[] { 12 });
+                yield return new TestCaseData(typeof(int[]), true, null);
+                yield return new TestCaseData(typeof(int[]), true, new object[] { });
             }
         }
 
