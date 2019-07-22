@@ -108,7 +108,7 @@ namespace ImmediateReflection
         #region Default constructor cache
 
         [NotNull]
-        private volatile MemoryCache<Type, DefaultConstructorData> _cachedConstructors = 
+        private volatile MemoryCache<Type, DefaultConstructorData> _cachedConstructors =
             new MemoryCache<Type, DefaultConstructorData>();
 
         [NotNull]
@@ -123,6 +123,23 @@ namespace ImmediateReflection
                 DefaultConstructorDelegate ctor = DelegatesFactory.CreateDefaultConstructor(type, out bool hasConstructor);
                 return new DefaultConstructorData(ctor, hasConstructor);
             });
+        }
+
+        #endregion
+
+        #region Property cache
+
+        [NotNull]
+        private volatile MemoryCache<PropertyInfo, ImmediateProperty> _cachedProperties = new MemoryCache<PropertyInfo, ImmediateProperty>();
+
+        [NotNull]
+        [ContractAnnotation("property:null => halt")]
+        public ImmediateProperty GetProperty([NotNull] PropertyInfo property)
+        {
+            if (property is null)
+                throw new ArgumentNullException(nameof(property));
+
+            return _cachedProperties.GetOrCreate(property, () => new ImmediateProperty(property));
         }
 
         #endregion

@@ -44,12 +44,22 @@ namespace ImmediateReflection
                 .Where(IsNotIndexed)
                 .ToDictionary(
                     property => property.Name, 
+#if SUPPORTS_CACHING
+                    property => CachesHandler.Instance.GetProperty(property));
+#else
                     property => new ImmediateProperty(property));
+#endif
 #else
             _properties = new Dictionary<string, ImmediateProperty>();
             foreach (PropertyInfo property in Where(properties, IsNotIndexed))
             {
-                _properties.Add(property.Name, new ImmediateProperty(property));
+                _properties.Add(
+                    property.Name,
+#if SUPPORTS_CACHING
+                    CachesHandler.Instance.GetProperty(property));
+#else
+                    new ImmediateProperty(property));
+#endif
             }
 #endif
 
