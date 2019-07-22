@@ -15,6 +15,7 @@ namespace ImmediateReflection
     /// <typeparam name="TKey">Cache key type.</typeparam>
     /// <typeparam name="TValue">Cache value type.</typeparam>
     internal class MemoryCache<TKey, TValue>
+        where TValue : class
     {
         [NotNull]
         private readonly Hashtable _cache = new Hashtable();

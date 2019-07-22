@@ -104,6 +104,28 @@ namespace ImmediateReflection
         }
 
         #endregion
+
+        #region Default constructor cache
+
+        [NotNull]
+        private volatile MemoryCache<Type, DefaultConstructorData> _cachedConstructors = 
+            new MemoryCache<Type, DefaultConstructorData>();
+
+        [NotNull]
+        [ContractAnnotation("type:null => halt")]
+        public DefaultConstructorData GetDefaultConstructor([NotNull] Type type)
+        {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+
+            return _cachedConstructors.GetOrCreate(type, () =>
+            {
+                DefaultConstructorDelegate ctor = DelegatesFactory.CreateDefaultConstructor(type, out bool hasConstructor);
+                return new DefaultConstructorData(ctor, hasConstructor);
+            });
+        }
+
+        #endregion
     }
 }
 #endif

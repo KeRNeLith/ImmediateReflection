@@ -89,8 +89,15 @@ namespace ImmediateReflection
             Type = type ?? throw new ArgumentNullException(nameof(type));
             FullName = type.FullName ?? Name;
 
+            // Default constructor
+#if SUPPORTS_CACHING
+            DefaultConstructorData data = CachesHandler.Instance.GetDefaultConstructor(Type);
+            _constructor = data.Constructor;
+            HasDefaultConstructor = data.HasDefault;
+#else
             _constructor = DelegatesFactory.CreateDefaultConstructor(Type, out bool hasConstructor);
             HasDefaultConstructor = hasConstructor;
+#endif
 
             if (type.IsEnum)
             {
