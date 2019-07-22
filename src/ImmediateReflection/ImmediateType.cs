@@ -302,7 +302,14 @@ namespace ImmediateReflection
         /// <exception cref="ArgumentException"><see cref="Type"/> a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
         /// <exception cref="MemberAccessException">Cannot create an instance of an abstract class, or this member was invoked with a late-binding mechanism.</exception>
         /// <exception cref="MissingMethodException">No matching public constructor was found.</exception>
+        /// <exception cref="NotSupportedException">
+        /// If the <see cref="Type"/> cannot be a TypeBuilder.
+        /// -or- Creation of <see cref="TypedReference"/>, ArgIterator, <see cref="Void"/>, and <see cref="RuntimeArgumentHandle"/> types, or arrays of those types, is not supported.
+        /// -or- The assembly that contains type is a dynamic assembly that was created with Save.
+        /// -or- The constructor that best matches args has varargs arguments.
+        /// </exception>
         /// <exception cref="TargetInvocationException">The constructor being called throws an exception.</exception>
+        /// <exception cref="TypeLoadException">If the <see cref="Type"/> is not a valid type.</exception>
         [PublicAPI]
         [Pure]
         [NotNull]

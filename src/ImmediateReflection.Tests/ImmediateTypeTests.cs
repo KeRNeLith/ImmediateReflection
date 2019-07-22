@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using NUnit.Framework;
+using static ImmediateReflection.Tests.ConstructorTestHelpers;
 
 namespace ImmediateReflection.Tests
 {
@@ -541,481 +542,6 @@ namespace ImmediateReflection.Tests
 
         #region New/Constructor
 
-        #region Test classes
-
-        private struct ParameterConstructorStruct
-        {
-            // ReSharper disable once UnusedParameter.Local
-            // ReSharper disable once UnusedMember.Local
-            public ParameterConstructorStruct(int value)
-            {
-            }
-        }
-
-        private class DefaultConstructor
-        {
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as DefaultConstructor);
-            }
-
-            private bool Equals(DefaultConstructor other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
-        }
-
-        private abstract class AbstractDefaultConstructor
-        {
-        }
-
-        private abstract class AbstractNoConstructor
-        {
-            // ReSharper disable once UnusedParameter.Local
-            public AbstractNoConstructor(int value)
-            {
-            }
-        }
-
-        private class NoDefaultConstructor
-        {
-            // ReSharper disable once UnusedParameter.Local
-            public NoDefaultConstructor(int value)
-            {
-            }
-
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as NoDefaultConstructor);
-            }
-
-            private bool Equals(NoDefaultConstructor other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
-        }
-
-        private class MultiParametersConstructor
-        {
-            // ReSharper disable UnusedParameter.Local
-            public MultiParametersConstructor(int value, float value2)
-                // ReSharper restore UnusedParameter.Local
-            {
-            }
-
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as MultiParametersConstructor);
-            }
-
-            private bool Equals(MultiParametersConstructor other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
-        }
-
-        private class NotAccessibleDefaultConstructor
-        {
-            private NotAccessibleDefaultConstructor()
-            {
-            }
-        }
-
-        private class NotAccessibleConstructor
-        {
-            // ReSharper disable once UnusedParameter.Local
-            private NotAccessibleConstructor(int value)
-            {
-            }
-        }
-
-        // ReSharper disable once UnusedTypeParameter
-        private struct TemplateStruct<TTemplate>
-        {
-        }
-
-        // ReSharper disable once UnusedTypeParameter
-        private class TemplateDefaultConstructor<TTemplate>
-        {
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as TemplateDefaultConstructor<TTemplate>);
-            }
-
-            private bool Equals(TemplateDefaultConstructor<TTemplate> other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
-        }
-
-        // ReSharper disable once UnusedTypeParameter
-        private class TemplateNoDefaultConstructor<TTemplate>
-        {
-            // ReSharper disable once UnusedParameter.Local
-            public TemplateNoDefaultConstructor(int value)
-            {
-            }
-
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as TemplateNoDefaultConstructor<TTemplate>);
-            }
-
-            private bool Equals(TemplateNoDefaultConstructor<TTemplate> other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
-        }
-
-        private class DefaultConstructorThrows
-        {
-            // ReSharper disable once UnusedMember.Local
-            public DefaultConstructorThrows()
-            {
-                throw new InvalidOperationException("Constructor throws.");
-            }
-
-            // ReSharper disable once UnusedMember.Local
-            // ReSharper disable once UnusedParameter.Local
-            public DefaultConstructorThrows(int value)
-            {
-                throw new InvalidOperationException("Constructor throws (int).");
-            }
-
-            // ReSharper disable once UnusedMember.Local
-            // ReSharper disable UnusedParameter.Local
-            public DefaultConstructorThrows(int value, float value2)
-            // ReSharper restore UnusedParameter.Local
-            {
-            }
-
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as DefaultConstructorThrows);
-            }
-
-            private bool Equals(DefaultConstructorThrows other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
-        }
-
-        private class NotDefaultConstructorThrows
-        {
-            // ReSharper disable once UnusedParameter.Local
-            public NotDefaultConstructorThrows(int value)
-            {
-                throw new InvalidOperationException("Constructor throws.");
-            }
-        }
-
-        private class MultipleConstructors
-        {
-            // ReSharper disable UnusedMember.Local
-            public MultipleConstructors()
-            {
-            }
-
-            // ReSharper disable UnusedParameter.Local
-            public MultipleConstructors(int value)
-            {
-            }
-
-            public MultipleConstructors(int value, float value2)
-            {
-            }
-
-            // ReSharper restore UnusedParameter.Local
-            // ReSharper restore UnusedMember.Local
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as MultipleConstructors);
-            }
-
-            private bool Equals(MultipleConstructors other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
-        }
-
-        private class ParamsOnlyConstructor
-        {
-            // ReSharper disable once UnusedParameter.Local
-            public ParamsOnlyConstructor(params object[] args)
-            {
-            }
-
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as ParamsOnlyConstructor);
-            }
-
-            private bool Equals(ParamsOnlyConstructor other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
-        }
-
-        private class ParamsConstructor
-        {
-            // ReSharper disable UnusedParameter.Local
-            public ParamsConstructor(int value, params object[] args)
-            // ReSharper restore UnusedParameter.Local
-            {
-            }
-
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as ParamsConstructor);
-            }
-
-            private bool Equals(ParamsConstructor other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
-        }
-
-        private class AmbiguousParamsOnlyConstructor
-        {
-            // ReSharper disable once UnusedParameter.Local
-            // ReSharper disable once UnusedMember.Local
-            public AmbiguousParamsOnlyConstructor(params object[] args)
-            {
-            }
-
-            // ReSharper disable once UnusedParameter.Local
-            // ReSharper disable once UnusedMember.Local
-            public AmbiguousParamsOnlyConstructor(params int[] args)
-            {
-            }
-
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as ParamsOnlyConstructor);
-            }
-
-            private bool Equals(ParamsOnlyConstructor other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
-        }
-
-        private class IntParamsOnlyConstructor
-        {
-            // ReSharper disable once UnusedParameter.Local
-            public IntParamsOnlyConstructor(params int[] args)
-            {
-            }
-
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as IntParamsOnlyConstructor);
-            }
-
-            private bool Equals(IntParamsOnlyConstructor other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
-        }
-
-        private class NullableIntParamsOnlyConstructor
-        {
-            // ReSharper disable once UnusedParameter.Local
-            public NullableIntParamsOnlyConstructor(params int?[] args)
-            {
-            }
-
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as NullableIntParamsOnlyConstructor);
-            }
-
-            private bool Equals(NullableIntParamsOnlyConstructor other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
-        }
-
-        private class DefaultInheritedDefaultConstructor : DefaultConstructor
-        {
-        }
-
-        private class DefaultInheritedNoDefaultConstructor : NoDefaultConstructor
-        {
-            public DefaultInheritedNoDefaultConstructor() 
-                : base(777)
-            {
-            }
-
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as DefaultInheritedNoDefaultConstructor);
-            }
-
-            private bool Equals(DefaultInheritedNoDefaultConstructor other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
-        }
-
-        private class DefaultInheritedFromAbstractClass : AbstractDefaultConstructor
-        {
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as DefaultInheritedFromAbstractClass);
-            }
-
-            private bool Equals(DefaultInheritedFromAbstractClass other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
-        }
-
-        private class NoDefaultInheritedDefaultConstructor : DefaultConstructor
-        {
-            // ReSharper disable once UnusedParameter.Local
-            public NoDefaultInheritedDefaultConstructor(int value)
-            {
-            }
-        }
-
-        private class NoDefaultInheritedNoDefaultConstructor : NoDefaultConstructor
-        {
-            public NoDefaultInheritedNoDefaultConstructor(int value)
-                : base(value)
-            {
-            }
-        }
-
-        private class NoDefaultInheritedFromAbstractClass : AbstractDefaultConstructor
-        {
-            // ReSharper disable once UnusedParameter.Local
-            public NoDefaultInheritedFromAbstractClass(int value)
-            {
-            }
-
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as NoDefaultInheritedFromAbstractClass);
-            }
-
-            private bool Equals(NoDefaultInheritedFromAbstractClass other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
-        }
-
-        private static class StaticClass
-        {
-        }
-
-        #endregion
-
         #region Has Default Constructor
 
         private static IEnumerable<TestCaseData> CreateHasDefaultConstructorTestCases
@@ -1060,52 +586,44 @@ namespace ImmediateReflection.Tests
 
         #region New/TryNew
 
-        private static IEnumerable<TestCaseData> CreateDefaultConstructorTestCases
-        {
-            [UsedImplicitly]
-            get
-            {
-                yield return new TestCaseData(typeof(int));
-                yield return new TestCaseData(typeof(TestStruct));
-                yield return new TestCaseData(typeof(DefaultConstructor));
-                yield return new TestCaseData(typeof(MultipleConstructors));
-                yield return new TestCaseData(typeof(TemplateStruct<double>));
-                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>));
-                yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor));
-                yield return new TestCaseData(typeof(DefaultInheritedNoDefaultConstructor));
-                yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass));
-                yield return new TestCaseData(typeof(List<int>));
-                yield return new TestCaseData(typeof(Dictionary<int, string>));
-            }
-        }
-
-        [TestCaseSource(nameof(CreateDefaultConstructorTestCases))]
+        [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateDefaultConstructorTestCases))]
         public void NewParameterLess([NotNull] Type type)
         {
-            var immediateType = new ImmediateType(type);
-
-            object instance = immediateType.New();
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(Activator.CreateInstance(type), instance);
+            ConstructorTestHelpers.NewParameterLess(
+                type,
+                () =>
+                {
+                    var immediateType = new ImmediateType(type);
+                    return immediateType.New();
+                });
         }
 
         [Test]
         public void NewParamsOnly()
         {
-            var immediateType = new ImmediateType(typeof(ParamsOnlyConstructor));
-            object instance = immediateType.New();
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(new ParamsOnlyConstructor(), instance);
+            ConstructorTestHelpers.NewParamsOnly(
+                () =>
+                {
+                    var immediateType = new ImmediateType(typeof(ParamsOnlyConstructor));
+                    return immediateType.New();
+                },
+                () => new ParamsOnlyConstructor());
 
-            immediateType = new ImmediateType(typeof(IntParamsOnlyConstructor));
-            instance = immediateType.New();
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(new IntParamsOnlyConstructor(), instance);
+            ConstructorTestHelpers.NewParamsOnly(
+                () =>
+                {
+                    var immediateType = new ImmediateType(typeof(IntParamsOnlyConstructor));
+                    return immediateType.New();
+                },
+                () => new IntParamsOnlyConstructor());
 
-            immediateType = new ImmediateType(typeof(NullableIntParamsOnlyConstructor));
-            instance = immediateType.New();
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(new NullableIntParamsOnlyConstructor(), instance);
+            ConstructorTestHelpers.NewParamsOnly(
+                () =>
+                {
+                    var immediateType = new ImmediateType(typeof(NullableIntParamsOnlyConstructor));
+                    return immediateType.New();
+                },
+                () => new NullableIntParamsOnlyConstructor());
         }
 
         [Test]
@@ -1157,75 +675,45 @@ namespace ImmediateReflection.Tests
             // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         }
 
-        private static IEnumerable<TestCaseData> CreateDefaultConstructorNoThrowTestCases
+        [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateDefaultConstructorNoThrowTestCases))]
+        public void TryNewParameterLess([NotNull] Type type, bool expectFail)
         {
-            [UsedImplicitly]
-            get
-            {
-                yield return new TestCaseData(typeof(int), false);
-                yield return new TestCaseData(typeof(TestStruct), false);
-                yield return new TestCaseData(typeof(DefaultConstructor), false);
-                yield return new TestCaseData(typeof(MultipleConstructors), false);
-                yield return new TestCaseData(typeof(TemplateStruct<double>), false);
-                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), false);
-                yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor), false);
-                yield return new TestCaseData(typeof(DefaultInheritedNoDefaultConstructor), false);
-                yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass), false);
-                yield return new TestCaseData(typeof(List<int>), false);
-                yield return new TestCaseData(typeof(Dictionary<int, string>), false);
-
-                yield return new TestCaseData(typeof(NoDefaultConstructor), true);
-                yield return new TestCaseData(typeof(NotAccessibleDefaultConstructor), true);
-                yield return new TestCaseData(typeof(IList<int>), true);
-                yield return new TestCaseData(typeof(IDictionary<int, string>), true);
-                yield return new TestCaseData(typeof(AbstractDefaultConstructor), true);
-                yield return new TestCaseData(typeof(StaticClass), true);
-                yield return new TestCaseData(typeof(TemplateStruct<>), true);
-                yield return new TestCaseData(typeof(TemplateDefaultConstructor<>), true);
-                yield return new TestCaseData(typeof(NoDefaultInheritedDefaultConstructor), true);
-                yield return new TestCaseData(typeof(NoDefaultInheritedNoDefaultConstructor), true);
-                yield return new TestCaseData(typeof(NoDefaultInheritedFromAbstractClass), true);
-                // ReSharper disable once PossibleMistakenCallToGetType.2
-                yield return new TestCaseData(typeof(DefaultConstructor).GetType(), true);
-                yield return new TestCaseData(typeof(DefaultConstructorThrows), true);
-            }
-        }
-
-        [TestCaseSource(nameof(CreateDefaultConstructorNoThrowTestCases))]
-        public void NewParameterLess_NoThrow([NotNull] Type type, bool expectFail)
-        {
-            var immediateType = new ImmediateType(type);
-
-            Assert.AreEqual(!expectFail, immediateType.TryNew(out object instance, out Exception ex));
-            if (expectFail)
-            {
-                Assert.IsNull(instance);
-                Assert.IsNotNull(ex);
-            }
-            else
-            {
-                Assert.IsNotNull(instance);
-                Assert.AreEqual(Activator.CreateInstance(type), instance);
-            }
+            ConstructorTestHelpers.TryNewParameterLess(
+                type,
+                expectFail,
+                (out object instance, out Exception exception) =>
+                {
+                    var immediateType = new ImmediateType(type);
+                    return immediateType.TryNew(out instance, out exception);
+                });
         }
 
         [Test]
-        public void NewParameterLess_NoThrow()
+        public void TryNewParameterLess()
         {
-            var immediateType = new ImmediateType(typeof(ParamsOnlyConstructor));
-            Assert.IsTrue(immediateType.TryNew(out object instance, out Exception _));
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(new ParamsOnlyConstructor(), instance);
+            ConstructorTestHelpers.TryNewParameterLess(
+                (out object instance, out Exception exception) =>
+                {
+                    var immediateType = new ImmediateType(typeof(ParamsOnlyConstructor));
+                    return immediateType.TryNew(out instance, out exception);
+                },
+                () => new ParamsOnlyConstructor());
 
-            immediateType = new ImmediateType(typeof(IntParamsOnlyConstructor));
-            Assert.IsTrue(immediateType.TryNew(out instance, out Exception _));
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(new IntParamsOnlyConstructor(), instance);
+            ConstructorTestHelpers.TryNewParameterLess(
+                (out object instance, out Exception exception) =>
+                {
+                    var immediateType = new ImmediateType(typeof(IntParamsOnlyConstructor));
+                    return immediateType.TryNew(out instance, out exception);
+                },
+                () => new IntParamsOnlyConstructor());
 
-            immediateType = new ImmediateType(typeof(NullableIntParamsOnlyConstructor));
-            Assert.IsTrue(immediateType.TryNew(out instance, out Exception _));
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(new NullableIntParamsOnlyConstructor(), instance);
+            ConstructorTestHelpers.TryNewParameterLess(
+                (out object instance, out Exception exception) =>
+                {
+                    var immediateType = new ImmediateType(typeof(NullableIntParamsOnlyConstructor));
+                    return immediateType.TryNew(out instance, out exception);
+                },
+                () => new NullableIntParamsOnlyConstructor());
         }
 
         #endregion
@@ -1408,7 +896,7 @@ namespace ImmediateReflection.Tests
         }
 
         [TestCaseSource(nameof(CreateNotDefaultConstructorNoThrowTestCases))]
-        public void NewWithParameters_NoThrow([NotNull] Type type, bool expectFail, [CanBeNull, ItemCanBeNull] params object[] args)
+        public void TryNewWithParameters([NotNull] Type type, bool expectFail, [CanBeNull, ItemCanBeNull] params object[] args)
         {
             var immediateType = new ImmediateType(type);
 
