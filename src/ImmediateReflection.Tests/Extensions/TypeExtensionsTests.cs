@@ -42,6 +42,9 @@ namespace ImmediateReflection.Tests
         public void NewParameterLess_Throws()
         {
             // ReSharper disable ReturnValueOfPureMethodIsNotUsed
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(null));
+
             Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(NoDefaultConstructor)));
             Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(NotAccessibleDefaultConstructor)));
             Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(IList<int>)));
@@ -83,6 +86,13 @@ namespace ImmediateReflection.Tests
             ConstructorTestHelpers.TryNewParameterLess(
                 (out object instance, out Exception exception) => TypeExtensions.TryNew(typeof(NullableIntParamsOnlyConstructor), out instance, out exception),
                 () => new NullableIntParamsOnlyConstructor());
+        }
+
+        [Test]
+        public void TryNewParameterLess_Throws()
+        {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(null, out _, out _));
         }
     }
 }
