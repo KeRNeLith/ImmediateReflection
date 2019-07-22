@@ -6,10 +6,10 @@ Benchmarks have been implemented with [BenchmarkDotNet](https://github.com/dotne
 
 ```ini
 BenchmarkDotNet=v0.11.5
-OS=Windows 10.0.17134.829 (1803/April2018Update/Redstone4)
+OS=Windows 10.0.18362
 Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-  [Host]     : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3416.0
-  DefaultJob : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3416.0
+  [Host]     : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.8.3815.0
+  DefaultJob : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.8.3815.0
 ```
 
 ## Implementation details
@@ -22,13 +22,13 @@ The Property_ByImmediateReflection_GetAttribute benchmark by getting attributes 
 
 ## Results
 
-|                                      Method |        Mean |      Error |     StdDev | Ratio | RatioSD |
-|-------------------------------------------- |------------:|-----------:|-----------:|------:|--------:|
-|                       Property_GetAttribute | 3,131.45 ns | 28.8622 ns | 26.9977 ns |  1.00 |    0.00 |
-|                  PropertyCache_GetAttribute |    81.15 ns |  1.6264 ns |  1.5214 ns |  0.03 |    0.00 |
-|                     FastMember_GetAttribute | 3,123.90 ns | 60.3643 ns | 61.9897 ns |  1.00 |    0.02 |
-|              **ImmediateProperty_GetAttribute** |    **48.07 ns** |  **0.2989 ns** |  **0.2649 ns** |  **0.02** |    **0.00** |
-| *Property_ByImmediateReflection_GetAttribute* |   *105.46 ns* |  *1.0925 ns* |  *1.0219 ns* |  *0.03* |    *0.00* |
+|                                      Method |        Mean |     Error |    StdDev | Ratio |
+|-------------------------------------------- |------------:|----------:|----------:|------:|
+|                       Property_GetAttribute | 3,015.71 ns | 4.9026 ns | 3.8277 ns |  1.00 |
+|                  PropertyCache_GetAttribute |    75.72 ns | 0.2193 ns | 0.2052 ns |  0.03 |
+|                     FastMember_GetAttribute | 3,018.84 ns | 7.0476 ns | 5.8850 ns |  1.00 |
+|              **ImmediateProperty_GetAttribute** |    **45.16 ns** | **0.0626 ns** | **0.0555 ns** |  **0.01** |
+| *Property_ByImmediateReflection_GetAttribute* |   *105.01 ns* | *0.2732 ns* | *0.2555 ns* |  *0.03* |
 
 ---
 

@@ -6,10 +6,10 @@ Benchmarks have been implemented with [BenchmarkDotNet](https://github.com/dotne
 
 ```ini
 BenchmarkDotNet=v0.11.5
-OS=Windows 10.0.17134.765 (1803/April2018Update/Redstone4)
+OS=Windows 10.0.18362
 Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-  [Host]     : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3416.0
-  DefaultJob : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3416.0
+  [Host]     : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.8.3815.0
+  DefaultJob : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.8.3815.0
 ```
 
 ## Results
@@ -18,22 +18,24 @@ Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 ph
 
 |                    Method |      Mean |     Error |    StdDev | Ratio | RatioSD |
 |-------------------------- |----------:|----------:|----------:|------:|--------:|
-|        Direct_Constructor |  3.828 ns | 0.1630 ns | 0.2538 ns |  1.00 |    0.00 |
-|     Activator_Constructor | 41.936 ns | 0.8829 ns | 0.9447 ns | 10.84 |    0.73 |
-|    Expression_Constructor | 11.170 ns | 0.2850 ns | 0.4352 ns |  2.93 |    0.22 |
-|    FastMember_Constructor |  8.535 ns | 0.1685 ns | 0.1655 ns |  2.20 |    0.15 |
-| **ImmediateType_Constructor** |  **6.911 ns** | **0.1938 ns** | **0.1903 ns** |  **1.78** |    **0.13** |
+|        Direct_Constructor |  3.565 ns | 0.0482 ns | 0.0376 ns |  1.00 |    0.00 |
+|     Activator_Constructor | 38.077 ns | 0.4029 ns | 0.3571 ns | 10.69 |    0.14 |
+|    Expression_Constructor |  9.140 ns | 0.1282 ns | 0.1199 ns |  2.57 |    0.05 |
+|    FastMember_Constructor |  5.499 ns | 0.0723 ns | 0.0676 ns |  1.55 |    0.02 |
+| **ImmediateType_Constructor** |  **6.132 ns** | **0.0729 ns** | **0.0647 ns** |  **1.72** |    **0.02** |
 
 ### Multiple constructor calls
 
 |                    Method |      Mean |     Error |    StdDev | Ratio | RatioSD |
 |-------------------------- |----------:|----------:|----------:|------:|--------:|
-|        Direct_Constructor |  14.32 ns | 0.3072 ns | 0.4205 ns |  1.00 |    0.00 |
-|     Activator_Constructor | 210.04 ns | 2.8246 ns | 2.6422 ns | 14.55 |    0.48 |
-|    Expression_Constructor |  44.76 ns | 0.7928 ns | 0.7028 ns |  3.11 |    0.11 |
-|    FastMember_Constructor |  24.61 ns | 0.5150 ns | 0.6697 ns |  1.72 |    0.07 |
-| **ImmediateType_Constructor** |  **26.29** ns | **0.5082 ns** | **0.4754 ns** |  **1.82** |    **0.05** |
+|        Direct_Constructor |  11.59 ns | 0.1348 ns | 0.1126 ns |  1.00 |    0.00 |
+|     Activator_Constructor | 183.74 ns | 1.5670 ns | 1.3085 ns | 15.85 |    0.21 |
+|    Expression_Constructor |  37.32 ns | 0.3168 ns | 0.2809 ns |  3.22 |    0.03 |
+|    FastMember_Constructor |  22.72 ns | 0.3246 ns | 0.3036 ns |  1.96 |    0.03 |
+| **ImmediateType_Constructor** |  **24.63 ns** | **0.4941 ns** | **0.6068 ns** |  **2.11** |    **0.06** |
 
 ---
 
 Results demonstrate that **ImmediateReflection** is really faster than using the classic `Activator.CreateInstance()`.
+Note that compared to FastMember the slight difference is explained by the fact that **ImmediateReflection** 
+tries to keep as much as possible an API like the standard one involving further checks not done in FastMember.
