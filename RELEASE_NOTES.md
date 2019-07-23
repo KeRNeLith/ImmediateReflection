@@ -1,5 +1,20 @@
 # Release notes
 
+## What's new in 1.3.0 July 23 2019
+### New:
+* Add type extensions to directly call a default constructor delegate from a Type (without ImmediateType).
+* Add type extensions to directly call a constructor delegate from a Type (without ImmediateType).
+
+### Fixes:
+* ImmediateType properly handle arrays which were crashing before.
+
+### Changes:
+* Default constructor delegates available via ImmediateType are now cached and shared across several instance of ImmediateType.
+* ImmediateProperty are now cached and shared across several instance of ImmediateType.
+* ImmediateField are now cached and shared across several instance of ImmediateType.
+
+---
+
 ## What's new in 1.2.0 July 18 2019
 ### New:
 * Add ConstructorDelegate delegate.

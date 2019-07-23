@@ -39,15 +39,18 @@ See benchmarks here: https://kernelith.github.io/ImmediateReflection/documentati
 
     <IsPackable>true</IsPackable>
     <PackageId>ImmediateReflection</PackageId>
-    <PackageReleaseNotes>➟ Release 1.2.0
+    <PackageReleaseNotes>➟ Release 1.3.0
 New:
-- Add ConstructorDelegate delegate.
+- Add type extensions to directly call a default constructor delegate from a Type (without ImmediateType).
+- Add type extensions to directly call a constructor delegate from a Type (without ImmediateType).
 
 Fixes:
-- Classes with indexed properties does not crash anymore.
+- ImmediateType properly handle arrays which were crashing before.
 
 Changes:
-- Lazily initialize fields property of ImmediateType.</PackageReleaseNotes>
+- Default constructor delegates available via ImmediateType are now cached and shared across several instance of ImmediateType.
+- ImmediateProperty are now cached and shared across several instance of ImmediateType.
+- ImmediateField are now cached and shared across several instance of ImmediateType.</PackageReleaseNotes>
     <PackageTags>C# Reflection Fast Immediate Performance Delegate Dynamic</PackageTags>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
