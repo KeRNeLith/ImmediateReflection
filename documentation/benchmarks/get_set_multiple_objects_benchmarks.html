@@ -72,10 +72,10 @@
 <p>Benchmarks have been implemented with <a href="https://github.com/dotnet/BenchmarkDotNet">BenchmarkDotNet</a>.</p>
 <h2 id="configuration">Configuration</h2>
 <pre><code class="lang-ini">BenchmarkDotNet=v0.11.5
-OS=Windows 10.0.17134.829 (1803/April2018Update/Redstone4)
+OS=Windows 10.0.18362
 Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-  [Host]     : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3416.0
-  DefaultJob : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3416.0
+  [Host]     : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.8.3815.0
+  DefaultJob : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.8.3815.0
 </code></pre>
 <h2 id="implementation-details">Implementation details</h2>
 <p>Each benchmark consists in iterating over a set of objects (or mixed objects) and getting a property accessor to get or set the target property of the treated object.</p>
@@ -97,115 +97,115 @@ Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 ph
 <tbody>
 <tr>
 <td>Reflection_PropertyGet_BenchmarkObject</td>
-<td style="text-align: right;">167.99 us</td>
-<td style="text-align: right;">1.913 us</td>
-<td style="text-align: right;">1.598 us</td>
+<td style="text-align: right;">153.24 us</td>
+<td style="text-align: right;">0.6956 us</td>
+<td style="text-align: right;">0.6167 us</td>
 <td style="text-align: right;">1.00</td>
 <td style="text-align: right;">0.00</td>
 </tr>
 <tr>
 <td>ReflectionCache_PropertyGet_BenchmarkObject</td>
-<td style="text-align: right;">95.85 us</td>
-<td style="text-align: right;">1.678 us</td>
-<td style="text-align: right;">1.401 us</td>
+<td style="text-align: right;">86.55 us</td>
+<td style="text-align: right;">0.2897 us</td>
+<td style="text-align: right;">0.2710 us</td>
 <td style="text-align: right;">0.57</td>
-<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.00</td>
 </tr>
 <tr>
 <td>HyperDescriptor_PropertyGet_BenchmarkObject</td>
-<td style="text-align: right;">973.49 us</td>
-<td style="text-align: right;">18.626 us</td>
-<td style="text-align: right;">23.555 us</td>
-<td style="text-align: right;">5.85</td>
-<td style="text-align: right;">0.14</td>
+<td style="text-align: right;">824.08 us</td>
+<td style="text-align: right;">4.8925 us</td>
+<td style="text-align: right;">4.3370 us</td>
+<td style="text-align: right;">5.38</td>
+<td style="text-align: right;">0.04</td>
 </tr>
 <tr>
 <td>FastMember_PropertyGet_BenchmarkObject</td>
-<td style="text-align: right;">97.44 us</td>
-<td style="text-align: right;">1.939 us</td>
-<td style="text-align: right;">2.233 us</td>
+<td style="text-align: right;">89.39 us</td>
+<td style="text-align: right;">0.7090 us</td>
+<td style="text-align: right;">0.6632 us</td>
 <td style="text-align: right;">0.58</td>
 <td style="text-align: right;">0.01</td>
 </tr>
 <tr>
 <td>FlashReflection_PropertyGet_BenchmarkObject</td>
-<td style="text-align: right;">407.91 us</td>
-<td style="text-align: right;">8.036 us</td>
-<td style="text-align: right;">13.646 us</td>
-<td style="text-align: right;">2.48</td>
-<td style="text-align: right;">0.09</td>
-</tr>
-<tr>
-<td><strong>ImmediateReflection_PropertyGet_BenchmarkObject</strong></td>
-<td style="text-align: right;"><strong>80.17 us</strong></td>
-<td style="text-align: right;"><strong>1.088 us</strong></td>
-<td style="text-align: right;"><strong>1.018 us</strong></td>
-<td style="text-align: right;"><strong>0.48</strong></td>
-<td style="text-align: right;"><strong>0.01</strong></td>
-</tr>
-<tr>
-<td>WithFasterflect_PropertyGet_BenchmarkObject</td>
-<td style="text-align: right;">96.89 us</td>
-<td style="text-align: right;">1.798 us</td>
-<td style="text-align: right;">1.682 us</td>
-<td style="text-align: right;">0.58</td>
-<td style="text-align: right;">0.01</td>
-</tr>
-<tr>
-<td>Reflection_PropertyGet_Mixed_BenchmarkObject</td>
-<td style="text-align: right;">113.72 us</td>
-<td style="text-align: right;">2.191 us</td>
-<td style="text-align: right;">2.250 us</td>
-<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">441.63 us</td>
+<td style="text-align: right;">2.9188 us</td>
+<td style="text-align: right;">2.5875 us</td>
+<td style="text-align: right;">2.88</td>
 <td style="text-align: right;">0.02</td>
 </tr>
 <tr>
+<td><strong>ImmediateReflection_PropertyGet_BenchmarkObject</strong></td>
+<td style="text-align: right;"><strong>74.21 us</strong></td>
+<td style="text-align: right;"><strong>0.4152 us</strong></td>
+<td style="text-align: right;"><strong>0.3681 us</strong></td>
+<td style="text-align: right;"><strong>0.48</strong></td>
+<td style="text-align: right;"><strong>0.00</strong></td>
+</tr>
+<tr>
+<td>WithFasterflect_PropertyGet_BenchmarkObject</td>
+<td style="text-align: right;">85.62 us</td>
+<td style="text-align: right;">0.8516 us</td>
+<td style="text-align: right;">0.7111 us</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr>
+<td>Reflection_PropertyGet_Mixed_BenchmarkObject</td>
+<td style="text-align: right;">99.78 us</td>
+<td style="text-align: right;">0.2330 us</td>
+<td style="text-align: right;">0.1945 us</td>
+<td style="text-align: right;">0.65</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr>
 <td>ReflectionCache_PropertyGet_Mixed_BenchmarkObject</td>
-<td style="text-align: right;">50.63 us</td>
-<td style="text-align: right;">1.001 us</td>
-<td style="text-align: right;">1.498 us</td>
-<td style="text-align: right;">0.30</td>
-<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">44.08 us</td>
+<td style="text-align: right;">0.2692 us</td>
+<td style="text-align: right;">0.2518 us</td>
+<td style="text-align: right;">0.29</td>
+<td style="text-align: right;">0.00</td>
 </tr>
 <tr>
 <td>HyperDescriptor_PropertyGet_Mixed_BenchmarkObject</td>
-<td style="text-align: right;">906.34 us</td>
-<td style="text-align: right;">15.062 us</td>
-<td style="text-align: right;">14.089 us</td>
-<td style="text-align: right;">5.41</td>
-<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">760.92 us</td>
+<td style="text-align: right;">11.8462 us</td>
+<td style="text-align: right;">10.5013 us</td>
+<td style="text-align: right;">4.97</td>
+<td style="text-align: right;">0.07</td>
 </tr>
 <tr>
 <td>FastMember_PropertyGet_Mixed_BenchmarkObject</td>
-<td style="text-align: right;">84.61 us</td>
-<td style="text-align: right;">1.654 us</td>
-<td style="text-align: right;">2.092 us</td>
-<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">75.34 us</td>
+<td style="text-align: right;">1.2642 us</td>
+<td style="text-align: right;">1.1207 us</td>
+<td style="text-align: right;">0.49</td>
 <td style="text-align: right;">0.01</td>
 </tr>
 <tr>
 <td>FlashReflection_PropertyGet_Mixed_BenchmarkObject</td>
-<td style="text-align: right;">443.51 us</td>
-<td style="text-align: right;">8.717 us</td>
-<td style="text-align: right;">10.705 us</td>
-<td style="text-align: right;">2.63</td>
-<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">452.75 us</td>
+<td style="text-align: right;">2.9525 us</td>
+<td style="text-align: right;">2.6174 us</td>
+<td style="text-align: right;">2.95</td>
+<td style="text-align: right;">0.02</td>
 </tr>
 <tr>
 <td><strong>ImmediateReflection_PropertyGet_Mixed_BenchmarkObject</strong></td>
-<td style="text-align: right;"><strong>78.81 us</strong></td>
-<td style="text-align: right;"><strong>1.575 us</strong></td>
-<td style="text-align: right;"><strong>2.920 us</strong></td>
-<td style="text-align: right;"><strong>0.48</strong></td>
+<td style="text-align: right;"><strong>69.06 us</strong></td>
+<td style="text-align: right;"><strong>0.9011 us</strong></td>
+<td style="text-align: right;"><strong>0.7988 us</strong></td>
+<td style="text-align: right;"><strong>0.45</strong></td>
 <td style="text-align: right;"><strong>0.01</strong></td>
 </tr>
 <tr>
 <td>Fasterflect_PropertyGet_Mixed_BenchmarkObject</td>
-<td style="text-align: right;">16,747.95 us</td>
-<td style="text-align: right;">324.643 us</td>
-<td style="text-align: right;">838.006 us</td>
-<td style="text-align: right;">97.43</td>
-<td style="text-align: right;">4.71</td>
+<td style="text-align: right;">14,456.22 us</td>
+<td style="text-align: right;">218.8338 us</td>
+<td style="text-align: right;">193.9904 us</td>
+<td style="text-align: right;">94.34</td>
+<td style="text-align: right;">1.42</td>
 </tr>
 </tbody>
 </table>
@@ -224,115 +224,115 @@ Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 ph
 <tbody>
 <tr>
 <td>Reflection_PropertySet_BenchmarkObject</td>
-<td style="text-align: right;">263.10 us</td>
-<td style="text-align: right;">4.041 us</td>
-<td style="text-align: right;">3.583 us</td>
+<td style="text-align: right;">236.29 us</td>
+<td style="text-align: right;">1.3175 us</td>
+<td style="text-align: right;">1.1679 us</td>
 <td style="text-align: right;">1.00</td>
 <td style="text-align: right;">0.00</td>
 </tr>
 <tr>
 <td>ReflectionCache_PropertySet_BenchmarkObject</td>
-<td style="text-align: right;">184.27 us</td>
-<td style="text-align: right;">2.934 us</td>
-<td style="text-align: right;">2.601 us</td>
+<td style="text-align: right;">165.01 us</td>
+<td style="text-align: right;">0.5586 us</td>
+<td style="text-align: right;">0.5225 us</td>
 <td style="text-align: right;">0.70</td>
-<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.00</td>
 </tr>
 <tr>
 <td>HyperDescriptor_PropertySet_BenchmarkObject</td>
-<td style="text-align: right;">1,219.58 us</td>
-<td style="text-align: right;">24.302 us</td>
-<td style="text-align: right;">27.986 us</td>
-<td style="text-align: right;">4.63</td>
-<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">1,060.21 us</td>
+<td style="text-align: right;">21.1042 us</td>
+<td style="text-align: right;">18.7083 us</td>
+<td style="text-align: right;">4.49</td>
+<td style="text-align: right;">0.07</td>
 </tr>
 <tr>
 <td>FastMember_PropertySet_BenchmarkObject</td>
-<td style="text-align: right;">99.87 us</td>
-<td style="text-align: right;">1.834 us</td>
-<td style="text-align: right;">1.531 us</td>
-<td style="text-align: right;">0.38</td>
-<td style="text-align: right;">0.01</td>
-</tr>
-<tr>
-<td>FlashReflection_PropertySet_BenchmarkObject</td>
-<td style="text-align: right;">401.15 us</td>
-<td style="text-align: right;">6.793 us</td>
-<td style="text-align: right;">6.354 us</td>
-<td style="text-align: right;">1.53</td>
-<td style="text-align: right;">0.03</td>
-</tr>
-<tr>
-<td><strong>ImmediateReflection_PropertySet_BenchmarkObject</strong></td>
-<td style="text-align: right;"><strong>91.76 us</strong></td>
-<td style="text-align: right;"><strong>1.830 us</strong></td>
-<td style="text-align: right;"><strong>3.057 us</strong></td>
-<td style="text-align: right;"><strong>0.34</strong></td>
-<td style="text-align: right;"><strong>0.02</strong></td>
-</tr>
-<tr>
-<td>WithFasterflect_PropertySet_BenchmarkObject</td>
-<td style="text-align: right;">105.34 us</td>
-<td style="text-align: right;">2.060 us</td>
-<td style="text-align: right;">3.145 us</td>
+<td style="text-align: right;">95.04 us</td>
+<td style="text-align: right;">1.3488 us</td>
+<td style="text-align: right;">1.1957 us</td>
 <td style="text-align: right;">0.40</td>
 <td style="text-align: right;">0.01</td>
 </tr>
 <tr>
+<td>FlashReflection_PropertySet_BenchmarkObject</td>
+<td style="text-align: right;">454.48 us</td>
+<td style="text-align: right;">6.8928 us</td>
+<td style="text-align: right;">5.7558 us</td>
+<td style="text-align: right;">1.92</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr>
+<td><strong>ImmediateReflection_PropertySet_BenchmarkObject</strong></td>
+<td style="text-align: right;"><strong>76.30 us</strong></td>
+<td style="text-align: right;"><strong>0.6909 us</strong></td>
+<td style="text-align: right;"><strong>0.6124 us</strong></td>
+<td style="text-align: right;"><strong>0.32</strong></td>
+<td style="text-align: right;"><strong>0.00</strong></td>
+</tr>
+<tr>
+<td>WithFasterflect_PropertySet_BenchmarkObject</td>
+<td style="text-align: right;">89.78 us</td>
+<td style="text-align: right;">0.8892 us</td>
+<td style="text-align: right;">0.8318 us</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr>
 <td>Reflection_PropertySet_Mixed_BenchmarkObject</td>
-<td style="text-align: right;">166.06 us</td>
-<td style="text-align: right;">3.044 us</td>
-<td style="text-align: right;">2.847 us</td>
-<td style="text-align: right;">0.63</td>
-<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">141.18 us</td>
+<td style="text-align: right;">0.3571 us</td>
+<td style="text-align: right;">0.2982 us</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">0.00</td>
 </tr>
 <tr>
 <td>ReflectionCache_PropertySet_Mixed_BenchmarkObject</td>
-<td style="text-align: right;">97.62 us</td>
-<td style="text-align: right;">1.862 us</td>
-<td style="text-align: right;">1.912 us</td>
-<td style="text-align: right;">0.37</td>
-<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">83.09 us</td>
+<td style="text-align: right;">0.2719 us</td>
+<td style="text-align: right;">0.2410 us</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">0.00</td>
 </tr>
 <tr>
 <td>HyperDescriptor_PropertySet_Mixed_BenchmarkObject</td>
-<td style="text-align: right;">1,083.02 us</td>
-<td style="text-align: right;">21.551 us</td>
-<td style="text-align: right;">41.522 us</td>
-<td style="text-align: right;">4.19</td>
-<td style="text-align: right;">0.14</td>
+<td style="text-align: right;">945.40 us</td>
+<td style="text-align: right;">17.6039 us</td>
+<td style="text-align: right;">15.6054 us</td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;">0.06</td>
 </tr>
 <tr>
 <td>FastMember_PropertySet_Mixed_BenchmarkObject</td>
-<td style="text-align: right;">83.45 us</td>
-<td style="text-align: right;">1.499 us</td>
-<td style="text-align: right;">1.329 us</td>
-<td style="text-align: right;">0.32</td>
-<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">78.91 us</td>
+<td style="text-align: right;">0.5266 us</td>
+<td style="text-align: right;">0.4668 us</td>
+<td style="text-align: right;">0.33</td>
+<td style="text-align: right;">0.00</td>
 </tr>
 <tr>
 <td>FlashReflection_PropertySet_Mixed_BenchmarkObject</td>
-<td style="text-align: right;">423.68 us</td>
-<td style="text-align: right;">8.080 us</td>
-<td style="text-align: right;">10.506 us</td>
-<td style="text-align: right;">1.62</td>
-<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">448.82 us</td>
+<td style="text-align: right;">1.1675 us</td>
+<td style="text-align: right;">1.0349 us</td>
+<td style="text-align: right;">1.90</td>
+<td style="text-align: right;">0.01</td>
 </tr>
 <tr>
 <td><strong>ImmediateReflection_PropertySet_Mixed_BenchmarkObject</strong></td>
-<td style="text-align: right;"><strong>78.97 us</strong></td>
-<td style="text-align: right;"><strong>1.494 us</strong></td>
-<td style="text-align: right;"><strong>1.397 us</strong></td>
+<td style="text-align: right;"><strong>69.95 us</strong></td>
+<td style="text-align: right;"><strong>0.4296 us</strong></td>
+<td style="text-align: right;"><strong>0.3809 us</strong></td>
 <td style="text-align: right;"><strong>0.30</strong></td>
-<td style="text-align: right;"><strong>0.01</strong></td>
+<td style="text-align: right;"><strong>0.00</strong></td>
 </tr>
 <tr>
 <td>Fasterflect_PropertySet_Mixed_BenchmarkObject</td>
-<td style="text-align: right;">16,319.73 us</td>
-<td style="text-align: right;">320.488 us</td>
-<td style="text-align: right;">342.918 us</td>
-<td style="text-align: right;">61.95</td>
-<td style="text-align: right;">1.81</td>
+<td style="text-align: right;">14,236.33 us</td>
+<td style="text-align: right;">185.1234 us</td>
+<td style="text-align: right;">154.5864 us</td>
+<td style="text-align: right;">60.26</td>
+<td style="text-align: right;">0.66</td>
 </tr>
 </tbody>
 </table>

@@ -1591,3 +1591,56 @@ references:
   fullName.vb: ImmediateReflection.TypeAccessor.Get(Of T)(System.Reflection.BindingFlags)
   nameWithType: TypeAccessor.Get<T>(BindingFlags)
   nameWithType.vb: TypeAccessor.Get(Of T)(BindingFlags)
+- uid: ImmediateReflection.TypeExtensions
+  name: TypeExtensions
+  href: api/ImmediateReflection.TypeExtensions.html
+  commentId: T:ImmediateReflection.TypeExtensions
+  fullName: ImmediateReflection.TypeExtensions
+  nameWithType: TypeExtensions
+- uid: ImmediateReflection.TypeExtensions.New(System.Type)
+  name: New(Type)
+  href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_New_System_Type_
+  commentId: M:ImmediateReflection.TypeExtensions.New(System.Type)
+  fullName: ImmediateReflection.TypeExtensions.New(System.Type)
+  nameWithType: TypeExtensions.New(Type)
+- uid: ImmediateReflection.TypeExtensions.New(System.Type,System.Object[])
+  name: New(Type, Object[])
+  href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_New_System_Type_System_Object___
+  commentId: M:ImmediateReflection.TypeExtensions.New(System.Type,System.Object[])
+  name.vb: New(Type, Object())
+  fullName: ImmediateReflection.TypeExtensions.New(System.Type, System.Object[])
+  fullName.vb: ImmediateReflection.TypeExtensions.New(System.Type, System.Object())
+  nameWithType: TypeExtensions.New(Type, Object[])
+  nameWithType.vb: TypeExtensions.New(Type, Object())
+- uid: ImmediateReflection.TypeExtensions.New*
+  name: New
+  href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_New_
+  commentId: Overload:ImmediateReflection.TypeExtensions.New
+  isSpec: "True"
+  fullName: ImmediateReflection.TypeExtensions.New
+  nameWithType: TypeExtensions.New
+- uid: ImmediateReflection.TypeExtensions.TryNew(System.Type,System.Object@,System.Exception@)
+  name: TryNew(Type, out Object, out Exception)
+  href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_TryNew_System_Type_System_Object__System_Exception__
+  commentId: M:ImmediateReflection.TypeExtensions.TryNew(System.Type,System.Object@,System.Exception@)
+  name.vb: TryNew(Type, ByRef Object, ByRef Exception)
+  fullName: ImmediateReflection.TypeExtensions.TryNew(System.Type, out System.Object, out System.Exception)
+  fullName.vb: ImmediateReflection.TypeExtensions.TryNew(System.Type, ByRef System.Object, ByRef System.Exception)
+  nameWithType: TypeExtensions.TryNew(Type, out Object, out Exception)
+  nameWithType.vb: TypeExtensions.TryNew(Type, ByRef Object, ByRef Exception)
+- uid: ImmediateReflection.TypeExtensions.TryNew(System.Type,System.Object@,System.Exception@,System.Object[])
+  name: TryNew(Type, out Object, out Exception, Object[])
+  href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_TryNew_System_Type_System_Object__System_Exception__System_Object___
+  commentId: M:ImmediateReflection.TypeExtensions.TryNew(System.Type,System.Object@,System.Exception@,System.Object[])
+  name.vb: TryNew(Type, ByRef Object, ByRef Exception, Object())
+  fullName: ImmediateReflection.TypeExtensions.TryNew(System.Type, out System.Object, out System.Exception, System.Object[])
+  fullName.vb: ImmediateReflection.TypeExtensions.TryNew(System.Type, ByRef System.Object, ByRef System.Exception, System.Object())
+  nameWithType: TypeExtensions.TryNew(Type, out Object, out Exception, Object[])
+  nameWithType.vb: TypeExtensions.TryNew(Type, ByRef Object, ByRef Exception, Object())
+- uid: ImmediateReflection.TypeExtensions.TryNew*
+  name: TryNew
+  href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_TryNew_
+  commentId: Overload:ImmediateReflection.TypeExtensions.TryNew
+  isSpec: "True"
+  fullName: ImmediateReflection.TypeExtensions.TryNew
+  nameWithType: TypeExtensions.TryNew
