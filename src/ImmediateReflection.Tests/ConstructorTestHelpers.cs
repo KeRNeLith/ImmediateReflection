@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using NUnit.Framework;
 
@@ -578,6 +579,218 @@ namespace ImmediateReflection.Tests
             Assert.IsTrue(tryCtor(out object instance, out Exception _));
             Assert.IsNotNull(instance);
             Assert.AreEqual(expectedObject(), instance);
+        }
+
+        #endregion
+
+        #region New(params)/TryNew(params)
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<TestCaseData> CreateNotDefaultConstructorNullParamsTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                yield return new TestCaseData(typeof(int), null);
+                yield return new TestCaseData(typeof(TestStruct), null);
+                yield return new TestCaseData(typeof(DefaultConstructor), null);
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), null);
+                yield return new TestCaseData(typeof(ParamsOnlyConstructor), null);
+                yield return new TestCaseData(typeof(IntParamsOnlyConstructor), null);
+                yield return new TestCaseData(typeof(NullableIntParamsOnlyConstructor), null);
+                yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor), null);
+                yield return new TestCaseData(typeof(DefaultInheritedNoDefaultConstructor), null);
+                yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass), null);
+                yield return new TestCaseData(typeof(List<int>), null);
+                yield return new TestCaseData(typeof(Dictionary<int, string>), null);
+            }
+        }
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<TestCaseData> CreateNotDefaultConstructorNotNullParamsTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                yield return new TestCaseData(typeof(int), new object[] { });
+                yield return new TestCaseData(typeof(TestStruct), new object[] { });
+                yield return new TestCaseData(typeof(DefaultConstructor), new object[] { });
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), new object[] { });
+                yield return new TestCaseData(typeof(ParamsOnlyConstructor), new object[] { });
+                yield return new TestCaseData(typeof(IntParamsOnlyConstructor), new object[] { });
+                yield return new TestCaseData(typeof(NullableIntParamsOnlyConstructor), new object[] { });
+                yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor), new object[] { });
+                yield return new TestCaseData(typeof(DefaultInheritedNoDefaultConstructor), new object[] { });
+                yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass), new object[] { });
+                yield return new TestCaseData(typeof(List<int>), new object[] { });
+                yield return new TestCaseData(typeof(Dictionary<int, string>), new object[] { });
+
+                yield return new TestCaseData(typeof(ParameterConstructorStruct), new object[] { 12 });
+                yield return new TestCaseData(typeof(NoDefaultConstructor), new object[] { 12 });
+                yield return new TestCaseData(typeof(MultiParametersConstructor), new object[] { 12, 42.5f });
+                yield return new TestCaseData(typeof(MultipleConstructors), new object[] { 12 });
+                yield return new TestCaseData(typeof(MultipleConstructors), new object[] { 12, 42.5f });
+                yield return new TestCaseData(typeof(TemplateNoDefaultConstructor<int>), new object[] { 12 });
+                yield return new TestCaseData(typeof(ParamsOnlyConstructor), new object[] { 12 });
+                yield return new TestCaseData(typeof(ParamsOnlyConstructor), new object[] { 12, 15.4f });
+                yield return new TestCaseData(typeof(IntParamsOnlyConstructor), new object[] { 12 });
+                yield return new TestCaseData(typeof(IntParamsOnlyConstructor), new object[] { 12, 15 });
+                yield return new TestCaseData(typeof(NullableIntParamsOnlyConstructor), new object[] { 12, null, 25 });
+                yield return new TestCaseData(typeof(ParamsConstructor), new object[] { 12 });
+                yield return new TestCaseData(typeof(ParamsConstructor), new object[] { 12, 15.4f });
+                yield return new TestCaseData(typeof(NoDefaultInheritedDefaultConstructor), new object[] { 12 });
+                yield return new TestCaseData(typeof(NoDefaultInheritedNoDefaultConstructor), new object[] { 42 });
+                yield return new TestCaseData(typeof(NoDefaultInheritedFromAbstractClass), new object[] { 25 });
+                yield return new TestCaseData(typeof(int[]), new object[] { 5 });
+                yield return new TestCaseData(typeof(List<int>), new object[] { 2 });
+                yield return new TestCaseData(typeof(List<int>), new object[] { Enumerable.Range(0, 5) });
+                yield return new TestCaseData(typeof(Dictionary<int, string>), new object[] { 3 });
+            }
+        }
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<TestCaseData> CreateNotDefaultConstructorTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                foreach (TestCaseData testCase in CreateNotDefaultConstructorNullParamsTestCases)
+                    yield return testCase;
+                foreach (TestCaseData testCase in CreateNotDefaultConstructorNotNullParamsTestCases)
+                    yield return testCase;
+            }
+        }
+
+        public delegate object ArgsCtor(params object[] args);
+
+        public static void NewWithParameters([NotNull] Type type, [NotNull, InstantHandle] ArgsCtor ctor, [CanBeNull, ItemCanBeNull] params object[] args)
+        {
+            object instance = ctor(args);
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(Activator.CreateInstance(type, args), instance);
+        }
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<TestCaseData> CreateNotDefaultConstructorNoThrowNullParamsTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                yield return new TestCaseData(typeof(int), false, null);
+                yield return new TestCaseData(typeof(TestStruct), false, null);
+                yield return new TestCaseData(typeof(DefaultConstructor), false, null);
+                yield return new TestCaseData(typeof(MultipleConstructors), false, null);
+                yield return new TestCaseData(typeof(TemplateStruct<double>), false, null);
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), false, null);
+                yield return new TestCaseData(typeof(ParamsOnlyConstructor), false, null);
+                yield return new TestCaseData(typeof(IntParamsOnlyConstructor), false, null);
+                yield return new TestCaseData(typeof(NullableIntParamsOnlyConstructor), false, null);
+                yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor), false, null);
+                yield return new TestCaseData(typeof(DefaultInheritedNoDefaultConstructor), false, null);
+                yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass), false, null);
+                yield return new TestCaseData(typeof(List<int>), false, null);
+                yield return new TestCaseData(typeof(Dictionary<int, string>), false, null);
+
+                yield return new TestCaseData(typeof(NoDefaultConstructor), true, null);
+                yield return new TestCaseData(typeof(NotAccessibleDefaultConstructor), true, null);
+                yield return new TestCaseData(typeof(AbstractDefaultConstructor), true, null);
+                yield return new TestCaseData(typeof(StaticClass), true, null);
+                yield return new TestCaseData(typeof(TemplateStruct<>), true, null);
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<>), true, null);
+                // ReSharper disable once PossibleMistakenCallToGetType.2
+                yield return new TestCaseData(typeof(DefaultConstructor).GetType(), true, null);
+                yield return new TestCaseData(typeof(DefaultConstructorThrows), true, null);
+                yield return new TestCaseData(typeof(int[]), true, null);
+            }
+        }
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<TestCaseData> CreateNotDefaultConstructorNoThrowNotNullParamsTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                yield return new TestCaseData(typeof(int), false, new object[] { });
+                yield return new TestCaseData(typeof(TestStruct), false, new object[] { });
+                yield return new TestCaseData(typeof(DefaultConstructor), false, new object[] { });
+                yield return new TestCaseData(typeof(MultipleConstructors), false, new object[] { });
+                yield return new TestCaseData(typeof(MultipleConstructors), false, new object[] { 12, 12.5f });
+                yield return new TestCaseData(typeof(TemplateStruct<double>), false, new object[] { });
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), false, new object[] { });
+                yield return new TestCaseData(typeof(DefaultConstructorThrows), false, new object[] { 45, 51.0f });
+                yield return new TestCaseData(typeof(ParamsOnlyConstructor), false, new object[] { });
+                yield return new TestCaseData(typeof(ParamsOnlyConstructor), false, new object[] { 12, 45.5f });
+                yield return new TestCaseData(typeof(IntParamsOnlyConstructor), false, new object[] { });
+                yield return new TestCaseData(typeof(IntParamsOnlyConstructor), false, new object[] { 45, 54 });
+                yield return new TestCaseData(typeof(NullableIntParamsOnlyConstructor), false, new object[] { });
+                yield return new TestCaseData(typeof(NullableIntParamsOnlyConstructor), false, new object[] { 12, null, 25 });
+                yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor), false, new object[] { });
+                yield return new TestCaseData(typeof(DefaultInheritedNoDefaultConstructor), false, new object[] { });
+                yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass), false, new object[] { });
+                yield return new TestCaseData(typeof(NoDefaultInheritedDefaultConstructor), false, new object[] { 12 });
+                yield return new TestCaseData(typeof(NoDefaultInheritedNoDefaultConstructor), false, new object[] { 42 });
+                yield return new TestCaseData(typeof(NoDefaultInheritedFromAbstractClass), false, new object[] { 25 });
+                yield return new TestCaseData(typeof(int[]), false, new object[] { 5 });
+                yield return new TestCaseData(typeof(List<int>), false, new object[] { });
+                yield return new TestCaseData(typeof(List<int>), false, new object[] { 2 });
+                yield return new TestCaseData(typeof(List<int>), false, new object[] { Enumerable.Range(0, 5) });
+                yield return new TestCaseData(typeof(Dictionary<int, string>), false, new object[] { });
+                yield return new TestCaseData(typeof(Dictionary<int, string>), false, new object[] { 3 });
+
+                yield return new TestCaseData(typeof(int), true, new object[] { 12 });
+                yield return new TestCaseData(typeof(TestStruct), true, new object[] { 12 });
+                yield return new TestCaseData(typeof(DefaultConstructor), true, new object[] { 12 });
+                yield return new TestCaseData(typeof(MultipleConstructors), true, new object[] { 12.5f, 12 });
+                yield return new TestCaseData(typeof(TemplateStruct<double>), true, new object[] { 25 });
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), true, new object[] { 25 });
+                yield return new TestCaseData(typeof(NoDefaultConstructor), true, new object[] { });
+                yield return new TestCaseData(typeof(NotAccessibleDefaultConstructor), true, new object[] { });
+                yield return new TestCaseData(typeof(AbstractDefaultConstructor), true, new object[] { });
+                yield return new TestCaseData(typeof(StaticClass), true, new object[] { });
+                yield return new TestCaseData(typeof(TemplateStruct<>), true, new object[] { });
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<>), true, new object[] { });
+                yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor), true, new object[] { 45 });
+                yield return new TestCaseData(typeof(DefaultInheritedNoDefaultConstructor), true, new object[] { 51 });
+                yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass), true, new object[] { 72 });
+                yield return new TestCaseData(typeof(NoDefaultInheritedDefaultConstructor), true, new object[] { 45, 35 });
+                yield return new TestCaseData(typeof(NoDefaultInheritedNoDefaultConstructor), true, new object[] { 51, 25 });
+                yield return new TestCaseData(typeof(NoDefaultInheritedFromAbstractClass), true, new object[] { 72, 15 });
+                // ReSharper disable once PossibleMistakenCallToGetType.2
+                yield return new TestCaseData(typeof(DefaultConstructor).GetType(), true, new object[] { });
+                yield return new TestCaseData(typeof(DefaultConstructorThrows), true, new object[] { });
+                yield return new TestCaseData(typeof(DefaultConstructorThrows), true, new object[] { 12 });
+                yield return new TestCaseData(typeof(int[]), true, new object[] { });
+            }
+        }
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<TestCaseData> CreateNotDefaultConstructorNoThrowTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                foreach (TestCaseData testCase in CreateNotDefaultConstructorNoThrowNullParamsTestCases)
+                    yield return testCase;
+                foreach (TestCaseData testCase in CreateNotDefaultConstructorNoThrowNotNullParamsTestCases)
+                    yield return testCase;
+            }
+        }
+
+        public delegate bool TryArgsCtor(out object instance, out Exception exception, params object[] args);
+
+        public static void TryNewWithParameters([NotNull] Type type, bool expectFail, [NotNull, InstantHandle] TryArgsCtor tryCtor, [CanBeNull, ItemCanBeNull] params object[] args)
+        {
+            Assert.AreEqual(!expectFail, tryCtor(out object instance, out Exception ex, args));
+            if (expectFail)
+            {
+                Assert.IsNull(instance);
+                Assert.IsNotNull(ex);
+            }
+            else
+            {
+                Assert.IsNotNull(instance);
+                Assert.AreEqual(Activator.CreateInstance(type, args), instance);
+            }
         }
 
         #endregion

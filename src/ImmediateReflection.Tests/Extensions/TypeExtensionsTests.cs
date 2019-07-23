@@ -14,6 +14,8 @@ namespace ImmediateReflection.Tests
     [TestFixture]
     internal class TypeExtensionsTests : ImmediateReflectionTestsBase
     {
+        #region New/TryNew
+
         [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateDefaultConstructorTestCases))]
         public void NewParameterLess([NotNull] Type type)
         {
@@ -94,6 +96,62 @@ namespace ImmediateReflection.Tests
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(null, out _, out _));
         }
+
+        #endregion
+
+        #region New(params)/TryNew(params)
+
+        [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateNotDefaultConstructorNotNullParamsTestCases))]
+        public void NewWithParameters([NotNull] Type type, [CanBeNull, ItemCanBeNull] params object[] arguments)
+        {
+            ConstructorTestHelpers.NewWithParameters(
+                type,
+                args => TypeExtensions.New(type, args),
+                arguments);
+        }
+
+        [Test]
+        public void NewWithParameters_Throws()
+        {
+            // ReSharper disable ReturnValueOfPureMethodIsNotUsed
+            // ReSharper disable AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(null, 12));
+            Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(typeof(ParamsConstructor), null));
+            Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(null, null));
+            // ReSharper restore AssignNullToNotNullAttribute
+
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(NoDefaultConstructor), 12, 42));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(NotAccessibleConstructor), 12));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(MultiParametersConstructor), 12f, 12));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(ParamsConstructor), 12f, 12));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(NoDefaultInheritedDefaultConstructor), 12f));
+            Assert.Throws<MemberAccessException>(() => TypeExtensions.New(typeof(AbstractNoConstructor), 12));
+            Assert.Throws<ArgumentException>(() => TypeExtensions.New(typeof(TemplateNoDefaultConstructor<>), 12));
+            Assert.Throws<TargetInvocationException>(() => TypeExtensions.New(typeof(NotDefaultConstructorThrows), 12));
+            // ReSharper restore ReturnValueOfPureMethodIsNotUsed
+        }
+
+        [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateNotDefaultConstructorNoThrowNotNullParamsTestCases))]
+        public void TryNewWithParameters([NotNull] Type type, bool expectFail, [CanBeNull, ItemCanBeNull] params object[] arguments)
+        {
+            ConstructorTestHelpers.TryNewWithParameters(
+                type,
+                expectFail,
+                (out object instance, out Exception exception, object[] args) => TypeExtensions.TryNew(type, out instance, out exception, args),
+                arguments);
+        }
+
+        [Test]
+        public void TryNewWithParameters_Throws()
+        {
+            // ReSharper disable AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(null, out _, out _, 12));
+            Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(typeof(ParamsConstructor), out _, out _, null));
+            Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(null, out _, out _, null));
+            // ReSharper restore AssignNullToNotNullAttribute
+        }
+
+        #endregion
     }
 }
 #endif
