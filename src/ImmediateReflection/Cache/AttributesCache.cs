@@ -192,6 +192,11 @@ namespace ImmediateReflection
         [ContractAnnotation("attributeType:null => halt")]
         public IEnumerable<Attribute> GetAttributes([NotNull] Type attributeType, bool inherit)
         {
+            if (attributeType is null)
+                throw new ArgumentNullException(nameof(attributeType));
+            if (!typeof(Attribute).IsAssignableFrom(attributeType))
+                throw new ArgumentException($"{nameof(attributeType)} must be an {nameof(Attribute)} type.");
+
             if (inherit)
                 return FindAttributes(_attributesWithInherited);
             return FindAttributes(_attributesWithoutInherited);

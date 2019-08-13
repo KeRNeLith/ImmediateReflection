@@ -1038,7 +1038,7 @@ namespace ImmediateReflection.Tests
         public void GetAttributes_WrongType([NotNull] ImmediateMember member, [NotNull] Type attributeType, bool inherit)
         {
             // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-            Assert.Throws<ArgumentException>(() => member.GetAttribute(attributeType, inherit));
+            Assert.Throws<ArgumentException>(() => member.GetAttributes(attributeType, inherit));
         }
 
         [Test]
