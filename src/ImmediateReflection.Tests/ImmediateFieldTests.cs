@@ -44,10 +44,6 @@ namespace ImmediateReflection.Tests
 
             var immediateField2 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
             Assert.AreNotEqual(immediateField1.FieldInfo, immediateField2.FieldInfo);
-
-            // ReSharper disable once AssignNullToNotNullAttribute
-            // ReSharper disable once ObjectCreationAsStatement
-            Assert.Throws<ArgumentNullException>(() => new ImmediateField(null));
         }
 
 #if SUPPORTS_IMMEDIATE_MEMBER_TYPE
@@ -308,14 +304,6 @@ namespace ImmediateReflection.Tests
         [Test]
         public void ImmediateFieldGetValue_EnumThrows()
         {
-            // ReSharper disable ObjectCreationAsStatement
-            // ReSharper disable AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() => new ImmediateField(null, typeof(TestEnum)));
-            Assert.Throws<ArgumentNullException>(() => new ImmediateField(TestEnumField1FieldInfo, null));
-            Assert.Throws<ArgumentException>(() => new ImmediateField(TestEnumField1FieldInfo, typeof(PublicValueTypeTestClass)));
-            // ReSharper restore AssignNullToNotNullAttribute
-            // ReSharper restore ObjectCreationAsStatement
-
             var immediateField = new ImmediateField(TestEnumFieldValueFieldInfo);
             // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             Assert.Throws<TargetException>(() => immediateField.GetValue(null));

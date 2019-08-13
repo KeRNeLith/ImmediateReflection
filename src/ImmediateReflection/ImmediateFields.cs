@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 #if SUPPORTS_SYSTEM_CORE
 using System.Linq;
 #endif
@@ -28,16 +29,20 @@ namespace ImmediateReflection
         /// Constructor.
         /// </summary>
         /// <param name="fields">Enumerable of <see cref="FieldInfo"/> to wrap.</param>
-        /// <exception cref="ArgumentNullException">If the <paramref name="fields"/> enumerable is null,
-        /// or if it contains a null <see cref="FieldInfo"/>.</exception>
         internal ImmediateFields([NotNull, ItemNotNull] IEnumerable<FieldInfo> fields)
         {
-            if (fields is null)
-                throw new ArgumentNullException(nameof(fields));
+            // ReSharper disable PossibleMultipleEnumeration
+            Debug.Assert(fields != null);
+#if SUPPORTS_SYSTEM_CORE
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            Debug.Assert(fields.All(field => field != null));
+#else
+            Debug.Assert(EnumerableUtils.All(fields, field => field != null));
+#endif
 
 #if SUPPORTS_SYSTEM_CORE
             _fields = fields.ToDictionary(
-                field => field?.Name ?? throw new ArgumentNullException(nameof(field), "A field is null."),
+                field => field.Name,
 #if SUPPORTS_CACHING
                 field => CachesHandler.Instance.GetField(field));
 #else
@@ -47,14 +52,14 @@ namespace ImmediateReflection
             _fields = new Dictionary<string, ImmediateField>();
             foreach (FieldInfo field in fields)
             {
-                string name = field?.Name ?? throw new ArgumentNullException(nameof(field), "A field is null.");
 #if SUPPORTS_CACHING
-                _fields.Add(name, CachesHandler.Instance.GetField(field));
+                _fields.Add(field.Name, CachesHandler.Instance.GetField(field));
 #else
-                _fields.Add(name, new ImmediateField(field));
+                _fields.Add(field.Name, new ImmediateField(field));
 #endif
             }
 #endif
+            // ReSharper restore PossibleMultipleEnumeration
         }
 
         /// <summary>
@@ -63,23 +68,23 @@ namespace ImmediateReflection
         /// <param name="enumType"><see cref="Type"/> of the enumeration.</param>
         /// <param name="enumValue">Field corresponding to the current enumeration value.</param>
         /// <param name="enumValues">Enumerable of <see cref="FieldInfo"/> corresponding to enum values.</param>
-        /// <exception cref="ArgumentNullException">If the <paramref name="enumType"/> or <paramref name="enumValue"/> or the <paramref name="enumValues"/> enumerable
-        /// is null, or if it contains a null <see cref="FieldInfo"/>.</exception>
-        /// <exception cref="ArgumentException">If the <paramref name="enumType"/> is not an enumeration type.</exception>
         internal ImmediateFields([NotNull] Type enumType, [NotNull] FieldInfo enumValue, [NotNull, ItemNotNull] IEnumerable<FieldInfo> enumValues)
         {
-            if (enumType is null)
-                throw new ArgumentNullException(nameof(enumType));
-            if (!enumType.IsEnum)
-                throw new ArgumentException($"{nameof(enumType)} be must an {nameof(Enum)} type.");
-            if (enumValue is null)
-                throw new ArgumentNullException(nameof(enumValue));
-            if (enumValues is null)
-                throw new ArgumentNullException(nameof(enumValues));
+            // ReSharper disable PossibleMultipleEnumeration
+            Debug.Assert(enumType != null);
+            Debug.Assert(enumType.IsEnum);
+            Debug.Assert(enumValue != null);
+            Debug.Assert(enumValues != null);
+#if SUPPORTS_SYSTEM_CORE
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            Debug.Assert(enumValues.All(value => value != null));
+#else
+            Debug.Assert(EnumerableUtils.All(enumValues, value => value != null));
+#endif
 
 #if SUPPORTS_SYSTEM_CORE
             _fields = enumValues.ToDictionary(
-                field => field?.Name ?? throw new ArgumentNullException(nameof(field), "An enum field is null."),
+                field => field.Name,
 #if SUPPORTS_CACHING
                 field => CachesHandler.Instance.GetField(field, enumType));
 #else
@@ -89,16 +94,15 @@ namespace ImmediateReflection
             _fields = new Dictionary<string, ImmediateField>();
             foreach (FieldInfo field in enumValues)
             {
-                string name = field?.Name ?? throw new ArgumentNullException(nameof(field), "An enum field is null.");
-
 #if SUPPORTS_CACHING
-                _fields.Add(name, CachesHandler.Instance.GetField(field, enumType));
+                _fields.Add(field.Name, CachesHandler.Instance.GetField(field, enumType));
 #else
-                _fields.Add(name, new ImmediateField(field, enumType));
+                _fields.Add(field.Name, new ImmediateField(field, enumType));
 #endif
             }
 #endif
             _fields[enumValue.Name] = new ImmediateField(enumValue);
+            // ReSharper restore PossibleMultipleEnumeration
         }
 
         /// <summary>

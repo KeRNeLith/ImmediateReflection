@@ -43,13 +43,6 @@ namespace ImmediateReflection.Tests
 
             var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
             Assert.AreNotEqual(immediateProperty1.PropertyInfo, immediateProperty2.PropertyInfo);
-
-            // ReSharper disable AssignNullToNotNullAttribute
-            // ReSharper disable ObjectCreationAsStatement
-            Assert.Throws<ArgumentNullException>(() => new ImmediateProperty(null));
-            Assert.Throws<ArgumentException>(() => new ImmediateProperty(ChildIndexedItemClassPublicGetPropertyPropertyInfo));
-            // ReSharper restore ObjectCreationAsStatement
-            // ReSharper restore AssignNullToNotNullAttribute
         }
 
 #if SUPPORTS_IMMEDIATE_MEMBER_TYPE

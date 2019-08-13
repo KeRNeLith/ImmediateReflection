@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -28,10 +29,10 @@ namespace ImmediateReflection
         [ContractAnnotation("type:null => halt")]
         public static DefaultConstructorDelegate CreateDefaultConstructor([NotNull] Type type, out bool hasConstructor)
         {
+            Debug.Assert(type != null);
+
             hasConstructor = false;
 
-            if (type is null)
-                throw new ArgumentNullException(nameof(type));
             if (type == RuntimeType)
                 return () => throw new ArgumentException($"Trying to call default constructor on {RuntimeTypeName}.");
             if (type.ContainsGenericParameters)
@@ -91,6 +92,8 @@ namespace ImmediateReflection
             out Type parameterType,
             out DefaultConstructorDelegate faultyConstructor)
         {
+            Debug.Assert(type != null);
+
             paramsConstructor = null;
             parameterType = null;
             faultyConstructor = null;
@@ -142,8 +145,7 @@ namespace ImmediateReflection
         [ContractAnnotation("fieldInfo:null => halt")]
         public static GetterDelegate CreateGetter([NotNull] FieldInfo fieldInfo)
         {
-            if (fieldInfo is null)
-                throw new ArgumentNullException(nameof(fieldInfo));
+            Debug.Assert(fieldInfo != null);
 
             DynamicMethod dynamicGetter = CreateDynamicGetter(fieldInfo, out Type targetType);
 
@@ -170,8 +172,7 @@ namespace ImmediateReflection
         [ContractAnnotation("fieldInfo:null => halt")]
         public static SetterDelegate CreateSetter([NotNull] FieldInfo fieldInfo)
         {
-            if (fieldInfo is null)
-                throw new ArgumentNullException(nameof(fieldInfo));
+            Debug.Assert(fieldInfo != null);
 
             DynamicMethod dynamicSetter = CreateDynamicSetter(fieldInfo, out Type targetType);
 
@@ -205,13 +206,12 @@ namespace ImmediateReflection
         [ContractAnnotation("propertyInfo:null => halt;getMethod:null => halt")]
         public static GetterDelegate CreateGetter([NotNull] PropertyInfo propertyInfo, [NotNull] MethodInfo getMethod)
         {
-            if (propertyInfo is null)
-                throw new ArgumentNullException(nameof(propertyInfo));
+            Debug.Assert(propertyInfo != null);
+
             if (!propertyInfo.CanRead)
                 return null;
 
-            if (getMethod is null)
-                throw new ArgumentNullException(nameof(getMethod));
+            Debug.Assert(getMethod != null);
 
             DynamicMethod dynamicGetter = CreateDynamicGetter(propertyInfo, out Type targetType);
 
@@ -235,13 +235,12 @@ namespace ImmediateReflection
         [ContractAnnotation("propertyInfo:null => halt;setMethod:null => halt")]
         public static SetterDelegate CreateSetter([NotNull] PropertyInfo propertyInfo, [NotNull] MethodInfo setMethod)
         {
-            if (propertyInfo is null)
-                throw new ArgumentNullException(nameof(propertyInfo));
+            Debug.Assert(propertyInfo != null);
+
             if (!propertyInfo.CanWrite)
                 return null;
 
-            if (setMethod is null)
-                throw new ArgumentNullException(nameof(setMethod));
+            Debug.Assert(setMethod != null);
 
             DynamicMethod dynamicSetter = CreateDynamicSetter(propertyInfo, out Type targetType);
 
@@ -274,6 +273,9 @@ namespace ImmediateReflection
         [ContractAnnotation("name:null => halt;owner:null => halt")]
         private static DynamicMethod CreateDynamicMethod([NotNull] string name, [CanBeNull] Type returnType, [CanBeNull] Type[] parameterTypes, [NotNull] Type owner)
         {
+            Debug.Assert(name != null);
+            Debug.Assert(owner != null);
+
             return owner.IsInterface
                 ? new DynamicMethod($"{DynamicMethodPrefix}{name}", returnType, parameterTypes, owner.Assembly.ManifestModule, true)
                 : new DynamicMethod($"{DynamicMethodPrefix}{name}", returnType, parameterTypes, owner, true);
@@ -335,6 +337,8 @@ namespace ImmediateReflection
 #endif
         private static Type GetOwnerType([NotNull] MemberInfo member)
         {
+            Debug.Assert(member != null);
+
             return member.DeclaringType
                    ?? member.ReflectedType
                    ?? throw new InvalidOperationException($"Cannot retrieve owner type of member {member.Name}.");

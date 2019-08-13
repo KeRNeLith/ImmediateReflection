@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using JetBrains.Annotations;
 
 namespace ImmediateReflection.Utils
@@ -25,6 +26,9 @@ namespace ImmediateReflection.Utils
         [NotNull]
         public static T First<T>([NotNull, ItemNotNull] IEnumerable<T> source, [NotNull, InstantHandle] Predicate<T> predicate)
         {
+            Debug.Assert(source != null);
+            Debug.Assert(predicate != null);
+
             foreach (T element in source)
             {
                 if (predicate(element))
@@ -32,6 +36,28 @@ namespace ImmediateReflection.Utils
             }
 
             throw new InvalidOperationException("No element matching the given predicate.");
+        }
+
+        /// <summary>
+        /// Checks if there is all <paramref name="source"/> items matches the <paramref name="predicate"/>.
+        /// </summary>
+        /// <typeparam name="T">Element type.</typeparam>
+        /// <param name="source">Source enumerable.</param>
+        /// <param name="predicate">Predicate to match.</param>
+        /// <returns>True if all items match the <paramref name="predicate"/>, false otherwise.</returns>
+        [Pure]
+        public static bool All<T>([NotNull, ItemCanBeNull] IEnumerable<T> source, [NotNull, InstantHandle] Predicate<T> predicate)
+        {
+            Debug.Assert(source != null);
+            Debug.Assert(predicate != null);
+
+            foreach (T element in source)
+            {
+                if (!predicate(element))
+                    return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -45,6 +71,9 @@ namespace ImmediateReflection.Utils
         [NotNull, ItemNotNull]
         public static IEnumerable<T> Where<T>([NotNull, ItemNotNull] IEnumerable<T> source, [NotNull, InstantHandle] Predicate<T> predicate)
         {
+            Debug.Assert(source != null);
+            Debug.Assert(predicate != null);
+
             foreach (T element in source)
             {
                 if (predicate(element))
@@ -62,6 +91,8 @@ namespace ImmediateReflection.Utils
         [NotNull, ItemNotNull]
         public static IEnumerable<TResult> OfType<TResult>([NotNull, ItemNotNull] IEnumerable source)
         {
+            Debug.Assert(source != null);
+
             foreach (object obj in source)
             {
                 if (obj is TResult element)
@@ -97,6 +128,8 @@ namespace ImmediateReflection.Utils
         [NotNull, ItemNotNull]
         public static IEnumerable<T> AsEnumerable<T>([NotNull, ItemNotNull] IEnumerable<T> source)
         {
+            Debug.Assert(source != null);
+
             foreach (T element in source)
                 yield return element;
         }
@@ -175,6 +208,8 @@ namespace ImmediateReflection.Utils
         [NotNull, ItemNotNull]
         public static T[] ToArray<T>([NotNull, ItemNotNull] IEnumerable<T> source)
         {
+            Debug.Assert(source != null);
+
             return new Buffer<T>(source).ToArray();
         }
 
@@ -189,6 +224,9 @@ namespace ImmediateReflection.Utils
         [NotNull, ItemNotNull]
         public static IEnumerable<T> Except<T>([NotNull, ItemNotNull] IEnumerable<T> first, [NotNull, ItemNotNull] IEnumerable<T> second)
         {
+            Debug.Assert(first != null);
+            Debug.Assert(second != null);
+
             var list = new List<T>(second);
             foreach (T source in first)
             {

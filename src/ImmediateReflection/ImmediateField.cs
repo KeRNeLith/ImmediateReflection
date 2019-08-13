@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using JetBrains.Annotations;
 
@@ -46,7 +47,6 @@ namespace ImmediateReflection
         /// Constructor.
         /// </summary>
         /// <param name="field"><see cref="System.Reflection.FieldInfo"/> to wrap.</param>
-        /// <exception cref="ArgumentNullException">If the <paramref name="field"/> is null.</exception>
         internal ImmediateField([NotNull] FieldInfo field)
             : base(field)
         {
@@ -92,15 +92,11 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="field"><see cref="System.Reflection.FieldInfo"/> to wrap.</param>
         /// <param name="enumType"><see cref="Type"/> of the enumeration.</param>
-        /// <exception cref="ArgumentNullException">If the <paramref name="field"/> or <paramref name="enumType"/> is null.</exception>
-        /// <exception cref="ArgumentException">If the <paramref name="enumType"/> is not an enumeration type.</exception>
         internal ImmediateField([NotNull] FieldInfo field, [NotNull] Type enumType)
             : base(field)
         {
-            if (enumType is null)
-                throw new ArgumentNullException(nameof(enumType));
-            if (!enumType.IsEnum)
-                throw new ArgumentException($"{nameof(enumType)} be must an {nameof(Enum)} type.");
+            Debug.Assert(enumType != null);
+            Debug.Assert(enumType.IsEnum, $"{nameof(enumType)} be must an {nameof(Enum)} type.");
 
             FieldInfo = field;
             FieldType = field.FieldType;

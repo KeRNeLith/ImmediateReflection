@@ -1,5 +1,6 @@
 #if SUPPORTS_CACHING
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using JetBrains.Annotations;
 
@@ -46,6 +47,8 @@ namespace ImmediateReflection
 
             public TypeCacheKey([NotNull] Type type, BindingFlags flags)
             {
+                Debug.Assert(type != null);
+
                 _type = type;
                 _flags = flags;
             }
@@ -78,8 +81,7 @@ namespace ImmediateReflection
         [ContractAnnotation("type:null => halt")]
         public ImmediateType GetImmediateType([NotNull] Type type, BindingFlags flags)
         {
-            if (type is null)
-                throw new ArgumentNullException(nameof(type));
+            Debug.Assert(type != null);
 
             return _cachedTypes.GetOrCreate(
                 new TypeCacheKey(type, flags),
@@ -97,8 +99,7 @@ namespace ImmediateReflection
         [ContractAnnotation("member:null => halt")]
         public AttributesCache GetAttributesCache([NotNull] MemberInfo member)
         {
-            if (member is null)
-                throw new ArgumentNullException(nameof(member));
+            Debug.Assert(member != null);
 
             return _cachedAttributes.GetOrCreate(member, () => new AttributesCache(member));
         }
@@ -115,8 +116,7 @@ namespace ImmediateReflection
         [ContractAnnotation("type:null => halt")]
         public DefaultConstructorData GetDefaultConstructor([NotNull] Type type)
         {
-            if (type is null)
-                throw new ArgumentNullException(nameof(type));
+            Debug.Assert(type != null);
 
             return _cachedConstructors.GetOrCreate(type, () =>
             {
@@ -136,8 +136,7 @@ namespace ImmediateReflection
         [ContractAnnotation("field:null => halt")]
         public ImmediateField GetField([NotNull] FieldInfo field)
         {
-            if (field is null)
-                throw new ArgumentNullException(nameof(field));
+            Debug.Assert(field != null);
 
             return _cachedFields.GetOrCreate(field, () => new ImmediateField(field));
         }
@@ -146,10 +145,9 @@ namespace ImmediateReflection
         [ContractAnnotation("field:null => halt;enumType:null => halt")]
         public ImmediateField GetField([NotNull] FieldInfo field, [NotNull] Type enumType)
         {
-            if (field is null)
-                throw new ArgumentNullException(nameof(field));
-            if (enumType is null)
-                throw new ArgumentNullException(nameof(enumType));
+            Debug.Assert(field != null);
+            Debug.Assert(enumType != null);
+            Debug.Assert(enumType.IsEnum);
 
             return _cachedFields.GetOrCreate(field, () => new ImmediateField(field, enumType));
         }
@@ -165,8 +163,7 @@ namespace ImmediateReflection
         [ContractAnnotation("property:null => halt")]
         public ImmediateProperty GetProperty([NotNull] PropertyInfo property)
         {
-            if (property is null)
-                throw new ArgumentNullException(nameof(property));
+            Debug.Assert(property != null);
 
             return _cachedProperties.GetOrCreate(property, () => new ImmediateProperty(property));
         }

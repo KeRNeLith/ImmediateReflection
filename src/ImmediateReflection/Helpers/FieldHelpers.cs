@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 #if SUPPORTS_SYSTEM_CORE
 using System.Linq;
 #else
@@ -26,6 +27,8 @@ namespace ImmediateReflection.Utils
         [ContractAnnotation("field:null => halt")]
         internal static bool IsBackingField([NotNull] FieldInfo field)
         {
+            Debug.Assert(field != null);
+
             return field.Name.Contains(BackingFieldName);
         }
 
@@ -39,6 +42,8 @@ namespace ImmediateReflection.Utils
         [ContractAnnotation("fields:null => halt")]
         internal static IEnumerable<FieldInfo> IgnoreBackingFields([NotNull, ItemNotNull] IEnumerable<FieldInfo> fields)
         {
+            Debug.Assert(fields != null);
+
 #if SUPPORTS_SYSTEM_CORE
             return fields.Where(field => !IsBackingField(field));
 #else

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
@@ -28,11 +29,9 @@ namespace ImmediateReflection
         /// Constructor.
         /// </summary>
         /// <param name="member"><see cref="MemberInfo"/> to wrap.</param>
-        /// <exception cref="ArgumentNullException">If the <paramref name="member"/> is null.</exception>
         protected ImmediateMember([NotNull] MemberInfo member)
         {
-            if (member is null)
-                throw new ArgumentNullException(nameof(member));
+            Debug.Assert(member != null);
 
             Name = member.Name;
 

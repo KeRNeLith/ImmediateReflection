@@ -5,6 +5,7 @@ using System;
 using ImmediateReflection.Utils;
 #endif
 using System.Collections;
+using System.Diagnostics;
 using JetBrains.Annotations;
 
 namespace ImmediateReflection
@@ -29,8 +30,11 @@ namespace ImmediateReflection
         /// <returns>The value.</returns>
         [NotNull]
         [ContractAnnotation("key:null => halt;valueFactory:null => halt")]
-        public TValue GetOrCreate([NotNull] TKey key, [NotNull] Func<TValue> valueFactory)
+        public TValue GetOrCreate([NotNull] TKey key, [NotNull, InstantHandle] Func<TValue> valueFactory)
         {
+            Debug.Assert(key != null);
+            Debug.Assert(valueFactory != null);
+
             // ReSharper disable once InconsistentlySynchronizedField, Justification: HashTable is thread safe for reading
             var cachedValue = (TValue)_cache[key];
             if (cachedValue != null)

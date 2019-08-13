@@ -29,12 +29,6 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEqual(
                 Enumerable.Empty<ImmediateProperty>(),
                 immediateProperties3);
-
-            // ReSharper disable once AssignNullToNotNullAttribute
-            // ReSharper disable ObjectCreationAsStatement
-            Assert.Throws<ArgumentNullException>(() => new ImmediateProperties(null));
-            Assert.Throws<ArgumentNullException>(() => new ImmediateProperties(new[] { SmallObjectTestProperty1PropertyInfo, null }));
-            // ReSharper restore ObjectCreationAsStatement
         }
 
         [Test]

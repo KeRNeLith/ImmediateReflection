@@ -29,18 +29,6 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreEqual(
                 Enumerable.Empty<ImmediateProperty>(),
                 immediateFields3);
-
-            // ReSharper disable AssignNullToNotNullAttribute
-            // ReSharper disable ObjectCreationAsStatement
-            Assert.Throws<ArgumentNullException>(() => new ImmediateFields(null));
-            Assert.Throws<ArgumentNullException>(() => new ImmediateFields(new[] { SmallObjectTestField1FieldInfo, null }));
-            Assert.Throws<ArgumentNullException>(() => new ImmediateFields(null, null, null));
-            Assert.Throws<ArgumentException>(() => new ImmediateFields(typeof(PublicValueTypeTestClass), null, null));
-            Assert.Throws<ArgumentNullException>(() => new ImmediateFields(typeof(TestEnum), null, null));
-            Assert.Throws<ArgumentNullException>(() => new ImmediateFields(typeof(TestEnum), TestEnumFieldValueFieldInfo, null));
-            Assert.Throws<ArgumentNullException>(() => new ImmediateFields(typeof(TestEnum), TestEnumFieldValueFieldInfo, new[] { TestEnumField1FieldInfo, null }));
-            // ReSharper restore ObjectCreationAsStatement
-            // ReSharper restore AssignNullToNotNullAttribute
         }
 
         [Test]

@@ -175,6 +175,9 @@ namespace ImmediateReflection
         [ContractAnnotation("type:null => halt")]
         public static ImmediateType Get([NotNull] Type type, BindingFlags flags)
         {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+
 #if SUPPORTS_CACHING
             return CachesHandler.Instance.GetImmediateType(type, flags);
 #else

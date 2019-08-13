@@ -1,5 +1,6 @@
 #if !SUPPORTS_STRING_FULL_FEATURES
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using JetBrains.Annotations;
 
@@ -21,6 +22,9 @@ namespace ImmediateReflection.Utils
         [NotNull]
         public static string Join<T>([NotNull] string separator, [NotNull, ItemNotNull] IEnumerable<T> values)
         {
+            Debug.Assert(separator != null);
+            Debug.Assert(values != null);
+
             bool firstValue = true;
             var stringBuilder = new StringBuilder();
             foreach (T value in values)

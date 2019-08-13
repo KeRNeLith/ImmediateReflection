@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using JetBrains.Annotations;
 using static ImmediateReflection.Utils.ReflectionHelpers;
@@ -59,12 +60,10 @@ namespace ImmediateReflection
         /// Constructor.
         /// </summary>
         /// <param name="property"><see cref="System.Reflection.PropertyInfo"/> to wrap.</param>
-        /// <exception cref="ArgumentNullException">If the <paramref name="property"/> is null.</exception>
         internal ImmediateProperty([NotNull] PropertyInfo property)
             : base(property)
         {
-            if (IsIndexed(property))
-                throw new ArgumentException($"Cannot initialize an {nameof(ImmediateProperty)} with an indexed property.");
+            Debug.Assert(!IsIndexed(property), $"Cannot initialize an {nameof(ImmediateProperty)} with an indexed property.");
 
             // General property info
             PropertyInfo = property;

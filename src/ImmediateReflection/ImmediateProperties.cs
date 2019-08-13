@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 #if SUPPORTS_SYSTEM_CORE
 using System.Linq;
 #endif
@@ -32,12 +33,9 @@ namespace ImmediateReflection
         /// Constructor.
         /// </summary>
         /// <param name="properties">Enumerable of <see cref="PropertyInfo"/> to wrap.</param>
-        /// <exception cref="ArgumentNullException">If the <paramref name="properties"/> enumerable is null,
-        /// or if it contains a null <see cref="PropertyInfo"/>.</exception>
         internal ImmediateProperties([NotNull, ItemNotNull] IEnumerable<PropertyInfo> properties)
         {
-            if (properties is null)
-                throw new ArgumentNullException(nameof(properties));
+            Debug.Assert(properties != null);
 
 #if SUPPORTS_SYSTEM_CORE
             _properties = properties
@@ -67,8 +65,8 @@ namespace ImmediateReflection
 
             bool IsNotIndexed(PropertyInfo property)
             {
-                if (property is null)
-                    throw new ArgumentNullException(nameof(property), "A property is null.");
+                Debug.Assert(property != null);
+
                 return !IsIndexed(property);
             }
 

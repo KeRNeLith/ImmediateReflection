@@ -541,6 +541,19 @@ namespace ImmediateReflection.Tests
             Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttribute(property, typeof(TestClassAttribute)));
             Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.IsDefinedImmediateAttribute(property, typeof(TestClassAttribute), true));
             Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttribute(property, typeof(TestClassAttribute), true));
+
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.IsDefinedImmediateAttribute<TestClassAttribute>(type));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttribute<TestClassAttribute>(type));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.IsDefinedImmediateAttribute<TestClassAttribute>(type, true));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttribute<TestClassAttribute>(type, true));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.IsDefinedImmediateAttribute<TestClassAttribute>(field));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttribute<TestClassAttribute>(field));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.IsDefinedImmediateAttribute<TestClassAttribute>(field, true));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttribute<TestClassAttribute>(field, true));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.IsDefinedImmediateAttribute<TestClassAttribute>(property));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttribute<TestClassAttribute>(property));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.IsDefinedImmediateAttribute<TestClassAttribute>(property, true));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttribute<TestClassAttribute>(property, true));
             // ReSharper restore once AssignNullToNotNullAttribute
             // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         }
@@ -994,6 +1007,13 @@ namespace ImmediateReflection.Tests
             Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes(field, typeof(TestClassAttribute), true));
             Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes(property, typeof(TestClassAttribute)));
             Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes(property, typeof(TestClassAttribute), true));
+
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes<TestClassAttribute>(type));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes<TestClassAttribute>(type, true));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes<TestClassAttribute>(field));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes<TestClassAttribute>(field, true));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes<TestClassAttribute>(property));
+            Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes<TestClassAttribute>(property, true));
             // ReSharper restore once AssignNullToNotNullAttribute
             // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         }

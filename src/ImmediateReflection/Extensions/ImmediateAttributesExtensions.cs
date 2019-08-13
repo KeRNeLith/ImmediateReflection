@@ -22,6 +22,7 @@ namespace ImmediateReflection
         /// <param name="member">Member to get its custom attributes.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>True if an attribute matches requested type, otherwise false.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
         [PublicAPI]
         [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -36,6 +37,9 @@ namespace ImmediateReflection
             bool inherit = false)
             where TAttribute : Attribute
         {
+            if (member is null)
+                throw new ArgumentNullException(nameof(member));
+
             return CachesHandler.Instance
                 .GetAttributesCache(member)
                 .IsDefined<TAttribute>(inherit);
@@ -48,6 +52,7 @@ namespace ImmediateReflection
         /// <param name="attributeType">Type of the attribute to search.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>True if an attribute matches requested type, otherwise false.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
         /// <exception cref="ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
         /// <exception cref="ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
         [PublicAPI]
@@ -64,6 +69,9 @@ namespace ImmediateReflection
             [NotNull] Type attributeType,
             bool inherit = false)
         {
+            if (member is null)
+                throw new ArgumentNullException(nameof(member));
+
             return CachesHandler.Instance
                 .GetAttributesCache(member)
                 .IsDefined(attributeType, inherit);
@@ -92,6 +100,9 @@ namespace ImmediateReflection
             bool inherit = false)
             where TAttribute : Attribute
         {
+            if (member is null)
+                throw new ArgumentNullException(nameof(member));
+
             return CachesHandler.Instance
                 .GetAttributesCache(member)
                 .GetAttribute<TAttribute>(inherit);
@@ -121,6 +132,9 @@ namespace ImmediateReflection
             [NotNull] Type attributeType,
             bool inherit = false)
         {
+            if (member is null)
+                throw new ArgumentNullException(nameof(member));
+
             return CachesHandler.Instance
                 .GetAttributesCache(member)
                 .GetAttribute(attributeType, inherit);
@@ -133,6 +147,7 @@ namespace ImmediateReflection
         /// <param name="member">Member to get its custom attributes.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>Attributes matching requested type.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
         [PublicAPI]
         [NotNull, ItemNotNull]
         [ContractAnnotation("member:null => halt")]
@@ -148,6 +163,9 @@ namespace ImmediateReflection
             bool inherit = false)
             where TAttribute : Attribute
         {
+            if (member is null)
+                throw new ArgumentNullException(nameof(member));
+
             return CachesHandler.Instance
                 .GetAttributesCache(member)
                 .GetAttributes<TAttribute>(inherit);
@@ -160,6 +178,7 @@ namespace ImmediateReflection
         /// <param name="attributeType">Type of the attribute to search.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>Attributes matching requested type.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
         [PublicAPI]
         [NotNull, ItemNotNull]
         [ContractAnnotation("member:null => halt;attributeType:null => halt")]
@@ -175,6 +194,9 @@ namespace ImmediateReflection
             [NotNull] Type attributeType,
             bool inherit = false)
         {
+            if (member is null)
+                throw new ArgumentNullException(nameof(member));
+
             return CachesHandler.Instance
                 .GetAttributesCache(member)
                 .GetAttributes(attributeType, inherit);
@@ -186,6 +208,7 @@ namespace ImmediateReflection
         /// <param name="member">Member to get its custom attributes.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>All attributes.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
         [PublicAPI]
         [NotNull, ItemNotNull]
         [ContractAnnotation("member:null => halt")]
@@ -200,6 +223,9 @@ namespace ImmediateReflection
 # endif
             bool inherit = false)
         {
+            if (member is null)
+                throw new ArgumentNullException(nameof(member));
+
             return CachesHandler.Instance
                 .GetAttributesCache(member)
                 .GetAllAttributes(inherit);

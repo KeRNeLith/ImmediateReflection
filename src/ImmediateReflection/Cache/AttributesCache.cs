@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 #if SUPPORTS_SYSTEM_CORE
 using System.Linq;
 #else
@@ -26,8 +27,7 @@ namespace ImmediateReflection
 
         public AttributesCache([NotNull] MemberInfo member)
         {
-            if (member is null)
-                throw new ArgumentNullException(nameof(member));
+            Debug.Assert(member != null);
 
             Attribute[] attributesNotInherited = Attribute.GetCustomAttributes(member, false);
             _attributesWithoutInherited = new Dictionary<Type, List<Attribute>>(attributesNotInherited.Length);

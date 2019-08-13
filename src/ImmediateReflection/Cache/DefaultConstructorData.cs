@@ -1,4 +1,5 @@
 #if SUPPORTS_CACHING
+using System.Diagnostics;
 using JetBrains.Annotations;
 
 namespace ImmediateReflection
@@ -21,6 +22,8 @@ namespace ImmediateReflection
 
         public DefaultConstructorData([NotNull] DefaultConstructorDelegate constructor, bool hasDefault)
         {
+            Debug.Assert(constructor != null);
+
             HasDefault = hasDefault;
             Constructor = constructor;
         }

@@ -27,6 +27,19 @@ namespace ImmediateReflection.Tests
             Assert.Throws<InvalidOperationException>(() => EnumerableUtils.First(emptyList, value => true));
         }
 
+        [Test]
+        public void All()
+        {
+            // ReSharper disable once CollectionNeverUpdated.Local
+            var emptyList = new List<int>();
+            var list1 = new List<int> { 1, 2, 3, 4 };
+            var list2 = new List<int> { 2, 2, 2, 2 };
+
+            Assert.IsTrue(EnumerableUtils.All(emptyList, value => value == 2));
+            Assert.IsFalse(EnumerableUtils.All(list1, value => value == 2));
+            Assert.IsTrue(EnumerableUtils.All(list2, value => value == 2));
+        }
+
         private static IEnumerable<int> GetInts()
         {
             yield return 4;
