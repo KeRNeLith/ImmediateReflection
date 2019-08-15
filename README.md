@@ -260,9 +260,9 @@ ImmediateType myImmediateType = myType.GetImmediateType();
 
 ## Targets
 
-- .NET Standard 2.0+
-- .NET Core 2.0+
-- .NET Framework 2.0+
+- [![.NET Standard](https://img.shields.io/badge/.NET%20Standard-%3E%3D%202.0-blue.svg)](#)
+- [![.NET Core](https://img.shields.io/badge/.NET%20Core-%3E%3D%202.0-blue.svg)](#)
+- [![.NET Framework](https://img.shields.io/badge/.NET%20Framework-%3E%3D%202.0-blue.svg)](#)
 
 Supports Source Link
 
