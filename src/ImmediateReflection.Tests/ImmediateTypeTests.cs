@@ -621,38 +621,7 @@ namespace ImmediateReflection.Tests
 
         #region Has Default Constructor
 
-        private static IEnumerable<TestCaseData> CreateHasDefaultConstructorTestCases
-        {
-            [UsedImplicitly]
-            get
-            {
-                yield return new TestCaseData(typeof(int)) { ExpectedResult = true };
-                yield return new TestCaseData(typeof(TestStruct)) { ExpectedResult = true };
-                yield return new TestCaseData(typeof(DefaultConstructor)) { ExpectedResult = true };
-                yield return new TestCaseData(typeof(MultipleConstructors)) { ExpectedResult = true };
-                yield return new TestCaseData(typeof(TemplateStruct<double>)) { ExpectedResult = true };
-                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>)) { ExpectedResult = true };
-                yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor)) { ExpectedResult = true };
-                yield return new TestCaseData(typeof(DefaultInheritedNoDefaultConstructor)) { ExpectedResult = true };
-                yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass)) { ExpectedResult = true };
-                yield return new TestCaseData(typeof(IntParamsOnlyConstructor)) { ExpectedResult = true };  // Considered as default
-                yield return new TestCaseData(typeof(DefaultConstructorThrows)) { ExpectedResult = true };
-
-                yield return new TestCaseData(typeof(NoDefaultConstructor)) { ExpectedResult = false };
-                yield return new TestCaseData(typeof(NotAccessibleDefaultConstructor)) { ExpectedResult = false };
-                yield return new TestCaseData(typeof(AbstractDefaultConstructor)) { ExpectedResult = false };
-                yield return new TestCaseData(typeof(StaticClass)) { ExpectedResult = false };
-                yield return new TestCaseData(typeof(TemplateStruct<>)) { ExpectedResult = false };
-                yield return new TestCaseData(typeof(TemplateDefaultConstructor<>)) { ExpectedResult = false };
-                yield return new TestCaseData(typeof(ParamsConstructor)) { ExpectedResult = false };
-                yield return new TestCaseData(typeof(NoDefaultInheritedDefaultConstructor)) { ExpectedResult = false };
-                yield return new TestCaseData(typeof(AmbiguousParamsOnlyConstructor)) { ExpectedResult = false };
-                // ReSharper disable once PossibleMistakenCallToGetType.2
-                yield return new TestCaseData(typeof(DefaultConstructor).GetType()) { ExpectedResult = false };
-            }
-        }
-
-        [TestCaseSource(nameof(CreateHasDefaultConstructorTestCases))]
+        [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateHasDefaultConstructorTestCases))]
         public bool HasDefaultConstructor([NotNull] Type type)
         {
             var immediateType = new ImmediateType(type);
@@ -852,6 +821,117 @@ namespace ImmediateReflection.Tests
                     return immediateType.TryNew(out instance, out exception, args);
                 },
                 arguments);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Copy Constructor
+
+        #region Has Copy Constructor
+
+        [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateHasCopyConstructorTestCases))]
+        public bool HasCopyConstructor([NotNull] Type type)
+        {
+            var immediateType = new ImmediateType(type);
+            return immediateType.HasCopyConstructor;
+        }
+
+        #endregion
+
+        #region Copy/TryCopy
+
+        [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorTestCases))]
+        public void Copy([NotNull] Type type, [CanBeNull] object other)
+        {
+            ConstructorTestHelpers.Copy(
+                type,
+                other,
+                o =>
+                {
+                    var immediateType = new ImmediateType(type);
+                    return immediateType.Copy(o);
+                });
+        }
+
+        [Test]
+        public void Copy_Throws()
+        {
+            // ReSharper disable ReturnValueOfPureMethodIsNotUsed
+            var immediateType = new ImmediateType(typeof(NoCopyConstructorClass));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(new NoCopyConstructorClass()));
+
+            immediateType = new ImmediateType(typeof(NotAccessibleCopyConstructor));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(new NotAccessibleCopyConstructor()));
+
+            immediateType = new ImmediateType(typeof(IList<int>));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(new List<int>()));
+
+            immediateType = new ImmediateType(typeof(IDictionary<int, string>));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(new Dictionary<int, string>()));
+
+            immediateType = new ImmediateType(typeof(AbstractCopyConstructor));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(null));
+
+            immediateType = new ImmediateType(typeof(StaticClass));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(null));
+
+            immediateType = new ImmediateType(typeof(TemplateStruct<>));
+            Assert.Throws<ArgumentException>(() => immediateType.Copy(null));
+
+            immediateType = new ImmediateType(typeof(TemplateCopyConstructor<>));
+            Assert.Throws<ArgumentException>(() => immediateType.Copy(null));
+
+            immediateType = new ImmediateType(typeof(NoCopyInheritedCopyConstructorClass));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(new NoCopyInheritedCopyConstructorClass(1)));
+
+            immediateType = new ImmediateType(typeof(NoCopyInheritedCopyConstructorClass));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(new CopyConstructorClass(2)));
+
+            immediateType = new ImmediateType(typeof(BaseCopyInheritedCopyConstructorClass));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(new BaseCopyInheritedCopyConstructorClass(3)));
+
+            immediateType = new ImmediateType(typeof(BaseCopyInheritedCopyConstructorClass));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(new CopyConstructorClass(4))); // Constructor exists but is not considered as copy constructor
+
+            immediateType = new ImmediateType(typeof(SpecializedCopyConstructorClass));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(new SpecializedCopyConstructorClass(5)));
+
+            immediateType = new ImmediateType(typeof(SpecializedCopyConstructorClass));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(new InheritedSpecializedCopyConstructorClass(6))); // Constructor exists but is not considered as copy constructor
+
+            immediateType = new ImmediateType(typeof(MultipleCopyConstructorClass));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(new InheritedMultipleCopyConstructorClass(12))); // Constructor exists but is not considered as copy constructor
+
+            // ReSharper disable once PossibleMistakenCallToGetType.2
+            immediateType = new ImmediateType(typeof(CopyConstructorClass).GetType());
+            Assert.Throws<ArgumentException>(() => immediateType.Copy(null));
+
+            immediateType = new ImmediateType(typeof(CopyConstructorThrows));
+            Assert.Throws(Is.InstanceOf<Exception>(), () => immediateType.Copy(new CopyConstructorThrows()));
+
+            immediateType = new ImmediateType(typeof(int[]));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(new int[0]));
+
+            // Wrong argument
+            immediateType = new ImmediateType(typeof(CopyConstructorClass));
+            Assert.Throws<ArgumentException>(() => immediateType.Copy(new NoCopyConstructorClass()));
+            // ReSharper restore ReturnValueOfPureMethodIsNotUsed
+        }
+
+        [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorNoThrowTestCases))]
+        public void TryCopy([NotNull] Type type, [CanBeNull] object other, bool expectFail)
+        {
+            ConstructorTestHelpers.TryCopy(
+                type,
+                other,
+                expectFail,
+                (object o, out object instance, out Exception exception) =>
+                {
+                    var immediateType = new ImmediateType(type);
+                    return immediateType.TryCopy(o, out instance, out exception);
+                });
         }
 
         #endregion

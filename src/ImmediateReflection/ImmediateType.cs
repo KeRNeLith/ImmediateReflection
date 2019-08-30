@@ -259,6 +259,8 @@ namespace ImmediateReflection
 #endif
         public ImmediateProperty GetProperty([NotNull] string propertyName) => Properties[propertyName];
 
+        #region New/TryNew
+
         /// <summary>
         /// Indicates if this <see cref="Type"/> has a default constructor.
         /// </summary>
@@ -272,7 +274,6 @@ namespace ImmediateReflection
         /// <exception cref="ArgumentException"><see cref="Type"/> a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
         /// <exception cref="AmbiguousMatchException"><see cref="Type"/> has several constructors defining "params" parameter only.</exception>
         /// <exception cref="MissingMethodException">No matching public constructor was found.</exception>
-        /// <exception cref="TargetInvocationException">The constructor being called throws an exception.</exception>
         [PublicAPI]
         [Pure]
         [NotNull]
@@ -369,6 +370,66 @@ namespace ImmediateReflection
                 return false;
             }
         }
+
+        #endregion
+
+        #region Copy/TryCopy
+
+        /// <summary>
+        /// Indicates if this <see cref="Type"/> has a copy constructor.
+        /// </summary>
+        [PublicAPI]
+        public bool HasCopyConstructor { get; }
+
+        /// <summary>
+        /// Creates a copy instance of <paramref name="other"/> with this <see cref="Type"/>'s copy constructor.
+        /// </summary>
+        /// <param name="other">Object to copy.</param>
+        /// <returns>A reference to the newly created object.</returns>
+        /// <exception cref="ArgumentException">
+        /// <see cref="Type"/> a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true),
+        /// or if the <paramref name="other"/> instance is not exactly an instance of <see cref="Type"/>.
+        /// </exception>
+        /// <exception cref="MissingMethodException">
+        /// No matching public copy constructor was found,
+        /// or constructor exists but was not considered as copy constructor.
+        /// </exception>
+        [PublicAPI]
+        [Pure]
+        [NotNull]
+        public object Copy([CanBeNull] object other)
+        {
+            return Activator.CreateInstance(Type, other);
+        }
+
+        /// <summary>
+        /// Tries to create a copy instance of <paramref name="other"/> with this <see cref="Type"/>'s copy constructor
+        /// </summary>
+        /// <remarks>This method will not throw if instantiation failed.</remarks>
+        /// <param name="other">Object to copy.</param>
+        /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
+        /// <param name="exception">Caught exception if the instantiation failed, otherwise null.</param>
+        /// <returns>True if the new instance was successfully created, false otherwise.</returns>
+        [PublicAPI]
+        [Pure]
+        [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
+        public bool TryCopy([CanBeNull] object other, out object newInstance, out Exception exception)
+        {
+            try
+            {
+                exception = null;
+                newInstance = Copy(other);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                newInstance = null;
+                exception = ex;
+                return false;
+            }
+        }
+
+        #endregion
 
         #region Equality / IEquatable<T>
 

@@ -24,6 +24,14 @@ namespace ImmediateReflection.Tests
 
         public class DefaultConstructor
         {
+            private readonly bool _baseValue;   // This serve as a check that this default constructor
+                                                // has been called when instantiating a sub class.
+
+            public DefaultConstructor()
+            {
+                _baseValue = true;
+            }
+
             public override bool Equals(object obj)
             {
                 return Equals(obj as DefaultConstructor);
@@ -33,17 +41,41 @@ namespace ImmediateReflection.Tests
             {
                 if (other is null)
                     return false;
-                return true;
+                return _baseValue == other._baseValue;
             }
 
             public override int GetHashCode()
             {
-                return 1;
+                return _baseValue.GetHashCode();
             }
         }
 
         public abstract class AbstractDefaultConstructor
         {
+            private readonly bool _baseValue;   // This serve as a check that this default constructor
+                                                // has been called when instantiating a sub class.
+
+            public AbstractDefaultConstructor()
+            {
+                _baseValue = true;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as AbstractDefaultConstructor);
+            }
+
+            private bool Equals(AbstractDefaultConstructor other)
+            {
+                if (other is null)
+                    return false;
+                return _baseValue == other._baseValue;
+            }
+
+            public override int GetHashCode()
+            {
+                return _baseValue.GetHashCode();
+            }
         }
 
         public abstract class AbstractNoConstructor
@@ -56,9 +88,13 @@ namespace ImmediateReflection.Tests
 
         public class NoDefaultConstructor
         {
+            private readonly bool _baseValue;   // This serve as a check that this default constructor
+                                                // has been called when instantiating a sub class.
+
             // ReSharper disable once UnusedParameter.Local
             public NoDefaultConstructor(int value)
             {
+                _baseValue = true;
             }
 
             public override bool Equals(object obj)
@@ -70,12 +106,12 @@ namespace ImmediateReflection.Tests
             {
                 if (other is null)
                     return false;
-                return true;
+                return _baseValue == other._baseValue;
             }
 
             public override int GetHashCode()
             {
-                return 1;
+                return _baseValue.GetHashCode();
             }
         }
 
@@ -92,7 +128,7 @@ namespace ImmediateReflection.Tests
                 return Equals(obj as MultiParametersConstructor);
             }
 
-            private bool Equals(MultiParametersConstructor other)
+            private static bool Equals(MultiParametersConstructor other)
             {
                 if (other is null)
                     return false;
@@ -133,7 +169,7 @@ namespace ImmediateReflection.Tests
                 return Equals(obj as TemplateDefaultConstructor<TTemplate>);
             }
 
-            private bool Equals(TemplateDefaultConstructor<TTemplate> other)
+            private static bool Equals(TemplateDefaultConstructor<TTemplate> other)
             {
                 if (other is null)
                     return false;
@@ -159,7 +195,7 @@ namespace ImmediateReflection.Tests
                 return Equals(obj as TemplateNoDefaultConstructor<TTemplate>);
             }
 
-            private bool Equals(TemplateNoDefaultConstructor<TTemplate> other)
+            private static bool Equals(TemplateNoDefaultConstructor<TTemplate> other)
             {
                 if (other is null)
                     return false;
@@ -199,7 +235,7 @@ namespace ImmediateReflection.Tests
                 return Equals(obj as DefaultConstructorThrows);
             }
 
-            private bool Equals(DefaultConstructorThrows other)
+            private static bool Equals(DefaultConstructorThrows other)
             {
                 if (other is null)
                     return false;
@@ -244,7 +280,7 @@ namespace ImmediateReflection.Tests
                 return Equals(obj as MultipleConstructors);
             }
 
-            private bool Equals(MultipleConstructors other)
+            private static bool Equals(MultipleConstructors other)
             {
                 if (other is null)
                     return false;
@@ -269,7 +305,7 @@ namespace ImmediateReflection.Tests
                 return Equals(obj as ParamsOnlyConstructor);
             }
 
-            private bool Equals(ParamsOnlyConstructor other)
+            private static bool Equals(ParamsOnlyConstructor other)
             {
                 if (other is null)
                     return false;
@@ -295,7 +331,7 @@ namespace ImmediateReflection.Tests
                 return Equals(obj as ParamsConstructor);
             }
 
-            private bool Equals(ParamsConstructor other)
+            private static bool Equals(ParamsConstructor other)
             {
                 if (other is null)
                     return false;
@@ -327,7 +363,7 @@ namespace ImmediateReflection.Tests
                 return Equals(obj as ParamsOnlyConstructor);
             }
 
-            private bool Equals(ParamsOnlyConstructor other)
+            private static bool Equals(ParamsOnlyConstructor other)
             {
                 if (other is null)
                     return false;
@@ -352,7 +388,7 @@ namespace ImmediateReflection.Tests
                 return Equals(obj as IntParamsOnlyConstructor);
             }
 
-            private bool Equals(IntParamsOnlyConstructor other)
+            private static bool Equals(IntParamsOnlyConstructor other)
             {
                 if (other is null)
                     return false;
@@ -377,7 +413,7 @@ namespace ImmediateReflection.Tests
                 return Equals(obj as NullableIntParamsOnlyConstructor);
             }
 
-            private bool Equals(NullableIntParamsOnlyConstructor other)
+            private static bool Equals(NullableIntParamsOnlyConstructor other)
             {
                 if (other is null)
                     return false;
@@ -406,7 +442,7 @@ namespace ImmediateReflection.Tests
                 return Equals(obj as DefaultInheritedNoDefaultConstructor);
             }
 
-            private bool Equals(DefaultInheritedNoDefaultConstructor other)
+            private static bool Equals(DefaultInheritedNoDefaultConstructor other)
             {
                 if (other is null)
                     return false;
@@ -421,22 +457,6 @@ namespace ImmediateReflection.Tests
 
         public class DefaultInheritedFromAbstractClass : AbstractDefaultConstructor
         {
-            public override bool Equals(object obj)
-            {
-                return Equals(obj as DefaultInheritedFromAbstractClass);
-            }
-
-            private bool Equals(DefaultInheritedFromAbstractClass other)
-            {
-                if (other is null)
-                    return false;
-                return true;
-            }
-
-            public override int GetHashCode()
-            {
-                return 1;
-            }
         }
 
         public class NoDefaultInheritedDefaultConstructor : DefaultConstructor
@@ -461,13 +481,241 @@ namespace ImmediateReflection.Tests
             public NoDefaultInheritedFromAbstractClass(int value)
             {
             }
+        }
+
+        public class NoCopyConstructorClass
+        {
+        }
+
+        public class CopyConstructorClass
+        {
+            private readonly int _value;
+
+            public CopyConstructorClass(int value)
+            {
+                _value = value;
+            }
+
+            public CopyConstructorClass(CopyConstructorClass other)
+            {
+                _value = other._value;
+            }
 
             public override bool Equals(object obj)
             {
-                return Equals(obj as NoDefaultInheritedFromAbstractClass);
+                return Equals(obj as CopyConstructorClass);
             }
 
-            private bool Equals(NoDefaultInheritedFromAbstractClass other)
+            private bool Equals(CopyConstructorClass other)
+            {
+                if (other is null)
+                    return false;
+                return _value == other._value;
+            }
+
+            public override int GetHashCode()
+            {
+                return _value.GetHashCode();
+            }
+        }
+
+        public class NoCopyInheritedCopyConstructorClass : CopyConstructorClass
+        {
+            public NoCopyInheritedCopyConstructorClass(int value)
+                : base(value)
+            {
+            }
+        }
+
+        public class CopyInheritedCopyConstructorClass : CopyConstructorClass
+        {
+            public CopyInheritedCopyConstructorClass(int value)
+                : base(value)
+            {
+            }
+
+            public CopyInheritedCopyConstructorClass(CopyInheritedCopyConstructorClass other)
+                : base(other)
+            {
+            }
+        }
+
+        public class BaseCopyInheritedCopyConstructorClass : CopyConstructorClass
+        {
+            public BaseCopyInheritedCopyConstructorClass(int value)
+                : base(value)
+            {
+            }
+
+            public BaseCopyInheritedCopyConstructorClass(CopyConstructorClass other)
+                : base(other)
+            {
+            }
+        }
+
+        public class SpecializedCopyConstructorClass
+        {
+            private readonly double _value;
+
+            public SpecializedCopyConstructorClass(double value)
+            {
+                _value = value;
+            }
+
+            public SpecializedCopyConstructorClass(InheritedSpecializedCopyConstructorClass other)
+            {
+                _value = other._value;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as SpecializedCopyConstructorClass);
+            }
+
+            private bool Equals(SpecializedCopyConstructorClass other)
+            {
+                if (other is null)
+                    return false;
+                return Math.Abs(_value - other._value) < double.Epsilon;
+            }
+
+            public override int GetHashCode()
+            {
+                return _value.GetHashCode();
+            }
+        }
+
+        public class InheritedSpecializedCopyConstructorClass : SpecializedCopyConstructorClass
+        {
+            public InheritedSpecializedCopyConstructorClass(double value)
+                : base(value)
+            {
+            }
+        }
+
+        public class MultipleCopyConstructorClass
+        {
+            private readonly double _value;
+
+            public MultipleCopyConstructorClass(double value)
+            {
+                _value = value;
+            }
+
+            public MultipleCopyConstructorClass(MultipleCopyConstructorClass other)
+            {
+                _value = other._value;
+            }
+
+            // ReSharper disable once UnusedParameter.Local
+            public MultipleCopyConstructorClass(InheritedMultipleCopyConstructorClass other)
+            {
+                _value = -1;    // Used during tests to assert that this constructor
+                                // is not called when copying a MultipleCopyConstructorClass
+                                // with other instance being an InheritedMultipleCopyConstructorClass
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as MultipleCopyConstructorClass);
+            }
+
+            private bool Equals(MultipleCopyConstructorClass other)
+            {
+                if (other is null)
+                    return false;
+                return Math.Abs(_value - other._value) < double.Epsilon;
+            }
+
+            public override int GetHashCode()
+            {
+                return _value.GetHashCode();
+            }
+        }
+
+        public class InheritedMultipleCopyConstructorClass : MultipleCopyConstructorClass
+        {
+            public InheritedMultipleCopyConstructorClass(double value)
+                : base(value)
+            {
+            }
+        }
+
+        public class TemplateCopyConstructor<TTemplate>
+        {
+            private readonly TTemplate _value;
+
+            public TemplateCopyConstructor(TTemplate value)
+            {
+                _value = value;
+            }
+
+            public TemplateCopyConstructor(TemplateCopyConstructor<TTemplate> other)
+            {
+                _value = other._value;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as TemplateCopyConstructor<TTemplate>);
+            }
+
+            private bool Equals(TemplateCopyConstructor<TTemplate> other)
+            {
+                if (other is null)
+                    return false;
+                return Equals(_value, other._value);
+            }
+
+            public override int GetHashCode()
+            {
+                return _value?.GetHashCode() ?? 0;
+            }
+        }
+
+        public abstract class AbstractCopyConstructor
+        {
+            public AbstractCopyConstructor()
+            {
+            }
+
+            // ReSharper disable once UnusedParameter.Local
+            public AbstractCopyConstructor(AbstractCopyConstructor other)
+            {
+            }
+        }
+
+        public class NotAccessibleCopyConstructor
+        {
+            public NotAccessibleCopyConstructor()
+            {
+            }
+
+            // ReSharper disable once UnusedParameter.Local
+            // ReSharper disable once UnusedMember.Local
+            private NotAccessibleCopyConstructor(NotAccessibleCopyConstructor other)
+            {
+            }
+        }
+
+        public class CopyConstructorThrows
+        {
+            public CopyConstructorThrows()
+            {
+            }
+
+            // ReSharper disable once UnusedParameter.Local
+            public CopyConstructorThrows(CopyConstructorThrows other)
+            {
+                throw new InvalidOperationException("Copy Constructor throws.");
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as CopyConstructorThrows);
+            }
+
+            private static bool Equals(CopyConstructorThrows other)
             {
                 if (other is null)
                     return false;
@@ -487,6 +735,42 @@ namespace ImmediateReflection.Tests
         #endregion
 
         #region New/TryNew
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<TestCaseData> CreateHasDefaultConstructorTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                yield return new TestCaseData(typeof(int)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(TestStruct)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(DefaultConstructor)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(MultipleConstructors)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(TemplateStruct<double>)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(DefaultInheritedDefaultConstructor)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(DefaultInheritedNoDefaultConstructor)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(IntParamsOnlyConstructor)) { ExpectedResult = true };  // Considered as default
+                yield return new TestCaseData(typeof(DefaultConstructorThrows)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(List<int>)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(Dictionary<int, string>)) { ExpectedResult = true };
+
+                yield return new TestCaseData(typeof(NoDefaultConstructor)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(NotAccessibleDefaultConstructor)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(AbstractDefaultConstructor)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(StaticClass)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(TemplateStruct<>)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(TemplateDefaultConstructor<>)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(ParamsConstructor)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(NoDefaultInheritedDefaultConstructor)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(AmbiguousParamsOnlyConstructor)) { ExpectedResult = false };
+                // ReSharper disable once PossibleMistakenCallToGetType.2
+                yield return new TestCaseData(typeof(DefaultConstructor).GetType()) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(IList<int>)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(IDictionary<int, string>)) { ExpectedResult = false };
+            }
+        }
 
         [NotNull, ItemNotNull]
         public static IEnumerable<TestCaseData> CreateDefaultConstructorTestCases
@@ -790,6 +1074,123 @@ namespace ImmediateReflection.Tests
             {
                 Assert.IsNotNull(instance);
                 Assert.AreEqual(Activator.CreateInstance(type, args), instance);
+            }
+        }
+
+        #endregion
+
+        #region Copy/TryCopy
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<TestCaseData> CreateHasCopyConstructorTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                yield return new TestCaseData(typeof(int)) { ExpectedResult = true };        // Not has a real copy constructor but it's more convenient
+                yield return new TestCaseData(typeof(TestStruct)) { ExpectedResult = true }; // Not has a real copy constructor but it's more convenient
+                yield return new TestCaseData(typeof(CopyConstructorClass)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(CopyInheritedCopyConstructorClass)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(MultipleCopyConstructorClass)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(TemplateCopyConstructor<double>)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(CopyConstructorThrows)) { ExpectedResult = true };
+
+                yield return new TestCaseData(typeof(NoCopyConstructorClass)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(NoCopyInheritedCopyConstructorClass)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(BaseCopyInheritedCopyConstructorClass)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(SpecializedCopyConstructorClass)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(InheritedSpecializedCopyConstructorClass)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(InheritedMultipleCopyConstructorClass)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(NotAccessibleCopyConstructor)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(AbstractCopyConstructor)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(StaticClass)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(TemplateStruct<>)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(TemplateCopyConstructor<>)) { ExpectedResult = false };
+                // ReSharper disable once PossibleMistakenCallToGetType.2
+                yield return new TestCaseData(typeof(CopyConstructorClass).GetType()) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(IList<int>)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(IDictionary<int, string>)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(int[])) { ExpectedResult = false };
+            }
+        }
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<TestCaseData> CreateCopyConstructorTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                yield return new TestCaseData(typeof(int), 25);
+                yield return new TestCaseData(typeof(TestStruct), new TestStruct { TestValue = 12 });
+                yield return new TestCaseData(typeof(CopyConstructorClass), new CopyConstructorClass(42));
+                yield return new TestCaseData(typeof(CopyInheritedCopyConstructorClass), new CopyInheritedCopyConstructorClass(28));
+                yield return new TestCaseData(typeof(MultipleCopyConstructorClass), new MultipleCopyConstructorClass(56));
+                yield return new TestCaseData(typeof(TemplateCopyConstructor<char>), new TemplateCopyConstructor<char>('A'));
+            }
+        }
+
+        public static void Copy([NotNull] Type type, [CanBeNull] object other, [NotNull, InstantHandle] Func<object, object> ctor)
+        {
+            object instance = ctor(other);
+            Assert.IsNotNull(instance);
+            if (type.IsValueType)
+                Assert.AreEqual(other, instance);
+            else
+                Assert.AreEqual(Activator.CreateInstance(type, other), instance);
+        }
+
+        [NotNull, ItemNotNull]
+        public static IEnumerable<TestCaseData> CreateCopyConstructorNoThrowTestCases
+        {
+            [UsedImplicitly]
+            get
+            {
+                yield return new TestCaseData(typeof(int), 1, false);
+                yield return new TestCaseData(typeof(TestStruct), new TestStruct { TestValue = 2 }, false);
+                yield return new TestCaseData(typeof(CopyConstructorClass), new CopyConstructorClass(3), false);
+                yield return new TestCaseData(typeof(CopyInheritedCopyConstructorClass), new CopyInheritedCopyConstructorClass(4), false);
+                yield return new TestCaseData(typeof(MultipleCopyConstructorClass), new MultipleCopyConstructorClass(5), false);
+                yield return new TestCaseData(typeof(TemplateCopyConstructor<char>), new TemplateCopyConstructor<char>('B'), false);
+
+                yield return new TestCaseData(typeof(NoCopyConstructorClass), new NoCopyConstructorClass(), true);
+                yield return new TestCaseData(typeof(NoCopyInheritedCopyConstructorClass), new NoCopyInheritedCopyConstructorClass(1), true);
+                yield return new TestCaseData(typeof(NoCopyInheritedCopyConstructorClass), new CopyConstructorClass(2), true);
+                yield return new TestCaseData(typeof(BaseCopyInheritedCopyConstructorClass), new BaseCopyInheritedCopyConstructorClass(3), true);
+                yield return new TestCaseData(typeof(BaseCopyInheritedCopyConstructorClass), new CopyConstructorClass(4), true);   // Constructor exists but is not considered as copy constructor
+                yield return new TestCaseData(typeof(SpecializedCopyConstructorClass), new SpecializedCopyConstructorClass(5), true);
+                yield return new TestCaseData(typeof(SpecializedCopyConstructorClass), new InheritedSpecializedCopyConstructorClass(6), true); // Constructor exists but is not considered as copy constructor
+                yield return new TestCaseData(typeof(MultipleCopyConstructorClass), new InheritedMultipleCopyConstructorClass(7), true);       // Constructor exists but is not considered as copy constructor
+                yield return new TestCaseData(typeof(NotAccessibleCopyConstructor), new NotAccessibleCopyConstructor(), true);
+                yield return new TestCaseData(typeof(IList<int>), new List<int>(), true);
+                yield return new TestCaseData(typeof(IDictionary<int, string>), new Dictionary<int, string>(), true);
+                yield return new TestCaseData(typeof(int[]), new int[0], true);
+                yield return new TestCaseData(typeof(AbstractCopyConstructor), null, true);
+                yield return new TestCaseData(typeof(StaticClass), null, true);
+                yield return new TestCaseData(typeof(TemplateStruct<>), null, true);
+                yield return new TestCaseData(typeof(TemplateCopyConstructor<>), null, true);
+                // ReSharper disable once PossibleMistakenCallToGetType.2
+                yield return new TestCaseData(typeof(CopyConstructorClass).GetType(), null, true);
+                yield return new TestCaseData(typeof(CopyConstructorThrows), new CopyConstructorThrows(), true);
+            }
+        }
+
+        public delegate bool TryCopyCtor(object other, out object instance, out Exception exception);
+
+        public static void TryCopy([NotNull] Type type, [CanBeNull] object other, bool expectFail, [NotNull, InstantHandle] TryCopyCtor tryCtor)
+        {
+            Assert.AreEqual(!expectFail, tryCtor(other, out object instance, out Exception ex));
+            if (expectFail)
+            {
+                Assert.IsNull(instance);
+                Assert.IsNotNull(ex);
+            }
+            else
+            {
+                Assert.IsNotNull(instance);
+                if (type.IsValueType)
+                    Assert.AreEqual(other, instance);
+                else
+                    Assert.AreEqual(Activator.CreateInstance(type, other), instance);
             }
         }
 
