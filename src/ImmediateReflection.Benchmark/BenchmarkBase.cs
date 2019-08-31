@@ -23,6 +23,18 @@ namespace ImmediateReflection.Benchmark
         [NotNull]
         protected static readonly Type BenchmarkObjectType4 = typeof(BenchmarkObject4);
 
+        [NotNull]
+        protected static readonly Type CopyableBenchmarkObjectType = typeof(CopyableBenchmarkObject);
+
+        [NotNull]
+        protected static readonly Type CopyableBenchmarkObjectType2 = typeof(CopyableBenchmarkObject2);
+
+        [NotNull]
+        protected static readonly Type CopyableBenchmarkObjectType3 = typeof(CopyableBenchmarkObject3);
+
+        [NotNull]
+        protected static readonly Type CopyableBenchmarkObjectType4 = typeof(CopyableBenchmarkObject4);
+
         #endregion
 
         #region Fields
@@ -126,6 +138,18 @@ namespace ImmediateReflection.Benchmark
 
         [NotNull]
         protected static readonly ImmediateType ImmediateType4 = new ImmediateType(BenchmarkObjectType4);
+
+        [NotNull]
+        protected static readonly ImmediateType ImmediateTypeCopyable = new ImmediateType(CopyableBenchmarkObjectType);
+
+        [NotNull]
+        protected static readonly ImmediateType ImmediateTypeCopyable2 = new ImmediateType(CopyableBenchmarkObjectType2);
+
+        [NotNull]
+        protected static readonly ImmediateType ImmediateTypeCopyable3 = new ImmediateType(CopyableBenchmarkObjectType3);
+
+        [NotNull]
+        protected static readonly ImmediateType ImmediateTypeCopyable4 = new ImmediateType(CopyableBenchmarkObjectType4);
 
 
         [NotNull]

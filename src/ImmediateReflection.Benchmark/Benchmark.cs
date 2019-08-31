@@ -18,8 +18,10 @@ namespace ImmediateReflection.Benchmark
 #endif
 
             // Constructor
-            BenchmarkRunner.Run<ConstructorBenchmark>(config);
-            BenchmarkRunner.Run<MultiConstructorBenchmark>(config);
+            BenchmarkRunner.Run<DefaultConstructorBenchmark>(config);
+            BenchmarkRunner.Run<MultiDefaultConstructorBenchmark>(config);
+            BenchmarkRunner.Run<CopyConstructorBenchmark>(config);
+            BenchmarkRunner.Run<MultiCopyConstructorBenchmark>(config);
 
             // Single get/set
             BenchmarkRunner.Run<FieldGetterBenchmark>(config);

@@ -12,10 +12,21 @@ namespace ImmediateReflection.Benchmark
     {
         [Pure]
         [NotNull]
-        public static Func<T> CreateConstructor<T>()
+        public static Func<T> CreateDefaultConstructor<T>()
         {
             Expression body = Expression.New(typeof(T));
             return (Func<T>)Expression.Lambda(body).Compile();
+        }
+
+        [Pure]
+        [NotNull]
+        public static Func<T, T> CreateCopyConstructor<T>()
+        {
+            ConstructorInfo constructor = typeof(T).GetConstructor(new[] { typeof(T) })
+                ?? throw new InvalidOperationException("Class must have a copy constructor.");
+            ParameterExpression other = Expression.Parameter(typeof(T), "other");
+            Expression body = Expression.New(constructor, other);
+            return (Func<T, T>)Expression.Lambda(body, other).Compile();
         }
 
         [Pure]

@@ -7,21 +7,21 @@ using JetBrains.Annotations;
 namespace ImmediateReflection.Benchmark
 {
     /// <summary>
-    /// Constructor benchmark class.
+    /// Default constructor benchmark class.
     /// </summary>
-    public class MultiConstructorBenchmark : BenchmarkBase
+    public class MultiDefaultConstructorBenchmark : BenchmarkBase
     {
         [NotNull]
-        private static readonly Func<BenchmarkObject> ExpressionConstructor = ExpressionHelpers.CreateConstructor<BenchmarkObject>();
+        private static readonly Func<BenchmarkObject> ExpressionConstructor = ExpressionHelpers.CreateDefaultConstructor<BenchmarkObject>();
 
         [NotNull]
-        private static readonly Func<BenchmarkObject2> ExpressionConstructor2 = ExpressionHelpers.CreateConstructor<BenchmarkObject2>();
+        private static readonly Func<BenchmarkObject2> ExpressionConstructor2 = ExpressionHelpers.CreateDefaultConstructor<BenchmarkObject2>();
 
         [NotNull]
-        private static readonly Func<BenchmarkObject3> ExpressionConstructor3 = ExpressionHelpers.CreateConstructor<BenchmarkObject3>();
+        private static readonly Func<BenchmarkObject3> ExpressionConstructor3 = ExpressionHelpers.CreateDefaultConstructor<BenchmarkObject3>();
 
         [NotNull]
-        private static readonly Func<BenchmarkObject4> ExpressionConstructor4 = ExpressionHelpers.CreateConstructor<BenchmarkObject4>();
+        private static readonly Func<BenchmarkObject4> ExpressionConstructor4 = ExpressionHelpers.CreateDefaultConstructor<BenchmarkObject4>();
 
         // Benchmark methods
         [Benchmark(Baseline = true)]

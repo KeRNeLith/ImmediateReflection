@@ -5,12 +5,12 @@ using JetBrains.Annotations;
 namespace ImmediateReflection.Benchmark
 {
     /// <summary>
-    /// Constructor benchmark class.
+    /// Default constructor benchmark class.
     /// </summary>
-    public class ConstructorBenchmark : BenchmarkBase
+    public class DefaultConstructorBenchmark : BenchmarkBase
     {
         [NotNull]
-        private static readonly Func<BenchmarkObject> ExpressionConstructor = ExpressionHelpers.CreateConstructor<BenchmarkObject>();
+        private static readonly Func<BenchmarkObject> ExpressionConstructor = ExpressionHelpers.CreateDefaultConstructor<BenchmarkObject>();
 
         // Benchmark methods
         [Benchmark(Baseline = true)]
