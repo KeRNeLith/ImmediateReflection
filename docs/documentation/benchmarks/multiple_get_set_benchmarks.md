@@ -22,23 +22,23 @@ The Field or Property cache implementations consider as a cache the fact of havi
 
 ### Get a field value
 
-|                  Method |       Mean |    Error |    StdDev | Ratio | RatioSD |
-|------------------------ |-----------:|---------:|----------:|------:|--------:|
-|         GetDirect_Field |   558.4 ns | 11.13 ns | 21.718 ns |  1.00 |    0.00 |
-|      GetFieldInfo_Field | 1,003.5 ns | 20.03 ns | 31.765 ns |  1.81 |    0.08 |
-| GetFieldInfoCache_Field |   803.4 ns | 19.99 ns | 25.283 ns |  1.46 |    0.09 |
-|     GetFastMember_Field |   771.2 ns | 15.03 ns | 23.834 ns |  1.39 |    0.07 |
-| **GetImmediateField_Field** |   **559.7 ns** | **10.49 ns** |  **8.764 ns** |  **1.02** |    **0.04** |
+|                  Method |     Mean |     Error |    StdDev | Ratio | RatioSD |
+|------------------------ |---------:|----------:|----------:|------:|--------:|
+|         GetDirect_Field | 530.0 ns | 11.161 ns | 24.499 ns |  1.00 |    0.00 |
+|      GetFieldInfo_Field | 966.9 ns | 11.199 ns | 10.475 ns |  1.74 |    0.08 |
+| GetFieldInfoCache_Field | 788.5 ns |  6.924 ns |  5.782 ns |  1.40 |    0.05 |
+|     GetFastMember_Field | 691.2 ns |  6.194 ns |  5.794 ns |  1.24 |    0.05 |
+| **GetImmediateField_Field** | **538.6 ns** | **14.479 ns** | **12.835 ns** |  **0.96** |    **0.05** |
 
 ### Set a field value
 
 |                  Method |       Mean |     Error |    StdDev |  Ratio | RatioSD |
 |------------------------ |-----------:|----------:|----------:|-------:|--------:|
-|         SetDirect_Field |   1.326 ns | 0.0057 ns | 0.0053 ns |   1.00 |    0.00 |
-|      SetFieldInfo_Field | 489.305 ns | 2.9321 ns | 2.7427 ns | 369.13 |    2.34 |
-| SetFieldInfoCache_Field | 322.758 ns | 0.9229 ns | 0.8633 ns | 243.49 |    1.18 |
-|     SetFastMember_Field | 154.080 ns | 0.4601 ns | 0.3842 ns | 116.32 |    0.41 |
-| **SetImmediateField_Field** |  **20.319 ns** | **0.1331 ns** | **0.1180 ns** |  **15.33** |    **0.10** |
+|         SetDirect_Field |   1.343 ns | 0.0212 ns | 0.0188 ns |   1.00 |    0.00 |
+|      SetFieldInfo_Field | 508.308 ns | 4.1885 ns | 3.9179 ns | 378.54 |    7.06 |
+| SetFieldInfoCache_Field | 334.152 ns | 3.7199 ns | 3.4796 ns | 248.86 |    4.38 |
+|     SetFastMember_Field | 153.589 ns | 1.2526 ns | 1.0459 ns | 114.37 |    1.59 |
+| **SetImmediateField_Field** |  **23.006 ns** | **1.0165 ns** | **1.2101 ns** |  **17.31** |    **1.12** |
 
 ---
 
@@ -46,15 +46,15 @@ The Field or Property cache implementations consider as a cache the fact of havi
 
 |                        Method |       Mean |     Error |    StdDev | Ratio | RatioSD |
 |------------------------------ |-----------:|----------:|----------:|------:|--------:|
-|            GetDirect_Property |   749.4 ns | 15.550 ns | 13.785 ns |  1.00 |    0.00 |
-|          GetDelegate_Property |   752.2 ns |  7.655 ns |  6.786 ns |  1.00 |    0.02 |
-|   GetDynamicDelegate_Property | 3,356.4 ns | 11.508 ns | 10.201 ns |  4.48 |    0.08 |
-|      GetPropertyInfo_Property | 1,471.6 ns | 13.947 ns | 13.046 ns |  1.96 |    0.04 |
-| GetPropertyInfoCache_Property | 1,238.6 ns |  2.543 ns |  2.123 ns |  1.65 |    0.03 |
-|         GetSigilEmit_Property |   757.3 ns |  6.912 ns |  6.466 ns |  1.01 |    0.02 |
-|        GetExpression_Property |   786.1 ns |  5.315 ns |  4.972 ns |  1.05 |    0.02 |
-|        GetFastMember_Property |   959.8 ns |  9.776 ns |  8.667 ns |  1.28 |    0.03 |
-| **GetImmediateProperty_Property** |   **764.3 ns** |  **1.906 ns** |  **1.690 ns** |  **1.02** |    **0.02** |
+|            GetDirect_Property |   700.8 ns |  2.185 ns |  1.824 ns |  1.00 |    0.00 |
+|          GetDelegate_Property |   723.6 ns |  3.828 ns |  3.394 ns |  1.03 |    0.01 |
+|   GetDynamicDelegate_Property | 3,323.6 ns | 17.185 ns | 15.234 ns |  4.74 |    0.03 |
+|      GetPropertyInfo_Property | 1,482.8 ns | 32.301 ns | 34.561 ns |  2.12 |    0.05 |
+| GetPropertyInfoCache_Property | 1,210.4 ns |  9.714 ns |  9.087 ns |  1.73 |    0.01 |
+|         GetSigilEmit_Property |   728.7 ns |  7.606 ns |  6.742 ns |  1.04 |    0.01 |
+|        GetExpression_Property |   748.6 ns |  2.830 ns |  2.509 ns |  1.07 |    0.01 |
+|        GetFastMember_Property |   936.6 ns | 18.140 ns | 20.163 ns |  1.34 |    0.03 |
+| **GetImmediateProperty_Property** |   **727.7 ns** |  **9.243 ns** |  **7.719 ns** |  **1.04** |    **0.01** |
 
 Note that **ImmediateReflection** performs really well if we take into account that the only better benchmark concern implementation using strong types considered as known which is in fact not the case in the mindset of **ImmediateReflection**.
 Indeed **ImmediateReflection** must work with `object` in a first approach and not the real property type (see `PropertyInfo.GetValue` as reference).
@@ -63,15 +63,15 @@ Indeed **ImmediateReflection** must work with `object` in a first approach and n
 
 |                        Method |         Mean |      Error |     StdDev |    Ratio | RatioSD |
 |------------------------------ |-------------:|-----------:|-----------:|---------:|--------:|
-|            SetDirect_Property |     1.403 ns |  0.0147 ns |  0.0138 ns |     1.00 |    0.00 |
-|          SetDelegate_Property |    10.580 ns |  0.2104 ns |  0.2808 ns |     7.56 |    0.23 |
-|   SetDynamicDelegate_Property | 2,512.460 ns | 21.4628 ns | 19.0262 ns | 1,789.19 |   17.07 |
-|      SetPropertyInfo_Property |   844.363 ns |  2.8357 ns |  2.5138 ns |   601.30 |    5.41 |
-| SetPropertyInfoCache_Property |   631.593 ns |  6.9640 ns |  6.5141 ns |   450.08 |    5.53 |
-|         SetSigilEmit_Property |    10.470 ns |  0.2040 ns |  0.2505 ns |     7.46 |    0.17 |
-|        SetExpression_Property |    32.912 ns |  0.1921 ns |  0.1604 ns |    23.45 |    0.22 |
-|        SetFastMember_Property |   162.898 ns |  0.6902 ns |  0.6119 ns |   116.01 |    1.26 |
-| **SetImmediateProperty_Property** |    **22.358 ns** |  **0.4367 ns** |  **0.3871 ns** |    **15.92** |    **0.31** |
+|            SetDirect_Property |     1.402 ns |  0.0287 ns |  0.0254 ns |     1.00 |    0.00 |
+|          SetDelegate_Property |    10.876 ns |  0.2157 ns |  0.4051 ns |     7.73 |    0.36 |
+|   SetDynamicDelegate_Property | 2,536.329 ns | 37.2463 ns | 34.8403 ns | 1,809.40 |   45.17 |
+|      SetPropertyInfo_Property |   858.440 ns | 13.0924 ns | 12.2467 ns |   613.07 |   13.73 |
+| SetPropertyInfoCache_Property |   638.475 ns |  7.7110 ns |  6.8356 ns |   455.62 |    8.86 |
+|         SetSigilEmit_Property |    10.987 ns |  0.2192 ns |  0.5926 ns |     7.65 |    0.31 |
+|        SetExpression_Property |    32.915 ns |  0.1765 ns |  0.1564 ns |    23.49 |    0.45 |
+|        SetFastMember_Property |   164.237 ns |  1.0621 ns |  0.9416 ns |   117.20 |    1.72 |
+| **SetImmediateProperty_Property** |    **22.787 ns** |  **0.5222 ns** |  **0.8282 ns** |    **16.70** |    **0.70** |
 
 Note that **ImmediateReflection** performs really well if we take into account that the only better benchmark concern implementation using strong types considered as known which is in fact not the case in the mindset of **ImmediateReflection**.
 Indeed **ImmediateReflection** must work with `object` in a first approach and not the real property type (see `PropertyInfo.SetValue` as reference).

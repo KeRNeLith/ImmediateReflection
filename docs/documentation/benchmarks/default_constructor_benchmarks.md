@@ -18,21 +18,21 @@ Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 ph
 
 |                    Method |      Mean |     Error |    StdDev | Ratio | RatioSD |
 |-------------------------- |----------:|----------:|----------:|------:|--------:|
-|        Direct_Constructor |  3.565 ns | 0.0482 ns | 0.0376 ns |  1.00 |    0.00 |
-|     Activator_Constructor | 38.077 ns | 0.4029 ns | 0.3571 ns | 10.69 |    0.14 |
-|    Expression_Constructor |  9.140 ns | 0.1282 ns | 0.1199 ns |  2.57 |    0.05 |
-|    FastMember_Constructor |  5.499 ns | 0.0723 ns | 0.0676 ns |  1.55 |    0.02 |
-| **ImmediateType_Constructor** |  **6.132 ns** | **0.0729 ns** | **0.0647 ns** |  **1.72** |    **0.02** |
+|        Direct_Constructor |  3.775 ns | 0.1453 ns | 0.1784 ns |  1.00 |    0.00 |
+|     Activator_Constructor | 40.120 ns | 0.9452 ns | 1.9308 ns | 10.83 |    0.73 |
+|    Expression_Constructor |  9.413 ns | 0.1010 ns | 0.0843 ns |  2.50 |    0.12 |
+|    FastMember_Constructor |  5.523 ns | 0.1383 ns | 0.1294 ns |  1.47 |    0.07 |
+| **ImmediateType_Constructor** |  **6.081 ns** | **0.1902 ns** |  **5.938 ns** |  **1.62** |    **0.12** |
 
 ### Multiple constructor calls
 
 |                    Method |      Mean |     Error |    StdDev | Ratio | RatioSD |
 |-------------------------- |----------:|----------:|----------:|------:|--------:|
-|        Direct_Constructor |  11.59 ns | 0.1348 ns | 0.1126 ns |  1.00 |    0.00 |
-|     Activator_Constructor | 183.74 ns | 1.5670 ns | 1.3085 ns | 15.85 |    0.21 |
-|    Expression_Constructor |  37.32 ns | 0.3168 ns | 0.2809 ns |  3.22 |    0.03 |
-|    FastMember_Constructor |  22.72 ns | 0.3246 ns | 0.3036 ns |  1.96 |    0.03 |
-| **ImmediateType_Constructor** |  **24.63 ns** | **0.4941 ns** | **0.6068 ns** |  **2.11** |    **0.06** |
+|        Direct_Constructor |  10.06 ns | 0.0308 ns | 0.0273 ns |  1.00 |    0.00 |
+|     Activator_Constructor | 188.84 ns | 1.7316 ns | 1.5350 ns | 18.77 |    0.15 |
+|    Expression_Constructor |  35.45 ns | 0.4622 ns | 0.4098 ns |  3.52 |    0.04 |
+|    FastMember_Constructor |  23.54 ns | 0.4225 ns | 0.3746 ns |  2.34 |    0.04 |
+| ImmediateType_Constructor |  **23.35 ns** | **0.3559 ns** | **0.2778 ns** |  2.32** |    **0.03** |
 
 ---
 

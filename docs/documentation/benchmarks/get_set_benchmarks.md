@@ -20,13 +20,13 @@ The Field or Property cache implementations consider as a cache the fact of havi
 
 ### Get a field value
 
-|                  Method |        Mean |     Error |    StdDev |      Median | Ratio | RatioSD |
-|------------------------ |------------:|----------:|----------:|------------:|------:|--------:|
-|         GetDirect_Field |   0.0073 ns | 0.0091 ns | 0.0081 ns |   0.0052 ns |     ? |       ? |
-|      GetFieldInfo_Field | 103.2361 ns | 0.8377 ns | 0.7426 ns | 103.0017 ns |     ? |       ? |
-| GetFieldInfoCache_Field |  62.3059 ns | 0.6476 ns | 0.6058 ns |  62.2037 ns |     ? |       ? |
-|     GetFastMember_Field |  29.9017 ns | 0.1978 ns | 0.1544 ns |  29.9552 ns |     ? |       ? |
-| **GetImmediateField_Field** |   **4.8914 ns** | **0.0653 ns** | **0.0579 ns** |   **4.8962 ns** |     **?** |       **?** |
+|                  Method |        Mean |     Error |    StdDev | Ratio | RatioSD |
+|------------------------ |------------:|----------:|----------:|------:|--------:|
+|         GetDirect_Field |   0.0000 ns | 0.0000 ns | 0.0000 ns |     ? |       ? |
+|      GetFieldInfo_Field | 100.6782 ns | 0.1422 ns | 0.1261 ns |     ? |       ? |
+| GetFieldInfoCache_Field |  60.4257 ns | 0.7904 ns | 0.7393 ns |     ? |       ? |
+|     GetFastMember_Field |  29.9598 ns | 0.4392 ns | 0.3894 ns |     ? |       ? |
+| **GetImmediateField_Field** |   **5.2535 ns** | **0.1314 ns** | **0.3018 ns** |     **?** |       **?** |
 
 **GetDirect_Field** is a too quick action to be benchmark, considering it as immediate!
 
@@ -34,11 +34,11 @@ The Field or Property cache implementations consider as a cache the fact of havi
 
 |                  Method |        Mean |     Error |    StdDev | Ratio | RatioSD |
 |------------------------ |------------:|----------:|----------:|------:|--------:|
-|         SetDirect_Field |   0.0000 ns | 0.0000 ns | 0.0000 ns |     ? |       ? |
-|      SetFieldInfo_Field | 127.6475 ns | 0.9885 ns | 0.9246 ns |     ? |       ? |
-| SetFieldInfoCache_Field |  77.3834 ns | 0.6383 ns | 0.5971 ns |     ? |       ? |
-|     SetFastMember_Field |  29.3380 ns | 0.3022 ns | 0.2827 ns |     ? |       ? |
-| **SetImmediateField_Field** |   **5.1049 ns** | **0.0754 ns** | **0.0705 ns** |     **?** |       **?** |
+|         SetDirect_Field |   0.0051 ns | 0.0085 ns | 0.0075 ns |     ? |       ? |
+|      SetFieldInfo_Field | 129.9163 ns | 0.3037 ns | 0.2371 ns |     ? |       ? |
+| SetFieldInfoCache_Field |  81.8266 ns | 0.2578 ns | 0.2153 ns |     ? |       ? |
+|     SetFastMember_Field |  28.8047 ns | 0.0672 ns | 0.0524 ns |     ? |       ? |
+| **SetImmediateField_Field** |   **5.2266 ns** | **0.1288 ns** | **0.1205 ns** |     **?** |       **?** |
 
 ---
 
@@ -46,15 +46,15 @@ The Field or Property cache implementations consider as a cache the fact of havi
 
 |                        Method |        Mean |     Error |    StdDev |    Ratio | RatioSD |
 |------------------------------ |------------:|----------:|----------:|---------:|--------:|
-|            GetDirect_Property |   0.2308 ns | 0.0263 ns | 0.0233 ns |     1.00 |    0.00 |
-|          GetDelegate_Property |   5.1924 ns | 0.1013 ns | 0.1748 ns |    22.74 |    2.24 |
-|   GetDynamicDelegate_Property | 544.1249 ns | 5.3205 ns | 4.9768 ns | 2,378.40 |  234.63 |
-|      GetPropertyInfo_Property | 143.0557 ns | 1.2193 ns | 1.1405 ns |   624.91 |   62.66 |
-| GetPropertyInfoCache_Property |  88.0197 ns | 1.0542 ns | 0.9345 ns |   384.82 |   37.64 |
-|         GetSigilEmit_Property |   6.3718 ns | 0.1253 ns | 0.2162 ns |    27.98 |    2.87 |
-|        GetExpression_Property |   9.7486 ns | 0.0679 ns | 0.0602 ns |    42.62 |    4.21 |
-|        GetFastMember_Property |  28.8541 ns | 0.1960 ns | 0.1834 ns |   126.08 |   12.11 |
-| **GetImmediateProperty_Property** |   **5.1149 ns** | **0.1653 ns** | **0.2573 ns** |    **22.51** |    **3.27** |
+|            GetDirect_Property |   0.3030 ns | 0.0389 ns | 0.0363 ns |     1.00 |    0.00 |
+|          GetDelegate_Property |   4.9874 ns | 0.0986 ns | 0.1247 ns |    16.76 |    1.97 |
+|   GetDynamicDelegate_Property | 537.3377 ns | 8.8565 ns | 8.2843 ns | 1,796.26 |  207.81 |
+|      GetPropertyInfo_Property | 142.9487 ns | 0.7985 ns | 0.7469 ns |   477.96 |   55.61 |
+| GetPropertyInfoCache_Property |  87.2921 ns | 0.9230 ns | 0.8182 ns |   288.61 |   32.69 |
+|         GetSigilEmit_Property |   5.9783 ns | 0.1159 ns | 0.1190 ns |    19.97 |    2.35 |
+|        GetExpression_Property |   9.7760 ns | 0.1546 ns | 0.1446 ns |    32.71 |    4.03 |
+|        GetFastMember_Property |  29.1414 ns | 0.3692 ns | 0.3453 ns |    97.45 |   11.57 |
+| **GetImmediateProperty_Property** |   **5.1417 ns** | **0.1690 ns** | **0.4271 ns** |    **17.20** |    **2.52** |
 
 **GetDirect_Property** is a too quick action to be benchmark, considering it as immediate!
 
@@ -62,15 +62,15 @@ The Field or Property cache implementations consider as a cache the fact of havi
 
 |                        Method |       Mean |     Error |    StdDev |  Ratio | RatioSD |
 |------------------------------ |-----------:|----------:|----------:|-------:|--------:|
-|            SetDirect_Property |   1.388 ns | 0.0173 ns | 0.0162 ns |   1.00 |    0.00 |
-|          SetDelegate_Property |   4.889 ns | 0.0952 ns | 0.1454 ns |   3.51 |    0.12 |
-|   SetDynamicDelegate_Property | 589.718 ns | 5.4911 ns | 5.1364 ns | 424.98 |    7.58 |
-|      SetPropertyInfo_Property | 200.290 ns | 0.7330 ns | 0.6121 ns | 144.04 |    1.76 |
-| SetPropertyInfoCache_Property | 142.318 ns | 1.1069 ns | 1.0354 ns | 102.56 |    1.67 |
-|         SetSigilEmit_Property |   4.862 ns | 0.0949 ns | 0.1734 ns |   3.48 |    0.11 |
-|        SetExpression_Property |   8.060 ns | 0.0414 ns | 0.0388 ns |   5.81 |    0.08 |
-|        SetFastMember_Property |  30.527 ns | 0.3143 ns | 0.2940 ns |  22.00 |    0.33 |
-| **SetImmediateProperty_Property** |   **5.007 ns** | **0.1219 ns** | **0.1197 ns** |   **3.60** |    **0.12** |
+|            SetDirect_Property |   1.165 ns | 0.0101 ns | 0.0094 ns |   1.00 |    0.00 |
+|          SetDelegate_Property |   4.596 ns | 0.0915 ns | 0.1785 ns |   3.92 |    0.13 |
+|   SetDynamicDelegate_Property | 571.378 ns | 6.8747 ns | 6.4306 ns | 490.65 |    6.76 |
+|      SetPropertyInfo_Property | 198.768 ns | 1.2488 ns | 1.1681 ns | 170.69 |    2.07 |
+| SetPropertyInfoCache_Property | 141.481 ns | 0.8785 ns | 0.7788 ns | 121.51 |    1.46 |
+|         SetSigilEmit_Property |   4.644 ns | 0.0911 ns | 0.1152 ns |   4.00 |    0.11 |
+|        SetExpression_Property |   7.622 ns | 0.0195 ns | 0.0183 ns |   6.55 |    0.06 |
+|        SetFastMember_Property |  31.451 ns | 0.1225 ns | 0.1086 ns |  27.01 |    0.22 |
+| **SetImmediateProperty_Property** |   **4.526 ns** | **0.0966 ns** | **0.0857 ns** |   **3.89** |    **0.08** |
 
 ---
 

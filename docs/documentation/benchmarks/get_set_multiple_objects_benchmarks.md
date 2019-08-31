@@ -26,38 +26,38 @@ In the case of the set of mixed objects, it's an array of objects containing 2 t
 
 |                                                Method |         Mean |       Error |      StdDev | Ratio | RatioSD |
 |------------------------------------------------------ |-------------:|------------:|------------:|------:|--------:|
-|                Reflection_PropertyGet_BenchmarkObject |    153.24 us |   0.6956 us |   0.6167 us |  1.00 |    0.00 |
-|           ReflectionCache_PropertyGet_BenchmarkObject |     86.55 us |   0.2897 us |   0.2710 us |  0.57 |    0.00 |
-|           HyperDescriptor_PropertyGet_BenchmarkObject |    824.08 us |   4.8925 us |   4.3370 us |  5.38 |    0.04 |
-|                FastMember_PropertyGet_BenchmarkObject |     89.39 us |   0.7090 us |   0.6632 us |  0.58 |    0.01 |
-|           FlashReflection_PropertyGet_BenchmarkObject |    441.63 us |   2.9188 us |   2.5875 us |  2.88 |    0.02 |
-|       **ImmediateReflection_PropertyGet_BenchmarkObject** |     **74.21 us** |   **0.4152 us** |   **0.3681 us** |  **0.48** |    **0.00** |
-|           WithFasterflect_PropertyGet_BenchmarkObject |     85.62 us |   0.8516 us |   0.7111 us |  0.56 |    0.00 |
-|          Reflection_PropertyGet_Mixed_BenchmarkObject |     99.78 us |   0.2330 us |   0.1945 us |  0.65 |    0.00 |
-|     ReflectionCache_PropertyGet_Mixed_BenchmarkObject |     44.08 us |   0.2692 us |   0.2518 us |  0.29 |    0.00 |
-|     HyperDescriptor_PropertyGet_Mixed_BenchmarkObject |    760.92 us |  11.8462 us |  10.5013 us |  4.97 |    0.07 |
-|          FastMember_PropertyGet_Mixed_BenchmarkObject |     75.34 us |   1.2642 us |   1.1207 us |  0.49 |    0.01 |
-|     FlashReflection_PropertyGet_Mixed_BenchmarkObject |    452.75 us |   2.9525 us |   2.6174 us |  2.95 |    0.02 |
-| **ImmediateReflection_PropertyGet_Mixed_BenchmarkObject** |     **69.06 us** |   **0.9011 us** |   **0.7988 us** |  **0.45** |    **0.01** |
-|         Fasterflect_PropertyGet_Mixed_BenchmarkObject | 14,456.22 us | 218.8338 us | 193.9904 us | 94.34 |    1.42 |
+|                Reflection_PropertyGet_BenchmarkObject |    161.82 us |   2.8856 us |   2.6992 us |  1.00 |    0.00 |
+|           ReflectionCache_PropertyGet_BenchmarkObject |     87.94 us |   0.9080 us |   0.8494 us |  0.54 |    0.01 |
+|           HyperDescriptor_PropertyGet_BenchmarkObject |    827.82 us |   2.9013 us |   2.7138 us |  5.12 |    0.09 |
+|                FastMember_PropertyGet_BenchmarkObject |     87.99 us |   1.2164 us |   1.0783 us |  0.54 |    0.01 |
+|           FlashReflection_PropertyGet_BenchmarkObject |    437.09 us |   4.3506 us |   4.0696 us |  2.70 |    0.05 |
+|       **ImmediateReflection_PropertyGet_BenchmarkObject** |     **74.13 us** |   **1.1393 us** |   **0.8895 us** |  **0.46** |    **0.01** |
+|           WithFasterflect_PropertyGet_BenchmarkObject |     85.21 us |   0.5650 us |   0.5008 us |  0.53 |    0.01 |
+|          Reflection_PropertyGet_Mixed_BenchmarkObject |    101.79 us |   1.4084 us |   1.2485 us |  0.63 |    0.01 |
+|     ReflectionCache_PropertyGet_Mixed_BenchmarkObject |     44.76 us |   0.1915 us |   0.1698 us |  0.28 |    0.00 |
+|     HyperDescriptor_PropertyGet_Mixed_BenchmarkObject |    766.16 us |  10.4081 us |   8.6912 us |  4.73 |    0.09 |
+|          FastMember_PropertyGet_Mixed_BenchmarkObject |     76.63 us |   0.3050 us |   0.2704 us |  0.47 |    0.01 |
+|     FlashReflection_PropertyGet_Mixed_BenchmarkObject |    463.26 us |   6.3032 us |   5.8961 us |  2.86 |    0.06 |
+| **ImmediateReflection_PropertyGet_Mixed_BenchmarkObject** |     **67.88 us** |   **0.6324 us** |   **0.5606 us** |  **0.42** |    **0.01** |
+|         Fasterflect_PropertyGet_Mixed_BenchmarkObject | 14,693.05 us | 330.8783 us | 570.7487 us | 90.35 |    4.35 |
 
 ### Set property value
 
-|                                                Method |         Mean |       Error |      StdDev | Ratio | RatioSD |
-|------------------------------------------------------ |-------------:|------------:|------------:|------:|--------:|
-|                Reflection_PropertySet_BenchmarkObject |    236.29 us |   1.3175 us |   1.1679 us |  1.00 |    0.00 |
-|           ReflectionCache_PropertySet_BenchmarkObject |    165.01 us |   0.5586 us |   0.5225 us |  0.70 |    0.00 |
-|           HyperDescriptor_PropertySet_BenchmarkObject |  1,060.21 us |  21.1042 us |  18.7083 us |  4.49 |    0.07 |
-|                FastMember_PropertySet_BenchmarkObject |     95.04 us |   1.3488 us |   1.1957 us |  0.40 |    0.01 |
-|           FlashReflection_PropertySet_BenchmarkObject |    454.48 us |   6.8928 us |   5.7558 us |  1.92 |    0.03 |
-|       **ImmediateReflection_PropertySet_BenchmarkObject** |     **76.30 us** |   **0.6909 us** |   **0.6124 us** |  **0.32** |    **0.00** |
-|           WithFasterflect_PropertySet_BenchmarkObject |     89.78 us |   0.8892 us |   0.8318 us |  0.38 |    0.00 |
-|          Reflection_PropertySet_Mixed_BenchmarkObject |    141.18 us |   0.3571 us |   0.2982 us |  0.60 |    0.00 |
-|     ReflectionCache_PropertySet_Mixed_BenchmarkObject |     83.09 us |   0.2719 us |   0.2410 us |  0.35 |    0.00 |
-|     HyperDescriptor_PropertySet_Mixed_BenchmarkObject |    945.40 us |  17.6039 us |  15.6054 us |  4.00 |    0.06 |
-|          FastMember_PropertySet_Mixed_BenchmarkObject |     78.91 us |   0.5266 us |   0.4668 us |  0.33 |    0.00 |
-|     FlashReflection_PropertySet_Mixed_BenchmarkObject |    448.82 us |   1.1675 us |   1.0349 us |  1.90 |    0.01 |
-| **ImmediateReflection_PropertySet_Mixed_BenchmarkObject** |     **69.95 us** |   **0.4296 us** |   **0.3809 us** |  **0.30** |    **0.00** |
-|         Fasterflect_PropertySet_Mixed_BenchmarkObject | 14,236.33 us | 185.1234 us | 154.5864 us | 60.26 |    0.66 |
+|                                                Method |         Mean |      Error |     StdDev | Ratio | RatioSD |
+|------------------------------------------------------ |-------------:|-----------:|-----------:|------:|--------:|
+|                Reflection_PropertySet_BenchmarkObject |    235.83 us |  2.4116 us |  2.0138 us |  1.00 |    0.00 |
+|           ReflectionCache_PropertySet_BenchmarkObject |    167.53 us |  1.7663 us |  1.5657 us |  0.71 |    0.01 |
+|           HyperDescriptor_PropertySet_BenchmarkObject |  1,054.13 us | 11.7559 us | 10.4213 us |  4.47 |    0.04 |
+|                FastMember_PropertySet_BenchmarkObject |     93.97 us |  0.8061 us |  0.6293 us |  0.40 |    0.00 |
+|           FlashReflection_PropertySet_BenchmarkObject |    447.69 us |  7.8387 us |  7.3324 us |  1.90 |    0.03 |
+|       **ImmediateReflection_PropertySet_BenchmarkObject** |     **78.97 us** |  **0.8561 us** |  **0.7149 us** |  **0.33** |    **0.00** |
+|           WithFasterflect_PropertySet_BenchmarkObject |     92.46 us |  1.8772 us |  2.3740 us |  0.40 |    0.01 |
+|          Reflection_PropertySet_Mixed_BenchmarkObject |    144.99 us |  2.3385 us |  2.0730 us |  0.61 |    0.01 |
+|     ReflectionCache_PropertySet_Mixed_BenchmarkObject |     83.63 us |  0.4110 us |  0.3643 us |  0.35 |    0.00 |
+|     HyperDescriptor_PropertySet_Mixed_BenchmarkObject |    953.34 us |  9.3168 us |  8.2591 us |  4.05 |    0.04 |
+|          FastMember_PropertySet_Mixed_BenchmarkObject |     79.13 us |  0.7507 us |  0.7022 us |  0.34 |    0.00 |
+|     FlashReflection_PropertySet_Mixed_BenchmarkObject |    464.35 us |  9.2689 us | 10.3024 us |  1.98 |    0.06 |
+| **ImmediateReflection_PropertySet_Mixed_BenchmarkObject** |     **71.93 us** |  **0.8027 us** |  **0.7115 us** |  **0.30** |    **0.00** |
+|         Fasterflect_PropertySet_Mixed_BenchmarkObject | 14,004.96 us | 69.2554 us | 57.8314 us | 59.39 |    0.66 |
 
 ---

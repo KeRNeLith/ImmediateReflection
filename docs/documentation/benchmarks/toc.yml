@@ -4,7 +4,9 @@
   href: multiple_get_set_benchmarks.md
 - name: Get/Set multiple objects
   href: get_set_multiple_objects_benchmarks.md
-- name: Constructor
-  href: constructor_benchmarks.md
+- name: Default Constructor
+  href: default_constructor_benchmarks.md
+- name: Copy Constructor
+  href: copy_constructor_benchmarks.md
 - name: Get Attributes
   href: attributes_benchmarks.md
