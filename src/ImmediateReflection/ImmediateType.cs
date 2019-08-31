@@ -28,6 +28,22 @@ namespace ImmediateReflection
         public Type Type { get; }
 
         /// <summary>
+        /// Gets the base <see cref="System.Type"/> of this <see cref="Type"/>.
+        /// If this is an interface or has no base class null is returned.
+        /// <see cref="object"/> is the only <see cref="System.Type"/> that does not have a base class.
+        /// </summary>
+        [PublicAPI]
+        [CanBeNull]
+        public Type BaseType { get; }
+
+        /// <summary>
+        /// Gets the <see cref="System.Type"/> owning this <see cref="System.Type"/> (declaring it).
+        /// </summary>
+        [PublicAPI]
+        [CanBeNull]
+        public Type DeclaringType { get; }
+
+        /// <summary>
         /// Gets the fully qualified name of the <see cref="System.Type"/>, including its namespace but not its assembly.
         /// </summary>
         /// <remarks>Fallback on the type name if full name is null.</remarks>
@@ -86,6 +102,8 @@ namespace ImmediateReflection
             : base(type)
         {
             Type = type;
+            BaseType = type.BaseType;
+            DeclaringType = type.DeclaringType;
             FullName = type.FullName ?? Name;
 
             // Default constructor

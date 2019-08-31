@@ -19,6 +19,13 @@ namespace ImmediateReflection
         public FieldInfo FieldInfo { get; }
 
         /// <summary>
+        /// Gets the <see cref="Type"/> owning this field (declaring it).
+        /// </summary>
+        [PublicAPI]
+        [NotNull]
+        public Type DeclaringType { get; }
+
+        /// <summary>
         /// Gets the <see cref="Type"/> of this field.
         /// </summary>
         [PublicAPI]
@@ -55,6 +62,9 @@ namespace ImmediateReflection
 #if SUPPORTS_LAZY
             _fieldImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(FieldType));
 #endif
+            // ReSharper disable once AssignNullToNotNullAttribute, Justification: A field is always declared inside a type.
+            DeclaringType = field.DeclaringType;
+
             // Getter / Setter
             _getter = ConfigureGetter();
             _setter = ConfigureSetter();
@@ -103,6 +113,7 @@ namespace ImmediateReflection
 #if SUPPORTS_LAZY
             _fieldImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(FieldType));
 #endif
+            DeclaringType = enumType;
 
             // Getter / No setter
             object enumValue = field.GetValue(null);

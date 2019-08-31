@@ -37,8 +37,9 @@ namespace ImmediateReflection.Tests
         public void ImmediatePropertyInfo()
         {
             var immediateProperty1 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
-            Assert.AreEqual(PublicValueTypePublicGetSetPropertyPropertyInfo.Name, immediateProperty1.Name);
-            Assert.AreEqual(PublicValueTypePublicGetSetPropertyPropertyInfo.PropertyType, immediateProperty1.PropertyType);
+            Assert.AreEqual(nameof(PublicValueTypeTestClass.PublicPropertyGetSet), immediateProperty1.Name);
+            Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateProperty1.DeclaringType);
+            Assert.AreEqual(typeof(int), immediateProperty1.PropertyType);
             Assert.AreEqual(PublicValueTypePublicGetSetPropertyPropertyInfo, immediateProperty1.PropertyInfo);
 
             var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
@@ -46,18 +47,18 @@ namespace ImmediateReflection.Tests
         }
 
 #if SUPPORTS_IMMEDIATE_MEMBER_TYPE
-        #region PropertyType
+        #region PropertyImmediateType
 
         [Test]
         public void PropertyImmediateType()
         {
-            CheckFieldImmediateType(new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo));
-            CheckFieldImmediateType(new ImmediateProperty(PublicReferenceTypePublicGetSetPropertyPropertyInfo));
-            CheckFieldImmediateType(new ImmediateProperty(PublicObjectTypePublicGetSetPropertyPropertyInfo));
+            CheckPropertyImmediateType(new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo));
+            CheckPropertyImmediateType(new ImmediateProperty(PublicReferenceTypePublicGetSetPropertyPropertyInfo));
+            CheckPropertyImmediateType(new ImmediateProperty(PublicObjectTypePublicGetSetPropertyPropertyInfo));
 
             #region Local function
 
-            void CheckFieldImmediateType(ImmediateProperty property)
+            void CheckPropertyImmediateType(ImmediateProperty property)
             {
                 ImmediateType immediateType = property.PropertyImmediateType;
                 Assert.IsNotNull(immediateType);

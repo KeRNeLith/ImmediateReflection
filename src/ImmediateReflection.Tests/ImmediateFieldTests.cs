@@ -38,12 +38,19 @@ namespace ImmediateReflection.Tests
         public void ImmediateFieldInfo()
         {
             var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
-            Assert.AreEqual(PublicValueTypePublicFieldFieldsInfo.Name, immediateField1.Name);
-            Assert.AreEqual(PublicValueTypePublicFieldFieldsInfo.FieldType, immediateField1.FieldType);
+            Assert.AreEqual(nameof(PublicValueTypeTestClass._publicField), immediateField1.Name);
+            Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateField1.DeclaringType);
+            Assert.AreEqual(typeof(int), immediateField1.FieldType);
             Assert.AreEqual(PublicValueTypePublicFieldFieldsInfo, immediateField1.FieldInfo);
 
             var immediateField2 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
             Assert.AreNotEqual(immediateField1.FieldInfo, immediateField2.FieldInfo);
+
+            var enumImmediateField = new ImmediateField(TestEnumField1FieldInfo, typeof(TestEnum));
+            Assert.AreEqual(nameof(TestEnum.EnumValue1), enumImmediateField.Name);
+            Assert.AreEqual(typeof(TestEnum), enumImmediateField.DeclaringType);
+            Assert.AreEqual(typeof(TestEnum), enumImmediateField.FieldType);
+            Assert.AreEqual(TestEnumField1FieldInfo, enumImmediateField.FieldInfo);
         }
 
 #if SUPPORTS_IMMEDIATE_MEMBER_TYPE

@@ -57,6 +57,8 @@ namespace ImmediateReflection.Tests
         {
             var emptyType = new ImmediateType(typeof(EmptyType));
             Assert.AreEqual(typeof(EmptyType), emptyType.Type);
+            Assert.AreEqual(typeof(object), emptyType.BaseType);
+            Assert.AreEqual(typeof(ImmediateTypeTests), emptyType.DeclaringType);
             Assert.AreEqual(nameof(EmptyType), emptyType.Name);
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(ImmediateTypeTests)}+{nameof(EmptyType)}",
@@ -77,6 +79,8 @@ namespace ImmediateReflection.Tests
 
             var immediateTypePublic = new ImmediateType(typeof(PublicValueTypeTestClass));
             Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateTypePublic.Type);
+            Assert.AreEqual(typeof(object), immediateTypePublic.BaseType);
+            Assert.IsNull(immediateTypePublic.DeclaringType);
             Assert.AreEqual(nameof(PublicValueTypeTestClass), immediateTypePublic.Name);
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(PublicValueTypeTestClass)}",
@@ -93,6 +97,8 @@ namespace ImmediateReflection.Tests
 
             var immediateTypeInternal = new ImmediateType(typeof(InternalValueTypeTestClass));
             Assert.AreEqual(typeof(InternalValueTypeTestClass), immediateTypeInternal.Type);
+            Assert.AreEqual(typeof(object), immediateTypeInternal.BaseType);
+            Assert.IsNull(immediateTypeInternal.DeclaringType);
             Assert.AreEqual(nameof(InternalValueTypeTestClass), immediateTypeInternal.Name);
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(InternalValueTypeTestClass)}",
@@ -113,6 +119,8 @@ namespace ImmediateReflection.Tests
 
             var immediateTypePublic = new ImmediateType(typeof(PublicReferenceTypeTestClass));
             Assert.AreEqual(typeof(PublicReferenceTypeTestClass), immediateTypePublic.Type);
+            Assert.AreEqual(typeof(object), immediateTypePublic.BaseType);
+            Assert.IsNull(immediateTypePublic.DeclaringType);
             Assert.AreEqual(nameof(PublicReferenceTypeTestClass), immediateTypePublic.Name);
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(PublicReferenceTypeTestClass)}",
@@ -129,6 +137,8 @@ namespace ImmediateReflection.Tests
 
             var immediateTypeInternal = new ImmediateType(typeof(InternalReferenceTypeTestClass));
             Assert.AreEqual(typeof(InternalReferenceTypeTestClass), immediateTypeInternal.Type);
+            Assert.AreEqual(typeof(object), immediateTypeInternal.BaseType);
+            Assert.IsNull(immediateTypeInternal.DeclaringType);
             Assert.AreEqual(nameof(InternalReferenceTypeTestClass), immediateTypeInternal.Name);
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(InternalReferenceTypeTestClass)}",
@@ -149,6 +159,8 @@ namespace ImmediateReflection.Tests
 
             var immediateTypePublic = new ImmediateType(typeof(PublicObjectTypeTestClass));
             Assert.AreEqual(typeof(PublicObjectTypeTestClass), immediateTypePublic.Type);
+            Assert.AreEqual(typeof(object), immediateTypePublic.BaseType);
+            Assert.IsNull(immediateTypePublic.DeclaringType);
             Assert.AreEqual(nameof(PublicObjectTypeTestClass), immediateTypePublic.Name);
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(PublicObjectTypeTestClass)}",
@@ -165,6 +177,8 @@ namespace ImmediateReflection.Tests
 
             var immediateTypeInternal = new ImmediateType(typeof(InternalObjectTypeTestClass));
             Assert.AreEqual(typeof(InternalObjectTypeTestClass), immediateTypeInternal.Type);
+            Assert.AreEqual(typeof(object), immediateTypeInternal.BaseType);
+            Assert.IsNull(immediateTypeInternal.DeclaringType);
             Assert.AreEqual(nameof(InternalObjectTypeTestClass), immediateTypeInternal.Name);
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(InternalObjectTypeTestClass)}",
@@ -183,6 +197,8 @@ namespace ImmediateReflection.Tests
             // Public class
             var nestedImmediateTypePublic = new ImmediateType(typeof(PublicTestClass.PublicNestedClass));
             Assert.AreEqual(typeof(PublicTestClass.PublicNestedClass), nestedImmediateTypePublic.Type);
+            Assert.AreEqual(typeof(object), nestedImmediateTypePublic.BaseType);
+            Assert.AreEqual(typeof(PublicTestClass), nestedImmediateTypePublic.DeclaringType);
             Assert.AreEqual(nameof(PublicTestClass.PublicNestedClass), nestedImmediateTypePublic.Name);
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(PublicTestClass)}+{nameof(PublicTestClass.PublicNestedClass)}",
@@ -203,6 +219,8 @@ namespace ImmediateReflection.Tests
             // Internal class
             var nestedImmediateTypeInternal = new ImmediateType(typeof(PublicTestClass.InternalNestedClass));
             Assert.AreEqual(typeof(PublicTestClass.InternalNestedClass), nestedImmediateTypeInternal.Type);
+            Assert.AreEqual(typeof(object), nestedImmediateTypeInternal.BaseType);
+            Assert.AreEqual(typeof(PublicTestClass), nestedImmediateTypeInternal.DeclaringType);
             Assert.AreEqual(nameof(PublicTestClass.InternalNestedClass), nestedImmediateTypeInternal.Name);
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(PublicTestClass)}+{nameof(PublicTestClass.InternalNestedClass)}",
@@ -223,6 +241,8 @@ namespace ImmediateReflection.Tests
             // Protected class
             var nestedImmediateTypeProtected = new ImmediateType(typeof(ProtectedNestedClass));
             Assert.AreEqual(typeof(ProtectedNestedClass), nestedImmediateTypeProtected.Type);
+            Assert.AreEqual(typeof(object), nestedImmediateTypeProtected.BaseType);
+            Assert.AreEqual(typeof(ImmediateReflectionTestsBase), nestedImmediateTypeProtected.DeclaringType);
             Assert.AreEqual(nameof(ProtectedNestedClass), nestedImmediateTypeProtected.Name);
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(ImmediateReflectionTestsBase)}+{nameof(ProtectedNestedClass)}",
@@ -243,6 +263,8 @@ namespace ImmediateReflection.Tests
             // Private class
             var nestedImmediateTypePrivate = new ImmediateType(typeof(PrivateNestedClass));
             Assert.AreEqual(typeof(PrivateNestedClass), nestedImmediateTypePrivate.Type);
+            Assert.AreEqual(typeof(object), nestedImmediateTypePrivate.BaseType);
+            Assert.AreEqual(typeof(ImmediateTypeTests), nestedImmediateTypePrivate.DeclaringType);
             Assert.AreEqual(nameof(PrivateNestedClass), nestedImmediateTypePrivate.Name);
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(ImmediateTypeTests)}+{nameof(PrivateNestedClass)}",
@@ -301,6 +323,8 @@ namespace ImmediateReflection.Tests
             {
                 var immediateType = new ImmediateType(enumType);
                 Assert.AreEqual(enumType, immediateType.Type);
+                Assert.AreEqual(typeof(Enum), immediateType.BaseType);
+                Assert.IsNull(immediateType.DeclaringType);
                 Assert.AreEqual(enumType.Name, immediateType.Name);
                 Assert.AreEqual(
                     $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{enumType.Name}",

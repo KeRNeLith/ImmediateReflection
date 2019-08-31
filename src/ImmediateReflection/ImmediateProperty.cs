@@ -20,6 +20,13 @@ namespace ImmediateReflection
         public PropertyInfo PropertyInfo { get; }
 
         /// <summary>
+        /// Gets the <see cref="Type"/> owning this property (declaring it).
+        /// </summary>
+        [PublicAPI]
+        [NotNull]
+        public Type DeclaringType { get; }
+
+        /// <summary>
         /// Gets the <see cref="Type"/> of this property.
         /// </summary>
         [PublicAPI]
@@ -71,6 +78,9 @@ namespace ImmediateReflection
 #if SUPPORTS_LAZY
             _propertyImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(PropertyType));
 #endif
+            // ReSharper disable once AssignNullToNotNullAttribute, Justification: A property is always declared inside a type.
+            DeclaringType = property.DeclaringType;
+
             CanRead = property.CanRead;
             CanWrite = property.CanWrite;
 
