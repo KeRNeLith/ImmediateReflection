@@ -134,6 +134,19 @@ references:
   commentId: T:ImmediateReflection.ImmediateField
   fullName: ImmediateReflection.ImmediateField
   nameWithType: ImmediateField
+- uid: ImmediateReflection.ImmediateField.DeclaringType
+  name: DeclaringType
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_DeclaringType
+  commentId: P:ImmediateReflection.ImmediateField.DeclaringType
+  fullName: ImmediateReflection.ImmediateField.DeclaringType
+  nameWithType: ImmediateField.DeclaringType
+- uid: ImmediateReflection.ImmediateField.DeclaringType*
+  name: DeclaringType
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_DeclaringType_
+  commentId: Overload:ImmediateReflection.ImmediateField.DeclaringType
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateField.DeclaringType
+  nameWithType: ImmediateField.DeclaringType
 - uid: ImmediateReflection.ImmediateField.Equals(ImmediateReflection.ImmediateField)
   name: Equals(ImmediateField)
   href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_Equals_ImmediateReflection_ImmediateField_
@@ -689,6 +702,19 @@ references:
   isSpec: "True"
   fullName: ImmediateReflection.ImmediateProperty.CanWrite
   nameWithType: ImmediateProperty.CanWrite
+- uid: ImmediateReflection.ImmediateProperty.DeclaringType
+  name: DeclaringType
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_DeclaringType
+  commentId: P:ImmediateReflection.ImmediateProperty.DeclaringType
+  fullName: ImmediateReflection.ImmediateProperty.DeclaringType
+  nameWithType: ImmediateProperty.DeclaringType
+- uid: ImmediateReflection.ImmediateProperty.DeclaringType*
+  name: DeclaringType
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_DeclaringType_
+  commentId: Overload:ImmediateReflection.ImmediateProperty.DeclaringType
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperty.DeclaringType
+  nameWithType: ImmediateProperty.DeclaringType
 - uid: ImmediateReflection.ImmediateProperty.Equals(ImmediateReflection.ImmediateProperty)
   name: Equals(ImmediateProperty)
   href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_Equals_ImmediateReflection_ImmediateProperty_
@@ -833,6 +859,32 @@ references:
   commentId: T:ImmediateReflection.ImmediateType
   fullName: ImmediateReflection.ImmediateType
   nameWithType: ImmediateType
+- uid: ImmediateReflection.ImmediateType.BaseType
+  name: BaseType
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_BaseType
+  commentId: P:ImmediateReflection.ImmediateType.BaseType
+  fullName: ImmediateReflection.ImmediateType.BaseType
+  nameWithType: ImmediateType.BaseType
+- uid: ImmediateReflection.ImmediateType.BaseType*
+  name: BaseType
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_BaseType_
+  commentId: Overload:ImmediateReflection.ImmediateType.BaseType
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.BaseType
+  nameWithType: ImmediateType.BaseType
+- uid: ImmediateReflection.ImmediateType.DeclaringType
+  name: DeclaringType
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_DeclaringType
+  commentId: P:ImmediateReflection.ImmediateType.DeclaringType
+  fullName: ImmediateReflection.ImmediateType.DeclaringType
+  nameWithType: ImmediateType.DeclaringType
+- uid: ImmediateReflection.ImmediateType.DeclaringType*
+  name: DeclaringType
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_DeclaringType_
+  commentId: Overload:ImmediateReflection.ImmediateType.DeclaringType
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.DeclaringType
+  nameWithType: ImmediateType.DeclaringType
 - uid: ImmediateReflection.ImmediateType.Equals(ImmediateReflection.ImmediateType)
   name: Equals(ImmediateType)
   href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Equals_ImmediateReflection_ImmediateType_
