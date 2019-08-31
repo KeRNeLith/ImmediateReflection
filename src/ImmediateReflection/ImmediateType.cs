@@ -105,17 +105,23 @@ namespace ImmediateReflection
 
             // Default constructor
 #if SUPPORTS_CACHING
-            DefaultConstructorData data = CachesHandler.Instance.GetDefaultConstructor(Type);
-            _constructor = data.Constructor;
-            HasDefaultConstructor = data.HasDefault;
+            ConstructorData<DefaultConstructorDelegate> defaultCtorData = CachesHandler.Instance.GetDefaultConstructor(Type);
+            _constructor = defaultCtorData.Constructor;
+            HasDefaultConstructor = defaultCtorData.HasConstructor;
 #else
             _constructor = DelegatesFactory.CreateDefaultConstructor(Type, out bool hasConstructor);
             HasDefaultConstructor = hasConstructor;
 #endif
 
             // Copy constructor
+#if SUPPORTS_CACHING
+            ConstructorData<CopyConstructorDelegate> copyCtorData = CachesHandler.Instance.GetCopyConstructor(Type);
+            _copyConstructor = copyCtorData.Constructor;
+            HasCopyConstructor = copyCtorData.HasConstructor;
+#else
             _copyConstructor = DelegatesFactory.CreateCopyConstructor(Type, out bool hasConstructor);
             HasCopyConstructor = hasConstructor;
+#endif
 
             if (type.IsEnum)
             {

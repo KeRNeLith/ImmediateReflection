@@ -109,19 +109,40 @@ namespace ImmediateReflection
         #region Default constructor cache
 
         [NotNull]
-        private volatile MemoryCache<Type, DefaultConstructorData> _cachedConstructors =
-            new MemoryCache<Type, DefaultConstructorData>();
+        private volatile MemoryCache<Type, ConstructorData<DefaultConstructorDelegate>> _cachedDefaultConstructors =
+            new MemoryCache<Type, ConstructorData<DefaultConstructorDelegate>>();
 
         [NotNull]
         [ContractAnnotation("type:null => halt")]
-        public DefaultConstructorData GetDefaultConstructor([NotNull] Type type)
+        public ConstructorData<DefaultConstructorDelegate> GetDefaultConstructor([NotNull] Type type)
         {
             Debug.Assert(type != null);
 
-            return _cachedConstructors.GetOrCreate(type, () =>
+            return _cachedDefaultConstructors.GetOrCreate(type, () =>
             {
                 DefaultConstructorDelegate ctor = DelegatesFactory.CreateDefaultConstructor(type, out bool hasConstructor);
-                return new DefaultConstructorData(ctor, hasConstructor);
+                return new ConstructorData<DefaultConstructorDelegate>(ctor, hasConstructor);
+            });
+        }
+
+        #endregion
+
+        #region Copy constructor cache
+
+        [NotNull]
+        private volatile MemoryCache<Type, ConstructorData<CopyConstructorDelegate>> _cachedCopyConstructors =
+            new MemoryCache<Type, ConstructorData<CopyConstructorDelegate>>();
+
+        [NotNull]
+        [ContractAnnotation("type:null => halt")]
+        public ConstructorData<CopyConstructorDelegate> GetCopyConstructor([NotNull] Type type)
+        {
+            Debug.Assert(type != null);
+
+            return _cachedCopyConstructors.GetOrCreate(type, () =>
+            {
+                CopyConstructorDelegate ctor = DelegatesFactory.CreateCopyConstructor(type, out bool hasConstructor);
+                return new ConstructorData<CopyConstructorDelegate>(ctor, hasConstructor);
             });
         }
 
