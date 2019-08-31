@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using NUnit.Framework;
 
@@ -30,6 +32,20 @@ namespace ImmediateReflection.Tests
 
         [NotNull, ItemNotNull]
         protected static readonly FieldInfo[] EmptyFieldInfo = { };
+
+        #region Local function
+
+        [Pure]
+        protected static bool IsAnonymousType([NotNull] Type type)
+        {
+            bool hasCompilerGeneratedAttribute = type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Any();
+            bool nameContainsAnonymousType = type.FullName != null && type.FullName.Contains("AnonymousType");
+            bool isAnonymousType = hasCompilerGeneratedAttribute && nameContainsAnonymousType;
+
+            return isAnonymousType;
+        }
+
+        #endregion
 
         #region Types members classifiers
 

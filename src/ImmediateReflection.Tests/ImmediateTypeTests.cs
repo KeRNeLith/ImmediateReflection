@@ -342,6 +342,28 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
+        public void ImmediateTypeAnonymousType()
+        {
+            var testObject = new
+            {
+                TestIntProperty = 1,
+                TestReferenceProperty = new TestObject(),
+                TestObjectProperty = new object()
+            };
+            Type anonymousType = testObject.GetType();
+
+            var immediateAnonymousType = new ImmediateType(anonymousType);
+            Assert.IsTrue(IsAnonymousType(immediateAnonymousType.Type));
+            Assert.AreEqual(typeof(object), immediateAnonymousType.BaseType);
+            Assert.IsNull(immediateAnonymousType.DeclaringType);
+            // Name & FullName are not relevant checks
+            CollectionAssert.IsEmpty(immediateAnonymousType.Fields);
+            CollectionAssert.AreEquivalent(
+                anonymousType.GetProperties(),
+                immediateAnonymousType.Properties.Select(property => property.PropertyInfo));
+        }
+
+        [Test]
         public void ImmediateTypeWithFlags()
         {
             TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();

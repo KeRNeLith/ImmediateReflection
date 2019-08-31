@@ -44,6 +44,21 @@ namespace ImmediateReflection.Tests
 
             var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
             Assert.AreNotEqual(immediateProperty1.PropertyInfo, immediateProperty2.PropertyInfo);
+
+            // Property from anonymous type
+            var testObject = new
+            {
+                TestIntProperty = 12
+            };
+            Type anonymousType = testObject.GetType();
+            PropertyInfo propertyInfoOfAnonymousType = anonymousType.GetProperty(nameof(testObject.TestIntProperty))
+                                                       ?? throw new AssertionException("Property must exist.");
+
+            var immediatePropertyOfAnonymousType = new ImmediateProperty(propertyInfoOfAnonymousType);
+            Assert.AreEqual(nameof(testObject.TestIntProperty), immediatePropertyOfAnonymousType.Name);
+            Assert.IsTrue(IsAnonymousType(immediatePropertyOfAnonymousType.DeclaringType));
+            Assert.AreEqual(typeof(int), immediatePropertyOfAnonymousType.PropertyType);
+            Assert.AreEqual(propertyInfoOfAnonymousType, immediatePropertyOfAnonymousType.PropertyInfo);
         }
 
 #if SUPPORTS_IMMEDIATE_MEMBER_TYPE
@@ -189,6 +204,19 @@ namespace ImmediateReflection.Tests
 
                 yield return new TestCaseData(PublicValueTypePublicAbstractGetSetPropertyPropertyInfo, true);
                 yield return new TestCaseData(PublicValueTypePublicConcreteGetSetPropertyPropertyInfo, true);
+
+                #endregion
+
+                #region Anonymous
+
+                var testObject = new
+                {
+                    TestIntProperty = 12
+                };
+                Type anonymousType = testObject.GetType();
+                PropertyInfo propertyInfoOfAnonymousType = anonymousType.GetProperty(nameof(testObject.TestIntProperty))
+                                                           ?? throw new AssertionException("Property must exist.");
+                yield return new TestCaseData(propertyInfoOfAnonymousType, true);
 
                 #endregion
             }
@@ -382,6 +410,19 @@ namespace ImmediateReflection.Tests
                 var childObject = new ChildTestClass();
                 yield return new TestCaseData(childObject, ChildClassPublicGetPropertyPropertyInfo, "Child");
                 yield return new TestCaseData(childObject, BaseClassPublicGetPropertyPropertyInfo, "Parent");
+
+                #endregion
+
+                #region Anonymous
+
+                var testObject = new
+                {
+                    TestIntProperty = 42
+                };
+                Type anonymousType = testObject.GetType();
+                PropertyInfo propertyInfoOfAnonymousType = anonymousType.GetProperty(nameof(testObject.TestIntProperty))
+                                                           ?? throw new AssertionException("Property must exist.");
+                yield return new TestCaseData(testObject, propertyInfoOfAnonymousType, 42);
 
                 #endregion
             }
@@ -711,6 +752,19 @@ namespace ImmediateReflection.Tests
 
                 yield return new TestCaseData(PublicValueTypePublicAbstractGetSetPropertyPropertyInfo, true);
                 yield return new TestCaseData(PublicValueTypePublicConcreteGetSetPropertyPropertyInfo, true);
+
+                #endregion
+
+                #region Anonymous
+
+                var testObject = new
+                {
+                    TestDoubleProperty = 12.0
+                };
+                Type anonymousType = testObject.GetType();
+                PropertyInfo propertyInfoOfAnonymousType = anonymousType.GetProperty(nameof(testObject.TestDoubleProperty))
+                                                           ?? throw new AssertionException("Property must exist.");
+                yield return new TestCaseData(propertyInfoOfAnonymousType, false);
 
                 #endregion
             }
@@ -1159,6 +1213,18 @@ namespace ImmediateReflection.Tests
         {
             var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
             Assert.Throws<ArgumentException>(() => immediateProperty.SetValue(new PublicValueTypeTestClass(), 51));
+
+            // Anonymous type
+            var testObject = new
+            {
+                TestDoubleProperty = 42
+            };
+            Type anonymousType = testObject.GetType();
+            PropertyInfo propertyInfoOfAnonymousType = anonymousType.GetProperty(nameof(testObject.TestDoubleProperty))
+                                                       ?? throw new AssertionException("Property must exist.");
+
+            immediateProperty = new ImmediateProperty(propertyInfoOfAnonymousType);
+            Assert.Throws<ArgumentException>(() => immediateProperty.SetValue(new PublicValueTypeTestClass(), 12));
         }
 
         #endregion
