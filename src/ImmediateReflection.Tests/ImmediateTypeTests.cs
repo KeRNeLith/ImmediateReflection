@@ -284,6 +284,37 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
+        public void ImmediateTypeInheritedType()
+        {
+            var immediateType = new ImmediateType(typeof(object));
+            Assert.AreEqual(typeof(object), immediateType.Type);
+            Assert.IsNull(immediateType.BaseType);
+            Assert.IsNull(immediateType.DeclaringType);
+            Assert.AreEqual("Object", immediateType.Name);
+            Assert.AreEqual(
+                $"{nameof(System)}.Object",
+                immediateType.FullName);
+            CollectionAssert.IsEmpty(immediateType.Fields);
+            CollectionAssert.IsEmpty(immediateType.Properties);
+
+            immediateType = new ImmediateType(typeof(ChildTestClass));
+            Assert.AreEqual(typeof(ChildTestClass), immediateType.Type);
+            Assert.AreEqual(typeof(BaseTestClass), immediateType.BaseType);
+            Assert.IsNull(immediateType.DeclaringType);
+            Assert.AreEqual(nameof(ChildTestClass), immediateType.Name);
+            Assert.AreEqual(
+                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(ChildTestClass)}",
+                immediateType.FullName);
+            CollectionAssert.IsEmpty(immediateType.Fields);
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    ChildClassPublicGetPropertyPropertyInfo
+                },
+                immediateType.Properties.Select(property => property.PropertyInfo));
+        }
+
+        [Test]
         public void ImmediateTypeEnumType()
         {
             // Simple test enum
