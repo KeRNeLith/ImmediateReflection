@@ -13,6 +13,15 @@ namespace ImmediateReflection
     public delegate object DefaultConstructorDelegate();
 
     /// <summary>
+    /// Copy constructor delegate.
+    /// </summary>
+    /// <param name="other">Object to copy.</param>
+    /// <returns>Newly created object.</returns>
+    [PublicAPI]
+    [NotNull]
+    public delegate object CopyConstructorDelegate([CanBeNull] object other);
+
+    /// <summary>
     /// Constructor delegate.
     /// </summary>
     /// <param name="arguments">Constructor arguments.</param>

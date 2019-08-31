@@ -902,7 +902,7 @@ namespace ImmediateReflection.Tests
             Assert.Throws<MissingMethodException>(() => immediateType.Copy(new InheritedSpecializedCopyConstructorClass(6))); // Constructor exists but is not considered as copy constructor
 
             immediateType = new ImmediateType(typeof(MultipleCopyConstructorClass));
-            Assert.Throws<MissingMethodException>(() => immediateType.Copy(new InheritedMultipleCopyConstructorClass(12))); // Constructor exists but is not considered as copy constructor
+            Assert.Throws<ArgumentException>(() => immediateType.Copy(new InheritedMultipleCopyConstructorClass(12))); // Constructor exists but is not considered as copy constructor
 
             // ReSharper disable once PossibleMistakenCallToGetType.2
             immediateType = new ImmediateType(typeof(CopyConstructorClass).GetType());

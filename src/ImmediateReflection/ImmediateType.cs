@@ -90,9 +90,6 @@ namespace ImmediateReflection
         [NotNull, ItemNotNull]
         public ImmediateProperties Properties { get; }
 
-        [NotNull]
-        private readonly DefaultConstructorDelegate _constructor;
-
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -115,6 +112,10 @@ namespace ImmediateReflection
             _constructor = DelegatesFactory.CreateDefaultConstructor(Type, out bool hasConstructor);
             HasDefaultConstructor = hasConstructor;
 #endif
+
+            // Copy constructor
+            _copyConstructor = DelegatesFactory.CreateCopyConstructor(Type, out bool hasConstructor);
+            HasCopyConstructor = hasConstructor;
 
             if (type.IsEnum)
             {
@@ -261,6 +262,9 @@ namespace ImmediateReflection
 
         #region New/TryNew
 
+        [NotNull]
+        private readonly DefaultConstructorDelegate _constructor;
+
         /// <summary>
         /// Indicates if this <see cref="Type"/> has a default constructor.
         /// </summary>
@@ -375,6 +379,9 @@ namespace ImmediateReflection
 
         #region Copy/TryCopy
 
+        [NotNull]
+        private readonly CopyConstructorDelegate _copyConstructor;
+
         /// <summary>
         /// Indicates if this <see cref="Type"/> has a copy constructor.
         /// </summary>
@@ -399,7 +406,7 @@ namespace ImmediateReflection
         [NotNull]
         public object Copy([CanBeNull] object other)
         {
-            return Activator.CreateInstance(Type, other);
+            return _copyConstructor(other);
         }
 
         /// <summary>
@@ -418,7 +425,7 @@ namespace ImmediateReflection
             try
             {
                 exception = null;
-                newInstance = Copy(other);
+                newInstance = _copyConstructor(other);
                 return true;
             }
             catch (Exception ex)

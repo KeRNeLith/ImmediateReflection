@@ -136,6 +136,92 @@ namespace ImmediateReflection
             return true;
         }
 
+        [NotNull]
+        private static readonly ConstructorInfo ArgumentExceptionCtor =
+            typeof(ArgumentException).GetConstructor(new[] { typeof(string), typeof(string) })
+            ?? throw new InvalidOperationException($"{nameof(ArgumentException)} must have a (String, String) constructor.");
+
+        [NotNull]
+        private static readonly MethodInfo GetTypeMethod =
+            typeof(object).GetMethod(nameof(GetType))
+            ?? throw new InvalidOperationException($"{nameof(GetType)} not found.");
+
+        [Pure]
+        [NotNull]
+        [ContractAnnotation("type:null => halt")]
+        public static CopyConstructorDelegate CreateCopyConstructor([NotNull] Type type, out bool hasConstructor)
+        {
+            Debug.Assert(type != null);
+
+            hasConstructor = false;
+
+            if (type == RuntimeType)
+                return other => throw new ArgumentException($"Trying to call copy constructor on {RuntimeTypeName}.");
+            if (type.ContainsGenericParameters)
+                return other => throw new ArgumentException($"Class {type.Name} has at least one template parameter not defined.");
+            if (type.IsAbstract)
+                return other => throw new MissingMethodException($"Abstract class {type.Name} cannot be copied.");
+            if (type.IsArray)
+                // ReSharper disable once PossibleNullReferenceException, Justification: Type is an array so it must have an element type.
+                return other => throw new MissingMethodException($"There is no copy constructor for array of {type.GetElementType().Name}.");
+
+            // Simply return the value itself for value types
+            if (type.IsValueType)
+            {
+                hasConstructor = true;
+                return other => other;
+            }
+
+            // Get the copy constructor if available (with exact type matching for the parameter)
+            ConstructorInfo constructor = type.GetConstructor(new[]{ type });
+            if (constructor is null || constructor.GetParameters()[0].ParameterType != type)
+                return other => throw new MissingMethodException($"Class {type.Name} does not contain any copy constructor.");
+
+            DynamicMethod dynamicConstructor = CreateDynamicCopyConstructor(type.Name, type);
+            dynamicConstructor.InitLocals = true;
+
+            ILGenerator generator = dynamicConstructor.GetILGenerator();
+
+            CheckParameterIsOfRightType();
+
+            generator.Emit(OpCodes.Ldarg_0);
+            generator.Emit(OpCodes.Newobj, constructor);
+
+            MethodReturn(generator);
+
+            hasConstructor = true;
+            return (CopyConstructorDelegate)dynamicConstructor.CreateDelegate(typeof(CopyConstructorDelegate));
+
+            #region Local function
+
+            void CheckParameterIsOfRightType()
+            {
+                Label paramIsValid = generator.DefineLabel();
+                generator.Emit(OpCodes.Ldarg_0);
+                generator.Emit(OpCodes.Ldnull);
+                generator.Emit(OpCodes.Ceq);
+                generator.Emit(OpCodes.Brtrue_S, paramIsValid);
+
+                // other != null
+                generator.Emit(OpCodes.Ldarg_0);
+                CallMethod(generator, GetTypeMethod);
+                generator.Emit(OpCodes.Ldtoken, type);
+                generator.Emit(OpCodes.Ceq);
+                generator.Emit(OpCodes.Brtrue_S, paramIsValid);
+
+                // Throw Argument exception => wrong parameter type
+                generator.Emit(OpCodes.Ldstr, "Object to copy has wrong type.");
+                generator.Emit(OpCodes.Ldstr, "other");
+                generator.Emit(OpCodes.Newobj, ArgumentExceptionCtor);
+                generator.Emit(OpCodes.Throw);
+
+                // other is null
+                generator.MarkLabel(paramIsValid);
+            }
+
+            #endregion
+        }
+
         #endregion
 
         #region Field Get/Set
@@ -309,6 +395,17 @@ namespace ImmediateReflection
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
+        private static DynamicMethod CreateDynamicCopyConstructor([NotNull] string name, [NotNull] Type owner)
+        {
+            return CreateDynamicMethod($"CopyConstructor_{name}", typeof(object), new[] { typeof(object) }, owner);
+        }
+
+        [Pure]
+        [NotNull]
+        [ContractAnnotation("name:null => halt;owner:null => halt")]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         private static DynamicMethod CreateDynamicGetter([NotNull] string name, [NotNull] Type owner)
         {
             return CreateDynamicMethod($"Get_{name}", typeof(object), new[] { typeof(object) }, owner);
@@ -386,7 +483,7 @@ namespace ImmediateReflection
             generator.Emit(OpCodes.Ldarg_0);
             generator.Emit(OpCodes.Ldnull);
             generator.Emit(OpCodes.Ceq);
-            generator.Emit(OpCodes.Brfalse, notNull);
+            generator.Emit(OpCodes.Brfalse_S, notNull);
             generator.ThrowException(typeof(TargetException));
             generator.MarkLabel(notNull);
         }
