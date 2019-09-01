@@ -281,7 +281,7 @@ namespace ImmediateReflection
         /// Creates an instance of this <see cref="Type"/> with that type's default constructor.
         /// </summary>
         /// <returns>A reference to the newly created object.</returns>
-        /// <exception cref="ArgumentException"><see cref="Type"/> a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
+        /// <exception cref="ArgumentException"><see cref="Type"/> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
         /// <exception cref="AmbiguousMatchException"><see cref="Type"/> has several constructors defining "params" parameter only.</exception>
         /// <exception cref="MissingMethodException">No matching public constructor was found.</exception>
         [PublicAPI]
@@ -327,7 +327,7 @@ namespace ImmediateReflection
         /// If <paramref name="args"/> is an empty array or null, the constructor that takes no parameters (the default constructor) is invoked.
         /// </param>
         /// <returns>A reference to the newly created object.</returns>
-        /// <exception cref="ArgumentException"><see cref="Type"/> a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
+        /// <exception cref="ArgumentException"><see cref="Type"/> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
         /// <exception cref="MemberAccessException">Cannot create an instance of an abstract class, or this member was invoked with a late-binding mechanism.</exception>
         /// <exception cref="MissingMethodException">No matching public constructor was found.</exception>
         /// <exception cref="NotSupportedException">
@@ -400,7 +400,7 @@ namespace ImmediateReflection
         /// <param name="other">Object to copy.</param>
         /// <returns>A reference to the newly created object.</returns>
         /// <exception cref="ArgumentException">
-        /// <see cref="Type"/> a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true),
+        /// <see cref="Type"/> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true),
         /// or if the <paramref name="other"/> instance is not exactly an instance of <see cref="Type"/>.
         /// </exception>
         /// <exception cref="MissingMethodException">
@@ -416,7 +416,7 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Tries to create a copy instance of <paramref name="other"/> with this <see cref="Type"/>'s copy constructor
+        /// Tries to create a copy instance of <paramref name="other"/> with this <see cref="Type"/>'s copy constructor.
         /// </summary>
         /// <remarks>This method will not throw if instantiation failed.</remarks>
         /// <param name="other">Object to copy.</param>

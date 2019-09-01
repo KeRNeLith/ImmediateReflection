@@ -56,10 +56,8 @@ namespace ImmediateReflection.Tests
         [Test]
         public void NewParameterLess_Throws()
         {
-            // ReSharper disable ReturnValueOfPureMethodIsNotUsed
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(null));
-
             Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(NoDefaultConstructor)));
             Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(NotAccessibleDefaultConstructor)));
             Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(IList<int>)));
@@ -75,7 +73,6 @@ namespace ImmediateReflection.Tests
             Assert.Throws<ArgumentException>(() => TypeExtensions.New(typeof(DefaultConstructor).GetType()));
             Assert.Throws(Is.InstanceOf<Exception>(), () => TypeExtensions.New(typeof(DefaultConstructorThrows)));
             Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(int[])));
-            // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         }
 
         [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateDefaultConstructorNoThrowTestCases))]
@@ -162,6 +159,62 @@ namespace ImmediateReflection.Tests
             Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(typeof(ParamsConstructor), out _, out _, null));
             Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(null, out _, out _, null));
             // ReSharper restore AssignNullToNotNullAttribute
+        }
+
+        #endregion
+
+        [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateHasCopyConstructorTestCases))]
+        public bool HasCopyConstructor([NotNull] Type type)
+        {
+            return TypeExtensions.HasCopyConstructor(type);
+        }
+
+        #region Copy/TryCopy
+
+        [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorTestCases))]
+        public void Copy([NotNull] Type type, [CanBeNull] object other)
+        {
+            ConstructorTestHelpers.Copy(
+                type,
+                other,
+                o => TypeExtensions.Copy(type, o));
+        }
+
+        [Test]
+        public void Copy_Throws()
+        {
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(NoCopyConstructorClass), new NoCopyConstructorClass()));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(NotAccessibleCopyConstructor), new NotAccessibleCopyConstructor()));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(IList<int>), new List<int>()));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(IDictionary<int, string>), new Dictionary<int, string>()));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(AbstractCopyConstructor), null));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(StaticClass), null));
+            Assert.Throws<ArgumentException>(() => TypeExtensions.Copy(typeof(TemplateStruct<>), null));
+            Assert.Throws<ArgumentException>(() => TypeExtensions.Copy(typeof(TemplateCopyConstructor<>), null));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(NoCopyInheritedCopyConstructorClass), new NoCopyInheritedCopyConstructorClass(1)));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(NoCopyInheritedCopyConstructorClass), new CopyConstructorClass(2)));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(BaseCopyInheritedCopyConstructorClass), new BaseCopyInheritedCopyConstructorClass(3)));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(BaseCopyInheritedCopyConstructorClass), new CopyConstructorClass(4))); // Constructor exists but is not considered as copy constructor
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(SpecializedCopyConstructorClass),  new SpecializedCopyConstructorClass(5)));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(SpecializedCopyConstructorClass), new InheritedSpecializedCopyConstructorClass(6))); // Constructor exists but is not considered as copy constructor
+            Assert.Throws<ArgumentException>(() => TypeExtensions.Copy(typeof(MultipleCopyConstructorClass), new InheritedMultipleCopyConstructorClass(12))); // Constructor exists but is not considered as copy constructor
+            // ReSharper disable once PossibleMistakenCallToGetType.2
+            Assert.Throws<ArgumentException>(() => TypeExtensions.Copy(typeof(CopyConstructorClass).GetType(), null));
+            Assert.Throws(Is.InstanceOf<Exception>(), () => TypeExtensions.Copy(typeof(CopyConstructorThrows), new CopyConstructorThrows()));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(int[]), new int[0]));
+
+            // Wrong argument
+            Assert.Throws<ArgumentException>(() => TypeExtensions.Copy(typeof(CopyConstructorClass), new NoCopyConstructorClass()));
+        }
+
+        [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorNoThrowTestCases))]
+        public void TryCopy([NotNull] Type type, [CanBeNull] object other, bool expectFail)
+        {
+            ConstructorTestHelpers.TryCopy(
+                type,
+                other,
+                expectFail,
+                (object o, out object instance, out Exception exception) => TypeExtensions.TryCopy(type, o, out instance, out exception));
         }
 
         #endregion

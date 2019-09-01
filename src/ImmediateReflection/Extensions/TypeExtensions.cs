@@ -175,6 +175,96 @@ namespace ImmediateReflection
                 throw new ArgumentNullException(nameof(args));
             return TypeAccessor.Get(type).TryNew(out newInstance, out exception, args);
         }
+
+        /// <summary>
+        /// Checks if this <paramref name="type"/> has a copy constructor.
+        /// </summary>
+        /// <param name="type"><see cref="Type"/> to check.</param>
+        /// <returns>True if the <paramref name="type"/> has a copy constructor, false otherwise.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        [PublicAPI]
+        [ContractAnnotation("type:null => halt")]
+        public static bool HasCopyConstructor(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this Type type)
+#else
+            [NotNull] Type type)
+#endif
+        {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+            return CachesHandler.Instance.GetCopyConstructor(type).HasConstructor;
+        }
+
+        /// <summary>
+        /// Creates a copy instance of <paramref name="other"/> with this <paramref name="type"/>'s copy constructor.
+        /// </summary>
+        /// <param name="type"><see cref="Type"/> of the object to copy.</param>
+        /// <param name="other">Object to copy.</param>
+        /// <returns>A reference to the newly created object.</returns>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="type"/> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true),
+        /// or if the <paramref name="other"/> instance is not exactly an instance of <paramref name="type"/>.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        /// <exception cref="MissingMethodException">
+        /// No matching public copy constructor was found,
+        /// or constructor exists but was not considered as copy constructor.
+        /// </exception>
+        [PublicAPI]
+        [NotNull]
+        [ContractAnnotation("type:null => halt")]
+        public static object Copy(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this Type type,
+#else
+            [NotNull] Type type,
+#endif
+            [CanBeNull] object other)
+        {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+            return CachesHandler.Instance.GetCopyConstructor(type).Constructor(other);
+        }
+
+        /// <summary>
+        /// Tries to create a copy instance of <paramref name="other"/> with this <paramref name="type"/>'s copy constructor.
+        /// </summary>
+        /// <remarks>This method will not throw if instantiation failed.</remarks>
+        /// <param name="type"><see cref="Type"/> of the object to copy.</param>
+        /// <param name="other">Object to copy.</param>
+        /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
+        /// <param name="exception">Caught exception if the instantiation failed, otherwise null.</param>
+        /// <returns>True if the new instance was successfully created, false otherwise.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        [PublicAPI]
+        [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
+        public static bool TryCopy(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this Type type,
+#else
+            [NotNull] Type type,
+#endif
+            [CanBeNull] object other,
+            out object newInstance,
+            out Exception exception)
+        {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+
+            try
+            {
+                exception = null;
+                newInstance = CachesHandler.Instance.GetCopyConstructor(type).Constructor(other);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                newInstance = null;
+                exception = ex;
+                return false;
+            }
+        }
     }
 }
 #endif
