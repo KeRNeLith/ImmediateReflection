@@ -415,6 +415,26 @@ namespace ImmediateReflection.Tests
         public int this[int index] => 0;
         public int this[float value] => 0;
     }
+
+    public interface IBaseTestInterface
+    {
+        uint TestGetProperty { get; }
+        int TestSetProperty { set; }
+        double TestGetSetProperty { get; set; }
+    }
+
+    public interface IChildTestInterface : IBaseTestInterface
+    {
+        float TestChildProperty { get; set; }
+    }
+
+    public class ImplementationInterfacesTestClass : IChildTestInterface
+    {
+        public uint TestGetProperty { get; set; }
+        public int TestSetProperty { get; set; }
+        public double TestGetSetProperty { get; set; }
+        public float TestChildProperty { get; set; }
+    }
 }
 
 #pragma warning restore 169

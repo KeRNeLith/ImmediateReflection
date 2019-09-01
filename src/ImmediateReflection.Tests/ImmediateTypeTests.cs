@@ -373,6 +373,66 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
+        public void ImmediateTypeInterface()
+        {
+            // Base interface
+            var immediateType = new ImmediateType(typeof(IBaseTestInterface));
+            Assert.AreEqual(typeof(IBaseTestInterface), immediateType.Type);
+            Assert.IsNull(immediateType.BaseType);
+            Assert.IsNull(immediateType.DeclaringType);
+            Assert.AreEqual(nameof(IBaseTestInterface), immediateType.Name);
+            Assert.AreEqual(
+                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(IBaseTestInterface)}",
+                immediateType.FullName);
+            CollectionAssert.IsEmpty(immediateType.Fields);
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    BaseInterfaceGetPropertyPropertyInfo,
+                    BaseInterfaceSetPropertyPropertyInfo,
+                    BaseInterfaceGetSetPropertyPropertyInfo
+                },
+                immediateType.Properties.Select(property => property.PropertyInfo));
+
+            // Child interface
+            immediateType = new ImmediateType(typeof(IChildTestInterface));
+            Assert.AreEqual(typeof(IChildTestInterface), immediateType.Type);
+            Assert.IsNull(immediateType.BaseType);
+            Assert.IsNull(immediateType.DeclaringType);
+            Assert.AreEqual(nameof(IChildTestInterface), immediateType.Name);
+            Assert.AreEqual(
+                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(IChildTestInterface)}",
+                immediateType.FullName);
+            CollectionAssert.IsEmpty(immediateType.Fields);
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    ChildInterfaceGetSetPropertyPropertyInfo
+                },
+                immediateType.Properties.Select(property => property.PropertyInfo));
+
+            // Implementation
+            immediateType = new ImmediateType(typeof(ImplementationInterfacesTestClass));
+            Assert.AreEqual(typeof(ImplementationInterfacesTestClass), immediateType.Type);
+            Assert.AreEqual(typeof(object), immediateType.BaseType);
+            Assert.IsNull(immediateType.DeclaringType);
+            Assert.AreEqual(nameof(ImplementationInterfacesTestClass), immediateType.Name);
+            Assert.AreEqual(
+                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(ImplementationInterfacesTestClass)}",
+                immediateType.FullName);
+            CollectionAssert.IsEmpty(immediateType.Fields);
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    ImplementationBaseInterfaceFromGetPropertyPropertyInfo,
+                    ImplementationBaseInterfaceFromSetPropertyPropertyInfo,
+                    ImplementationBaseInterfaceFromGetSetPropertyPropertyInfo,
+                    ImplementationChildInterfaceFromGetSetPropertyPropertyInfo
+                },
+                immediateType.Properties.Select(property => property.PropertyInfo));
+        }
+
+        [Test]
         public void ImmediateTypeAnonymousType()
         {
             var testObject = new

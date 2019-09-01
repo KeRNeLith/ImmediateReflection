@@ -1063,6 +1063,47 @@ namespace ImmediateReflection.Tests
 
         #endregion
 
+        #region Interfaces & implementations
+
+        // Base interface
+        [NotNull]
+        protected static readonly PropertyInfo BaseInterfaceGetPropertyPropertyInfo =
+            typeof(IBaseTestInterface).GetProperty(nameof(IBaseTestInterface.TestGetProperty)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static readonly PropertyInfo BaseInterfaceSetPropertyPropertyInfo =
+            typeof(IBaseTestInterface).GetProperty(nameof(IBaseTestInterface.TestSetProperty)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static readonly PropertyInfo BaseInterfaceGetSetPropertyPropertyInfo =
+            typeof(IBaseTestInterface).GetProperty(nameof(IBaseTestInterface.TestGetSetProperty)) ?? throw new AssertionException("Cannot find property.");
+
+
+        // Child interface
+        [NotNull]
+        protected static readonly PropertyInfo ChildInterfaceGetSetPropertyPropertyInfo =
+            typeof(IChildTestInterface).GetProperty(nameof(IChildTestInterface.TestChildProperty)) ?? throw new AssertionException("Cannot find property.");
+
+
+        // Interface implementation
+        [NotNull]
+        protected static readonly PropertyInfo ImplementationBaseInterfaceFromGetPropertyPropertyInfo =
+            typeof(ImplementationInterfacesTestClass).GetProperty(nameof(ImplementationInterfacesTestClass.TestGetProperty)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static readonly PropertyInfo ImplementationBaseInterfaceFromSetPropertyPropertyInfo =
+            typeof(ImplementationInterfacesTestClass).GetProperty(nameof(ImplementationInterfacesTestClass.TestSetProperty)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static readonly PropertyInfo ImplementationBaseInterfaceFromGetSetPropertyPropertyInfo =
+            typeof(ImplementationInterfacesTestClass).GetProperty(nameof(ImplementationInterfacesTestClass.TestGetSetProperty)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static readonly PropertyInfo ImplementationChildInterfaceFromGetSetPropertyPropertyInfo =
+            typeof(ImplementationInterfacesTestClass).GetProperty(nameof(ImplementationInterfacesTestClass.TestChildProperty)) ?? throw new AssertionException("Cannot find property.");
+
+        #endregion
+
         #endregion
     }
 }

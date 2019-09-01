@@ -219,6 +219,15 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(propertyInfoOfAnonymousType, true);
 
                 #endregion
+
+                #region Interfaces
+
+                yield return new TestCaseData(BaseInterfaceGetPropertyPropertyInfo, true);
+                yield return new TestCaseData(BaseInterfaceSetPropertyPropertyInfo, false);
+                yield return new TestCaseData(BaseInterfaceGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(ChildInterfaceGetSetPropertyPropertyInfo, true);
+
+                #endregion
             }
         }
 
@@ -425,6 +434,22 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(testObject, propertyInfoOfAnonymousType, 42);
 
                 #endregion
+
+                #region Interfaces (via concrete type)
+
+                var implementationTestObject = new ImplementationInterfacesTestClass
+                {
+                    TestGetProperty = 1u,
+                    TestSetProperty = 2,
+                    TestGetSetProperty = 3.0,
+                    TestChildProperty = 4.0f
+                };
+
+                yield return new TestCaseData(implementationTestObject, BaseInterfaceGetPropertyPropertyInfo, 1u);
+                yield return new TestCaseData(implementationTestObject, BaseInterfaceGetSetPropertyPropertyInfo, 3.0);
+                yield return new TestCaseData(implementationTestObject, ChildInterfaceGetSetPropertyPropertyInfo, 4.0f);
+
+                #endregion
             }
         }
 
@@ -629,10 +654,14 @@ namespace ImmediateReflection.Tests
         [Test]
         public void ImmediatePropertyGetValue_NoGetter()
         {
+            // ReSharper disable ReturnValueOfPureMethodIsNotUsed
             var immediateProperty = new ImmediateProperty(PublicValueTypePublicSetPropertyPropertyInfo);
-
-            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             Assert.Throws<ArgumentException>(() => immediateProperty.GetValue(new PublicValueTypeTestClass()));
+
+            immediateProperty = new ImmediateProperty(BaseInterfaceSetPropertyPropertyInfo);
+            // Cannot get via interface property even if property is get/set on implementation
+            Assert.Throws<ArgumentException>(() => immediateProperty.GetValue(new ImplementationInterfacesTestClass()));
+            // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         }
 
         #endregion
@@ -765,6 +794,15 @@ namespace ImmediateReflection.Tests
                 PropertyInfo propertyInfoOfAnonymousType = anonymousType.GetProperty(nameof(testObject.TestDoubleProperty))
                                                            ?? throw new AssertionException("Property must exist.");
                 yield return new TestCaseData(propertyInfoOfAnonymousType, false);
+
+                #endregion
+
+                #region Interfaces
+
+                yield return new TestCaseData(BaseInterfaceGetPropertyPropertyInfo, false);
+                yield return new TestCaseData(BaseInterfaceSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(BaseInterfaceGetSetPropertyPropertyInfo, true);
+                yield return new TestCaseData(ChildInterfaceGetSetPropertyPropertyInfo, true);
 
                 #endregion
             }
@@ -1180,6 +1218,31 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
+        public void ImmediatePropertySetValue_Interface()
+        {
+            // Interfaces (via concrete type)
+            var testObject = new ImplementationInterfacesTestClass
+            {
+                TestGetProperty = 1u,
+                TestSetProperty = 2,
+                TestGetSetProperty = 3.0,
+                TestChildProperty = 4.0f
+            };
+
+            var immediateProperty = new ImmediateProperty(BaseInterfaceSetPropertyPropertyInfo);
+            immediateProperty.SetValue(testObject, 12);
+            Assert.AreEqual(12, testObject.TestSetProperty);
+
+            immediateProperty = new ImmediateProperty(BaseInterfaceGetSetPropertyPropertyInfo);
+            immediateProperty.SetValue(testObject, 24.0);
+            Assert.AreEqual(24.0, testObject.TestGetSetProperty);
+
+            immediateProperty = new ImmediateProperty(ChildInterfaceGetSetPropertyPropertyInfo);
+            immediateProperty.SetValue(testObject, 48.0f);
+            Assert.AreEqual(48.0f, testObject.TestChildProperty);
+        }
+
+        [Test]
         public void ImmediatePropertySetValue_NullInstance()
         {
             var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
@@ -1225,6 +1288,10 @@ namespace ImmediateReflection.Tests
 
             immediateProperty = new ImmediateProperty(propertyInfoOfAnonymousType);
             Assert.Throws<ArgumentException>(() => immediateProperty.SetValue(new PublicValueTypeTestClass(), 12));
+
+            immediateProperty = new ImmediateProperty(BaseInterfaceGetPropertyPropertyInfo);
+            // Cannot set via interface property even if property is get/set on implementation
+            Assert.Throws<ArgumentException>(() => immediateProperty.SetValue(new ImplementationInterfacesTestClass(), 12));
         }
 
         #endregion
