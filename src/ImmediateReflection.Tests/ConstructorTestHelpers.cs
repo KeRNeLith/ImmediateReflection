@@ -744,6 +744,7 @@ namespace ImmediateReflection.Tests
             {
                 yield return new TestCaseData(typeof(int)) { ExpectedResult = true };
                 yield return new TestCaseData(typeof(TestStruct)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(TestEnum)) { ExpectedResult = true };
                 yield return new TestCaseData(typeof(DefaultConstructor)) { ExpectedResult = true };
                 yield return new TestCaseData(typeof(MultipleConstructors)) { ExpectedResult = true };
                 yield return new TestCaseData(typeof(TemplateStruct<double>)) { ExpectedResult = true };
@@ -780,6 +781,7 @@ namespace ImmediateReflection.Tests
             {
                 yield return new TestCaseData(typeof(int));
                 yield return new TestCaseData(typeof(TestStruct));
+                yield return new TestCaseData(typeof(TestEnum));
                 yield return new TestCaseData(typeof(DefaultConstructor));
                 yield return new TestCaseData(typeof(MultipleConstructors));
                 yield return new TestCaseData(typeof(TemplateStruct<double>));
@@ -814,6 +816,7 @@ namespace ImmediateReflection.Tests
             {
                 yield return new TestCaseData(typeof(int), false);
                 yield return new TestCaseData(typeof(TestStruct), false);
+                yield return new TestCaseData(typeof(TestEnum), false);
                 yield return new TestCaseData(typeof(DefaultConstructor), false);
                 yield return new TestCaseData(typeof(MultipleConstructors), false);
                 yield return new TestCaseData(typeof(TemplateStruct<double>), false);
@@ -877,6 +880,7 @@ namespace ImmediateReflection.Tests
             {
                 yield return new TestCaseData(typeof(int), null);
                 yield return new TestCaseData(typeof(TestStruct), null);
+                yield return new TestCaseData(typeof(TestEnum), null);
                 yield return new TestCaseData(typeof(DefaultConstructor), null);
                 yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), null);
                 yield return new TestCaseData(typeof(ParamsOnlyConstructor), null);
@@ -898,6 +902,7 @@ namespace ImmediateReflection.Tests
             {
                 yield return new TestCaseData(typeof(int), new object[] { });
                 yield return new TestCaseData(typeof(TestStruct), new object[] { });
+                yield return new TestCaseData(typeof(TestEnum), new object[] { });
                 yield return new TestCaseData(typeof(DefaultConstructor), new object[] { });
                 yield return new TestCaseData(typeof(TemplateDefaultConstructor<int>), new object[] { });
                 yield return new TestCaseData(typeof(ParamsOnlyConstructor), new object[] { });
@@ -962,6 +967,7 @@ namespace ImmediateReflection.Tests
             {
                 yield return new TestCaseData(typeof(int), false, null);
                 yield return new TestCaseData(typeof(TestStruct), false, null);
+                yield return new TestCaseData(typeof(TestEnum), false, null);
                 yield return new TestCaseData(typeof(DefaultConstructor), false, null);
                 yield return new TestCaseData(typeof(MultipleConstructors), false, null);
                 yield return new TestCaseData(typeof(TemplateStruct<double>), false, null);
@@ -996,6 +1002,7 @@ namespace ImmediateReflection.Tests
             {
                 yield return new TestCaseData(typeof(int), false, new object[] { });
                 yield return new TestCaseData(typeof(TestStruct), false, new object[] { });
+                yield return new TestCaseData(typeof(TestEnum), false, new object[] { });
                 yield return new TestCaseData(typeof(DefaultConstructor), false, new object[] { });
                 yield return new TestCaseData(typeof(MultipleConstructors), false, new object[] { });
                 yield return new TestCaseData(typeof(MultipleConstructors), false, new object[] { 12, 12.5f });
@@ -1023,6 +1030,7 @@ namespace ImmediateReflection.Tests
 
                 yield return new TestCaseData(typeof(int), true, new object[] { 12 });
                 yield return new TestCaseData(typeof(TestStruct), true, new object[] { 12 });
+                yield return new TestCaseData(typeof(TestEnum), true, new object[] { 1 });
                 yield return new TestCaseData(typeof(DefaultConstructor), true, new object[] { 12 });
                 yield return new TestCaseData(typeof(MultipleConstructors), true, new object[] { 12.5f, 12 });
                 yield return new TestCaseData(typeof(TemplateStruct<double>), true, new object[] { 25 });
@@ -1089,6 +1097,7 @@ namespace ImmediateReflection.Tests
             {
                 yield return new TestCaseData(typeof(int)) { ExpectedResult = true };        // Not has a real copy constructor but it's more convenient
                 yield return new TestCaseData(typeof(TestStruct)) { ExpectedResult = true }; // Not has a real copy constructor but it's more convenient
+                yield return new TestCaseData(typeof(TestEnum)) { ExpectedResult = true };   // Not has a real copy constructor but it's more convenient
                 yield return new TestCaseData(typeof(CopyConstructorClass)) { ExpectedResult = true };
                 yield return new TestCaseData(typeof(CopyInheritedCopyConstructorClass)) { ExpectedResult = true };
                 yield return new TestCaseData(typeof(MultipleCopyConstructorClass)) { ExpectedResult = true };
@@ -1122,6 +1131,7 @@ namespace ImmediateReflection.Tests
             {
                 yield return new TestCaseData(typeof(int), 25);
                 yield return new TestCaseData(typeof(TestStruct), new TestStruct { TestValue = 12 });
+                yield return new TestCaseData(typeof(TestEnum), TestEnum.EnumValue2);
                 yield return new TestCaseData(typeof(CopyConstructorClass), new CopyConstructorClass(42));
                 yield return new TestCaseData(typeof(CopyInheritedCopyConstructorClass), new CopyInheritedCopyConstructorClass(28));
                 yield return new TestCaseData(typeof(MultipleCopyConstructorClass), new MultipleCopyConstructorClass(56));
@@ -1147,6 +1157,7 @@ namespace ImmediateReflection.Tests
             {
                 yield return new TestCaseData(typeof(int), 1, false);
                 yield return new TestCaseData(typeof(TestStruct), new TestStruct { TestValue = 2 }, false);
+                yield return new TestCaseData(typeof(TestEnum), TestEnum.EnumValue2, false);
                 yield return new TestCaseData(typeof(CopyConstructorClass), new CopyConstructorClass(3), false);
                 yield return new TestCaseData(typeof(CopyInheritedCopyConstructorClass), new CopyInheritedCopyConstructorClass(4), false);
                 yield return new TestCaseData(typeof(MultipleCopyConstructorClass), new MultipleCopyConstructorClass(5), false);

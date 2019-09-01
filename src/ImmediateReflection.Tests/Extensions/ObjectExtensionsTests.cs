@@ -21,6 +21,7 @@ namespace ImmediateReflection.Tests
             {
                 yield return new TestCaseData(42) { ExpectedResult = true };                            // Not has a real copy constructor but it's more convenient
                 yield return new TestCaseData(new TestStruct { TestValue = 12 }) { ExpectedResult = true }; // Not has a real copy constructor but it's more convenient
+                yield return new TestCaseData(TestEnum.EnumValue2) { ExpectedResult = true };           // Not has a real copy constructor but it's more convenient
                 yield return new TestCaseData(new CopyConstructorClass(25)) { ExpectedResult = true };
                 yield return new TestCaseData(new CopyInheritedCopyConstructorClass(66)) { ExpectedResult = true };
                 yield return new TestCaseData(new MultipleCopyConstructorClass(33)) { ExpectedResult = true };
@@ -87,6 +88,7 @@ namespace ImmediateReflection.Tests
             {
                 yield return new TestCaseData(typeof(int), 42, false);                                       // Not has a real copy constructor but it's more convenient
                 yield return new TestCaseData(typeof(TestStruct), new TestStruct { TestValue = 12 }, false); // Not has a real copy constructor but it's more convenient
+                yield return new TestCaseData(typeof(TestEnum), TestEnum.EnumValue2, false);                 // Not has a real copy constructor but it's more convenient
                 yield return new TestCaseData(typeof(CopyConstructorClass), new CopyConstructorClass(25), false);
                 yield return new TestCaseData(typeof(CopyInheritedCopyConstructorClass), new CopyInheritedCopyConstructorClass(66), false);
                 yield return new TestCaseData(typeof(MultipleCopyConstructorClass), new MultipleCopyConstructorClass(33), false);
