@@ -1,5 +1,21 @@
 # Release notes
 
+## What's new in 1.4.0 September 1 2019
+### New:
+* Add an access to the Declaring Type directly through ImmediateType, ImmediateProperty and ImmediateField.
+* Add an access to the Base Type directly through ImmediateType.
+* Add CopyConstructorDelegate delegate.
+* Add the possibility to call Copy constructor in a faster way than Activator from ImmediateType.
+* Add a type extension to check if a type has a default constructor.
+* Add type extensions to check if a type has a copy constructor and to directly call it.
+* Add object extensions to check if an instance can be copied by a copy constructor and to directly call it.
+
+### Changes:
+* Globally optimize the library by reducing the number of redundant null checks.
+* Slightly optimize the branching in generated code.
+
+---
+
 ## What's new in 1.3.0 July 23 2019
 ### New:
 * Add type extensions to directly call a default constructor delegate from a Type (without ImmediateType).
