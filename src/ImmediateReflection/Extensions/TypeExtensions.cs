@@ -15,15 +15,35 @@ namespace ImmediateReflection
     public static class TypeExtensions
     {
         /// <summary>
+        /// Checks if this <paramref name="type"/> has a default constructor.
+        /// </summary>
+        /// <param name="type"><see cref="Type"/> to check.</param>
+        /// <returns>True if the <paramref name="type"/> has a default constructor, false otherwise.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        [PublicAPI]
+        [ContractAnnotation("type:null => halt")]
+        public static bool HasDefaultConstructor(
+#if SUPPORTS_EXTENSIONS
+            [NotNull] this Type type)
+#else
+            [NotNull] Type type)
+#endif
+        {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+            return CachesHandler.Instance.GetDefaultConstructor(type).HasConstructor;
+        }
+
+        /// <summary>
         /// Creates an instance of this <paramref name="type"/> with that type's default constructor.
         /// </summary>
         /// <param name="type"><see cref="Type"/> to instantiate.</param>
         /// <returns>A reference to the newly created object.</returns>
         /// <exception cref="ArgumentException"><see cref="Type"/> a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         /// <exception cref="AmbiguousMatchException"><see cref="Type"/> has several constructors defining "params" parameter only.</exception>
         /// <exception cref="MissingMethodException">No matching public constructor was found.</exception>
         [PublicAPI]
-        [Pure]
         [NotNull]
         [ContractAnnotation("type:null => halt")]
         public static object New(
@@ -46,8 +66,8 @@ namespace ImmediateReflection
         /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
         /// <param name="exception">Caught exception if the instantiation failed, otherwise null.</param>
         /// <returns>True if the new instance was successfully created, false otherwise.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [PublicAPI]
-        [Pure]
         [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
         public static bool TryNew(
 #if SUPPORTS_EXTENSIONS
@@ -86,6 +106,7 @@ namespace ImmediateReflection
         /// </param>
         /// <returns>A reference to the newly created object.</returns>
         /// <exception cref="ArgumentException"><see cref="Type"/> a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> or <paramref name="args"/> is null.</exception>
         /// <exception cref="MemberAccessException">Cannot create an instance of an abstract class, or this member was invoked with a late-binding mechanism.</exception>
         /// <exception cref="MissingMethodException">No matching public constructor was found.</exception>
         /// <exception cref="NotSupportedException">
@@ -97,7 +118,6 @@ namespace ImmediateReflection
         /// <exception cref="TargetInvocationException">The constructor being called throws an exception.</exception>
         /// <exception cref="TypeLoadException">If the <see cref="Type"/> is not a valid type.</exception>
         [PublicAPI]
-        [Pure]
         [NotNull]
         [ContractAnnotation("type:null => halt;args:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -133,8 +153,8 @@ namespace ImmediateReflection
         /// If <paramref name="args"/> is an empty array or null, the constructor that takes no parameters (the default constructor) is invoked.
         /// </param>
         /// <returns>True if the new instance was successfully created, false otherwise.</returns>
+        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> or <paramref name="args"/> is null.</exception>
         [PublicAPI]
-        [Pure]
         [ContractAnnotation("type:null => halt;args:null => halt;=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

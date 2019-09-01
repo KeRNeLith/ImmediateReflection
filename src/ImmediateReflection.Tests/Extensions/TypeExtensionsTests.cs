@@ -14,6 +14,19 @@ namespace ImmediateReflection.Tests
     [TestFixture]
     internal class TypeExtensionsTests : ImmediateReflectionTestsBase
     {
+        [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateHasDefaultConstructorTestCases))]
+        public bool HasDefaultConstructor([NotNull] Type type)
+        {
+            return TypeExtensions.HasDefaultConstructor(type);
+        }
+
+        [Test]
+        public void HasDefaultConstructor_Throws()
+        {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => TypeExtensions.HasDefaultConstructor(null));
+        }
+
         #region New/TryNew
 
         [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateDefaultConstructorTestCases))]
