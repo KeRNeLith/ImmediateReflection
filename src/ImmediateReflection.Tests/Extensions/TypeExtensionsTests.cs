@@ -169,6 +169,13 @@ namespace ImmediateReflection.Tests
             return TypeExtensions.HasCopyConstructor(type);
         }
 
+        [Test]
+        public void HasCopyConstructor_Throws()
+        {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => TypeExtensions.HasCopyConstructor(null));
+        }
+
         #region Copy/TryCopy
 
         [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorTestCases))]
@@ -183,6 +190,9 @@ namespace ImmediateReflection.Tests
         [Test]
         public void Copy_Throws()
         {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => TypeExtensions.Copy(null, new CopyConstructorClass(11)));
+
             Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(NoCopyConstructorClass), new NoCopyConstructorClass()));
             Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(NotAccessibleCopyConstructor), new NotAccessibleCopyConstructor()));
             Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(IList<int>), new List<int>()));
@@ -215,6 +225,13 @@ namespace ImmediateReflection.Tests
                 other,
                 expectFail,
                 (object o, out object instance, out Exception exception) => TypeExtensions.TryCopy(type, o, out instance, out exception));
+        }
+
+        [Test]
+        public void TryCopy_Throws()
+        {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryCopy(null, null, out _, out _));
         }
 
         #endregion
