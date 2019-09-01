@@ -13,6 +13,12 @@ references:
   commentId: T:ImmediateReflection.ConstructorDelegate
   fullName: ImmediateReflection.ConstructorDelegate
   nameWithType: ConstructorDelegate
+- uid: ImmediateReflection.CopyConstructorDelegate
+  name: CopyConstructorDelegate
+  href: api/ImmediateReflection.CopyConstructorDelegate.html
+  commentId: T:ImmediateReflection.CopyConstructorDelegate
+  fullName: ImmediateReflection.CopyConstructorDelegate
+  nameWithType: CopyConstructorDelegate
 - uid: ImmediateReflection.DefaultConstructorDelegate
   name: DefaultConstructorDelegate
   href: api/ImmediateReflection.DefaultConstructorDelegate.html
@@ -872,6 +878,19 @@ references:
   isSpec: "True"
   fullName: ImmediateReflection.ImmediateType.BaseType
   nameWithType: ImmediateType.BaseType
+- uid: ImmediateReflection.ImmediateType.Copy(System.Object)
+  name: Copy(Object)
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Copy_System_Object_
+  commentId: M:ImmediateReflection.ImmediateType.Copy(System.Object)
+  fullName: ImmediateReflection.ImmediateType.Copy(System.Object)
+  nameWithType: ImmediateType.Copy(Object)
+- uid: ImmediateReflection.ImmediateType.Copy*
+  name: Copy
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Copy_
+  commentId: Overload:ImmediateReflection.ImmediateType.Copy
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.Copy
+  nameWithType: ImmediateType.Copy
 - uid: ImmediateReflection.ImmediateType.DeclaringType
   name: DeclaringType
   href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_DeclaringType
@@ -1021,6 +1040,19 @@ references:
   isSpec: "True"
   fullName: ImmediateReflection.ImmediateType.GetProperty
   nameWithType: ImmediateType.GetProperty
+- uid: ImmediateReflection.ImmediateType.HasCopyConstructor
+  name: HasCopyConstructor
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_HasCopyConstructor
+  commentId: P:ImmediateReflection.ImmediateType.HasCopyConstructor
+  fullName: ImmediateReflection.ImmediateType.HasCopyConstructor
+  nameWithType: ImmediateType.HasCopyConstructor
+- uid: ImmediateReflection.ImmediateType.HasCopyConstructor*
+  name: HasCopyConstructor
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_HasCopyConstructor_
+  commentId: Overload:ImmediateReflection.ImmediateType.HasCopyConstructor
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.HasCopyConstructor
+  nameWithType: ImmediateType.HasCopyConstructor
 - uid: ImmediateReflection.ImmediateType.HasDefaultConstructor
   name: HasDefaultConstructor
   href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_HasDefaultConstructor
@@ -1111,6 +1143,22 @@ references:
   isSpec: "True"
   fullName: ImmediateReflection.ImmediateType.ToString
   nameWithType: ImmediateType.ToString
+- uid: ImmediateReflection.ImmediateType.TryCopy(System.Object,System.Object@,System.Exception@)
+  name: TryCopy(Object, out Object, out Exception)
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_TryCopy_System_Object_System_Object__System_Exception__
+  commentId: M:ImmediateReflection.ImmediateType.TryCopy(System.Object,System.Object@,System.Exception@)
+  name.vb: TryCopy(Object, ByRef Object, ByRef Exception)
+  fullName: ImmediateReflection.ImmediateType.TryCopy(System.Object, out System.Object, out System.Exception)
+  fullName.vb: ImmediateReflection.ImmediateType.TryCopy(System.Object, ByRef System.Object, ByRef System.Exception)
+  nameWithType: ImmediateType.TryCopy(Object, out Object, out Exception)
+  nameWithType.vb: ImmediateType.TryCopy(Object, ByRef Object, ByRef Exception)
+- uid: ImmediateReflection.ImmediateType.TryCopy*
+  name: TryCopy
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_TryCopy_
+  commentId: Overload:ImmediateReflection.ImmediateType.TryCopy
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.TryCopy
+  nameWithType: ImmediateType.TryCopy
 - uid: ImmediateReflection.ImmediateType.TryNew(System.Object@,System.Exception@)
   name: TryNew(out Object, out Exception)
   href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_TryNew_System_Object__System_Exception__
@@ -1649,6 +1697,19 @@ references:
   commentId: T:ImmediateReflection.TypeExtensions
   fullName: ImmediateReflection.TypeExtensions
   nameWithType: TypeExtensions
+- uid: ImmediateReflection.TypeExtensions.HasDefaultConstructor(System.Type)
+  name: HasDefaultConstructor(Type)
+  href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_HasDefaultConstructor_System_Type_
+  commentId: M:ImmediateReflection.TypeExtensions.HasDefaultConstructor(System.Type)
+  fullName: ImmediateReflection.TypeExtensions.HasDefaultConstructor(System.Type)
+  nameWithType: TypeExtensions.HasDefaultConstructor(Type)
+- uid: ImmediateReflection.TypeExtensions.HasDefaultConstructor*
+  name: HasDefaultConstructor
+  href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_HasDefaultConstructor_
+  commentId: Overload:ImmediateReflection.TypeExtensions.HasDefaultConstructor
+  isSpec: "True"
+  fullName: ImmediateReflection.TypeExtensions.HasDefaultConstructor
+  nameWithType: TypeExtensions.HasDefaultConstructor
 - uid: ImmediateReflection.TypeExtensions.New(System.Type)
   name: New(Type)
   href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_New_System_Type_
