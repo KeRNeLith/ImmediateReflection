@@ -115,19 +115,19 @@
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_TypeExtensions_Copy_System_Type_System_Object_.md&amp;value=---%0Auid%3A%20ImmediateReflection.TypeExtensions.Copy(System.Type%2CSystem.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_TypeExtensions_Copy__1_System_Type___0_.md&amp;value=---%0Auid%3A%20ImmediateReflection.TypeExtensions.Copy%60%601(System.Type%2C%60%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/Extensions/TypeExtensions.cs/#L214">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/Extensions/TypeExtensions.cs/#L226">View Source</a>
   </span>
   <a id="ImmediateReflection_TypeExtensions_Copy_" data-uid="ImmediateReflection.TypeExtensions.Copy*"></a>
-  <h4 id="ImmediateReflection_TypeExtensions_Copy_System_Type_System_Object_" data-uid="ImmediateReflection.TypeExtensions.Copy(System.Type,System.Object)">Copy(Type, Object)</h4>
+  <h4 id="ImmediateReflection_TypeExtensions_Copy__1_System_Type___0_" data-uid="ImmediateReflection.TypeExtensions.Copy``1(System.Type,``0)">Copy&lt;T&gt;(Type, T)</h4>
   <div class="markdown level1 summary"><p>Creates a copy instance of <code data-dev-comment-type="paramref" class="paramref">other</code> with this <code data-dev-comment-type="paramref" class="paramref">type</code>'s copy constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static object Copy(this Type type, object other)</code></pre>
+    <pre><code class="lang-csharp hljs">public static T Copy&lt;T&gt;(this Type type, T other)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -146,7 +146,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Object</span></td>
+        <td><span class="xref">T</span></td>
         <td><span class="parametername">other</span></td>
         <td><p>Object to copy.</p>
 </td>
@@ -163,8 +163,24 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Object</span></td>
+        <td><span class="xref">T</span></td>
         <td><p>A reference to the newly created object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Object type.</p>
 </td>
       </tr>
     </tbody>
@@ -521,19 +537,19 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_TypeExtensions_TryCopy_System_Type_System_Object_System_Object__System_Exception__.md&amp;value=---%0Auid%3A%20ImmediateReflection.TypeExtensions.TryCopy(System.Type%2CSystem.Object%2CSystem.Object%40%2CSystem.Exception%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_TypeExtensions_TryCopy__1_System_Type___0___0__System_Exception__.md&amp;value=---%0Auid%3A%20ImmediateReflection.TypeExtensions.TryCopy%60%601(System.Type%2C%60%600%2C%60%600%40%2CSystem.Exception%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/Extensions/TypeExtensions.cs/#L240">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/Extensions/TypeExtensions.cs/#L252">View Source</a>
   </span>
   <a id="ImmediateReflection_TypeExtensions_TryCopy_" data-uid="ImmediateReflection.TypeExtensions.TryCopy*"></a>
-  <h4 id="ImmediateReflection_TypeExtensions_TryCopy_System_Type_System_Object_System_Object__System_Exception__" data-uid="ImmediateReflection.TypeExtensions.TryCopy(System.Type,System.Object,System.Object@,System.Exception@)">TryCopy(Type, Object, out Object, out Exception)</h4>
+  <h4 id="ImmediateReflection_TypeExtensions_TryCopy__1_System_Type___0___0__System_Exception__" data-uid="ImmediateReflection.TypeExtensions.TryCopy``1(System.Type,``0,``0@,System.Exception@)">TryCopy&lt;T&gt;(Type, T, out T, out Exception)</h4>
   <div class="markdown level1 summary"><p>Tries to create a copy instance of <code data-dev-comment-type="paramref" class="paramref">other</code> with this <code data-dev-comment-type="paramref" class="paramref">type</code>'s copy constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool TryCopy(this Type type, object other, out object newInstance, out Exception exception)</code></pre>
+    <pre><code class="lang-csharp hljs">public static bool TryCopy&lt;T&gt;(this Type type, T other, out T newInstance, out Exception exception)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -552,13 +568,13 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Object</span></td>
+        <td><span class="xref">T</span></td>
         <td><span class="parametername">other</span></td>
         <td><p>Object to copy.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Object</span></td>
+        <td><span class="xref">T</span></td>
         <td><span class="parametername">newInstance</span></td>
         <td><p>A reference to the newly created object, otherwise null.</p>
 </td>
@@ -587,7 +603,23 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
       </tr>
     </tbody>
   </table>
-  <h5 id="ImmediateReflection_TypeExtensions_TryCopy_System_Type_System_Object_System_Object__System_Exception___remarks">Remarks</h5>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Object type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="ImmediateReflection_TypeExtensions_TryCopy__1_System_Type___0___0__System_Exception___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This method will not throw if instantiation failed.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>

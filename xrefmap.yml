@@ -1751,12 +1751,6 @@ references:
   commentId: T:ImmediateReflection.TypeExtensions
   fullName: ImmediateReflection.TypeExtensions
   nameWithType: TypeExtensions
-- uid: ImmediateReflection.TypeExtensions.Copy(System.Type,System.Object)
-  name: Copy(Type, Object)
-  href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_Copy_System_Type_System_Object_
-  commentId: M:ImmediateReflection.TypeExtensions.Copy(System.Type,System.Object)
-  fullName: ImmediateReflection.TypeExtensions.Copy(System.Type, System.Object)
-  nameWithType: TypeExtensions.Copy(Type, Object)
 - uid: ImmediateReflection.TypeExtensions.Copy*
   name: Copy
   href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_Copy_
@@ -1764,6 +1758,15 @@ references:
   isSpec: "True"
   fullName: ImmediateReflection.TypeExtensions.Copy
   nameWithType: TypeExtensions.Copy
+- uid: ImmediateReflection.TypeExtensions.Copy``1(System.Type,``0)
+  name: Copy<T>(Type, T)
+  href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_Copy__1_System_Type___0_
+  commentId: M:ImmediateReflection.TypeExtensions.Copy``1(System.Type,``0)
+  name.vb: Copy(Of T)(Type, T)
+  fullName: ImmediateReflection.TypeExtensions.Copy<T>(System.Type, T)
+  fullName.vb: ImmediateReflection.TypeExtensions.Copy(Of T)(System.Type, T)
+  nameWithType: TypeExtensions.Copy<T>(Type, T)
+  nameWithType.vb: TypeExtensions.Copy(Of T)(Type, T)
 - uid: ImmediateReflection.TypeExtensions.HasCopyConstructor(System.Type)
   name: HasCopyConstructor(Type)
   href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_HasCopyConstructor_System_Type_
@@ -1812,15 +1815,6 @@ references:
   isSpec: "True"
   fullName: ImmediateReflection.TypeExtensions.New
   nameWithType: TypeExtensions.New
-- uid: ImmediateReflection.TypeExtensions.TryCopy(System.Type,System.Object,System.Object@,System.Exception@)
-  name: TryCopy(Type, Object, out Object, out Exception)
-  href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_TryCopy_System_Type_System_Object_System_Object__System_Exception__
-  commentId: M:ImmediateReflection.TypeExtensions.TryCopy(System.Type,System.Object,System.Object@,System.Exception@)
-  name.vb: TryCopy(Type, Object, ByRef Object, ByRef Exception)
-  fullName: ImmediateReflection.TypeExtensions.TryCopy(System.Type, System.Object, out System.Object, out System.Exception)
-  fullName.vb: ImmediateReflection.TypeExtensions.TryCopy(System.Type, System.Object, ByRef System.Object, ByRef System.Exception)
-  nameWithType: TypeExtensions.TryCopy(Type, Object, out Object, out Exception)
-  nameWithType.vb: TypeExtensions.TryCopy(Type, Object, ByRef Object, ByRef Exception)
 - uid: ImmediateReflection.TypeExtensions.TryCopy*
   name: TryCopy
   href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_TryCopy_
@@ -1828,6 +1822,15 @@ references:
   isSpec: "True"
   fullName: ImmediateReflection.TypeExtensions.TryCopy
   nameWithType: TypeExtensions.TryCopy
+- uid: ImmediateReflection.TypeExtensions.TryCopy``1(System.Type,``0,``0@,System.Exception@)
+  name: TryCopy<T>(Type, T, out T, out Exception)
+  href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_TryCopy__1_System_Type___0___0__System_Exception__
+  commentId: M:ImmediateReflection.TypeExtensions.TryCopy``1(System.Type,``0,``0@,System.Exception@)
+  name.vb: TryCopy(Of T)(Type, T, ByRef T, ByRef Exception)
+  fullName: ImmediateReflection.TypeExtensions.TryCopy<T>(System.Type, T, out T, out System.Exception)
+  fullName.vb: ImmediateReflection.TypeExtensions.TryCopy(Of T)(System.Type, T, ByRef T, ByRef System.Exception)
+  nameWithType: TypeExtensions.TryCopy<T>(Type, T, out T, out Exception)
+  nameWithType.vb: TypeExtensions.TryCopy(Of T)(Type, T, ByRef T, ByRef Exception)
 - uid: ImmediateReflection.TypeExtensions.TryNew(System.Type,System.Object@,System.Exception@)
   name: TryNew(Type, out Object, out Exception)
   href: api/ImmediateReflection.TypeExtensions.html#ImmediateReflection_TypeExtensions_TryNew_System_Type_System_Object__System_Exception__
