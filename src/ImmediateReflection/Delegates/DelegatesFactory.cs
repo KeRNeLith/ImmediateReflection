@@ -159,18 +159,21 @@ namespace ImmediateReflection
                 return other => throw new ArgumentException($"Trying to call copy constructor on {RuntimeTypeName}.");
             if (type.ContainsGenericParameters)
                 return other => throw new ArgumentException($"Class {type.Name} has at least one template parameter not defined.");
-            if (type.IsAbstract)
-                return other => throw new MissingMethodException($"Abstract class {type.Name} cannot be copied.");
             if (type.IsArray)
                 // ReSharper disable once PossibleNullReferenceException, Justification: Type is an array so it must have an element type.
                 return other => throw new MissingMethodException($"There is no copy constructor for array of {type.GetElementType().Name}.");
 
             // Simply return the value itself for value types
-            if (type.IsValueType)
+            // String are immutable and does not provide a copy constructor but treat them as if they have one
+            // Type are singleton type so the copy is the type itself
+            if (type.IsValueType || type == typeof(string) || type == typeof(Type))
             {
                 hasConstructor = true;
                 return other => other;
             }
+
+            if (type.IsAbstract)
+                return other => throw new MissingMethodException($"Abstract class {type.Name} cannot be copied.");
 
             // Get the copy constructor if available (with exact type matching for the parameter)
             ConstructorInfo constructor = type.GetConstructor(new[]{ type });
@@ -197,12 +200,8 @@ namespace ImmediateReflection
             void CheckParameterIsOfRightType()
             {
                 Label paramIsValid = generator.DefineLabel();
-                generator.Emit(OpCodes.Ldarg_0);
-                generator.Emit(OpCodes.Ldnull);
-                generator.Emit(OpCodes.Ceq);
-                generator.Emit(OpCodes.Brtrue_S, paramIsValid);
 
-                // other != null
+                // other is not null there
                 generator.Emit(OpCodes.Ldarg_0);
                 CallMethod(generator, GetTypeMethod);
                 generator.Emit(OpCodes.Ldtoken, type);
@@ -215,7 +214,6 @@ namespace ImmediateReflection
                 generator.Emit(OpCodes.Newobj, ArgumentExceptionCtor);
                 generator.Emit(OpCodes.Throw);
 
-                // other is null
                 generator.MarkLabel(paramIsValid);
             }
 

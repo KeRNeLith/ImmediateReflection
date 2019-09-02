@@ -1,8 +1,5 @@
 #if SUPPORTS_CACHING
 using System;
-#if SUPPORTS_AGGRESSIVE_INLINING
-using System.Runtime.CompilerServices;
-#endif
 using JetBrains.Annotations;
 
 namespace ImmediateReflection
@@ -16,6 +13,7 @@ namespace ImmediateReflection
         /// <summary>
         /// Checks if this <paramref name="instance"/> can be copied by a copy constructor.
         /// </summary>
+        /// <typeparam name="T">Instance type.</typeparam>
         /// <param name="instance">Object to check if its <see cref="Type"/> has a copy constructor.</param>
         /// <returns>True if the <paramref name="instance"/> can be copied, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="instance"/> is null.</exception>
@@ -30,12 +28,15 @@ namespace ImmediateReflection
         {
             if (instance == null)
                 throw new ArgumentNullException(nameof(instance));
+            if (instance is Type)
+                return true;
             return CachesHandler.Instance.GetCopyConstructor(instance.GetType()).HasConstructor;
         }
 
         /// <summary>
         /// Creates a copy instance of this <paramref name="instance"/> with its copy constructor.
         /// </summary>
+        /// <typeparam name="T">Instance type.</typeparam>
         /// <param name="instance">Object to copy.</param>
         /// <returns>A reference to the newly created object.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="instance"/> is null.</exception>
@@ -44,23 +45,25 @@ namespace ImmediateReflection
         /// or constructor exists but was not considered as copy constructor.
         /// </exception>
         [PublicAPI]
-        [NotNull]
-        [ContractAnnotation("instance:null => halt")]
+        [ContractAnnotation("instance:null => null;instance:notnull => notnull")]
         public static T Copy<T>(
 #if SUPPORTS_EXTENSIONS
-            [NotNull] this T instance)
+            [CanBeNull] this T instance)
 #else
-            [NotNull] T instance)
+            [CanBeNull] T instance)
 #endif
         {
             if (instance == null)
-                throw new ArgumentNullException(nameof(instance));
+                return default(T);
+            if (instance is Type)
+                return instance;
             return (T)CachesHandler.Instance.GetCopyConstructor(instance.GetType()).Constructor(instance);
         }
 
         /// <summary>
         /// Tries to create a copy instance of this <paramref name="newInstance"/> with its copy constructor.
         /// </summary>
+        /// <typeparam name="T">Instance type.</typeparam>
         /// <remarks>This method will not throw if instantiation failed.</remarks>
         /// <param name="instance">Object to copy.</param>
         /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
@@ -68,23 +71,23 @@ namespace ImmediateReflection
         /// <returns>True if the new instance was successfully created, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="instance"/> is null.</exception>
         [PublicAPI]
-        [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
+        [ContractAnnotation("instance:null => true, newInstance:null, exception:null;"
+                            + "instance:notnull => true, newInstance:notnull, exception:null;"
+                            + "instance:null => false, newInstance:null, exception:notnull;"
+                            + "instance:notnull => false, newInstance:null, exception:notnull")]
         public static bool TryCopy<T>(
 #if SUPPORTS_EXTENSIONS
-            [NotNull] this T instance,
+            [CanBeNull] this T instance,
 #else
-            [NotNull] T instance,
+            [CanBeNull] T instance,
 #endif
             out T newInstance,
             out Exception exception)
         {
-            if (instance == null)
-                throw new ArgumentNullException(nameof(instance));
-
             try
             {
                 exception = null;
-                newInstance = (T)CachesHandler.Instance.GetCopyConstructor(instance.GetType()).Constructor(instance);
+                newInstance = Copy(instance);
                 return true;
             }
             catch (Exception ex)

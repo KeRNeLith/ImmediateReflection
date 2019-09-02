@@ -757,6 +757,8 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(List<int>)) { ExpectedResult = true };
                 yield return new TestCaseData(typeof(Dictionary<int, string>)) { ExpectedResult = true };
 
+                yield return new TestCaseData(typeof(string)) { ExpectedResult = false };
+                yield return new TestCaseData(typeof(Type)) { ExpectedResult = false };
                 yield return new TestCaseData(typeof(NoDefaultConstructor)) { ExpectedResult = false };
                 yield return new TestCaseData(typeof(NotAccessibleDefaultConstructor)) { ExpectedResult = false };
                 yield return new TestCaseData(typeof(AbstractDefaultConstructor)) { ExpectedResult = false };
@@ -827,6 +829,8 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(List<int>), false);
                 yield return new TestCaseData(typeof(Dictionary<int, string>), false);
 
+                yield return new TestCaseData(typeof(string), true);
+                yield return new TestCaseData(typeof(Type), true);
                 yield return new TestCaseData(typeof(NoDefaultConstructor), true);
                 yield return new TestCaseData(typeof(NotAccessibleDefaultConstructor), true);
                 yield return new TestCaseData(typeof(IList<int>), true);
@@ -981,6 +985,8 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(List<int>), false, null);
                 yield return new TestCaseData(typeof(Dictionary<int, string>), false, null);
 
+                yield return new TestCaseData(typeof(string), true, null);
+                yield return new TestCaseData(typeof(Type), true, null);
                 yield return new TestCaseData(typeof(NoDefaultConstructor), true, null);
                 yield return new TestCaseData(typeof(NotAccessibleDefaultConstructor), true, null);
                 yield return new TestCaseData(typeof(AbstractDefaultConstructor), true, null);
@@ -1031,6 +1037,10 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(int), true, new object[] { 12 });
                 yield return new TestCaseData(typeof(TestStruct), true, new object[] { 12 });
                 yield return new TestCaseData(typeof(TestEnum), true, new object[] { 1 });
+                yield return new TestCaseData(typeof(string), true, new object[] { });
+                yield return new TestCaseData(typeof(string), true, new object[] { "str" });
+                yield return new TestCaseData(typeof(Type), true, new object[] { });
+                yield return new TestCaseData(typeof(Type), true, new object[] { typeof(int) });
                 yield return new TestCaseData(typeof(DefaultConstructor), true, new object[] { 12 });
                 yield return new TestCaseData(typeof(MultipleConstructors), true, new object[] { 12.5f, 12 });
                 yield return new TestCaseData(typeof(TemplateStruct<double>), true, new object[] { 25 });
@@ -1095,15 +1105,21 @@ namespace ImmediateReflection.Tests
             [UsedImplicitly]
             get
             {
-                yield return new TestCaseData(typeof(int)) { ExpectedResult = true };        // Not has a real copy constructor but it's more convenient
-                yield return new TestCaseData(typeof(TestStruct)) { ExpectedResult = true }; // Not has a real copy constructor but it's more convenient
-                yield return new TestCaseData(typeof(TestEnum)) { ExpectedResult = true };   // Not has a real copy constructor but it's more convenient
+                // Not has a real copy constructor but it's more convenient
+                yield return new TestCaseData(typeof(int)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(TestStruct)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(TestEnum)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(string)) { ExpectedResult = true };
+                yield return new TestCaseData(typeof(Type)) { ExpectedResult = true };
+
+                // Normal copy constructor
                 yield return new TestCaseData(typeof(CopyConstructorClass)) { ExpectedResult = true };
                 yield return new TestCaseData(typeof(CopyInheritedCopyConstructorClass)) { ExpectedResult = true };
                 yield return new TestCaseData(typeof(MultipleCopyConstructorClass)) { ExpectedResult = true };
                 yield return new TestCaseData(typeof(TemplateCopyConstructor<double>)) { ExpectedResult = true };
                 yield return new TestCaseData(typeof(CopyConstructorThrows)) { ExpectedResult = true };
 
+                // No copy constructor
                 yield return new TestCaseData(typeof(NoCopyConstructorClass)) { ExpectedResult = false };
                 yield return new TestCaseData(typeof(NoCopyInheritedCopyConstructorClass)) { ExpectedResult = false };
                 yield return new TestCaseData(typeof(BaseCopyInheritedCopyConstructorClass)) { ExpectedResult = false };
@@ -1129,9 +1145,15 @@ namespace ImmediateReflection.Tests
             [UsedImplicitly]
             get
             {
+                yield return new TestCaseData(typeof(CopyConstructorClass), null);
+                yield return new TestCaseData(typeof(NoCopyConstructorClass), null);
+                yield return new TestCaseData(typeof(AbstractCopyConstructor), null);
+
                 yield return new TestCaseData(typeof(int), 25);
                 yield return new TestCaseData(typeof(TestStruct), new TestStruct { TestValue = 12 });
                 yield return new TestCaseData(typeof(TestEnum), TestEnum.EnumValue2);
+                yield return new TestCaseData(typeof(string), "string test value");
+                yield return new TestCaseData(typeof(Type), typeof(int));
                 yield return new TestCaseData(typeof(CopyConstructorClass), new CopyConstructorClass(42));
                 yield return new TestCaseData(typeof(CopyInheritedCopyConstructorClass), new CopyInheritedCopyConstructorClass(28));
                 yield return new TestCaseData(typeof(MultipleCopyConstructorClass), new MultipleCopyConstructorClass(56));
@@ -1142,8 +1164,10 @@ namespace ImmediateReflection.Tests
         public static void Copy([NotNull] Type type, [CanBeNull] object other, [NotNull, InstantHandle] Func<object, object> ctor)
         {
             object instance = ctor(other);
-            Assert.IsNotNull(instance);
-            if (type.IsValueType)
+
+            if (other is null)
+                Assert.IsNull(instance);
+            else if (type.IsValueType || type == typeof(string) || type == typeof(Type))
                 Assert.AreEqual(other, instance);
             else
                 Assert.AreEqual(Activator.CreateInstance(type, other), instance);
@@ -1155,9 +1179,15 @@ namespace ImmediateReflection.Tests
             [UsedImplicitly]
             get
             {
+                yield return new TestCaseData(typeof(CopyConstructorClass), null, false);
+                yield return new TestCaseData(typeof(NoCopyConstructorClass), null, false);
+                yield return new TestCaseData(typeof(AbstractCopyConstructor), null, false);
+
                 yield return new TestCaseData(typeof(int), 1, false);
                 yield return new TestCaseData(typeof(TestStruct), new TestStruct { TestValue = 2 }, false);
                 yield return new TestCaseData(typeof(TestEnum), TestEnum.EnumValue2, false);
+                yield return new TestCaseData(typeof(string), "string test value", false);
+                yield return new TestCaseData(typeof(Type), typeof(int), false);
                 yield return new TestCaseData(typeof(CopyConstructorClass), new CopyConstructorClass(3), false);
                 yield return new TestCaseData(typeof(CopyInheritedCopyConstructorClass), new CopyInheritedCopyConstructorClass(4), false);
                 yield return new TestCaseData(typeof(MultipleCopyConstructorClass), new MultipleCopyConstructorClass(5), false);
@@ -1175,12 +1205,12 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(IList<int>), new List<int>(), true);
                 yield return new TestCaseData(typeof(IDictionary<int, string>), new Dictionary<int, string>(), true);
                 yield return new TestCaseData(typeof(int[]), new int[0], true);
-                yield return new TestCaseData(typeof(AbstractCopyConstructor), null, true);
-                yield return new TestCaseData(typeof(StaticClass), null, true);
-                yield return new TestCaseData(typeof(TemplateStruct<>), null, true);
-                yield return new TestCaseData(typeof(TemplateCopyConstructor<>), null, true);
+                yield return new TestCaseData(typeof(AbstractCopyConstructor), new CopyConstructorClass(12), true);
+                yield return new TestCaseData(typeof(StaticClass), new CopyConstructorClass(12), true);
+                yield return new TestCaseData(typeof(TemplateStruct<>), new CopyConstructorClass(12), true);
+                yield return new TestCaseData(typeof(TemplateCopyConstructor<>), new CopyConstructorClass(12), true);
                 // ReSharper disable once PossibleMistakenCallToGetType.2
-                yield return new TestCaseData(typeof(CopyConstructorClass).GetType(), null, true);
+                yield return new TestCaseData(typeof(CopyConstructorClass).GetType(), new CopyConstructorClass(12), true);
                 yield return new TestCaseData(typeof(CopyConstructorThrows), new CopyConstructorThrows(), true);
             }
         }
@@ -1197,8 +1227,9 @@ namespace ImmediateReflection.Tests
             }
             else
             {
-                Assert.IsNotNull(instance);
-                if (type.IsValueType)
+                if (other is null)
+                    Assert.IsNull(instance);
+                else if (type.IsValueType || type == typeof(string) || type == typeof(Type))
                     Assert.AreEqual(other, instance);
                 else
                     Assert.AreEqual(Activator.CreateInstance(type, other), instance);

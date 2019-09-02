@@ -409,9 +409,11 @@ namespace ImmediateReflection
         /// </exception>
         [PublicAPI]
         [Pure]
-        [NotNull]
+        [ContractAnnotation("other:null => null; other:notnull => notnull")]
         public object Copy([CanBeNull] object other)
         {
+            if (other is null)
+                return null;
             return _copyConstructor(other);
         }
 
@@ -425,13 +427,16 @@ namespace ImmediateReflection
         /// <returns>True if the new instance was successfully created, false otherwise.</returns>
         [PublicAPI]
         [Pure]
-        [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
+        [ContractAnnotation("other:null => true, newInstance:null, exception:null;"
+                            + "other:notnull => true, newInstance:notnull, exception:null;"
+                            + "other:null => false, newInstance:null, exception:notnull;"
+                            + "other:notnull => false, newInstance:null, exception:notnull")]
         public bool TryCopy([CanBeNull] object other, out object newInstance, out Exception exception)
         {
             try
             {
                 exception = null;
-                newInstance = _copyConstructor(other);
+                newInstance = Copy(other);
                 return true;
             }
             catch (Exception ex)

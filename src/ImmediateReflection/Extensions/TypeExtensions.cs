@@ -196,9 +196,21 @@ namespace ImmediateReflection
             return CachesHandler.Instance.GetCopyConstructor(type).HasConstructor;
         }
 
+        [CanBeNull]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        private static T CopyInternal<T>([NotNull] Type type, [CanBeNull] T instance)
+        {
+            if (instance == null)
+                return default(T);
+            return (T)CachesHandler.Instance.GetCopyConstructor(type).Constructor(instance);
+        }
+
         /// <summary>
         /// Creates a copy instance of <paramref name="other"/> with this <paramref name="type"/>'s copy constructor.
         /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
         /// <param name="type"><see cref="Type"/> of the object to copy.</param>
         /// <param name="other">Object to copy.</param>
         /// <returns>A reference to the newly created object.</returns>
@@ -212,25 +224,25 @@ namespace ImmediateReflection
         /// or constructor exists but was not considered as copy constructor.
         /// </exception>
         [PublicAPI]
-        [NotNull]
-        [ContractAnnotation("type:null => halt")]
-        public static object Copy(
+        [ContractAnnotation("type:null => halt; other:null => null; other:notnull => notnull")]
+        public static T Copy<T>(
 #if SUPPORTS_EXTENSIONS
             [NotNull] this Type type,
 #else
             [NotNull] Type type,
 #endif
-            [CanBeNull] object other)
+            [CanBeNull] T other)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
-            return CachesHandler.Instance.GetCopyConstructor(type).Constructor(other);
+            return CopyInternal(type, other);
         }
 
         /// <summary>
         /// Tries to create a copy instance of <paramref name="other"/> with this <paramref name="type"/>'s copy constructor.
         /// </summary>
         /// <remarks>This method will not throw if instantiation failed.</remarks>
+        /// <typeparam name="T">Object type.</typeparam>
         /// <param name="type"><see cref="Type"/> of the object to copy.</param>
         /// <param name="other">Object to copy.</param>
         /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
@@ -238,15 +250,19 @@ namespace ImmediateReflection
         /// <returns>True if the new instance was successfully created, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [PublicAPI]
-        [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
-        public static bool TryCopy(
+        [ContractAnnotation("type:null => halt;"
+                            + "other:null => true, newInstance:null, exception:null;"
+                            + "other:notnull => true, newInstance:notnull, exception:null;"
+                            + "other:null => false, newInstance:null, exception:notnull;"
+                            + "other:notnull => false, newInstance:null, exception:notnull")]
+        public static bool TryCopy<T>(
 #if SUPPORTS_EXTENSIONS
             [NotNull] this Type type,
 #else
             [NotNull] Type type,
 #endif
-            [CanBeNull] object other,
-            out object newInstance,
+            [CanBeNull] T other,
+            out T newInstance,
             out Exception exception)
         {
             if (type is null)
@@ -255,12 +271,12 @@ namespace ImmediateReflection
             try
             {
                 exception = null;
-                newInstance = CachesHandler.Instance.GetCopyConstructor(type).Constructor(other);
+                newInstance = CopyInternal(type, other);
                 return true;
             }
             catch (Exception ex)
             {
-                newInstance = null;
+                newInstance = default(T);
                 exception = ex;
                 return false;
             }

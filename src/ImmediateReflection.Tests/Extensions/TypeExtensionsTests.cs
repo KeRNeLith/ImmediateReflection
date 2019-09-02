@@ -197,19 +197,19 @@ namespace ImmediateReflection.Tests
             Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(NotAccessibleCopyConstructor), new NotAccessibleCopyConstructor()));
             Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(IList<int>), new List<int>()));
             Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(IDictionary<int, string>), new Dictionary<int, string>()));
-            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(AbstractCopyConstructor), null));
-            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(StaticClass), null));
-            Assert.Throws<ArgumentException>(() => TypeExtensions.Copy(typeof(TemplateStruct<>), null));
-            Assert.Throws<ArgumentException>(() => TypeExtensions.Copy(typeof(TemplateCopyConstructor<>), null));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(AbstractCopyConstructor), new CopyConstructorClass(12)));
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(StaticClass), new CopyConstructorClass(12)));
+            Assert.Throws<ArgumentException>(() => TypeExtensions.Copy(typeof(TemplateStruct<>), new CopyConstructorClass(12)));
+            Assert.Throws<ArgumentException>(() => TypeExtensions.Copy(typeof(TemplateCopyConstructor<>), new CopyConstructorClass(12)));
             Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(NoCopyInheritedCopyConstructorClass), new NoCopyInheritedCopyConstructorClass(1)));
             Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(NoCopyInheritedCopyConstructorClass), new CopyConstructorClass(2)));
             Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(BaseCopyInheritedCopyConstructorClass), new BaseCopyInheritedCopyConstructorClass(3)));
-            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(BaseCopyInheritedCopyConstructorClass), new CopyConstructorClass(4))); // Constructor exists but is not considered as copy constructor
+            Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(BaseCopyInheritedCopyConstructorClass), new CopyConstructorClass(4)));               // Constructor exists but is not considered as copy constructor
             Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(SpecializedCopyConstructorClass),  new SpecializedCopyConstructorClass(5)));
             Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(SpecializedCopyConstructorClass), new InheritedSpecializedCopyConstructorClass(6))); // Constructor exists but is not considered as copy constructor
-            Assert.Throws<ArgumentException>(() => TypeExtensions.Copy(typeof(MultipleCopyConstructorClass), new InheritedMultipleCopyConstructorClass(12))); // Constructor exists but is not considered as copy constructor
+            Assert.Throws<ArgumentException>(() => TypeExtensions.Copy(typeof(MultipleCopyConstructorClass), new InheritedMultipleCopyConstructorClass(12)));           // Constructor exists but is not considered as copy constructor
             // ReSharper disable once PossibleMistakenCallToGetType.2
-            Assert.Throws<ArgumentException>(() => TypeExtensions.Copy(typeof(CopyConstructorClass).GetType(), null));
+            Assert.Throws<ArgumentException>(() => TypeExtensions.Copy(typeof(CopyConstructorClass).GetType(), new CopyConstructorClass(12)));
             Assert.Throws(Is.InstanceOf<Exception>(), () => TypeExtensions.Copy(typeof(CopyConstructorThrows), new CopyConstructorThrows()));
             Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(int[]), new int[0]));
 
@@ -231,7 +231,7 @@ namespace ImmediateReflection.Tests
         public void TryCopy_Throws()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryCopy(null, null, out _, out _));
+            Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryCopy<object>(null, null, out _, out _));
         }
 
         #endregion

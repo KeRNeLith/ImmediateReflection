@@ -19,14 +19,23 @@ namespace ImmediateReflection.Tests
             [UsedImplicitly]
             get
             {
-                yield return new TestCaseData(42) { ExpectedResult = true };                            // Not has a real copy constructor but it's more convenient
-                yield return new TestCaseData(new TestStruct { TestValue = 12 }) { ExpectedResult = true }; // Not has a real copy constructor but it's more convenient
-                yield return new TestCaseData(TestEnum.EnumValue2) { ExpectedResult = true };           // Not has a real copy constructor but it's more convenient
+                // Not has a real copy constructor but it's more convenient
+                yield return new TestCaseData(42) { ExpectedResult = true };
+                yield return new TestCaseData(new TestStruct { TestValue = 12 }) { ExpectedResult = true }; 
+                yield return new TestCaseData(TestEnum.EnumValue2) { ExpectedResult = true };
+                yield return new TestCaseData("string value") { ExpectedResult = true };
+                yield return new TestCaseData(typeof(double)) { ExpectedResult = true };
+
+                // Normal copy constructor
                 yield return new TestCaseData(new CopyConstructorClass(25)) { ExpectedResult = true };
                 yield return new TestCaseData(new CopyInheritedCopyConstructorClass(66)) { ExpectedResult = true };
                 yield return new TestCaseData(new MultipleCopyConstructorClass(33)) { ExpectedResult = true };
                 yield return new TestCaseData(new TemplateCopyConstructor<double>(7.5)) { ExpectedResult = true };
 
+                // Has copy constructor but not usable
+                yield return new TestCaseData(typeof(AbstractCopyConstructor)) { ExpectedResult = true };
+
+                // No copy constructor
                 yield return new TestCaseData(new NoCopyConstructorClass()) { ExpectedResult = false };
                 yield return new TestCaseData(new NoCopyInheritedCopyConstructorClass(1)) { ExpectedResult = false };
                 yield return new TestCaseData(new BaseCopyInheritedCopyConstructorClass(2)) { ExpectedResult = false };
@@ -49,7 +58,7 @@ namespace ImmediateReflection.Tests
         public void HasCopyConstructor_Throws()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() => ObjectExtensions.HasCopyConstructor<PublicTestClass>(null));
+            Assert.Throws<ArgumentNullException>(() => ObjectExtensions.HasCopyConstructor<object>(null));
         }
 
         #region Copy/TryCopy
@@ -66,9 +75,6 @@ namespace ImmediateReflection.Tests
         [Test]
         public void Copy_Throws()
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Copy<PublicTestClass>(null));
-
             Assert.Throws<MissingMethodException>(() => ObjectExtensions.Copy(new NoCopyConstructorClass()));
             Assert.Throws<MissingMethodException>(() => ObjectExtensions.Copy(new NotAccessibleCopyConstructor()));
             Assert.Throws<MissingMethodException>(() => ObjectExtensions.Copy(new List<int>()));
@@ -86,14 +92,25 @@ namespace ImmediateReflection.Tests
             [UsedImplicitly]
             get
             {
-                yield return new TestCaseData(typeof(int), 42, false);                                       // Not has a real copy constructor but it's more convenient
-                yield return new TestCaseData(typeof(TestStruct), new TestStruct { TestValue = 12 }, false); // Not has a real copy constructor but it's more convenient
-                yield return new TestCaseData(typeof(TestEnum), TestEnum.EnumValue2, false);                 // Not has a real copy constructor but it's more convenient
+                // Null instance always return null
+                yield return new TestCaseData(typeof(CopyConstructorClass), null, false);
+                yield return new TestCaseData(typeof(NoCopyConstructorClass), null, false);
+                yield return new TestCaseData(typeof(AbstractCopyConstructor), null, false);
+
+                // Not has a real copy constructor but it's more convenient
+                yield return new TestCaseData(typeof(int), 42, false);
+                yield return new TestCaseData(typeof(TestStruct), new TestStruct { TestValue = 12 }, false);
+                yield return new TestCaseData(typeof(TestEnum), TestEnum.EnumValue2, false);
+                yield return new TestCaseData(typeof(string), "string test", false);
+                yield return new TestCaseData(typeof(Type), typeof(float), false);
+
+                // Normal copy constructor
                 yield return new TestCaseData(typeof(CopyConstructorClass), new CopyConstructorClass(25), false);
                 yield return new TestCaseData(typeof(CopyInheritedCopyConstructorClass), new CopyInheritedCopyConstructorClass(66), false);
                 yield return new TestCaseData(typeof(MultipleCopyConstructorClass), new MultipleCopyConstructorClass(33), false);
                 yield return new TestCaseData(typeof(TemplateCopyConstructor<double>), new TemplateCopyConstructor<double>(7.5), false);
 
+                // No copy constructor
                 yield return new TestCaseData(typeof(NoCopyConstructorClass), new NoCopyConstructorClass(), true);
                 yield return new TestCaseData(typeof(NoCopyInheritedCopyConstructorClass), new NoCopyInheritedCopyConstructorClass(1), true);
                 yield return new TestCaseData(typeof(BaseCopyInheritedCopyConstructorClass), new BaseCopyInheritedCopyConstructorClass(2), true);
@@ -114,13 +131,6 @@ namespace ImmediateReflection.Tests
                 other,
                 expectFail,
                 (object o, out object instance, out Exception exception) => ObjectExtensions.TryCopy(o, out instance, out exception));
-        }
-
-        [Test]
-        public void TryCopy_Throws()
-        {
-            // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentNullException>(() => ObjectExtensions.TryCopy<PublicTestClass>(null, out _, out _));
         }
 
         #endregion

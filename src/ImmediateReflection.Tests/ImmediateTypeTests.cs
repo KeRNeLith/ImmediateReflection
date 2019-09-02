@@ -932,16 +932,16 @@ namespace ImmediateReflection.Tests
             Assert.Throws<MissingMethodException>(() => immediateType.Copy(new Dictionary<int, string>()));
 
             immediateType = new ImmediateType(typeof(AbstractCopyConstructor));
-            Assert.Throws<MissingMethodException>(() => immediateType.Copy(null));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(new CopyConstructorClass(12)));
 
             immediateType = new ImmediateType(typeof(StaticClass));
-            Assert.Throws<MissingMethodException>(() => immediateType.Copy(null));
+            Assert.Throws<MissingMethodException>(() => immediateType.Copy(new CopyConstructorClass(12)));
 
             immediateType = new ImmediateType(typeof(TemplateStruct<>));
-            Assert.Throws<ArgumentException>(() => immediateType.Copy(null));
+            Assert.Throws<ArgumentException>(() => immediateType.Copy(new CopyConstructorClass(12)));
 
             immediateType = new ImmediateType(typeof(TemplateCopyConstructor<>));
-            Assert.Throws<ArgumentException>(() => immediateType.Copy(null));
+            Assert.Throws<ArgumentException>(() => immediateType.Copy(new CopyConstructorClass(12)));
 
             immediateType = new ImmediateType(typeof(NoCopyInheritedCopyConstructorClass));
             Assert.Throws<MissingMethodException>(() => immediateType.Copy(new NoCopyInheritedCopyConstructorClass(1)));
@@ -966,7 +966,7 @@ namespace ImmediateReflection.Tests
 
             // ReSharper disable once PossibleMistakenCallToGetType.2
             immediateType = new ImmediateType(typeof(CopyConstructorClass).GetType());
-            Assert.Throws<ArgumentException>(() => immediateType.Copy(null));
+            Assert.Throws<ArgumentException>(() => immediateType.Copy(new CopyConstructorClass(12)));
 
             immediateType = new ImmediateType(typeof(CopyConstructorThrows));
             Assert.Throws(Is.InstanceOf<Exception>(), () => immediateType.Copy(new CopyConstructorThrows()));
