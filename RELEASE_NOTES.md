@@ -1,5 +1,12 @@
 # Release notes
 
+## What's new in 1.4.1 September 2 2019
+### Fixes:
+* Properly handle null parameter for Copy and TryCopy (return null).
+
+### Changes:
+* Copy and TryCopy consider string and Type as copyable types and return themselves if asked.
+
 ## What's new in 1.4.0 September 1 2019
 ### New:
 * Add an access to the Declaring Type directly through ImmediateType, ImmediateProperty and ImmediateField.

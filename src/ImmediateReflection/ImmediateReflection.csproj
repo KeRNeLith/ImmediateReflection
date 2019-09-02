@@ -39,19 +39,12 @@ See benchmarks here: https://kernelith.github.io/ImmediateReflection/documentati
 
     <IsPackable>true</IsPackable>
     <PackageId>ImmediateReflection</PackageId>
-    <PackageReleaseNotes>➟ Release 1.4.0
-New:
-- Add an access to the Declaring Type directly through ImmediateType, ImmediateProperty and ImmediateField.
-- Add an access to the Base Type directly through ImmediateType.
-- Add CopyConstructorDelegate delegate.
-- Add the possibility to call Copy constructor in a faster way than Activator from ImmediateType.
-- Add a type extension to check if a type has a default constructor.
-- Add type extensions to check if a type has a copy constructor and to directly call it.
-- Add object extensions to check if an instance can be copied by a copy constructor and to directly call it.
+    <PackageReleaseNotes>➟ Release 1.4.1
+Fixes:
+- Properly handle null parameter for Copy and TryCopy (return null).
 
 Changes:
-- Globally optimize the library by reducing the number of redundant null checks.
-- Slightly optimize the branching in generated code.</PackageReleaseNotes>
+- Copy and TryCopy consider string and Type as copyable types and return themselves if asked.</PackageReleaseNotes>
     <PackageTags>C# Reflection Fast Immediate Performance Delegate Dynamic</PackageTags>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
