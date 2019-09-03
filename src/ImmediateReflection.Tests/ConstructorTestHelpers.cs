@@ -1161,16 +1161,27 @@ namespace ImmediateReflection.Tests
             }
         }
 
+        private static void AssertEqualInstances([NotNull] Type type, [CanBeNull] object other, [CanBeNull] object instance)
+        {
+            if (other is null)
+            {
+                Assert.IsNull(instance);
+            }
+            else if (type.IsValueType || type == typeof(string) || type == typeof(Type))
+            {
+                Assert.AreEqual(other, instance);
+            }
+            else
+            {
+                Assert.AreEqual(Activator.CreateInstance(type, other), instance);
+                Assert.AreNotSame(other, instance);
+            }
+        }
+
         public static void Copy([NotNull] Type type, [CanBeNull] object other, [NotNull, InstantHandle] Func<object, object> ctor)
         {
             object instance = ctor(other);
-
-            if (other is null)
-                Assert.IsNull(instance);
-            else if (type.IsValueType || type == typeof(string) || type == typeof(Type))
-                Assert.AreEqual(other, instance);
-            else
-                Assert.AreEqual(Activator.CreateInstance(type, other), instance);
+            AssertEqualInstances(type, other, instance);
         }
 
         [NotNull, ItemNotNull]
@@ -1227,12 +1238,7 @@ namespace ImmediateReflection.Tests
             }
             else
             {
-                if (other is null)
-                    Assert.IsNull(instance);
-                else if (type.IsValueType || type == typeof(string) || type == typeof(Type))
-                    Assert.AreEqual(other, instance);
-                else
-                    Assert.AreEqual(Activator.CreateInstance(type, other), instance);
+                AssertEqualInstances(type, other, instance);
             }
         }
 
