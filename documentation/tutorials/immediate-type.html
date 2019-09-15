@@ -98,6 +98,32 @@ object newInstance = type.New();
 // You can also use the version that not throws in case of failure
 bool succeed = type.TryNew(out object instance, out Exception _);
 </code></pre>
+<h2 id="copy-an-instance">Copy an instance</h2>
+<p>The <code>ImmediateType</code> allows to create a copy of a given instance via a copy constructor if available. This feature is faster than making a traditional call to <code>Activator.CreateInstance(Type, Instance)</code>.</p>
+<p>Here is a quick example:</p>
+<pre><code class="lang-csharp">ImmediateType type = TypeAccessor.Get&lt;MySuperType&gt;();
+
+MySuperType instance = new MySuperType
+{
+    TestProperty = 12
+};
+
+// Create a copy instance of MySuperType
+object newInstance = type.Copy(instance);
+
+// You can also use the version that not throws in case of failure
+bool succeed = type.TryCopy(instance, out object newInstance, out Exception _);
+</code></pre>
+<p>Note also that a more easy way of using copy is available as extension directly when manipulating an instance.</p>
+<pre><code class="lang-csharp">MySuperType instance = new MySuperType
+{
+    TestProperty = 12
+};
+
+// Create a copy instance of MySuperType
+MySuperType newInstance = instance.Copy();
+</code></pre>
+<p>Obviously in such situation you would have directly called the copy constructor of <code>MySuperType</code>, but we have to keep in mind that it is designed to be use when the instance we manipulate has not been created in such explicit way.</p>
 </article>
           </div>
           
