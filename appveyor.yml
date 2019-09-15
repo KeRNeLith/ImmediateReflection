@@ -1,5 +1,5 @@
 version: '0.0.{build}'
-image: Previous Visual Studio 2017
+image: Visual Studio 2017
 
 # Setup environment
 pull_requests:
@@ -61,8 +61,9 @@ matrix:
 
 # Build
 before_build:
-# Chocolatey SonarQube
-  - cinst msbuild-sonarqube-runner
+# SonarQube
+  - ps: dotnet tool install --tool-path tools dotnet-sonarscanner
+  - ps: $sonarScanner = (Resolve-Path "tools\dotnet-sonarscanner.exe").ToString()
 # Chocolatey DocFX
   - ps: cinst docfx --version $env:DocFXVersion
 # NuGet restore
@@ -73,7 +74,8 @@ build:
 
 build_script:
   - ps: $analysisFile = (Convert-Path SonarQube.Analysis.xml).ToString()
-  - ps: SonarScanner.MSBuild.exe begin /k:"immediate_reflection" /s:$analysisFile /o:"kernelith-github" /d:sonar.host.url="https://sonarcloud.io" /d:"sonar.branch.name=$env:APPVEYOR_REPO_BRANCH" /d:sonar.cs.opencover.reportsPaths="coverage.xml" /d:sonar.login="$env:SONARQUBE_TOKEN"
+  - ps: >-
+      & $sonarScanner begin /k:"immediate_reflection" /s:$analysisFile /o:"kernelith-github" /d:sonar.host.url="https://sonarcloud.io" /d:"sonar.branch.name=$env:APPVEYOR_REPO_BRANCH" /d:sonar.cs.opencover.reportsPaths="coverage.xml" /d:sonar.login="$env:SONARQUBE_TOKEN"
   - msbuild
 
 before_test:
@@ -92,8 +94,9 @@ after_test:
   - ps: $testAssemblies = (ls src\*.Tests\bin\$env:Configuration\*\*Tests.dll | Where-Object { $_ -Match "net*" -and $_ -NotMatch "netcoreapp*" } | % FullName | sort-object -Unique)
 # Generate coverage report
   - ps: >-
-      & $opencover -register:user -filter:"+[*]* -[*.Test*]* -[*]JetBrains.Annotations*" -target:"$nunitConsole" -targetargs:"$testAssemblies" -log:Warn -output:coverage.xml
-  - ps: SonarScanner.MSBuild.exe end /d:"sonar.login=$env:SONARQUBE_TOKEN"
+      & $opencover -register:Path64 -filter:"+[*]* -[*.Test*]* -[*]JetBrains.Annotations*" -target:"$nunitConsole" -targetargs:"$testAssemblies" -log:Warn -output:coverage.xml
+  - ps: >-
+      & $sonarScanner end /d:"sonar.login=$env:SONARQUBE_TOKEN"
   - ps: >-
       & $coveralls --opencover -i coverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --useRelativePaths --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_BUILD_NUMBER --serviceName appveyor
 
