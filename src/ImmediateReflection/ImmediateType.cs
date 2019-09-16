@@ -6,20 +6,34 @@ using System.Linq;
 using static ImmediateReflection.Utils.EnumerableUtils;
 #endif
 using System.Reflection;
-using static ImmediateReflection.Utils.FieldHelpers;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
+#if SUPPORTS_SERIALIZATION
+using System.Runtime.Serialization;
+#endif
 using JetBrains.Annotations;
+using static ImmediateReflection.Utils.FieldHelpers;
 
 namespace ImmediateReflection
 {
     /// <summary>
-    /// Represents type declarations: class types, interface types, array types, value types, enumeration types,
-    /// type parameters, generic type definitions, and open or closed constructed generic types in a faster way.
+    /// Represents type declarations (class types, interface types, array types, value types, enumeration types,
+    /// type parameters, generic type definitions, and open or closed constructed generic types) in a faster way.
     /// </summary>
-    public sealed class ImmediateType : ImmediateMember, IEquatable<ImmediateType>
+    [PublicAPI]
+#if SUPPORTS_SERIALIZATION
+    [Serializable]
+#endif
+    public sealed class ImmediateType 
+        : ImmediateMember
+        , IEquatable<ImmediateType>
+#if SUPPORTS_SERIALIZATION
+        , ISerializable
+#endif
     {
+        private BindingFlags _flags;
+
         /// <summary>
         /// Gets the wrapped <see cref="System.Type"/>.
         /// </summary>
@@ -98,6 +112,7 @@ namespace ImmediateReflection
         internal ImmediateType([NotNull] Type type, BindingFlags flags = TypeAccessor.DefaultFlags)
             : base(type)
         {
+            _flags = flags;
             Type = type;
             BaseType = type.BaseType;
             DeclaringType = type.DeclaringType;
@@ -126,9 +141,9 @@ namespace ImmediateReflection
             if (type.IsEnum)
             {
 #if SUPPORTS_LAZY
-                _fields = new Lazy<ImmediateFields>(GetImmediateFieldsForEnum);
+                _fields = new Lazy<ImmediateFields>(() => new ImmediateFields(type.GetFields()));
 #else
-                Fields = GetImmediateFieldsForEnum();
+                Fields = new ImmediateFields(type.GetFields());
 #endif
 
 #if SUPPORTS_SYSTEM_CORE
@@ -140,30 +155,13 @@ namespace ImmediateReflection
             else
             {
 #if SUPPORTS_LAZY
-                _fields = new Lazy<ImmediateFields>(() => new ImmediateFields(IgnoreBackingFields(type.GetFields(flags))));
+                _fields = new Lazy<ImmediateFields>(() => new ImmediateFields(IgnoreBackingFields(type.GetFields(_flags))));
 #else
-                Fields = new ImmediateFields(IgnoreBackingFields(type.GetFields(flags)));
+                Fields = new ImmediateFields(IgnoreBackingFields(type.GetFields(_flags)));
 #endif
 
-                Properties = new ImmediateProperties(type.GetProperties(flags));
+                Properties = new ImmediateProperties(type.GetProperties(_flags));
             }
-
-            #region Local function
-
-            ImmediateFields GetImmediateFieldsForEnum()
-            {
-                FieldInfo[] enumFields = type.GetFields();
-#if SUPPORTS_SYSTEM_CORE
-                FieldInfo enumValue = enumFields.First(field => !field.IsStatic);               // Current enum value field (not static)
-                IEnumerable<FieldInfo> enumValues = enumFields.Where(field => field.IsStatic);  // Enum values (static)
-#else
-                FieldInfo enumValue = First(enumFields, field => !field.IsStatic);               // Current enum value field (not static)
-                IEnumerable<FieldInfo> enumValues = Where(enumFields, field => field.IsStatic);  // Enum values (static)
-#endif
-                return new ImmediateFields(type, enumValue, enumValues);
-            }
-
-            #endregion
         }
 
         /// <summary>
@@ -474,6 +472,24 @@ namespace ImmediateReflection
         }
 
         #endregion
+
+#if SUPPORTS_SERIALIZATION
+        #region ISerializable
+
+        private ImmediateType(SerializationInfo info, StreamingContext context)
+            : this((Type)info.GetValue("Type", typeof(Type)), (BindingFlags)info.GetValue("Flags", typeof(BindingFlags)))
+        {
+        }
+
+        /// <inheritdoc />
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Flags", _flags);
+            info.AddValue("Type", Type);
+        }
+
+        #endregion
+#endif
 
         /// <inheritdoc />
         public override string ToString()

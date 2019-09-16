@@ -1,6 +1,8 @@
 using System;
-using System.Diagnostics;
 using System.Reflection;
+#if SUPPORTS_SERIALIZATION
+using System.Runtime.Serialization;
+#endif
 using JetBrains.Annotations;
 
 namespace ImmediateReflection
@@ -9,7 +11,15 @@ namespace ImmediateReflection
     /// Represents a field and provides access to its metadata in a faster way.
     /// </summary>
     [PublicAPI]
-    public sealed class ImmediateField : ImmediateMember, IEquatable<ImmediateField>
+#if SUPPORTS_SERIALIZATION
+    [Serializable]
+#endif
+    public sealed class ImmediateField
+        : ImmediateMember
+        , IEquatable<ImmediateField>
+#if SUPPORTS_SERIALIZATION
+        , ISerializable
+#endif
     {
         /// <summary>
         /// Gets the wrapped <see cref="System.Reflection.FieldInfo"/>.
@@ -65,9 +75,22 @@ namespace ImmediateReflection
             // ReSharper disable once AssignNullToNotNullAttribute, Justification: A field is always declared inside a type.
             DeclaringType = field.DeclaringType;
 
-            // Getter / Setter
-            _getter = ConfigureGetter();
-            _setter = ConfigureSetter();
+            // ReSharper disable once PossibleNullReferenceException, Justification: Declaring type for a field is always considered not null.
+            // Current enum value field is not static compared to other enumeration available values fields
+            // => That's why we need the static check
+            if (field.IsStatic && DeclaringType.IsEnum)
+            {
+                // Getter / No setter
+                object enumValue = field.GetValue(null);
+                _getter = target => enumValue;
+                _setter = (target, value) => throw new FieldAccessException("Cannot set an enumeration value.");
+            }
+            else
+            {
+                // Getter / Setter
+                _getter = ConfigureGetter();
+                _setter = ConfigureSetter();
+            }
 
             #region Local functions
 
@@ -95,30 +118,6 @@ namespace ImmediateReflection
             }
 
             #endregion
-        }
-
-        /// <summary>
-        /// Constructor for an enum value.
-        /// </summary>
-        /// <param name="field"><see cref="System.Reflection.FieldInfo"/> to wrap.</param>
-        /// <param name="enumType"><see cref="Type"/> of the enumeration.</param>
-        internal ImmediateField([NotNull] FieldInfo field, [NotNull] Type enumType)
-            : base(field)
-        {
-            Debug.Assert(enumType != null);
-            Debug.Assert(enumType.IsEnum, $"{nameof(enumType)} be must an {nameof(Enum)} type.");
-
-            FieldInfo = field;
-            FieldType = field.FieldType;
-#if SUPPORTS_LAZY
-            _fieldImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(FieldType));
-#endif
-            DeclaringType = enumType;
-
-            // Getter / No setter
-            object enumValue = field.GetValue(null);
-            _getter = target => enumValue;
-            _setter = (target, value) => throw new FieldAccessException("Cannot set an enumeration value.");
         }
 
         /// <summary>
@@ -174,6 +173,23 @@ namespace ImmediateReflection
         }
 
         #endregion
+
+#if SUPPORTS_SERIALIZATION
+        #region ISerializable
+
+        private ImmediateField(SerializationInfo info, StreamingContext context)
+            : this((FieldInfo)info.GetValue("Field", typeof(FieldInfo)))
+        {
+        }
+
+        /// <inheritdoc />
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Field", FieldInfo);
+        }
+
+        #endregion
+#endif
 
         /// <inheritdoc />
         public override string ToString()

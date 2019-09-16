@@ -46,11 +46,17 @@ namespace ImmediateReflection.Tests
             var immediateField2 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
             Assert.AreNotEqual(immediateField1.FieldInfo, immediateField2.FieldInfo);
 
-            var enumImmediateField = new ImmediateField(TestEnumField1FieldInfo, typeof(TestEnum));
+            var enumImmediateField = new ImmediateField(TestEnumField1FieldInfo);
             Assert.AreEqual(nameof(TestEnum.EnumValue1), enumImmediateField.Name);
             Assert.AreEqual(typeof(TestEnum), enumImmediateField.DeclaringType);
             Assert.AreEqual(typeof(TestEnum), enumImmediateField.FieldType);
             Assert.AreEqual(TestEnumField1FieldInfo, enumImmediateField.FieldInfo);
+
+            var currentEnumValueImmediateField = new ImmediateField(TestEnumULongFieldValueFieldInfo);
+            Assert.AreEqual(EnumValueFieldName, currentEnumValueImmediateField.Name);
+            Assert.AreEqual(typeof(TestEnumULong), currentEnumValueImmediateField.DeclaringType);
+            Assert.AreEqual(typeof(ulong), currentEnumValueImmediateField.FieldType);
+            Assert.AreEqual(TestEnumULongFieldValueFieldInfo, currentEnumValueImmediateField.FieldInfo);
         }
 
 #if SUPPORTS_IMMEDIATE_MEMBER_TYPE
@@ -286,7 +292,7 @@ namespace ImmediateReflection.Tests
             var immediateField = new ImmediateField(TestEnumFieldValueFieldInfo);
             Assert.AreEqual((int)TestEnum.EnumValue2, immediateField.GetValue(testEnum1));
 
-            immediateField = new ImmediateField(TestEnumField2FieldInfo, typeof(TestEnum));
+            immediateField = new ImmediateField(TestEnumField2FieldInfo);
             Assert.AreEqual(TestEnum.EnumValue2, immediateField.GetValue(null));
 
             // TestEnum (inherit ulong)
@@ -295,7 +301,7 @@ namespace ImmediateReflection.Tests
             immediateField = new ImmediateField(TestEnumULongFieldValueFieldInfo);
             Assert.AreEqual((ulong)TestEnumULong.EnumValue1, immediateField.GetValue(testEnum2));
 
-            immediateField = new ImmediateField(TestEnumULongField1FieldInfo, typeof(TestEnumULong));
+            immediateField = new ImmediateField(TestEnumULongField1FieldInfo);
             Assert.AreEqual(TestEnumULong.EnumValue1, immediateField.GetValue(null));
 
             // TestEnumFlags
@@ -304,7 +310,7 @@ namespace ImmediateReflection.Tests
             immediateField = new ImmediateField(TestEnumFlagsFieldValueFieldInfo);
             Assert.AreEqual((int)(TestEnumFlags.EnumValue1 | TestEnumFlags.EnumValue2), immediateField.GetValue(testEnum3));
 
-            immediateField = new ImmediateField(TestEnumFlagsField3FieldInfo, typeof(TestEnumFlags));
+            immediateField = new ImmediateField(TestEnumFlagsField3FieldInfo);
             Assert.AreEqual(TestEnumFlags.EnumValue3, immediateField.GetValue(null));
         }
 
@@ -594,7 +600,7 @@ namespace ImmediateReflection.Tests
             // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             Assert.Throws<TargetException>(() => immediateField.SetValue(null, TestEnum.EnumValue2));
 
-            immediateField = new ImmediateField(TestEnumField1FieldInfo, typeof(TestEnum));
+            immediateField = new ImmediateField(TestEnumField1FieldInfo);
             Assert.Throws<FieldAccessException>(() => immediateField.SetValue(null, TestEnum.EnumValue2));
         }
 

@@ -1,5 +1,4 @@
 #if !SUPPORTS_SYSTEM_CORE
-using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using ImmediateReflection.Utils;
@@ -12,34 +11,6 @@ namespace ImmediateReflection.Tests
     [TestFixture]
     internal class EnumerableUtilsTests
     {
-        [Test]
-        public void First()
-        {
-            // ReSharper disable once CollectionNeverUpdated.Local
-            var emptyList = new List<int>();
-            var list = new List<int> { 1, 2, 3, 4 };
-
-            Assert.AreEqual(3, EnumerableUtils.First(list, value => value > 2));
-            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-            Assert.Throws<InvalidOperationException>(() => EnumerableUtils.First(list, value => value > 5));
-
-            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-            Assert.Throws<InvalidOperationException>(() => EnumerableUtils.First(emptyList, value => true));
-        }
-
-        [Test]
-        public void All()
-        {
-            // ReSharper disable once CollectionNeverUpdated.Local
-            var emptyList = new List<int>();
-            var list1 = new List<int> { 1, 2, 3, 4 };
-            var list2 = new List<int> { 2, 2, 2, 2 };
-
-            Assert.IsTrue(EnumerableUtils.All(emptyList, value => value == 2));
-            Assert.IsFalse(EnumerableUtils.All(list1, value => value == 2));
-            Assert.IsTrue(EnumerableUtils.All(list2, value => value == 2));
-        }
-
         private static IEnumerable<int> GetInts()
         {
             yield return 4;

@@ -12,52 +12,29 @@ namespace ImmediateReflection.Utils
     /// </summary>
     internal static class EnumerableUtils
     {
-        // Predicate delegate
+        // Delegates
+        internal delegate TOut Func<in TIn, out TOut>(TIn param);
         internal delegate bool Predicate<in T>(T param);
 
         /// <summary>
-        /// Gets the first element in the <paramref name="source"/> enumerable that matches the given <paramref name="predicate"/>.
+        /// Select a set of values from given <paramref name="source"/> elements using the given <paramref name="selector"/>.
         /// </summary>
-        /// <typeparam name="T">Element type.</typeparam>
+        /// <typeparam name="TIn">Element type.</typeparam>
+        /// <typeparam name="TOut">Output element type.</typeparam>
         /// <param name="source">Source enumerable.</param>
-        /// <param name="predicate">Predicate to check on each source element.</param>
-        /// <returns>First element matching <paramref name="predicate"/>.</returns>
+        /// <param name="selector">Selector applied on each <paramref name="source"/> element.</param>
+        /// <returns>Enumerable of selected elements.</returns>
         [Pure]
-        [NotNull]
-        public static T First<T>([NotNull, ItemNotNull] IEnumerable<T> source, [NotNull, InstantHandle] Predicate<T> predicate)
+        [NotNull, ItemNotNull]
+        public static IEnumerable<TOut> Select<TIn, TOut>([NotNull, ItemNotNull] IEnumerable<TIn> source, [NotNull, InstantHandle] Func<TIn, TOut> selector)
         {
             Debug.Assert(source != null);
-            Debug.Assert(predicate != null);
+            Debug.Assert(selector != null);
 
-            foreach (T element in source)
+            foreach (TIn element in source)
             {
-                if (predicate(element))
-                    return element;
+                yield return selector(element);
             }
-
-            throw new InvalidOperationException("No element matching the given predicate.");
-        }
-
-        /// <summary>
-        /// Checks if there is all <paramref name="source"/> items matches the <paramref name="predicate"/>.
-        /// </summary>
-        /// <typeparam name="T">Element type.</typeparam>
-        /// <param name="source">Source enumerable.</param>
-        /// <param name="predicate">Predicate to match.</param>
-        /// <returns>True if all items match the <paramref name="predicate"/>, false otherwise.</returns>
-        [Pure]
-        public static bool All<T>([NotNull, ItemCanBeNull] IEnumerable<T> source, [NotNull, InstantHandle] Predicate<T> predicate)
-        {
-            Debug.Assert(source != null);
-            Debug.Assert(predicate != null);
-
-            foreach (T element in source)
-            {
-                if (!predicate(element))
-                    return false;
-            }
-
-            return true;
         }
 
         /// <summary>

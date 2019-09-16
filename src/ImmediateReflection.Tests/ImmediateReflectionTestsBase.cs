@@ -396,7 +396,7 @@ namespace ImmediateReflection.Tests
 
         #region Enums
 
-        private const string EnumValueFieldName = "value__";
+        protected const string EnumValueFieldName = "value__";
 
         // TestEnum
 

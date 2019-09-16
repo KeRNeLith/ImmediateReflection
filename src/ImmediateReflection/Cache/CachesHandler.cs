@@ -162,17 +162,6 @@ namespace ImmediateReflection
             return _cachedFields.GetOrCreate(field, () => new ImmediateField(field));
         }
 
-        [NotNull]
-        [ContractAnnotation("field:null => halt;enumType:null => halt")]
-        public ImmediateField GetField([NotNull] FieldInfo field, [NotNull] Type enumType)
-        {
-            Debug.Assert(field != null);
-            Debug.Assert(enumType != null);
-            Debug.Assert(enumType.IsEnum);
-
-            return _cachedFields.GetOrCreate(field, () => new ImmediateField(field, enumType));
-        }
-
         #endregion
 
         #region Property cache

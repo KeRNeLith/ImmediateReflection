@@ -13,6 +13,9 @@ namespace ImmediateReflection
     /// Represents information about the attributes of a member or <see cref="Type"/> and provides access to its metadata in a faster way.
     /// </summary>
     [PublicAPI]
+#if SUPPORTS_SERIALIZATION
+    [Serializable]
+#endif
     public abstract class ImmediateMember
     {
         /// <summary>

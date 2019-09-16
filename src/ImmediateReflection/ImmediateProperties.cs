@@ -9,6 +9,9 @@ using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
+#if SUPPORTS_SERIALIZATION
+using System.Runtime.Serialization;
+#endif
 using JetBrains.Annotations;
 #if !SUPPORTS_SYSTEM_CORE
 using static ImmediateReflection.Utils.EnumerableUtils;
@@ -24,10 +27,19 @@ namespace ImmediateReflection
     /// Represents a collection of properties and provides access to property metadata in a faster way.
     /// </summary>
     [PublicAPI]
-    public sealed class ImmediateProperties : IEnumerable<ImmediateProperty>, IEquatable<ImmediateProperties>
+#if SUPPORTS_SERIALIZATION
+    [Serializable]
+#endif
+    public sealed class ImmediateProperties
+        : IEnumerable<ImmediateProperty>
+        , IEquatable<ImmediateProperties>
+#if SUPPORTS_SERIALIZATION
+        , ISerializable
+#endif
     {
         [NotNull]
-        private readonly Dictionary<string, ImmediateProperty> _properties;
+        private readonly Dictionary<string, ImmediateProperty> _properties 
+            = new Dictionary<string, ImmediateProperty>();
 
         /// <summary>
         /// Constructor.
@@ -35,21 +47,18 @@ namespace ImmediateReflection
         /// <param name="properties">Enumerable of <see cref="PropertyInfo"/> to wrap.</param>
         internal ImmediateProperties([NotNull, ItemNotNull] IEnumerable<PropertyInfo> properties)
         {
+            Init(properties);
+        }
+
+        private void Init([NotNull, ItemNotNull] IEnumerable<PropertyInfo> properties)
+        {
             Debug.Assert(properties != null);
 
 #if SUPPORTS_SYSTEM_CORE
-            _properties = properties
-                .Where(IsNotIndexed)
-                .ToDictionary(
-                    property => property.Name, 
-#if SUPPORTS_CACHING
-                    property => CachesHandler.Instance.GetProperty(property));
+            foreach (PropertyInfo property in properties.Where(IsNotIndexed))
 #else
-                    property => new ImmediateProperty(property));
-#endif
-#else
-            _properties = new Dictionary<string, ImmediateProperty>();
             foreach (PropertyInfo property in Where(properties, IsNotIndexed))
+#endif
             {
                 _properties.Add(
                     property.Name,
@@ -59,7 +68,6 @@ namespace ImmediateReflection
                     new ImmediateProperty(property));
 #endif
             }
-#endif
 
             #region Local function
 
@@ -162,6 +170,46 @@ namespace ImmediateReflection
         }
 
         #endregion
+
+#if SUPPORTS_SERIALIZATION
+        #region ISerializable
+
+        private ImmediateProperties(SerializationInfo info, StreamingContext context)
+        {
+            Init(ExtractProperties());
+
+            #region Local function
+
+            IEnumerable<PropertyInfo> ExtractProperties()
+            {
+                int count = (int)info.GetValue("Count", typeof(int));
+                for (int i = 0; i < count; ++i)
+                {
+                    yield return (PropertyInfo)info.GetValue($"Property{i}", typeof(PropertyInfo));
+                }
+            }
+
+            #endregion
+        }
+
+        /// <inheritdoc />
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Count", _properties.Count);
+
+            int i = -1;
+#if SUPPORTS_SYSTEM_CORE
+            foreach (PropertyInfo property in _properties.Select(pair => pair.Value.PropertyInfo))
+#else
+            foreach (PropertyInfo property in Select(_properties, pair => pair.Value.PropertyInfo))
+#endif
+            {
+                info.AddValue($"Property{++i}", property);
+            }
+        }
+
+        #endregion
+#endif
 
         /// <inheritdoc />
         public override string ToString()

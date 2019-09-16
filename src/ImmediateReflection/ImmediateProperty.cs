@@ -1,6 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
+#if SUPPORTS_SERIALIZATION
+using System.Runtime.Serialization;
+#endif
 using JetBrains.Annotations;
 using static ImmediateReflection.Utils.ReflectionHelpers;
 
@@ -10,7 +13,15 @@ namespace ImmediateReflection
     /// Represents a property and provides access to property metadata in a faster way.
     /// </summary>
     [PublicAPI]
-    public sealed class ImmediateProperty : ImmediateMember, IEquatable<ImmediateProperty>
+#if SUPPORTS_SERIALIZATION
+    [Serializable]
+#endif
+    public sealed class ImmediateProperty
+        : ImmediateMember
+        , IEquatable<ImmediateProperty>
+#if SUPPORTS_SERIALIZATION
+        , ISerializable
+#endif
     {
         /// <summary>
         /// Gets the wrapped <see cref="System.Reflection.PropertyInfo"/>.
@@ -173,6 +184,23 @@ namespace ImmediateReflection
         }
 
         #endregion
+
+#if SUPPORTS_SERIALIZATION
+        #region ISerializable
+
+        private ImmediateProperty(SerializationInfo info, StreamingContext context)
+            : this((PropertyInfo)info.GetValue("Property", typeof(PropertyInfo)))
+        {
+        }
+
+        /// <inheritdoc />
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Property", PropertyInfo);
+        }
+
+        #endregion
+#endif
 
         /// <inheritdoc />
         public override string ToString()

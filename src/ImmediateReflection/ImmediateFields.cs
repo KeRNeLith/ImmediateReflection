@@ -9,9 +9,15 @@ using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
+#if SUPPORTS_SERIALIZATION
+using System.Runtime.Serialization;
+#endif
 using JetBrains.Annotations;
-#if !SUPPORTS_STRING_FULL_FEATURES || !SUPPORTS_SYSTEM_CORE
-using ImmediateReflection.Utils;
+#if !SUPPORTS_SYSTEM_CORE
+using static ImmediateReflection.Utils.EnumerableUtils;
+#endif
+#if !SUPPORTS_STRING_FULL_FEATURES
+using static ImmediateReflection.Utils.StringUtils;
 #endif
 
 namespace ImmediateReflection
@@ -20,10 +26,19 @@ namespace ImmediateReflection
     /// Represents a collection of fields and provides access to its metadata in a faster way.
     /// </summary>
     [PublicAPI]
-    public sealed class ImmediateFields : IEnumerable<ImmediateField>, IEquatable<ImmediateFields>
+#if SUPPORTS_SERIALIZATION
+    [Serializable]
+#endif
+    public sealed class ImmediateFields
+        : IEnumerable<ImmediateField>
+        , IEquatable<ImmediateFields>
+#if SUPPORTS_SERIALIZATION
+        , ISerializable
+#endif
     {
         [NotNull]
-        private readonly Dictionary<string, ImmediateField> _fields;
+        private readonly Dictionary<string, ImmediateField> _fields
+            = new Dictionary<string, ImmediateField>();
 
         /// <summary>
         /// Constructor.
@@ -31,78 +46,23 @@ namespace ImmediateReflection
         /// <param name="fields">Enumerable of <see cref="FieldInfo"/> to wrap.</param>
         internal ImmediateFields([NotNull, ItemNotNull] IEnumerable<FieldInfo> fields)
         {
-            // ReSharper disable PossibleMultipleEnumeration
-            Debug.Assert(fields != null);
-#if SUPPORTS_SYSTEM_CORE
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-            Debug.Assert(fields.All(field => field != null));
-#else
-            Debug.Assert(EnumerableUtils.All(fields, field => field != null));
-#endif
+            Init(fields);
+        }
 
-#if SUPPORTS_SYSTEM_CORE
-            _fields = fields.ToDictionary(
-                field => field.Name,
-#if SUPPORTS_CACHING
-                field => CachesHandler.Instance.GetField(field));
-#else
-                field => new ImmediateField(field));
-#endif
-#else
-            _fields = new Dictionary<string, ImmediateField>();
+        private void Init([NotNull, ItemNotNull] IEnumerable<FieldInfo> fields)
+        {
+            Debug.Assert(fields != null);
+
             foreach (FieldInfo field in fields)
             {
+                Debug.Assert(field != null);
+
 #if SUPPORTS_CACHING
                 _fields.Add(field.Name, CachesHandler.Instance.GetField(field));
 #else
                 _fields.Add(field.Name, new ImmediateField(field));
 #endif
             }
-#endif
-            // ReSharper restore PossibleMultipleEnumeration
-        }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="enumType"><see cref="Type"/> of the enumeration.</param>
-        /// <param name="enumValue">Field corresponding to the current enumeration value.</param>
-        /// <param name="enumValues">Enumerable of <see cref="FieldInfo"/> corresponding to enum values.</param>
-        internal ImmediateFields([NotNull] Type enumType, [NotNull] FieldInfo enumValue, [NotNull, ItemNotNull] IEnumerable<FieldInfo> enumValues)
-        {
-            // ReSharper disable PossibleMultipleEnumeration
-            Debug.Assert(enumType != null);
-            Debug.Assert(enumType.IsEnum);
-            Debug.Assert(enumValue != null);
-            Debug.Assert(enumValues != null);
-#if SUPPORTS_SYSTEM_CORE
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-            Debug.Assert(enumValues.All(value => value != null));
-#else
-            Debug.Assert(EnumerableUtils.All(enumValues, value => value != null));
-#endif
-
-#if SUPPORTS_SYSTEM_CORE
-            _fields = enumValues.ToDictionary(
-                field => field.Name,
-#if SUPPORTS_CACHING
-                field => CachesHandler.Instance.GetField(field, enumType));
-#else
-                field => new ImmediateField(field, enumType));
-#endif
-#else
-            _fields = new Dictionary<string, ImmediateField>();
-            foreach (FieldInfo field in enumValues)
-            {
-#if SUPPORTS_CACHING
-                _fields.Add(field.Name, CachesHandler.Instance.GetField(field, enumType));
-#else
-                _fields.Add(field.Name, new ImmediateField(field, enumType));
-#endif
-            }
-#endif
-            _fields[enumValue.Name] = new ImmediateField(enumValue);
-            // ReSharper restore PossibleMultipleEnumeration
         }
 
         /// <summary>
@@ -154,7 +114,7 @@ namespace ImmediateReflection
 #if SUPPORTS_SYSTEM_CORE
             return !_fields.Except(other._fields).Any();
 #else
-            return !EnumerableUtils.Except(_fields, other._fields)
+            return !Except(_fields, other._fields)
                 .GetEnumerator()
                 .MoveNext();
 #endif
@@ -195,13 +155,53 @@ namespace ImmediateReflection
 
         #endregion
 
+#if SUPPORTS_SERIALIZATION
+        #region ISerializable
+
+        private ImmediateFields(SerializationInfo info, StreamingContext context)
+        {
+            Init(ExtractFields());
+
+            #region Local function
+
+            IEnumerable<FieldInfo> ExtractFields()
+            {
+                int count = (int)info.GetValue("Count", typeof(int));
+                for (int i = 0; i < count; ++i)
+                {
+                    yield return (FieldInfo)info.GetValue($"Field{i}", typeof(FieldInfo));
+                }
+            }
+
+            #endregion
+        }
+
+        /// <inheritdoc />
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Count", _fields.Count);
+
+            int i = -1;
+#if SUPPORTS_SYSTEM_CORE
+            foreach (FieldInfo field in _fields.Select(pair => pair.Value.FieldInfo))
+#else
+            foreach (FieldInfo field in Select(_fields, pair => pair.Value.FieldInfo))
+#endif
+            {
+                info.AddValue($"Field{++i}", field);
+            }
+        }
+
+        #endregion
+#endif
+
         /// <inheritdoc />
         public override string ToString()
         {
 #if SUPPORTS_STRING_FULL_FEATURES
             return $"[{string.Join(", ", _fields.Values)}]";
 #else
-            return $"[{StringUtils.Join(", ", _fields.Values)}]";
+            return $"[{Join(", ", _fields.Values)}]";
 #endif
         }
     }
