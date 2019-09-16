@@ -73,8 +73,8 @@
   
   <h1 id="ImmediateReflection_ImmediateType" data-uid="ImmediateReflection.ImmediateType" class="text-break">Class ImmediateType
   </h1>
-  <div class="markdown level0 summary"><p>Represents type declarations: class types, interface types, array types, value types, enumeration types,
-type parameters, generic type definitions, and open or closed constructed generic types in a faster way.</p>
+  <div class="markdown level0 summary"><p>Represents type declarations (class types, interface types, array types, value types, enumeration types,
+type parameters, generic type definitions, and open or closed constructed generic types) in a faster way.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -86,6 +86,7 @@ type parameters, generic type definitions, and open or closed constructed generi
   <div classs="implements">
     <h5>Implements</h5>
     <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="ImmediateReflection.ImmediateType.html">ImmediateType</a>&gt;</div>
+    <div><span class="xref">System.Runtime.Serialization.ISerializable</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -130,7 +131,8 @@ type parameters, generic type definitions, and open or closed constructed generi
   <h6><strong>Assembly</strong>: ImmediateReflection.dll</h6>
   <h5 id="ImmediateReflection_ImmediateType_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class ImmediateType : ImmediateMember, IEquatable&lt;ImmediateType&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+public sealed class ImmediateType : ImmediateMember, IEquatable&lt;ImmediateType&gt;, ISerializable</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
@@ -139,7 +141,7 @@ type parameters, generic type definitions, and open or closed constructed generi
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_BaseType.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.BaseType%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L35">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L49">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_BaseType_" data-uid="ImmediateReflection.ImmediateType.BaseType*"></a>
   <h4 id="ImmediateReflection_ImmediateType_BaseType" data-uid="ImmediateReflection.ImmediateType.BaseType">BaseType</h4>
@@ -172,7 +174,7 @@ If this is an interface or has no base class null is returned.
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_DeclaringType.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.DeclaringType%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L42">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L56">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_DeclaringType_" data-uid="ImmediateReflection.ImmediateType.DeclaringType*"></a>
   <h4 id="ImmediateReflection_ImmediateType_DeclaringType" data-uid="ImmediateReflection.ImmediateType.DeclaringType">DeclaringType</h4>
@@ -203,7 +205,7 @@ If this is an interface or has no base class null is returned.
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_Fields.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.Fields%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L78">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L92">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_Fields_" data-uid="ImmediateReflection.ImmediateType.Fields*"></a>
   <h4 id="ImmediateReflection_ImmediateType_Fields" data-uid="ImmediateReflection.ImmediateType.Fields">Fields</h4>
@@ -234,7 +236,7 @@ If this is an interface or has no base class null is returned.
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_FullName.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.FullName%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L50">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L64">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_FullName_" data-uid="ImmediateReflection.ImmediateType.FullName*"></a>
   <h4 id="ImmediateReflection_ImmediateType_FullName" data-uid="ImmediateReflection.ImmediateType.FullName">FullName</h4>
@@ -268,7 +270,7 @@ If this is an interface or has no base class null is returned.
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_HasCopyConstructor.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.HasCopyConstructor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L394">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L392">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_HasCopyConstructor_" data-uid="ImmediateReflection.ImmediateType.HasCopyConstructor*"></a>
   <h4 id="ImmediateReflection_ImmediateType_HasCopyConstructor" data-uid="ImmediateReflection.ImmediateType.HasCopyConstructor">HasCopyConstructor</h4>
@@ -299,7 +301,7 @@ If this is an interface or has no base class null is returned.
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_HasDefaultConstructor.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.HasDefaultConstructor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L277">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L275">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_HasDefaultConstructor_" data-uid="ImmediateReflection.ImmediateType.HasDefaultConstructor*"></a>
   <h4 id="ImmediateReflection_ImmediateType_HasDefaultConstructor" data-uid="ImmediateReflection.ImmediateType.HasDefaultConstructor">HasDefaultConstructor</h4>
@@ -330,7 +332,7 @@ If this is an interface or has no base class null is returned.
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_Item_System_String_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.Item(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L187">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L185">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_Item_" data-uid="ImmediateReflection.ImmediateType.Item*"></a>
   <h4 id="ImmediateReflection_ImmediateType_Item_System_String_" data-uid="ImmediateReflection.ImmediateType.Item(System.String)">Item[String]</h4>
@@ -396,7 +398,7 @@ If this is an interface or has no base class null is returned.
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_Members.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.Members%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L57">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L71">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_Members_" data-uid="ImmediateReflection.ImmediateType.Members*"></a>
   <h4 id="ImmediateReflection_ImmediateType_Members" data-uid="ImmediateReflection.ImmediateType.Members">Members</h4>
@@ -427,7 +429,7 @@ If this is an interface or has no base class null is returned.
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_Properties.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.Properties%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L89">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L103">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_Properties_" data-uid="ImmediateReflection.ImmediateType.Properties*"></a>
   <h4 id="ImmediateReflection_ImmediateType_Properties" data-uid="ImmediateReflection.ImmediateType.Properties">Properties</h4>
@@ -458,7 +460,7 @@ If this is an interface or has no base class null is returned.
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_Type.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.Type%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L26">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L40">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_Type_" data-uid="ImmediateReflection.ImmediateType.Type*"></a>
   <h4 id="ImmediateReflection_ImmediateType_Type" data-uid="ImmediateReflection.ImmediateType.Type">Type</h4>
@@ -491,7 +493,7 @@ If this is an interface or has no base class null is returned.
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_Copy_System_Object_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.Copy(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L410">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L408">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_Copy_" data-uid="ImmediateReflection.ImmediateType.Copy*"></a>
   <h4 id="ImmediateReflection_ImmediateType_Copy_System_Object_" data-uid="ImmediateReflection.ImmediateType.Copy(System.Object)">Copy(Object)</h4>
@@ -564,7 +566,7 @@ or constructor exists but was not considered as copy constructor.</p>
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_Equals_ImmediateReflection_ImmediateType_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.Equals(ImmediateReflection.ImmediateType)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L461">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L459">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_Equals_" data-uid="ImmediateReflection.ImmediateType.Equals*"></a>
   <h4 id="ImmediateReflection_ImmediateType_Equals_ImmediateReflection_ImmediateType_" data-uid="ImmediateReflection.ImmediateType.Equals(ImmediateReflection.ImmediateType)">Equals(ImmediateType)</h4>
@@ -611,7 +613,7 @@ or constructor exists but was not considered as copy constructor.</p>
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_Equals_System_Object_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.Equals(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L455">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L453">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_Equals_" data-uid="ImmediateReflection.ImmediateType.Equals*"></a>
   <h4 id="ImmediateReflection_ImmediateType_Equals_System_Object_" data-uid="ImmediateReflection.ImmediateType.Equals(System.Object)">Equals(Object)</h4>
@@ -660,7 +662,7 @@ or constructor exists but was not considered as copy constructor.</p>
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_GetField_System_String_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.GetField(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L233">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L231">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_GetField_" data-uid="ImmediateReflection.ImmediateType.GetField*"></a>
   <h4 id="ImmediateReflection_ImmediateType_GetField_System_String_" data-uid="ImmediateReflection.ImmediateType.GetField(System.String)">GetField(String)</h4>
@@ -726,7 +728,7 @@ or constructor exists but was not considered as copy constructor.</p>
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_GetFields.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.GetFields%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L219">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L217">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_GetFields_" data-uid="ImmediateReflection.ImmediateType.GetFields*"></a>
   <h4 id="ImmediateReflection_ImmediateType_GetFields" data-uid="ImmediateReflection.ImmediateType.GetFields">GetFields()</h4>
@@ -758,7 +760,7 @@ or constructor exists but was not considered as copy constructor.</p>
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_GetHashCode.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L471">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L469">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_GetHashCode_" data-uid="ImmediateReflection.ImmediateType.GetHashCode*"></a>
   <h4 id="ImmediateReflection_ImmediateType_GetHashCode" data-uid="ImmediateReflection.ImmediateType.GetHashCode">GetHashCode()</h4>
@@ -790,7 +792,7 @@ or constructor exists but was not considered as copy constructor.</p>
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_GetMember_System_String_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.GetMember(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L206">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L204">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_GetMember_" data-uid="ImmediateReflection.ImmediateType.GetMember*"></a>
   <h4 id="ImmediateReflection_ImmediateType_GetMember_System_String_" data-uid="ImmediateReflection.ImmediateType.GetMember(System.String)">GetMember(String)</h4>
@@ -856,7 +858,7 @@ or constructor exists but was not considered as copy constructor.</p>
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_GetMembers.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.GetMembers%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L173">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L171">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_GetMembers_" data-uid="ImmediateReflection.ImmediateType.GetMembers*"></a>
   <h4 id="ImmediateReflection_ImmediateType_GetMembers" data-uid="ImmediateReflection.ImmediateType.GetMembers">GetMembers()</h4>
@@ -885,10 +887,47 @@ or constructor exists but was not considered as copy constructor.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.GetObjectData(System.Runtime.Serialization.SerializationInfo%2CSystem.Runtime.Serialization.StreamingContext)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L485">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ImmediateType_GetObjectData_" data-uid="ImmediateReflection.ImmediateType.GetObjectData*"></a>
+  <h4 id="ImmediateReflection_ImmediateType_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_" data-uid="ImmediateReflection.ImmediateType.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">GetObjectData(SerializationInfo, StreamingContext)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetObjectData(SerializationInfo info, StreamingContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Runtime.Serialization.SerializationInfo</span></td>
+        <td><span class="parametername">info</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Runtime.Serialization.StreamingContext</span></td>
+        <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_GetProperties.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.GetProperties%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L246">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L244">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_GetProperties_" data-uid="ImmediateReflection.ImmediateType.GetProperties*"></a>
   <h4 id="ImmediateReflection_ImmediateType_GetProperties" data-uid="ImmediateReflection.ImmediateType.GetProperties">GetProperties()</h4>
@@ -920,7 +959,7 @@ or constructor exists but was not considered as copy constructor.</p>
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_GetProperty_System_String_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.GetProperty(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L260">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L258">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_GetProperty_" data-uid="ImmediateReflection.ImmediateType.GetProperty*"></a>
   <h4 id="ImmediateReflection_ImmediateType_GetProperty_System_String_" data-uid="ImmediateReflection.ImmediateType.GetProperty(System.String)">GetProperty(String)</h4>
@@ -986,7 +1025,7 @@ or constructor exists but was not considered as copy constructor.</p>
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_New.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.New%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L287">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L285">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_New_" data-uid="ImmediateReflection.ImmediateType.New*"></a>
   <h4 id="ImmediateReflection_ImmediateType_New" data-uid="ImmediateReflection.ImmediateType.New">New()</h4>
@@ -1044,7 +1083,7 @@ or constructor exists but was not considered as copy constructor.</p>
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_New_System_Object___.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.New(System.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L341">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L339">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_New_" data-uid="ImmediateReflection.ImmediateType.New*"></a>
   <h4 id="ImmediateReflection_ImmediateType_New_System_Object___" data-uid="ImmediateReflection.ImmediateType.New(System.Object[])">New(Object[])</h4>
@@ -1142,7 +1181,7 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_ToString.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L479">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L495">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_ToString_" data-uid="ImmediateReflection.ImmediateType.ToString*"></a>
   <h4 id="ImmediateReflection_ImmediateType_ToString" data-uid="ImmediateReflection.ImmediateType.ToString">ToString()</h4>
@@ -1174,7 +1213,7 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_TryCopy_System_Object_System_Object__System_Exception__.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.TryCopy(System.Object%2CSystem.Object%40%2CSystem.Exception%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L428">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L426">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_TryCopy_" data-uid="ImmediateReflection.ImmediateType.TryCopy*"></a>
   <h4 id="ImmediateReflection_ImmediateType_TryCopy_System_Object_System_Object__System_Exception__" data-uid="ImmediateReflection.ImmediateType.TryCopy(System.Object,System.Object@,System.Exception@)">TryCopy(Object, out Object, out Exception)</h4>
@@ -1239,7 +1278,7 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_TryNew_System_Object__System_Exception__.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.TryNew(System.Object%40%2CSystem.Exception%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L302">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L300">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_TryNew_" data-uid="ImmediateReflection.ImmediateType.TryNew*"></a>
   <h4 id="ImmediateReflection_ImmediateType_TryNew_System_Object__System_Exception__" data-uid="ImmediateReflection.ImmediateType.TryNew(System.Object@,System.Exception@)">TryNew(out Object, out Exception)</h4>
@@ -1298,7 +1337,7 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType_TryNew_System_Object__System_Exception__System_Object___.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType.TryNew(System.Object%40%2CSystem.Exception%40%2CSystem.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L365">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L363">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateType_TryNew_" data-uid="ImmediateReflection.ImmediateType.TryNew*"></a>
   <h4 id="ImmediateReflection_ImmediateType_TryNew_System_Object__System_Exception__System_Object___" data-uid="ImmediateReflection.ImmediateType.TryNew(System.Object@,System.Exception@,System.Object[])">TryNew(out Object, out Exception, Object[])</h4>
@@ -1364,6 +1403,9 @@ Tries to use the <a class="xref" href="ImmediateReflection.ImmediateType.html#Im
   <div>
       <span class="xref">System.IEquatable&lt;T&gt;</span>
   </div>
+  <div>
+      <span class="xref">System.Runtime.Serialization.ISerializable</span>
+  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="ImmediateReflection.ImmediateReflectionExtensions.html#ImmediateReflection_ImmediateReflectionExtensions_GetImmediateType__1___0_">ImmediateReflectionExtensions.GetImmediateType&lt;T&gt;(T)</a>
@@ -1388,7 +1430,7 @@ Tries to use the <a class="xref" href="ImmediateReflection.ImmediateType.html#Im
                     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateType.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateType%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L21" class="contribution-link">View Source</a>
+                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateType.cs/#L24" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

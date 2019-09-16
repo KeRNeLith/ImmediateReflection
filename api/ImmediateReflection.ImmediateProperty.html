@@ -85,6 +85,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="ImmediateReflection.ImmediateProperty.html">ImmediateProperty</a>&gt;</div>
+    <div><span class="xref">System.Runtime.Serialization.ISerializable</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -129,7 +130,8 @@
   <h6><strong>Assembly</strong>: ImmediateReflection.dll</h6>
   <h5 id="ImmediateReflection_ImmediateProperty_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class ImmediateProperty : ImmediateMember, IEquatable&lt;ImmediateProperty&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+public sealed class ImmediateProperty : ImmediateMember, IEquatable&lt;ImmediateProperty&gt;, ISerializable</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
@@ -138,7 +140,7 @@
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateProperty_CanRead.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateProperty.CanRead%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L51">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L62">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateProperty_CanRead_" data-uid="ImmediateReflection.ImmediateProperty.CanRead*"></a>
   <h4 id="ImmediateReflection_ImmediateProperty_CanRead" data-uid="ImmediateReflection.ImmediateProperty.CanRead">CanRead</h4>
@@ -169,7 +171,7 @@
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateProperty_CanWrite.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateProperty.CanWrite%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L60">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L71">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateProperty_CanWrite_" data-uid="ImmediateReflection.ImmediateProperty.CanWrite*"></a>
   <h4 id="ImmediateReflection_ImmediateProperty_CanWrite" data-uid="ImmediateReflection.ImmediateProperty.CanWrite">CanWrite</h4>
@@ -200,7 +202,7 @@
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateProperty_DeclaringType.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateProperty.DeclaringType%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L25">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L36">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateProperty_DeclaringType_" data-uid="ImmediateReflection.ImmediateProperty.DeclaringType*"></a>
   <h4 id="ImmediateReflection_ImmediateProperty_DeclaringType" data-uid="ImmediateReflection.ImmediateProperty.DeclaringType">DeclaringType</h4>
@@ -231,7 +233,7 @@
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateProperty_PropertyImmediateType.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateProperty.PropertyImmediateType%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L43">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L54">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateProperty_PropertyImmediateType_" data-uid="ImmediateReflection.ImmediateProperty.PropertyImmediateType*"></a>
   <h4 id="ImmediateReflection_ImmediateProperty_PropertyImmediateType" data-uid="ImmediateReflection.ImmediateProperty.PropertyImmediateType">PropertyImmediateType</h4>
@@ -262,7 +264,7 @@
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateProperty_PropertyInfo.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateProperty.PropertyInfo%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L18">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L29">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateProperty_PropertyInfo_" data-uid="ImmediateReflection.ImmediateProperty.PropertyInfo*"></a>
   <h4 id="ImmediateReflection_ImmediateProperty_PropertyInfo" data-uid="ImmediateReflection.ImmediateProperty.PropertyInfo">PropertyInfo</h4>
@@ -293,7 +295,7 @@
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateProperty_PropertyType.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateProperty.PropertyType%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L32">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L43">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateProperty_PropertyType_" data-uid="ImmediateReflection.ImmediateProperty.PropertyType*"></a>
   <h4 id="ImmediateReflection_ImmediateProperty_PropertyType" data-uid="ImmediateReflection.ImmediateProperty.PropertyType">PropertyType</h4>
@@ -326,7 +328,7 @@
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateProperty_Equals_ImmediateReflection_ImmediateProperty_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateProperty.Equals(ImmediateReflection.ImmediateProperty)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L160">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L171">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateProperty_Equals_" data-uid="ImmediateReflection.ImmediateProperty.Equals*"></a>
   <h4 id="ImmediateReflection_ImmediateProperty_Equals_ImmediateReflection_ImmediateProperty_" data-uid="ImmediateReflection.ImmediateProperty.Equals(ImmediateReflection.ImmediateProperty)">Equals(ImmediateProperty)</h4>
@@ -373,7 +375,7 @@
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateProperty_Equals_System_Object_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateProperty.Equals(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L154">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L165">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateProperty_Equals_" data-uid="ImmediateReflection.ImmediateProperty.Equals*"></a>
   <h4 id="ImmediateReflection_ImmediateProperty_Equals_System_Object_" data-uid="ImmediateReflection.ImmediateProperty.Equals(System.Object)">Equals(Object)</h4>
@@ -422,7 +424,7 @@
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateProperty_GetHashCode.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateProperty.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L170">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L181">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateProperty_GetHashCode_" data-uid="ImmediateReflection.ImmediateProperty.GetHashCode*"></a>
   <h4 id="ImmediateReflection_ImmediateProperty_GetHashCode" data-uid="ImmediateReflection.ImmediateProperty.GetHashCode">GetHashCode()</h4>
@@ -451,10 +453,47 @@
   <div><span class="xref">System.Object.GetHashCode()</span></div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateProperty_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateProperty.GetObjectData(System.Runtime.Serialization.SerializationInfo%2CSystem.Runtime.Serialization.StreamingContext)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L197">View Source</a>
+  </span>
+  <a id="ImmediateReflection_ImmediateProperty_GetObjectData_" data-uid="ImmediateReflection.ImmediateProperty.GetObjectData*"></a>
+  <h4 id="ImmediateReflection_ImmediateProperty_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_" data-uid="ImmediateReflection.ImmediateProperty.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">GetObjectData(SerializationInfo, StreamingContext)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetObjectData(SerializationInfo info, StreamingContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Runtime.Serialization.SerializationInfo</span></td>
+        <td><span class="parametername">info</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Runtime.Serialization.StreamingContext</span></td>
+        <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateProperty_GetValue_System_Object_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateProperty.GetValue(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L130">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L141">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateProperty_GetValue_" data-uid="ImmediateReflection.ImmediateProperty.GetValue*"></a>
   <h4 id="ImmediateReflection_ImmediateProperty_GetValue_System_Object_" data-uid="ImmediateReflection.ImmediateProperty.GetValue(System.Object)">GetValue(Object)</h4>
@@ -530,7 +569,7 @@
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateProperty_SetValue_System_Object_System_Object_.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateProperty.SetValue(System.Object%2CSystem.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L145">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L156">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateProperty_SetValue_" data-uid="ImmediateReflection.ImmediateProperty.SetValue*"></a>
   <h4 id="ImmediateReflection_ImmediateProperty_SetValue_System_Object_System_Object_" data-uid="ImmediateReflection.ImmediateProperty.SetValue(System.Object,System.Object)">SetValue(Object, Object)</h4>
@@ -596,7 +635,7 @@
     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateProperty_ToString.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateProperty.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L178">View Source</a>
+    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L206">View Source</a>
   </span>
   <a id="ImmediateReflection_ImmediateProperty_ToString_" data-uid="ImmediateReflection.ImmediateProperty.ToString*"></a>
   <h4 id="ImmediateReflection_ImmediateProperty_ToString" data-uid="ImmediateReflection.ImmediateProperty.ToString">ToString()</h4>
@@ -627,6 +666,9 @@
   <div>
       <span class="xref">System.IEquatable&lt;T&gt;</span>
   </div>
+  <div>
+      <span class="xref">System.Runtime.Serialization.ISerializable</span>
+  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="ImmediateReflection.ImmediateReflectionExtensions.html#ImmediateReflection_ImmediateReflectionExtensions_GetImmediateType__1___0_">ImmediateReflectionExtensions.GetImmediateType&lt;T&gt;(T)</a>
@@ -651,7 +693,7 @@
                     <a href="https://github.com/KeRNeLith/ImmediateReflection/new/master/apiSpec/new?filename=ImmediateReflection_ImmediateProperty.md&amp;value=---%0Auid%3A%20ImmediateReflection.ImmediateProperty%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L12" class="contribution-link">View Source</a>
+                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/src/ImmediateReflection/ImmediateProperty.cs/#L15" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

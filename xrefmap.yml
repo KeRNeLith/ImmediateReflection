@@ -224,6 +224,19 @@ references:
   isSpec: "True"
   fullName: ImmediateReflection.ImmediateField.GetHashCode
   nameWithType: ImmediateField.GetHashCode
+- uid: ImmediateReflection.ImmediateField.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  name: GetObjectData(SerializationInfo, StreamingContext)
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_
+  commentId: M:ImmediateReflection.ImmediateField.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  fullName: ImmediateReflection.ImmediateField.GetObjectData(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)
+  nameWithType: ImmediateField.GetObjectData(SerializationInfo, StreamingContext)
+- uid: ImmediateReflection.ImmediateField.GetObjectData*
+  name: GetObjectData
+  href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_GetObjectData_
+  commentId: Overload:ImmediateReflection.ImmediateField.GetObjectData
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateField.GetObjectData
+  nameWithType: ImmediateField.GetObjectData
 - uid: ImmediateReflection.ImmediateField.GetValue(System.Object)
   name: GetValue(Object)
   href: api/ImmediateReflection.ImmediateField.html#ImmediateReflection_ImmediateField_GetValue_System_Object_
@@ -327,6 +340,19 @@ references:
   isSpec: "True"
   fullName: ImmediateReflection.ImmediateFields.GetHashCode
   nameWithType: ImmediateFields.GetHashCode
+- uid: ImmediateReflection.ImmediateFields.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  name: GetObjectData(SerializationInfo, StreamingContext)
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_
+  commentId: M:ImmediateReflection.ImmediateFields.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  fullName: ImmediateReflection.ImmediateFields.GetObjectData(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)
+  nameWithType: ImmediateFields.GetObjectData(SerializationInfo, StreamingContext)
+- uid: ImmediateReflection.ImmediateFields.GetObjectData*
+  name: GetObjectData
+  href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_GetObjectData_
+  commentId: Overload:ImmediateReflection.ImmediateFields.GetObjectData
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateFields.GetObjectData
+  nameWithType: ImmediateFields.GetObjectData
 - uid: ImmediateReflection.ImmediateFields.Item(System.String)
   name: Item[String]
   href: api/ImmediateReflection.ImmediateFields.html#ImmediateReflection_ImmediateFields_Item_System_String_
@@ -617,6 +643,19 @@ references:
   isSpec: "True"
   fullName: ImmediateReflection.ImmediateProperties.GetHashCode
   nameWithType: ImmediateProperties.GetHashCode
+- uid: ImmediateReflection.ImmediateProperties.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  name: GetObjectData(SerializationInfo, StreamingContext)
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_
+  commentId: M:ImmediateReflection.ImmediateProperties.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  fullName: ImmediateReflection.ImmediateProperties.GetObjectData(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)
+  nameWithType: ImmediateProperties.GetObjectData(SerializationInfo, StreamingContext)
+- uid: ImmediateReflection.ImmediateProperties.GetObjectData*
+  name: GetObjectData
+  href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_GetObjectData_
+  commentId: Overload:ImmediateReflection.ImmediateProperties.GetObjectData
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperties.GetObjectData
+  nameWithType: ImmediateProperties.GetObjectData
 - uid: ImmediateReflection.ImmediateProperties.GetProperty(System.String)
   name: GetProperty(String)
   href: api/ImmediateReflection.ImmediateProperties.html#ImmediateReflection_ImmediateProperties_GetProperty_System_String_
@@ -753,6 +792,19 @@ references:
   isSpec: "True"
   fullName: ImmediateReflection.ImmediateProperty.GetHashCode
   nameWithType: ImmediateProperty.GetHashCode
+- uid: ImmediateReflection.ImmediateProperty.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  name: GetObjectData(SerializationInfo, StreamingContext)
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_
+  commentId: M:ImmediateReflection.ImmediateProperty.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  fullName: ImmediateReflection.ImmediateProperty.GetObjectData(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)
+  nameWithType: ImmediateProperty.GetObjectData(SerializationInfo, StreamingContext)
+- uid: ImmediateReflection.ImmediateProperty.GetObjectData*
+  name: GetObjectData
+  href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_GetObjectData_
+  commentId: Overload:ImmediateReflection.ImmediateProperty.GetObjectData
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateProperty.GetObjectData
+  nameWithType: ImmediateProperty.GetObjectData
 - uid: ImmediateReflection.ImmediateProperty.GetValue(System.Object)
   name: GetValue(Object)
   href: api/ImmediateReflection.ImmediateProperty.html#ImmediateReflection_ImmediateProperty_GetValue_System_Object_
@@ -1014,6 +1066,19 @@ references:
   isSpec: "True"
   fullName: ImmediateReflection.ImmediateType.GetMembers
   nameWithType: ImmediateType.GetMembers
+- uid: ImmediateReflection.ImmediateType.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  name: GetObjectData(SerializationInfo, StreamingContext)
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_
+  commentId: M:ImmediateReflection.ImmediateType.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
+  fullName: ImmediateReflection.ImmediateType.GetObjectData(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)
+  nameWithType: ImmediateType.GetObjectData(SerializationInfo, StreamingContext)
+- uid: ImmediateReflection.ImmediateType.GetObjectData*
+  name: GetObjectData
+  href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetObjectData_
+  commentId: Overload:ImmediateReflection.ImmediateType.GetObjectData
+  isSpec: "True"
+  fullName: ImmediateReflection.ImmediateType.GetObjectData
+  nameWithType: ImmediateType.GetObjectData
 - uid: ImmediateReflection.ImmediateType.GetProperties
   name: GetProperties()
   href: api/ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_GetProperties
