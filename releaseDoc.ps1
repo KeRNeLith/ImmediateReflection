@@ -60,6 +60,9 @@ if ($env:APPVEYOR_REPO_BRANCH -ne "master")
 	Return;
 }
 
+# Chocolatey DocFX
+cinst docfx --version $env:DocFXVersion
+
 git config --global core.autocrlf true
 git config --global core.eol lf
 

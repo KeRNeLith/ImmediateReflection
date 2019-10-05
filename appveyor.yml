@@ -61,44 +61,55 @@ matrix:
 
 # Build
 before_build:
-# SonarQube
-  - ps: dotnet tool install --tool-path tools dotnet-sonarscanner
-  - ps: $sonarScanner = (Resolve-Path "tools\dotnet-sonarscanner.exe").ToString()
-# Chocolatey DocFX
-  - ps: cinst docfx --version $env:DocFXVersion
 # NuGet restore
   - nuget restore -verbosity detailed
+# SonarQube
+  - ps: >-
+      if ($env:Configuration -eq "Release")
+      {
+          dotnet tool install --tool-path tools dotnet-sonarscanner
+          $sonarScanner = (Resolve-Path "tools\dotnet-sonarscanner.exe").ToString()
+      }
 
 build:
   verbosity: minimal
 
 build_script:
+# Start SonarQube analysis (only for Release configuration)
   - ps: $analysisFile = (Convert-Path SonarQube.Analysis.xml).ToString()
   - ps: >-
-      & $sonarScanner begin /k:"immediate_reflection" /s:$analysisFile /o:"kernelith-github" /d:sonar.host.url="https://sonarcloud.io" /d:"sonar.branch.name=$env:APPVEYOR_REPO_BRANCH" /d:sonar.cs.opencover.reportsPaths="coverage.xml" /d:sonar.login="$env:SONARQUBE_TOKEN"
+      if ($env:Configuration -eq "Release")
+      {
+          & $sonarScanner begin /k:"immediate_reflection" /s:$analysisFile /o:"kernelith-github" /d:sonar.host.url="https://sonarcloud.io" /d:"sonar.branch.name=$env:APPVEYOR_REPO_BRANCH" /d:sonar.cs.opencover.reportsPaths="coverage.xml" /d:sonar.login="$env:SONARQUBE_TOKEN"
+      }
   - msbuild
 
 before_test:
-# NuGet packages for coverage
-  - ps: nuget install NUnit.Console -Version $env:NUnitConsoleVersion -OutputDirectory tools
-  - ps: nuget install OpenCover -Version $env:OpenCoverVersion -OutputDirectory tools
-# .Net tool for coverage
-  - ps: dotnet tool install --tool-path tools --version $env:CoverallsVersion coveralls.net
+# NuGet packages for test & coverage
+  - ps: >-
+      if ($env:Configuration -eq "Release")
+      {
+          nuget install NUnit.Console -Version $env:NUnitConsoleVersion -OutputDirectory tools
+          nuget install OpenCover -Version $env:OpenCoverVersion -OutputDirectory tools
+          dotnet tool install --tool-path tools --version $env:CoverallsVersion coveralls.net
+      }
 
-after_test: 
-# Coverage
-# Setup variables
-  - ps: $opencover = (Resolve-Path "tools\OpenCover.*\tools\OpenCover.Console.exe").ToString()
-  - ps: $nunitConsole = (Resolve-Path "tools\NUnit.ConsoleRunner.*\tools\nunit3-console.exe").ToString()
-  - ps: $coveralls = (Resolve-Path "tools\csmacnz.Coveralls.exe").ToString()
-  - ps: $testAssemblies = (ls src\*.Tests\bin\$env:Configuration\*\*Tests.dll | Where-Object { $_ -Match "net*" -and $_ -NotMatch "netcoreapp*" } | % FullName | sort-object -Unique)
+after_test:
 # Generate coverage report
   - ps: >-
-      & $opencover -register:Path64 -filter:"+[*]* -[*.Test*]* -[*]JetBrains.Annotations*" -target:"$nunitConsole" -targetargs:"$testAssemblies" -log:Warn -output:coverage.xml
-  - ps: >-
-      & $sonarScanner end /d:"sonar.login=$env:SONARQUBE_TOKEN"
-  - ps: >-
-      & $coveralls --opencover -i coverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --useRelativePaths --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_BUILD_NUMBER --serviceName appveyor
+      if ($env:Configuration -eq "Release")
+      {
+          $opencover = (Resolve-Path "tools\OpenCover.*\tools\OpenCover.Console.exe").ToString()
+          $nunitConsole = (Resolve-Path "tools\NUnit.ConsoleRunner.*\tools\nunit3-console.exe").ToString()
+          $coveralls = (Resolve-Path "tools\csmacnz.Coveralls.exe").ToString()
+          $testAssemblies = (ls src\*.Tests\bin\$env:Configuration\*\*Tests.dll | Where-Object { $_ -Match "net*" -and $_ -NotMatch "netcoreapp*" } | % FullName | sort-object -Unique)
+          
+          & $opencover -register:Path64 -filter:"+[*]* -[*.Test*]* -[*]JetBrains.Annotations*" -target:"$nunitConsole" -targetargs:"$testAssemblies" -log:Warn -output:coverage.xml
+          
+          & $sonarScanner end /d:"sonar.login=$env:SONARQUBE_TOKEN"
+          
+          & $coveralls --opencover -i coverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --useRelativePaths --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_BUILD_NUMBER --serviceName appveyor
+      }
 
 # Artifact
 artifacts:  
@@ -107,6 +118,7 @@ artifacts:
 
 # Documentation
 before_deploy:
+# Release documentation
   - ps: ./releaseDoc.ps1
 
 # Deploy
