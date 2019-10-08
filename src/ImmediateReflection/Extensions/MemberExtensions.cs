@@ -157,22 +157,19 @@ namespace ImmediateReflection
             return target => getter(target);
         }
 
+        // Fetch the generic helper
+        [NotNull]
+        private static MethodInfo _genericGetterHelper = typeof(MemberExtensions).GetMethod(
+            nameof(GetterHelper),
+            BindingFlags.Static | BindingFlags.NonPublic) ?? throw new InvalidOperationException("Cannot find the generic getter helper.");
+
         [Pure]
         [NotNull]
         [ContractAnnotation("method:null => halt")]
         private static GetterDelegate<TOwner> CreateGetter<TOwner>([NotNull] MethodInfo method)
         {
-            // Fetch the generic helper
-            MethodInfo genericHelper = typeof(MemberExtensions)
-                .GetMethod(
-                    nameof(GetterHelper),
-                    BindingFlags.Static | BindingFlags.NonPublic);
-
-            if (genericHelper is null)
-                throw new InvalidOperationException("Cannot find the generic setter helper.");
-
             // Supply type arguments
-            MethodInfo delegateConstructor = genericHelper.MakeGenericMethod(
+            MethodInfo delegateConstructor = _genericGetterHelper.MakeGenericMethod(
                 typeof(TOwner),
                 method.ReturnType);
 
@@ -396,23 +393,20 @@ namespace ImmediateReflection
             return (target, param) => setter(target, (TValue)param);
         }
 
+        // Fetch the generic helper
+        [NotNull]
+        private static MethodInfo _genericSetterHelper = typeof(MemberExtensions).GetMethod(
+            nameof(SetterHelper),
+            BindingFlags.Static | BindingFlags.NonPublic) ?? throw new InvalidOperationException("Cannot find the generic setter helper.");
+
         [Pure]
         [NotNull]
         [ContractAnnotation("method:null => halt")]
         private static SetterDelegate<TOwner> CreateSetter<TOwner>([NotNull] MethodInfo method)
             where TOwner : class
         {
-            // Fetch the generic helper
-            MethodInfo genericHelper = typeof(MemberExtensions)
-                .GetMethod(
-                    nameof(SetterHelper),
-                    BindingFlags.Static | BindingFlags.NonPublic);
-
-            if (genericHelper is null)
-                throw new InvalidOperationException("Cannot find the generic setter helper.");
-
             // Supply type arguments
-            MethodInfo delegateConstructor = genericHelper.MakeGenericMethod(
+            MethodInfo delegateConstructor = _genericSetterHelper.MakeGenericMethod(
                 typeof(TOwner),
                 method.GetParameters()[0].ParameterType);
 
