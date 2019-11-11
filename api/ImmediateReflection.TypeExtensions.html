@@ -109,7 +109,8 @@
   <h6><strong>Assembly</strong>: ImmediateReflection.dll</h6>
   <h5 id="ImmediateReflection_TypeExtensions_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class TypeExtensions</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+public static class TypeExtensions</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -127,7 +128,9 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T Copy&lt;T&gt;(this Type type, T other)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[ContractAnnotation(&quot;type:null =&gt; halt; other:null =&gt; null; other:notnull =&gt; notnull&quot;)]
+public static T Copy&lt;T&gt;([NotNull] this Type type, [CanBeNull] T other)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -227,7 +230,9 @@ or constructor exists but was not considered as copy constructor.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool HasCopyConstructor(this Type type)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[ContractAnnotation(&quot;type:null =&gt; halt&quot;)]
+public static bool HasCopyConstructor([NotNull] this Type type)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -293,7 +298,9 @@ or constructor exists but was not considered as copy constructor.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool HasDefaultConstructor(this Type type)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[ContractAnnotation(&quot;type:null =&gt; halt&quot;)]
+public static bool HasDefaultConstructor([NotNull] this Type type)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -359,7 +366,10 @@ or constructor exists but was not considered as copy constructor.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static object New(this Type type)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+[ContractAnnotation(&quot;type:null =&gt; halt&quot;)]
+public static object New([NotNull] this Type type)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -440,7 +450,10 @@ or constructor exists but was not considered as copy constructor.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static object New(this Type type, params object[] args)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+[ContractAnnotation(&quot;type:null =&gt; halt;args:null =&gt; halt&quot;)]
+public static object New([NotNull] this Type type, [NotNull, ItemCanBeNull] params object[] args)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -549,7 +562,9 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool TryCopy&lt;T&gt;(this Type type, T other, out T newInstance, out Exception exception)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[ContractAnnotation(&quot;type:null =&gt; halt;other:null =&gt; true, newInstance:null, exception:null;other:notnull =&gt; true, newInstance:notnull, exception:null;other:null =&gt; false, newInstance:null, exception:notnull;other:notnull =&gt; false, newInstance:null, exception:notnull&quot;)]
+public static bool TryCopy&lt;T&gt;([NotNull] this Type type, [CanBeNull] T other, out T newInstance, out Exception exception)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -652,7 +667,9 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool TryNew(this Type type, out object newInstance, out Exception exception)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[ContractAnnotation(&quot;=&gt; true, newInstance:notnull, exception:null;=&gt; false, newInstance:null, exception:notnull&quot;)]
+public static bool TryNew([NotNull] this Type type, out object newInstance, out Exception exception)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -733,7 +750,9 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool TryNew(this Type type, out object newInstance, out Exception exception, params object[] args)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[ContractAnnotation(&quot;type:null =&gt; halt;args:null =&gt; halt;=&gt; true, newInstance:notnull, exception:null;=&gt; false, newInstance:null, exception:notnull&quot;)]
+public static bool TryNew([NotNull] this Type type, out object newInstance, out Exception exception, [NotNull, ItemCanBeNull] params object[] args)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

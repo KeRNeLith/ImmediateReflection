@@ -131,7 +131,8 @@ type parameters, generic type definitions, and open or closed constructed generi
   <h6><strong>Assembly</strong>: ImmediateReflection.dll</h6>
   <h5 id="ImmediateReflection_ImmediateType_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[Serializable]
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Serializable]
 public sealed class ImmediateType : ImmediateMember, IEquatable&lt;ImmediateType&gt;, ISerializable</code></pre>
   </div>
   <h3 id="properties">Properties
@@ -152,7 +153,9 @@ If this is an interface or has no base class null is returned.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Type BaseType { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[CanBeNull]
+public Type BaseType { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -183,7 +186,9 @@ If this is an interface or has no base class null is returned.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Type DeclaringType { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[CanBeNull]
+public Type DeclaringType { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -214,7 +219,10 @@ If this is an interface or has no base class null is returned.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ImmediateFields Fields { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+[ItemNotNull]
+public ImmediateFields Fields { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -245,7 +253,9 @@ If this is an interface or has no base class null is returned.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string FullName { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+public string FullName { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -279,7 +289,8 @@ If this is an interface or has no base class null is returned.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool HasCopyConstructor { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+public bool HasCopyConstructor { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -310,7 +321,8 @@ If this is an interface or has no base class null is returned.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool HasDefaultConstructor { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+public bool HasDefaultConstructor { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -341,7 +353,9 @@ If this is an interface or has no base class null is returned.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ImmediateMember this[string memberName] { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[CanBeNull]
+public ImmediateMember this[[NotNull] string memberName] { get; }</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -407,7 +421,10 @@ If this is an interface or has no base class null is returned.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ImmediateMember&gt; Members { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+[ItemNotNull]
+public IEnumerable&lt;ImmediateMember&gt; Members { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -438,7 +455,10 @@ If this is an interface or has no base class null is returned.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ImmediateProperties Properties { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+[ItemNotNull]
+public ImmediateProperties Properties { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -469,7 +489,9 @@ If this is an interface or has no base class null is returned.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Type Type { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+public Type Type { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -502,7 +524,10 @@ If this is an interface or has no base class null is returned.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public object Copy(object other)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[ContractAnnotation(&quot;other:null =&gt; null; other:notnull =&gt; notnull&quot;)]
+public object Copy([CanBeNull] object other)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -671,7 +696,11 @@ or constructor exists but was not considered as copy constructor.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ImmediateField GetField(string fieldName)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[CanBeNull]
+[ContractAnnotation(&quot;fieldName:null =&gt; halt&quot;)]
+public ImmediateField GetField([NotNull] string fieldName)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -737,7 +766,11 @@ or constructor exists but was not considered as copy constructor.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ImmediateField&gt; GetFields()</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[NotNull]
+[ItemNotNull]
+public IEnumerable&lt;ImmediateField&gt; GetFields()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -801,7 +834,11 @@ or constructor exists but was not considered as copy constructor.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ImmediateMember GetMember(string memberName)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[CanBeNull]
+[ContractAnnotation(&quot;memberName:null =&gt; halt&quot;)]
+public ImmediateMember GetMember([NotNull] string memberName)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -867,7 +904,11 @@ or constructor exists but was not considered as copy constructor.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ImmediateMember&gt; GetMembers()</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[NotNull]
+[ItemNotNull]
+public IEnumerable&lt;ImmediateMember&gt; GetMembers()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -936,7 +977,11 @@ or constructor exists but was not considered as copy constructor.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ImmediateProperty&gt; GetProperties()</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[NotNull]
+[ItemNotNull]
+public IEnumerable&lt;ImmediateProperty&gt; GetProperties()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -968,7 +1013,11 @@ or constructor exists but was not considered as copy constructor.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ImmediateProperty GetProperty(string propertyName)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[CanBeNull]
+[ContractAnnotation(&quot;propertyName:null =&gt; halt&quot;)]
+public ImmediateProperty GetProperty([NotNull] string propertyName)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1034,7 +1083,10 @@ or constructor exists but was not considered as copy constructor.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public object New()</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[NotNull]
+public object New()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1092,7 +1144,10 @@ or constructor exists but was not considered as copy constructor.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public object New(params object[] args)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[NotNull]
+public object New([CanBeNull, ItemCanBeNull] params object[] args)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1222,7 +1277,10 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool TryCopy(object other, out object newInstance, out Exception exception)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[ContractAnnotation(&quot;other:null =&gt; true, newInstance:null, exception:null;other:notnull =&gt; true, newInstance:notnull, exception:null;other:null =&gt; false, newInstance:null, exception:notnull;other:notnull =&gt; false, newInstance:null, exception:notnull&quot;)]
+public bool TryCopy([CanBeNull] object other, out object newInstance, out Exception exception)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1287,7 +1345,10 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool TryNew(out object newInstance, out Exception exception)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[ContractAnnotation(&quot;=&gt; true, newInstance:notnull, exception:null;=&gt; false, newInstance:null, exception:notnull&quot;)]
+public bool TryNew(out object newInstance, out Exception exception)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1346,7 +1407,10 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool TryNew(out object newInstance, out Exception exception, params object[] args)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[ContractAnnotation(&quot;=&gt; true, newInstance:notnull, exception:null;=&gt; false, newInstance:null, exception:notnull&quot;)]
+public bool TryNew(out object newInstance, out Exception exception, [CanBeNull, ItemCanBeNull] params object[] args)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

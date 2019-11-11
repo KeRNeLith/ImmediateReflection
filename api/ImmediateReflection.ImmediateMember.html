@@ -112,7 +112,8 @@
   <h6><strong>Assembly</strong>: ImmediateReflection.dll</h6>
   <h5 id="ImmediateReflection_ImmediateMember_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[Serializable]
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Serializable]
 public abstract class ImmediateMember</code></pre>
   </div>
   <h3 id="constructors">Constructors
@@ -131,7 +132,7 @@ public abstract class ImmediateMember</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected ImmediateMember(MemberInfo member)</code></pre>
+    <pre><code class="lang-csharp hljs">protected ImmediateMember([NotNull] MemberInfo member)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -167,7 +168,9 @@ public abstract class ImmediateMember</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Name { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+public string Name { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -200,7 +203,11 @@ public abstract class ImmediateMember</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Attribute&gt; GetAllAttributes(bool inherit = false)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[NotNull]
+[ItemNotNull]
+public IEnumerable&lt;Attribute&gt; GetAllAttributes(bool inherit = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -250,7 +257,11 @@ public abstract class ImmediateMember</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Attribute GetAttribute(Type attributeType, bool inherit = false)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[CanBeNull]
+[ContractAnnotation(&quot;attributeType:null =&gt; halt&quot;)]
+public Attribute GetAttribute([NotNull] Type attributeType, bool inherit = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -327,7 +338,10 @@ public abstract class ImmediateMember</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TAttribute GetAttribute&lt;TAttribute&gt;(bool inherit = false)
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[CanBeNull]
+public TAttribute GetAttribute&lt;TAttribute&gt;(bool inherit = false)
     where TAttribute : Attribute</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -394,7 +408,12 @@ public abstract class ImmediateMember</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Attribute&gt; GetAttributes(Type attributeType, bool inherit = false)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[NotNull]
+[ItemNotNull]
+[ContractAnnotation(&quot;attributeType:null =&gt; halt&quot;)]
+public IEnumerable&lt;Attribute&gt; GetAttributes([NotNull] Type attributeType, bool inherit = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -450,7 +469,11 @@ public abstract class ImmediateMember</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TAttribute&gt; GetAttributes&lt;TAttribute&gt;(bool inherit = false)
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[NotNull]
+[ItemNotNull]
+public IEnumerable&lt;TAttribute&gt; GetAttributes&lt;TAttribute&gt;(bool inherit = false)
     where TAttribute : Attribute</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -517,7 +540,10 @@ public abstract class ImmediateMember</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsDefined(Type attributeType, bool inherit = false)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+[ContractAnnotation(&quot;attributeType:null =&gt; halt&quot;)]
+public bool IsDefined([NotNull] Type attributeType, bool inherit = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -594,7 +620,9 @@ public abstract class ImmediateMember</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsDefined&lt;TAttribute&gt;(bool inherit = false)
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+public bool IsDefined&lt;TAttribute&gt;(bool inherit = false)
     where TAttribute : Attribute</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>

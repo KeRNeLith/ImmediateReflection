@@ -130,7 +130,8 @@
   <h6><strong>Assembly</strong>: ImmediateReflection.dll</h6>
   <h5 id="ImmediateReflection_ImmediateProperty_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[Serializable]
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Serializable]
 public sealed class ImmediateProperty : ImmediateMember, IEquatable&lt;ImmediateProperty&gt;, ISerializable</code></pre>
   </div>
   <h3 id="properties">Properties
@@ -149,7 +150,8 @@ public sealed class ImmediateProperty : ImmediateMember, IEquatable&lt;Immediate
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool CanRead { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+public bool CanRead { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -180,7 +182,8 @@ public sealed class ImmediateProperty : ImmediateMember, IEquatable&lt;Immediate
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool CanWrite { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+public bool CanWrite { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -211,7 +214,9 @@ public sealed class ImmediateProperty : ImmediateMember, IEquatable&lt;Immediate
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Type DeclaringType { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+public Type DeclaringType { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -242,7 +247,9 @@ public sealed class ImmediateProperty : ImmediateMember, IEquatable&lt;Immediate
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ImmediateType PropertyImmediateType { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+public ImmediateType PropertyImmediateType { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -273,7 +280,9 @@ public sealed class ImmediateProperty : ImmediateMember, IEquatable&lt;Immediate
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PropertyInfo PropertyInfo { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+public PropertyInfo PropertyInfo { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -304,7 +313,9 @@ public sealed class ImmediateProperty : ImmediateMember, IEquatable&lt;Immediate
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Type PropertyType { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+public Type PropertyType { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -502,7 +513,9 @@ public sealed class ImmediateProperty : ImmediateMember, IEquatable&lt;Immediate
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public object GetValue(object obj)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[Pure]
+public object GetValue([CanBeNull] object obj)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -578,7 +591,8 @@ public sealed class ImmediateProperty : ImmediateMember, IEquatable&lt;Immediate
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetValue(object obj, object value)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+public void SetValue([CanBeNull] object obj, [CanBeNull] object value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

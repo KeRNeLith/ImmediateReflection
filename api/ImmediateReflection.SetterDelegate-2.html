@@ -80,7 +80,8 @@
   <h6><strong>Assembly</strong>: ImmediateReflection.dll</h6>
   <h5 id="ImmediateReflection_SetterDelegate_2_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public delegate void SetterDelegate&lt;in TOwner, in TValue&gt;(TOwner target, TValue value);</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+public delegate void SetterDelegate&lt;in TOwner, in TValue&gt;([CanBeNull] TOwner target, [CanBeNull] TValue value);</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

@@ -109,7 +109,8 @@
   <h6><strong>Assembly</strong>: ImmediateReflection.dll</h6>
   <h5 id="ImmediateReflection_ImmediateMemberExtensions_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class ImmediateMemberExtensions</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+public static class ImmediateMemberExtensions</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -127,7 +128,10 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ImmediateField GetImmediateField(this Type type, string fieldName)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[CanBeNull]
+[ContractAnnotation(&quot;type:null =&gt; halt;fieldName:null =&gt; halt&quot;)]
+public static ImmediateField GetImmediateField([NotNull] this Type type, [NotNull] string fieldName)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -199,7 +203,10 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ImmediateField GetImmediateField(this Type type, string fieldName, BindingFlags flags)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[CanBeNull]
+[ContractAnnotation(&quot;type:null =&gt; halt;fieldName:null =&gt; halt&quot;)]
+public static ImmediateField GetImmediateField([NotNull] this Type type, [NotNull] string fieldName, BindingFlags flags)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -277,7 +284,11 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;ImmediateField&gt; GetImmediateFields(this Type type)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+[ItemNotNull]
+[ContractAnnotation(&quot;type:null =&gt; halt&quot;)]
+public static IEnumerable&lt;ImmediateField&gt; GetImmediateFields([NotNull] this Type type)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -343,7 +354,11 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;ImmediateField&gt; GetImmediateFields(this Type type, BindingFlags flags)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+[ItemNotNull]
+[ContractAnnotation(&quot;type:null =&gt; halt&quot;)]
+public static IEnumerable&lt;ImmediateField&gt; GetImmediateFields([NotNull] this Type type, BindingFlags flags)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -415,7 +430,11 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;ImmediateProperty&gt; GetImmediateProperties(this Type type)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+[ItemNotNull]
+[ContractAnnotation(&quot;type:null =&gt; halt&quot;)]
+public static IEnumerable&lt;ImmediateProperty&gt; GetImmediateProperties([NotNull] this Type type)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -481,7 +500,11 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;ImmediateProperty&gt; GetImmediateProperties(this Type type, BindingFlags flags)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[NotNull]
+[ItemNotNull]
+[ContractAnnotation(&quot;type:null =&gt; halt&quot;)]
+public static IEnumerable&lt;ImmediateProperty&gt; GetImmediateProperties([NotNull] this Type type, BindingFlags flags)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -553,7 +576,10 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ImmediateProperty GetImmediateProperty(this Type type, string propertyName)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[CanBeNull]
+[ContractAnnotation(&quot;type:null =&gt; halt;propertyName:null =&gt; halt&quot;)]
+public static ImmediateProperty GetImmediateProperty([NotNull] this Type type, [NotNull] string propertyName)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -625,7 +651,10 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ImmediateProperty GetImmediateProperty(this Type type, string propertyName, BindingFlags flags)</code></pre>
+    <pre><code class="lang-csharp hljs">[PublicAPI]
+[CanBeNull]
+[ContractAnnotation(&quot;type:null =&gt; halt;propertyName:null =&gt; halt&quot;)]
+public static ImmediateProperty GetImmediateProperty([NotNull] this Type type, [NotNull] string propertyName, BindingFlags flags)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
