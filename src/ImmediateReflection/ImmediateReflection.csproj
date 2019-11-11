@@ -103,13 +103,14 @@ Changes:
     <DefineConstants>$(DefineConstants);NETSTANDARD2_0;SUPPORTS_SERIALIZATION;SUPPORTS_AGGRESSIVE_INLINING;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_SYSTEM_CORE;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LAZY;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
 
-  <!-- Dependencies -->  
+  <!-- Dependencies -->
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="System.Reflection.Emit.LightWeight" Version="4.3.0" />
   </ItemGroup>
 
   <!-- Source Link -->
   <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" PrivateAssets="All" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All" />
   </ItemGroup>
 </Project>
