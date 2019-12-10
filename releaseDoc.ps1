@@ -50,14 +50,14 @@ param(
 # Only master Release
 if ($env:Configuration -ne "Release")
 {
-	"Documentation update ignored: Not Release build.";
-	Return;
+    "Documentation update ignored: Not Release build.";
+    Return;
 }
 
 if ($env:APPVEYOR_REPO_BRANCH -ne "master")
 {
-	"Documentation update ignored: Not master branch.";
-	Return;
+    "Documentation update ignored: Not master branch.";
+    Return;
 }
 
 # Chocolatey DocFX
@@ -84,8 +84,8 @@ $TEMP_REPO_DIR="$pwd/../ImmediateReflection-gh-pages"
 
 if (Test-Path $TEMP_REPO_DIR)
 {
-	"Removing temporary documentation directory $TEMP_REPO_DIR..."
-	rm -recurse $TEMP_REPO_DIR
+    "Removing temporary documentation directory $TEMP_REPO_DIR..."
+    rm -recurse $TEMP_REPO_DIR
 }
 
 mkdir $TEMP_REPO_DIR
@@ -106,15 +106,15 @@ Invoke-Git "add -A ."
 "Checking if there are changes in the documentation..."
 if (-not [string]::IsNullOrEmpty($(git status --porcelain)))
 {
-	"Pushing the new documentation to the remote gh-pages branch..."
-	
-	git commit -m "Update generated documentation."
-	# -q is to avoid git to output thing to stderr for no reason
-	git push -q origin gh-pages
-	
-	"Documentation updated in remote gh-pages branch."
+    "Pushing the new documentation to the remote gh-pages branch..."
+
+    git commit -m "Update generated documentation."
+    # -q is to avoid git to output thing to stderr for no reason
+    git push -q origin gh-pages
+
+    "Documentation updated in remote gh-pages branch."
 }
 else
 {
-	"Documentation update ignored: No relevant changes in the documentation."
+    "Documentation update ignored: No relevant changes in the documentation."
 }
