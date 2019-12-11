@@ -312,7 +312,7 @@ For targets higher than .NET Standard 2.0:
 
 - It uses NUnit3 for unit testing (not published).
 
-- The library code is published annotated with JetBrains annotations that are embedded in the library. But they will **not conflict** with any of your referenced packages or project defined attributes as they are **internal** to ImmediateReflection.
+- The library code is published annotated with JetBrains annotations.
 
 ---
 
@@ -320,6 +320,6 @@ For targets higher than .NET Standard 2.0:
 
 ImmediateReflection is available on [NuGet](https://www.nuget.org/packages/ImmediateReflection)
 
-	PM> Install-Package ImmediateReflection
+    PM> Install-Package ImmediateReflection
 
 ---
