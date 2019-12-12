@@ -40,6 +40,6 @@ For targets higher than .NET Standard 2.0:
 
 ImmediateReflection is available on [NuGet](https://www.nuget.org/packages/ImmediateReflection)
 
-	PM> Install-Package ImmediateReflection
+    PM> Install-Package ImmediateReflection
 
 <img src="images/immediate_reflection_logo.png" width="128" height="128" style="display: block; margin-left: auto; margin-right: auto" />

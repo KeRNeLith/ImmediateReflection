@@ -21,6 +21,9 @@
     <Company>Alexandre Rabérin</Company>
 
     <IsPackable>false</IsPackable>
+    <!-- Exclude the project from analysis -->
+    <SonarQubeExclude>true</SonarQubeExclude>
+
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/KeRNeLith/ImmediateReflection</PackageProjectUrl>

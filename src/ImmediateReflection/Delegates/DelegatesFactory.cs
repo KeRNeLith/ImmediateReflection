@@ -398,28 +398,6 @@ namespace ImmediateReflection
             return CreateDynamicMethod($"CopyConstructor_{name}", typeof(object), new[] { typeof(object) }, owner);
         }
 
-        [Pure]
-        [NotNull]
-        [ContractAnnotation("name:null => halt;owner:null => halt")]
-#if SUPPORTS_AGGRESSIVE_INLINING
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        private static DynamicMethod CreateDynamicGetter([NotNull] string name, [NotNull] Type owner)
-        {
-            return CreateDynamicMethod($"Get_{name}", typeof(object), new[] { typeof(object) }, owner);
-        }
-
-        [Pure]
-        [NotNull]
-        [ContractAnnotation("name:null => halt;owner:null => halt")]
-#if SUPPORTS_AGGRESSIVE_INLINING
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        private static DynamicMethod CreateDynamicSetter([NotNull] string name, [NotNull] Type owner)
-        {
-            return CreateDynamicProcedure($"Set_{name}", new[] { typeof(object), typeof(object) }, owner);
-        }
-
         /// <summary>
         /// Gets the <see cref="Type"/> of the <paramref name="member"/> owner.
         /// </summary>
@@ -441,6 +419,17 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
+        [ContractAnnotation("name:null => halt;owner:null => halt")]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        private static DynamicMethod CreateDynamicGetter([NotNull] string name, [NotNull] Type owner)
+        {
+            return CreateDynamicMethod($"Get_{name}", typeof(object), new[] { typeof(object) }, owner);
+        }
+
+        [Pure]
+        [NotNull]
         [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -449,6 +438,17 @@ namespace ImmediateReflection
         {
             targetType = GetOwnerType(member);
             return CreateDynamicGetter(member.Name, targetType);
+        }
+
+        [Pure]
+        [NotNull]
+        [ContractAnnotation("name:null => halt;owner:null => halt")]
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        private static DynamicMethod CreateDynamicSetter([NotNull] string name, [NotNull] Type owner)
+        {
+            return CreateDynamicProcedure($"Set_{name}", new[] { typeof(object), typeof(object) }, owner);
         }
 
         [Pure]
