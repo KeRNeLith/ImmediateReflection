@@ -4,3 +4,5 @@
 - name: Benchmarks
   href: benchmarks/toc.yml
   topicHref: benchmarks.md
+- name: Release Notes
+  href: ~/../RELEASE_NOTES.md
