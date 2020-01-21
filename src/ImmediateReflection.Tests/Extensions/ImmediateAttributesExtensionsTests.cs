@@ -134,6 +134,27 @@ namespace ImmediateReflection.Tests
                     typeof(SecondTestClassAttribute),
                     true);
 
+                // Inheriting attribute
+                yield return new TestCaseData(
+                    typeof(TestClassOnlyInheritedAttribute),
+                    typeof(TestBaseAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    typeof(TestClassOnlyInheritedAttribute),
+                    typeof(TestBaseAttribute),
+                    true);
+
+                yield return new TestCaseData(
+                    typeof(TestClassInheritedAttribute),
+                    typeof(TestBaseAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    typeof(TestClassInheritedAttribute),
+                    typeof(TestBaseAttribute),
+                    true);
+
                 #endregion
 
                 #region ImmediateField
@@ -200,6 +221,27 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(
                     TestFieldMultiAttributesFieldInfo,
                     typeof(SecondTestClassAttribute),
+                    true);
+
+                // Inheriting attribute
+                yield return new TestCaseData(
+                    TestFieldOnlyInheritingAttributeFieldInfo,
+                    typeof(TestBaseAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    TestFieldOnlyInheritingAttributeFieldInfo,
+                    typeof(TestBaseAttribute),
+                    true);
+
+                yield return new TestCaseData(
+                    TestFieldInheritingAttributeFieldInfo,
+                    typeof(TestBaseAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    TestFieldInheritingAttributeFieldInfo,
+                    typeof(TestBaseAttribute),
                     true);
 
                 #endregion
@@ -303,6 +345,27 @@ namespace ImmediateReflection.Tests
                     typeof(SecondTestClassAttribute),
                     true);
 
+                // Inheriting attribute
+                yield return new TestCaseData(
+                    TestPropertyOnlyInheritingAttributePropertyInfo,
+                    typeof(TestBaseAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    TestPropertyOnlyInheritingAttributePropertyInfo,
+                    typeof(TestBaseAttribute),
+                    true);
+
+                yield return new TestCaseData(
+                    TestPropertyInheritingAttributePropertyInfo,
+                    typeof(TestBaseAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    TestPropertyInheritingAttributePropertyInfo,
+                    typeof(TestBaseAttribute),
+                    true);
+
                 #endregion
             }
         }
@@ -321,107 +384,140 @@ namespace ImmediateReflection.Tests
             #region ImmediateType
 
             // No attribute
-            CheckHasAndGetAttribute<TestClassAttribute>(typeof(TestClassNoAttribute), false);
-            CheckHasAndGetAttribute<TestClassAttribute>(typeof(TestClassNoAttribute), true);
+            CheckHasAndGetAttribute<TestClassAttribute>(typeof(TestClassNoAttribute));
 
             // With attribute
-            CheckHasAndGetAttribute<TestClassAttribute>(typeof(TestClassWithAttribute), false);
-            CheckHasAndGetAttribute<TestClassAttribute>(typeof(TestClassWithAttribute), true);
-            CheckHasAndGetAttribute<TestClassAttribute>(typeof(TestClassWithAttributes), false);
-            CheckHasAndGetAttribute<TestClassAttribute>(typeof(TestClassWithAttributes), true);
+            CheckHasAndGetAttribute<TestClassAttribute>(typeof(TestClassWithAttribute));
+            CheckHasAndGetAttribute<TestClassAttribute>(typeof(TestClassWithAttributes));
 
             // Without requested attribute
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(typeof(TestClassWithAttribute), false);
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(typeof(TestClassWithAttribute), true);
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(typeof(TestClassWithAttribute));
 
             // Attribute not inherited
-            CheckHasAndGetAttribute<TestClassAttribute>(typeof(InheritedTestClassNoAttribute), false);
-            CheckHasAndGetAttribute<TestClassAttribute>(typeof(InheritedTestClassNoAttribute), true);
+            CheckHasAndGetAttribute<TestClassAttribute>(typeof(InheritedTestClassNoAttribute));
 
             // Attribute inherited 1
-            CheckHasAndGetAttribute<TestClassAttribute>(typeof(InheritedTestClassWithAttribute1), false);
-            CheckHasAndGetAttribute<TestClassAttribute>(typeof(InheritedTestClassWithAttribute1), true);
+            CheckHasAndGetAttribute<TestClassAttribute>(typeof(InheritedTestClassWithAttribute1));
 
             // Attribute inherited 2
-            CheckHasAndGetAttribute<TestClassAttribute>(typeof(InheritedTestClassWithAttribute2), false);
-            CheckHasAndGetAttribute<TestClassAttribute>(typeof(InheritedTestClassWithAttribute2), true);
+            CheckHasAndGetAttribute<TestClassAttribute>(typeof(InheritedTestClassWithAttribute2));
 
             // Several attributes
-            CheckHasAndGetAttribute<TestClassAttribute>(typeof(TestClassMultiAttributes), false);
-            CheckHasAndGetAttribute<TestClassAttribute>(typeof(TestClassMultiAttributes), true);
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(typeof(TestClassMultiAttributes), false);
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(typeof(TestClassMultiAttributes), true);
+            CheckHasAndGetAttribute<TestClassAttribute>(typeof(TestClassMultiAttributes));
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(typeof(TestClassMultiAttributes));
 
             #endregion
 
             #region ImmediateField
 
             // No attribute
-            CheckHasAndGetAttribute<TestClassAttribute>(TestFieldNoAttributeFieldInfo, false);
-            CheckHasAndGetAttribute<TestClassAttribute>(TestFieldNoAttributeFieldInfo, true);
+            CheckHasAndGetAttribute<TestClassAttribute>(TestFieldNoAttributeFieldInfo);
 
             // With attribute
-            CheckHasAndGetAttribute<TestClassAttribute>(TestFieldAttributeFieldInfo, false);
-            CheckHasAndGetAttribute<TestClassAttribute>(TestFieldAttributeFieldInfo, true);
-            CheckHasAndGetAttribute<TestClassAttribute>(TestFieldAttributesFieldInfo, false);
-            CheckHasAndGetAttribute<TestClassAttribute>(TestFieldAttributesFieldInfo, true);
+            CheckHasAndGetAttribute<TestClassAttribute>(TestFieldAttributeFieldInfo);
+            CheckHasAndGetAttribute<TestClassAttribute>(TestFieldAttributesFieldInfo);
 
             // Without requested attribute
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(TestFieldAttributeFieldInfo, false);
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(TestFieldAttributeFieldInfo, true);
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(TestFieldAttributeFieldInfo);
 
             // Several attributes
-            CheckHasAndGetAttribute<TestClassAttribute>(TestFieldMultiAttributesFieldInfo, false);
-            CheckHasAndGetAttribute<TestClassAttribute>(TestFieldMultiAttributesFieldInfo, true);
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(TestFieldMultiAttributesFieldInfo, false);
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(TestFieldMultiAttributesFieldInfo, true);
+            CheckHasAndGetAttribute<TestClassAttribute>(TestFieldMultiAttributesFieldInfo);
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(TestFieldMultiAttributesFieldInfo);
 
             #endregion
 
             #region ImmediateProperty
 
             // No attribute
-            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyNoAttributePropertyInfo, false);
-            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyNoAttributePropertyInfo, true);
+            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyNoAttributePropertyInfo);
 
             // With attribute
-            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyAttributePropertyInfo, false);
-            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyAttributePropertyInfo, true);
-            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyAttributesPropertyInfo, false);
-            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyAttributesPropertyInfo, true);
+            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyAttributePropertyInfo);
+            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyAttributesPropertyInfo);
 
             // Without requested attribute
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(TestPropertyAttributePropertyInfo, false);
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(TestPropertyAttributePropertyInfo, true);
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(TestPropertyAttributePropertyInfo);
 
             // Attribute not inherited
-            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyInheritedNoAttributePropertyInfo, false);
-            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyInheritedNoAttributePropertyInfo, true);
+            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyInheritedNoAttributePropertyInfo);
 
             // Attribute inherited 1
-            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyInheritedAttribute1PropertyInfo, false);
-            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyInheritedAttribute1PropertyInfo, true);
+            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyInheritedAttribute1PropertyInfo);
 
             // Attribute inherited 2
-            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyInheritedAttribute2PropertyInfo, false);
-            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyInheritedAttribute2PropertyInfo, true);
+            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyInheritedAttribute2PropertyInfo);
 
             // Several attributes
-            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyMultiAttributesPropertyInfo, false);
-            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyMultiAttributesPropertyInfo, true);
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(TestPropertyMultiAttributesPropertyInfo, false);
-            CheckHasAndGetAttribute<SecondTestClassAttribute>(TestPropertyMultiAttributesPropertyInfo, true);
+            CheckHasAndGetAttribute<TestClassAttribute>(TestPropertyMultiAttributesPropertyInfo);
+            CheckHasAndGetAttribute<SecondTestClassAttribute>(TestPropertyMultiAttributesPropertyInfo);
 
             #endregion
 
             #region Local function
 
-            void CheckHasAndGetAttribute<TAttribute>(MemberInfo member, bool inherit)
+            void CheckHasAndGetAttribute<TAttribute>(MemberInfo member)
                 where TAttribute : Attribute
             {
-                ImmediateMember immediateMember = GetImmediateMember(member);
-                Assert.AreEqual(immediateMember.IsDefined<TAttribute>(inherit), ImmediateAttributesExtensions.IsDefinedImmediateAttribute<TAttribute>(member, inherit));
-                Assert.AreEqual(immediateMember.GetAttribute<TAttribute>(inherit), ImmediateAttributesExtensions.GetImmediateAttribute<TAttribute>(member, inherit));
+                CheckHasAndGetAttributeHelper(false);
+                CheckHasAndGetAttributeHelper(true);
+
+                #region Local function
+
+                void CheckHasAndGetAttributeHelper(bool inherit)
+                {
+                    ImmediateMember immediateMember = GetImmediateMember(member);
+                    Assert.AreEqual(immediateMember.IsDefined<TAttribute>(inherit), ImmediateAttributesExtensions.IsDefinedImmediateAttribute<TAttribute>(member, inherit));
+                    Assert.AreEqual(immediateMember.GetAttribute<TAttribute>(inherit), ImmediateAttributesExtensions.GetImmediateAttribute<TAttribute>(member, inherit));
+                }
+
+                #endregion
+            }
+
+            #endregion
+        }
+
+        [Test]
+        public void TemplateIsDefinedAndGetAttribute_Inherited()
+        {
+            #region ImmediateType
+
+            CheckHasAndGetAttribute<TestBaseAttribute>(typeof(TestClassOnlyInheritedAttribute));
+            CheckHasAndGetAttribute<TestBaseAttribute>(typeof(TestClassInheritedAttribute));
+
+            #endregion
+
+            #region ImmediateField
+
+            CheckHasAndGetAttribute<TestBaseAttribute>(TestFieldOnlyInheritingAttributeFieldInfo);
+            CheckHasAndGetAttribute<TestBaseAttribute>(TestFieldInheritingAttributeFieldInfo);
+
+            #endregion
+
+            #region ImmediateProperty
+
+            CheckHasAndGetAttribute<TestBaseAttribute>(TestPropertyOnlyInheritingAttributePropertyInfo);
+            CheckHasAndGetAttribute<TestBaseAttribute>(TestPropertyInheritingAttributePropertyInfo);
+
+            #endregion
+
+            #region Local function
+
+            void CheckHasAndGetAttribute<TAttribute>(MemberInfo member)
+                where TAttribute : Attribute
+            {
+                CheckHasAndGetAttributeHelper(false);
+                CheckHasAndGetAttributeHelper(true);
+
+                #region Local function
+
+                void CheckHasAndGetAttributeHelper(bool inherit)
+                {
+                    ImmediateMember immediateMember = GetImmediateMember(member);
+                    Assert.AreEqual(immediateMember.IsDefined<TAttribute>(inherit), ImmediateAttributesExtensions.IsDefinedImmediateAttribute<TAttribute>(member, inherit));
+                    Assert.AreEqual(immediateMember.GetAttribute<TAttribute>(inherit), ImmediateAttributesExtensions.GetImmediateAttribute<TAttribute>(member, inherit));
+                }
+
+                #endregion
             }
 
             #endregion
@@ -687,6 +783,27 @@ namespace ImmediateReflection.Tests
                     typeof(SecondTestClassAttribute),
                     true);
 
+                // Inheriting attribute
+                yield return new TestCaseData(
+                    typeof(TestClassOnlyInheritedAttribute),
+                    typeof(TestBaseAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    typeof(TestClassOnlyInheritedAttribute),
+                    typeof(TestBaseAttribute),
+                    true);
+
+                yield return new TestCaseData(
+                    typeof(TestClassInheritedAttribute),
+                    typeof(TestBaseAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    typeof(TestClassInheritedAttribute),
+                    typeof(TestBaseAttribute),
+                    true);
+
                 #endregion
 
                 #region ImmediateField
@@ -753,6 +870,27 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(
                     TestFieldMultiAttributesFieldInfo,
                     typeof(SecondTestClassAttribute),
+                    true);
+
+                // Inheriting attribute
+                yield return new TestCaseData(
+                    TestFieldOnlyInheritingAttributeFieldInfo,
+                    typeof(TestBaseAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    TestFieldOnlyInheritingAttributeFieldInfo,
+                    typeof(TestBaseAttribute),
+                    true);
+
+                yield return new TestCaseData(
+                    TestFieldInheritingAttributeFieldInfo,
+                    typeof(TestBaseAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    TestFieldInheritingAttributeFieldInfo,
+                    typeof(TestBaseAttribute),
                     true);
 
                 #endregion
@@ -856,6 +994,27 @@ namespace ImmediateReflection.Tests
                     typeof(SecondTestClassAttribute),
                     true);
 
+                // Inheriting attribute
+                yield return new TestCaseData(
+                    TestPropertyOnlyInheritingAttributePropertyInfo,
+                    typeof(TestBaseAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    TestPropertyOnlyInheritingAttributePropertyInfo,
+                    typeof(TestBaseAttribute),
+                    true);
+
+                yield return new TestCaseData(
+                    TestPropertyInheritingAttributePropertyInfo,
+                    typeof(TestBaseAttribute),
+                    false);
+
+                yield return new TestCaseData(
+                    TestPropertyInheritingAttributePropertyInfo,
+                    typeof(TestBaseAttribute),
+                    true);
+
                 #endregion
             }
         }
@@ -877,136 +1036,142 @@ namespace ImmediateReflection.Tests
             #region ImmediateType
 
             // No attribute
-            CheckGetAttributes<TestClassAttribute>(typeof(TestClassNoAttribute), false);
-            CheckGetAttributes<TestClassAttribute>(typeof(TestClassNoAttribute), true);
+            CheckGetAttributes<TestClassAttribute>(typeof(TestClassNoAttribute));
 
             // With attribute
-            CheckGetAttributes<TestClassAttribute>(typeof(TestClassWithAttribute), false);
-            CheckGetAttributes<TestClassAttribute>(typeof(TestClassWithAttribute), true);
+            CheckGetAttributes<TestClassAttribute>(typeof(TestClassWithAttribute));
 
-            CheckGetAttributes<TestClassAttribute>(typeof(TestClassWithAttributes), false);
-            CheckGetAttributes<TestClassAttribute>(typeof(TestClassWithAttributes), true);
+            CheckGetAttributes<TestClassAttribute>(typeof(TestClassWithAttributes));
 
             // Without requested attribute
-            CheckGetAttributes<SecondTestClassAttribute>(typeof(TestClassWithAttribute), false);
-            CheckGetAttributes<SecondTestClassAttribute>(typeof(TestClassWithAttribute), true);
+            CheckGetAttributes<SecondTestClassAttribute>(typeof(TestClassWithAttribute));
 
             // Attribute not inherited
-            CheckGetAttributes<TestClassAttribute>(typeof(InheritedTestClassNoAttribute), false);
-            CheckGetAttributes<TestClassAttribute>(typeof(InheritedTestClassNoAttribute), true);
+            CheckGetAttributes<TestClassAttribute>(typeof(InheritedTestClassNoAttribute));
 
             // Attribute inherited 1
-            CheckGetAttributes<TestClassAttribute>(typeof(InheritedTestClassWithAttribute1), false);
-            CheckGetAttributes<TestClassAttribute>(typeof(InheritedTestClassWithAttribute1), true);
+            CheckGetAttributes<TestClassAttribute>(typeof(InheritedTestClassWithAttribute1));
 
             // Attribute inherited 2
-            CheckGetAttributes<TestClassAttribute>(typeof(InheritedTestClassWithAttribute2), false);
-            CheckGetAttributes<TestClassAttribute>(typeof(InheritedTestClassWithAttribute2), true);
+            CheckGetAttributes<TestClassAttribute>(typeof(InheritedTestClassWithAttribute2));
 
             // Several attributes
-            CheckGetAttributes<TestClassAttribute>(typeof(TestClassMultiAttributes), false);
-            CheckGetAttributes<TestClassAttribute>(typeof(TestClassMultiAttributes), true);
-            CheckGetAttributes<SecondTestClassAttribute>(typeof(TestClassMultiAttributes), false);
-            CheckGetAttributes<SecondTestClassAttribute>(typeof(TestClassMultiAttributes), true);
+            CheckGetAttributes<TestClassAttribute>(typeof(TestClassMultiAttributes));
+            CheckGetAttributes<SecondTestClassAttribute>(typeof(TestClassMultiAttributes));
 
             #endregion
 
             #region ImmediateField
 
             // No attribute
-            CheckGetAttributes<TestClassAttribute>(TestFieldNoAttributeFieldInfo, false);
-            CheckGetAttributes<TestClassAttribute>(TestFieldNoAttributeFieldInfo, true);
+            CheckGetAttributes<TestClassAttribute>(TestFieldNoAttributeFieldInfo);
 
             // With attribute
-            CheckGetAttributes<TestClassAttribute>(TestFieldAttributeFieldInfo, false);
-            CheckGetAttributes<TestClassAttribute>(TestFieldAttributeFieldInfo, true);
+            CheckGetAttributes<TestClassAttribute>(TestFieldAttributeFieldInfo);
 
-            CheckGetAttributes<TestClassAttribute>(TestFieldAttributesFieldInfo, false);
-            CheckGetAttributes<TestClassAttribute>(TestFieldAttributesFieldInfo, true);
+            CheckGetAttributes<TestClassAttribute>(TestFieldAttributesFieldInfo);
 
             // Without requested attribute
-            CheckGetAttributes<SecondTestClassAttribute>(TestFieldAttributeFieldInfo, false);
-            CheckGetAttributes<SecondTestClassAttribute>(TestFieldAttributeFieldInfo, true);
+            CheckGetAttributes<SecondTestClassAttribute>(TestFieldAttributeFieldInfo);
 
             // Several attributes
-            CheckGetAttributes<TestClassAttribute>(TestFieldMultiAttributesFieldInfo, false);
-            CheckGetAttributes<TestClassAttribute>(TestFieldMultiAttributesFieldInfo, true);
-            CheckGetAttributes<SecondTestClassAttribute>(TestFieldMultiAttributesFieldInfo, false);
-            CheckGetAttributes<SecondTestClassAttribute>(TestFieldMultiAttributesFieldInfo, true);
+            CheckGetAttributes<TestClassAttribute>(TestFieldMultiAttributesFieldInfo);
+            CheckGetAttributes<SecondTestClassAttribute>(TestFieldMultiAttributesFieldInfo);
 
             #endregion
 
             #region ImmediateProperty
 
             // No attribute
-            CheckGetAttributes<TestClassAttribute>(TestPropertyNoAttributePropertyInfo, false);
-            CheckGetAttributes<TestClassAttribute>(TestPropertyNoAttributePropertyInfo, true);
+            CheckGetAttributes<TestClassAttribute>(TestPropertyNoAttributePropertyInfo);
 
             // With attribute
-            CheckGetAttributes<TestClassAttribute>(TestPropertyAttributePropertyInfo, false);
-            CheckGetAttributes<TestClassAttribute>(TestPropertyAttributePropertyInfo, true);
+            CheckGetAttributes<TestClassAttribute>(TestPropertyAttributePropertyInfo);
 
-            CheckGetAttributes<TestClassAttribute>(TestPropertyAttributesPropertyInfo, false);
-            CheckGetAttributes<TestClassAttribute>(TestPropertyAttributesPropertyInfo, true);
+            CheckGetAttributes<TestClassAttribute>(TestPropertyAttributesPropertyInfo);
 
             // Without requested attribute
-            CheckGetAttributes<SecondTestClassAttribute>(TestPropertyAttributePropertyInfo, false);
-            CheckGetAttributes<SecondTestClassAttribute>(TestPropertyAttributePropertyInfo, true);
+            CheckGetAttributes<SecondTestClassAttribute>(TestPropertyAttributePropertyInfo);
 
             // Attribute not inherited
-            CheckGetAttributes<TestClassAttribute>(TestPropertyInheritedNoAttributePropertyInfo, false);
-            CheckGetAttributes<TestClassAttribute>(TestPropertyInheritedNoAttributePropertyInfo, true);
+            CheckGetAttributes<TestClassAttribute>(TestPropertyInheritedNoAttributePropertyInfo);
 
             // Attribute inherited 1
-            CheckGetAttributes<TestClassAttribute>(TestPropertyInheritedAttribute1PropertyInfo, false);
-            CheckGetAttributes<TestClassAttribute>(TestPropertyInheritedAttribute1PropertyInfo, true);
+            CheckGetAttributes<TestClassAttribute>(TestPropertyInheritedAttribute1PropertyInfo);
 
             // Attribute inherited 2
-            CheckGetAttributes<SecondTestClassAttribute>(TestPropertyInheritedAttribute2PropertyInfo, false);
-            CheckGetAttributes<SecondTestClassAttribute>(TestPropertyInheritedAttribute2PropertyInfo, true);
+            CheckGetAttributes<SecondTestClassAttribute>(TestPropertyInheritedAttribute2PropertyInfo);
 
             // Several attributes
-            CheckGetAttributes<TestClassAttribute>(TestPropertyMultiAttributesPropertyInfo, false);
-            CheckGetAttributes<TestClassAttribute>(TestPropertyMultiAttributesPropertyInfo, true);
-            CheckGetAttributes<SecondTestClassAttribute>(TestPropertyMultiAttributesPropertyInfo, false);
-            CheckGetAttributes<SecondTestClassAttribute>(TestPropertyMultiAttributesPropertyInfo, true);
+            CheckGetAttributes<TestClassAttribute>(TestPropertyMultiAttributesPropertyInfo);
+            CheckGetAttributes<SecondTestClassAttribute>(TestPropertyMultiAttributesPropertyInfo);
 
             #endregion
 
             #region Local function
 
-            void CheckGetAttributes<TAttribute>(MemberInfo member, bool inherit)
+            void CheckGetAttributes<TAttribute>(MemberInfo member)
                 where TAttribute : Attribute
             {
-                CollectionAssert.AreEqual(
-                    GetImmediateMember(member).GetAttributes<TAttribute>(inherit),
-                    ImmediateAttributesExtensions.GetImmediateAttributes<TAttribute>(member, inherit));
+                CheckGetAttributesHelper(false);
+                CheckGetAttributesHelper(true);
+
+                void CheckGetAttributesHelper(bool inherit)
+                {
+                    CollectionAssert.AreEqual(
+                        GetImmediateMember(member).GetAttributes<TAttribute>(inherit),
+                        ImmediateAttributesExtensions.GetImmediateAttributes<TAttribute>(member, inherit));
+                }
             }
 
             #endregion
         }
 
         [Test]
-        public void GetAttributes_Inherited()
+        public void TemplateGetAttributes_Inherited()
         {
-            PropertyInfo property = typeof(TestClassInheritedAttribute).GetProperty(nameof(TestClassInheritedAttribute.TestProperty)) ?? throw new AssertionException("Cannot find property.");
-            IEnumerable<TestBaseAttribute> attributes = GetAttributes<TestBaseAttribute>(property);
+            #region ImmediateType
 
-            var imProperty = (ImmediateProperty)GetImmediateMember(property);
-            IEnumerable<TestBaseAttribute> imAttributes = imProperty.GetAttributes<TestBaseAttribute>();
+            CheckGetAttributes<TestBaseAttribute>(typeof(TestClassOnlyInheritedAttribute));
+            CheckGetAttributes<TestBaseAttribute>(typeof(TestClassInheritedAttribute));
 
-            CollectionAssert.AreEqual(attributes, imAttributes);
-            
-            IEnumerable<TAttribute> GetAttributes<TAttribute>(PropertyInfo prop)
+            #endregion
+
+            #region ImmediateField
+
+            CheckGetAttributes<TestBaseAttribute>(TestFieldOnlyInheritingAttributeFieldInfo);
+            CheckGetAttributes<TestBaseAttribute>(TestFieldInheritingAttributeFieldInfo);
+
+            #endregion
+
+            #region ImmediateProperty
+
+            CheckGetAttributes<TestBaseAttribute>(TestPropertyOnlyInheritingAttributePropertyInfo);
+            CheckGetAttributes<TestBaseAttribute>(TestPropertyInheritingAttributePropertyInfo);
+
+            #endregion
+
+            #region Local function
+
+            void CheckGetAttributes<TAttribute>(MemberInfo member)
                 where TAttribute : Attribute
-            {   
-                object[] attrs = prop.GetCustomAttributes(typeof(TAttribute), false);
-                foreach (object attr in attrs)
+            {
+                CheckGetAttributesHelper(false);
+                CheckGetAttributesHelper(true);
+
+                #region Local function
+
+                void CheckGetAttributesHelper(bool inherit)
                 {
-                    if (attr is TAttribute a)
-                        yield return a;
+                    CollectionAssert.AreEqual(
+                        GetImmediateMember(member).GetAttributes<TAttribute>(inherit),
+                        ImmediateAttributesExtensions.GetImmediateAttributes<TAttribute>(member, inherit));
                 }
+
+                #endregion
             }
+
+            #endregion
         }
 
         [TestCaseSource(nameof(CreateWrongAttributeTestCases))]

@@ -25,6 +25,7 @@ namespace ImmediateReflection.Tests
                 _id = id;
             }
 
+            /// <inheritdoc />
             public bool Equals(TestClassAttribute other)
             {
                 if (other is null)
@@ -34,11 +35,13 @@ namespace ImmediateReflection.Tests
                 return _id == other._id;
             }
 
+            /// <inheritdoc />
             public override bool Equals(object obj)
             {
                 return Equals(obj as TestClassAttribute);
             }
 
+            /// <inheritdoc />
             public override int GetHashCode()
             {
                 unchecked
@@ -58,6 +61,7 @@ namespace ImmediateReflection.Tests
                 _id = id;
             }
 
+            /// <inheritdoc />
             public bool Equals(SecondTestClassAttribute other)
             {
                 if (other is null)
@@ -67,11 +71,49 @@ namespace ImmediateReflection.Tests
                 return _id == other._id;
             }
 
+            /// <inheritdoc />
             public override bool Equals(object obj)
             {
                 return Equals(obj as SecondTestClassAttribute);
             }
 
+            /// <inheritdoc />
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return (base.GetHashCode() * 397) ^ _id;
+                }
+            }
+        }
+
+        [AttributeUsage(AttributeTargets.All)]
+        protected sealed class ThirdTestClassAttribute : Attribute, IEquatable<ThirdTestClassAttribute>
+        {
+            private readonly int _id;
+
+            public ThirdTestClassAttribute(int id)
+            {
+                _id = id;
+            }
+
+            /// <inheritdoc />
+            public bool Equals(ThirdTestClassAttribute other)
+            {
+                if (other is null)
+                    return false;
+                if (ReferenceEquals(this, other))
+                    return true;
+                return _id == other._id;
+            }
+
+            /// <inheritdoc />
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as ThirdTestClassAttribute);
+            }
+
+            /// <inheritdoc />
             public override int GetHashCode()
             {
                 unchecked
@@ -85,14 +127,60 @@ namespace ImmediateReflection.Tests
         {
         }
 
+        [AttributeUsage(AttributeTargets.All)]
         protected class TestBaseAttribute : Attribute
         {
+            private readonly int _id;
 
+            public TestBaseAttribute(int id)
+            {
+                _id = id;
+            }
+
+            protected bool Equals(TestBaseAttribute other)
+            {
+                if (other is null)
+                    return false;
+                if (ReferenceEquals(this, other))
+                    return true;
+                return _id == other._id;
+            }
+
+            /// <inheritdoc />
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as TestBaseAttribute);
+            }
+
+            /// <inheritdoc />
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return (base.GetHashCode() * 397) ^ _id;
+                }
+            }
         }
 
+        [AttributeUsage(AttributeTargets.All)]
         protected sealed class TestInheritingAttribute : TestBaseAttribute
         {
+            public TestInheritingAttribute(int id)
+                : base(id)
+            {
+            }
 
+            /// <inheritdoc />
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as TestInheritingAttribute);
+            }
+
+            /// <inheritdoc />
+            public override int GetHashCode()
+            {
+                return base.GetHashCode() * 397;
+            }
         }
 
         #endregion
@@ -167,10 +255,29 @@ namespace ImmediateReflection.Tests
             public override int TestProperty { get; set; } = 45;
         }
 
+        [ThirdTestClass(16)]
+        [TestInheriting(17)]
+        protected class TestClassOnlyInheritedAttribute
+        {
+            [ThirdTestClass(18)]
+            [TestInheriting(19)]
+            public int _testFieldOnlyInheriting = 12;
+
+            [TestBase(20)]
+            [TestInheriting(21)]
+            public int _testField = 42;
+        }
+
+        [TestBase(22)]
+        [TestInheriting(23)]
         protected class TestClassInheritedAttribute
         {
-            [TestBase]
-            [TestInheriting]
+            [ThirdTestClass(24)]
+            [TestInheriting(25)]
+            public int TestPropertyOnlyInheriting { get; set; }
+
+            [TestBase(26)]
+            [TestInheriting(27)]
             public int TestProperty { get; set; }
         }
 
@@ -214,6 +321,14 @@ namespace ImmediateReflection.Tests
         protected static readonly PropertyInfo TestPropertyInheritedMultiAttributesPropertyInfo =
             typeof(InheritedTestClassMultiAttributes).GetProperty(nameof(InheritedTestClassMultiAttributes.TestProperty)) ?? throw new AssertionException("Cannot find property.");
 
+        [NotNull]
+        protected static readonly PropertyInfo TestPropertyOnlyInheritingAttributePropertyInfo =
+            typeof(TestClassInheritedAttribute).GetProperty(nameof(TestClassInheritedAttribute.TestPropertyOnlyInheriting)) ?? throw new AssertionException("Cannot find property.");
+
+        [NotNull]
+        protected static readonly PropertyInfo TestPropertyInheritingAttributePropertyInfo =
+            typeof(TestClassInheritedAttribute).GetProperty(nameof(TestClassInheritedAttribute.TestProperty)) ?? throw new AssertionException("Cannot find property.");
+
         // Fields //
 
         [NotNull]
@@ -231,6 +346,14 @@ namespace ImmediateReflection.Tests
         [NotNull]
         protected static readonly FieldInfo TestFieldMultiAttributesFieldInfo =
             typeof(TestClassMultiAttributes).GetField(nameof(TestClassMultiAttributes._testField)) ?? throw new AssertionException("Cannot find field.");
+
+        [NotNull]
+        protected static readonly FieldInfo TestFieldOnlyInheritingAttributeFieldInfo =
+            typeof(TestClassOnlyInheritedAttribute).GetField(nameof(TestClassOnlyInheritedAttribute._testFieldOnlyInheriting)) ?? throw new AssertionException("Cannot find field.");
+
+        [NotNull]
+        protected static readonly FieldInfo TestFieldInheritingAttributeFieldInfo =
+            typeof(TestClassOnlyInheritedAttribute).GetField(nameof(TestClassOnlyInheritedAttribute._testField)) ?? throw new AssertionException("Cannot find field.");
 
         #endregion
 

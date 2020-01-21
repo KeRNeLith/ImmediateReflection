@@ -45,11 +45,15 @@ namespace ImmediateReflection.Utils
         /// <typeparam name="TResult">The type of the elements of the sequence returned by <paramref name="selector"/>.</typeparam>
         /// <param name="source">A sequence of values to project.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
-        /// <returns>An <see cref="IEnumerable"/> whose elements are the result of invoking the one-to-many transform
-        /// function on each element of the input sequence.</returns>
+        /// <returns>
+        /// An <see cref="IEnumerable"/> whose elements are the result of invoking the one-to-many transform
+        /// function on each element of the input sequence.
+        /// </returns>
         [Pure]
-        [NotNull]
-        public static IEnumerable<TResult> SelectMany<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, IEnumerable<TResult>> selector)
+        [NotNull, ItemNotNull]
+        public static IEnumerable<TResult> SelectMany<TSource, TResult>(
+            [NotNull, ItemNotNull] IEnumerable<TSource> source,
+            [NotNull, InstantHandle] Func<TSource, IEnumerable<TResult>> selector)
         {
             foreach (TSource item in source)
             {
