@@ -85,6 +85,16 @@ namespace ImmediateReflection.Tests
         {
         }
 
+        protected class TestBaseAttribute : Attribute
+        {
+
+        }
+
+        protected sealed class TestInheritingAttribute : TestBaseAttribute
+        {
+
+        }
+
         #endregion
 
         #region Classes
@@ -155,6 +165,13 @@ namespace ImmediateReflection.Tests
         protected class InheritedTestClassMultiAttributes : TestClassMultiAttributes
         {
             public override int TestProperty { get; set; } = 45;
+        }
+
+        protected class TestClassInheritedAttribute
+        {
+            [TestBase]
+            [TestInheriting]
+            public int TestProperty { get; set; }
         }
 
         // ReSharper restore InconsistentNaming

@@ -986,6 +986,29 @@ namespace ImmediateReflection.Tests
             #endregion
         }
 
+        [Test]
+        public void GetAttributes_Inherited()
+        {
+            PropertyInfo property = typeof(TestClassInheritedAttribute).GetProperty(nameof(TestClassInheritedAttribute.TestProperty)) ?? throw new AssertionException("Cannot find property.");
+            IEnumerable<TestBaseAttribute> attributes = GetAttributes<TestBaseAttribute>(property);
+
+            var imProperty = (ImmediateProperty)GetImmediateMember(property);
+            IEnumerable<TestBaseAttribute> imAttributes = imProperty.GetAttributes<TestBaseAttribute>();
+
+            CollectionAssert.AreEqual(attributes, imAttributes);
+            
+            IEnumerable<TAttribute> GetAttributes<TAttribute>(PropertyInfo prop)
+                where TAttribute : Attribute
+            {   
+                object[] attrs = prop.GetCustomAttributes(typeof(TAttribute), false);
+                foreach (object attr in attrs)
+                {
+                    if (attr is TAttribute a)
+                        yield return a;
+                }
+            }
+        }
+
         [TestCaseSource(nameof(CreateWrongAttributeTestCases))]
         public void GetAttributes_WrongType([NotNull] MemberInfo member, [NotNull] Type attributeType, bool inherit)
         {

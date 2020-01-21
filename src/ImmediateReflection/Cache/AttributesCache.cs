@@ -168,13 +168,16 @@ namespace ImmediateReflection
 
             IEnumerable<TAttribute> FindAttributes(Dictionary<Type, List<Attribute>> attributesDictionary)
             {
-                if (attributesDictionary.TryGetValue(typeof(TAttribute), out List<Attribute> attributes))
 #if SUPPORTS_SYSTEM_CORE
-                    return attributes.OfType<TAttribute>();
-                return Enumerable.Empty<TAttribute>();
+                IEnumerable<List<Attribute>> attributes = attributesDictionary
+                    .Where(kp => typeof(TAttribute).IsAssignableFrom(kp.Key))
+                    .SelectMany(kp => kp.Value); 
+                return attributes.OfType<TAttribute>();
 #else
-                    return OfType<TAttribute>(attributes);
-                return Empty<TAttribute>();
+                IEnumerable<Attribute> attributes = SelectMany(
+                    Where(attributesDictionary, kp => typeof(TAttribute).IsAssignableFrom(kp.Key)),
+                    kp => kp.Value);
+                return OfType<TAttribute>(attributes);
 #endif
             }
 
