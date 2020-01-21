@@ -169,9 +169,9 @@ namespace ImmediateReflection
             IEnumerable<TAttribute> FindAttributes(Dictionary<Type, List<Attribute>> attributesDictionary)
             {
 #if SUPPORTS_SYSTEM_CORE
-                IEnumerable<List<Attribute>> attributes = attributesDictionary
+                IEnumerable<Attribute> attributes = attributesDictionary
                     .Where(kp => typeof(TAttribute).IsAssignableFrom(kp.Key))
-                    .SelectMany(kp => kp.Value); 
+                    .SelectMany(kp => kp.Value);
                 return attributes.OfType<TAttribute>();
 #else
                 IEnumerable<Attribute> attributes = SelectMany(
