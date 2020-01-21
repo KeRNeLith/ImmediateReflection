@@ -41,22 +41,33 @@ init:
         $env:Build_Assembly_Version = "$env:Build_Version" -replace "\-.*","";
         $env:IsFullIntegrationBuild = "$env:APPVEYOR_PULL_REQUEST_NUMBER" -eq "" -And $env:Configuration -eq "Release";
     }
+    
+    "Building version: $env:Build_Version";
+    "Building assembly version: $env:Build_Assembly_Version";
+    if ($env:IsFullIntegrationBuild -eq $true)
+    {
+        "With full integration";
+    }
+    else
+    {
+        "Without full integration";
+    }
 
 # Assembly infos & csproj patching
 assembly_info:
   patch: true
   file: '**\\AssemblyInfo.*'
   assembly_version: '$(Build_Assembly_Version)'
-  assembly_file_version: '$(Build_Version)'
+  assembly_file_version: '$(Build_Assembly_Version)'
   assembly_informational_version: '$(Build_Version)'
 
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
-  version: '$(Build_Version)'
+  version: '$(Build_Assembly_Version)'
   package_version: '$(Build_Version)'
   assembly_version: '$(Build_Assembly_Version)'
-  file_version: '$(Build_Version)'
+  file_version: '$(Build_Assembly_Version)'
   informational_version: '$(Build_Version)'
 
 # Build configurations
