@@ -19,39 +19,18 @@ namespace ImmediateReflection
     /// </summary>
     internal class AttributesCache
     {
-        [NotNull]
-        private readonly Dictionary<Type, List<Attribute>> _attributesWithInherited;
+        [NotNull, ItemNotNull]
+        private readonly Attribute[] _attributesWithInherited;
 
-        [NotNull]
-        private readonly Dictionary<Type, List<Attribute>> _attributesWithoutInherited;
+        [NotNull, ItemNotNull]
+        private readonly Attribute[] _attributesWithoutInherited;
 
         public AttributesCache([NotNull] MemberInfo member)
         {
             Debug.Assert(member != null);
 
-            Attribute[] attributesNotInherited = Attribute.GetCustomAttributes(member, false);
-            _attributesWithoutInherited = new Dictionary<Type, List<Attribute>>(attributesNotInherited.Length);
-            FillAttributesDictionary(_attributesWithoutInherited, attributesNotInherited);
-
-            Attribute[] attributesInherited = Attribute.GetCustomAttributes(member, true);
-            _attributesWithInherited = new Dictionary<Type, List<Attribute>>(attributesInherited.Length);
-            FillAttributesDictionary(_attributesWithInherited, attributesInherited);
-
-            #region Local function
-
-            void FillAttributesDictionary(Dictionary<Type, List<Attribute>> attributesDictionary, Attribute[] attributes)
-            {
-                foreach (Attribute attribute in attributes)
-                {
-                    Type attributeType = attribute.GetType();
-                    if (attributesDictionary.TryGetValue(attributeType, out List<Attribute> currentAttributes))
-                        currentAttributes.Add(attribute);
-                    else
-                        attributesDictionary[attributeType] = new List<Attribute> { attribute };
-                }
-            }
-
-            #endregion
+            _attributesWithoutInherited = Attribute.GetCustomAttributes(member, false);
+            _attributesWithInherited = Attribute.GetCustomAttributes(member, true);
         }
 
         /// <summary>
@@ -105,13 +84,14 @@ namespace ImmediateReflection
 
             #region Local function
 
-            TAttribute FindAttribute(Dictionary<Type, List<Attribute>> attributesDictionary)
+            TAttribute FindAttribute(Attribute[] attributes)
             {
-                foreach (KeyValuePair<Type, List<Attribute>> pair in attributesDictionary)
+                foreach (Attribute attribute in attributes)
                 {
-                    if (typeof(TAttribute).IsAssignableFrom(pair.Key))
-                        return (TAttribute)pair.Value[0];
+                    if (attribute is TAttribute attr)
+                        return attr;
                 }
+
                 return null;
             }
 
@@ -142,13 +122,14 @@ namespace ImmediateReflection
 
             #region Local function
 
-            Attribute FindAttribute(Dictionary<Type, List<Attribute>> attributesDictionary)
+            Attribute FindAttribute(Attribute[] attributes)
             {
-                foreach (KeyValuePair<Type, List<Attribute>> pair in attributesDictionary)
+                foreach (Attribute attribute in attributes)
                 {
-                    if (attributeType.IsAssignableFrom(pair.Key))
-                        return pair.Value[0];
+                    if (attributeType.IsInstanceOfType(attribute))
+                        return attribute;
                 }
+
                 return null;
             }
 
@@ -172,17 +153,11 @@ namespace ImmediateReflection
 
             #region Local function
 
-            IEnumerable<TAttribute> FindAttributes(Dictionary<Type, List<Attribute>> attributesDictionary)
+            IEnumerable<TAttribute> FindAttributes(Attribute[] attributes)
             {
 #if SUPPORTS_SYSTEM_CORE
-                IEnumerable<Attribute> attributes = attributesDictionary
-                    .Where(pair => typeof(TAttribute).IsAssignableFrom(pair.Key))
-                    .SelectMany(pair => pair.Value);
                 return attributes.OfType<TAttribute>();
 #else
-                IEnumerable<Attribute> attributes = SelectMany(
-                    Where(attributesDictionary, pair => typeof(TAttribute).IsAssignableFrom(pair.Key)),
-                    pair => pair.Value);
                 return OfType<TAttribute>(attributes);
 #endif
             }
@@ -212,16 +187,12 @@ namespace ImmediateReflection
 
             #region Local function
 
-            IEnumerable<Attribute> FindAttributes(Dictionary<Type, List<Attribute>> attributesDictionary)
+            IEnumerable<Attribute> FindAttributes(Attribute[] attributes)
             {
 #if SUPPORTS_SYSTEM_CORE
-                return attributesDictionary
-                    .Where(pair => attributeType.IsAssignableFrom(pair.Key))
-                    .SelectMany(pair => pair.Value);
+                return attributes.Where(attributeType.IsInstanceOfType);
 #else
-                return SelectMany(
-                    Where(attributesDictionary, pair => attributeType.IsAssignableFrom(pair.Key)),
-                    kp => kp.Value);
+                return Where(attributes, attributeType.IsInstanceOfType);
 #endif
             }
 
@@ -243,12 +214,11 @@ namespace ImmediateReflection
 
             #region Local function
 
-            IEnumerable<Attribute> GetAllAttributes(Dictionary<Type, List<Attribute>> attributesDictionary)
+            IEnumerable<Attribute> GetAllAttributes(Attribute[] attributes)
             {
-                foreach (List<Attribute> attributes in attributesDictionary.Values)
+                foreach (Attribute attribute in attributes)
                 {
-                    foreach (Attribute attribute in attributes)
-                        yield return attribute;
+                    yield return attribute;
                 }
             }
 

@@ -22,13 +22,13 @@ The Property_ByImmediateReflection_GetAttribute benchmark by getting attributes 
 
 ## Results
 
-|                                      Method |        Mean |     Error |    StdDev | Ratio |
-|-------------------------------------------- |------------:|----------:|----------:|------:|
-|                       Property_GetAttribute | 3,015.71 ns | 4.9026 ns | 3.8277 ns |  1.00 |
-|                  PropertyCache_GetAttribute |    75.72 ns | 0.2193 ns | 0.2052 ns |  0.03 |
-|                     FastMember_GetAttribute | 3,018.84 ns | 7.0476 ns | 5.8850 ns |  1.00 |
-|              **ImmediateProperty_GetAttribute** |    **45.16 ns** | **0.0626 ns** | **0.0555 ns** |  **0.01** |
-| *Property_ByImmediateReflection_GetAttribute* |   *105.01 ns* | *0.2732 ns* | *0.2555 ns* |  *0.03* |
+|                                      Method |        Mean |      Error |      StdDev | Ratio | RatioSD |
+|-------------------------------------------- |------------:|-----------:|------------:|------:|--------:|
+|                       Property_GetAttribute | 3,189.22 ns | 78.6381 ns | 102.2517 ns |  1.00 |    0.00 |
+|                  PropertyCache_GetAttribute |    76.40 ns |  0.6781 ns |   0.5294 ns |  0.02 |    0.00 |
+|                     FastMember_GetAttribute | 3,188.79 ns | 62.4070 ns |  66.7748 ns |  0.99 |    0.03 |
+|              **ImmediateProperty_GetAttribute** |    **75.92 ns** |  **0.3393 ns** |   **0.3174 ns** |  **0.02** |    **0.00** |
+| *Property_ByImmediateReflection_GetAttribute* |   *111.50 ns* |  *1.2293 ns* |   *1.1498 ns* |  *0.03* |    *0.00* |
 
 ---
 
