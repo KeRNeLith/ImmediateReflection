@@ -543,6 +543,8 @@ namespace ImmediateReflection.Tests
 
             CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), false, new TestInheritingAttribute(17));
             CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), true, new TestInheritingAttribute(17));
+            CheckHasAndGetAttribute<Attribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), false, new ThirdTestClassAttribute(16));
+            CheckHasAndGetAttribute<Attribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), true, new ThirdTestClassAttribute(16));
             CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateType(typeof(TestClassInheritedAttribute)), false, new TestBaseAttribute(22));
             CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateType(typeof(TestClassInheritedAttribute)), true, new TestBaseAttribute(22));
 
@@ -552,6 +554,8 @@ namespace ImmediateReflection.Tests
 
             CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), false, new TestInheritingAttribute(19));
             CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), true, new TestInheritingAttribute(19));
+            CheckHasAndGetAttribute<Attribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), false, new ThirdTestClassAttribute(18));
+            CheckHasAndGetAttribute<Attribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), true, new ThirdTestClassAttribute(18));
             CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateField(TestFieldInheritingAttributeFieldInfo), false, new TestBaseAttribute(20));
             CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateField(TestFieldInheritingAttributeFieldInfo), true, new TestBaseAttribute(20));
 
@@ -561,6 +565,8 @@ namespace ImmediateReflection.Tests
 
             CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), false, new TestInheritingAttribute(25));
             CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), true, new TestInheritingAttribute(25));
+            CheckHasAndGetAttribute<Attribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), false, new ThirdTestClassAttribute(24));
+            CheckHasAndGetAttribute<Attribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), true, new ThirdTestClassAttribute(24));
             CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo), false, new TestBaseAttribute(26));
             CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo), true, new TestBaseAttribute(26));
 
@@ -836,6 +842,18 @@ namespace ImmediateReflection.Tests
                     new[] { new TestInheritingAttribute(17) });
 
                 yield return new TestCaseData(
+                    new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
+                    typeof(Attribute),
+                    false,
+                    new Attribute[] { new ThirdTestClassAttribute(16), new TestInheritingAttribute(17) });
+
+                yield return new TestCaseData(
+                    new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
+                    typeof(Attribute),
+                    true,
+                    new Attribute[] { new ThirdTestClassAttribute(16), new TestInheritingAttribute(17) });
+
+                yield return new TestCaseData(
                     new ImmediateType(typeof(TestClassInheritedAttribute)),
                     typeof(TestBaseAttribute),
                     false,
@@ -939,6 +957,18 @@ namespace ImmediateReflection.Tests
                     typeof(TestBaseAttribute),
                     true,
                     new[] { new TestInheritingAttribute(19) });
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
+                    typeof(Attribute),
+                    false,
+                    new Attribute[] { new ThirdTestClassAttribute(18), new TestInheritingAttribute(19) });
+
+                yield return new TestCaseData(
+                    new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
+                    typeof(Attribute),
+                    true,
+                    new Attribute[] { new ThirdTestClassAttribute(18), new TestInheritingAttribute(19) });
 
                 yield return new TestCaseData(
                     new ImmediateField(TestFieldInheritingAttributeFieldInfo),
@@ -1083,6 +1113,18 @@ namespace ImmediateReflection.Tests
                     typeof(TestBaseAttribute),
                     true,
                     new[] { new TestInheritingAttribute(25) });
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
+                    typeof(Attribute),
+                    false,
+                    new Attribute[] { new ThirdTestClassAttribute(24), new TestInheritingAttribute(25) });
+
+                yield return new TestCaseData(
+                    new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
+                    typeof(Attribute),
+                    true,
+                    new Attribute[] { new ThirdTestClassAttribute(24), new TestInheritingAttribute(25) });
 
                 yield return new TestCaseData(
                     new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo),
@@ -1236,6 +1278,8 @@ namespace ImmediateReflection.Tests
 
             CheckGetAttributes<TestBaseAttribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), false, new[] { new TestInheritingAttribute(17) });
             CheckGetAttributes<TestBaseAttribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), true, new[] { new TestInheritingAttribute(17) });
+            CheckGetAttributes<Attribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), false, new Attribute[] { new ThirdTestClassAttribute(16), new TestInheritingAttribute(17) });
+            CheckGetAttributes<Attribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), true, new Attribute[] { new ThirdTestClassAttribute(16), new TestInheritingAttribute(17) });
             CheckGetAttributes<TestBaseAttribute>(new ImmediateType(typeof(TestClassInheritedAttribute)), false, new[] { new TestBaseAttribute(22), new TestInheritingAttribute(23) });
             CheckGetAttributes<TestBaseAttribute>(new ImmediateType(typeof(TestClassInheritedAttribute)), true, new[] { new TestBaseAttribute(22), new TestInheritingAttribute(23) });
 
@@ -1245,6 +1289,8 @@ namespace ImmediateReflection.Tests
 
             CheckGetAttributes<TestBaseAttribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), false, new[] { new TestInheritingAttribute(19) });
             CheckGetAttributes<TestBaseAttribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), true, new[] { new TestInheritingAttribute(19) });
+            CheckGetAttributes<Attribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), false, new Attribute[] { new ThirdTestClassAttribute(18), new TestInheritingAttribute(19) });
+            CheckGetAttributes<Attribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), true, new Attribute[] { new ThirdTestClassAttribute(18), new TestInheritingAttribute(19) });
             CheckGetAttributes<TestBaseAttribute>(new ImmediateField(TestFieldInheritingAttributeFieldInfo), false, new[] { new TestBaseAttribute(20), new TestInheritingAttribute(21) });
             CheckGetAttributes<TestBaseAttribute>(new ImmediateField(TestFieldInheritingAttributeFieldInfo), true, new[] { new TestBaseAttribute(20), new TestInheritingAttribute(21) });
 
@@ -1254,6 +1300,8 @@ namespace ImmediateReflection.Tests
 
             CheckGetAttributes<TestBaseAttribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), false, new[] { new TestInheritingAttribute(25) });
             CheckGetAttributes<TestBaseAttribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), true, new[] { new TestInheritingAttribute(25) });
+            CheckGetAttributes<Attribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), false, new Attribute[] { new ThirdTestClassAttribute(24), new TestInheritingAttribute(25) });
+            CheckGetAttributes<Attribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), true, new Attribute[] { new ThirdTestClassAttribute(24), new TestInheritingAttribute(25) });
             CheckGetAttributes<TestBaseAttribute>(new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo), false, new[] { new TestBaseAttribute(26), new TestInheritingAttribute(27) });
             CheckGetAttributes<TestBaseAttribute>(new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo), true, new[] { new TestBaseAttribute(26), new TestInheritingAttribute(27) });
 

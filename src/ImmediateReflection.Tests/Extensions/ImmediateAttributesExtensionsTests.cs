@@ -146,6 +146,16 @@ namespace ImmediateReflection.Tests
                     true);
 
                 yield return new TestCaseData(
+                    typeof(TestClassOnlyInheritedAttribute),
+                    typeof(Attribute),
+                    false);
+
+                yield return new TestCaseData(
+                    typeof(TestClassOnlyInheritedAttribute),
+                    typeof(Attribute),
+                    true);
+
+                yield return new TestCaseData(
                     typeof(TestClassInheritedAttribute),
                     typeof(TestBaseAttribute),
                     false);
@@ -232,6 +242,16 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(
                     TestFieldOnlyInheritingAttributeFieldInfo,
                     typeof(TestBaseAttribute),
+                    true);
+
+                yield return new TestCaseData(
+                    TestFieldOnlyInheritingAttributeFieldInfo,
+                    typeof(Attribute),
+                    false);
+
+                yield return new TestCaseData(
+                    TestFieldOnlyInheritingAttributeFieldInfo,
+                    typeof(Attribute),
                     true);
 
                 yield return new TestCaseData(
@@ -354,6 +374,16 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(
                     TestPropertyOnlyInheritingAttributePropertyInfo,
                     typeof(TestBaseAttribute),
+                    true);
+
+                yield return new TestCaseData(
+                    TestPropertyOnlyInheritingAttributePropertyInfo,
+                    typeof(Attribute),
+                    false);
+
+                yield return new TestCaseData(
+                    TestPropertyOnlyInheritingAttributePropertyInfo,
+                    typeof(Attribute),
                     true);
 
                 yield return new TestCaseData(
@@ -482,6 +512,7 @@ namespace ImmediateReflection.Tests
             #region ImmediateType
 
             CheckHasAndGetAttribute<TestBaseAttribute>(typeof(TestClassOnlyInheritedAttribute));
+            CheckHasAndGetAttribute<Attribute>(typeof(TestClassOnlyInheritedAttribute));
             CheckHasAndGetAttribute<TestBaseAttribute>(typeof(TestClassInheritedAttribute));
 
             #endregion
@@ -489,6 +520,7 @@ namespace ImmediateReflection.Tests
             #region ImmediateField
 
             CheckHasAndGetAttribute<TestBaseAttribute>(TestFieldOnlyInheritingAttributeFieldInfo);
+            CheckHasAndGetAttribute<Attribute>(TestFieldOnlyInheritingAttributeFieldInfo);
             CheckHasAndGetAttribute<TestBaseAttribute>(TestFieldInheritingAttributeFieldInfo);
 
             #endregion
@@ -496,6 +528,7 @@ namespace ImmediateReflection.Tests
             #region ImmediateProperty
 
             CheckHasAndGetAttribute<TestBaseAttribute>(TestPropertyOnlyInheritingAttributePropertyInfo);
+            CheckHasAndGetAttribute<Attribute>(TestPropertyOnlyInheritingAttributePropertyInfo);
             CheckHasAndGetAttribute<TestBaseAttribute>(TestPropertyInheritingAttributePropertyInfo);
 
             #endregion
@@ -795,6 +828,16 @@ namespace ImmediateReflection.Tests
                     true);
 
                 yield return new TestCaseData(
+                    typeof(TestClassOnlyInheritedAttribute),
+                    typeof(Attribute),
+                    false);
+
+                yield return new TestCaseData(
+                    typeof(TestClassOnlyInheritedAttribute),
+                    typeof(Attribute),
+                    true);
+
+                yield return new TestCaseData(
                     typeof(TestClassInheritedAttribute),
                     typeof(TestBaseAttribute),
                     false);
@@ -881,6 +924,16 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(
                     TestFieldOnlyInheritingAttributeFieldInfo,
                     typeof(TestBaseAttribute),
+                    true);
+
+                yield return new TestCaseData(
+                    TestFieldOnlyInheritingAttributeFieldInfo,
+                    typeof(Attribute),
+                    false);
+
+                yield return new TestCaseData(
+                    TestFieldOnlyInheritingAttributeFieldInfo,
+                    typeof(Attribute),
                     true);
 
                 yield return new TestCaseData(
@@ -1003,6 +1056,16 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(
                     TestPropertyOnlyInheritingAttributePropertyInfo,
                     typeof(TestBaseAttribute),
+                    true);
+
+                yield return new TestCaseData(
+                    TestPropertyOnlyInheritingAttributePropertyInfo,
+                    typeof(Attribute),
+                    false);
+
+                yield return new TestCaseData(
+                    TestPropertyOnlyInheritingAttributePropertyInfo,
+                    typeof(Attribute),
                     true);
 
                 yield return new TestCaseData(
@@ -1133,6 +1196,7 @@ namespace ImmediateReflection.Tests
             #region ImmediateType
 
             CheckGetAttributes<TestBaseAttribute>(typeof(TestClassOnlyInheritedAttribute));
+            CheckGetAttributes<Attribute>(typeof(TestClassOnlyInheritedAttribute));
             CheckGetAttributes<TestBaseAttribute>(typeof(TestClassInheritedAttribute));
 
             #endregion
@@ -1140,6 +1204,7 @@ namespace ImmediateReflection.Tests
             #region ImmediateField
 
             CheckGetAttributes<TestBaseAttribute>(TestFieldOnlyInheritingAttributeFieldInfo);
+            CheckGetAttributes<Attribute>(TestFieldOnlyInheritingAttributeFieldInfo);
             CheckGetAttributes<TestBaseAttribute>(TestFieldInheritingAttributeFieldInfo);
 
             #endregion
@@ -1147,6 +1212,7 @@ namespace ImmediateReflection.Tests
             #region ImmediateProperty
 
             CheckGetAttributes<TestBaseAttribute>(TestPropertyOnlyInheritingAttributePropertyInfo);
+            CheckGetAttributes<Attribute>(TestPropertyOnlyInheritingAttributePropertyInfo);
             CheckGetAttributes<TestBaseAttribute>(TestPropertyInheritingAttributePropertyInfo);
 
             #endregion
@@ -1262,6 +1328,13 @@ namespace ImmediateReflection.Tests
                 yield return new TestCaseData(typeof(InheritedTestClassMultiAttributes), false);
                 yield return new TestCaseData(typeof(InheritedTestClassMultiAttributes), true);
 
+                // Inheriting attribute
+                yield return new TestCaseData(typeof(TestClassOnlyInheritedAttribute), false);
+                yield return new TestCaseData(typeof(TestClassOnlyInheritedAttribute), true);
+
+                yield return new TestCaseData(typeof(TestClassInheritedAttribute), false);
+                yield return new TestCaseData(typeof(TestClassInheritedAttribute), true);
+
                 #endregion
 
                 #region ImmediateField
@@ -1280,6 +1353,13 @@ namespace ImmediateReflection.Tests
                 // Several attributes
                 yield return new TestCaseData(TestFieldMultiAttributesFieldInfo, false);
                 yield return new TestCaseData(TestFieldMultiAttributesFieldInfo, true);
+
+                // Inheriting attribute
+                yield return new TestCaseData(TestFieldOnlyInheritingAttributeFieldInfo, false);
+                yield return new TestCaseData(TestFieldOnlyInheritingAttributeFieldInfo, true);
+
+                yield return new TestCaseData(TestFieldInheritingAttributeFieldInfo, false);
+                yield return new TestCaseData(TestFieldInheritingAttributeFieldInfo, true);
 
                 #endregion
 
@@ -1314,6 +1394,13 @@ namespace ImmediateReflection.Tests
 
                 yield return new TestCaseData(TestPropertyInheritedMultiAttributesPropertyInfo, false);
                 yield return new TestCaseData(TestPropertyInheritedMultiAttributesPropertyInfo, true);
+
+                // Inheriting attribute
+                yield return new TestCaseData(TestFieldOnlyInheritingAttributeFieldInfo, false);
+                yield return new TestCaseData(TestFieldOnlyInheritingAttributeFieldInfo, true);
+
+                yield return new TestCaseData(TestFieldInheritingAttributeFieldInfo, false);
+                yield return new TestCaseData(TestFieldInheritingAttributeFieldInfo, true);
 
                 #endregion
             }
