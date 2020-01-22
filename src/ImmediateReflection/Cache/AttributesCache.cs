@@ -107,8 +107,11 @@ namespace ImmediateReflection
 
             TAttribute FindAttribute(Dictionary<Type, List<Attribute>> attributesDictionary)
             {
-                if (attributesDictionary.TryGetValue(typeof(TAttribute), out List<Attribute> attributes))
-                    return (TAttribute)attributes[0];
+                foreach (KeyValuePair<Type, List<Attribute>> pair in attributesDictionary)
+                {
+                    if (typeof(TAttribute).IsAssignableFrom(pair.Key))
+                        return (TAttribute)pair.Value[0];
+                }
                 return null;
             }
 
@@ -141,8 +144,11 @@ namespace ImmediateReflection
 
             Attribute FindAttribute(Dictionary<Type, List<Attribute>> attributesDictionary)
             {
-                if (attributesDictionary.TryGetValue(attributeType, out List<Attribute> attributes))
-                    return attributes[0];
+                foreach (KeyValuePair<Type, List<Attribute>> pair in attributesDictionary)
+                {
+                    if (attributeType.IsAssignableFrom(pair.Key))
+                        return pair.Value[0];
+                }
                 return null;
             }
 
@@ -170,13 +176,13 @@ namespace ImmediateReflection
             {
 #if SUPPORTS_SYSTEM_CORE
                 IEnumerable<Attribute> attributes = attributesDictionary
-                    .Where(kp => typeof(TAttribute).IsAssignableFrom(kp.Key))
-                    .SelectMany(kp => kp.Value);
+                    .Where(pair => typeof(TAttribute).IsAssignableFrom(pair.Key))
+                    .SelectMany(pair => pair.Value);
                 return attributes.OfType<TAttribute>();
 #else
                 IEnumerable<Attribute> attributes = SelectMany(
-                    Where(attributesDictionary, kp => typeof(TAttribute).IsAssignableFrom(kp.Key)),
-                    kp => kp.Value);
+                    Where(attributesDictionary, pair => typeof(TAttribute).IsAssignableFrom(pair.Key)),
+                    pair => pair.Value);
                 return OfType<TAttribute>(attributes);
 #endif
             }
@@ -208,13 +214,14 @@ namespace ImmediateReflection
 
             IEnumerable<Attribute> FindAttributes(Dictionary<Type, List<Attribute>> attributesDictionary)
             {
-                if (attributesDictionary.TryGetValue(attributeType, out List<Attribute> attributes))
 #if SUPPORTS_SYSTEM_CORE
-                    return attributes.AsEnumerable();
-                return Enumerable.Empty<Attribute>();
+                return attributesDictionary
+                    .Where(pair => attributeType.IsAssignableFrom(pair.Key))
+                    .SelectMany(pair => pair.Value);
 #else
-                    return AsEnumerable(attributes);
-                return Empty<Attribute>();
+                return SelectMany(
+                    Where(attributesDictionary, pair => attributeType.IsAssignableFrom(pair.Key)),
+                    kp => kp.Value);
 #endif
             }
 
