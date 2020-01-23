@@ -1,5 +1,16 @@
 # Release notes
 
+## What's new in 1.5.0 January 23 2020
+### Fixes:
+* IsDefined/GetAttribute(s) properly handle get of attribute when dealing inheriting attributes.
+
+### New:
+* All ImmediateReflection types are serializable via C# standard serialization.
+
+### Misc:
+* JetBrains.Annotations are no more embedded in the assembly, replaced by a private reference to official NuGet.
+* Minor optimization.
+
 ## What's new in 1.4.1 September 2 2019
 ### Fixes:
 * Properly handle null parameter for Copy and TryCopy (return null).

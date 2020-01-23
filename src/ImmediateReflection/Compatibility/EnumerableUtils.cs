@@ -95,22 +95,6 @@ namespace ImmediateReflection.Utils
             return EmptyEnumerable<T>.Instance;
         }
 
-        /// <summary>
-        /// Gets an enumerable and return it as a enumerable sequence.
-        /// </summary>
-        /// <typeparam name="T">Element type.</typeparam>
-        /// <param name="source">Source enumerable.</param>
-        /// <returns>Enumerable.</returns>
-        [Pure]
-        [NotNull, ItemNotNull]
-        public static IEnumerable<T> AsEnumerable<T>([NotNull, ItemNotNull] IEnumerable<T> source)
-        {
-            Debug.Assert(source != null);
-
-            foreach (T element in source)
-                yield return element;
-        }
-
         #region Buffer helper
 
         /// <summary>
