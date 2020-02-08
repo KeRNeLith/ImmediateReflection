@@ -107,8 +107,7 @@
   <h6><strong>Assembly</strong>: ImmediateReflection.dll</h6>
   <h5 id="ImmediateReflection_ImmediateProperties_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Serializable]
+    <pre><code class="lang-csharp hljs">[Serializable]
 public sealed class ImmediateProperties : IEnumerable&lt;ImmediateProperty&gt;, IEnumerable, IEquatable&lt;ImmediateProperties&gt;, ISerializable</code></pre>
   </div>
   <h3 id="properties">Properties
@@ -127,9 +126,7 @@ public sealed class ImmediateProperties : IEnumerable&lt;ImmediateProperty&gt;, 
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[CanBeNull]
-public ImmediateProperty this[[NotNull] string propertyName] { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public ImmediateProperty this[string propertyName] { get; }</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -392,11 +389,7 @@ public ImmediateProperty this[[NotNull] string propertyName] { get; }</code></pr
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[CanBeNull]
-[ContractAnnotation(&quot;propertyName:null =&gt; halt&quot;)]
-public ImmediateProperty GetProperty([NotNull] string propertyName)</code></pre>
+    <pre><code class="lang-csharp hljs">public ImmediateProperty GetProperty(string propertyName)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

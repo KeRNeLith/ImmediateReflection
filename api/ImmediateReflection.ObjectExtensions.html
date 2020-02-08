@@ -109,8 +109,7 @@
   <h6><strong>Assembly</strong>: ImmediateReflection.dll</h6>
   <h5 id="ImmediateReflection_ObjectExtensions_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-public static class ObjectExtensions</code></pre>
+    <pre><code class="lang-csharp hljs">public static class ObjectExtensions</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -128,9 +127,7 @@ public static class ObjectExtensions</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[ContractAnnotation(&quot;instance:null =&gt; null;instance:notnull =&gt; notnull&quot;)]
-public static T Copy&lt;T&gt;([CanBeNull] this T instance)</code></pre>
+    <pre><code class="lang-csharp hljs">public static T Copy&lt;T&gt;(this T instance)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -218,9 +215,7 @@ or constructor exists but was not considered as copy constructor.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[ContractAnnotation(&quot;instance:null =&gt; halt&quot;)]
-public static bool HasCopyConstructor&lt;T&gt;([NotNull] this T instance)</code></pre>
+    <pre><code class="lang-csharp hljs">public static bool HasCopyConstructor&lt;T&gt;(this T instance)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -302,9 +297,7 @@ public static bool HasCopyConstructor&lt;T&gt;([NotNull] this T instance)</code>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[ContractAnnotation(&quot;instance:null =&gt; true, newInstance:null, exception:null;instance:notnull =&gt; true, newInstance:notnull, exception:null;instance:null =&gt; false, newInstance:null, exception:notnull;instance:notnull =&gt; false, newInstance:null, exception:notnull&quot;)]
-public static bool TryCopy&lt;T&gt;([CanBeNull] this T instance, out T newInstance, out Exception exception)</code></pre>
+    <pre><code class="lang-csharp hljs">public static bool TryCopy&lt;T&gt;(this T instance, out T newInstance, out Exception exception)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

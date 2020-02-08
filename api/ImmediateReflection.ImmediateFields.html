@@ -107,8 +107,7 @@
   <h6><strong>Assembly</strong>: ImmediateReflection.dll</h6>
   <h5 id="ImmediateReflection_ImmediateFields_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Serializable]
+    <pre><code class="lang-csharp hljs">[Serializable]
 public sealed class ImmediateFields : IEnumerable&lt;ImmediateField&gt;, IEnumerable, IEquatable&lt;ImmediateFields&gt;, ISerializable</code></pre>
   </div>
   <h3 id="properties">Properties
@@ -127,9 +126,7 @@ public sealed class ImmediateFields : IEnumerable&lt;ImmediateField&gt;, IEnumer
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[CanBeNull]
-public ImmediateField this[[NotNull] string fieldName] { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public ImmediateField this[string fieldName] { get; }</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -323,11 +320,7 @@ public ImmediateField this[[NotNull] string fieldName] { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[CanBeNull]
-[ContractAnnotation(&quot;fieldName:null =&gt; halt&quot;)]
-public ImmediateField GetField([NotNull] string fieldName)</code></pre>
+    <pre><code class="lang-csharp hljs">public ImmediateField GetField(string fieldName)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

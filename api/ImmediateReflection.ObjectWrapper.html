@@ -104,8 +104,7 @@
   <h6><strong>Assembly</strong>: ImmediateReflection.dll</h6>
   <h5 id="ImmediateReflection_ObjectWrapper_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-public sealed class ObjectWrapper : IEquatable&lt;ObjectWrapper&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class ObjectWrapper : IEquatable&lt;ObjectWrapper&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -123,7 +122,7 @@ public sealed class ObjectWrapper : IEquatable&lt;ObjectWrapper&gt;</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ObjectWrapper([NotNull] object obj)</code></pre>
+    <pre><code class="lang-csharp hljs">public ObjectWrapper(object obj)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -175,10 +174,7 @@ public sealed class ObjectWrapper : IEquatable&lt;ObjectWrapper&gt;</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[NotNull]
-[ItemNotNull]
-public ImmediateFields Fields { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public ImmediateFields Fields { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -209,9 +205,7 @@ public ImmediateFields Fields { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[NotNull]
-public ImmediateType ImmediateType { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public ImmediateType ImmediateType { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -242,9 +236,7 @@ public ImmediateType ImmediateType { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[CanBeNull]
-public ImmediateMember this[[NotNull] string memberName] { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public ImmediateMember this[string memberName] { get; }</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -310,10 +302,7 @@ public ImmediateMember this[[NotNull] string memberName] { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[NotNull]
-[ItemNotNull]
-public IEnumerable&lt;ImmediateMember&gt; Members { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ImmediateMember&gt; Members { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -344,8 +333,7 @@ public IEnumerable&lt;ImmediateMember&gt; Members { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-public object Object { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public object Object { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -376,10 +364,7 @@ public object Object { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[NotNull]
-[ItemNotNull]
-public ImmediateProperties Properties { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public ImmediateProperties Properties { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -410,9 +395,7 @@ public ImmediateProperties Properties { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[NotNull]
-public Type Type { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Type Type { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -541,11 +524,7 @@ public Type Type { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[CanBeNull]
-[ContractAnnotation(&quot;fieldName:null =&gt; halt&quot;)]
-public ImmediateField GetField([NotNull] string fieldName)</code></pre>
+    <pre><code class="lang-csharp hljs">public ImmediateField GetField(string fieldName)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -611,11 +590,7 @@ public ImmediateField GetField([NotNull] string fieldName)</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[NotNull]
-[ItemNotNull]
-public IEnumerable&lt;ImmediateField&gt; GetFields()</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ImmediateField&gt; GetFields()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -647,10 +622,7 @@ public IEnumerable&lt;ImmediateField&gt; GetFields()</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[ContractAnnotation(&quot;fieldName:null =&gt; halt&quot;)]
-public object GetFieldValue([NotNull] string fieldName)</code></pre>
+    <pre><code class="lang-csharp hljs">public object GetFieldValue(string fieldName)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -733,11 +705,7 @@ It can also returns null if there is no field corresponding to <code data-dev-co
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[CanBeNull]
-[ContractAnnotation(&quot;memberName:null =&gt; halt&quot;)]
-public ImmediateMember GetMember([NotNull] string memberName)</code></pre>
+    <pre><code class="lang-csharp hljs">public ImmediateMember GetMember(string memberName)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -803,11 +771,7 @@ public ImmediateMember GetMember([NotNull] string memberName)</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[NotNull]
-[ItemNotNull]
-public IEnumerable&lt;ImmediateMember&gt; GetMembers()</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ImmediateMember&gt; GetMembers()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -839,11 +803,7 @@ public IEnumerable&lt;ImmediateMember&gt; GetMembers()</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[NotNull]
-[ItemNotNull]
-public IEnumerable&lt;ImmediateProperty&gt; GetProperties()</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ImmediateProperty&gt; GetProperties()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -875,11 +835,7 @@ public IEnumerable&lt;ImmediateProperty&gt; GetProperties()</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[CanBeNull]
-[ContractAnnotation(&quot;propertyName:null =&gt; halt&quot;)]
-public ImmediateProperty GetProperty([NotNull] string propertyName)</code></pre>
+    <pre><code class="lang-csharp hljs">public ImmediateProperty GetProperty(string propertyName)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -945,10 +901,7 @@ public ImmediateProperty GetProperty([NotNull] string propertyName)</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[ContractAnnotation(&quot;propertyName:null =&gt; halt&quot;)]
-public object GetPropertyValue([NotNull] string propertyName)</code></pre>
+    <pre><code class="lang-csharp hljs">public object GetPropertyValue(string propertyName)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1015,9 +968,7 @@ It can also returns null if there is no property corresponding to <code data-dev
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[ContractAnnotation(&quot;fieldName:null =&gt; halt&quot;)]
-public void SetFieldValue([NotNull] string fieldName, [CanBeNull] object value)</code></pre>
+    <pre><code class="lang-csharp hljs">public void SetFieldValue(string fieldName, object value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1076,9 +1027,7 @@ public void SetFieldValue([NotNull] string fieldName, [CanBeNull] object value)<
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[ContractAnnotation(&quot;propertyName:null =&gt; halt&quot;)]
-public void SetPropertyValue([NotNull] string propertyName, [CanBeNull] object value)</code></pre>
+    <pre><code class="lang-csharp hljs">public void SetPropertyValue(string propertyName, object value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

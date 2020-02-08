@@ -109,8 +109,7 @@
   <h6><strong>Assembly</strong>: ImmediateReflection.dll</h6>
   <h5 id="ImmediateReflection_MemberExtensions_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-public static class MemberExtensions</code></pre>
+    <pre><code class="lang-csharp hljs">public static class MemberExtensions</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -129,11 +128,7 @@ available then it creates a default delegate that returns the default property t
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[NotNull]
-[ContractAnnotation(&quot;property:null =&gt; halt&quot;)]
-public static GetterDelegate&lt;TOwner&gt; CreateGetter&lt;TOwner&gt;([NotNull] this PropertyInfo property)</code></pre>
+    <pre><code class="lang-csharp hljs">public static GetterDelegate&lt;TOwner&gt; CreateGetter&lt;TOwner&gt;(this PropertyInfo property)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -221,11 +216,7 @@ available then it creates a default delegate that returns the default value of <
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[NotNull]
-[ContractAnnotation(&quot;property:null =&gt; halt&quot;)]
-public static GetterDelegate&lt;TOwner, TProperty&gt; CreateGetter&lt;TOwner, TProperty&gt;([NotNull] this PropertyInfo property)</code></pre>
+    <pre><code class="lang-csharp hljs">public static GetterDelegate&lt;TOwner, TProperty&gt; CreateGetter&lt;TOwner, TProperty&gt;(this PropertyInfo property)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -318,11 +309,7 @@ available then it creates a default delegate that does nothing.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[NotNull]
-[ContractAnnotation(&quot;property:null =&gt; halt&quot;)]
-public static SetterDelegate&lt;TOwner&gt; CreateSetter&lt;TOwner&gt;([NotNull] this PropertyInfo property)
+    <pre><code class="lang-csharp hljs">public static SetterDelegate&lt;TOwner&gt; CreateSetter&lt;TOwner&gt;(this PropertyInfo property)
     where TOwner : class</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -411,11 +398,7 @@ available then it creates a default delegate that does nothing.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[NotNull]
-[ContractAnnotation(&quot;property:null =&gt; halt&quot;)]
-public static SetterDelegate&lt;TOwner, TProperty&gt; CreateSetter&lt;TOwner, TProperty&gt;([NotNull] this PropertyInfo property)
+    <pre><code class="lang-csharp hljs">public static SetterDelegate&lt;TOwner, TProperty&gt; CreateSetter&lt;TOwner, TProperty&gt;(this PropertyInfo property)
     where TOwner : class</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -509,10 +492,7 @@ available then it returns false and a null <code data-dev-comment-type="paramref
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[ContractAnnotation(&quot;property:null =&gt; halt;=&gt; true, getter:notnull;=&gt; false, getter:null&quot;)]
-public static bool TryCreateGetter&lt;TOwner&gt;([NotNull] this PropertyInfo property, out GetterDelegate&lt;TOwner&gt; getter)</code></pre>
+    <pre><code class="lang-csharp hljs">public static bool TryCreateGetter&lt;TOwner&gt;(this PropertyInfo property, out GetterDelegate&lt;TOwner&gt; getter)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -601,10 +581,7 @@ available then it returns false and a null <code data-dev-comment-type="paramref
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[ContractAnnotation(&quot;property:null =&gt; halt;=&gt; true, getter:notnull;=&gt; false, getter:null&quot;)]
-public static bool TryCreateGetter&lt;TOwner, TProperty&gt;([NotNull] this PropertyInfo property, out GetterDelegate&lt;TOwner, TProperty&gt; getter)</code></pre>
+    <pre><code class="lang-csharp hljs">public static bool TryCreateGetter&lt;TOwner, TProperty&gt;(this PropertyInfo property, out GetterDelegate&lt;TOwner, TProperty&gt; getter)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -698,10 +675,7 @@ available then it returns false and a null <code data-dev-comment-type="paramref
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[ContractAnnotation(&quot;property:null =&gt; halt;=&gt; true, setter:notnull;=&gt; false, setter:null&quot;)]
-public static bool TryCreateSetter&lt;TOwner&gt;([NotNull] this PropertyInfo property, out SetterDelegate&lt;TOwner&gt; setter)
+    <pre><code class="lang-csharp hljs">public static bool TryCreateSetter&lt;TOwner&gt;(this PropertyInfo property, out SetterDelegate&lt;TOwner&gt; setter)
     where TOwner : class</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -791,10 +765,7 @@ available then it returns false and a null <code data-dev-comment-type="paramref
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[PublicAPI]
-[Pure]
-[ContractAnnotation(&quot;property:null =&gt; halt;=&gt; true, setter:notnull;=&gt; false, setter:null&quot;)]
-public static bool TryCreateSetter&lt;TOwner, TProperty&gt;([NotNull] this PropertyInfo property, out SetterDelegate&lt;TOwner, TProperty&gt; setter)
+    <pre><code class="lang-csharp hljs">public static bool TryCreateSetter&lt;TOwner, TProperty&gt;(this PropertyInfo property, out SetterDelegate&lt;TOwner, TProperty&gt; setter)
     where TOwner : class</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
