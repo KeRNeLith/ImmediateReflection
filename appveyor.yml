@@ -12,6 +12,18 @@ branches:
   except:
     - /tmp|temp/
 
+skip_commits:
+  files:
+  - .github/
+  - .gitattributes
+  - .gitignore
+  - LICENSE
+  - README.md
+  - CONTRIBUTING.md
+  - ISSUE_TEMPLATE.md
+  - CODE_OF_CONDUCT.md
+  - '**/*.DotSettings'
+
 environment:
   SONARQUBE_TOKEN:
     secure: IDwa0NHtLUrg2jV3JZetUqUCGTgv3/UcZyYtMGvo7Pro1s9OmYTPjGMd6Vmx7Ktx
