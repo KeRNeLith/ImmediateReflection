@@ -28,7 +28,6 @@ environment:
   SONARQUBE_TOKEN:
     secure: IDwa0NHtLUrg2jV3JZetUqUCGTgv3/UcZyYtMGvo7Pro1s9OmYTPjGMd6Vmx7Ktx
   DocFXVersion: 2.42.4
-  NUnitConsoleVersion: 3.10.0
   OpenCoverVersion: 4.7.922
   CoverallsVersion: 1.0.0
   COVERALLS_REPO_TOKEN:
@@ -123,26 +122,39 @@ before_test:
   - ps: >-
       if ($env:IsFullIntegrationBuild -eq $true)
       {
-          nuget install NUnit.Console -Version $env:NUnitConsoleVersion -OutputDirectory tools
           nuget install OpenCover -Version $env:OpenCoverVersion -OutputDirectory tools
           dotnet tool install --tool-path tools --version $env:CoverallsVersion coveralls.net
       }
 
-after_test:
-# Generate coverage report
+test_script:
+# Test & generate coverage report
   - ps: >-
+      $nunitFolder = (Resolve-Path "$env:SYSTEMDRIVE\Tools\NUnit3").ToString();
+      $nunitConsole = (Resolve-Path "$nunitFolder\nunit3-console.exe").ToString();
+      
+      # Only take test assemblies matching their folder name
+      # Example:
+      # Directory = src\TestProject.Tests\bin\CONFIGURATION\TARGET
+      # Directory.Parent = src\TestProject.Tests\bin\CONFIGURATION
+      # Directory.Parent.Parent = src\TestProject.Tests\bin
+      # Directory.Parent.Parent.Parent = src\TestProject.Tests
+      
+      $testAssemblies = (ls src\*.Tests\bin\$env:Configuration\*\*Tests.dll | Where-Object { $_ -Match "net*" -and $_ -NotMatch "netcoreapp*" -and [System.IO.Path]::GetFileNameWithoutExtension($_.FullName) -Match $_.Directory.Parent.Parent.Parent.Name } | % FullName | sort-object -Unique)
+      
       if ($env:IsFullIntegrationBuild -eq $true)
       {
-          $opencover = (Resolve-Path "tools\OpenCover.*\tools\OpenCover.Console.exe").ToString()
-          $nunitConsole = (Resolve-Path "tools\NUnit.ConsoleRunner.*\tools\nunit3-console.exe").ToString()
-          $coveralls = (Resolve-Path "tools\csmacnz.Coveralls.exe").ToString()
-          $testAssemblies = (ls src\*.Tests\bin\$env:Configuration\*\*Tests.dll | Where-Object { $_ -Match "net*" -and $_ -NotMatch "netcoreapp*" } | % FullName | sort-object -Unique)
+          $opencover = (Resolve-Path "tools\OpenCover.*\tools\OpenCover.Console.exe").ToString();
+          $coveralls = (Resolve-Path "tools\csmacnz.Coveralls.exe").ToString();
           
-          & $opencover -register:Path64 -filter:"+[*]* -[*.Benchmark*]* -[*.Test*]* -[*]JetBrains.Annotations*" -target:"$nunitConsole" -targetargs:"$testAssemblies" -log:Warn -output:coverage.xml
+          & $opencover -register:Path64 -filter:"+[*]* -[*.Benchmark*]* -[*.Test*]* -[*]JetBrains.Annotations*" -target:"$nunitConsole" -targetargs:"$testAssemblies" -returntargetcode -log:Warn -output:coverage.xml
           
           & $sonarScanner end /d:"sonar.login=$env:SONARQUBE_TOKEN"
           
           & $coveralls --opencover -i coverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --useRelativePaths --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_BUILD_NUMBER --serviceName appveyor
+      }
+      else
+      {
+          & $nunitConsole $testAssemblies
       }
 
 # Artifact
