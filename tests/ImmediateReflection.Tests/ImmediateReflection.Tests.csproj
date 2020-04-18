@@ -3,9 +3,6 @@
   <PropertyGroup>
     <TargetFrameworks>net20;net30;net35;net40;net45;net451;net452;net46;net461;net462;net47;net471;net472;netcoreapp2.0</TargetFrameworks>
 
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-
     <Title>ImmediateReflection.Tests</Title>
 
     <Version>1.0.0</Version>
@@ -14,32 +11,6 @@
 
     <Copyright>Copyright © 2019</Copyright>
     <Description>Tests for ImmediateReflection library.</Description>
-
-    <Authors>Alexandre Rabérin</Authors>
-    <Owners>Alexandre Rabérin</Owners>
-    <Company>Alexandre Rabérin</Company>
-
-    <IsPackable>false</IsPackable>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/KeRNeLith/ImmediateReflection</PackageProjectUrl>
-    <RepositoryType>GitHub</RepositoryType>
-    <RepositoryUrl>https://github.com/KeRNeLith/ImmediateReflection</RepositoryUrl>
-  </PropertyGroup>
-
-  <!-- C# configuration -->
-  <PropertyGroup>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-
-  <!-- Optimization configurations -->
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 
   <!-- Targets defines -->
@@ -88,10 +59,6 @@
 
   <!-- Dependencies -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="NUnit" Version="3.11.0" />
   </ItemGroup>
   
@@ -105,6 +72,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\ImmediateReflection\ImmediateReflection.csproj" />
+    <ProjectReference Include="..\..\src\ImmediateReflection\ImmediateReflection.csproj" />
   </ItemGroup>
 </Project>

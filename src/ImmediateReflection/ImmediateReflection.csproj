@@ -3,8 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net20;net35;net40;net45;netstandard2.0</TargetFrameworks>
 
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GeneratePackageOnBuild>$(Generate_ImmediateReflection)</GeneratePackageOnBuild>
 
     <Title>ImmediateReflection</Title>
     <RootNamespace>ImmediateReflection</RootNamespace>
@@ -14,10 +13,6 @@
     <Version>1.0.0</Version>
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <FileVersion>1.0.0</FileVersion>
-
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <!-- Include PDB files in NuGet for Source Link because symbolsource.org does not support portable PDBs -->
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
 
     <Copyright>Copyright © 2019</Copyright>
     <Description>.NET library that aims to provide a faster usage of C# reflection features.
@@ -33,9 +28,6 @@ Supported platforms:
 Supports Source Link
 
 See benchmarks here: https://kernelith.github.io/ImmediateReflection/documentation/benchmarks.html.</Description>
-    <Owners>Alexandre Rabérin</Owners>
-    <Authors>Alexandre Rabérin</Authors>
-    <Company>Alexandre Rabérin</Company>
 
     <IsPackable>true</IsPackable>
     <PackageId>ImmediateReflection</PackageId>
@@ -50,56 +42,23 @@ Misc:
 - JetBrains.Annotations are no more embedded in the assembly, replaced by a private reference to official NuGet.
 - Minor optimization.</PackageReleaseNotes>
     <PackageTags>C# Reflection Fast Immediate Performance Delegate Dynamic</PackageTags>
-
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/KeRNeLith/ImmediateReflection</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/KeRNeLith/ImmediateReflection/master/docs/images/immediate_reflection_logo.png</PackageIconUrl>
-    <RepositoryType>GitHub</RepositoryType>
-    <RepositoryUrl>https://github.com/KeRNeLith/ImmediateReflection</RepositoryUrl>
-  </PropertyGroup>
-
-  <!-- C# configuration -->
-  <PropertyGroup>
-    <LangVersion>7</LangVersion>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
-  </ItemGroup>
-
-  <!-- Optimization configurations -->
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>JETBRAINS_ANNOTATIONS</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 
   <!-- Targets defines -->
   <PropertyGroup Condition="'$(TargetFramework)'=='net20'">
-    <AssemblyTitle>ImmediateReflection .NET Framework 2.0</AssemblyTitle>
+    <AssemblyTitle>ImmediateReflection .NET 2.0</AssemblyTitle>
     <DefineConstants>$(DefineConstants);NET20;SUPPORTS_SERIALIZATION;SUPPORTS_CACHING;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net35'">
-    <AssemblyTitle>ImmediateReflection .NET Framework 3.5</AssemblyTitle>
+    <AssemblyTitle>ImmediateReflection .NET 3.5</AssemblyTitle>
     <DefineConstants>$(DefineConstants);NET35;SUPPORTS_SERIALIZATION;SUPPORTS_SYSTEM_CORE;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net40'">
-    <AssemblyTitle>ImmediateReflection .NET Framework 4.0</AssemblyTitle>
+    <AssemblyTitle>ImmediateReflection .NET 4.0</AssemblyTitle>
     <DefineConstants>$(DefineConstants);NET40;SUPPORTS_SERIALIZATION;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_SYSTEM_CORE;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LAZY;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net45'">
-    <AssemblyTitle>ImmediateReflection .NET Framework 4.5</AssemblyTitle>
+    <AssemblyTitle>ImmediateReflection .NET 4.5</AssemblyTitle>
     <DefineConstants>$(DefineConstants);NET45;SUPPORTS_SERIALIZATION;SUPPORTS_AGGRESSIVE_INLINING;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_SYSTEM_CORE;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LAZY;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
@@ -110,10 +69,5 @@ Misc:
   <!-- Dependencies -->
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="System.Reflection.Emit.LightWeight" Version="4.3.0" />
-  </ItemGroup>
-
-  <!-- Source Link -->
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 </Project>

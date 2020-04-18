@@ -4,11 +4,11 @@ VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmediateReflection", "src\ImmediateReflection\ImmediateReflection.csproj", "{D5762C6B-C87B-28BB-C2A8-60B33343641D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmediateReflection.Tests", "src\ImmediateReflection.Tests\ImmediateReflection.Tests.csproj", "{125C0F86-EA89-B12B-AEDF-B83E2B9623AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmediateReflection.Tests", "tests\ImmediateReflection.Tests\ImmediateReflection.Tests.csproj", "{125C0F86-EA89-B12B-AEDF-B83E2B9623AC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Benchmark", "Benchmark", "{22937B93-4129-4F68-AB14-F7AFE020BA8F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmediateReflection.Benchmark", "src\ImmediateReflection.Benchmark\ImmediateReflection.Benchmark.csproj", "{952EA9EF-9206-4BD8-8F9E-3CBAB655BCD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmediateReflection.Benchmark", "benchmarks\ImmediateReflection.Benchmark\ImmediateReflection.Benchmark.csproj", "{952EA9EF-9206-4BD8-8F9E-3CBAB655BCD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
