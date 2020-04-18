@@ -11,7 +11,7 @@
             "**/bin/**",
             "_site/**"
           ],
-          "cwd": ".."
+          "src": ".."
         }
       ],
       "dest": "api",
@@ -42,7 +42,7 @@
         "files": [
           "RELEASE_NOTES.md"
         ],
-        "cwd": ".."
+        "src": ".."
       }
     ],
     "resource": [
