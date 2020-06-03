@@ -323,3 +323,15 @@ ImmediateReflection is available on [NuGet](https://www.nuget.org/packages/Immed
     PM> Install-Package ImmediateReflection
 
 ---
+
+## Maintainer(s)
+
+[![](https://github.com/KeRNeLith.png?size=50)](https://github.com/KeRNeLith)
+
+## Contributor(s)
+
+This project exists thanks to all the people who have contributed to the code base.
+
+[![](https://github.com/AdrienVR.png?size=50)](https://github.com/AdrienVR)
+
+---
