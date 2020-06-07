@@ -13,32 +13,10 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
-  <!-- C# configuration -->
-  <PropertyGroup>
-    <LangVersion>7</LangVersion>
-  </PropertyGroup>
-
   <ItemGroup>
     <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
     <None Include="..\..\docs\images\immediate_reflection_logo.png" Pack="true" Visible="false" PackagePath=""/>
   </ItemGroup>
-
-  <!-- Optimization configurations -->
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DebugType>portable</DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>JETBRAINS_ANNOTATIONS</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
 
   <!-- Dependencies -->
   <!-- Shared Projects -->

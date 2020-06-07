@@ -11,7 +11,26 @@ function UpdateAllPackagesGeneration()
     $newGenPackagesContent | Set-Content $genPackagesFilePath;
 }
 
+<#
+.Synopsis
+    Update the SetupBuild.props to make the build a deploy build.
+#>
+function UpdateDeployBuild()
+{
+    # Update the package generation props to enable package generation of the right package
+    $genPackagesFilePath = "./build/BuildSetup.props";
+    $genPackagesContent = Get-Content $genPackagesFilePath;
+    $newGenPackagesContent = $genPackagesContent -replace "false","true";
+    $newGenPackagesContent | Set-Content $genPackagesFilePath;
+}
+
+
 # Update .props & setup build version
+if ($env:APPVEYOR_REPO_TAG -eq "true")
+{
+    UpdateDeployBuild;
+}
+
 UpdateAllPackagesGeneration;
 $env:Build_Version = "$($env:APPVEYOR_BUILD_VERSION)";
 $env:Release_Name = $env:Build_Version;

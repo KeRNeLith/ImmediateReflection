@@ -10,5 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Externs\JetBrains.Annotations.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Signing\PublicKey.cs" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
+  <Import Project="./build/BuildSetup.props" />
+
   <PropertyGroup>
     <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
 
@@ -14,5 +16,33 @@
     <PackageProjectUrl>https://github.com/KeRNeLith/ImmediateReflection</PackageProjectUrl>
     <RepositoryType>GitHub</RepositoryType>
     <RepositoryUrl>https://github.com/KeRNeLith/ImmediateReflection</RepositoryUrl>
+  </PropertyGroup>
+
+  <!-- Optimization configurations -->
+  <PropertyGroup>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>JETBRAINS_ANNOTATIONS</DefineConstants>
+  </PropertyGroup>
+
+  <!-- C# configuration -->
+  <PropertyGroup>
+    <LangVersion>7</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(DeployBuild)">
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\ImmediateReflection.snk</AssemblyOriginatorKeyFile>
+    <DefineConstants>$(DefineConstants);DEPLOY_BUILD;</DefineConstants>
   </PropertyGroup>
 </Project>

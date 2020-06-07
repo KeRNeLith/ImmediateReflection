@@ -12,7 +12,7 @@ namespace ImmediateReflection.Benchmark
         {
 #if DEBUG
             // Allow to run even if in Debug target (But Benchmark must be run in RELEASE in the end
-            IConfig config = DefaultConfig.Instance.With(ConfigOptions.DisableOptimizationsValidator);
+            IConfig config = DefaultConfig.Instance.WithOptions(ConfigOptions.DisableOptimizationsValidator);
 #else
             IConfig config = DefaultConfig.Instance;
 #endif

@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using ImmediateReflection;
 
-[assembly:InternalsVisibleTo("ImmediateReflection.Benchmark")]
-[assembly:InternalsVisibleTo("ImmediateReflection.Tests")]
+[assembly:InternalsVisibleTo("ImmediateReflection.Benchmark" + PublicKey.Key)]
+[assembly:InternalsVisibleTo("ImmediateReflection.Tests" + PublicKey.Key)]
