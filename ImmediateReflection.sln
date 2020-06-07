@@ -2,6 +2,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ImmediateReflection.CommonInternals", "src\ImmediateReflection.CommonInternals\ImmediateReflection.CommonInternals.shproj", "{CE984360-54F0-406F-B8A9-E75897DAED3B}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmediateReflection", "src\ImmediateReflection\ImmediateReflection.csproj", "{D5762C6B-C87B-28BB-C2A8-60B33343641D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmediateReflection.Tests", "tests\ImmediateReflection.Tests\ImmediateReflection.Tests.csproj", "{125C0F86-EA89-B12B-AEDF-B83E2B9623AC}"

@@ -40,6 +40,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 
+  <!-- Dependencies -->
+  <!-- Shared Projects -->
+  <Import Project="ImmediateReflection.CommonInternals\ImmediateReflection.CommonInternals.projitems" Label="Shared" />
+
   <!-- Source Link -->
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
