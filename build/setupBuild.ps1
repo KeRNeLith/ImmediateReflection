@@ -29,6 +29,11 @@ function UpdateDeployBuild()
 if ($env:APPVEYOR_REPO_TAG -eq "true")
 {
     UpdateDeployBuild;
+    $env:IsFullIntegrationBuild = $false;   # Run only tests on deploy builds (not coverage, etc.)
+}
+else
+{
+    $env:IsFullIntegrationBuild = "$env:APPVEYOR_PULL_REQUEST_NUMBER" -eq "" -And $env:Configuration -eq "Release";
 }
 
 UpdateAllPackagesGeneration;
