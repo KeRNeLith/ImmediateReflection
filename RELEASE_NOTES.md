@@ -1,5 +1,15 @@
 # Release notes
 
+## What's new in 1.6.0 August 31 2020
+### Fixes:
+* ImmediateType properly handle type having redefined properties with a type different from initial type.
+
+### New:
+* Use signing key to strong name library assemby.
+
+### Misc:
+* JetBrains.Annotations are embedded in the assembly (internal).
+
 ## What's new in 1.5.0 January 23 2020
 ### Fixes:
 * IsDefined/GetAttribute(s) properly handle get of attribute when dealing inheriting attributes.

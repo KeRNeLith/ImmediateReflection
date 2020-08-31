@@ -31,16 +31,15 @@ See benchmarks here: https://kernelith.github.io/ImmediateReflection/documentati
 
     <IsPackable>true</IsPackable>
     <PackageId>ImmediateReflection</PackageId>
-    <PackageReleaseNotes>➟ Release 1.5.0
+    <PackageReleaseNotes>➟ Release 1.6.0
 Fixes:
-- IsDefined/GetAttribute(s) properly handle get of attribute when dealing inheriting attributes.
+- ImmediateType properly handle type having redefined properties with a type different from initial type.
 
 New:
-- All ImmediateReflection types are serializable via C# standard serialization.
+- Use signing key to strong name library assemby.
 
 Misc:
-- JetBrains.Annotations are no more embedded in the assembly, replaced by a private reference to official NuGet.
-- Minor optimization.</PackageReleaseNotes>
+- JetBrains.Annotations are embedded in the assembly (internal).</PackageReleaseNotes>
     <PackageTags>C# Reflection Fast Immediate Performance Delegate Dynamic</PackageTags>
   </PropertyGroup>
 
