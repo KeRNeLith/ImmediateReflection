@@ -32,6 +32,20 @@ namespace ImmediateReflection.Tests
         }
 
         [Test]
+        public void ImmediatePropertiesInfoWithNew()
+        {
+            var immediateProperties = new ImmediateProperties(new[] { ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, BaseClassPublicGetPropertyPropertyInfo });
+            CollectionAssert.AreEquivalent(
+                new[] { new ImmediateProperty(ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo) },
+                immediateProperties);
+
+            immediateProperties = new ImmediateProperties(new[] { BaseClassPublicGetPropertyPropertyInfo, ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo });
+            CollectionAssert.AreEquivalent(
+                new[] { new ImmediateProperty(ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo) },
+                immediateProperties);
+        }
+
+        [Test]
         public void GetProperty()
         {
             var immediateProperties = new ImmediateProperties(SmallObjectPropertyInfos);
@@ -48,6 +62,19 @@ namespace ImmediateReflection.Tests
             Assert.Throws<ArgumentNullException>(() => { var _ = immediateProperties.GetProperty(null); });
             // ReSharper restore AssignNullToNotNullAttribute
             // ReSharper restore InconsistentNaming
+        }
+
+        [Test]
+        public void GetPropertyWithNew()
+        {
+            var immediateProperties = new ImmediateProperties(new[] { ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, BaseClassPublicGetPropertyPropertyInfo });
+            var expectedProperty = new ImmediateProperty(ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo);
+            Assert.AreEqual(expectedProperty, immediateProperties[nameof(ChildTypeRedefinitionTestClass.Property)]);
+            Assert.AreEqual(expectedProperty, immediateProperties.GetProperty(nameof(ChildTypeRedefinitionTestClass.Property)));
+
+            immediateProperties = new ImmediateProperties(new[] { BaseClassPublicGetPropertyPropertyInfo, ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo });
+            Assert.AreEqual(expectedProperty, immediateProperties[nameof(ChildTypeRedefinitionTestClass.Property)]);
+            Assert.AreEqual(expectedProperty, immediateProperties.GetProperty(nameof(ChildTypeRedefinitionTestClass.Property)));
         }
 
         #region Equals/HashCode/ToString

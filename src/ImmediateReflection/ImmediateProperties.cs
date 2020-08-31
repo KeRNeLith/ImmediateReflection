@@ -60,22 +60,54 @@ namespace ImmediateReflection
             foreach (PropertyInfo property in Where(properties, IsNotIndexed))
 #endif
             {
-                _properties.Add(
-                    property.Name,
+                var currentImmediateProperty =
 #if SUPPORTS_CACHING
-                    CachesHandler.Instance.GetProperty(property));
+                    CachesHandler.Instance.GetProperty(property);
 #else
-                    new ImmediateProperty(property));
+                    new ImmediateProperty(property);
 #endif
+
+                if (_properties.TryGetValue(property.Name, out ImmediateProperty immediateProperty))
+                {
+                    // Keep the property from the most derived type
+                    if (ShouldReplacePropertyWith(immediateProperty, currentImmediateProperty))
+                    {
+                        _properties[property.Name] = currentImmediateProperty;
+                    }
+                }
+                else
+                {
+                    _properties.Add(property.Name, currentImmediateProperty);
+                }
             }
 
-            #region Local function
+            #region Local functions
 
             bool IsNotIndexed(PropertyInfo property)
             {
                 Debug.Assert(property != null);
 
                 return !IsIndexed(property);
+            }
+
+            bool ShouldReplacePropertyWith(ImmediateProperty property1, ImmediateProperty property2)
+            {
+                Debug.Assert(property1 != null);
+                Debug.Assert(property2 != null);
+
+                Type initialType = property1.DeclaringType;
+                Type currentType = property2.DeclaringType;
+                while (currentType != null)
+                {
+                    // If property2 is a property of a derived object of property1 declaring type
+                    // => Prefer derived property
+                    if (initialType == currentType)
+                        return true;
+
+                    currentType = currentType.BaseType;
+                }
+
+                return false;
             }
 
             #endregion

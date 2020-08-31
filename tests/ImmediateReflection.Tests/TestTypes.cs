@@ -405,6 +405,11 @@ namespace ImmediateReflection.Tests
         public new string Property { get; } = "Child";
     }
 
+    public class ChildTypeRedefinitionTestClass : BaseTestClass
+    {
+        public new int Property { get; set; } = 12;
+    }
+
     public class BaseItemTestClass
     {
         public string Item { get; }

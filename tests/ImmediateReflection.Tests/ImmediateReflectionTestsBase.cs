@@ -1045,6 +1045,13 @@ namespace ImmediateReflection.Tests
         protected static readonly PropertyInfo ChildClassPublicGetPropertyPropertyInfo =
             typeof(ChildTestClass).GetProperty(nameof(ChildTestClass.Property)) ?? throw new AssertionException("Cannot find property.");
 
+        [NotNull]
+        protected static readonly PropertyInfo ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo =
+            typeof(ChildTypeRedefinitionTestClass).GetProperty(
+                nameof(ChildTypeRedefinitionTestClass.Property),
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
+            ?? throw new AssertionException("Cannot find property.");
+
         #endregion
 
         #region Item & indexed property

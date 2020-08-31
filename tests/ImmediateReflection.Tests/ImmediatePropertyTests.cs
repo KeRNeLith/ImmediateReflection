@@ -416,9 +416,13 @@ namespace ImmediateReflection.Tests
                 var baseObject = new BaseTestClass();
                 yield return new TestCaseData(baseObject, BaseClassPublicGetPropertyPropertyInfo, "Parent");
 
-                var childObject = new ChildTestClass();
-                yield return new TestCaseData(childObject, ChildClassPublicGetPropertyPropertyInfo, "Child");
-                yield return new TestCaseData(childObject, BaseClassPublicGetPropertyPropertyInfo, "Parent");
+                var childObject1 = new ChildTestClass();
+                yield return new TestCaseData(childObject1, ChildClassPublicGetPropertyPropertyInfo, "Child");
+                yield return new TestCaseData(childObject1, BaseClassPublicGetPropertyPropertyInfo, "Parent");
+
+                var childObject2 = new ChildTypeRedefinitionTestClass();
+                yield return new TestCaseData(childObject2, ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, 12);
+                yield return new TestCaseData(childObject2, BaseClassPublicGetPropertyPropertyInfo, "Parent");
 
                 #endregion
 

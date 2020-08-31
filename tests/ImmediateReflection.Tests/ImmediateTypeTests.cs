@@ -519,6 +519,7 @@ namespace ImmediateReflection.Tests
                 },
                 immediateType.Properties.Select(property => property.PropertyInfo));
 
+            // Case same type redefinition
             immediateType = new ImmediateType(typeof(ChildTestClass));
             Assert.AreEqual(typeof(ChildTestClass), immediateType.Type);
             Assert.AreEqual(nameof(ChildTestClass), immediateType.Name);
@@ -534,6 +535,24 @@ namespace ImmediateReflection.Tests
                     ChildClassPublicGetPropertyPropertyInfo
                 },
                 immediateType.Properties.Select(property => property.PropertyInfo));
+
+            // Case different type definition
+            immediateType = new ImmediateType(typeof(ChildTypeRedefinitionTestClass));
+            Assert.AreEqual(typeof(ChildTypeRedefinitionTestClass), immediateType.Type);
+            Assert.AreEqual(nameof(ChildTypeRedefinitionTestClass), immediateType.Name);
+            Assert.AreEqual(
+                $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(ChildTypeRedefinitionTestClass)}",
+                immediateType.FullName);
+            CollectionAssert.AreEquivalent(
+                Enumerable.Empty<FieldInfo>(),
+                immediateType.Fields.Select(field => field.FieldInfo));
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo
+                },
+                immediateType.Properties.Select(property => property.PropertyInfo));
+
         }
 
         [Test]
