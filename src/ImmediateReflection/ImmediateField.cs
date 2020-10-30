@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 #if SUPPORTS_SERIALIZATION
 using System.Runtime.Serialization;
+using System.Security.Permissions;
 #endif
 using JetBrains.Annotations;
 
@@ -183,7 +184,8 @@ namespace ImmediateReflection
         }
 
         /// <inheritdoc />
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
+        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Field", FieldInfo);
         }
