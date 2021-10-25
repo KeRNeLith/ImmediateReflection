@@ -13,7 +13,7 @@ function UpdateAllPackagesGeneration()
 
 <#
 .Synopsis
-    Update the SetupBuild.props to make the build a deploy build.
+    Update the BuildSetup.props to make the build a deploy build.
 #>
 function UpdateDeployBuild()
 {
@@ -25,7 +25,7 @@ function UpdateDeployBuild()
 }
 
 
-# Update .props & setup build version
+# Update .props based on git tag status & setup build version
 if ($env:APPVEYOR_REPO_TAG -eq "true")
 {
     UpdateDeployBuild;
@@ -49,6 +49,10 @@ $env:Release_Name = $env:Build_Version;
 if ($env:IsFullIntegrationBuild -eq $true)
 {
     "With full integration";
+
+    $env:PATH="C:\Program Files\Java\jdk15\bin;$($env:PATH)"
+    $env:JAVA_HOME_11_X64='C:\Program Files\Java\jdk15'
+    $env:JAVA_HOME='C:\Program Files\Java\jdk15'
 }
 else
 {
