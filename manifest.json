@@ -440,6 +440,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "documentation/general-coding-guidelines.md",
+      "output": {
+        ".html": {
+          "relative_path": "documentation/general-coding-guidelines.html",
+          "hash": "x53RrKQ8i+lRH3tfAHZmpDXQDpcjJ4aac26Ss/YkOHk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "documentation/getting-started.md",
       "output": {
         ".html": {
@@ -451,12 +463,36 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "documentation/guidelines/csharp-best-practices.md",
+      "output": {
+        ".html": {
+          "relative_path": "documentation/guidelines/csharp-best-practices.html",
+          "hash": "jbRVgj+zpgvezfrdTvNZ8RTmObsA5nfzokGujdiNG+E="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "documentation/guidelines/csharp-coding-guidelines.md",
+      "output": {
+        ".html": {
+          "relative_path": "documentation/guidelines/csharp-coding-guidelines.html",
+          "hash": "YVvPE/6EGAU7mUDO1KQrM852PFfkbpqdiUM/QjSzNiI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Toc",
       "source_relative_path": "documentation/toc.yml",
       "output": {
         ".html": {
           "relative_path": "documentation/toc.html",
-          "hash": "LKjMPuAhk09Po844zCZXyXDwpQRSdclX7i4OsPamlb8="
+          "hash": "1fk7im2hK6urUdPb+PsEE5SxZ5epG5IeX1bE3kgRkfg="
         }
       },
       "is_incremental": false,
@@ -536,6 +572,28 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/check.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/check.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/cross.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/cross.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/immediate_reflection_logo.png",
       "output": {
         "resource": {
@@ -584,7 +642,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 17,
+          "total_file_count": 20,
           "skipped_file_count": 0
         },
         "ManagedReferenceDocumentProcessor": {
