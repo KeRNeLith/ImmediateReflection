@@ -399,9 +399,9 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Gets the <see cref="Type"/> of the <paramref name="member"/> owner.
+        /// Gets the <see cref="T:System.Type"/> of the <paramref name="member"/> owner.
         /// </summary>
-        /// <exception cref="InvalidOperationException">If it's impossible to retrieve the owner <see cref="Type"/>.</exception>
+        /// <exception cref="InvalidOperationException">If it's impossible to retrieve the owner <see cref="T:System.Type"/>.</exception>
         [Pure]
         [NotNull]
         [ContractAnnotation("member:null => halt")]

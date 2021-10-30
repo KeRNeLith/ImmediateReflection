@@ -1,4 +1,4 @@
-#if SUPPORTS_CACHING
+﻿#if SUPPORTS_CACHING
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -22,7 +22,7 @@ namespace ImmediateReflection
         /// <param name="member">Member to get its custom attributes.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>True if an attribute matches requested type, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
         [PublicAPI]
         [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -52,9 +52,9 @@ namespace ImmediateReflection
         /// <param name="attributeType">Type of the attribute to search.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>True if an attribute matches requested type, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
-        /// <exception cref="ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="T:System.Attribute"/> type.</exception>
         [PublicAPI]
         [ContractAnnotation("member:null => halt;attributeType:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -84,7 +84,7 @@ namespace ImmediateReflection
         /// <param name="member">Member to get its custom attributes.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>The first attribute matching requested type, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
         [PublicAPI]
         [CanBeNull]
         [ContractAnnotation("member:null => halt")]
@@ -115,8 +115,8 @@ namespace ImmediateReflection
         /// <param name="attributeType">Type of the attribute to search.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>The first attribute matching requested type, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="member"/> or the <paramref name="attributeType"/> is null.</exception>
-        /// <exception cref="ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="member"/> or the <paramref name="attributeType"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="T:System.Attribute"/> type.</exception>
         [PublicAPI]
         [CanBeNull]
         [ContractAnnotation("member:null => halt;attributeType:null => halt")]
@@ -147,7 +147,7 @@ namespace ImmediateReflection
         /// <param name="member">Member to get its custom attributes.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>Attributes matching requested type.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
         [PublicAPI]
         [NotNull, ItemNotNull]
         [ContractAnnotation("member:null => halt")]
@@ -178,7 +178,7 @@ namespace ImmediateReflection
         /// <param name="attributeType">Type of the attribute to search.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>Attributes matching requested type.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
         [PublicAPI]
         [NotNull, ItemNotNull]
         [ContractAnnotation("member:null => halt;attributeType:null => halt")]
@@ -208,7 +208,7 @@ namespace ImmediateReflection
         /// <param name="member">Member to get its custom attributes.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>All attributes.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
         [PublicAPI]
         [NotNull, ItemNotNull]
         [ContractAnnotation("member:null => halt")]

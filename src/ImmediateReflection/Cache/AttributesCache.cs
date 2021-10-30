@@ -55,8 +55,8 @@ namespace ImmediateReflection
         /// <param name="attributeType">Type of the attribute to search.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>True if an attribute matches requested type, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
-        /// <exception cref="ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
         [Pure]
         [ContractAnnotation("attributeType:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -104,8 +104,8 @@ namespace ImmediateReflection
         /// <param name="attributeType">Type of the attribute to search.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>The first attribute matching requested type, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
-        /// <exception cref="ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
         [Pure]
         [CanBeNull]
         [ContractAnnotation("attributeType:null => halt")]

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 namespace ImmediateReflection
 {
     /// <summary>
-    /// Represents information about the attributes of a member or <see cref="Type"/> and provides access to its metadata in a faster way.
+    /// Represents information about the attributes of a member or <see cref="T:System.Type"/> and provides access to its metadata in a faster way.
     /// </summary>
     [PublicAPI]
 #if SUPPORTS_SERIALIZATION
@@ -31,7 +31,7 @@ namespace ImmediateReflection
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="member"><see cref="MemberInfo"/> to wrap.</param>
+        /// <param name="member"><see cref="T:System.Reflection.MemberInfo"/> to wrap.</param>
         protected ImmediateMember([NotNull] MemberInfo member)
         {
             Debug.Assert(member != null);
@@ -69,8 +69,8 @@ namespace ImmediateReflection
         /// <param name="attributeType">Type of the attribute to search.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>True if an attribute matches requested type, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
-        /// <exception cref="ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="T:System.Attribute"/> type.</exception>
         [PublicAPI]
         [Pure]
         [ContractAnnotation("attributeType:null => halt")]
@@ -106,8 +106,8 @@ namespace ImmediateReflection
         /// <param name="attributeType">Type of the attribute to search.</param>
         /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
         /// <returns>The first attribute matching requested type, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
-        /// <exception cref="ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="T:System.Attribute"/> type.</exception>
         [PublicAPI]
         [Pure]
         [CanBeNull]

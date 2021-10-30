@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -45,7 +45,7 @@ namespace ImmediateReflection
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="properties">Enumerable of <see cref="PropertyInfo"/> to wrap.</param>
+        /// <param name="properties">Enumerable of <see cref="T:System.Reflection.PropertyInfo"/> to wrap.</param>
         internal ImmediateProperties([NotNull, ItemNotNull] IEnumerable<PropertyInfo> properties)
         {
             Init(properties);
@@ -119,7 +119,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="propertyName">Property name.</param>
         /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
         [PublicAPI]
         [CanBeNull]
         public ImmediateProperty this[[NotNull] string propertyName] =>
@@ -132,7 +132,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="propertyName">Property name.</param>
         /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
         [PublicAPI]
         [Pure]
         [CanBeNull]

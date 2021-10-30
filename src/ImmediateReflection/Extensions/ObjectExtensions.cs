@@ -1,4 +1,4 @@
-#if SUPPORTS_CACHING
+﻿#if SUPPORTS_CACHING
 using System;
 using JetBrains.Annotations;
 
@@ -14,9 +14,9 @@ namespace ImmediateReflection
         /// Checks if this <paramref name="instance"/> can be copied by a copy constructor.
         /// </summary>
         /// <typeparam name="T">Instance type.</typeparam>
-        /// <param name="instance">Object to check if its <see cref="Type"/> has a copy constructor.</param>
+        /// <param name="instance">Object to check if its <see cref="T:System.Type"/> has a copy constructor.</param>
         /// <returns>True if the <paramref name="instance"/> can be copied, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="instance"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="instance"/> is null.</exception>
         [PublicAPI]
         [ContractAnnotation("instance:null => halt")]
         public static bool HasCopyConstructor<T>(
@@ -39,8 +39,8 @@ namespace ImmediateReflection
         /// <typeparam name="T">Instance type.</typeparam>
         /// <param name="instance">Object to copy.</param>
         /// <returns>A reference to the newly created object.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="instance"/> is null.</exception>
-        /// <exception cref="MissingMethodException">
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="instance"/> is null.</exception>
+        /// <exception cref="T:System.MissingMethodException">
         /// No matching public copy constructor was found,
         /// or constructor exists but was not considered as copy constructor.
         /// </exception>
@@ -69,7 +69,7 @@ namespace ImmediateReflection
         /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
         /// <param name="exception">Caught exception if the instantiation failed, otherwise null.</param>
         /// <returns>True if the new instance was successfully created, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="instance"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="instance"/> is null.</exception>
         [PublicAPI]
         [ContractAnnotation("instance:null => true, newInstance:null, exception:null;"
                             + "instance:notnull => true, newInstance:notnull, exception:null;"

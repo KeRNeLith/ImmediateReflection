@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Reflection;
 using JetBrains.Annotations;
 
 namespace ImmediateReflection
 {
     /// <summary>
-    /// Extensions to work with <see cref="MemberInfo"/>.
+    /// Extensions to work with <see cref="T:System.Reflection.MemberInfo"/>.
     /// </summary>
     [PublicAPI]
     public static class MemberExtensions
@@ -61,7 +61,7 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Tries to create a delegate getter for this <see cref="PropertyInfo"/>, if the property has no get method
+        /// Tries to create a delegate getter for this <see cref="T:System.Reflection.PropertyInfo"/>, if the property has no get method
         /// available then it returns false and a null <paramref name="getter"/>.
         /// </summary>
         /// <typeparam name="TOwner">Property owner type.</typeparam>
@@ -69,7 +69,7 @@ namespace ImmediateReflection
         /// <param name="property">Property for which creating a getter.</param>
         /// <param name="getter">Created getter delegate.</param>
         /// <returns>True if the getter was successfully created, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         [PublicAPI]
         [Pure]
         [ContractAnnotation("property:null => halt;=> true, getter:notnull;=> false, getter:null")]
@@ -97,15 +97,15 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Creates a delegate getter for this <see cref="PropertyInfo"/>, if the property has no get method
+        /// Creates a delegate getter for this <see cref="T:System.Reflection.PropertyInfo"/>, if the property has no get method
         /// available then it creates a default delegate that returns the default value of <typeparamref name="TProperty"/>.
         /// </summary>
         /// <typeparam name="TOwner">Property owner type.</typeparam>
         /// <typeparam name="TProperty">Property type.</typeparam>
         /// <param name="property">Property for which creating a getter.</param>
         /// <returns>The corresponding <see cref="GetterDelegate{TOwner,TProperty}"/> delegate getter.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
-        /// <exception cref="ArgumentException">If the given template type does not match owner and property types.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentException">If the given template type does not match owner and property types.</exception>
         [PublicAPI]
         [Pure]
         [NotNull]
@@ -197,14 +197,14 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Tries to create a delegate getter for this <see cref="PropertyInfo"/>, if the property has no get method
+        /// Tries to create a delegate getter for this <see cref="T:System.Reflection.PropertyInfo"/>, if the property has no get method
         /// available then it returns false and a null <paramref name="getter"/>.
         /// </summary>
         /// <typeparam name="TOwner">Property owner type.</typeparam>
         /// <param name="property">Property for which creating a setter.</param>
         /// <param name="getter">Created getter delegate.</param>
         /// <returns>True if the getter was successfully created, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         [PublicAPI]
         [Pure]
         [ContractAnnotation("property:null => halt;=> true, getter:notnull;=> false, getter:null")]
@@ -232,14 +232,14 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Creates a delegate setter for this <see cref="PropertyInfo"/>, if the property has no get method
+        /// Creates a delegate setter for this <see cref="T:System.Reflection.PropertyInfo"/>, if the property has no get method
         /// available then it creates a default delegate that returns the default property type value.
         /// </summary>
         /// <typeparam name="TOwner">Property owner type.</typeparam>
         /// <param name="property">Property for which creating a getter.</param>
         /// <returns>The corresponding <see cref="GetterDelegate{TOwner}"/> delegate getter.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
-        /// <exception cref="ArgumentException">If the given template type does not match owner type.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentException">If the given template type does not match owner type.</exception>
         [PublicAPI]
         [Pure]
         [NotNull]
@@ -303,7 +303,7 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Tries to create a delegate setter for this <see cref="PropertyInfo"/>, if the property has no set method
+        /// Tries to create a delegate setter for this <see cref="T:System.Reflection.PropertyInfo"/>, if the property has no set method
         /// available then it returns false and a null <paramref name="setter"/>.
         /// </summary>
         /// <typeparam name="TOwner">Property owner type.</typeparam>
@@ -311,7 +311,7 @@ namespace ImmediateReflection
         /// <param name="property">Property for which creating a setter.</param>
         /// <param name="setter">Created setter delegate.</param>
         /// <returns>True if the setter was successfully created, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         [PublicAPI]
         [Pure]
         [ContractAnnotation("property:null => halt;=> true, setter:notnull;=> false, setter:null")]
@@ -340,15 +340,15 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Creates a delegate setter for this <see cref="PropertyInfo"/>, if the property has no set method
+        /// Creates a delegate setter for this <see cref="T:System.Reflection.PropertyInfo"/>, if the property has no set method
         /// available then it creates a default delegate that does nothing.
         /// </summary>
         /// <typeparam name="TOwner">Property owner type.</typeparam>
         /// <typeparam name="TProperty">Property type.</typeparam>
         /// <param name="property">Property for which creating a setter.</param>
         /// <returns>The corresponding <see cref="SetterDelegate{TOwner,TProperty}"/> delegate setter.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
-        /// <exception cref="ArgumentException">If the given template type does not match owner and property types.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentException">If the given template type does not match owner and property types.</exception>
         [PublicAPI]
         [Pure]
         [NotNull]
@@ -435,14 +435,14 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Tries to create a delegate setter for this <see cref="PropertyInfo"/>, if the property has no set method
+        /// Tries to create a delegate setter for this <see cref="T:System.Reflection.PropertyInfo"/>, if the property has no set method
         /// available then it returns false and a null <paramref name="setter"/>.
         /// </summary>
         /// <typeparam name="TOwner">Property owner type.</typeparam>
         /// <param name="property">Property for which creating a setter.</param>
         /// <param name="setter">Created setter delegate.</param>
         /// <returns>True if the setter was successfully created, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
         [PublicAPI]
         [Pure]
         [ContractAnnotation("property:null => halt;=> true, setter:notnull;=> false, setter:null")]
@@ -471,14 +471,14 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Creates a delegate setter for this <see cref="PropertyInfo"/>, if the property has no set method
+        /// Creates a delegate setter for this <see cref="T:System.Reflection.PropertyInfo"/>, if the property has no set method
         /// available then it creates a default delegate that does nothing.
         /// </summary>
         /// <typeparam name="TOwner">Property owner type.</typeparam>
         /// <param name="property">Property for which creating a setter.</param>
         /// <returns>The corresponding <see cref="SetterDelegate{TOwner}"/> delegate setter.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
-        /// <exception cref="ArgumentException">If the given template type does not match owner type.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="property"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentException">If the given template type does not match owner type.</exception>
         [PublicAPI]
         [Pure]
         [NotNull]

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Reflection;
 #if SUPPORTS_SERIALIZATION
 using System.Runtime.Serialization;
@@ -23,21 +23,21 @@ namespace ImmediateReflection
 #endif
     {
         /// <summary>
-        /// Gets the wrapped <see cref="System.Reflection.FieldInfo"/>.
+        /// Gets the wrapped <see cref="T:System.Reflection.FieldInfo"/>.
         /// </summary>
         [PublicAPI]
         [NotNull]
         public FieldInfo FieldInfo { get; }
 
         /// <summary>
-        /// Gets the <see cref="Type"/> owning this field (declaring it).
+        /// Gets the <see cref="T:System.Type"/> owning this field (declaring it).
         /// </summary>
         [PublicAPI]
         [NotNull]
         public Type DeclaringType { get; }
 
         /// <summary>
-        /// Gets the <see cref="Type"/> of this field.
+        /// Gets the <see cref="T:System.Type"/> of this field.
         /// </summary>
         [PublicAPI]
         [NotNull]
@@ -64,7 +64,7 @@ namespace ImmediateReflection
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="field"><see cref="System.Reflection.FieldInfo"/> to wrap.</param>
+        /// <param name="field"><see cref="T:System.Reflection.FieldInfo"/> to wrap.</param>
         internal ImmediateField([NotNull] FieldInfo field)
             : base(field)
         {
@@ -126,8 +126,8 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="obj">Object that field value will be returned.</param>
         /// <returns>Field value of the specified object.</returns>
-        /// <exception cref="InvalidCastException">If the <paramref name="obj"/> is not the owner of this field.</exception>
-        /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the field to get is not static.</exception>
+        /// <exception cref="T:System.InvalidCastException">If the <paramref name="obj"/> is not the owner of this field.</exception>
+        /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the field to get is not static.</exception>
         [PublicAPI]
         [Pure]
         public object GetValue([CanBeNull] object obj)
@@ -140,9 +140,9 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="obj">Object that field value will be set.</param>
         /// <param name="value">New field value.</param>
-        /// <exception cref="InvalidCastException">If the <paramref name="obj"/> is not the owner of this field or if the <paramref name="value"/> is of the wrong type.</exception>
-        /// <exception cref="FieldAccessException">If the field is constant or read only.</exception>
-        /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the field to set is not static.</exception>
+        /// <exception cref="T:System.InvalidCastException">If the <paramref name="obj"/> is not the owner of this field or if the <paramref name="value"/> is of the wrong type.</exception>
+        /// <exception cref="T:System.FieldAccessException">If the field is constant or read only.</exception>
+        /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the field to set is not static.</exception>
         [PublicAPI]
         public void SetValue([CanBeNull] object obj, [CanBeNull] object value)
         {

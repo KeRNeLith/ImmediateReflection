@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Reflection;
 #if SUPPORTS_SERIALIZATION
@@ -25,21 +25,21 @@ namespace ImmediateReflection
 #endif
     {
         /// <summary>
-        /// Gets the wrapped <see cref="System.Reflection.PropertyInfo"/>.
+        /// Gets the wrapped <see cref="T:System.Reflection.PropertyInfo"/>.
         /// </summary>
         [PublicAPI]
         [NotNull]
         public PropertyInfo PropertyInfo { get; }
 
         /// <summary>
-        /// Gets the <see cref="Type"/> owning this property (declaring it).
+        /// Gets the <see cref="T:System.Type"/> owning this property (declaring it).
         /// </summary>
         [PublicAPI]
         [NotNull]
         public Type DeclaringType { get; }
 
         /// <summary>
-        /// Gets the <see cref="Type"/> of this property.
+        /// Gets the <see cref="T:System.Type"/> of this property.
         /// </summary>
         [PublicAPI]
         [NotNull]
@@ -78,7 +78,7 @@ namespace ImmediateReflection
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="property"><see cref="System.Reflection.PropertyInfo"/> to wrap.</param>
+        /// <param name="property"><see cref="T:System.Reflection.PropertyInfo"/> to wrap.</param>
         internal ImmediateProperty([NotNull] PropertyInfo property)
             : base(property)
         {
@@ -136,9 +136,9 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="obj">Object that property value will be returned.</param>
         /// <returns>Property value of the specified object.</returns>
-        /// <exception cref="ArgumentException">If this property has no getter.</exception>
-        /// <exception cref="InvalidCastException">If the <paramref name="obj"/> is not the owner of this property.</exception>
-        /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the property to get is not static.</exception>
+        /// <exception cref="T:System.ArgumentException">If this property has no getter.</exception>
+        /// <exception cref="T:System.InvalidCastException">If the <paramref name="obj"/> is not the owner of this property.</exception>
+        /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the property to get is not static.</exception>
         [PublicAPI]
         [Pure]
         public object GetValue([CanBeNull] object obj)
@@ -151,9 +151,9 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="obj">Object that property value will be set.</param>
         /// <param name="value">New property value.</param>
-        /// <exception cref="ArgumentException">If this property has no setter.</exception>
-        /// <exception cref="InvalidCastException">If the <paramref name="obj"/> is not the owner of this property or if the <paramref name="value"/> is of the wrong type.</exception>
-        /// <exception cref="TargetException">If the given <paramref name="obj"/> is null and the property to set is not static.</exception>
+        /// <exception cref="T:System.ArgumentException">If this property has no setter.</exception>
+        /// <exception cref="T:System.InvalidCastException">If the <paramref name="obj"/> is not the owner of this property or if the <paramref name="value"/> is of the wrong type.</exception>
+        /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the property to set is not static.</exception>
         [PublicAPI]
         public void SetValue([CanBeNull] object obj, [CanBeNull] object value)
         {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 #if SUPPORTS_SYSTEM_CORE
 using System.Linq;
@@ -36,30 +36,30 @@ namespace ImmediateReflection
         private BindingFlags _flags;
 
         /// <summary>
-        /// Gets the wrapped <see cref="System.Type"/>.
+        /// Gets the wrapped <see cref="T:System.Type"/>.
         /// </summary>
         [PublicAPI]
         [NotNull]
         public Type Type { get; }
 
         /// <summary>
-        /// Gets the base <see cref="System.Type"/> of this <see cref="Type"/>.
+        /// Gets the base <see cref="T:System.Type"/> of this <see cref="T:System.Type"/>.
         /// If this is an interface or has no base class null is returned.
-        /// <see cref="object"/> is the only <see cref="System.Type"/> that does not have a base class.
+        /// <see cref="T:System.Object"/> is the only <see cref="T:System.Type"/> that does not have a base class.
         /// </summary>
         [PublicAPI]
         [CanBeNull]
         public Type BaseType { get; }
 
         /// <summary>
-        /// Gets the <see cref="System.Type"/> owning this <see cref="System.Type"/> (declaring it).
+        /// Gets the <see cref="T:System.Type"/> owning this <see cref="T:System.Type"/> (declaring it).
         /// </summary>
         [PublicAPI]
         [CanBeNull]
         public Type DeclaringType { get; }
 
         /// <summary>
-        /// Gets the fully qualified name of the <see cref="System.Type"/>, including its namespace but not its assembly.
+        /// Gets the fully qualified name of the <see cref="T:System.Type"/>, including its namespace but not its assembly.
         /// </summary>
         /// <remarks>Fallback on the type name if full name is null.</remarks>
         [PublicAPI]
@@ -67,7 +67,7 @@ namespace ImmediateReflection
         public string FullName { get; }
 
         /// <summary>
-        /// Gets all the members of this <see cref="System.Type"/>.
+        /// Gets all the members of this <see cref="T:System.Type"/>.
         /// </summary>
         [PublicAPI]
         [NotNull, ItemNotNull]
@@ -88,7 +88,7 @@ namespace ImmediateReflection
 #endif
 
         /// <summary>
-        /// Gets all the fields of this <see cref="System.Type"/>.
+        /// Gets all the fields of this <see cref="T:System.Type"/>.
         /// </summary>
         [PublicAPI]
         [NotNull, ItemNotNull]
@@ -99,7 +99,7 @@ namespace ImmediateReflection
 #endif
 
         /// <summary>
-        /// Gets all the properties of this <see cref="System.Type"/>.
+        /// Gets all the properties of this <see cref="T:System.Type"/>.
         /// </summary>
         [PublicAPI]
         [NotNull, ItemNotNull]
@@ -108,7 +108,7 @@ namespace ImmediateReflection
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="type"><see cref="System.Type"/> to wrap.</param>
+        /// <param name="type"><see cref="T:System.Type"/> to wrap.</param>
         /// <param name="flags">Flags that must be taken into account to get members.</param>
         internal ImmediateType([NotNull] Type type, BindingFlags flags = TypeAccessor.DefaultFlags)
             : base(type)
@@ -166,7 +166,7 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Gets all the members of this <see cref="System.Type"/>.
+        /// Gets all the members of this <see cref="T:System.Type"/>.
         /// </summary>
         /// <returns>All <see cref="ImmediateMember"/>.</returns>
         [PublicAPI]
@@ -182,7 +182,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="memberName">Member name.</param>
         /// <returns>Found <see cref="ImmediateMember"/>, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
         [PublicAPI]
         [CanBeNull]
         public ImmediateMember this[[NotNull] string memberName]
@@ -201,7 +201,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="memberName">Member name.</param>
         /// <returns>Found <see cref="ImmediateMember"/>, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
         [PublicAPI]
         [Pure]
         [CanBeNull]
@@ -212,7 +212,7 @@ namespace ImmediateReflection
         public ImmediateMember GetMember([NotNull] string memberName) => this[memberName];
 
         /// <summary>
-        /// Gets all the fields of this <see cref="System.Type"/>.
+        /// Gets all the fields of this <see cref="T:System.Type"/>.
         /// </summary>
         /// <returns>All <see cref="ImmediateField"/>.</returns>
         [PublicAPI]
@@ -228,7 +228,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="fieldName">Property name.</param>
         /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="fieldName"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="fieldName"/> is null.</exception>
         [PublicAPI]
         [Pure]
         [CanBeNull]
@@ -239,7 +239,7 @@ namespace ImmediateReflection
         public ImmediateField GetField([NotNull] string fieldName) => Fields[fieldName];
 
         /// <summary>
-        /// Gets all the properties of this <see cref="System.Type"/>.
+        /// Gets all the properties of this <see cref="T:System.Type"/>.
         /// </summary>
         /// <returns>All <see cref="ImmediateProperty"/>.</returns>
         [PublicAPI]
@@ -255,7 +255,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="propertyName">Property name.</param>
         /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
         [PublicAPI]
         [Pure]
         [CanBeNull]
@@ -271,18 +271,18 @@ namespace ImmediateReflection
         private readonly DefaultConstructorDelegate _constructor;
 
         /// <summary>
-        /// Indicates if this <see cref="Type"/> has a default constructor.
+        /// Indicates if this <see cref="T:System.Type"/> has a default constructor.
         /// </summary>
         [PublicAPI]
         public bool HasDefaultConstructor { get; }
 
         /// <summary>
-        /// Creates an instance of this <see cref="Type"/> with that type's default constructor.
+        /// Creates an instance of this <see cref="T:System.Type"/> with that type's default constructor.
         /// </summary>
         /// <returns>A reference to the newly created object.</returns>
-        /// <exception cref="ArgumentException"><see cref="Type"/> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
-        /// <exception cref="AmbiguousMatchException"><see cref="Type"/> has several constructors defining "params" parameter only.</exception>
-        /// <exception cref="MissingMethodException">No matching public constructor was found.</exception>
+        /// <exception cref="T:System.ArgumentException"><see cref="T:System.Type"/> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
+        /// <exception cref="T:System.MissingMethodException">No matching public constructor was found.</exception>
+        /// <exception cref="T:System.Reflection.AmbiguousMatchException"><see cref="T:System.Type"/> has several constructors defining "params" parameter only.</exception>
         [PublicAPI]
         [Pure]
         [NotNull]
@@ -292,7 +292,7 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Tries to create an instance of this <see cref="Type"/> with that type's default constructor.
+        /// Tries to create an instance of this <see cref="T:System.Type"/> with that type's default constructor.
         /// </summary>
         /// <remarks>This method will not throw if instantiation failed.</remarks>
         /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
@@ -318,25 +318,25 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Creates an instance of this <see cref="Type"/> using the constructor that best matches the specified parameters.
+        /// Creates an instance of this <see cref="T:System.Type"/> using the constructor that best matches the specified parameters.
         /// </summary>
-        /// <remarks>Tries to use the <see cref="New()"/> if no parameter provided, otherwise fallback on <see cref="Activator.CreateInstance(System.Type,object[])"/>.</remarks>
+        /// <remarks>Tries to use the <see cref="New()"/> if no parameter provided, otherwise fallback on <see cref="M:System.Activator.CreateInstance(System.Type,object[])"/>.</remarks>
         /// <param name="args">
         /// An array of arguments that match in number, order, and type the parameters of the constructor to invoke.
         /// If <paramref name="args"/> is an empty array or null, the constructor that takes no parameters (the default constructor) is invoked.
         /// </param>
         /// <returns>A reference to the newly created object.</returns>
-        /// <exception cref="ArgumentException"><see cref="Type"/> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
-        /// <exception cref="MemberAccessException">Cannot create an instance of an abstract class, or this member was invoked with a late-binding mechanism.</exception>
-        /// <exception cref="MissingMethodException">No matching public constructor was found.</exception>
-        /// <exception cref="NotSupportedException">
-        /// If the <see cref="Type"/> cannot be a TypeBuilder.
-        /// -or- Creation of <see cref="TypedReference"/>, ArgIterator, <see cref="Void"/>, and <see cref="RuntimeArgumentHandle"/> types, or arrays of those types, is not supported.
+        /// <exception cref="T:System.ArgumentException"><see cref="T:System.Type"/> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
+        /// <exception cref="T:System.MemberAccessException">Cannot create an instance of an abstract class, or this member was invoked with a late-binding mechanism.</exception>
+        /// <exception cref="T:System.MissingMethodException">No matching public constructor was found.</exception>
+        /// <exception cref="T:System.NotSupportedException">
+        /// If the <see cref="T:System.Type"/> cannot be a TypeBuilder.
+        /// -or- Creation of <see cref="T:System.TypedReference"/>, ArgIterator, <see cref="T:System.Void"/>, and <see cref="T:System.RuntimeArgumentHandle"/> types, or arrays of those types, is not supported.
         /// -or- The assembly that contains type is a dynamic assembly that was created with Save.
         /// -or- The constructor that best matches args has varargs arguments.
         /// </exception>
-        /// <exception cref="TargetInvocationException">The constructor being called throws an exception.</exception>
-        /// <exception cref="TypeLoadException">If the <see cref="Type"/> is not a valid type.</exception>
+        /// <exception cref="T:System.TypeLoadException">If the <see cref="T:System.Type"/> is not a valid type.</exception>
+        /// <exception cref="T:System.Reflection.TargetInvocationException">The constructor being called throws an exception.</exception>
         [PublicAPI]
         [Pure]
         [NotNull]
@@ -348,11 +348,11 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Tries to create an instance of this <see cref="Type"/> with the best matching constructor.
+        /// Tries to create an instance of this <see cref="T:System.Type"/> with the best matching constructor.
         /// </summary>
         /// <remarks>
         /// This method will not throw if instantiation failed.
-        /// Tries to use the <see cref="New()"/> if no parameter provided, otherwise fallback on <see cref="Activator.CreateInstance(System.Type,object[])"/>.
+        /// Tries to use the <see cref="New()"/> if no parameter provided, otherwise fallback on <see cref="M:System.Activator.CreateInstance(System.Type,object[])"/>.
         /// </remarks>
         /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
         /// <param name="exception">Caught exception if the instantiation failed, otherwise null.</param>
@@ -388,21 +388,21 @@ namespace ImmediateReflection
         private readonly CopyConstructorDelegate _copyConstructor;
 
         /// <summary>
-        /// Indicates if this <see cref="Type"/> has a copy constructor.
+        /// Indicates if this <see cref="T:System.Type"/> has a copy constructor.
         /// </summary>
         [PublicAPI]
         public bool HasCopyConstructor { get; }
 
         /// <summary>
-        /// Creates a copy instance of <paramref name="other"/> with this <see cref="Type"/>'s copy constructor.
+        /// Creates a copy instance of <paramref name="other"/> with this <see cref="T:System.Type"/>'s copy constructor.
         /// </summary>
         /// <param name="other">Object to copy.</param>
         /// <returns>A reference to the newly created object.</returns>
-        /// <exception cref="ArgumentException">
-        /// <see cref="Type"/> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true),
-        /// or if the <paramref name="other"/> instance is not exactly an instance of <see cref="Type"/>.
+        /// <exception cref="T:System.ArgumentException">
+        /// <see cref="T:System.Type"/> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true),
+        /// or if the <paramref name="other"/> instance is not exactly an instance of <see cref="T:System.Type"/>.
         /// </exception>
-        /// <exception cref="MissingMethodException">
+        /// <exception cref="T:System.MissingMethodException">
         /// No matching public copy constructor was found,
         /// or constructor exists but was not considered as copy constructor.
         /// </exception>
@@ -417,7 +417,7 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Tries to create a copy instance of <paramref name="other"/> with this <see cref="Type"/>'s copy constructor.
+        /// Tries to create a copy instance of <paramref name="other"/> with this <see cref="T:System.Type"/>'s copy constructor.
         /// </summary>
         /// <remarks>This method will not throw if instantiation failed.</remarks>
         /// <param name="other">Object to copy.</param>

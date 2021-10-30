@@ -1,4 +1,4 @@
-#if SUPPORTS_EXTENSIONS
+﻿#if SUPPORTS_EXTENSIONS
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -20,10 +20,10 @@ namespace ImmediateReflection
         /// <summary>
         /// Searches for the public <see cref="ImmediateField"/> corresponding to the given <paramref name="fieldName"/>.
         /// </summary>
-        /// <param name="type">A <see cref="Type"/>.</param>
+        /// <param name="type">A <see cref="T:System.Type"/>.</param>
         /// <param name="fieldName">Field name.</param>
         /// <returns>The corresponding <see cref="ImmediateField"/>, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> or <paramref name="fieldName"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> or <paramref name="fieldName"/> is null.</exception>
         [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
@@ -41,11 +41,11 @@ namespace ImmediateReflection
         /// <summary>
         /// Searches for the <see cref="ImmediateField"/> corresponding to the given <paramref name="fieldName"/>.
         /// </summary>
-        /// <param name="type">A <see cref="Type"/>.</param>
+        /// <param name="type">A <see cref="T:System.Type"/>.</param>
         /// <param name="fieldName">Field name.</param>
         /// <param name="flags">Flags that must be taken into account to get members.</param>
         /// <returns>The corresponding <see cref="ImmediateField"/>, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> or <paramref name="fieldName"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> or <paramref name="fieldName"/> is null.</exception>
         [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
@@ -61,11 +61,11 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Gets all the public fields of this <see cref="Type"/>.
+        /// Gets all the public fields of this <see cref="T:System.Type"/>.
         /// </summary>
-        /// <param name="type">A <see cref="Type"/>.</param>
+        /// <param name="type">A <see cref="T:System.Type"/>.</param>
         /// <returns>All <see cref="ImmediateField"/>.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
@@ -81,12 +81,12 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Gets all the fields of this <see cref="Type"/>.
+        /// Gets all the fields of this <see cref="T:System.Type"/>.
         /// </summary>
-        /// <param name="type">A <see cref="Type"/>.</param>
+        /// <param name="type">A <see cref="T:System.Type"/>.</param>
         /// <param name="flags">Flags that must be taken into account to get members.</param>
         /// <returns>All <see cref="ImmediateField"/>.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
@@ -108,10 +108,10 @@ namespace ImmediateReflection
         /// <summary>
         /// Searches for the public <see cref="ImmediateProperty"/> corresponding to the given <paramref name="propertyName"/>.
         /// </summary>
-        /// <param name="type">A <see cref="Type"/>.</param>
+        /// <param name="type">A <see cref="T:System.Type"/>.</param>
         /// <param name="propertyName">Property name.</param>
         /// <returns>The corresponding <see cref="ImmediateProperty"/>, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> or <paramref name="propertyName"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> or <paramref name="propertyName"/> is null.</exception>
         [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
@@ -129,11 +129,11 @@ namespace ImmediateReflection
         /// <summary>
         /// Searches for the <see cref="ImmediateProperty"/> corresponding to the given <paramref name="propertyName"/>.
         /// </summary>
-        /// <param name="type">A <see cref="Type"/>.</param>
+        /// <param name="type">A <see cref="T:System.Type"/>.</param>
         /// <param name="propertyName">Property name.</param>
         /// <param name="flags">Flags that must be taken into account to get members.</param>
         /// <returns>The corresponding <see cref="ImmediateProperty"/>, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> or <paramref name="propertyName"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> or <paramref name="propertyName"/> is null.</exception>
         [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
@@ -149,11 +149,11 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Gets all the public properties of this <see cref="Type"/>.
+        /// Gets all the public properties of this <see cref="T:System.Type"/>.
         /// </summary>
-        /// <param name="type">A <see cref="Type"/>.</param>
+        /// <param name="type">A <see cref="T:System.Type"/>.</param>
         /// <returns>All <see cref="ImmediateProperty"/>.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
@@ -169,12 +169,12 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Gets all the properties of this <see cref="Type"/>.
+        /// Gets all the properties of this <see cref="T:System.Type"/>.
         /// </summary>
-        /// <param name="type">A <see cref="Type"/>.</param>
+        /// <param name="type">A <see cref="T:System.Type"/>.</param>
         /// <param name="flags">Flags that must be taken into account to get members.</param>
         /// <returns>All <see cref="ImmediateProperty"/>.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]

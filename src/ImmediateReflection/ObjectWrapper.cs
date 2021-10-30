@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace ImmediateReflection
 {
     /// <summary>
-    /// Provides a wrapper over an <see cref="object"/> that gives access to its Reflection features in a faster way than standard stuff.
+    /// Provides a wrapper over an <see cref="T:System.Object"/> that gives access to its Reflection features in a faster way than standard stuff.
     /// </summary>
     [PublicAPI]
     public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
@@ -20,7 +20,7 @@ namespace ImmediateReflection
         public object Object { get; }
 
         /// <summary>
-        /// Gets the wrapped object <see cref="System.Type"/>.
+        /// Gets the wrapped object <see cref="T:System.Type"/>.
         /// </summary>
         [PublicAPI]
         [NotNull]
@@ -58,7 +58,7 @@ namespace ImmediateReflection
         /// Constructor.
         /// </summary>
         /// <param name="obj">Object to wrap.</param>
-        /// <exception cref="ArgumentNullException">If the <paramref name="obj"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the <paramref name="obj"/> is null.</exception>
         public ObjectWrapper([NotNull] object obj)
         {
             Object = obj ?? throw new ArgumentNullException(nameof(obj));
@@ -69,7 +69,7 @@ namespace ImmediateReflection
         #region Members
 
         /// <summary>
-        /// Gets all the members of this <see cref="System.Type"/>.
+        /// Gets all the members of this <see cref="T:System.Type"/>.
         /// </summary>
         /// <returns>All <see cref="ImmediateMember"/>.</returns>
         [PublicAPI]
@@ -85,7 +85,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="memberName">Member name.</param>
         /// <returns>Found <see cref="ImmediateMember"/>, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
         [PublicAPI]
         [CanBeNull]
         public ImmediateMember this[[NotNull] string memberName] => ImmediateType[memberName];
@@ -95,7 +95,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="memberName">Member name.</param>
         /// <returns>Found <see cref="ImmediateMember"/>, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
         [PublicAPI]
         [Pure]
         [CanBeNull]
@@ -126,7 +126,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="fieldName">Property name.</param>
         /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="fieldName"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="fieldName"/> is null.</exception>
         [PublicAPI]
         [Pure]
         [CanBeNull]
@@ -161,7 +161,7 @@ namespace ImmediateReflection
         /// <remarks>It will set nothing if there is no field corresponding to <paramref name="fieldName"/> in the object.</remarks>
         /// <param name="fieldName">Field name.</param>
         /// <param name="value">New field value.</param>
-        /// <exception cref="InvalidCastException">If the <paramref name="value"/> is of the wrong type.</exception>
+        /// <exception cref="T:System.InvalidCastException">If the <paramref name="value"/> is of the wrong type.</exception>
         [PublicAPI]
         [ContractAnnotation("fieldName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -193,7 +193,7 @@ namespace ImmediateReflection
         /// </summary>
         /// <param name="propertyName">Property name.</param>
         /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
         [PublicAPI]
         [Pure]
         [CanBeNull]
@@ -211,7 +211,7 @@ namespace ImmediateReflection
         /// Property value of the <see cref="Object"/>.
         /// It can also returns null if there is no property corresponding to <paramref name="propertyName"/> in the object.
         /// </returns>
-        /// <exception cref="ArgumentException">If this property has no getter.</exception>
+        /// <exception cref="T:System.ArgumentException">If this property has no getter.</exception>
         [PublicAPI]
         [Pure]
         [ContractAnnotation("propertyName:null => halt")]
@@ -229,8 +229,8 @@ namespace ImmediateReflection
         /// <remarks>It will set nothing if there is no property corresponding to <paramref name="propertyName"/> in the object.</remarks>
         /// <param name="propertyName">Property name.</param>
         /// <param name="value">New property value.</param>
-        /// <exception cref="ArgumentException">If this property has no setter.</exception>
-        /// <exception cref="InvalidCastException">If the <paramref name="value"/> is of the wrong type.</exception>
+        /// <exception cref="T:System.ArgumentException">If this property has no setter.</exception>
+        /// <exception cref="T:System.InvalidCastException">If the <paramref name="value"/> is of the wrong type.</exception>
         [PublicAPI]
         [ContractAnnotation("propertyName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING

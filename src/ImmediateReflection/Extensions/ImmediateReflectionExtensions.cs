@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
@@ -18,7 +18,7 @@ namespace ImmediateReflection
         /// <typeparam name="T">Object type.</typeparam>
         /// <param name="obj">Object instance.</param>
         /// <returns>The corresponding <see cref="ImmediateType"/>.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="obj"/>is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="obj"/>is null.</exception>
         [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]
@@ -43,11 +43,11 @@ namespace ImmediateReflection
 
 #if SUPPORTS_EXTENSIONS
         /// <summary>
-        /// Gets the <see cref="ImmediateType"/> corresponding to this <see cref="Type"/>.
+        /// Gets the <see cref="ImmediateType"/> corresponding to this <see cref="T:System.Type"/>.
         /// </summary>
-        /// <param name="type">A <see cref="Type"/>.</param>
+        /// <param name="type">A <see cref="T:System.Type"/>.</param>
         /// <returns>The corresponding <see cref="ImmediateType"/>.</returns>
-        /// <exception cref="ArgumentNullException">If the given <paramref name="type"/>is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/>is null.</exception>
         [PublicAPI]
 #if !SUPPORTS_CACHING
         [Pure]

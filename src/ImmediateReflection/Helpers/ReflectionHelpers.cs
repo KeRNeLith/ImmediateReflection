@@ -24,7 +24,7 @@ namespace ImmediateReflection.Utils
         /// <summary>
         /// Checks if the given <paramref name="property"/> is an indexed one.
         /// </summary>
-        /// <param name="property">A <see cref="PropertyInfo"/>.</param>
+        /// <param name="property">A <see cref="T:System.Reflection.PropertyInfo"/>.</param>
         /// <returns>True if the <paramref name="property"/> is an indexed property, false otherwise.</returns>
         [Pure]
         [ContractAnnotation("property:null => halt")]
