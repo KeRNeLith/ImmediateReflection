@@ -189,7 +189,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ImmediateReflection.ImmediateType.html",
-          "hash": "2evMBi7RL7NnkZFt9VN3iNh4OnoeIKBDw94pTH8bH+I="
+          "hash": "fo1xr4ZFk1a5TCPfXg8mapBeeNEcr6Mm8srcwRJPy3Y="
         }
       },
       "is_incremental": false,
@@ -309,7 +309,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ImmediateReflection.TypeExtensions.html",
-          "hash": "WoH9+JmZBY/eDjgtCEgDGKe+7YSsmqrVka8NzgKfBXA="
+          "hash": "AXqHi/Oz7vLJI6/tL78HoggvfGm7bDqLAUlcEQbvC2M="
         }
       },
       "is_incremental": false,
@@ -352,15 +352,12 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Conceptual",
       "source_relative_path": "documentation/benchmarks.md",
       "output": {
         ".html": {
           "relative_path": "documentation/benchmarks.html",
-          "hash": "zg7b6Jbl0Y/gPIGqbJkOjzwBAs7nzUaGmeVz3EimlAM="
+          "hash": "GzNFh514cuicXf4oU32isAqoF96M+YlNX7Jyo/fsZrM="
         }
       },
       "is_incremental": false,

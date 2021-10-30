@@ -145,7 +145,7 @@ public sealed class ImmediateType : ImmediateMember, IEquatable&lt;ImmediateType
   </span>
   <a id="ImmediateReflection_ImmediateType_BaseType_" data-uid="ImmediateReflection.ImmediateType.BaseType*"></a>
   <h4 id="ImmediateReflection_ImmediateType_BaseType" data-uid="ImmediateReflection.ImmediateType.BaseType">BaseType</h4>
-  <div class="markdown level1 summary"><p>Gets the base <span class="xref">System.Type</span> of this <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a>.
+  <div class="markdown level1 summary"><p>Gets the base <span class="xref">System.Type</span> of this <span class="xref">System.Type</span>.
 If this is an interface or has no base class null is returned.
 <span class="xref">System.Object</span> is the only <span class="xref">System.Type</span> that does not have a base class.</p>
 </div>
@@ -274,7 +274,7 @@ If this is an interface or has no base class null is returned.
   </span>
   <a id="ImmediateReflection_ImmediateType_HasCopyConstructor_" data-uid="ImmediateReflection.ImmediateType.HasCopyConstructor*"></a>
   <h4 id="ImmediateReflection_ImmediateType_HasCopyConstructor" data-uid="ImmediateReflection.ImmediateType.HasCopyConstructor">HasCopyConstructor</h4>
-  <div class="markdown level1 summary"><p>Indicates if this <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a> has a copy constructor.</p>
+  <div class="markdown level1 summary"><p>Indicates if this <span class="xref">System.Type</span> has a copy constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -305,7 +305,7 @@ If this is an interface or has no base class null is returned.
   </span>
   <a id="ImmediateReflection_ImmediateType_HasDefaultConstructor_" data-uid="ImmediateReflection.ImmediateType.HasDefaultConstructor*"></a>
   <h4 id="ImmediateReflection_ImmediateType_HasDefaultConstructor" data-uid="ImmediateReflection.ImmediateType.HasDefaultConstructor">HasDefaultConstructor</h4>
-  <div class="markdown level1 summary"><p>Indicates if this <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a> has a default constructor.</p>
+  <div class="markdown level1 summary"><p>Indicates if this <span class="xref">System.Type</span> has a default constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -497,7 +497,7 @@ If this is an interface or has no base class null is returned.
   </span>
   <a id="ImmediateReflection_ImmediateType_Copy_" data-uid="ImmediateReflection.ImmediateType.Copy*"></a>
   <h4 id="ImmediateReflection_ImmediateType_Copy_System_Object_" data-uid="ImmediateReflection.ImmediateType.Copy(System.Object)">Copy(Object)</h4>
-  <div class="markdown level1 summary"><p>Creates a copy instance of <code data-dev-comment-type="paramref" class="paramref">other</code> with this <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a>'s copy constructor.</p>
+  <div class="markdown level1 summary"><p>Creates a copy instance of <code data-dev-comment-type="paramref" class="paramref">other</code> with this <span class="xref">System.Type</span>'s copy constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -549,8 +549,8 @@ If this is an interface or has no base class null is returned.
     <tbody>
       <tr>
         <td><span class="xref">System.ArgumentException</span></td>
-        <td><p><a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true),
-or if the <code data-dev-comment-type="paramref" class="paramref">other</code> instance is not exactly an instance of <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a>.</p>
+        <td><p><span class="xref">System.Type</span> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true),
+or if the <code data-dev-comment-type="paramref" class="paramref">other</code> instance is not exactly an instance of <span class="xref">System.Type</span>.</p>
 </td>
       </tr>
       <tr>
@@ -992,7 +992,7 @@ or constructor exists but was not considered as copy constructor.</p>
   </span>
   <a id="ImmediateReflection_ImmediateType_New_" data-uid="ImmediateReflection.ImmediateType.New*"></a>
   <h4 id="ImmediateReflection_ImmediateType_New" data-uid="ImmediateReflection.ImmediateType.New">New()</h4>
-  <div class="markdown level1 summary"><p>Creates an instance of this <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a> with that type's default constructor.</p>
+  <div class="markdown level1 summary"><p>Creates an instance of this <span class="xref">System.Type</span> with that type's default constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1026,17 +1026,17 @@ or constructor exists but was not considered as copy constructor.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.ArgumentException</span></td>
-        <td><p><a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Reflection.AmbiguousMatchException</span></td>
-        <td><p><a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a> has several constructors defining &quot;params&quot; parameter only.</p>
+        <td><p><span class="xref">System.Type</span> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.MissingMethodException</span></td>
         <td><p>No matching public constructor was found.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Reflection.AmbiguousMatchException</span></td>
+        <td><p><span class="xref">System.Type</span> has several constructors defining &quot;params&quot; parameter only.</p>
 </td>
       </tr>
     </tbody>
@@ -1050,7 +1050,7 @@ or constructor exists but was not considered as copy constructor.</p>
   </span>
   <a id="ImmediateReflection_ImmediateType_New_" data-uid="ImmediateReflection.ImmediateType.New*"></a>
   <h4 id="ImmediateReflection_ImmediateType_New_System_Object___" data-uid="ImmediateReflection.ImmediateType.New(System.Object[])">New(Object[])</h4>
-  <div class="markdown level1 summary"><p>Creates an instance of this <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a> using the constructor that best matches the specified parameters.</p>
+  <div class="markdown level1 summary"><p>Creates an instance of this <span class="xref">System.Type</span> using the constructor that best matches the specified parameters.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1093,7 +1093,7 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
     </tbody>
   </table>
   <h5 id="ImmediateReflection_ImmediateType_New_System_Object____remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Tries to use the <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_New">New()</a> if no parameter provided, otherwise fallback on <span class="xref">System.Activator.CreateInstance(System.Type,System.Object[])</span>.</p>
+  <div class="markdown level1 remarks"><p>Tries to use the <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_New">New()</a> if no parameter provided, otherwise fallback on <span class="xref">System.Activator.CreateInstance(System.Type,object[])</span>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1106,7 +1106,7 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
     <tbody>
       <tr>
         <td><span class="xref">System.ArgumentException</span></td>
-        <td><p><a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</p>
+        <td><p><span class="xref">System.Type</span> is a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</p>
 </td>
       </tr>
       <tr>
@@ -1121,20 +1121,20 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
       </tr>
       <tr>
         <td><span class="xref">System.NotSupportedException</span></td>
-        <td><p>If the <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a> cannot be a TypeBuilder.
+        <td><p>If the <span class="xref">System.Type</span> cannot be a TypeBuilder.
 -or- Creation of <span class="xref">System.TypedReference</span>, ArgIterator, <span class="xref">System.Void</span>, and <span class="xref">System.RuntimeArgumentHandle</span> types, or arrays of those types, is not supported.
 -or- The assembly that contains type is a dynamic assembly that was created with Save.
 -or- The constructor that best matches args has varargs arguments.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Reflection.TargetInvocationException</span></td>
-        <td><p>The constructor being called throws an exception.</p>
+        <td><span class="xref">System.TypeLoadException</span></td>
+        <td><p>If the <span class="xref">System.Type</span> is not a valid type.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.TypeLoadException</span></td>
-        <td><p>If the <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a> is not a valid type.</p>
+        <td><span class="xref">System.Reflection.TargetInvocationException</span></td>
+        <td><p>The constructor being called throws an exception.</p>
 </td>
       </tr>
     </tbody>
@@ -1180,7 +1180,7 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
   </span>
   <a id="ImmediateReflection_ImmediateType_TryCopy_" data-uid="ImmediateReflection.ImmediateType.TryCopy*"></a>
   <h4 id="ImmediateReflection_ImmediateType_TryCopy_System_Object_System_Object__System_Exception__" data-uid="ImmediateReflection.ImmediateType.TryCopy(System.Object,System.Object@,System.Exception@)">TryCopy(Object, out Object, out Exception)</h4>
-  <div class="markdown level1 summary"><p>Tries to create a copy instance of <code data-dev-comment-type="paramref" class="paramref">other</code> with this <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a>'s copy constructor.</p>
+  <div class="markdown level1 summary"><p>Tries to create a copy instance of <code data-dev-comment-type="paramref" class="paramref">other</code> with this <span class="xref">System.Type</span>'s copy constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1245,7 +1245,7 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
   </span>
   <a id="ImmediateReflection_ImmediateType_TryNew_" data-uid="ImmediateReflection.ImmediateType.TryNew*"></a>
   <h4 id="ImmediateReflection_ImmediateType_TryNew_System_Object__System_Exception__" data-uid="ImmediateReflection.ImmediateType.TryNew(System.Object@,System.Exception@)">TryNew(out Object, out Exception)</h4>
-  <div class="markdown level1 summary"><p>Tries to create an instance of this <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a> with that type's default constructor.</p>
+  <div class="markdown level1 summary"><p>Tries to create an instance of this <span class="xref">System.Type</span> with that type's default constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1304,7 +1304,7 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
   </span>
   <a id="ImmediateReflection_ImmediateType_TryNew_" data-uid="ImmediateReflection.ImmediateType.TryNew*"></a>
   <h4 id="ImmediateReflection_ImmediateType_TryNew_System_Object__System_Exception__System_Object___" data-uid="ImmediateReflection.ImmediateType.TryNew(System.Object@,System.Exception@,System.Object[])">TryNew(out Object, out Exception, Object[])</h4>
-  <div class="markdown level1 summary"><p>Tries to create an instance of this <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_Type">Type</a> with the best matching constructor.</p>
+  <div class="markdown level1 summary"><p>Tries to create an instance of this <span class="xref">System.Type</span> with the best matching constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1360,7 +1360,7 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
   </table>
   <h5 id="ImmediateReflection_ImmediateType_TryNew_System_Object__System_Exception__System_Object____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This method will not throw if instantiation failed.
-Tries to use the <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_New">New()</a> if no parameter provided, otherwise fallback on <span class="xref">System.Activator.CreateInstance(System.Type,System.Object[])</span>.</p>
+Tries to use the <a class="xref" href="ImmediateReflection.ImmediateType.html#ImmediateReflection_ImmediateType_New">New()</a> if no parameter provided, otherwise fallback on <span class="xref">System.Activator.CreateInstance(System.Type,object[])</span>.</p>
 </div>
   <h3 id="eii">Explicit Interface Implementations
   </h3>

@@ -415,7 +415,7 @@ or constructor exists but was not considered as copy constructor.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Reflection.AmbiguousMatchException</span></td>
+        <td><span class="xref">System.AmbiguousMatchException</span></td>
         <td><p><span class="xref">System.Type</span> has several constructors defining &quot;params&quot; parameter only.</p>
 </td>
       </tr>
@@ -484,7 +484,7 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
     </tbody>
   </table>
   <h5 id="ImmediateReflection_TypeExtensions_New_System_Type_System_Object____remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>It finally uses <span class="xref">System.Activator.CreateInstance(System.Type,System.Object[])</span>.</p>
+  <div class="markdown level1 remarks"><p>It finally uses <span class="xref">System.Activator.CreateInstance(Type,object[])</span>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -524,13 +524,13 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Reflection.TargetInvocationException</span></td>
-        <td><p>The constructor being called throws an exception.</p>
+        <td><span class="xref">System.TypeLoadException</span></td>
+        <td><p>If the <span class="xref">System.Type</span> is not a valid type.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.TypeLoadException</span></td>
-        <td><p>If the <span class="xref">System.Type</span> is not a valid type.</p>
+        <td><span class="xref">System.Reflection.TargetInvocationException</span></td>
+        <td><p>The constructor being called throws an exception.</p>
 </td>
       </tr>
     </tbody>
@@ -790,7 +790,7 @@ If <code data-dev-comment-type="paramref" class="paramref">args</code> is an emp
   </table>
   <h5 id="ImmediateReflection_TypeExtensions_TryNew_System_Type_System_Object__System_Exception__System_Object____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This method will not throw if instantiation failed.
-It finally uses <span class="xref">System.Activator.CreateInstance(System.Type,System.Object[])</span>.</p>
+It finally uses <span class="xref">System.Activator.CreateInstance(Type,object[])</span>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
