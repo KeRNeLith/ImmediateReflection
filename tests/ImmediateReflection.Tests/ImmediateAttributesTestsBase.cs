@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Reflection;
 using JetBrains.Annotations;
 using NUnit.Framework;
@@ -8,7 +8,6 @@ namespace ImmediateReflection.Tests
     /// <summary>
     /// Tests related to attributes.
     /// </summary>
-    [TestFixture]
     internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
     {
         #region Test classes

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +11,6 @@ namespace ImmediateReflection.Tests
     /// <summary>
     /// Base class for unit tests.
     /// </summary>
-    [TestFixture]
     internal class ImmediateReflectionTestsBase
     {
         protected class ProtectedNestedClass
