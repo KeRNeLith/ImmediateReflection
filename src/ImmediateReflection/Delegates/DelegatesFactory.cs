@@ -222,7 +222,7 @@ namespace ImmediateReflection
 
         #endregion
 
-        #region Field Get/Set
+        #region Getter
 
         [Pure]
         [NotNull]
@@ -252,6 +252,39 @@ namespace ImmediateReflection
         }
 
         [Pure]
+        [CanBeNull]
+        [ContractAnnotation("propertyInfo:null => halt;getMethod:null => halt")]
+        public static GetterDelegate CreateGetter([NotNull] PropertyInfo propertyInfo, [NotNull] MethodInfo getMethod)
+        {
+            Debug.Assert(propertyInfo != null);
+
+            if (!propertyInfo.CanRead)
+                return null;
+
+            Debug.Assert(getMethod != null);
+
+            DynamicMethod dynamicGetter = CreateDynamicGetter(propertyInfo, out Type targetType);
+
+            ILGenerator generator = dynamicGetter.GetILGenerator();
+
+            if (!getMethod.IsStatic)
+                RegisterTargetArgument(generator, targetType);
+
+            CallMethod(generator, getMethod);
+
+            // Box the result if needed
+            BoxIfNeeded(generator, propertyInfo.PropertyType);
+
+            MethodReturn(generator);
+
+            return (GetterDelegate)dynamicGetter.CreateDelegate(typeof(GetterDelegate));
+        }
+
+        #endregion
+
+        #region Setter
+
+        [Pure]
         [NotNull]
         [ContractAnnotation("fieldInfo:null => halt")]
         public static SetterDelegate CreateSetter([NotNull] FieldInfo fieldInfo)
@@ -279,39 +312,6 @@ namespace ImmediateReflection
             MethodReturn(generator);
 
             return (SetterDelegate)dynamicSetter.CreateDelegate(typeof(SetterDelegate));
-        }
-
-        #endregion
-
-        #region Property Get/Set
-
-        [Pure]
-        [CanBeNull]
-        [ContractAnnotation("propertyInfo:null => halt;getMethod:null => halt")]
-        public static GetterDelegate CreateGetter([NotNull] PropertyInfo propertyInfo, [NotNull] MethodInfo getMethod)
-        {
-            Debug.Assert(propertyInfo != null);
-
-            if (!propertyInfo.CanRead)
-                return null;
-
-            Debug.Assert(getMethod != null);
-
-            DynamicMethod dynamicGetter = CreateDynamicGetter(propertyInfo, out Type targetType);
-
-            ILGenerator generator = dynamicGetter.GetILGenerator();
-
-            if (!getMethod.IsStatic)
-                RegisterTargetArgument(generator, targetType);
-
-            CallMethod(generator, getMethod);
-
-            // Box the result if needed
-            BoxIfNeeded(generator, propertyInfo.PropertyType);
-
-            MethodReturn(generator);
-
-            return (GetterDelegate)dynamicGetter.CreateDelegate(typeof(GetterDelegate));
         }
 
         [Pure]

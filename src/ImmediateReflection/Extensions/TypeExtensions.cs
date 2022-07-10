@@ -47,39 +47,6 @@ namespace ImmediateReflection
         }
 
         /// <summary>
-        /// Tries to create an instance of this <paramref name="type"/> with that type's default constructor.
-        /// </summary>
-        /// <remarks>This method will not throw if instantiation failed.</remarks>
-        /// <param name="type"><see cref="T:System.Type"/> to instantiate.</param>
-        /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
-        /// <param name="exception">Caught exception if the instantiation failed, otherwise null.</param>
-        /// <returns>True if the new instance was successfully created, false otherwise.</returns>
-        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
-        [PublicAPI]
-        [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
-        public static bool TryNew(
-            [NotNull] this Type type,
-            out object newInstance,
-            out Exception exception)
-        {
-            if (type is null)
-                throw new ArgumentNullException(nameof(type));
-
-            try
-            {
-                exception = null;
-                newInstance = CachesHandler.Instance.GetDefaultConstructor(type).Constructor();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                newInstance = null;
-                exception = ex;
-                return false;
-            }
-        }
-
-        /// <summary>
         /// Creates an instance of this <paramref name="type"/> using the constructor that best matches the specified parameters.
         /// </summary>
         /// <remarks>It finally uses <see cref="M:System.Activator.CreateInstance(Type,object[])"/>.</remarks>
@@ -116,6 +83,39 @@ namespace ImmediateReflection
             if (args is null)
                 throw new ArgumentNullException(nameof(args));
             return TypeAccessor.Get(type).New(args);
+        }
+
+        /// <summary>
+        /// Tries to create an instance of this <paramref name="type"/> with that type's default constructor.
+        /// </summary>
+        /// <remarks>This method will not throw if instantiation failed.</remarks>
+        /// <param name="type"><see cref="T:System.Type"/> to instantiate.</param>
+        /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
+        /// <param name="exception">Caught exception if the instantiation failed, otherwise null.</param>
+        /// <returns>True if the new instance was successfully created, false otherwise.</returns>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        [PublicAPI]
+        [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
+        public static bool TryNew(
+            [NotNull] this Type type,
+            out object newInstance,
+            out Exception exception)
+        {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+
+            try
+            {
+                exception = null;
+                newInstance = CachesHandler.Instance.GetDefaultConstructor(type).Constructor();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                newInstance = null;
+                exception = ex;
+                return false;
+            }
         }
 
         /// <summary>
