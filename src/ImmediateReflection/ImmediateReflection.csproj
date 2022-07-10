@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net20;net35;net40;net45;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net20;net35;net40;net45;netstandard2.0;netstandard2.1</TargetFrameworks>
 
     <GeneratePackageOnBuild>$(Generate_ImmediateReflection)</GeneratePackageOnBuild>
 
@@ -64,9 +64,13 @@ Misc:
     <AssemblyTitle>ImmediateReflection .NET Standard 2.0</AssemblyTitle>
     <DefineConstants>$(DefineConstants);NETSTANDARD2_0;SUPPORTS_SERIALIZATION;SUPPORTS_AGGRESSIVE_INLINING;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_SYSTEM_CORE;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LAZY;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.1'">
+    <AssemblyTitle>ImmediateReflection .NET Standard 2.1</AssemblyTitle>
+    <DefineConstants>$(DefineConstants);NETSTANDARD2_1;SUPPORTS_SERIALIZATION;SUPPORTS_AGGRESSIVE_INLINING;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_SYSTEM_CORE;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LAZY;$(AdditionalConstants)</DefineConstants>
+  </PropertyGroup>
 
   <!-- Dependencies -->
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-    <PackageReference Include="System.Reflection.Emit.LightWeight" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.Emit.LightWeight" Version="4.7.0" />
   </ItemGroup>
 </Project>
