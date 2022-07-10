@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -1226,7 +1226,7 @@ namespace ImmediateReflection.Tests
             }
         }
 
-        public delegate bool TryCopyCtor(object other, out object instance, out Exception exception);
+        public delegate bool TryCopyCtor([CanBeNull] object other, [CanBeNull] out object instance, [CanBeNull] out Exception exception);
 
         public static void TryCopy([NotNull] Type type, [CanBeNull] object other, bool expectFail, [NotNull, InstantHandle] TryCopyCtor tryCtor)
         {
