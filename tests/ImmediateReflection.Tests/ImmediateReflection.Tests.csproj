@@ -58,19 +58,17 @@
   </PropertyGroup>
 
   <!-- Dependencies -->
-  <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.11.0" />
-  </ItemGroup>
-  
   <ItemGroup Condition="'$(TargetFramework)' != 'net20' AND '$(TargetFramework)' != 'net30'">
-    <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
   </ItemGroup>
 
   <!-- Needed to have tests working without R# -->
   <ItemGroup Condition="'$(TargetFramework)' == 'net20' OR '$(TargetFramework)' == 'net30'">
+    <PackageReference Include="NUnit" Version="3.11.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.4.0" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\ImmediateReflection\ImmediateReflection.csproj" />
   </ItemGroup>

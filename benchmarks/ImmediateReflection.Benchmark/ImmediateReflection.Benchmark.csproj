@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
     <PackageReference Include="fasterflect" Version="3.0.0" />
     <PackageReference Include="FastMember.Signed" Version="1.5.0" />
     <PackageReference Include="FlashReflection" Version="1.0.2" />
