@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net20;net30;net35;net40;net45;net451;net452;net46;net461;net462;net47;net471;net472;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net20;net30;net35;net40;net45;net451;net452;net46;net461;net462;net47;net471;net472;netcoreapp3.1</TargetFrameworks>
 
     <Title>ImmediateReflection.Tests</Title>
 
@@ -53,8 +53,8 @@
   <PropertyGroup Condition="'$(TargetFramework)'=='net472'">
     <DefineConstants>$(DefineConstants);NET472;SUPPORTS_SERIALIZATION;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">
-    <DefineConstants>$(DefineConstants);NETCOREAPP2_0;SUPPORTS_SERIALIZATION;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
+  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
+    <DefineConstants>$(DefineConstants);NETCOREAPP3_1;SUPPORTS_SERIALIZATION;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_SYSTEM_CORE;SUPPORTS_IMMEDIATE_MEMBER_TYPE;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
 
   <!-- Dependencies -->
