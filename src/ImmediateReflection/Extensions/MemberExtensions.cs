@@ -74,11 +74,7 @@ namespace ImmediateReflection
         [Pure]
         [ContractAnnotation("property:null => halt;=> true, getter:notnull;=> false, getter:null")]
         public static bool TryCreateGetter<TOwner, TProperty>(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this PropertyInfo property,
-#else
-            [NotNull] PropertyInfo property,
-#endif
             out GetterDelegate<TOwner, TProperty> getter)
         {
             getter = null;
@@ -110,13 +106,7 @@ namespace ImmediateReflection
         [Pure]
         [NotNull]
         [ContractAnnotation("property:null => halt")]
-        public static GetterDelegate<TOwner, TProperty> CreateGetter<TOwner, TProperty>(
-#if SUPPORTS_EXTENSIONS
-            [NotNull] this PropertyInfo property
-#else
-            [NotNull] PropertyInfo property
-#endif
-            )
+        public static GetterDelegate<TOwner, TProperty> CreateGetter<TOwner, TProperty>([NotNull] this PropertyInfo property)
         {
             if (TryCreateGetterInternal(property, out GetterDelegate<TOwner, TProperty> getter))
                 return getter;
@@ -209,11 +199,7 @@ namespace ImmediateReflection
         [Pure]
         [ContractAnnotation("property:null => halt;=> true, getter:notnull;=> false, getter:null")]
         public static bool TryCreateGetter<TOwner>(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this PropertyInfo property,
-#else
-            [NotNull] PropertyInfo property,
-#endif
             out GetterDelegate<TOwner> getter)
         {
             getter = null;
@@ -244,13 +230,7 @@ namespace ImmediateReflection
         [Pure]
         [NotNull]
         [ContractAnnotation("property:null => halt")]
-        public static GetterDelegate<TOwner> CreateGetter<TOwner>(
-#if SUPPORTS_EXTENSIONS
-            [NotNull] this PropertyInfo property
-#else
-            [NotNull] PropertyInfo property
-#endif
-            )
+        public static GetterDelegate<TOwner> CreateGetter<TOwner>([NotNull] this PropertyInfo property)
         {
             if (TryCreateGetterInternal(property, out GetterDelegate<TOwner> getter))
                 return getter;
@@ -316,11 +296,7 @@ namespace ImmediateReflection
         [Pure]
         [ContractAnnotation("property:null => halt;=> true, setter:notnull;=> false, setter:null")]
         public static bool TryCreateSetter<TOwner, TProperty>(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this PropertyInfo property,
-#else
-            [NotNull] PropertyInfo property,
-#endif
             out SetterDelegate<TOwner, TProperty> setter)
             where TOwner : class
         {
@@ -353,13 +329,7 @@ namespace ImmediateReflection
         [Pure]
         [NotNull]
         [ContractAnnotation("property:null => halt")]
-        public static SetterDelegate<TOwner, TProperty> CreateSetter<TOwner, TProperty>(
-#if SUPPORTS_EXTENSIONS
-            [NotNull] this PropertyInfo property
-#else
-            [NotNull] PropertyInfo property
-#endif
-            )
+        public static SetterDelegate<TOwner, TProperty> CreateSetter<TOwner, TProperty>([NotNull] this PropertyInfo property)
             where TOwner : class
         {
             if (TryCreateSetterInternal(property, out SetterDelegate<TOwner, TProperty> setter))
@@ -447,11 +417,7 @@ namespace ImmediateReflection
         [Pure]
         [ContractAnnotation("property:null => halt;=> true, setter:notnull;=> false, setter:null")]
         public static bool TryCreateSetter<TOwner>(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this PropertyInfo property,
-#else
-            [NotNull] PropertyInfo property,
-#endif
             out SetterDelegate<TOwner> setter)
             where TOwner : class
         {
@@ -483,13 +449,7 @@ namespace ImmediateReflection
         [Pure]
         [NotNull]
         [ContractAnnotation("property:null => halt")]
-        public static SetterDelegate<TOwner> CreateSetter<TOwner>(
-#if SUPPORTS_EXTENSIONS
-            [NotNull] this PropertyInfo property
-#else
-            [NotNull] PropertyInfo property
-#endif
-            )
+        public static SetterDelegate<TOwner> CreateSetter<TOwner>([NotNull] this PropertyInfo property)
             where TOwner : class
         {
             if (TryCreateSetterInternal(property, out SetterDelegate<TOwner> setter))

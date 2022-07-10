@@ -20,28 +20,18 @@ namespace ImmediateReflection
         /// <returns>The corresponding <see cref="ImmediateType"/>.</returns>
         /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="obj"/>is null.</exception>
         [PublicAPI]
-#if !SUPPORTS_CACHING
-        [Pure]
-#endif
         [NotNull]
         [ContractAnnotation("obj:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static ImmediateType GetImmediateType<T>(
-#if SUPPORTS_EXTENSIONS
-            [NotNull] this T obj
-#else
-            [NotNull] T obj
-#endif
-            )
+        public static ImmediateType GetImmediateType<T>([NotNull] this T obj)
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
             return TypeAccessor.Get(obj.GetType());
         }
 
-#if SUPPORTS_EXTENSIONS
         /// <summary>
         /// Gets the <see cref="ImmediateType"/> corresponding to this <see cref="T:System.Type"/>.
         /// </summary>
@@ -49,9 +39,6 @@ namespace ImmediateReflection
         /// <returns>The corresponding <see cref="ImmediateType"/>.</returns>
         /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/>is null.</exception>
         [PublicAPI]
-#if !SUPPORTS_CACHING
-        [Pure]
-#endif
         [NotNull]
         [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -61,6 +48,5 @@ namespace ImmediateReflection
         {
             return TypeAccessor.Get(type);
         }
-#endif
     }
 }

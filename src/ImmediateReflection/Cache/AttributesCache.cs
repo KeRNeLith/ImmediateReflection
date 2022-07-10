@@ -1,11 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-#if SUPPORTS_SYSTEM_CORE
 using System.Linq;
-#else
-using static ImmediateReflection.Utils.EnumerableUtils;
-#endif
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
@@ -17,7 +13,7 @@ namespace ImmediateReflection
     /// <summary>
     /// Cache storage for attributes.
     /// </summary>
-    internal class AttributesCache
+    internal sealed class AttributesCache
     {
         [NotNull, ItemNotNull]
         private readonly Attribute[] _attributesWithInherited;
@@ -155,11 +151,7 @@ namespace ImmediateReflection
 
             IEnumerable<TAttribute> FindAttributes(Attribute[] attributes)
             {
-#if SUPPORTS_SYSTEM_CORE
                 return attributes.OfType<TAttribute>();
-#else
-                return OfType<TAttribute>(attributes);
-#endif
             }
 
             #endregion
@@ -189,11 +181,7 @@ namespace ImmediateReflection
 
             IEnumerable<Attribute> FindAttributes(Attribute[] attributes)
             {
-#if SUPPORTS_SYSTEM_CORE
                 return attributes.Where(attributeType.IsInstanceOfType);
-#else
-                return Where(attributes, attributeType.IsInstanceOfType);
-#endif
             }
 
             #endregion

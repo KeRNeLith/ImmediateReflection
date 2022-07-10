@@ -1,5 +1,4 @@
-#if SUPPORTS_CACHING
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -181,4 +180,3 @@ namespace ImmediateReflection
         #endregion
     }
 }
-#endif

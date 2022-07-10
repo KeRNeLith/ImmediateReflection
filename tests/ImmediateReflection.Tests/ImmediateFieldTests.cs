@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -59,7 +59,6 @@ namespace ImmediateReflection.Tests
             Assert.AreEqual(TestEnumULongFieldValueFieldInfo, currentEnumValueImmediateField.FieldInfo);
         }
 
-#if SUPPORTS_IMMEDIATE_MEMBER_TYPE
         #region FieldType
 
         [Test]
@@ -85,7 +84,6 @@ namespace ImmediateReflection.Tests
         }
 
         #endregion
-#endif
 
         #region GetValue
 

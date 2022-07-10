@@ -1,10 +1,6 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-#if SUPPORTS_SYSTEM_CORE
 using System.Linq;
-#else
-using static ImmediateReflection.Utils.EnumerableUtils;
-#endif
 using System.Reflection;
 using JetBrains.Annotations;
 
@@ -44,11 +40,7 @@ namespace ImmediateReflection.Utils
         {
             Debug.Assert(fields != null);
 
-#if SUPPORTS_SYSTEM_CORE
             return fields.Where(field => !IsBackingField(field));
-#else
-            return Where(fields, field => !IsBackingField(field));
-#endif
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿#if SUPPORTS_EXTENSIONS
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -25,9 +24,6 @@ namespace ImmediateReflection
         /// <returns>The corresponding <see cref="ImmediateField"/>, otherwise null.</returns>
         /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> or <paramref name="fieldName"/> is null.</exception>
         [PublicAPI]
-#if !SUPPORTS_CACHING
-        [Pure]
-#endif
         [CanBeNull]
         [ContractAnnotation("type:null => halt;fieldName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -47,9 +43,6 @@ namespace ImmediateReflection
         /// <returns>The corresponding <see cref="ImmediateField"/>, otherwise null.</returns>
         /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> or <paramref name="fieldName"/> is null.</exception>
         [PublicAPI]
-#if !SUPPORTS_CACHING
-        [Pure]
-#endif
         [CanBeNull]
         [ContractAnnotation("type:null => halt;fieldName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -67,9 +60,6 @@ namespace ImmediateReflection
         /// <returns>All <see cref="ImmediateField"/>.</returns>
         /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [PublicAPI]
-#if !SUPPORTS_CACHING
-        [Pure]
-#endif
         [NotNull, ItemNotNull]
         [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -88,9 +78,6 @@ namespace ImmediateReflection
         /// <returns>All <see cref="ImmediateField"/>.</returns>
         /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [PublicAPI]
-#if !SUPPORTS_CACHING
-        [Pure]
-#endif
         [NotNull, ItemNotNull]
         [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -113,9 +100,6 @@ namespace ImmediateReflection
         /// <returns>The corresponding <see cref="ImmediateProperty"/>, otherwise null.</returns>
         /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> or <paramref name="propertyName"/> is null.</exception>
         [PublicAPI]
-#if !SUPPORTS_CACHING
-        [Pure]
-#endif
         [CanBeNull]
         [ContractAnnotation("type:null => halt;propertyName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -135,9 +119,6 @@ namespace ImmediateReflection
         /// <returns>The corresponding <see cref="ImmediateProperty"/>, otherwise null.</returns>
         /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> or <paramref name="propertyName"/> is null.</exception>
         [PublicAPI]
-#if !SUPPORTS_CACHING
-        [Pure]
-#endif
         [CanBeNull]
         [ContractAnnotation("type:null => halt;propertyName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -155,9 +136,6 @@ namespace ImmediateReflection
         /// <returns>All <see cref="ImmediateProperty"/>.</returns>
         /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [PublicAPI]
-#if !SUPPORTS_CACHING
-        [Pure]
-#endif
         [NotNull, ItemNotNull]
         [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -176,9 +154,6 @@ namespace ImmediateReflection
         /// <returns>All <see cref="ImmediateProperty"/>.</returns>
         /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [PublicAPI]
-#if !SUPPORTS_CACHING
-        [Pure]
-#endif
         [NotNull, ItemNotNull]
         [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -192,4 +167,3 @@ namespace ImmediateReflection
         #endregion
     }
 }
-#endif

@@ -1,5 +1,4 @@
-#if SUPPORTS_CACHING
-using System;
+﻿using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using NUnit.Framework;
@@ -136,4 +135,3 @@ namespace ImmediateReflection.Tests
         #endregion
     }
 }
-#endif

@@ -1,6 +1,4 @@
-﻿#if SUPPORTS_CACHING
-using System;
-using System.Reflection;
+﻿using System;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
@@ -22,12 +20,7 @@ namespace ImmediateReflection
         /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [PublicAPI]
         [ContractAnnotation("type:null => halt")]
-        public static bool HasDefaultConstructor(
-#if SUPPORTS_EXTENSIONS
-            [NotNull] this Type type)
-#else
-            [NotNull] Type type)
-#endif
+        public static bool HasDefaultConstructor([NotNull] this Type type)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
@@ -46,12 +39,7 @@ namespace ImmediateReflection
         [PublicAPI]
         [NotNull]
         [ContractAnnotation("type:null => halt")]
-        public static object New(
-#if SUPPORTS_EXTENSIONS
-            [NotNull] this Type type)
-#else
-            [NotNull] Type type)
-#endif
+        public static object New([NotNull] this Type type)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
@@ -70,12 +58,8 @@ namespace ImmediateReflection
         [PublicAPI]
         [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
         public static bool TryNew(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this Type type,
-#else
-            [NotNull] Type type,
-#endif
-            out object newInstance, 
+            out object newInstance,
             out Exception exception)
         {
             if (type is null)
@@ -124,11 +108,7 @@ namespace ImmediateReflection
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static object New(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this Type type,
-#else
-            [NotNull] Type type,
-#endif
             [NotNull, ItemCanBeNull] params object[] args)
         {
             if (type is null)
@@ -160,13 +140,9 @@ namespace ImmediateReflection
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static bool TryNew(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this Type type,
-#else
-            [NotNull] Type type,
-#endif
-            out object newInstance, 
-            out Exception exception, 
+            out object newInstance,
+            out Exception exception,
             [NotNull, ItemCanBeNull] params object[] args)
         {
             if (type is null)
@@ -184,12 +160,7 @@ namespace ImmediateReflection
         /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [PublicAPI]
         [ContractAnnotation("type:null => halt")]
-        public static bool HasCopyConstructor(
-#if SUPPORTS_EXTENSIONS
-            [NotNull] this Type type)
-#else
-            [NotNull] Type type)
-#endif
+        public static bool HasCopyConstructor([NotNull] this Type type)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
@@ -225,13 +196,7 @@ namespace ImmediateReflection
         /// </exception>
         [PublicAPI]
         [ContractAnnotation("type:null => halt; other:null => null; other:notnull => notnull")]
-        public static T Copy<T>(
-#if SUPPORTS_EXTENSIONS
-            [NotNull] this Type type,
-#else
-            [NotNull] Type type,
-#endif
-            [CanBeNull] T other)
+        public static T Copy<T>([NotNull] this Type type, [CanBeNull] T other)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
@@ -256,11 +221,7 @@ namespace ImmediateReflection
                             + "other:null => false, newInstance:null, exception:notnull;"
                             + "other:notnull => false, newInstance:null, exception:notnull")]
         public static bool TryCopy<T>(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this Type type,
-#else
-            [NotNull] Type type,
-#endif
             [CanBeNull] T other,
             out T newInstance,
             out Exception exception)
@@ -283,4 +244,3 @@ namespace ImmediateReflection
         }
     }
 }
-#endif

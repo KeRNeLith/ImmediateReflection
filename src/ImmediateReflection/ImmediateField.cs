@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Reflection;
-#if SUPPORTS_SERIALIZATION
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-#endif
 using JetBrains.Annotations;
 
 namespace ImmediateReflection
@@ -12,15 +10,11 @@ namespace ImmediateReflection
     /// Represents a field and provides access to its metadata in a faster way.
     /// </summary>
     [PublicAPI]
-#if SUPPORTS_SERIALIZATION
     [Serializable]
-#endif
     public sealed class ImmediateField
         : ImmediateMember
         , IEquatable<ImmediateField>
-#if SUPPORTS_SERIALIZATION
         , ISerializable
-#endif
     {
         /// <summary>
         /// Gets the wrapped <see cref="T:System.Reflection.FieldInfo"/>.
@@ -43,7 +37,6 @@ namespace ImmediateReflection
         [NotNull]
         public Type FieldType { get; }
 
-#if SUPPORTS_LAZY
         [NotNull]
         private readonly Lazy<ImmediateType> _fieldImmediateType;
 
@@ -53,7 +46,6 @@ namespace ImmediateReflection
         [PublicAPI]
         [NotNull]
         public ImmediateType FieldImmediateType => _fieldImmediateType.Value;
-#endif
 
         [NotNull]
         private readonly GetterDelegate _getter;
@@ -70,9 +62,8 @@ namespace ImmediateReflection
         {
             FieldInfo = field;
             FieldType = field.FieldType;
-#if SUPPORTS_LAZY
             _fieldImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(FieldType));
-#endif
+
             // ReSharper disable once AssignNullToNotNullAttribute, Justification: A field is always declared inside a type.
             DeclaringType = field.DeclaringType;
 
@@ -175,7 +166,6 @@ namespace ImmediateReflection
 
         #endregion
 
-#if SUPPORTS_SERIALIZATION
         #region ISerializable
 
         private ImmediateField(SerializationInfo info, StreamingContext context)
@@ -191,7 +181,6 @@ namespace ImmediateReflection
         }
 
         #endregion
-#endif
 
         /// <inheritdoc />
         public override string ToString()

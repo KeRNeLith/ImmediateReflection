@@ -1,5 +1,4 @@
-﻿#if SUPPORTS_CACHING
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -29,11 +28,7 @@ namespace ImmediateReflection
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static bool IsDefinedImmediateAttribute<TAttribute>(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this MemberInfo member,
-#else
-            [NotNull] MemberInfo member,
-#endif
             bool inherit = false)
             where TAttribute : Attribute
         {
@@ -61,11 +56,7 @@ namespace ImmediateReflection
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static bool IsDefinedImmediateAttribute(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this MemberInfo member,
-#else
-            [NotNull] MemberInfo member,
-#endif
             [NotNull] Type attributeType,
             bool inherit = false)
         {
@@ -92,11 +83,7 @@ namespace ImmediateReflection
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static TAttribute GetImmediateAttribute<TAttribute>(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this MemberInfo member,
-#else
-            [NotNull] MemberInfo member,
-#endif
             bool inherit = false)
             where TAttribute : Attribute
         {
@@ -124,11 +111,7 @@ namespace ImmediateReflection
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static Attribute GetImmediateAttribute(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this MemberInfo member,
-#else
-            [NotNull] MemberInfo member,
-#endif 
             [NotNull] Type attributeType,
             bool inherit = false)
         {
@@ -155,11 +138,7 @@ namespace ImmediateReflection
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static IEnumerable<TAttribute> GetImmediateAttributes<TAttribute>(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this MemberInfo member,
-#else
-            [NotNull] MemberInfo member,
-#endif
             bool inherit = false)
             where TAttribute : Attribute
         {
@@ -186,11 +165,7 @@ namespace ImmediateReflection
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static IEnumerable<Attribute> GetImmediateAttributes(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this MemberInfo member,
-#else
-            [NotNull] MemberInfo member,
-#endif
             [NotNull] Type attributeType,
             bool inherit = false)
         {
@@ -216,11 +191,7 @@ namespace ImmediateReflection
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static IEnumerable<Attribute> GetAllImmediateAttributes(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this MemberInfo member,
-#else
-            [NotNull] MemberInfo member,
-# endif
             bool inherit = false)
         {
             if (member is null)
@@ -232,4 +203,3 @@ namespace ImmediateReflection
         }
     }
 }
-#endif

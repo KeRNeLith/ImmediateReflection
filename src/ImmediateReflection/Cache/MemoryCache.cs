@@ -1,9 +1,4 @@
-#if SUPPORTS_CACHING
-#if SUPPORTS_SYSTEM_CORE
-using System;
-#else
-using ImmediateReflection.Utils;
-#endif
+﻿using System;
 using System.Collections;
 using System.Diagnostics;
 using JetBrains.Annotations;
@@ -15,7 +10,7 @@ namespace ImmediateReflection
     /// </summary>
     /// <typeparam name="TKey">Cache key type.</typeparam>
     /// <typeparam name="TValue">Cache value type.</typeparam>
-    internal class MemoryCache<TKey, TValue>
+    internal sealed class MemoryCache<TKey, TValue>
         where TValue : class
     {
         [NotNull]
@@ -54,4 +49,3 @@ namespace ImmediateReflection
         }
     }
 }
-#endif
