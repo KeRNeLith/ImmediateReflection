@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net20;net35;net40;net45;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net40;net45;netstandard2.0;netstandard2.1</TargetFrameworks>
 
     <GeneratePackageOnBuild>$(Generate_ImmediateReflection)</GeneratePackageOnBuild>
 
@@ -23,7 +23,7 @@ It provides these features while trying to keep an API as similar as the standar
 Supported platforms:
 - .NET Standard 2.0+
 - .NET Core 2.0+
-- .NET Framework 2.0+
+- .NET Framework 4.0+
 
 Supports Source Link
 
@@ -44,14 +44,6 @@ Misc:
   </PropertyGroup>
 
   <!-- Targets defines -->
-  <PropertyGroup Condition="'$(TargetFramework)'=='net20'">
-    <AssemblyTitle>ImmediateReflection .NET 2.0</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NET20;SUPPORTS_SERIALIZATION;SUPPORTS_CACHING;$(AdditionalConstants)</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)'=='net35'">
-    <AssemblyTitle>ImmediateReflection .NET 3.5</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NET35;SUPPORTS_SERIALIZATION;SUPPORTS_SYSTEM_CORE;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;$(AdditionalConstants)</DefineConstants>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net40'">
     <AssemblyTitle>ImmediateReflection .NET 4.0</AssemblyTitle>
     <DefineConstants>$(DefineConstants);NET40;SUPPORTS_SERIALIZATION;SUPPORTS_STRING_FULL_FEATURES;SUPPORTS_SYSTEM_CORE;SUPPORTS_CACHING;SUPPORTS_EXTENSIONS;SUPPORTS_LAZY;$(AdditionalConstants)</DefineConstants>

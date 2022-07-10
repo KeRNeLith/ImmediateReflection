@@ -27,14 +27,9 @@ You can find library sources on [GitHub](https://github.com/KeRNeLith/ImmediateR
 
 - .NET Standard 2.0+
 - .NET Core 2.0+
-- .NET Framework 2.0+
+- .NET Framework 4.0+
 
 Supports Source Link
-
-## Dependencies
-
-For targets higher than .NET Standard 2.0:
-- System.Reflection.Emit.LightWeight
 
 ## Installation
 

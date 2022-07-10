@@ -297,16 +297,9 @@ ImmediateType myImmediateType = myType.GetImmediateType();
 
 - [![.NET Standard](https://img.shields.io/badge/.NET%20Standard-%3E%3D%202.0-blue.svg)](#)
 - [![.NET Core](https://img.shields.io/badge/.NET%20Core-%3E%3D%202.0-blue.svg)](#)
-- [![.NET Framework](https://img.shields.io/badge/.NET%20Framework-%3E%3D%202.0-blue.svg)](#)
+- [![.NET Framework](https://img.shields.io/badge/.NET%20Framework-%3E%3D%204.0-blue.svg)](#)
 
 Supports Source Link
-
----
-
-## Dependencies
-
-For targets higher than .NET Standard 2.0:
-- System.Reflection.Emit.LightWeight
 
 ### Notes
 
