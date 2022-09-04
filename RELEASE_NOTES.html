@@ -69,8 +69,13 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="release-notes">Release notes</h1>
 
-<h2 id="whats-new-in-160-august-31-2020">What's new in 1.6.0 August 31 2020</h2>
+<h2 id="whats-new-in-161-september-4-2022">What's new in 1.6.1 September 4 2022</h2>
 <h3 id="fixes">Fixes:</h3>
+<ul>
+<li>Fix wrong generated IL code for copy constructor under .NET5+ target.</li>
+</ul>
+<h2 id="whats-new-in-160-august-31-2020">What's new in 1.6.0 August 31 2020</h2>
+<h3 id="fixes-1">Fixes:</h3>
 <ul>
 <li>ImmediateType properly handle type having redefined properties with a type different from initial type.</li>
 </ul>
@@ -83,7 +88,7 @@
 <li>JetBrains.Annotations are embedded in the assembly (internal).</li>
 </ul>
 <h2 id="whats-new-in-150-january-23-2020">What's new in 1.5.0 January 23 2020</h2>
-<h3 id="fixes-1">Fixes:</h3>
+<h3 id="fixes-2">Fixes:</h3>
 <ul>
 <li>IsDefined/GetAttribute(s) properly handle get of attribute when dealing inheriting attributes.</li>
 </ul>
@@ -97,7 +102,7 @@
 <li>Minor optimization.</li>
 </ul>
 <h2 id="whats-new-in-141-september-2-2019">What's new in 1.4.1 September 2 2019</h2>
-<h3 id="fixes-2">Fixes:</h3>
+<h3 id="fixes-3">Fixes:</h3>
 <ul>
 <li>Properly handle null parameter for Copy and TryCopy (return null).</li>
 </ul>
@@ -128,7 +133,7 @@
 <li>Add type extensions to directly call a default constructor delegate from a Type (without ImmediateType).</li>
 <li>Add type extensions to directly call a constructor delegate from a Type (without ImmediateType).</li>
 </ul>
-<h3 id="fixes-3">Fixes:</h3>
+<h3 id="fixes-4">Fixes:</h3>
 <ul>
 <li>ImmediateType properly handle arrays which were crashing before.</li>
 </ul>
@@ -144,7 +149,7 @@
 <ul>
 <li>Add ConstructorDelegate delegate.</li>
 </ul>
-<h3 id="fixes-4">Fixes:</h3>
+<h3 id="fixes-5">Fixes:</h3>
 <ul>
 <li>Classes with indexed properties does not crash anymore.</li>
 </ul>
@@ -167,7 +172,7 @@
 </ul>
 <hr>
 <h2 id="whats-new-in-100-may-31-2019">What's new in 1.0.0 May 31 2019</h2>
-<h3 id="fixes-5">Fixes:</h3>
+<h3 id="fixes-6">Fixes:</h3>
 <ul>
 <li>Properly supports static readonly and constant fields.</li>
 <li>Properly handle reflection on enumeration types.</li>
