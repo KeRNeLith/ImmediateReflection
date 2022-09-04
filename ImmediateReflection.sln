@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2043
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ImmediateReflection.CommonInternals", "src\ImmediateReflection.CommonInternals\ImmediateReflection.CommonInternals.shproj", "{CE984360-54F0-406F-B8A9-E75897DAED3B}"
 EndProject
