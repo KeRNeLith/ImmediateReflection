@@ -1,5 +1,9 @@
 # Release notes
 
+## What's new in 1.6.1 September 4 2022
+### Fixes:
+* Fix wrong generated IL code for copy constructor under .NET5+ target.
+
 ## What's new in 1.6.0 August 31 2020
 ### Fixes:
 * ImmediateType properly handle type having redefined properties with a type different from initial type.

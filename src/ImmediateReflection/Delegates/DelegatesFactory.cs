@@ -146,6 +146,20 @@ namespace ImmediateReflection
             typeof(object).GetMethod(nameof(GetType))
             ?? throw new InvalidOperationException($"{nameof(GetType)} not found.");
 
+        [NotNull]
+        private static readonly MethodInfo TypeEqualsMethod =
+            typeof(Type).GetMethod(
+                "op_Equality",
+                BindingFlags.Static | BindingFlags.Public,
+                null,
+                new[] { typeof(Type), typeof(Type) },
+                null) ?? throw new InvalidOperationException("Cannot find == operator method on Type.");
+
+        [NotNull]
+        private static readonly MethodInfo GetTypeFromHandleMethod =
+            typeof(Type).GetMethod(nameof(Type.GetTypeFromHandle))
+            ?? throw new InvalidOperationException($"{nameof(Type.GetTypeFromHandle)} not found.");
+
         [Pure]
         [NotNull]
         [ContractAnnotation("type:null => halt")]
@@ -205,7 +219,8 @@ namespace ImmediateReflection
                 generator.Emit(OpCodes.Ldarg_0);
                 CallMethod(generator, GetTypeMethod);
                 generator.Emit(OpCodes.Ldtoken, type);
-                generator.Emit(OpCodes.Ceq);
+                CallMethod(generator, GetTypeFromHandleMethod);
+                CallMethod(generator, TypeEqualsMethod);
                 generator.Emit(OpCodes.Brtrue_S, paramIsValid);
 
                 // Throw Argument exception => wrong parameter type

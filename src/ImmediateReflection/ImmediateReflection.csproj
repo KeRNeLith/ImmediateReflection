@@ -31,15 +31,9 @@ See benchmarks here: https://kernelith.github.io/ImmediateReflection/documentati
 
     <IsPackable>true</IsPackable>
     <PackageId>ImmediateReflection</PackageId>
-    <PackageReleaseNotes>➟ Release 1.6.0
+    <PackageReleaseNotes>➟ Release 1.6.1
 Fixes:
-- ImmediateType properly handle type having redefined properties with a type different from initial type.
-
-New:
-- Use signing key to strong name library assemby.
-
-Misc:
-- JetBrains.Annotations are embedded in the assembly (internal).</PackageReleaseNotes>
+- Fix wrong generated IL code for copy constructor under .NET5+ target.</PackageReleaseNotes>
     <PackageTags>C# Reflection Fast Immediate Performance Delegate Dynamic</PackageTags>
   </PropertyGroup>
 
