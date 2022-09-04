@@ -1,6 +1,4 @@
-﻿#if SUPPORTS_CACHING
-using System;
-using System.Reflection;
+﻿using System;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
@@ -22,12 +20,7 @@ namespace ImmediateReflection
         /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [PublicAPI]
         [ContractAnnotation("type:null => halt")]
-        public static bool HasDefaultConstructor(
-#if SUPPORTS_EXTENSIONS
-            [NotNull] this Type type)
-#else
-            [NotNull] Type type)
-#endif
+        public static bool HasDefaultConstructor([NotNull] this Type type)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
@@ -46,53 +39,11 @@ namespace ImmediateReflection
         [PublicAPI]
         [NotNull]
         [ContractAnnotation("type:null => halt")]
-        public static object New(
-#if SUPPORTS_EXTENSIONS
-            [NotNull] this Type type)
-#else
-            [NotNull] Type type)
-#endif
+        public static object New([NotNull] this Type type)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
             return CachesHandler.Instance.GetDefaultConstructor(type).Constructor();
-        }
-
-        /// <summary>
-        /// Tries to create an instance of this <paramref name="type"/> with that type's default constructor.
-        /// </summary>
-        /// <remarks>This method will not throw if instantiation failed.</remarks>
-        /// <param name="type"><see cref="T:System.Type"/> to instantiate.</param>
-        /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
-        /// <param name="exception">Caught exception if the instantiation failed, otherwise null.</param>
-        /// <returns>True if the new instance was successfully created, false otherwise.</returns>
-        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
-        [PublicAPI]
-        [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
-        public static bool TryNew(
-#if SUPPORTS_EXTENSIONS
-            [NotNull] this Type type,
-#else
-            [NotNull] Type type,
-#endif
-            out object newInstance, 
-            out Exception exception)
-        {
-            if (type is null)
-                throw new ArgumentNullException(nameof(type));
-
-            try
-            {
-                exception = null;
-                newInstance = CachesHandler.Instance.GetDefaultConstructor(type).Constructor();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                newInstance = null;
-                exception = ex;
-                return false;
-            }
         }
 
         /// <summary>
@@ -124,11 +75,7 @@ namespace ImmediateReflection
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static object New(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this Type type,
-#else
-            [NotNull] Type type,
-#endif
             [NotNull, ItemCanBeNull] params object[] args)
         {
             if (type is null)
@@ -136,6 +83,39 @@ namespace ImmediateReflection
             if (args is null)
                 throw new ArgumentNullException(nameof(args));
             return TypeAccessor.Get(type).New(args);
+        }
+
+        /// <summary>
+        /// Tries to create an instance of this <paramref name="type"/> with that type's default constructor.
+        /// </summary>
+        /// <remarks>This method will not throw if instantiation failed.</remarks>
+        /// <param name="type"><see cref="T:System.Type"/> to instantiate.</param>
+        /// <param name="newInstance">A reference to the newly created object, otherwise null.</param>
+        /// <param name="exception">Caught exception if the instantiation failed, otherwise null.</param>
+        /// <returns>True if the new instance was successfully created, false otherwise.</returns>
+        /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
+        [PublicAPI]
+        [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
+        public static bool TryNew(
+            [NotNull] this Type type,
+            out object newInstance,
+            out Exception exception)
+        {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+
+            try
+            {
+                exception = null;
+                newInstance = CachesHandler.Instance.GetDefaultConstructor(type).Constructor();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                newInstance = null;
+                exception = ex;
+                return false;
+            }
         }
 
         /// <summary>
@@ -160,13 +140,9 @@ namespace ImmediateReflection
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static bool TryNew(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this Type type,
-#else
-            [NotNull] Type type,
-#endif
-            out object newInstance, 
-            out Exception exception, 
+            out object newInstance,
+            out Exception exception,
             [NotNull, ItemCanBeNull] params object[] args)
         {
             if (type is null)
@@ -184,12 +160,7 @@ namespace ImmediateReflection
         /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
         [PublicAPI]
         [ContractAnnotation("type:null => halt")]
-        public static bool HasCopyConstructor(
-#if SUPPORTS_EXTENSIONS
-            [NotNull] this Type type)
-#else
-            [NotNull] Type type)
-#endif
+        public static bool HasCopyConstructor([NotNull] this Type type)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
@@ -225,13 +196,7 @@ namespace ImmediateReflection
         /// </exception>
         [PublicAPI]
         [ContractAnnotation("type:null => halt; other:null => null; other:notnull => notnull")]
-        public static T Copy<T>(
-#if SUPPORTS_EXTENSIONS
-            [NotNull] this Type type,
-#else
-            [NotNull] Type type,
-#endif
-            [CanBeNull] T other)
+        public static T Copy<T>([NotNull] this Type type, [CanBeNull] T other)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
@@ -256,11 +221,7 @@ namespace ImmediateReflection
                             + "other:null => false, newInstance:null, exception:notnull;"
                             + "other:notnull => false, newInstance:null, exception:notnull")]
         public static bool TryCopy<T>(
-#if SUPPORTS_EXTENSIONS
             [NotNull] this Type type,
-#else
-            [NotNull] Type type,
-#endif
             [CanBeNull] T other,
             out T newInstance,
             out Exception exception)
@@ -283,4 +244,3 @@ namespace ImmediateReflection
         }
     }
 }
-#endif

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Reflection;
-#if SUPPORTS_SERIALIZATION
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-#endif
 using JetBrains.Annotations;
 using static ImmediateReflection.Utils.ReflectionHelpers;
 
@@ -14,15 +12,11 @@ namespace ImmediateReflection
     /// Represents a property and provides access to property metadata in a faster way.
     /// </summary>
     [PublicAPI]
-#if SUPPORTS_SERIALIZATION
     [Serializable]
-#endif
     public sealed class ImmediateProperty
         : ImmediateMember
         , IEquatable<ImmediateProperty>
-#if SUPPORTS_SERIALIZATION
         , ISerializable
-#endif
     {
         /// <summary>
         /// Gets the wrapped <see cref="T:System.Reflection.PropertyInfo"/>.
@@ -45,7 +39,6 @@ namespace ImmediateReflection
         [NotNull]
         public Type PropertyType { get; }
 
-#if SUPPORTS_LAZY
         [NotNull]
         private readonly Lazy<ImmediateType> _propertyImmediateType;
 
@@ -55,7 +48,6 @@ namespace ImmediateReflection
         [PublicAPI]
         [NotNull]
         public ImmediateType PropertyImmediateType => _propertyImmediateType.Value;
-#endif
 
         /// <summary>
         /// Gets the readable state of this property.
@@ -87,9 +79,8 @@ namespace ImmediateReflection
             // General property info
             PropertyInfo = property;
             PropertyType = property.PropertyType;
-#if SUPPORTS_LAZY
             _propertyImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(PropertyType));
-#endif
+
             // ReSharper disable once AssignNullToNotNullAttribute, Justification: A property is always declared inside a type.
             DeclaringType = property.DeclaringType;
 
@@ -186,7 +177,6 @@ namespace ImmediateReflection
 
         #endregion
 
-#if SUPPORTS_SERIALIZATION
         #region ISerializable
 
         private ImmediateProperty(SerializationInfo info, StreamingContext context)
@@ -202,7 +192,6 @@ namespace ImmediateReflection
         }
 
         #endregion
-#endif
 
         /// <inheritdoc />
         public override string ToString()

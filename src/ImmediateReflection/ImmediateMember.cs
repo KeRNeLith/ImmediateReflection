@@ -13,9 +13,7 @@ namespace ImmediateReflection
     /// Represents information about the attributes of a member or <see cref="T:System.Type"/> and provides access to its metadata in a faster way.
     /// </summary>
     [PublicAPI]
-#if SUPPORTS_SERIALIZATION
     [Serializable]
-#endif
     public abstract class ImmediateMember
     {
         /// <summary>
@@ -39,11 +37,7 @@ namespace ImmediateReflection
             Name = member.Name;
 
             // Attributes
-#if SUPPORTS_CACHING
             _attributeCache = CachesHandler.Instance.GetAttributesCache(member);
-#else
-            _attributeCache = new AttributesCache(member);
-#endif
         }
 
         /// <summary>

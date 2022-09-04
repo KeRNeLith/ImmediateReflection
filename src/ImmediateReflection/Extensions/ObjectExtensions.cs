@@ -1,5 +1,4 @@
-﻿#if SUPPORTS_CACHING
-using System;
+﻿using System;
 using JetBrains.Annotations;
 
 namespace ImmediateReflection
@@ -19,12 +18,7 @@ namespace ImmediateReflection
         /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="instance"/> is null.</exception>
         [PublicAPI]
         [ContractAnnotation("instance:null => halt")]
-        public static bool HasCopyConstructor<T>(
-#if SUPPORTS_EXTENSIONS
-            [NotNull] this T instance)
-#else
-            [NotNull] T instance)
-#endif
+        public static bool HasCopyConstructor<T>([NotNull] this T instance)
         {
             if (instance == null)
                 throw new ArgumentNullException(nameof(instance));
@@ -46,12 +40,7 @@ namespace ImmediateReflection
         /// </exception>
         [PublicAPI]
         [ContractAnnotation("instance:null => null;instance:notnull => notnull")]
-        public static T Copy<T>(
-#if SUPPORTS_EXTENSIONS
-            [CanBeNull] this T instance)
-#else
-            [CanBeNull] T instance)
-#endif
+        public static T Copy<T>([CanBeNull] this T instance)
         {
             if (instance == null)
                 return default(T);
@@ -76,11 +65,7 @@ namespace ImmediateReflection
                             + "instance:null => false, newInstance:null, exception:notnull;"
                             + "instance:notnull => false, newInstance:null, exception:notnull")]
         public static bool TryCopy<T>(
-#if SUPPORTS_EXTENSIONS
             [CanBeNull] this T instance,
-#else
-            [CanBeNull] T instance,
-#endif
             out T newInstance,
             out Exception exception)
         {
@@ -99,4 +84,3 @@ namespace ImmediateReflection
         }
     }
 }
-#endif

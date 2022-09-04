@@ -1,5 +1,4 @@
-#if SUPPORTS_CACHING
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using JetBrains.Annotations;
 
 namespace ImmediateReflection
@@ -8,7 +7,7 @@ namespace ImmediateReflection
     /// Data stored in a constructor cache.
     /// </summary>
     /// <typeparam name="TConstructorDelegate">Constructor delegate type.</typeparam>
-    internal class ConstructorData<TConstructorDelegate>
+    internal sealed class ConstructorData<TConstructorDelegate>
     {
         /// <summary>
         /// Indicates if there is a constructor.
@@ -30,4 +29,3 @@ namespace ImmediateReflection
         }
     }
 }
-#endif

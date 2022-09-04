@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
@@ -118,7 +118,6 @@ namespace ImmediateReflection.Tests
             // ReSharper restore AssignNullToNotNullAttribute
         }
 
-#if SUPPORTS_CACHING
         [Test]
         public void GetCached()
         {
@@ -130,6 +129,5 @@ namespace ImmediateReflection.Tests
 
             Assert.AreSame(immediateType1, immediateType2);
         }
-#endif
     }
 }

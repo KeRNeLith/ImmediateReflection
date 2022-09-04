@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using NUnit.Framework;
 
 namespace ImmediateReflection.Tests
@@ -39,7 +39,6 @@ namespace ImmediateReflection.Tests
             Assert.Throws<ArgumentNullException>(() => ImmediateReflectionExtensions.GetImmediateType(testObject));
         }
 
-#if SUPPORTS_EXTENSIONS
         [Test]
         public void GetImmediateTypeFromType()
         {
@@ -69,6 +68,5 @@ namespace ImmediateReflection.Tests
             // ReSharper disable once AssignNullToNotNullAttribute
             Assert.Throws<ArgumentNullException>(() => testType.GetImmediateType());
         }
-#endif
     }
 }

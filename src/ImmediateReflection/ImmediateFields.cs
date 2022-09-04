@@ -1,25 +1,15 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-#if SUPPORTS_SYSTEM_CORE
 using System.Linq;
-#endif
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
-#if SUPPORTS_SERIALIZATION
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-#endif
 using JetBrains.Annotations;
-#if !SUPPORTS_SYSTEM_CORE
-using static ImmediateReflection.Utils.EnumerableUtils;
-#endif
-#if !SUPPORTS_STRING_FULL_FEATURES
-using static ImmediateReflection.Utils.StringUtils;
-#endif
 
 namespace ImmediateReflection
 {
@@ -27,15 +17,11 @@ namespace ImmediateReflection
     /// Represents a collection of fields and provides access to its metadata in a faster way.
     /// </summary>
     [PublicAPI]
-#if SUPPORTS_SERIALIZATION
     [Serializable]
-#endif
     public sealed class ImmediateFields
         : IEnumerable<ImmediateField>
         , IEquatable<ImmediateFields>
-#if SUPPORTS_SERIALIZATION
         , ISerializable
-#endif
     {
         [NotNull]
         private readonly Dictionary<string, ImmediateField> _fields
@@ -58,11 +44,7 @@ namespace ImmediateReflection
             {
                 Debug.Assert(field != null);
 
-#if SUPPORTS_CACHING
                 _fields.Add(field.Name, CachesHandler.Instance.GetField(field));
-#else
-                _fields.Add(field.Name, new ImmediateField(field));
-#endif
             }
         }
 
@@ -111,14 +93,7 @@ namespace ImmediateReflection
                 return true;
             if (_fields.Count != other._fields.Count)
                 return false;
-
-#if SUPPORTS_SYSTEM_CORE
             return !_fields.Except(other._fields).Any();
-#else
-            return !Except(_fields, other._fields)
-                .GetEnumerator()
-                .MoveNext();
-#endif
         }
 
         /// <inheritdoc />
@@ -156,7 +131,6 @@ namespace ImmediateReflection
 
         #endregion
 
-#if SUPPORTS_SERIALIZATION
         #region ISerializable
 
         private ImmediateFields(SerializationInfo info, StreamingContext context)
@@ -184,27 +158,18 @@ namespace ImmediateReflection
             info.AddValue("Count", _fields.Count);
 
             int i = -1;
-#if SUPPORTS_SYSTEM_CORE
             foreach (FieldInfo field in _fields.Select(pair => pair.Value.FieldInfo))
-#else
-            foreach (FieldInfo field in Select(_fields, pair => pair.Value.FieldInfo))
-#endif
             {
                 info.AddValue($"Field{++i}", field);
             }
         }
 
         #endregion
-#endif
 
         /// <inheritdoc />
         public override string ToString()
         {
-#if SUPPORTS_STRING_FULL_FEATURES
             return $"[{string.Join(", ", _fields.Values)}]";
-#else
-            return $"[{Join(", ", _fields.Values)}]";
-#endif
         }
     }
 }

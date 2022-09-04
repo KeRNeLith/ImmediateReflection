@@ -1,5 +1,5 @@
 version: '0.0.{build}'
-image: Visual Studio 2019
+image: Visual Studio 2022
 
 # Setup environment
 nuget:
@@ -27,10 +27,10 @@ skip_commits:
 environment:
   SONARQUBE_TOKEN:
     secure: IDwa0NHtLUrg2jV3JZetUqUCGTgv3/UcZyYtMGvo7Pro1s9OmYTPjGMd6Vmx7Ktx
-  DocFXVersion: 2.58
-  NUnitConsoleVersion: 3.10.0
-  OpenCoverVersion: 4.7.922
-  CoverallsVersion: 1.0.0
+  DocFXVersion: 2.59.2
+  NUnitConsoleVersion: 3.15.2
+  OpenCoverVersion: 4.7.1221
+  CoverallsVersion: 4.0.1
   COVERALLS_REPO_TOKEN:
     secure: +DiJ+F7GIX0MMo/rtIRXO8GSdyYHa1CWKLw4H2Rx3AP27Shr6mZMC6l+muu2H/Dg
   GITHUB_ACCESS_TOKEN:
@@ -119,7 +119,7 @@ test_script:
       # Directory.Parent.Parent = tests\TestProject.Tests\bin
       # Directory.Parent.Parent.Parent = tests\TestProject.Tests
       
-      $testAssemblies = (ls tests\*.Tests\bin\$env:Configuration\*\*Tests.dll | Where-Object { $_ -Match "net*" -and $_ -NotMatch "netcoreapp*" -and [System.IO.Path]::GetFileNameWithoutExtension($_.FullName) -Match $_.Directory.Parent.Parent.Parent.Name } | % FullName | sort-object -Unique);
+      $testAssemblies = (ls tests\*.Tests\bin\$env:Configuration\net461\*Tests.dll | Where-Object { $_ -Match "net*" -and $_ -NotMatch "netcoreapp*" -and [System.IO.Path]::GetFileNameWithoutExtension($_.FullName) -Match $_.Directory.Parent.Parent.Parent.Name } | % FullName | sort-object -Unique);
       
       $testsPassed = $false;
       if ($env:IsFullIntegrationBuild -eq $true)

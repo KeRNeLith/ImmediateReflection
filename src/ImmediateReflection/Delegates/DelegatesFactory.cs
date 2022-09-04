@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -43,7 +43,7 @@ namespace ImmediateReflection
                 // ReSharper disable once PossibleNullReferenceException, Justification: Type is an array so it must have an element type.
                 return () => throw new MissingMethodException($"There is no default constructor for array of {type.GetElementType().Name}.");
 
-            DynamicMethod dynamicConstructor = CreateDynamicDefaultConstructor(type.Name, type);
+            DynamicMethod dynamicConstructor = CreateDynamicDefaultConstructor(type.Name);
             dynamicConstructor.InitLocals = true;
 
             ILGenerator generator = dynamicConstructor.GetILGenerator();
@@ -194,7 +194,7 @@ namespace ImmediateReflection
             if (constructor is null || constructor.GetParameters()[0].ParameterType != type)
                 return other => throw new MissingMethodException($"Class {type.Name} does not contain any copy constructor.");
 
-            DynamicMethod dynamicConstructor = CreateDynamicCopyConstructor(type.Name, type);
+            DynamicMethod dynamicConstructor = CreateDynamicCopyConstructor(type.Name);
             dynamicConstructor.InitLocals = true;
 
             ILGenerator generator = dynamicConstructor.GetILGenerator();
@@ -237,7 +237,7 @@ namespace ImmediateReflection
 
         #endregion
 
-        #region Field Get/Set
+        #region Getter
 
         [Pure]
         [NotNull]
@@ -267,6 +267,39 @@ namespace ImmediateReflection
         }
 
         [Pure]
+        [CanBeNull]
+        [ContractAnnotation("propertyInfo:null => halt;getMethod:null => halt")]
+        public static GetterDelegate CreateGetter([NotNull] PropertyInfo propertyInfo, [NotNull] MethodInfo getMethod)
+        {
+            Debug.Assert(propertyInfo != null);
+
+            if (!propertyInfo.CanRead)
+                return null;
+
+            Debug.Assert(getMethod != null);
+
+            DynamicMethod dynamicGetter = CreateDynamicGetter(propertyInfo, out Type targetType);
+
+            ILGenerator generator = dynamicGetter.GetILGenerator();
+
+            if (!getMethod.IsStatic)
+                RegisterTargetArgument(generator, targetType);
+
+            CallMethod(generator, getMethod);
+
+            // Box the result if needed
+            BoxIfNeeded(generator, propertyInfo.PropertyType);
+
+            MethodReturn(generator);
+
+            return (GetterDelegate)dynamicGetter.CreateDelegate(typeof(GetterDelegate));
+        }
+
+        #endregion
+
+        #region Setter
+
+        [Pure]
         [NotNull]
         [ContractAnnotation("fieldInfo:null => halt")]
         public static SetterDelegate CreateSetter([NotNull] FieldInfo fieldInfo)
@@ -294,39 +327,6 @@ namespace ImmediateReflection
             MethodReturn(generator);
 
             return (SetterDelegate)dynamicSetter.CreateDelegate(typeof(SetterDelegate));
-        }
-
-        #endregion
-
-        #region Property Get/Set
-
-        [Pure]
-        [CanBeNull]
-        [ContractAnnotation("propertyInfo:null => halt;getMethod:null => halt")]
-        public static GetterDelegate CreateGetter([NotNull] PropertyInfo propertyInfo, [NotNull] MethodInfo getMethod)
-        {
-            Debug.Assert(propertyInfo != null);
-
-            if (!propertyInfo.CanRead)
-                return null;
-
-            Debug.Assert(getMethod != null);
-
-            DynamicMethod dynamicGetter = CreateDynamicGetter(propertyInfo, out Type targetType);
-
-            ILGenerator generator = dynamicGetter.GetILGenerator();
-
-            if (!getMethod.IsStatic)
-                RegisterTargetArgument(generator, targetType);
-
-            CallMethod(generator, getMethod);
-
-            // Box the result if needed
-            BoxIfNeeded(generator, propertyInfo.PropertyType);
-
-            MethodReturn(generator);
-
-            return (GetterDelegate)dynamicGetter.CreateDelegate(typeof(GetterDelegate));
         }
 
         [Pure]
@@ -369,48 +369,45 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
-        [ContractAnnotation("name:null => halt;owner:null => halt")]
-        private static DynamicMethod CreateDynamicMethod([NotNull] string name, [CanBeNull] Type returnType, [CanBeNull] Type[] parameterTypes, [NotNull] Type owner)
+        [ContractAnnotation("name:null => halt")]
+        private static DynamicMethod CreateDynamicMethod([NotNull] string name, [CanBeNull] Type returnType, [CanBeNull] Type[] parameterTypes)
         {
             Debug.Assert(name != null);
-            Debug.Assert(owner != null);
 
-            return owner.IsInterface
-                ? new DynamicMethod($"{DynamicMethodPrefix}{name}", returnType, parameterTypes, owner.Assembly.ManifestModule, true)
-                : new DynamicMethod($"{DynamicMethodPrefix}{name}", returnType, parameterTypes, owner, true);
+            return new DynamicMethod($"{DynamicMethodPrefix}{name}", returnType, parameterTypes, typeof(DelegatesFactory).Module, true);
         }
 
         [Pure]
         [NotNull]
-        [ContractAnnotation("name:null => halt;owner:null => halt")]
+        [ContractAnnotation("name:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        private static DynamicMethod CreateDynamicProcedure([NotNull] string name, [CanBeNull] Type[] parameterTypes, [NotNull] Type owner)
+        private static DynamicMethod CreateDynamicProcedure([NotNull] string name, [CanBeNull] Type[] parameterTypes)
         {
-            return CreateDynamicMethod(name, typeof(void), parameterTypes, owner);
+            return CreateDynamicMethod(name, typeof(void), parameterTypes);
         }
 
         [Pure]
         [NotNull]
-        [ContractAnnotation("name:null => halt;owner:null => halt")]
+        [ContractAnnotation("name:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        private static DynamicMethod CreateDynamicDefaultConstructor([NotNull] string name, [NotNull] Type owner)
+        private static DynamicMethod CreateDynamicDefaultConstructor([NotNull] string name)
         {
-            return CreateDynamicMethod($"Constructor_{name}", typeof(object), Type.EmptyTypes, owner);
+            return CreateDynamicMethod($"Constructor_{name}", typeof(object), Type.EmptyTypes);
         }
 
         [Pure]
         [NotNull]
-        [ContractAnnotation("name:null => halt;owner:null => halt")]
+        [ContractAnnotation("name:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        private static DynamicMethod CreateDynamicCopyConstructor([NotNull] string name, [NotNull] Type owner)
+        private static DynamicMethod CreateDynamicCopyConstructor([NotNull] string name)
         {
-            return CreateDynamicMethod($"CopyConstructor_{name}", typeof(object), new[] { typeof(object) }, owner);
+            return CreateDynamicMethod($"CopyConstructor_{name}", typeof(object), new[] { typeof(object) });
         }
 
         /// <summary>
@@ -434,13 +431,13 @@ namespace ImmediateReflection
 
         [Pure]
         [NotNull]
-        [ContractAnnotation("name:null => halt;owner:null => halt")]
+        [ContractAnnotation("name:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        private static DynamicMethod CreateDynamicGetter([NotNull] string name, [NotNull] Type owner)
+        private static DynamicMethod CreateDynamicGetter([NotNull] string name)
         {
-            return CreateDynamicMethod($"Get_{name}", typeof(object), new[] { typeof(object) }, owner);
+            return CreateDynamicMethod($"Get_{name}", typeof(object), new[] { typeof(object) });
         }
 
         [Pure]
@@ -452,18 +449,18 @@ namespace ImmediateReflection
         private static DynamicMethod CreateDynamicGetter([NotNull] MemberInfo member, [NotNull] out Type targetType)
         {
             targetType = GetOwnerType(member);
-            return CreateDynamicGetter(member.Name, targetType);
+            return CreateDynamicGetter(member.Name);
         }
 
         [Pure]
         [NotNull]
-        [ContractAnnotation("name:null => halt;owner:null => halt")]
+        [ContractAnnotation("name:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        private static DynamicMethod CreateDynamicSetter([NotNull] string name, [NotNull] Type owner)
+        private static DynamicMethod CreateDynamicSetter([NotNull] string name)
         {
-            return CreateDynamicProcedure($"Set_{name}", new[] { typeof(object), typeof(object) }, owner);
+            return CreateDynamicProcedure($"Set_{name}", new[] { typeof(object), typeof(object) });
         }
 
         [Pure]
@@ -475,7 +472,7 @@ namespace ImmediateReflection
         private static DynamicMethod CreateDynamicSetter([NotNull] MemberInfo member, [NotNull] out Type targetType)
         {
             targetType = GetOwnerType(member);
-            return CreateDynamicSetter(member.Name, targetType);
+            return CreateDynamicSetter(member.Name);
         }
 
         #endregion

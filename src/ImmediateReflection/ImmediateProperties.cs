@@ -2,25 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-#if SUPPORTS_SYSTEM_CORE
 using System.Linq;
-#endif
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
-#if SUPPORTS_SERIALIZATION
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-#endif
 using JetBrains.Annotations;
-#if !SUPPORTS_SYSTEM_CORE
-using static ImmediateReflection.Utils.EnumerableUtils;
-#endif
 using static ImmediateReflection.Utils.ReflectionHelpers;
-#if !SUPPORTS_STRING_FULL_FEATURES
-using static ImmediateReflection.Utils.StringUtils;
-#endif
 
 namespace ImmediateReflection
 {
@@ -28,15 +18,11 @@ namespace ImmediateReflection
     /// Represents a collection of properties and provides access to property metadata in a faster way.
     /// </summary>
     [PublicAPI]
-#if SUPPORTS_SERIALIZATION
     [Serializable]
-#endif
     public sealed class ImmediateProperties
         : IEnumerable<ImmediateProperty>
         , IEquatable<ImmediateProperties>
-#if SUPPORTS_SERIALIZATION
         , ISerializable
-#endif
     {
         [NotNull]
         private readonly Dictionary<string, ImmediateProperty> _properties 
@@ -55,18 +41,9 @@ namespace ImmediateReflection
         {
             Debug.Assert(properties != null);
 
-#if SUPPORTS_SYSTEM_CORE
             foreach (PropertyInfo property in properties.Where(IsNotIndexed))
-#else
-            foreach (PropertyInfo property in Where(properties, IsNotIndexed))
-#endif
             {
-                var currentImmediateProperty =
-#if SUPPORTS_CACHING
-                    CachesHandler.Instance.GetProperty(property);
-#else
-                    new ImmediateProperty(property);
-#endif
+                ImmediateProperty currentImmediateProperty = CachesHandler.Instance.GetProperty(property);
 
                 if (_properties.TryGetValue(property.Name, out ImmediateProperty immediateProperty))
                 {
@@ -159,14 +136,7 @@ namespace ImmediateReflection
                 return true;
             if (_properties.Count != other._properties.Count)
                 return false;
-
-#if SUPPORTS_SYSTEM_CORE
             return !_properties.Except(other._properties).Any();
-#else
-            return !Except(_properties, other._properties)
-                .GetEnumerator()
-                .MoveNext();
-#endif
         }
 
         /// <inheritdoc />
@@ -204,7 +174,6 @@ namespace ImmediateReflection
 
         #endregion
 
-#if SUPPORTS_SERIALIZATION
         #region ISerializable
 
         private ImmediateProperties(SerializationInfo info, StreamingContext context)
@@ -232,27 +201,18 @@ namespace ImmediateReflection
             info.AddValue("Count", _properties.Count);
 
             int i = -1;
-#if SUPPORTS_SYSTEM_CORE
             foreach (PropertyInfo property in _properties.Select(pair => pair.Value.PropertyInfo))
-#else
-            foreach (PropertyInfo property in Select(_properties, pair => pair.Value.PropertyInfo))
-#endif
             {
                 info.AddValue($"Property{++i}", property);
             }
         }
 
         #endregion
-#endif
 
         /// <inheritdoc />
         public override string ToString()
         {
-#if SUPPORTS_STRING_FULL_FEATURES
             return $"[{string.Join(", ", _properties.Values)}]";
-#else
-            return $"[{Join(", ", _properties.Values)}]";
-#endif
         }
     }
 }

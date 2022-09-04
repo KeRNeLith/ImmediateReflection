@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-#if SUPPORTS_SYSTEM_CORE
 using System.Linq;
-#else
-using static ImmediateReflection.Utils.EnumerableUtils;
-#endif
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
-#if SUPPORTS_SERIALIZATION
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-#endif
 using JetBrains.Annotations;
 using static ImmediateReflection.Utils.FieldHelpers;
 
@@ -23,15 +17,11 @@ namespace ImmediateReflection
     /// type parameters, generic type definitions, and open or closed constructed generic types) in a faster way.
     /// </summary>
     [PublicAPI]
-#if SUPPORTS_SERIALIZATION
     [Serializable]
-#endif
     public sealed class ImmediateType 
         : ImmediateMember
         , IEquatable<ImmediateType>
-#if SUPPORTS_SERIALIZATION
         , ISerializable
-#endif
     {
         private BindingFlags _flags;
 
@@ -82,21 +72,15 @@ namespace ImmediateReflection
             }
         }
 
-#if SUPPORTS_LAZY
         [NotNull]
         private readonly Lazy<ImmediateFields> _fields;
-#endif
 
         /// <summary>
         /// Gets all the fields of this <see cref="T:System.Type"/>.
         /// </summary>
         [PublicAPI]
         [NotNull, ItemNotNull]
-#if SUPPORTS_LAZY
         public ImmediateFields Fields => _fields.Value;
-#else
-        public ImmediateFields Fields { get; }
-#endif
 
         /// <summary>
         /// Gets all the properties of this <see cref="T:System.Type"/>.
@@ -120,46 +104,24 @@ namespace ImmediateReflection
             FullName = type.FullName ?? Name;
 
             // Default constructor
-#if SUPPORTS_CACHING
             ConstructorData<DefaultConstructorDelegate> defaultCtorData = CachesHandler.Instance.GetDefaultConstructor(Type);
             _constructor = defaultCtorData.Constructor;
             HasDefaultConstructor = defaultCtorData.HasConstructor;
-#else
-            _constructor = DelegatesFactory.CreateDefaultConstructor(Type, out bool hasConstructor);
-            HasDefaultConstructor = hasConstructor;
-#endif
 
             // Copy constructor
-#if SUPPORTS_CACHING
             ConstructorData<CopyConstructorDelegate> copyCtorData = CachesHandler.Instance.GetCopyConstructor(Type);
             _copyConstructor = copyCtorData.Constructor;
             HasCopyConstructor = copyCtorData.HasConstructor;
-#else
-            _copyConstructor = DelegatesFactory.CreateCopyConstructor(Type, out bool hasConstructor);
-            HasCopyConstructor = hasConstructor;
-#endif
 
             if (type.IsEnum)
             {
-#if SUPPORTS_LAZY
                 _fields = new Lazy<ImmediateFields>(() => new ImmediateFields(type.GetFields()));
-#else
-                Fields = new ImmediateFields(type.GetFields());
-#endif
 
-#if SUPPORTS_SYSTEM_CORE
                 Properties = new ImmediateProperties(Enumerable.Empty<PropertyInfo>());
-#else
-                Properties = new ImmediateProperties(Empty<PropertyInfo>());
-#endif
             }
             else
             {
-#if SUPPORTS_LAZY
                 _fields = new Lazy<ImmediateFields>(() => new ImmediateFields(IgnoreBackingFields(type.GetFields(_flags))));
-#else
-                Fields = new ImmediateFields(IgnoreBackingFields(type.GetFields(_flags)));
-#endif
 
                 Properties = new ImmediateProperties(type.GetProperties(_flags));
             }
@@ -474,7 +436,6 @@ namespace ImmediateReflection
 
         #endregion
 
-#if SUPPORTS_SERIALIZATION
         #region ISerializable
 
         private ImmediateType(SerializationInfo info, StreamingContext context)
@@ -491,7 +452,6 @@ namespace ImmediateReflection
         }
 
         #endregion
-#endif
 
         /// <inheritdoc />
         public override string ToString()
