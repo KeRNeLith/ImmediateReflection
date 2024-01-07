@@ -149,7 +149,7 @@ namespace ImmediateReflection
 
         // Fetch the generic helper
         [NotNull]
-        private static MethodInfo _genericGetterHelper = typeof(MemberExtensions).GetMethod(
+        private static readonly MethodInfo GenericGetterHelper = typeof(MemberExtensions).GetMethod(
             nameof(GetterHelper),
             BindingFlags.Static | BindingFlags.NonPublic) ?? throw new InvalidOperationException("Cannot find the generic getter helper.");
 
@@ -159,7 +159,7 @@ namespace ImmediateReflection
         private static GetterDelegate<TOwner> CreateGetter<TOwner>([NotNull] MethodInfo method)
         {
             // Supply type arguments
-            MethodInfo delegateConstructor = _genericGetterHelper.MakeGenericMethod(
+            MethodInfo delegateConstructor = GenericGetterHelper.MakeGenericMethod(
                 typeof(TOwner),
                 method.ReturnType);
 
@@ -365,7 +365,7 @@ namespace ImmediateReflection
 
         // Fetch the generic helper
         [NotNull]
-        private static MethodInfo _genericSetterHelper = typeof(MemberExtensions).GetMethod(
+        private static readonly MethodInfo GenericSetterHelper = typeof(MemberExtensions).GetMethod(
             nameof(SetterHelper),
             BindingFlags.Static | BindingFlags.NonPublic) ?? throw new InvalidOperationException("Cannot find the generic setter helper.");
 
@@ -376,7 +376,7 @@ namespace ImmediateReflection
             where TOwner : class
         {
             // Supply type arguments
-            MethodInfo delegateConstructor = _genericSetterHelper.MakeGenericMethod(
+            MethodInfo delegateConstructor = GenericSetterHelper.MakeGenericMethod(
                 typeof(TOwner),
                 method.GetParameters()[0].ParameterType);
 
