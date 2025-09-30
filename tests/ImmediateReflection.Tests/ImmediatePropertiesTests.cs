@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using NUnit.Framework;
 
@@ -26,9 +26,7 @@ namespace ImmediateReflection.Tests
             CollectionAssert.AreNotEquivalent(immediateProperties1, immediateProperties2);
 
             var immediateProperties3 = new ImmediateProperties(EmptyPropertyInfo);
-            CollectionAssert.AreEqual(
-                Enumerable.Empty<ImmediateProperty>(),
-                immediateProperties3);
+            CollectionAssert.IsEmpty(immediateProperties3);
         }
 
         [Test]

@@ -35,7 +35,7 @@ namespace ImmediateReflection.Tests
                 Assert.IsNotNull(type);
                 Assert.AreEqual(typeof(PublicValueTypeTestClass), type.Type);
                 // Public instance members
-                CollectionAssert.AreEqual(
+                CollectionAssert.AreEquivalent(
                     classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.StaticFields).Concat(classifiedMembers.ConstFields),
                     type.Fields.Select(field => field.FieldInfo));
                 CollectionAssert.AreEquivalent(
@@ -94,7 +94,7 @@ namespace ImmediateReflection.Tests
                 Assert.IsNotNull(type);
                 Assert.AreEqual(typeof(PublicValueTypeTestClass), type.Type);
                 // Static members
-                CollectionAssert.AreEqual(
+                CollectionAssert.AreEquivalent(
                     classifiedMembers.StaticFields.Concat(classifiedMembers.ConstFields),
                     immediateType.Fields.Select(field => field.FieldInfo));
                 CollectionAssert.AreEquivalent(

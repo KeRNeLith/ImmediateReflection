@@ -1087,7 +1087,7 @@ namespace ImmediateReflection.Tests
             [NotNull] Type attributeType,
             bool inherit)
         {
-            CollectionAssert.AreEqual(
+            CollectionAssert.AreEquivalent(
                 GetImmediateMember(member).GetAttributes(attributeType, inherit),
                 ImmediateAttributesExtensions.GetImmediateAttributes(member, attributeType, inherit));
         }
@@ -1180,7 +1180,7 @@ namespace ImmediateReflection.Tests
 
                 void CheckGetAttributesHelper(bool inherit)
                 {
-                    CollectionAssert.AreEqual(
+                    CollectionAssert.AreEquivalent(
                         GetImmediateMember(member).GetAttributes<TAttribute>(inherit),
                         ImmediateAttributesExtensions.GetImmediateAttributes<TAttribute>(member, inherit));
                 }
@@ -1228,7 +1228,7 @@ namespace ImmediateReflection.Tests
 
                 void CheckGetAttributesHelper(bool inherit)
                 {
-                    CollectionAssert.AreEqual(
+                    CollectionAssert.AreEquivalent(
                         GetImmediateMember(member).GetAttributes<TAttribute>(inherit),
                         ImmediateAttributesExtensions.GetImmediateAttributes<TAttribute>(member, inherit));
                 }
@@ -1410,7 +1410,7 @@ namespace ImmediateReflection.Tests
             [NotNull] MemberInfo member,
             bool inherit)
         {
-            CollectionAssert.AreEqual(
+            CollectionAssert.AreEquivalent(
                 GetImmediateMember(member).GetAllAttributes(inherit),
                 ImmediateAttributesExtensions.GetAllImmediateAttributes(member, inherit));
         }

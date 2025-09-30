@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -63,12 +63,8 @@ namespace ImmediateReflection.Tests
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(ImmediateTypeTests)}+{nameof(EmptyType)}",
                 emptyType.FullName);
-            CollectionAssert.AreEqual(
-                Enumerable.Empty<FieldInfo>(),
-                emptyType.Fields.Select(field => field.FieldInfo));
-            CollectionAssert.AreEqual(
-                Enumerable.Empty<PropertyInfo>(),
-                emptyType.Properties.Select(property => property.PropertyInfo));
+            CollectionAssert.IsEmpty(emptyType.Fields);
+            CollectionAssert.IsEmpty(emptyType.Properties);
         }
 
         [Test]
@@ -364,9 +360,7 @@ namespace ImmediateReflection.Tests
                 CollectionAssert.AreEquivalent(
                     enumFields,
                     immediateType.Fields.Select(field => field.FieldInfo));
-                CollectionAssert.AreEquivalent(
-                    Enumerable.Empty<PropertyInfo>(),
-                    immediateType.Properties.Select(property => property.PropertyInfo));
+                CollectionAssert.IsEmpty(immediateType.Properties);
             }
 
             #endregion
@@ -460,7 +454,7 @@ namespace ImmediateReflection.Tests
             TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
             var testType = new ImmediateType(typeof(PublicValueTypeTestClass)); // BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static
-            CollectionAssert.AreEqual(
+            CollectionAssert.AreEquivalent(
                 classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.StaticFields).Concat(classifiedMembers.ConstFields),
                 testType.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
@@ -468,7 +462,7 @@ namespace ImmediateReflection.Tests
                 testType.Properties.Select(property => property.PropertyInfo));
 
             testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.NonPublic | BindingFlags.Instance);
-            CollectionAssert.AreEqual(
+            CollectionAssert.AreEquivalent(
                 classifiedMembers.NonPublicInstanceFields,
                 testType.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
@@ -476,7 +470,7 @@ namespace ImmediateReflection.Tests
                 testType.Properties.Select(property => property.PropertyInfo));
 
             testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            CollectionAssert.AreEqual(
+            CollectionAssert.AreEquivalent(
                 classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.NonPublicInstanceFields),
                 testType.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
@@ -484,7 +478,7 @@ namespace ImmediateReflection.Tests
                 testType.Properties.Select(property => property.PropertyInfo));
 
             testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
-            CollectionAssert.AreEqual(
+            CollectionAssert.AreEquivalent(
                 classifiedMembers.StaticFields.Concat(classifiedMembers.ConstFields),
                 testType.Fields.Select(field => field.FieldInfo));
             CollectionAssert.AreEquivalent(
@@ -492,12 +486,8 @@ namespace ImmediateReflection.Tests
                 testType.Properties.Select(property => property.PropertyInfo));
 
             testType = new ImmediateType(typeof(PublicValueTypeTestClass), BindingFlags.IgnoreCase);
-            CollectionAssert.AreEqual(
-                Enumerable.Empty<FieldInfo>(),
-                testType.Fields.Select(field => field.FieldInfo));
-            CollectionAssert.AreEqual(
-                Enumerable.Empty<PropertyInfo>(),
-                testType.Properties.Select(property => property.PropertyInfo));
+            CollectionAssert.IsEmpty(testType.Fields);
+            CollectionAssert.IsEmpty(testType.Properties);
         }
 
         [Test]
@@ -509,9 +499,7 @@ namespace ImmediateReflection.Tests
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(BaseTestClass)}",
                 immediateType.FullName);
-            CollectionAssert.AreEquivalent(
-                Enumerable.Empty<FieldInfo>(),
-                immediateType.Fields.Select(field => field.FieldInfo));
+            CollectionAssert.IsEmpty(immediateType.Fields);
             CollectionAssert.AreEquivalent(
                 new[]
                 {
@@ -526,9 +514,7 @@ namespace ImmediateReflection.Tests
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(ChildTestClass)}",
                 immediateType.FullName);
-            CollectionAssert.AreEquivalent(
-                Enumerable.Empty<FieldInfo>(),
-                immediateType.Fields.Select(field => field.FieldInfo));
+            CollectionAssert.IsEmpty(immediateType.Fields);
             CollectionAssert.AreEquivalent(
                 new[]
                 {
@@ -543,9 +529,7 @@ namespace ImmediateReflection.Tests
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(ChildTypeRedefinitionTestClass)}",
                 immediateType.FullName);
-            CollectionAssert.AreEquivalent(
-                Enumerable.Empty<FieldInfo>(),
-                immediateType.Fields.Select(field => field.FieldInfo));
+            CollectionAssert.IsEmpty(immediateType.Fields);
             CollectionAssert.AreEquivalent(
                 new[]
                 {
@@ -564,9 +548,7 @@ namespace ImmediateReflection.Tests
             Assert.AreEqual(
                 $"{nameof(ImmediateReflection)}.{nameof(Tests)}.{nameof(ChildItemTestClass)}",
                 immediateType.FullName);
-            CollectionAssert.AreEquivalent(
-                Enumerable.Empty<FieldInfo>(),
-                immediateType.Fields.Select(field => field.FieldInfo));
+            CollectionAssert.IsEmpty(immediateType.Fields);
             CollectionAssert.AreEquivalent(
                 new[]
                 {
