@@ -166,13 +166,13 @@ namespace ImmediateReflection
                 return false;
             if (ReferenceEquals(this, other))
                 return true;
-            return PropertyInfo == other.PropertyInfo;
+            return PropertyInfo.Equals(other.PropertyInfo);
         }
 
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return PropertyInfo.GetHashCode();
+            return GetPropertyInfoHashCode(PropertyInfo);
         }
 
         #endregion

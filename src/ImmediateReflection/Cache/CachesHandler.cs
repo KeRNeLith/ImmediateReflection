@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Reflection;
 using JetBrains.Annotations;
+using static ImmediateReflection.Utils.ReflectionHelpers;
 
 namespace ImmediateReflection
 {
@@ -92,7 +93,8 @@ namespace ImmediateReflection
         #region Attributes cache
 
         [NotNull]
-        private volatile MemoryCache<MemberInfo, AttributesCache> _cachedAttributes = new MemoryCache<MemberInfo, AttributesCache>();
+        private volatile MemoryCache<MemberInfo, AttributesCache> _cachedAttributes =
+            new MemoryCache<MemberInfo, AttributesCache>(new MemberInfoEqualityComparer());
 
         [NotNull]
         [ContractAnnotation("member:null => halt")]
@@ -166,7 +168,8 @@ namespace ImmediateReflection
         #region Property cache
 
         [NotNull]
-        private volatile MemoryCache<PropertyInfo, ImmediateProperty> _cachedProperties = new MemoryCache<PropertyInfo, ImmediateProperty>();
+        private volatile MemoryCache<PropertyInfo, ImmediateProperty> _cachedProperties =
+            new MemoryCache<PropertyInfo, ImmediateProperty>(new PropertyInfoEqualityComparer());
 
         [NotNull]
         [ContractAnnotation("property:null => halt")]

@@ -46,23 +46,23 @@ Misc:
   <!-- Targets defines -->
   <PropertyGroup Condition="'$(TargetFramework)'=='net40'">
     <AssemblyTitle>ImmediateReflection .NET 4.0</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NET40;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net45'">
     <AssemblyTitle>ImmediateReflection .NET 4.5</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NET45;SUPPORTS_AGGRESSIVE_INLINING;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);SUPPORTS_AGGRESSIVE_INLINING</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <AssemblyTitle>ImmediateReflection .NET Standard 2.0</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NETSTANDARD2_0;SUPPORTS_AGGRESSIVE_INLINING;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);SUPPORTS_AGGRESSIVE_INLINING</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.1'">
     <AssemblyTitle>ImmediateReflection .NET Standard 2.1</AssemblyTitle>
-    <DefineConstants>$(DefineConstants);NETSTANDARD2_1;SUPPORTS_AGGRESSIVE_INLINING;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);SUPPORTS_AGGRESSIVE_INLINING</DefineConstants>
   </PropertyGroup>
 
   <!-- Dependencies -->
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <PackageReference Include="Microsoft.Bcl.HashCode" Version="6.0.0" />
     <PackageReference Include="System.Reflection.Emit.LightWeight" Version="4.7.0" />
   </ItemGroup>
 </Project>

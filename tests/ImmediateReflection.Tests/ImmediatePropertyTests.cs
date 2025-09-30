@@ -829,7 +829,7 @@ namespace ImmediateReflection.Tests
             var immediateProperty = new ImmediateProperty(TestStructTestPropertyPropertyInfo);
             immediateProperty.SetValue(testStruct, 51);
             Assert.AreEqual(0, testStruct.TestValue);   // Not updated there (but on the shadow copy yes) since struct are immutable
-                                                                      // Limitation is the same with classic PropertyInfo
+                                                        // Limitation is the same with classic PropertyInfo
         }
 
         [Test]
@@ -1320,7 +1320,9 @@ namespace ImmediateReflection.Tests
         {
             var immediateProperty1 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
             var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
+#if NETFRAMEWORK
             Assert.AreEqual(PublicValueTypePublicGetSetPropertyPropertyInfo.GetHashCode(), immediateProperty1.GetHashCode());
+#endif
             Assert.AreEqual(immediateProperty1.GetHashCode(), immediateProperty2.GetHashCode());
 
             var immediateProperty3 = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);

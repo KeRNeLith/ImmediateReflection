@@ -14,7 +14,12 @@ namespace ImmediateReflection
         where TValue : class
     {
         [NotNull]
-        private readonly Hashtable _cache = new Hashtable();
+        private readonly Hashtable _cache;
+
+        public MemoryCache(IEqualityComparer comparer = null)
+        {
+            _cache = new Hashtable(comparer);
+        }
 
         /// <summary>
         /// Gets the cached value corresponding to the given <paramref name="key"/> if already cached, or creates

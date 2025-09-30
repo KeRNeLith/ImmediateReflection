@@ -18,7 +18,7 @@ namespace ImmediateReflection
     /// </summary>
     [PublicAPI]
     [Serializable]
-    public sealed class ImmediateType 
+    public sealed class ImmediateType
         : ImmediateMember
         , IEquatable<ImmediateType>
         , ISerializable

@@ -155,7 +155,7 @@ namespace ImmediateReflection
                 return false;
             if (ReferenceEquals(this, other))
                 return true;
-            return FieldInfo == other.FieldInfo;
+            return FieldInfo.Equals(other.FieldInfo);
         }
 
         /// <inheritdoc />
