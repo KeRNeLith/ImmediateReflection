@@ -4,43 +4,42 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 
-namespace ImmediateReflection.Utils
+namespace ImmediateReflection.Utils;
+
+/// <summary>
+/// Helpers to work with fields.
+/// </summary>
+internal static class FieldHelpers
 {
+    [NotNull]
+    private const string BackingFieldName = "BackingField";
+
     /// <summary>
-    /// Helpers to work with fields.
+    /// Checks if the given <see cref="FieldInfo"/> corresponds to a backing field.
     /// </summary>
-    internal static class FieldHelpers
+    /// <param name="field">The <see cref="FieldInfo"/>.</param>
+    /// <returns>True if the <see cref="FieldInfo"/> is a backing field, false otherwise.</returns>
+    [Pure]
+    [ContractAnnotation("field:null => halt")]
+    internal static bool IsBackingField([NotNull] FieldInfo field)
     {
-        [NotNull]
-        private const string BackingFieldName = "BackingField";
+        Debug.Assert(field != null);
 
-        /// <summary>
-        /// Checks if the given <see cref="FieldInfo"/> corresponds to a backing field.
-        /// </summary>
-        /// <param name="field">The <see cref="FieldInfo"/>.</param>
-        /// <returns>True if the <see cref="FieldInfo"/> is a backing field, false otherwise.</returns>
-        [Pure]
-        [ContractAnnotation("field:null => halt")]
-        internal static bool IsBackingField([NotNull] FieldInfo field)
-        {
-            Debug.Assert(field != null);
+        return field.Name.Contains(BackingFieldName);
+    }
 
-            return field.Name.Contains(BackingFieldName);
-        }
+    /// <summary>
+    /// Gets an enumerable of <see cref="FieldInfo"/> without backing fields.
+    /// </summary>
+    /// <param name="fields">Enumerable of <see cref="FieldInfo"/> to filter.</param>
+    /// <returns>Filtered <see cref="FieldInfo"/>.</returns>
+    [Pure]
+    [NotNull, ItemNotNull]
+    [ContractAnnotation("fields:null => halt")]
+    internal static IEnumerable<FieldInfo> IgnoreBackingFields([NotNull, ItemNotNull] IEnumerable<FieldInfo> fields)
+    {
+        Debug.Assert(fields != null);
 
-        /// <summary>
-        /// Gets an enumerable of <see cref="FieldInfo"/> without backing fields.
-        /// </summary>
-        /// <param name="fields">Enumerable of <see cref="FieldInfo"/> to filter.</param>
-        /// <returns>Filtered <see cref="FieldInfo"/>.</returns>
-        [Pure]
-        [NotNull, ItemNotNull]
-        [ContractAnnotation("fields:null => halt")]
-        internal static IEnumerable<FieldInfo> IgnoreBackingFields([NotNull, ItemNotNull] IEnumerable<FieldInfo> fields)
-        {
-            Debug.Assert(fields != null);
-
-            return fields.Where(field => !IsBackingField(field));
-        }
+        return fields.Where(field => !IsBackingField(field));
     }
 }

@@ -1,13 +1,12 @@
-namespace ImmediateReflection.Benchmark
+﻿namespace ImmediateReflection.Benchmark;
+
+/// <summary>
+/// Benchmark object for attributes.
+/// </summary>
+public class AttributesBenchmarkObject
 {
-    /// <summary>
-    /// Benchmark object for attributes.
-    /// </summary>
-    public class AttributesBenchmarkObject
-    {
-        [TestClass]
-        [SecondTestClass]
-        [ThirdTestClass]
-        public int TestProperty { get; set; }
-    }
+    [TestClass]
+    [SecondTestClass]
+    [ThirdTestClass]
+    public int TestProperty { get; set; }
 }

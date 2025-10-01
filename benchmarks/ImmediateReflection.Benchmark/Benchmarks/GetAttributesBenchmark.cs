@@ -6,75 +6,74 @@ using BenchmarkDotNet.Jobs;
 using FastMember;
 using JetBrains.Annotations;
 
-namespace ImmediateReflection.Benchmark
+namespace ImmediateReflection.Benchmark;
+
+/// <summary>
+/// Get attributes benchmark class.
+/// </summary>
+[SimpleJob(RuntimeMoniker.Net48)]
+[SimpleJob(RuntimeMoniker.Net80)]
+public class GetAttributesBenchmark : BenchmarkBase
 {
-    /// <summary>
-    /// Get attributes benchmark class.
-    /// </summary>
-    [SimpleJob(RuntimeMoniker.Net48)]
-    [SimpleJob(RuntimeMoniker.Net80)]
-    public class GetAttributesBenchmark : BenchmarkBase
+    [NotNull]
+    private static readonly Type AttributesBenchmarkObjectType = typeof(AttributesBenchmarkObject);
+
+    [NotNull] private static readonly PropertyInfo AttributesBenchmarkProperty =
+        AttributesBenchmarkObjectType.GetProperty(nameof(AttributesBenchmarkObject.TestProperty)) 
+        ?? throw new InvalidOperationException("Property does not exist.");
+
+    [NotNull, ItemNotNull]
+    private static readonly Attribute[] CachedAttributes = AttributesBenchmarkProperty.GetCustomAttributes(false).OfType<Attribute>().ToArray();
+
+    [CanBeNull]
+    // ReSharper disable once UnusedMethodReturnValue.Local
+    private static TAttribute GetAttributeFromCache<TAttribute>()
+        where TAttribute : Attribute
     {
-        [NotNull]
-        private static readonly Type AttributesBenchmarkObjectType = typeof(AttributesBenchmarkObject);
+        return (TAttribute)CachedAttributes.FirstOrDefault(attribute => attribute is TAttribute);
+    }
 
-        [NotNull] private static readonly PropertyInfo AttributesBenchmarkProperty =
-            AttributesBenchmarkObjectType.GetProperty(nameof(AttributesBenchmarkObject.TestProperty)) 
-            ?? throw new InvalidOperationException("Property does not exist.");
+    [NotNull]
+    private static readonly Member FastMemberProperty = FastMember.TypeAccessor.Create(AttributesBenchmarkObjectType).GetMembers()[0];
 
-        [NotNull, ItemNotNull]
-        private static readonly Attribute[] CachedAttributes = AttributesBenchmarkProperty.GetCustomAttributes(false).OfType<Attribute>().ToArray();
+    [NotNull]
+    private static readonly ImmediateProperty AttributesImmediateProperty = new ImmediateProperty(AttributesBenchmarkProperty);
 
-        [CanBeNull]
-        // ReSharper disable once UnusedMethodReturnValue.Local
-        private static TAttribute GetAttributeFromCache<TAttribute>()
-            where TAttribute : Attribute
-        {
-            return (TAttribute)CachedAttributes.FirstOrDefault(attribute => attribute is TAttribute);
-        }
+    // Benchmark methods
+    [Benchmark(Baseline = true)]
+    public void Property_GetAttribute()
+    {
+        AttributesBenchmarkProperty.GetCustomAttribute<TestClassAttribute>(false);
+        AttributesBenchmarkProperty.GetCustomAttribute<ThirdTestClassAttribute>(false);
+    }
 
-        [NotNull]
-        private static readonly Member FastMemberProperty = FastMember.TypeAccessor.Create(AttributesBenchmarkObjectType).GetMembers()[0];
+    [Benchmark]
+    public void PropertyCache_GetAttribute()
+    {
+        GetAttributeFromCache<TestClassAttribute>();
+        GetAttributeFromCache<ThirdTestClassAttribute>();
+    }
 
-        [NotNull]
-        private static readonly ImmediateProperty AttributesImmediateProperty = new ImmediateProperty(AttributesBenchmarkProperty);
+    [Benchmark]
+    public void FastMember_GetAttribute()
+    {
+        FastMemberProperty.GetAttribute(typeof(TestClassAttribute), false);
+        FastMemberProperty.GetAttribute(typeof(ThirdTestClassAttribute), false);
+    }
 
-        // Benchmark methods
-        [Benchmark(Baseline = true)]
-        public void Property_GetAttribute()
-        {
-            AttributesBenchmarkProperty.GetCustomAttribute<TestClassAttribute>(false);
-            AttributesBenchmarkProperty.GetCustomAttribute<ThirdTestClassAttribute>(false);
-        }
+    [Benchmark]
+    public void ImmediateProperty_GetAttribute()
+    {
+        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
+        AttributesImmediateProperty.GetAttribute<TestClassAttribute>();
+        AttributesImmediateProperty.GetAttribute<ThirdTestClassAttribute>();
+        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
+    }
 
-        [Benchmark]
-        public void PropertyCache_GetAttribute()
-        {
-            GetAttributeFromCache<TestClassAttribute>();
-            GetAttributeFromCache<ThirdTestClassAttribute>();
-        }
-
-        [Benchmark]
-        public void FastMember_GetAttribute()
-        {
-            FastMemberProperty.GetAttribute(typeof(TestClassAttribute), false);
-            FastMemberProperty.GetAttribute(typeof(ThirdTestClassAttribute), false);
-        }
-
-        [Benchmark]
-        public void ImmediateProperty_GetAttribute()
-        {
-            // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-            AttributesImmediateProperty.GetAttribute<TestClassAttribute>();
-            AttributesImmediateProperty.GetAttribute<ThirdTestClassAttribute>();
-            // ReSharper restore ReturnValueOfPureMethodIsNotUsed
-        }
-
-        [Benchmark]
-        public void Property_ByImmediateReflection_GetAttribute()
-        {
-            AttributesBenchmarkProperty.GetImmediateAttribute<TestClassAttribute>();
-            AttributesBenchmarkProperty.GetImmediateAttribute<TestClassAttribute>();
-        }
+    [Benchmark]
+    public void Property_ByImmediateReflection_GetAttribute()
+    {
+        AttributesBenchmarkProperty.GetImmediateAttribute<TestClassAttribute>();
+        AttributesBenchmarkProperty.GetImmediateAttribute<TestClassAttribute>();
     }
 }
