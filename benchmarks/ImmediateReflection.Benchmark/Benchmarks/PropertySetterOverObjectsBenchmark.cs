@@ -1,7 +1,8 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
 using Fasterflect;
 using FlashReflection;
 using JetBrains.Annotations;
@@ -11,6 +12,8 @@ namespace ImmediateReflection.Benchmark
     /// <summary>
     /// Property setter over multiple objects benchmark class.
     /// </summary>
+    [SimpleJob(RuntimeMoniker.Net48)]
+    [SimpleJob(RuntimeMoniker.Net80)]
     public class PropertySetterOverObjectsBenchmark : ObjectsBenchmarkBase
     {
         // Benchmark methods

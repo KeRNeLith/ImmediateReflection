@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net461</TargetFrameworks>
+    <TargetFrameworks>net48;net8.0</TargetFrameworks>
     <OutputType>Exe</OutputType>
 
     <Title>ImmediateReflection.Benchmark</Title>
@@ -14,11 +14,6 @@
     <Description>Benchmark for ImmediateReflection library.</Description>
   </PropertyGroup>
 
-  <!-- Targets defines -->
-  <PropertyGroup Condition="'$(TargetFramework)'=='net461'">
-    <DefineConstants>$(DefineConstants);NET461;$(AdditionalConstants)</DefineConstants>
-  </PropertyGroup>
-
   <!-- Dependencies -->
   <ItemGroup>
     <ProjectReference Include="..\..\src\ImmediateReflection\ImmediateReflection.csproj" />
@@ -29,11 +24,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.15.4" />
     <PackageReference Include="fasterflect" Version="3.0.0" />
     <PackageReference Include="FastMember.Signed" Version="1.5.0" />
     <PackageReference Include="FlashReflection" Version="1.0.2" />
-    <PackageReference Include="HyperDescriptor" Version="1.0.5" />
+    <PackageReference Include="HyperDescriptor" Version="1.0.5" Condition="'$(TargetFramework)'=='net48'" />
     <PackageReference Include="Sigil" Version="5.0.0" />
   </ItemGroup>
 </Project>

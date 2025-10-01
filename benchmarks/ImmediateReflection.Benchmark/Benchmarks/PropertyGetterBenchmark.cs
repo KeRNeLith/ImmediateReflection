@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
 using JetBrains.Annotations;
 using Sigil;
 
@@ -9,6 +10,8 @@ namespace ImmediateReflection.Benchmark
     /// <summary>
     /// Property getter benchmark class.
     /// </summary>
+    [SimpleJob(RuntimeMoniker.Net48)]
+    [SimpleJob(RuntimeMoniker.Net80)]
     public class PropertyGetterBenchmark : BenchmarkBase
     {
         [NotNull]

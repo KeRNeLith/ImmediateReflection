@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
 using JetBrains.Annotations;
 
 namespace ImmediateReflection.Benchmark
@@ -7,6 +8,8 @@ namespace ImmediateReflection.Benchmark
     /// <summary>
     /// Copy constructor benchmark class.
     /// </summary>
+    [SimpleJob(RuntimeMoniker.Net48)]
+    [SimpleJob(RuntimeMoniker.Net80)]
     public class CopyConstructorBenchmark : BenchmarkBase
     {
         [NotNull]

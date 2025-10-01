@@ -1,12 +1,18 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
 using FastMember;
 using JetBrains.Annotations;
 
 namespace ImmediateReflection.Benchmark
 {
+    /// <summary>
+    /// Get attributes benchmark class.
+    /// </summary>
+    [SimpleJob(RuntimeMoniker.Net48)]
+    [SimpleJob(RuntimeMoniker.Net80)]
     public class GetAttributesBenchmark : BenchmarkBase
     {
         [NotNull]
