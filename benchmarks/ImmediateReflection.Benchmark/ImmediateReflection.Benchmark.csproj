@@ -28,7 +28,6 @@
     <PackageReference Include="fasterflect" Version="3.0.0" />
     <PackageReference Include="FastMember.Signed" Version="1.5.0" />
     <PackageReference Include="FlashReflection" Version="1.0.2" />
-    <PackageReference Include="HyperDescriptor" Version="1.0.5" Condition="'$(TargetFramework)'=='net48'" />
     <PackageReference Include="Sigil" Version="5.0.0" />
   </ItemGroup>
 </Project>

@@ -36,11 +36,11 @@ namespace ImmediateReflection.Benchmark
         }
 
         [Benchmark]
-        public void HyperDescriptor_PropertyGet_BenchmarkObject()
+        public void TypeDescriptor_PropertyGet_BenchmarkObject()
         {
             foreach (object obj in BenchmarkObjects)
             {
-                GetPropertyHyperDescriptor(obj);
+                GetPropertyTypeDescriptor(obj);
             }
         }
 
@@ -99,11 +99,11 @@ namespace ImmediateReflection.Benchmark
         }
 
         [Benchmark]
-        public void HyperDescriptor_PropertyGet_Mixed_BenchmarkObject()
+        public void TypeDescriptor_PropertyGet_Mixed_BenchmarkObject()
         {
             foreach (object obj in BenchmarkMixedObjects)
             {
-                GetPropertyHyperDescriptor(obj);
+                GetPropertyTypeDescriptor(obj);
             }
         }
 
@@ -162,7 +162,7 @@ namespace ImmediateReflection.Benchmark
             return UIntArrayPropertyInfo.GetValue(obj);
         }
 
-        public object GetPropertyHyperDescriptor([NotNull] object obj)
+        public object GetPropertyTypeDescriptor([NotNull] object obj)
         {
             PropertyDescriptor propertyDescriptor = TypeDescriptor.GetProperties(obj).Find(UIntArrayPropertyName, false);
             return propertyDescriptor?.GetValue(obj);
