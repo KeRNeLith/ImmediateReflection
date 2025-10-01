@@ -37,7 +37,7 @@
 
   <!-- C# configuration -->
   <PropertyGroup>
-    <LangVersion>7</LangVersion>
+    <LangVersion>10</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(DeployBuild)">
