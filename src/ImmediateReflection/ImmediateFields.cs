@@ -93,7 +93,17 @@ public sealed class ImmediateFields
             return true;
         if (_fields.Count != other._fields.Count)
             return false;
-        return !_fields.Except(other._fields).Any();
+
+        foreach (KeyValuePair<string, ImmediateField> pair in _fields)
+        {
+            if (!other._fields.TryGetValue(pair.Key, out ImmediateField? otherField))
+                return false;
+
+            if (!pair.Value.Equals(otherField))
+                return false;
+        }
+
+        return true;
     }
 
     /// <inheritdoc />

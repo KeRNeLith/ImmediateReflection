@@ -136,7 +136,17 @@ public sealed class ImmediateProperties
             return true;
         if (_properties.Count != other._properties.Count)
             return false;
-        return !_properties.Except(other._properties).Any();
+
+        foreach (KeyValuePair<string, ImmediateProperty> pair in _properties)
+        {
+            if (!other._properties.TryGetValue(pair.Key, out ImmediateProperty? otherProperty))
+                return false;
+
+            if (!pair.Value.Equals(otherProperty))
+                return false;
+        }
+
+        return true;
     }
 
     /// <inheritdoc />
