@@ -50,7 +50,6 @@ internal sealed class ObjectExtensionsTests : ImmediateReflectionTestsBase
     [Test]
     public static void HasCopyConstructor_Throws()
     {
-        // ReSharper disable once AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => ObjectExtensions.HasCopyConstructor<object>(null!));
     }
 

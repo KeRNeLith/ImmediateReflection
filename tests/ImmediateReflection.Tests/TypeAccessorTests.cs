@@ -108,14 +108,10 @@ internal sealed class TypeAccessorTests : ImmediateReflectionTestsBase
     [Test]
     public static void Get_NullType()
     {
-        // ReSharper disable AssignNullToNotNullAttribute
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null!));
         Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null!, false));
         Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null!, true));
         Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null!, BindingFlags.Public | BindingFlags.Instance));
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-        // ReSharper restore AssignNullToNotNullAttribute
     }
 
     [Test]

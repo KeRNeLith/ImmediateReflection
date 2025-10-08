@@ -65,12 +65,8 @@ internal sealed class ImmediateMemberExtensionsTests : ImmediateReflectionTestsB
     {
         Type testType = typeof(PublicValueTypeTestClass);
 
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-        // ReSharper disable AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => testType.GetImmediateField(null!));
         Assert.Throws<ArgumentNullException>(() => testType.GetImmediateField(null!, BindingFlags.NonPublic));
-        // ReSharper restore AssignNullToNotNullAttribute
-        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 
     [Test]
@@ -78,14 +74,10 @@ internal sealed class ImmediateMemberExtensionsTests : ImmediateReflectionTestsB
     {
         Type? testType = null;
 
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-        // ReSharper disable AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateField("Field"));
         Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateField("Field", BindingFlags.NonPublic));
         Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateFields());
         Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateFields(BindingFlags.NonPublic));
-        // ReSharper restore AssignNullToNotNullAttribute
-        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 
 
@@ -134,12 +126,8 @@ internal sealed class ImmediateMemberExtensionsTests : ImmediateReflectionTestsB
     {
         Type testType = typeof(PublicValueTypeTestClass);
 
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-        // ReSharper disable AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => testType.GetImmediateProperty(null!));
         Assert.Throws<ArgumentNullException>(() => testType.GetImmediateProperty(null!, BindingFlags.NonPublic));
-        // ReSharper restore AssignNullToNotNullAttribute
-        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 
     [Test]
@@ -147,13 +135,9 @@ internal sealed class ImmediateMemberExtensionsTests : ImmediateReflectionTestsB
     {
         Type? testType = null;
 
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-        // ReSharper disable AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateProperty("Property"));
         Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateProperty("Property", BindingFlags.NonPublic));
         Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateProperties());
         Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateProperties(BindingFlags.NonPublic));
-        // ReSharper restore AssignNullToNotNullAttribute
-        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 }

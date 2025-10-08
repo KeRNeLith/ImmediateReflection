@@ -605,12 +605,8 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         Assert.IsNull(immediateType.GetMember(memberName));
         Assert.IsNull(immediateType[memberName]);
 
-        // ReSharper disable AssignNullToNotNullAttribute
-        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentNullException>(() => immediateType.GetMember(null!));
-        // ReSharper disable once UnusedVariable
-        Assert.Throws<ArgumentNullException>(() => { _ = immediateType[null!]; });
-        // ReSharper restore AssignNullToNotNullAttribute
+        Assert.Throws<ArgumentNullException>(() => _ = immediateType.GetMember(null!));
+        Assert.Throws<ArgumentNullException>(() => _ = immediateType[null!]);
     }
 
     #endregion
@@ -637,9 +633,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         fieldName = "NotExists";
         Assert.IsNull(immediateType.GetField(fieldName));
 
-        // ReSharper disable once AssignNullToNotNullAttribute
-        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentNullException>(() => immediateType.GetField(null!));
+        Assert.Throws<ArgumentNullException>(() => _ = immediateType.GetField(null!));
     }
 
     #endregion
@@ -666,9 +660,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         propertyName = "NotExists";
         Assert.IsNull(immediateType.GetProperty(propertyName));
 
-        // ReSharper disable once AssignNullToNotNullAttribute
-        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentNullException>(() => immediateType.GetProperty(null!));
+        Assert.Throws<ArgumentNullException>(() => _ = immediateType.GetProperty(null!));
     }
 
     #endregion
@@ -731,50 +723,48 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [Test]
     public static void NewParameterLess_Throws()
     {
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         var immediateType = new ImmediateType(typeof(NoDefaultConstructor));
-        Assert.Throws<MissingMethodException>(() => immediateType.New());
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New());
 
         immediateType = new ImmediateType(typeof(NotAccessibleDefaultConstructor));
-        Assert.Throws<MissingMethodException>(() => immediateType.New());
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New());
 
         immediateType = new ImmediateType(typeof(IList<int>));
-        Assert.Throws<MissingMethodException>(() => immediateType.New());
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New());
 
         immediateType = new ImmediateType(typeof(IDictionary<int, string>));
-        Assert.Throws<MissingMethodException>(() => immediateType.New());
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New());
 
         immediateType = new ImmediateType(typeof(AbstractDefaultConstructor));
-        Assert.Throws<MissingMethodException>(() => immediateType.New());
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New());
 
         immediateType = new ImmediateType(typeof(StaticClass));
-        Assert.Throws<MissingMethodException>(() => immediateType.New());
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New());
 
         immediateType = new ImmediateType(typeof(TemplateStruct<>));
-        Assert.Throws<ArgumentException>(() => immediateType.New());
+        Assert.Throws<ArgumentException>(() => _ = immediateType.New());
 
         immediateType = new ImmediateType(typeof(TemplateDefaultConstructor<>));
-        Assert.Throws<ArgumentException>(() => immediateType.New());
+        Assert.Throws<ArgumentException>(() => _ = immediateType.New());
 
         immediateType = new ImmediateType(typeof(ParamsConstructor));
-        Assert.Throws<MissingMethodException>(() => immediateType.New());
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New());
 
         immediateType = new ImmediateType(typeof(NoDefaultInheritedDefaultConstructor));
-        Assert.Throws<MissingMethodException>(() => immediateType.New());
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New());
 
         immediateType = new ImmediateType(typeof(AmbiguousParamsOnlyConstructor));
-        Assert.Throws<AmbiguousMatchException>(() => immediateType.New());
+        Assert.Throws<AmbiguousMatchException>(() => _ = immediateType.New());
 
         // ReSharper disable once PossibleMistakenCallToGetType.2
         immediateType = new ImmediateType(typeof(DefaultConstructor).GetType());
-        Assert.Throws<ArgumentException>(() => immediateType.New());
+        Assert.Throws<ArgumentException>(() => _ = immediateType.New());
 
         immediateType = new ImmediateType(typeof(DefaultConstructorThrows));
-        Assert.Throws(Is.InstanceOf<Exception>(), () => immediateType.New());
+        Assert.Throws(Is.InstanceOf<Exception>(), () => _ = immediateType.New());
 
         immediateType = new ImmediateType(typeof(int[]));
-        Assert.Throws<MissingMethodException>(() => immediateType.New());
-        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New());
     }
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateDefaultConstructorNoThrowTestCases))]
@@ -838,31 +828,29 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [Test]
     public static void NewWithParameters_Throws()
     {
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         var immediateType = new ImmediateType(typeof(NoDefaultConstructor));
-        Assert.Throws<MissingMethodException>(() => immediateType.New(12, 42));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New(12, 42));
 
         immediateType = new ImmediateType(typeof(NotAccessibleConstructor));
-        Assert.Throws<MissingMethodException>(() => immediateType.New(12));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New(12));
 
         immediateType = new ImmediateType(typeof(MultiParametersConstructor));
-        Assert.Throws<MissingMethodException>(() => immediateType.New(12f, 12));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New(12f, 12));
 
         immediateType = new ImmediateType(typeof(ParamsConstructor));
-        Assert.Throws<MissingMethodException>(() => immediateType.New(12f, 12));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New(12f, 12));
 
         immediateType = new ImmediateType(typeof(NoDefaultInheritedDefaultConstructor));
-        Assert.Throws<MissingMethodException>(() => immediateType.New(12f));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New(12f));
 
         immediateType = new ImmediateType(typeof(AbstractNoConstructor));
-        Assert.Throws<MemberAccessException>(() => immediateType.New(12));
+        Assert.Throws<MemberAccessException>(() => _ = immediateType.New(12));
 
         immediateType = new ImmediateType(typeof(TemplateNoDefaultConstructor<>));
-        Assert.Throws<ArgumentException>(() => immediateType.New(12));
+        Assert.Throws<ArgumentException>(() => _ = immediateType.New(12));
 
         immediateType = new ImmediateType(typeof(NotDefaultConstructorThrows));
-        Assert.Throws<TargetInvocationException>(() => immediateType.New(12));
-        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
+        Assert.Throws<TargetInvocationException>(() => _ = immediateType.New(12));
     }
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateNotDefaultConstructorNoThrowTestCases))]
@@ -914,66 +902,64 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [Test]
     public static void Copy_Throws()
     {
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         var immediateType = new ImmediateType(typeof(NoCopyConstructorClass));
-        Assert.Throws<MissingMethodException>(() => immediateType.Copy(new NoCopyConstructorClass()));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.Copy(new NoCopyConstructorClass()));
 
         immediateType = new ImmediateType(typeof(NotAccessibleCopyConstructor));
-        Assert.Throws<MissingMethodException>(() => immediateType.Copy(new NotAccessibleCopyConstructor()));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.Copy(new NotAccessibleCopyConstructor()));
 
         immediateType = new ImmediateType(typeof(IList<int>));
-        Assert.Throws<MissingMethodException>(() => immediateType.Copy(new List<int>()));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.Copy(new List<int>()));
 
         immediateType = new ImmediateType(typeof(IDictionary<int, string>));
-        Assert.Throws<MissingMethodException>(() => immediateType.Copy(new Dictionary<int, string>()));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.Copy(new Dictionary<int, string>()));
 
         immediateType = new ImmediateType(typeof(AbstractCopyConstructor));
-        Assert.Throws<MissingMethodException>(() => immediateType.Copy(new CopyConstructorClass(12)));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.Copy(new CopyConstructorClass(12)));
 
         immediateType = new ImmediateType(typeof(StaticClass));
-        Assert.Throws<MissingMethodException>(() => immediateType.Copy(new CopyConstructorClass(12)));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.Copy(new CopyConstructorClass(12)));
 
         immediateType = new ImmediateType(typeof(TemplateStruct<>));
-        Assert.Throws<ArgumentException>(() => immediateType.Copy(new CopyConstructorClass(12)));
+        Assert.Throws<ArgumentException>(() => _ = immediateType.Copy(new CopyConstructorClass(12)));
 
         immediateType = new ImmediateType(typeof(TemplateCopyConstructor<>));
-        Assert.Throws<ArgumentException>(() => immediateType.Copy(new CopyConstructorClass(12)));
+        Assert.Throws<ArgumentException>(() => _ = immediateType.Copy(new CopyConstructorClass(12)));
 
         immediateType = new ImmediateType(typeof(NoCopyInheritedCopyConstructorClass));
-        Assert.Throws<MissingMethodException>(() => immediateType.Copy(new NoCopyInheritedCopyConstructorClass(1)));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.Copy(new NoCopyInheritedCopyConstructorClass(1)));
 
         immediateType = new ImmediateType(typeof(NoCopyInheritedCopyConstructorClass));
-        Assert.Throws<MissingMethodException>(() => immediateType.Copy(new CopyConstructorClass(2)));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.Copy(new CopyConstructorClass(2)));
 
         immediateType = new ImmediateType(typeof(BaseCopyInheritedCopyConstructorClass));
-        Assert.Throws<MissingMethodException>(() => immediateType.Copy(new BaseCopyInheritedCopyConstructorClass(3)));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.Copy(new BaseCopyInheritedCopyConstructorClass(3)));
 
         immediateType = new ImmediateType(typeof(BaseCopyInheritedCopyConstructorClass));
-        Assert.Throws<MissingMethodException>(() => immediateType.Copy(new CopyConstructorClass(4))); // Constructor exists but is not considered as copy constructor
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.Copy(new CopyConstructorClass(4))); // Constructor exists but is not considered as copy constructor
 
         immediateType = new ImmediateType(typeof(SpecializedCopyConstructorClass));
-        Assert.Throws<MissingMethodException>(() => immediateType.Copy(new SpecializedCopyConstructorClass(5)));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.Copy(new SpecializedCopyConstructorClass(5)));
 
         immediateType = new ImmediateType(typeof(SpecializedCopyConstructorClass));
-        Assert.Throws<MissingMethodException>(() => immediateType.Copy(new InheritedSpecializedCopyConstructorClass(6))); // Constructor exists but is not considered as copy constructor
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.Copy(new InheritedSpecializedCopyConstructorClass(6))); // Constructor exists but is not considered as copy constructor
 
         immediateType = new ImmediateType(typeof(MultipleCopyConstructorClass));
-        Assert.Throws<ArgumentException>(() => immediateType.Copy(new InheritedMultipleCopyConstructorClass(12))); // Constructor exists but is not considered as copy constructor
+        Assert.Throws<ArgumentException>(() => _ = immediateType.Copy(new InheritedMultipleCopyConstructorClass(12))); // Constructor exists but is not considered as copy constructor
 
         // ReSharper disable once PossibleMistakenCallToGetType.2
         immediateType = new ImmediateType(typeof(CopyConstructorClass).GetType());
-        Assert.Throws<ArgumentException>(() => immediateType.Copy(new CopyConstructorClass(12)));
+        Assert.Throws<ArgumentException>(() => _ = immediateType.Copy(new CopyConstructorClass(12)));
 
         immediateType = new ImmediateType(typeof(CopyConstructorThrows));
-        Assert.Throws(Is.InstanceOf<Exception>(), () => immediateType.Copy(new CopyConstructorThrows()));
+        Assert.Throws(Is.InstanceOf<Exception>(), () => _ = immediateType.Copy(new CopyConstructorThrows()));
 
         immediateType = new ImmediateType(typeof(int[]));
-        Assert.Throws<MissingMethodException>(() => immediateType.Copy(new int[0]));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.Copy(new int[0]));
 
         // Wrong argument
         immediateType = new ImmediateType(typeof(CopyConstructorClass));
-        Assert.Throws<ArgumentException>(() => immediateType.Copy(new NoCopyConstructorClass()));
-        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
+        Assert.Throws<ArgumentException>(() => _ = immediateType.Copy(new NoCopyConstructorClass()));
     }
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorNoThrowTestCases))]

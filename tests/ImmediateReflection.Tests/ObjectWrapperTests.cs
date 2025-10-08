@@ -92,12 +92,9 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
         Assert.IsNull(objectWrapper.GetMember(memberName));
         Assert.IsNull(objectWrapper[memberName]);
 
-        // ReSharper disable AssignNullToNotNullAttribute
-        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentNullException>(() => objectWrapper.GetMember(null!));
+        Assert.Throws<ArgumentNullException>(() => _ = objectWrapper.GetMember(null!));
         // ReSharper disable once UnusedVariable
-        Assert.Throws<ArgumentNullException>(() => { _ = objectWrapper[null!]; });
-        // ReSharper restore AssignNullToNotNullAttribute
+        Assert.Throws<ArgumentNullException>(() => _ = objectWrapper[null!]);
     }
 
     #endregion
@@ -128,9 +125,7 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
         fieldName = "NotExists";
         Assert.IsNull(objectWrapper.GetField(fieldName));
 
-        // ReSharper disable once AssignNullToNotNullAttribute
-        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentNullException>(() => objectWrapper.GetField(null!));
+        Assert.Throws<ArgumentNullException>(() => _ = objectWrapper.GetField(null!));
     }
 
     #region GetValue
@@ -319,9 +314,7 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
         propertyName = "NotExists";
         Assert.IsNull(objectWrapper.GetProperty(propertyName));
 
-        // ReSharper disable once AssignNullToNotNullAttribute
-        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentNullException>(() => objectWrapper.GetProperty(null!));
+        Assert.Throws<ArgumentNullException>(() => _ = objectWrapper.GetProperty(null!));
     }
 
     #region GetValue
@@ -434,8 +427,7 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
         var testObject = new PublicValueTypeTestClass();
         var objectWrapper = new ObjectWrapper(testObject);
 
-        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentException>(() => objectWrapper.GetPropertyValue(nameof(PublicValueTypeTestClass.PublicPropertySet)));
+        Assert.Throws<ArgumentException>(() => _ = objectWrapper.GetPropertyValue(nameof(PublicValueTypeTestClass.PublicPropertySet)));
     }
 
     #endregion

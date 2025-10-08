@@ -634,10 +634,8 @@ internal sealed class ImmediateAttributesExtensionsTests : ImmediateAttributesTe
     [TestCaseSource(nameof(CreateWrongAttributeTestCases))]
     public static void IsDefinedAndGetAttribute_WrongType(MemberInfo member, Type attributeType, bool inherit)
     {
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         Assert.Throws<ArgumentException>(() => ImmediateAttributesExtensions.IsDefinedImmediateAttribute(member, attributeType, inherit));
         Assert.Throws<ArgumentException>(() => ImmediateAttributesExtensions.GetImmediateAttribute(member, attributeType, inherit));
-        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 
     [Test]
@@ -646,8 +644,6 @@ internal sealed class ImmediateAttributesExtensionsTests : ImmediateAttributesTe
         Type? type = null;
         FieldInfo? field = null;
         PropertyInfo? property = null;
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-        // ReSharper disable AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.IsDefinedImmediateAttribute(type!, typeof(TestClassAttribute)));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttribute(type!, typeof(TestClassAttribute)));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.IsDefinedImmediateAttribute(type!, typeof(TestClassAttribute), true));
@@ -673,8 +669,6 @@ internal sealed class ImmediateAttributesExtensionsTests : ImmediateAttributesTe
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttribute<TestClassAttribute>(property!));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.IsDefinedImmediateAttribute<TestClassAttribute>(property!, true));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttribute<TestClassAttribute>(property!, true));
-        // ReSharper restore once AssignNullToNotNullAttribute
-        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 
     [Test]
@@ -684,8 +678,6 @@ internal sealed class ImmediateAttributesExtensionsTests : ImmediateAttributesTe
         FieldInfo field = PublicValueTypePublicFieldFieldsInfo;
         PropertyInfo property = PublicValueTypePublicGetSetPropertyPropertyInfo;
 
-        // ReSharper disable AssignNullToNotNullAttribute
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.IsDefinedImmediateAttribute(type, null!));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttribute(type, null!));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.IsDefinedImmediateAttribute(type, null!, true));
@@ -698,8 +690,6 @@ internal sealed class ImmediateAttributesExtensionsTests : ImmediateAttributesTe
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttribute(property, null!));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.IsDefinedImmediateAttribute(property, null!, true));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttribute(property, null!, true));
-        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
-        // ReSharper restore AssignNullToNotNullAttribute
     }
 
     private static IEnumerable<TestCaseData> CreateGetAttributesTestCases()
@@ -1226,7 +1216,6 @@ internal sealed class ImmediateAttributesExtensionsTests : ImmediateAttributesTe
     [TestCaseSource(nameof(CreateWrongAttributeTestCases))]
     public static void GetAttributes_WrongType(MemberInfo member, Type attributeType, bool inherit)
     {
-        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
         Assert.Throws<ArgumentException>(() => ImmediateAttributesExtensions.GetImmediateAttributes(member, attributeType, inherit));
     }
 
@@ -1236,8 +1225,6 @@ internal sealed class ImmediateAttributesExtensionsTests : ImmediateAttributesTe
         Type? type = null;
         FieldInfo? field = null;
         PropertyInfo? property = null;
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-        // ReSharper disable AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes(type!, typeof(TestClassAttribute)));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes(type!, typeof(TestClassAttribute), true));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes(field!, typeof(TestClassAttribute)));
@@ -1251,8 +1238,6 @@ internal sealed class ImmediateAttributesExtensionsTests : ImmediateAttributesTe
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes<TestClassAttribute>(field!, true));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes<TestClassAttribute>(property!));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes<TestClassAttribute>(property!, true));
-        // ReSharper restore once AssignNullToNotNullAttribute
-        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 
     [Test]
@@ -1262,16 +1247,12 @@ internal sealed class ImmediateAttributesExtensionsTests : ImmediateAttributesTe
         FieldInfo field = PublicValueTypePublicFieldFieldsInfo;
         PropertyInfo property = PublicValueTypePublicGetSetPropertyPropertyInfo;
 
-        // ReSharper disable AssignNullToNotNullAttribute
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes(type, null!));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes(type, null!, true));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes(field, null!));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes(field, null!, true));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes(property, null!));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetImmediateAttributes(property, null!, true));
-        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
-        // ReSharper restore AssignNullToNotNullAttribute
     }
 
     private static IEnumerable<TestCaseData> CreateGetAllAttributesTestCases()
@@ -1399,15 +1380,11 @@ internal sealed class ImmediateAttributesExtensionsTests : ImmediateAttributesTe
         Type? type = null;
         FieldInfo? field = null;
         PropertyInfo? property = null;
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-        // ReSharper disable AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetAllImmediateAttributes(type!));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetAllImmediateAttributes(type!, true));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetAllImmediateAttributes(field!));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetAllImmediateAttributes(field!, true));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetAllImmediateAttributes(property!));
         Assert.Throws<ArgumentNullException>(() => ImmediateAttributesExtensions.GetAllImmediateAttributes(property!, true));
-        // ReSharper restore once AssignNullToNotNullAttribute
-        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 }

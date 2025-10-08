@@ -21,7 +21,6 @@ internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
     [Test]
     public static void HasDefaultConstructor_Throws()
     {
-        // ReSharper disable once AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => TypeExtensions.HasDefaultConstructor(null!));
     }
 
@@ -54,7 +53,6 @@ internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
     [Test]
     public static void NewParameterLess_Throws()
     {
-        // ReSharper disable once AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(null!));
         Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(NoDefaultConstructor)));
         Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(NotAccessibleDefaultConstructor)));
@@ -101,7 +99,6 @@ internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
     [Test]
     public static void TryNewParameterLess_Throws()
     {
-        // ReSharper disable once AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(null!, out _, out _));
     }
 
@@ -121,12 +118,9 @@ internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
     [Test]
     public static void NewWithParameters_Throws()
     {
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-        // ReSharper disable AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(null!, 12));
         Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(typeof(ParamsConstructor), null!));
         Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(null!, null!));
-        // ReSharper restore AssignNullToNotNullAttribute
 
         Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(NoDefaultConstructor), 12, 42));
         Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(NotAccessibleConstructor), 12));
@@ -136,7 +130,6 @@ internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
         Assert.Throws<MemberAccessException>(() => TypeExtensions.New(typeof(AbstractNoConstructor), 12));
         Assert.Throws<ArgumentException>(() => TypeExtensions.New(typeof(TemplateNoDefaultConstructor<>), 12));
         Assert.Throws<TargetInvocationException>(() => TypeExtensions.New(typeof(NotDefaultConstructorThrows), 12));
-        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateNotDefaultConstructorNoThrowNotNullParamsTestCases))]
@@ -152,11 +145,9 @@ internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
     [Test]
     public static void TryNewWithParameters_Throws()
     {
-        // ReSharper disable AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(null!, out _, out _, 12));
         Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(typeof(ParamsConstructor), out _, out _, null!));
         Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(null!, out _, out _, null!));
-        // ReSharper restore AssignNullToNotNullAttribute
     }
 
     #endregion
@@ -170,7 +161,6 @@ internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
     [Test]
     public static void HasCopyConstructor_Throws()
     {
-        // ReSharper disable once AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => TypeExtensions.HasCopyConstructor(null!));
     }
 
@@ -188,7 +178,6 @@ internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
     [Test]
     public static void Copy_Throws()
     {
-        // ReSharper disable once AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => TypeExtensions.Copy(null!, new CopyConstructorClass(11)));
 
         Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(NoCopyConstructorClass), new NoCopyConstructorClass()));
@@ -228,7 +217,6 @@ internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
     [Test]
     public static void TryCopy_Throws()
     {
-        // ReSharper disable once AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryCopy<object>(null!, null!, out _, out _));
     }
 

@@ -54,12 +54,8 @@ internal sealed class ImmediatePropertiesTests : ImmediateReflectionTestsBase
         Assert.IsNull(immediateProperties["NotExists"]);
         Assert.IsNull(immediateProperties.GetProperty("NotExists"));
 
-        // ReSharper disable InconsistentNaming
-        // ReSharper disable AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => { _ = immediateProperties[null!]; });
-        Assert.Throws<ArgumentNullException>(() => { _ = immediateProperties.GetProperty(null!); });
-        // ReSharper restore AssignNullToNotNullAttribute
-        // ReSharper restore InconsistentNaming
+        Assert.Throws<ArgumentNullException>(() => _ = immediateProperties[null!]);
+        Assert.Throws<ArgumentNullException>(() => _ = immediateProperties.GetProperty(null!));
     }
 
     [Test]

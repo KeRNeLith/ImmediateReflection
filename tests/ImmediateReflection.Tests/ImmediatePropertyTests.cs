@@ -643,22 +643,18 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     {
         var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
 
-        // ReSharper disable once AssignNullToNotNullAttribute
-        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<TargetException>(() => immediateProperty.GetValue(null));
+        Assert.Throws<TargetException>(() => _ = immediateProperty.GetValue(null));
     }
 
     [Test]
     public static void ImmediatePropertyGetValue_NoGetter()
     {
-        // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         var immediateProperty = new ImmediateProperty(PublicValueTypePublicSetPropertyPropertyInfo);
-        Assert.Throws<ArgumentException>(() => immediateProperty.GetValue(new PublicValueTypeTestClass()));
+        Assert.Throws<ArgumentException>(() => _ = immediateProperty.GetValue(new PublicValueTypeTestClass()));
 
         immediateProperty = new ImmediateProperty(BaseInterfaceSetPropertyPropertyInfo);
         // Cannot get via interface property even if property is get/set on implementation
-        Assert.Throws<ArgumentException>(() => immediateProperty.GetValue(new ImplementationInterfacesTestClass()));
-        // ReSharper restore ReturnValueOfPureMethodIsNotUsed
+        Assert.Throws<ArgumentException>(() => _ = immediateProperty.GetValue(new ImplementationInterfacesTestClass()));
     }
 
     #endregion
@@ -1240,7 +1236,6 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     {
         var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
 
-        // ReSharper disable once AssignNullToNotNullAttribute
         Assert.Throws<TargetException>(() => immediateProperty.SetValue(null, null));
     }
 

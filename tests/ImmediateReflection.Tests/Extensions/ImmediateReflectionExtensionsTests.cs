@@ -33,9 +33,6 @@ internal sealed class ImmediateReflectionExtensionsTests : ImmediateReflectionTe
     public static void GetImmediateTypeFromObject_Throws()
     {
         object? testObject = null;
-
-        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        // ReSharper disable once AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => ImmediateReflectionExtensions.GetImmediateType(testObject));
     }
 
@@ -63,9 +60,6 @@ internal sealed class ImmediateReflectionExtensionsTests : ImmediateReflectionTe
     public static void GetImmediateTypeFromType_Throws()
     {
         Type? testType = null;
-
-        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        // ReSharper disable once AssignNullToNotNullAttribute
         Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateType());
     }
 }

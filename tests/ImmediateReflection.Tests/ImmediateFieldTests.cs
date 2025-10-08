@@ -316,8 +316,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     public static void ImmediateFieldGetValue_EnumThrows()
     {
         var immediateField = new ImmediateField(TestEnumFieldValueFieldInfo);
-        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<TargetException>(() => immediateField.GetValue(null));
+        Assert.Throws<TargetException>(() => _ = immediateField.GetValue(null));
     }
 
     [Test]
@@ -341,9 +340,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     {
         var immediateField = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
 
-        // ReSharper disable once AssignNullToNotNullAttribute
-        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<TargetException>(() => immediateField.GetValue(null));
+        Assert.Throws<TargetException>(() => _ = immediateField.GetValue(null));
     }
 
     #endregion
@@ -595,7 +592,6 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     public static void ImmediateFieldSetValue_EnumThrows()
     {
         var immediateField = new ImmediateField(TestEnumFieldValueFieldInfo);
-        // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
         Assert.Throws<TargetException>(() => immediateField.SetValue(null, TestEnum.EnumValue2));
 
         immediateField = new ImmediateField(TestEnumField1FieldInfo);
@@ -647,7 +643,6 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     {
         var immediateField = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
 
-        // ReSharper disable once AssignNullToNotNullAttribute
         Assert.Throws<TargetException>(() => immediateField.SetValue(null, null));
     }
 

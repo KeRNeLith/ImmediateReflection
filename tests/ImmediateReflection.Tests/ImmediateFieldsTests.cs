@@ -40,12 +40,8 @@ internal sealed class ImmediateFieldsTests : ImmediateReflectionTestsBase
         Assert.IsNull(immediateFields["NotExists"]);
         Assert.IsNull(immediateFields.GetField("NotExists"));
 
-        // ReSharper disable InconsistentNaming
-        // ReSharper disable AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => { _ = immediateFields[null!]; });
-        Assert.Throws<ArgumentNullException>(() => { _ = immediateFields.GetField(null!); });
-        // ReSharper restore AssignNullToNotNullAttribute
-        // ReSharper restore InconsistentNaming
+        Assert.Throws<ArgumentNullException>(() => _ = immediateFields[null!]);
+        Assert.Throws<ArgumentNullException>(() => _ = immediateFields.GetField(null!));
     }
 
     #region Equals/HashCode/ToString
