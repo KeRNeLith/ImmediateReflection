@@ -5,7 +5,6 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 using Fasterflect;
 using FlashReflection;
-using JetBrains.Annotations;
 
 namespace ImmediateReflection.Benchmark;
 
@@ -145,18 +144,18 @@ public class PropertySetterOverObjectsBenchmark : ObjectsBenchmarkBase
 
     #region Helper methods
 
-    private static readonly uint[] ValueToSet = { 2u, 3u };
+    private static readonly uint[] ValueToSet = [2u, 3u];
 
-    public void SetPropertyReflection([NotNull] object obj)
+    private static void SetPropertyReflection(object obj)
     {
-        PropertyInfo propertyInfo = obj.GetType().GetProperty(UIntArrayPropertyName);
+        PropertyInfo? propertyInfo = obj.GetType().GetProperty(UIntArrayPropertyName);
         if (propertyInfo is null || propertyInfo.PropertyType != typeof(uint[]))
             return;
 
         propertyInfo.SetValue(obj, ValueToSet);
     }
 
-    public void SetPropertyReflectionCache([NotNull] object obj)
+    private static void SetPropertyReflectionCache(object obj)
     {
         if (obj.GetType() != typeof(ObjectsBenchmarkObject1))
             return;
@@ -164,15 +163,15 @@ public class PropertySetterOverObjectsBenchmark : ObjectsBenchmarkBase
         UIntArrayPropertyInfo.SetValue(obj, ValueToSet);
     }
 
-    public void SetPropertyTypeDescriptor([NotNull] object obj)
+    private static void SetPropertyTypeDescriptor(object obj)
     {
-        PropertyDescriptor propertyDescriptor = TypeDescriptor.GetProperties(obj).Find(UIntArrayPropertyName, false);
+        PropertyDescriptor? propertyDescriptor = TypeDescriptor.GetProperties(obj).Find(UIntArrayPropertyName, false);
         propertyDescriptor?.SetValue(obj, ValueToSet);
     }
 
-    public void SetPropertyFastMember([NotNull] object obj)
+    private static void SetPropertyFastMember(object obj)
     {
-        FastMember.TypeAccessor accessor = FastMember.TypeAccessor.Create(obj.GetType());
+        var accessor = FastMember.TypeAccessor.Create(obj.GetType());
         bool hasProperty = accessor.GetMembers().Any(m => m.Name == UIntArrayPropertyName);
         if (!hasProperty)
             return;
@@ -180,23 +179,23 @@ public class PropertySetterOverObjectsBenchmark : ObjectsBenchmarkBase
         accessor[obj, UIntArrayPropertyName] = ValueToSet;
     }
 
-    public void SetPropertyFlashReflection([NotNull] object obj)
+    private static void SetPropertyFlashReflection(object obj)
     {
         ReflectionType type = ReflectionCache.Instance.GetReflectionType(obj.GetType());
-        ReflectionProperty property = type.Properties[UIntArrayPropertyName];
+        ReflectionProperty? property = type.Properties[UIntArrayPropertyName];
 
         property?.SetValue(obj, ValueToSet);
     }
 
-    public void SetPropertyImmediateReflection([NotNull] object obj)
+    private static void SetPropertyImmediateReflection(object obj)
     {
         ImmediateType accessor = ImmediateReflection.TypeAccessor.Get(obj.GetType());
-        ImmediateProperty property = accessor.GetProperty(UIntArrayPropertyName);
+        ImmediateProperty? property = accessor.GetProperty(UIntArrayPropertyName);
 
         property?.SetValue(obj, ValueToSet);
     }
 
-    public void SetPropertyFasterflect([NotNull] object obj)
+    private static void SetPropertyFasterflect(object obj)
     {
         obj.TrySetPropertyValue(UIntArrayPropertyName, ValueToSet);
     }

@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Reflection.Emit;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
-using static ImmediateReflection.Utils.ReflectionHelpers;
 using JetBrains.Annotations;
+using static ImmediateReflection.GeneralHelpers;
+using static ImmediateReflection.Utils.ReflectionHelpers;
 
 namespace ImmediateReflection;
 
@@ -17,19 +18,14 @@ internal static class DelegatesFactory
 {
     #region Constructor
 
-    [NotNull]
     private const string RuntimeTypeName = "System.RuntimeType";
-
-    [NotNull]
-    // ReSharper disable once AssignNullToNotNullAttribute, Justification: This type must exists.
-    private static readonly Type RuntimeType = Type.GetType(RuntimeTypeName);
+    private static readonly Type RuntimeType = Type.GetType(RuntimeTypeName)!;  // Justification: This type must exist.
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("type:null => halt")]
-    public static DefaultConstructorDelegate CreateDefaultConstructor([NotNull] Type type, out bool hasConstructor)
+    public static DefaultConstructorDelegate CreateDefaultConstructor(Type type, out bool hasConstructor)
     {
-        Debug.Assert(type != null);
+        AssertNotNull(type);
 
         hasConstructor = false;
 
@@ -40,8 +36,8 @@ internal static class DelegatesFactory
         if (type.IsAbstract)
             return () => throw new MissingMethodException($"Abstract class {type.Name} cannot be instantiated.");
         if (type.IsArray)
-            // ReSharper disable once PossibleNullReferenceException, Justification: Type is an array so it must have an element type.
-            return () => throw new MissingMethodException($"There is no default constructor for array of {type.GetElementType().Name}.");
+            // Justification: Type is an array so it must have an element type.
+            return () => throw new MissingMethodException($"There is no default constructor for array of {type.GetElementType()!.Name}.");
 
         DynamicMethod dynamicConstructor = CreateDynamicDefaultConstructor(type.Name);
         dynamicConstructor.InitLocals = true;
@@ -58,11 +54,11 @@ internal static class DelegatesFactory
         // Get the default constructor if available
         else
         {
-            ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes);
+            ConstructorInfo? constructor = type.GetConstructor(Type.EmptyTypes);
             if (constructor is null)
             {
                 // Last possibility the class has at least one params constructor only
-                if (TryGetParamsConstructorAsDefault(type, out constructor, out Type parameterType, out DefaultConstructorDelegate faultyConstructor))
+                if (TryGetParamsConstructorAsDefault(type, out constructor, out Type? parameterType, out DefaultConstructorDelegate? faultyConstructor))
                 {
                     // Create an empty array to fill the params parameter
                     generator.Emit(OpCodes.Ldc_I4_0);
@@ -87,12 +83,12 @@ internal static class DelegatesFactory
     [ContractAnnotation("=> true, paramsConstructor:notnull,parameterType:notnull, faultyConstructor:null;" +
                         "=> false, paramsConstructor:null,parameterType:null, faultyConstructor:notnull")]
     private static bool TryGetParamsConstructorAsDefault(
-        [NotNull] Type type,
-        out ConstructorInfo paramsConstructor,
-        out Type parameterType,
-        out DefaultConstructorDelegate faultyConstructor)
+        Type type,
+        [NotNullWhen(true)] out ConstructorInfo? paramsConstructor,
+        [NotNullWhen(true)] out Type? parameterType,
+        [NotNullWhen(false)] out DefaultConstructorDelegate? faultyConstructor)
     {
-        Debug.Assert(type != null);
+        AssertNotNull(type);
 
         paramsConstructor = null;
         parameterType = null;
@@ -101,9 +97,9 @@ internal static class DelegatesFactory
         ConstructorInfo[] constructors = type.GetConstructors();
         if (constructors.Length > 0)
         {
-            for (int i = 0; i < constructors.Length; ++i)
+            foreach (ConstructorInfo constructor in constructors)
             {
-                ParameterInfo[] parameters = constructors[i].GetParameters();
+                ParameterInfo[] parameters = constructor.GetParameters();
                 // Skip constructors with more than one parameter
                 if (parameters.Length > 1)
                     continue;
@@ -113,7 +109,7 @@ internal static class DelegatesFactory
                 {
                     if (paramsConstructor is null)
                     {
-                        paramsConstructor = constructors[i];
+                        paramsConstructor = constructor;
                         parameterType = parameters[0].ParameterType.GetElementType();
                         // Continue the search to detect ambiguity with another constructor
                     }
@@ -133,20 +129,17 @@ internal static class DelegatesFactory
             return false;
         }
 
-        return true;
+        return parameterType is not null;
     }
 
-    [NotNull]
     private static readonly ConstructorInfo ArgumentExceptionCtor =
         typeof(ArgumentException).GetConstructor(new[] { typeof(string), typeof(string) })
         ?? throw new InvalidOperationException($"{nameof(ArgumentException)} must have a (String, String) constructor.");
 
-    [NotNull]
     private static readonly MethodInfo GetTypeMethod =
         typeof(object).GetMethod(nameof(GetType))
         ?? throw new InvalidOperationException($"{nameof(GetType)} not found.");
 
-    [NotNull]
     private static readonly MethodInfo TypeEqualsMethod =
         typeof(Type).GetMethod(
             "op_Equality",
@@ -155,27 +148,25 @@ internal static class DelegatesFactory
             new[] { typeof(Type), typeof(Type) },
             null) ?? throw new InvalidOperationException("Cannot find == operator method on Type.");
 
-    [NotNull]
     private static readonly MethodInfo GetTypeFromHandleMethod =
         typeof(Type).GetMethod(nameof(Type.GetTypeFromHandle))
         ?? throw new InvalidOperationException($"{nameof(Type.GetTypeFromHandle)} not found.");
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("type:null => halt")]
-    public static CopyConstructorDelegate CreateCopyConstructor([NotNull] Type type, out bool hasConstructor)
+    public static CopyConstructorDelegate CreateCopyConstructor(Type type, out bool hasConstructor)
     {
-        Debug.Assert(type != null);
+        AssertNotNull(type);
 
         hasConstructor = false;
 
         if (type == RuntimeType)
-            return other => throw new ArgumentException($"Trying to call copy constructor on {RuntimeTypeName}.");
+            return _ => throw new ArgumentException($"Trying to call copy constructor on {RuntimeTypeName}.");
         if (type.ContainsGenericParameters)
-            return other => throw new ArgumentException($"Class {type.Name} has at least one template parameter not defined.");
+            return _ => throw new ArgumentException($"Class {type.Name} has at least one template parameter not defined.");
         if (type.IsArray)
-            // ReSharper disable once PossibleNullReferenceException, Justification: Type is an array so it must have an element type.
-            return other => throw new MissingMethodException($"There is no copy constructor for array of {type.GetElementType().Name}.");
+            // Justification: Type is an array so it must have an element type.
+            return _ => throw new MissingMethodException($"There is no copy constructor for array of {type.GetElementType()!.Name}.");
 
         // Simply return the value itself for value types
         // String are immutable and does not provide a copy constructor but treat them as if they have one
@@ -187,12 +178,12 @@ internal static class DelegatesFactory
         }
 
         if (type.IsAbstract)
-            return other => throw new MissingMethodException($"Abstract class {type.Name} cannot be copied.");
+            return _ => throw new MissingMethodException($"Abstract class {type.Name} cannot be copied.");
 
         // Get the copy constructor if available (with exact type matching for the parameter)
-        ConstructorInfo constructor = type.GetConstructor(new[]{ type });
+        ConstructorInfo? constructor = type.GetConstructor(new[] { type });
         if (constructor is null || constructor.GetParameters()[0].ParameterType != type)
-            return other => throw new MissingMethodException($"Class {type.Name} does not contain any copy constructor.");
+            return _ => throw new MissingMethodException($"Class {type.Name} does not contain any copy constructor.");
 
         DynamicMethod dynamicConstructor = CreateDynamicCopyConstructor(type.Name);
         dynamicConstructor.InitLocals = true;
@@ -240,20 +231,23 @@ internal static class DelegatesFactory
     #region Getter
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("fieldInfo:null => halt")]
-    public static GetterDelegate CreateGetter([NotNull] FieldInfo fieldInfo)
+    public static GetterDelegate CreateGetter(FieldInfo fieldInfo)
     {
-        Debug.Assert(fieldInfo != null);
+        AssertNotNull(fieldInfo);
 
         DynamicMethod dynamicGetter = CreateDynamicGetter(fieldInfo, out Type targetType);
 
         ILGenerator generator = dynamicGetter.GetILGenerator();
 
         if (fieldInfo.IsStatic)
+        {
             RegisterStaticTargetArgument(generator, fieldInfo);
+        }
         else
+        {
             RegisterTargetArgument(generator, targetType);
+        }
 
         // Load field value to the stack
         generator.Emit(OpCodes.Ldfld, fieldInfo);
@@ -267,23 +261,24 @@ internal static class DelegatesFactory
     }
 
     [Pure]
-    [CanBeNull]
     [ContractAnnotation("propertyInfo:null => halt;getMethod:null => halt")]
-    public static GetterDelegate CreateGetter([NotNull] PropertyInfo propertyInfo, [NotNull] MethodInfo getMethod)
+    public static GetterDelegate? CreateGetter(PropertyInfo propertyInfo, MethodInfo getMethod)
     {
-        Debug.Assert(propertyInfo != null);
+        AssertNotNull(propertyInfo);
 
         if (!propertyInfo.CanRead)
             return null;
 
-        Debug.Assert(getMethod != null);
+        AssertNotNull(getMethod);
 
         DynamicMethod dynamicGetter = CreateDynamicGetter(propertyInfo, out Type targetType);
 
         ILGenerator generator = dynamicGetter.GetILGenerator();
 
         if (!getMethod.IsStatic)
+        {
             RegisterTargetArgument(generator, targetType);
+        }
 
         CallMethod(generator, getMethod);
 
@@ -300,20 +295,23 @@ internal static class DelegatesFactory
     #region Setter
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("fieldInfo:null => halt")]
-    public static SetterDelegate CreateSetter([NotNull] FieldInfo fieldInfo)
+    public static SetterDelegate CreateSetter(FieldInfo fieldInfo)
     {
-        Debug.Assert(fieldInfo != null);
+        AssertNotNull(fieldInfo);
 
         DynamicMethod dynamicSetter = CreateDynamicSetter(fieldInfo, out Type targetType);
 
         ILGenerator generator = dynamicSetter.GetILGenerator();
 
         if (fieldInfo.IsStatic)
+        {
             RegisterStaticTargetArgument(generator, fieldInfo);
+        }
         else
+        {
             RegisterTargetArgument(generator, targetType);
+        }
 
         // Load second argument to the stack
         generator.Emit(OpCodes.Ldarg_1);
@@ -330,23 +328,24 @@ internal static class DelegatesFactory
     }
 
     [Pure]
-    [CanBeNull]
     [ContractAnnotation("propertyInfo:null => halt;setMethod:null => halt")]
-    public static SetterDelegate CreateSetter([NotNull] PropertyInfo propertyInfo, [NotNull] MethodInfo setMethod)
+    public static SetterDelegate? CreateSetter(PropertyInfo propertyInfo, MethodInfo setMethod)
     {
-        Debug.Assert(propertyInfo != null);
+        AssertNotNull(propertyInfo);
 
         if (!propertyInfo.CanWrite)
             return null;
 
-        Debug.Assert(setMethod != null);
+        AssertNotNull(setMethod);
 
         DynamicMethod dynamicSetter = CreateDynamicSetter(propertyInfo, out Type targetType);
 
         ILGenerator generator = dynamicSetter.GetILGenerator();
 
         if (!setMethod.IsStatic)
+        {
             RegisterTargetArgument(generator, targetType);
+        }
 
         // Load second argument to the stack
         generator.Emit(OpCodes.Ldarg_1);
@@ -368,44 +367,40 @@ internal static class DelegatesFactory
     private const string DynamicMethodPrefix = "Immediate";
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("name:null => halt")]
-    private static DynamicMethod CreateDynamicMethod([NotNull] string name, [CanBeNull] Type returnType, [CanBeNull] Type[] parameterTypes)
+    private static DynamicMethod CreateDynamicMethod(string name, Type? returnType, Type[]? parameterTypes)
     {
-        Debug.Assert(name != null);
+        AssertNotNull(name);
 
         return new DynamicMethod($"{DynamicMethodPrefix}{name}", returnType, parameterTypes, typeof(DelegatesFactory).Module, true);
     }
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("name:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    private static DynamicMethod CreateDynamicProcedure([NotNull] string name, [CanBeNull] Type[] parameterTypes)
+    private static DynamicMethod CreateDynamicProcedure(string name, Type[]? parameterTypes)
     {
         return CreateDynamicMethod(name, typeof(void), parameterTypes);
     }
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("name:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    private static DynamicMethod CreateDynamicDefaultConstructor([NotNull] string name)
+    private static DynamicMethod CreateDynamicDefaultConstructor(string name)
     {
         return CreateDynamicMethod($"Constructor_{name}", typeof(object), Type.EmptyTypes);
     }
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("name:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    private static DynamicMethod CreateDynamicCopyConstructor([NotNull] string name)
+    private static DynamicMethod CreateDynamicCopyConstructor(string name)
     {
         return CreateDynamicMethod($"CopyConstructor_{name}", typeof(object), new[] { typeof(object) });
     }
@@ -415,14 +410,13 @@ internal static class DelegatesFactory
     /// </summary>
     /// <exception cref="InvalidOperationException">If it's impossible to retrieve the owner <see cref="T:System.Type"/>.</exception>
     [Pure]
-    [NotNull]
     [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    private static Type GetOwnerType([NotNull] MemberInfo member)
+    private static Type GetOwnerType(MemberInfo member)
     {
-        Debug.Assert(member != null);
+        AssertNotNull(member);
 
         return member.DeclaringType
                ?? member.ReflectedType
@@ -430,46 +424,42 @@ internal static class DelegatesFactory
     }
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("name:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    private static DynamicMethod CreateDynamicGetter([NotNull] string name)
+    private static DynamicMethod CreateDynamicGetter(string name)
     {
         return CreateDynamicMethod($"Get_{name}", typeof(object), new[] { typeof(object) });
     }
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    private static DynamicMethod CreateDynamicGetter([NotNull] MemberInfo member, [NotNull] out Type targetType)
+    private static DynamicMethod CreateDynamicGetter(MemberInfo member, out Type targetType)
     {
         targetType = GetOwnerType(member);
         return CreateDynamicGetter(member.Name);
     }
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("name:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    private static DynamicMethod CreateDynamicSetter([NotNull] string name)
+    private static DynamicMethod CreateDynamicSetter(string name)
     {
         return CreateDynamicProcedure($"Set_{name}", new[] { typeof(object), typeof(object) });
     }
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    private static DynamicMethod CreateDynamicSetter([NotNull] MemberInfo member, [NotNull] out Type targetType)
+    private static DynamicMethod CreateDynamicSetter(MemberInfo member, out Type targetType)
     {
         targetType = GetOwnerType(member);
         return CreateDynamicSetter(member.Name);
@@ -480,14 +470,14 @@ internal static class DelegatesFactory
     #region ILGenerator Helpers
 
     [ContractAnnotation("generator:null => halt;field:null => halt")]
-    private static void RegisterStaticTargetArgument([NotNull] ILGenerator generator, [NotNull] FieldInfo field)
+    private static void RegisterStaticTargetArgument(ILGenerator generator, FieldInfo field)
     {
         // Load static field argument
         generator.Emit(OpCodes.Ldsfld, field);
     }
 
     [ContractAnnotation("generator:null => halt")]
-    private static void NullCheckTarget([NotNull] ILGenerator generator)
+    private static void NullCheckTarget(ILGenerator generator)
     {
         Label notNull = generator.DefineLabel();
         generator.Emit(OpCodes.Ldarg_0);
@@ -499,7 +489,7 @@ internal static class DelegatesFactory
     }
 
     [ContractAnnotation("generator:null => halt;targetType:null => halt")]
-    private static void RegisterTargetArgument([NotNull] ILGenerator generator, [NotNull] Type targetType)
+    private static void RegisterTargetArgument(ILGenerator generator, Type targetType)
     {
         // If the target object is null throw TargetException
         NullCheckTarget(generator);
@@ -516,17 +506,21 @@ internal static class DelegatesFactory
     }
 
     [ContractAnnotation("generator:null => halt;method:null => halt")]
-    private static void CallMethod([NotNull] ILGenerator generator, [NotNull] MethodInfo method)
+    private static void CallMethod(ILGenerator generator, MethodInfo method)
     {
         // Call the method passing the object on the stack (only virtual if needed)
         if (method.IsFinal || !method.IsVirtual)
+        {
             generator.Emit(OpCodes.Call, method);
+        }
         else
+        {
             generator.Emit(OpCodes.Callvirt, method);
+        }
     }
 
     [ContractAnnotation("generator:null => halt;valueType:null => halt")]
-    private static void BoxIfNeeded([NotNull] ILGenerator generator, [NotNull] Type valueType)
+    private static void BoxIfNeeded(ILGenerator generator, Type valueType)
     {
         // Already the right type
         if (valueType == typeof(object))
@@ -541,7 +535,7 @@ internal static class DelegatesFactory
     }
 
     [ContractAnnotation("generator:null => halt;valueType:null => halt")]
-    private static void UnboxIfNeeded([NotNull] ILGenerator generator, [NotNull] Type valueType)
+    private static void UnboxIfNeeded(ILGenerator generator, Type valueType)
     {
         // Already the right type
         if (valueType == typeof(object))
@@ -556,7 +550,7 @@ internal static class DelegatesFactory
     }
 
     [ContractAnnotation("generator:null => halt")]
-    private static void MethodReturn([NotNull] ILGenerator generator)
+    private static void MethodReturn(ILGenerator generator)
     {
         // Return
         generator.Emit(OpCodes.Ret);

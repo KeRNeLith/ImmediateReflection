@@ -2,7 +2,6 @@
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
-using JetBrains.Annotations;
 
 namespace ImmediateReflection.Benchmark;
 
@@ -14,12 +13,8 @@ namespace ImmediateReflection.Benchmark;
 public class FieldMultiSetterBenchmark : BenchmarkBase
 {
     private const int ValueToSet = 12;
-
     private const float ValueToSet2 = 14.1f;
-
-    [NotNull]
     private const string ValueToSet3 = "Updated Benchmark Field";
-
     private const uint ValueToSet4 = 6;
 
     // Benchmark methods
@@ -36,23 +31,21 @@ public class FieldMultiSetterBenchmark : BenchmarkBase
     public void SetFieldInfo_Field()
     {
         Type benchmarkType = BenchmarkObject.GetType();
-        FieldInfo benchmarkField = benchmarkType.GetField(BenchmarkObjectFieldName);
+        FieldInfo benchmarkField = benchmarkType.GetField(BenchmarkObjectFieldName)!;
 
         Type benchmarkType2 = BenchmarkObject2.GetType();
-        FieldInfo benchmarkField2 = benchmarkType2.GetField(BenchmarkObjectFieldName2);
+        FieldInfo benchmarkField2 = benchmarkType2.GetField(BenchmarkObjectFieldName2)!;
 
         Type benchmarkType3 = BenchmarkObject3.GetType();
-        FieldInfo benchmarkField3 = benchmarkType3.GetField(BenchmarkObjectFieldName3);
+        FieldInfo benchmarkField3 = benchmarkType3.GetField(BenchmarkObjectFieldName3)!;
 
         Type benchmarkType4 = BenchmarkObject4.GetType();
-        FieldInfo benchmarkField4 = benchmarkType4.GetField(BenchmarkObjectFieldName4);
+        FieldInfo benchmarkField4 = benchmarkType4.GetField(BenchmarkObjectFieldName4)!;
 
-        // ReSharper disable PossibleNullReferenceException
         benchmarkField.SetValue(BenchmarkObject, ValueToSet);
         benchmarkField2.SetValue(BenchmarkObject2, ValueToSet2);
         benchmarkField3.SetValue(BenchmarkObject3, ValueToSet3);
         benchmarkField4.SetValue(BenchmarkObject4, ValueToSet4);
-        // ReSharper restore PossibleNullReferenceException
     }
 
     [Benchmark]

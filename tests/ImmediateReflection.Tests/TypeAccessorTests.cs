@@ -9,10 +9,10 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="TypeAccessor"/>.
 /// </summary>
 [TestFixture]
-internal class TypeAccessorTests : ImmediateReflectionTestsBase
+internal sealed class TypeAccessorTests : ImmediateReflectionTestsBase
 {
     [Test]
-    public void Get()
+    public static void Get()
     {
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
@@ -47,7 +47,7 @@ internal class TypeAccessorTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void GetWithNonPublic()
+    public static void GetWithNonPublic()
     {
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
@@ -57,7 +57,7 @@ internal class TypeAccessorTests : ImmediateReflectionTestsBase
         immediateType = TypeAccessor.Get(typeof(PublicValueTypeTestClass), true);
         CheckPublicAndNonPublicInstanceMembers(immediateType);
 
-        #region Local functions
+        #region Local function
 
         void CheckPublicAndNonPublicInstanceMembers(ImmediateType type)
         {
@@ -76,7 +76,7 @@ internal class TypeAccessorTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void GetWithFlags()
+    public static void GetWithFlags()
     {
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
@@ -87,7 +87,7 @@ internal class TypeAccessorTests : ImmediateReflectionTestsBase
         immediateType = TypeAccessor.Get(typeof(PublicValueTypeTestClass), flags);
         CheckStaticInstanceMembers(immediateType);
 
-        #region Local functions
+        #region Local function
 
         void CheckStaticInstanceMembers(ImmediateType type)
         {
@@ -106,20 +106,20 @@ internal class TypeAccessorTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void Get_NullType()
+    public static void Get_NullType()
     {
         // ReSharper disable AssignNullToNotNullAttribute
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null));
-        Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null, false));
-        Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null, true));
-        Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null, BindingFlags.Public | BindingFlags.Instance));
+        Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null!));
+        Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null!, false));
+        Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null!, true));
+        Assert.Throws<ArgumentNullException>(() => TypeAccessor.Get(null!, BindingFlags.Public | BindingFlags.Instance));
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         // ReSharper restore AssignNullToNotNullAttribute
     }
 
     [Test]
-    public void GetCached()
+    public static void GetCached()
     {
         ImmediateType immediateType1 = TypeAccessor.Get(typeof(PublicValueTypeTestClass));
         Assert.IsNotNull(immediateType1);

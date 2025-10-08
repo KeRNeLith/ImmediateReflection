@@ -3,7 +3,7 @@
 /// <summary>
 /// Benchmark object.
 /// </summary>
-public class BenchmarkObject
+internal sealed class BenchmarkObject
 {
     // ReSharper disable once InconsistentNaming
     public int _benchmarkField = 42;

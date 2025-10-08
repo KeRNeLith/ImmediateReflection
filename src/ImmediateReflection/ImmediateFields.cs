@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -10,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 using JetBrains.Annotations;
+using static ImmediateReflection.GeneralHelpers;
 
 namespace ImmediateReflection;
 
@@ -23,26 +23,24 @@ public sealed class ImmediateFields
     , IEquatable<ImmediateFields>
     , ISerializable
 {
-    [NotNull]
-    private readonly Dictionary<string, ImmediateField> _fields
-        = new Dictionary<string, ImmediateField>();
+    private readonly Dictionary<string, ImmediateField> _fields = new(StringComparer.Ordinal);
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="fields">Enumerable of <see cref="FieldInfo"/> to wrap.</param>
-    internal ImmediateFields([NotNull, ItemNotNull] IEnumerable<FieldInfo> fields)
+    internal ImmediateFields(IEnumerable<FieldInfo> fields)
     {
         Init(fields);
     }
 
-    private void Init([NotNull, ItemNotNull] IEnumerable<FieldInfo> fields)
+    private void Init(IEnumerable<FieldInfo> fields)
     {
-        Debug.Assert(fields != null);
+        AssertNotNull(fields);
 
         foreach (FieldInfo field in fields)
         {
-            Debug.Assert(field != null);
+            AssertNotNull(field);
 
             _fields.Add(field.Name, CachesHandler.Instance.GetField(field));
         }
@@ -55,9 +53,8 @@ public sealed class ImmediateFields
     /// <returns>Found <see cref="ImmediateField"/>, otherwise null.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="fieldName"/> is null.</exception>
     [PublicAPI]
-    [CanBeNull]
-    public ImmediateField this[[NotNull] string fieldName] =>
-        _fields.TryGetValue(fieldName, out ImmediateField field)
+    public ImmediateField? this[string fieldName] =>
+        _fields.TryGetValue(fieldName, out ImmediateField? field)
             ? field
             : null;
 
@@ -69,23 +66,22 @@ public sealed class ImmediateFields
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="fieldName"/> is null.</exception>
     [PublicAPI]
     [Pure]
-    [CanBeNull]
     [ContractAnnotation("fieldName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public ImmediateField GetField([NotNull] string fieldName) => this[fieldName];
+    public ImmediateField? GetField(string fieldName) => this[fieldName];
 
     #region Equality / IEquatable<T>
 
     /// <inheritdoc />
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         return Equals(obj as ImmediateFields);
     }
 
     /// <inheritdoc />
-    public bool Equals(ImmediateFields other)
+    public bool Equals(ImmediateFields? other)
     {
         if (other is null)
             return false;

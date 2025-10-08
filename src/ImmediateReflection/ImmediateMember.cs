@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
 using JetBrains.Annotations;
+using static ImmediateReflection.GeneralHelpers;
 
 namespace ImmediateReflection;
 
@@ -20,19 +20,17 @@ public abstract class ImmediateMember
     /// Gets the name of the current member.
     /// </summary>
     [PublicAPI]
-    [NotNull]
     public string Name { get; }
 
-    [NotNull]
     private readonly AttributesCache _attributeCache;
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="member"><see cref="T:System.Reflection.MemberInfo"/> to wrap.</param>
-    protected ImmediateMember([NotNull] MemberInfo member)
+    protected ImmediateMember(MemberInfo member)
     {
-        Debug.Assert(member != null);
+        AssertNotNull(member);
 
         Name = member.Name;
 
@@ -71,7 +69,7 @@ public abstract class ImmediateMember
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public bool IsDefined([NotNull] Type attributeType, bool inherit = false)
+    public bool IsDefined(Type attributeType, bool inherit = false)
     {
         return _attributeCache.IsDefined(attributeType, inherit);
     }
@@ -84,11 +82,10 @@ public abstract class ImmediateMember
     /// <returns>The first attribute matching requested type, otherwise null.</returns>
     [PublicAPI]
     [Pure]
-    [CanBeNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public TAttribute GetAttribute<TAttribute>(bool inherit = false)
+    public TAttribute? GetAttribute<TAttribute>(bool inherit = false)
         where TAttribute : Attribute
     {
         return _attributeCache.GetAttribute<TAttribute>(inherit);
@@ -104,12 +101,11 @@ public abstract class ImmediateMember
     /// <exception cref="T:System.ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="T:System.Attribute"/> type.</exception>
     [PublicAPI]
     [Pure]
-    [CanBeNull]
     [ContractAnnotation("attributeType:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public Attribute GetAttribute([NotNull] Type attributeType, bool inherit = false)
+    public Attribute? GetAttribute(Type attributeType, bool inherit = false)
     {
         return _attributeCache.GetAttribute(attributeType, inherit);
     }
@@ -122,7 +118,6 @@ public abstract class ImmediateMember
     /// <returns>Attributes matching requested type.</returns>
     [PublicAPI]
     [Pure]
-    [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -140,12 +135,11 @@ public abstract class ImmediateMember
     /// <returns>Attributes matching requested type.</returns>
     [PublicAPI]
     [Pure]
-    [NotNull, ItemNotNull]
     [ContractAnnotation("attributeType:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public IEnumerable<Attribute> GetAttributes([NotNull] Type attributeType, bool inherit = false)
+    public IEnumerable<Attribute> GetAttributes(Type attributeType, bool inherit = false)
     {
         return _attributeCache.GetAttributes(attributeType, inherit);
     }
@@ -157,7 +151,6 @@ public abstract class ImmediateMember
     /// <returns>All attributes.</returns>
     [PublicAPI]
     [Pure]
-    [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif

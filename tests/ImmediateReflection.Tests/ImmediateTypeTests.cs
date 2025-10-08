@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using JetBrains.Annotations;
 using NUnit.Framework;
 using static ImmediateReflection.Tests.ConstructorTestHelpers;
 
@@ -12,17 +11,17 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ImmediateType"/>.
 /// </summary>
 [TestFixture]
-internal class ImmediateTypeTests : ImmediateReflectionTestsBase
+internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
 {
     #region ImmediateType infos
 
     #region Test classes
 
-    private class EmptyType
+    private sealed class EmptyType
     {
     }
 
-    private class PrivateNestedClass
+    private sealed class PrivateNestedClass
     {
 #pragma warning disable 649
         // ReSharper disable once InconsistentNaming
@@ -37,14 +36,10 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     #region Test helpers
 
     // Fields //
-
-    [NotNull]
     private static readonly FieldInfo PrivateNestedPublicFieldFieldInfo =
         typeof(PrivateNestedClass).GetField(nameof(PrivateNestedClass._nestedTestValue)) ?? throw new AssertionException("Cannot find field.");
 
     // Properties //
-
-    [NotNull]
     private static readonly PropertyInfo PrivateNestedPublicGetSetPropertyPropertyInfo =
         typeof(PrivateNestedClass).GetProperty(nameof(PrivateNestedClass.NestedTestValue)) ?? throw new AssertionException("Cannot find property.");
 
@@ -53,7 +48,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     #endregion
 
     [Test]
-    public void ImmediateTypeEmptyType()
+    public static void ImmediateTypeEmptyType()
     {
         var emptyType = new ImmediateType(typeof(EmptyType));
         Assert.AreEqual(typeof(EmptyType), emptyType.Type);
@@ -68,7 +63,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateTypeValueType()
+    public static void ImmediateTypeValueType()
     {
         // Public class
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
@@ -108,7 +103,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateTypeReferenceType()
+    public static void ImmediateTypeReferenceType()
     {
         // Public class
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicReferenceTypeTestObject();
@@ -148,7 +143,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateTypeObjectReferenceType()
+    public static void ImmediateTypeObjectReferenceType()
     {
         // Public class
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicObjectTypeTestObject();
@@ -188,7 +183,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateTypeNestedType()
+    public static void ImmediateTypeNestedType()
     {
         // Public class
         var nestedImmediateTypePublic = new ImmediateType(typeof(PublicTestClass.PublicNestedClass));
@@ -280,7 +275,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateTypeInheritedType()
+    public static void ImmediateTypeInheritedType()
     {
         var immediateType = new ImmediateType(typeof(object));
         Assert.AreEqual(typeof(object), immediateType.Type);
@@ -311,7 +306,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateTypeEnumType()
+    public static void ImmediateTypeEnumType()
     {
         // Simple test enum
         CheckEnumType(
@@ -344,9 +339,9 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
                 TestEnumFlagsField3FieldInfo
             });
 
-        #region Local functions
+        #region Local function
 
-        void CheckEnumType(Type enumType, IEnumerable<FieldInfo> enumFields)
+        static void CheckEnumType(Type enumType, IEnumerable<FieldInfo> enumFields)
         {
             var immediateType = new ImmediateType(enumType);
             Assert.AreEqual(enumType, immediateType.Type);
@@ -367,7 +362,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateTypeInterface()
+    public static void ImmediateTypeInterface()
     {
         // Base interface
         var immediateType = new ImmediateType(typeof(IBaseTestInterface));
@@ -427,7 +422,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateTypeAnonymousType()
+    public static void ImmediateTypeAnonymousType()
     {
         var testObject = new
         {
@@ -449,7 +444,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateTypeWithFlags()
+    public static void ImmediateTypeWithFlags()
     {
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
@@ -491,7 +486,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateTypeNewKeyword()
+    public static void ImmediateTypeNewKeyword()
     {
         var immediateType = new ImmediateType(typeof(BaseTestClass));
         Assert.AreEqual(typeof(BaseTestClass), immediateType.Type);
@@ -540,7 +535,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateTypeIndexedProperties()
+    public static void ImmediateTypeIndexedProperties()
     {
         var immediateType = new ImmediateType(typeof(ChildItemTestClass));
         Assert.AreEqual(typeof(ChildItemTestClass), immediateType.Type);
@@ -563,7 +558,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     #region Members
 
     [Test]
-    public void ImmediateTypeGetMembers()
+    public static void ImmediateTypeGetMembers()
     {
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
@@ -578,7 +573,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
 
         #region Local function
 
-        IEnumerable<MemberInfo> SelectAllMemberInfos(IEnumerable<ImmediateMember> members)
+        static IEnumerable<MemberInfo> SelectAllMemberInfos(IEnumerable<ImmediateMember> members)
         {
             return members.Select<ImmediateMember, MemberInfo>(member =>
             {
@@ -595,7 +590,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateTypeGetMember()
+    public static void ImmediateTypeGetMember()
     {
         var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
         string memberName = nameof(PublicValueTypeTestClass._publicField);
@@ -612,9 +607,9 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
 
         // ReSharper disable AssignNullToNotNullAttribute
         // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentNullException>(() => immediateType.GetMember(null));
+        Assert.Throws<ArgumentNullException>(() => immediateType.GetMember(null!));
         // ReSharper disable once UnusedVariable
-        Assert.Throws<ArgumentNullException>(() => { ImmediateMember member = immediateType[null]; });
+        Assert.Throws<ArgumentNullException>(() => { _ = immediateType[null!]; });
         // ReSharper restore AssignNullToNotNullAttribute
     }
 
@@ -623,7 +618,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     #region Fields
 
     [Test]
-    public void ImmediateTypeGetFields()
+    public static void ImmediateTypeGetFields()
     {
         var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
         CollectionAssert.AreEquivalent(immediateType1.Fields, immediateType1.GetFields());
@@ -633,7 +628,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateTypeGetField()
+    public static void ImmediateTypeGetField()
     {
         var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
         string fieldName = nameof(PublicValueTypeTestClass._publicField);
@@ -644,7 +639,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
 
         // ReSharper disable once AssignNullToNotNullAttribute
         // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentNullException>(() => immediateType.GetField(null));
+        Assert.Throws<ArgumentNullException>(() => immediateType.GetField(null!));
     }
 
     #endregion
@@ -652,7 +647,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     #region Properties
 
     [Test]
-    public void ImmediateTypeGetProperties()
+    public static void ImmediateTypeGetProperties()
     {
         var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
         CollectionAssert.AreEquivalent(immediateType1.Properties, immediateType1.GetProperties());
@@ -662,7 +657,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateTypeGetProperty()
+    public static void ImmediateTypeGetProperty()
     {
         var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
         string propertyName = nameof(PublicValueTypeTestClass.PublicPropertyGetSet);
@@ -673,7 +668,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
 
         // ReSharper disable once AssignNullToNotNullAttribute
         // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentNullException>(() => immediateType.GetProperty(null));
+        Assert.Throws<ArgumentNullException>(() => immediateType.GetProperty(null!));
     }
 
     #endregion
@@ -683,7 +678,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     #region Has Default Constructor
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateHasDefaultConstructorTestCases))]
-    public bool HasDefaultConstructor([NotNull] Type type)
+    public static bool HasDefaultConstructor(Type type)
     {
         var immediateType = new ImmediateType(type);
         return immediateType.HasDefaultConstructor;
@@ -694,7 +689,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     #region New/TryNew
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateDefaultConstructorTestCases))]
-    public void NewParameterLess([NotNull] Type type)
+    public static void NewParameterLess(Type type)
     {
         ConstructorTestHelpers.NewParameterLess(
             type,
@@ -706,7 +701,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void NewParamsOnly()
+    public static void NewParamsOnly()
     {
         ConstructorTestHelpers.NewParamsOnly(
             () =>
@@ -734,7 +729,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void NewParameterLess_Throws()
+    public static void NewParameterLess_Throws()
     {
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         var immediateType = new ImmediateType(typeof(NoDefaultConstructor));
@@ -783,12 +778,12 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateDefaultConstructorNoThrowTestCases))]
-    public void TryNewParameterLess([NotNull] Type type, bool expectFail)
+    public static void TryNewParameterLess(Type type, bool expectFail)
     {
         ConstructorTestHelpers.TryNewParameterLess(
             type,
             expectFail,
-            (out object instance, out Exception exception) =>
+            (out object? instance, out Exception? exception) =>
             {
                 var immediateType = new ImmediateType(type);
                 return immediateType.TryNew(out instance, out exception);
@@ -796,10 +791,10 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void TryNewParameterLess()
+    public static void TryNewParameterLess()
     {
         ConstructorTestHelpers.TryNewParameterLess(
-            (out object instance, out Exception exception) =>
+            (out object? instance, out Exception? exception) =>
             {
                 var immediateType = new ImmediateType(typeof(ParamsOnlyConstructor));
                 return immediateType.TryNew(out instance, out exception);
@@ -807,7 +802,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
             () => new ParamsOnlyConstructor());
 
         ConstructorTestHelpers.TryNewParameterLess(
-            (out object instance, out Exception exception) =>
+            (out object? instance, out Exception? exception) =>
             {
                 var immediateType = new ImmediateType(typeof(IntParamsOnlyConstructor));
                 return immediateType.TryNew(out instance, out exception);
@@ -815,7 +810,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
             () => new IntParamsOnlyConstructor());
 
         ConstructorTestHelpers.TryNewParameterLess(
-            (out object instance, out Exception exception) =>
+            (out object? instance, out Exception? exception) =>
             {
                 var immediateType = new ImmediateType(typeof(NullableIntParamsOnlyConstructor));
                 return immediateType.TryNew(out instance, out exception);
@@ -828,7 +823,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     #region New(params)/TryNew(params)
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateNotDefaultConstructorTestCases))]
-    public void NewWithParameters([NotNull] Type type, [CanBeNull, ItemCanBeNull] params object[] arguments)
+    public static void NewWithParameters(Type type, params object?[] arguments)
     {
         ConstructorTestHelpers.NewWithParameters(
             type,
@@ -841,7 +836,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void NewWithParameters_Throws()
+    public static void NewWithParameters_Throws()
     {
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         var immediateType = new ImmediateType(typeof(NoDefaultConstructor));
@@ -871,12 +866,12 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateNotDefaultConstructorNoThrowTestCases))]
-    public void TryNewWithParameters([NotNull] Type type, bool expectFail, [CanBeNull, ItemCanBeNull] params object[] arguments)
+    public static void TryNewWithParameters(Type type, bool expectFail, params object?[] arguments)
     {
         ConstructorTestHelpers.TryNewWithParameters(
             type,
             expectFail,
-            (out object instance, out Exception exception, object[] args) =>
+            (out object? instance, out Exception? exception, object?[] args) =>
             {
                 var immediateType = new ImmediateType(type);
                 return immediateType.TryNew(out instance, out exception, args);
@@ -893,7 +888,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     #region Has Copy Constructor
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateHasCopyConstructorTestCases))]
-    public bool HasCopyConstructor([NotNull] Type type)
+    public static bool HasCopyConstructor(Type type)
     {
         var immediateType = new ImmediateType(type);
         return immediateType.HasCopyConstructor;
@@ -904,7 +899,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     #region Copy/TryCopy
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorTestCases))]
-    public void Copy([NotNull] Type type, [CanBeNull] object other)
+    public static void Copy(Type type, object? other)
     {
         ConstructorTestHelpers.Copy(
             type,
@@ -917,7 +912,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void Copy_Throws()
+    public static void Copy_Throws()
     {
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         var immediateType = new ImmediateType(typeof(NoCopyConstructorClass));
@@ -982,13 +977,13 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorNoThrowTestCases))]
-    public void TryCopy([NotNull] Type type, [CanBeNull] object other, bool expectFail)
+    public static void TryCopy(Type type, object? other, bool expectFail)
     {
         ConstructorTestHelpers.TryCopy(
             type,
             other,
             expectFail,
-            (object o, out object instance, out Exception exception) =>
+            (object? o, out object? instance, out Exception? exception) =>
             {
                 var immediateType = new ImmediateType(type);
                 return immediateType.TryCopy(o, out instance, out exception);
@@ -1002,22 +997,23 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     #region Equals/HashCode/ToString
 
     [Test]
-    public void ImmediateTypeEquality()
+    public static void ImmediateTypeEquality()
     {
         var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
         var immediateType2 = new ImmediateType(typeof(PublicValueTypeTestClass));
         Assert.IsTrue(immediateType1.Equals(immediateType1));
         Assert.IsTrue(immediateType1.Equals(immediateType2));
         Assert.IsTrue(immediateType1.Equals((object)immediateType2));
-        Assert.IsFalse(immediateType1.Equals(null));
 
         var immediateType3 = new ImmediateType(typeof(InternalValueTypeTestClass));
         Assert.IsFalse(immediateType1.Equals(immediateType3));
         Assert.IsFalse(immediateType1.Equals((object)immediateType3));
+
+        Assert.IsFalse(immediateType1.Equals(null));
     }
 
     [Test]
-    public void ImmediateTypeHashCode()
+    public static void ImmediateTypeHashCode()
     {
         var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
         var immediateType2 = new ImmediateType(typeof(PublicValueTypeTestClass));
@@ -1029,7 +1025,7 @@ internal class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateTypeToString()
+    public static void ImmediateTypeToString()
     {
         var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
         Assert.AreEqual(typeof(PublicValueTypeTestClass).ToString(), immediateType1.ToString());

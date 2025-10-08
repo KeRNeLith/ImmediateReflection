@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Diagnostics;
 using JetBrains.Annotations;
+using static ImmediateReflection.GeneralHelpers;
 
 namespace ImmediateReflection;
 
@@ -13,10 +13,9 @@ namespace ImmediateReflection;
 internal sealed class MemoryCache<TKey, TValue>
     where TValue : class
 {
-    [NotNull]
     private readonly Hashtable _cache;
 
-    public MemoryCache(IEqualityComparer comparer = null)
+    public MemoryCache(IEqualityComparer? comparer = null)
     {
         _cache = new Hashtable(comparer);
     }
@@ -28,23 +27,22 @@ internal sealed class MemoryCache<TKey, TValue>
     /// <param name="key">Cache key.</param>
     /// <param name="valueFactory">Factory method to create the value if it does not exist.</param>
     /// <returns>The value.</returns>
-    [NotNull]
     [ContractAnnotation("key:null => halt;valueFactory:null => halt")]
-    public TValue GetOrCreate([NotNull] TKey key, [NotNull, InstantHandle] Func<TValue> valueFactory)
+    public TValue GetOrCreate(TKey key, [InstantHandle] Func<TValue> valueFactory)
     {
-        Debug.Assert(key != null);
-        Debug.Assert(valueFactory != null);
+        AssertNotNull(key);
+        AssertNotNull(valueFactory);
 
         // ReSharper disable once InconsistentlySynchronizedField, Justification: HashTable is thread safe for reading
-        var cachedValue = (TValue)_cache[key];
-        if (cachedValue != null)
+        var cachedValue = (TValue?)_cache[key];
+        if (cachedValue is not null)
             return cachedValue;
 
         lock (_cache)
         {
             // Double check (init during lock wait)
-            cachedValue = (TValue)_cache[key];
-            if (cachedValue != null)
+            cachedValue = (TValue?)_cache[key];
+            if (cachedValue is not null)
                 return cachedValue;
 
             cachedValue = valueFactory();

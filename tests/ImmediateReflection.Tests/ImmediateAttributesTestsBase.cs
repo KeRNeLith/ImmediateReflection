@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using JetBrains.Annotations;
 using NUnit.Framework;
 
 namespace ImmediateReflection.Tests;
@@ -25,7 +24,7 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         }
 
         /// <inheritdoc />
-        public bool Equals(TestClassAttribute other)
+        public bool Equals(TestClassAttribute? other)
         {
             if (other is null)
                 return false;
@@ -35,7 +34,7 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return Equals(obj as TestClassAttribute);
         }
@@ -43,10 +42,7 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            unchecked
-            {
-                return (base.GetHashCode() * 397) ^ _id;
-            }
+            return (base.GetHashCode() * 397) ^ _id;
         }
     }
 
@@ -61,7 +57,7 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         }
 
         /// <inheritdoc />
-        public bool Equals(SecondTestClassAttribute other)
+        public bool Equals(SecondTestClassAttribute? other)
         {
             if (other is null)
                 return false;
@@ -71,7 +67,7 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return Equals(obj as SecondTestClassAttribute);
         }
@@ -79,10 +75,7 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            unchecked
-            {
-                return (base.GetHashCode() * 397) ^ _id;
-            }
+            return (base.GetHashCode() * 397) ^ _id;
         }
     }
 
@@ -97,7 +90,7 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         }
 
         /// <inheritdoc />
-        public bool Equals(ThirdTestClassAttribute other)
+        public bool Equals(ThirdTestClassAttribute? other)
         {
             if (other is null)
                 return false;
@@ -107,7 +100,7 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return Equals(obj as ThirdTestClassAttribute);
         }
@@ -115,10 +108,7 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            unchecked
-            {
-                return (base.GetHashCode() * 397) ^ _id;
-            }
+            return (base.GetHashCode() * 397) ^ _id;
         }
     }
 
@@ -136,7 +126,7 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
             _id = id;
         }
 
-        protected bool Equals(TestBaseAttribute other)
+        protected bool Equals(TestBaseAttribute? other)
         {
             if (other is null)
                 return false;
@@ -146,7 +136,7 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return Equals(obj as TestBaseAttribute);
         }
@@ -154,10 +144,7 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            unchecked
-            {
-                return (base.GetHashCode() * 397) ^ _id;
-            }
+            return (base.GetHashCode() * 397) ^ _id;
         }
     }
 
@@ -170,7 +157,7 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return Equals(obj as TestInheritingAttribute);
         }
@@ -221,17 +208,20 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
 
     protected class InheritedTestClassNoAttribute : TestClassNoAttribute
     {
+        /// <inheritdoc />
         public override int TestProperty { get; set; } = 45;
     }
 
     protected class InheritedTestClassWithAttribute1 : TestClassWithAttribute
     {
+        /// <inheritdoc />
         public override int TestProperty { get; set; } = 45;
     }
 
     [TestClass(11)]
     protected class InheritedTestClassWithAttribute2 : TestClassWithAttribute
     {
+        /// <inheritdoc />
         [TestClass(12)]
         public override int TestProperty { get; set; } = 45;
     }
@@ -251,6 +241,7 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
 
     protected class InheritedTestClassMultiAttributes : TestClassMultiAttributes
     {
+        /// <inheritdoc />
         public override int TestProperty { get; set; } = 45;
     }
 
@@ -288,69 +279,53 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
 
     // Properties //
 
-    [NotNull]
     protected static readonly PropertyInfo TestPropertyNoAttributePropertyInfo =
         typeof(TestClassNoAttribute).GetProperty(nameof(TestClassNoAttribute.TestProperty)) ?? throw new AssertionException("Cannot find property.");
 
-    [NotNull]
     protected static readonly PropertyInfo TestPropertyAttributePropertyInfo =
         typeof(TestClassWithAttribute).GetProperty(nameof(TestClassWithAttribute.TestProperty)) ?? throw new AssertionException("Cannot find property.");
 
-    [NotNull]
     protected static readonly PropertyInfo TestPropertyAttributesPropertyInfo =
         typeof(TestClassWithAttributes).GetProperty(nameof(TestClassWithAttributes.TestProperty)) ?? throw new AssertionException("Cannot find property.");
 
-    [NotNull]
     protected static readonly PropertyInfo TestPropertyInheritedNoAttributePropertyInfo =
         typeof(InheritedTestClassNoAttribute).GetProperty(nameof(InheritedTestClassNoAttribute.TestProperty)) ?? throw new AssertionException("Cannot find property.");
 
-    [NotNull]
     protected static readonly PropertyInfo TestPropertyInheritedAttribute1PropertyInfo =
         typeof(InheritedTestClassWithAttribute1).GetProperty(nameof(InheritedTestClassWithAttribute1.TestProperty)) ?? throw new AssertionException("Cannot find property.");
 
-    [NotNull]
     protected static readonly PropertyInfo TestPropertyInheritedAttribute2PropertyInfo =
         typeof(InheritedTestClassWithAttribute2).GetProperty(nameof(InheritedTestClassWithAttribute2.TestProperty)) ?? throw new AssertionException("Cannot find property.");
 
-    [NotNull]
     protected static readonly PropertyInfo TestPropertyMultiAttributesPropertyInfo =
         typeof(TestClassMultiAttributes).GetProperty(nameof(TestClassMultiAttributes.TestProperty)) ?? throw new AssertionException("Cannot find property.");
 
-    [NotNull]
     protected static readonly PropertyInfo TestPropertyInheritedMultiAttributesPropertyInfo =
         typeof(InheritedTestClassMultiAttributes).GetProperty(nameof(InheritedTestClassMultiAttributes.TestProperty)) ?? throw new AssertionException("Cannot find property.");
 
-    [NotNull]
     protected static readonly PropertyInfo TestPropertyOnlyInheritingAttributePropertyInfo =
         typeof(TestClassInheritedAttribute).GetProperty(nameof(TestClassInheritedAttribute.TestPropertyOnlyInheriting)) ?? throw new AssertionException("Cannot find property.");
 
-    [NotNull]
     protected static readonly PropertyInfo TestPropertyInheritingAttributePropertyInfo =
         typeof(TestClassInheritedAttribute).GetProperty(nameof(TestClassInheritedAttribute.TestProperty)) ?? throw new AssertionException("Cannot find property.");
 
     // Fields //
 
-    [NotNull]
     protected static readonly FieldInfo TestFieldNoAttributeFieldInfo =
         typeof(TestClassNoAttribute).GetField(nameof(TestClassNoAttribute._testField)) ?? throw new AssertionException("Cannot find field.");
 
-    [NotNull]
     protected static readonly FieldInfo TestFieldAttributeFieldInfo =
         typeof(TestClassWithAttribute).GetField(nameof(TestClassWithAttribute._testField)) ?? throw new AssertionException("Cannot find field.");
 
-    [NotNull]
     protected static readonly FieldInfo TestFieldAttributesFieldInfo =
         typeof(TestClassWithAttributes).GetField(nameof(TestClassWithAttributes._testField)) ?? throw new AssertionException("Cannot find field.");
 
-    [NotNull]
     protected static readonly FieldInfo TestFieldMultiAttributesFieldInfo =
         typeof(TestClassMultiAttributes).GetField(nameof(TestClassMultiAttributes._testField)) ?? throw new AssertionException("Cannot find field.");
 
-    [NotNull]
     protected static readonly FieldInfo TestFieldOnlyInheritingAttributeFieldInfo =
         typeof(TestClassOnlyInheritedAttribute).GetField(nameof(TestClassOnlyInheritedAttribute._testFieldOnlyInheriting)) ?? throw new AssertionException("Cannot find field.");
 
-    [NotNull]
     protected static readonly FieldInfo TestFieldInheritingAttributeFieldInfo =
         typeof(TestClassOnlyInheritedAttribute).GetField(nameof(TestClassOnlyInheritedAttribute._testField)) ?? throw new AssertionException("Cannot find field.");
 

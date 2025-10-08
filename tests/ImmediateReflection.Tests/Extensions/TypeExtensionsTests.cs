@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using JetBrains.Annotations;
 using NUnit.Framework;
 using static ImmediateReflection.Tests.ConstructorTestHelpers;
 
@@ -11,25 +10,25 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="TypeExtensions"/>.
 /// </summary>
 [TestFixture]
-internal class TypeExtensionsTests : ImmediateReflectionTestsBase
+internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
 {
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateHasDefaultConstructorTestCases))]
-    public bool HasDefaultConstructor([NotNull] Type type)
+    public static bool HasDefaultConstructor(Type type)
     {
         return TypeExtensions.HasDefaultConstructor(type);
     }
 
     [Test]
-    public void HasDefaultConstructor_Throws()
+    public static void HasDefaultConstructor_Throws()
     {
         // ReSharper disable once AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => TypeExtensions.HasDefaultConstructor(null));
+        Assert.Throws<ArgumentNullException>(() => TypeExtensions.HasDefaultConstructor(null!));
     }
 
     #region New/TryNew
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateDefaultConstructorTestCases))]
-    public void NewParameterLess([NotNull] Type type)
+    public static void NewParameterLess(Type type)
     {
         ConstructorTestHelpers.NewParameterLess(
             type,
@@ -37,7 +36,7 @@ internal class TypeExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void NewParamsOnly()
+    public static void NewParamsOnly()
     {
         ConstructorTestHelpers.NewParamsOnly(
             () => TypeExtensions.New(typeof(ParamsOnlyConstructor)),
@@ -53,10 +52,10 @@ internal class TypeExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void NewParameterLess_Throws()
+    public static void NewParameterLess_Throws()
     {
         // ReSharper disable once AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(null));
+        Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(null!));
         Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(NoDefaultConstructor)));
         Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(NotAccessibleDefaultConstructor)));
         Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(IList<int>)));
@@ -75,35 +74,35 @@ internal class TypeExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateDefaultConstructorNoThrowTestCases))]
-    public void TryNewParameterLess([NotNull] Type type, bool expectFail)
+    public static void TryNewParameterLess(Type type, bool expectFail)
     {
         ConstructorTestHelpers.TryNewParameterLess(
             type,
             expectFail,
-            (out object instance, out Exception exception) => TypeExtensions.TryNew(type, out instance, out exception));
+            (out object? instance, out Exception? exception) => TypeExtensions.TryNew(type, out instance, out exception));
     }
 
     [Test]
-    public void TryNewParameterLess()
+    public static void TryNewParameterLess()
     {
         ConstructorTestHelpers.TryNewParameterLess(
-            (out object instance, out Exception exception) => TypeExtensions.TryNew(typeof(ParamsOnlyConstructor), out instance, out exception),
+            (out object? instance, out Exception? exception) => TypeExtensions.TryNew(typeof(ParamsOnlyConstructor), out instance, out exception),
             () => new ParamsOnlyConstructor());
 
         ConstructorTestHelpers.TryNewParameterLess(
-            (out object instance, out Exception exception) => TypeExtensions.TryNew(typeof(IntParamsOnlyConstructor), out instance, out exception),
+            (out object? instance, out Exception? exception) => TypeExtensions.TryNew(typeof(IntParamsOnlyConstructor), out instance, out exception),
             () => new IntParamsOnlyConstructor());
 
         ConstructorTestHelpers.TryNewParameterLess(
-            (out object instance, out Exception exception) => TypeExtensions.TryNew(typeof(NullableIntParamsOnlyConstructor), out instance, out exception),
+            (out object? instance, out Exception? exception) => TypeExtensions.TryNew(typeof(NullableIntParamsOnlyConstructor), out instance, out exception),
             () => new NullableIntParamsOnlyConstructor());
     }
 
     [Test]
-    public void TryNewParameterLess_Throws()
+    public static void TryNewParameterLess_Throws()
     {
         // ReSharper disable once AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(null, out _, out _));
+        Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(null!, out _, out _));
     }
 
     #endregion
@@ -111,7 +110,7 @@ internal class TypeExtensionsTests : ImmediateReflectionTestsBase
     #region New(params)/TryNew(params)
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateNotDefaultConstructorNotNullParamsTestCases))]
-    public void NewWithParameters([NotNull] Type type, [CanBeNull, ItemCanBeNull] params object[] arguments)
+    public static void NewWithParameters(Type type, params object?[] arguments)
     {
         ConstructorTestHelpers.NewWithParameters(
             type,
@@ -120,13 +119,13 @@ internal class TypeExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void NewWithParameters_Throws()
+    public static void NewWithParameters_Throws()
     {
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         // ReSharper disable AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(null, 12));
-        Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(typeof(ParamsConstructor), null));
-        Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(null, null));
+        Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(null!, 12));
+        Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(typeof(ParamsConstructor), null!));
+        Assert.Throws<ArgumentNullException>(() => TypeExtensions.New(null!, null!));
         // ReSharper restore AssignNullToNotNullAttribute
 
         Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(NoDefaultConstructor), 12, 42));
@@ -141,44 +140,44 @@ internal class TypeExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateNotDefaultConstructorNoThrowNotNullParamsTestCases))]
-    public void TryNewWithParameters([NotNull] Type type, bool expectFail, [CanBeNull, ItemCanBeNull] params object[] arguments)
+    public static void TryNewWithParameters(Type type, bool expectFail, params object?[] arguments)
     {
         ConstructorTestHelpers.TryNewWithParameters(
             type,
             expectFail,
-            (out object instance, out Exception exception, object[] args) => TypeExtensions.TryNew(type, out instance, out exception, args),
+            (out object? instance, out Exception? exception, object?[] args) => TypeExtensions.TryNew(type, out instance, out exception, args),
             arguments);
     }
 
     [Test]
-    public void TryNewWithParameters_Throws()
+    public static void TryNewWithParameters_Throws()
     {
         // ReSharper disable AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(null, out _, out _, 12));
-        Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(typeof(ParamsConstructor), out _, out _, null));
-        Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(null, out _, out _, null));
+        Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(null!, out _, out _, 12));
+        Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(typeof(ParamsConstructor), out _, out _, null!));
+        Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryNew(null!, out _, out _, null!));
         // ReSharper restore AssignNullToNotNullAttribute
     }
 
     #endregion
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateHasCopyConstructorTestCases))]
-    public bool HasCopyConstructor([NotNull] Type type)
+    public static bool HasCopyConstructor(Type type)
     {
         return TypeExtensions.HasCopyConstructor(type);
     }
 
     [Test]
-    public void HasCopyConstructor_Throws()
+    public static void HasCopyConstructor_Throws()
     {
         // ReSharper disable once AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => TypeExtensions.HasCopyConstructor(null));
+        Assert.Throws<ArgumentNullException>(() => TypeExtensions.HasCopyConstructor(null!));
     }
 
     #region Copy/TryCopy
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorTestCases))]
-    public void Copy([NotNull] Type type, [CanBeNull] object other)
+    public static void Copy(Type type, object? other)
     {
         ConstructorTestHelpers.Copy(
             type,
@@ -187,10 +186,10 @@ internal class TypeExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void Copy_Throws()
+    public static void Copy_Throws()
     {
         // ReSharper disable once AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => TypeExtensions.Copy(null, new CopyConstructorClass(11)));
+        Assert.Throws<ArgumentNullException>(() => TypeExtensions.Copy(null!, new CopyConstructorClass(11)));
 
         Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(NoCopyConstructorClass), new NoCopyConstructorClass()));
         Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(NotAccessibleCopyConstructor), new NotAccessibleCopyConstructor()));
@@ -217,20 +216,20 @@ internal class TypeExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorNoThrowTestCases))]
-    public void TryCopy([NotNull] Type type, [CanBeNull] object other, bool expectFail)
+    public static void TryCopy(Type type, object? other, bool expectFail)
     {
         ConstructorTestHelpers.TryCopy(
             type,
             other,
             expectFail,
-            (object o, out object instance, out Exception exception) => TypeExtensions.TryCopy(type, o, out instance, out exception));
+            (object? o, out object? instance, out Exception? exception) => TypeExtensions.TryCopy(type, o, out instance, out exception));
     }
 
     [Test]
-    public void TryCopy_Throws()
+    public static void TryCopy_Throws()
     {
         // ReSharper disable once AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryCopy<object>(null, null, out _, out _));
+        Assert.Throws<ArgumentNullException>(() => TypeExtensions.TryCopy<object>(null!, null!, out _, out _));
     }
 
     #endregion

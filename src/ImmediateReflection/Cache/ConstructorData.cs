@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using JetBrains.Annotations;
+﻿using static ImmediateReflection.GeneralHelpers;
 
 namespace ImmediateReflection;
 
@@ -17,12 +16,11 @@ internal sealed class ConstructorData<TConstructorDelegate>
     /// <summary>
     /// Constructor delegate.
     /// </summary>
-    [NotNull]
     public TConstructorDelegate Constructor { get; }
 
-    public ConstructorData([NotNull] TConstructorDelegate constructor, bool hasConstructor)
+    public ConstructorData(TConstructorDelegate constructor, bool hasConstructor)
     {
-        Debug.Assert(constructor != null);
+        AssertNotNull(constructor);
 
         HasConstructor = hasConstructor;
         Constructor = constructor;

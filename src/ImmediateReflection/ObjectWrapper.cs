@@ -23,35 +23,30 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
     /// Gets the wrapped object <see cref="T:System.Type"/>.
     /// </summary>
     [PublicAPI]
-    [NotNull]
     public Type Type { get; }
 
     /// <summary>
     /// Gets the wrapped object corresponding <see cref="ImmediateType"/>.
     /// </summary>
     [PublicAPI]
-    [NotNull]
     public ImmediateType ImmediateType { get; }
 
     /// <summary>
     /// Gets all the members of this <see cref="Object"/>.
     /// </summary>
     [PublicAPI]
-    [NotNull, ItemNotNull]
     public IEnumerable<ImmediateMember> Members => ImmediateType.Members;
 
     /// <summary>
     /// Gets all the fields of this <see cref="Object"/>.
     /// </summary>
     [PublicAPI]
-    [NotNull, ItemNotNull]
     public ImmediateFields Fields => ImmediateType.Fields;
 
     /// <summary>
     /// Gets all the properties of this <see cref="Object"/>.
     /// </summary>
     [PublicAPI]
-    [NotNull, ItemNotNull]
     public ImmediateProperties Properties => ImmediateType.Properties;
 
     /// <summary>
@@ -59,7 +54,7 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
     /// </summary>
     /// <param name="obj">Object to wrap.</param>
     /// <exception cref="T:System.ArgumentNullException">If the <paramref name="obj"/> is null.</exception>
-    public ObjectWrapper([NotNull] object obj)
+    public ObjectWrapper(object obj)
     {
         Object = obj ?? throw new ArgumentNullException(nameof(obj));
         Type = obj.GetType();
@@ -74,7 +69,6 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
     /// <returns>All <see cref="ImmediateMember"/>.</returns>
     [PublicAPI]
     [Pure]
-    [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -87,8 +81,7 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
     /// <returns>Found <see cref="ImmediateMember"/>, otherwise null.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
     [PublicAPI]
-    [CanBeNull]
-    public ImmediateMember this[[NotNull] string memberName] => ImmediateType[memberName];
+    public ImmediateMember? this[string memberName] => ImmediateType[memberName];
 
     /// <summary>
     /// Gets the <see cref="ImmediateMember"/> corresponding to the given <paramref name="memberName"/>.
@@ -98,12 +91,11 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
     [PublicAPI]
     [Pure]
-    [CanBeNull]
     [ContractAnnotation("memberName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public ImmediateMember GetMember([NotNull] string memberName) => ImmediateType[memberName];
+    public ImmediateMember? GetMember(string memberName) => ImmediateType[memberName];
 
     #endregion
 
@@ -115,7 +107,6 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
     /// <returns>All <see cref="ImmediateField"/>.</returns>
     [PublicAPI]
     [Pure]
-    [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -129,12 +120,11 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="fieldName"/> is null.</exception>
     [PublicAPI]
     [Pure]
-    [CanBeNull]
     [ContractAnnotation("fieldName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public ImmediateField GetField([NotNull] string fieldName) => ImmediateType.Fields[fieldName];
+    public ImmediateField? GetField(string fieldName) => ImmediateType.Fields[fieldName];
 
     /// <summary>
     /// Returns the field value of the wrapped <see cref="Object"/>.
@@ -142,7 +132,7 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
     /// <param name="fieldName">Field name.</param>
     /// <returns>
     /// Field value of the <see cref="Object"/>.
-    /// It can also returns null if there is no field corresponding to <paramref name="fieldName"/> in the object.
+    /// It can also return null if there is no field corresponding to <paramref name="fieldName"/> in the object.
     /// </returns>
     [PublicAPI]
     [Pure]
@@ -150,7 +140,7 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public object GetFieldValue([NotNull] string fieldName)
+    public object? GetFieldValue(string fieldName)
     {
         return GetField(fieldName)?.GetValue(Object);
     }
@@ -167,7 +157,7 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public void SetFieldValue([NotNull] string fieldName, [CanBeNull] object value)
+    public void SetFieldValue(string fieldName, object? value)
     {
         GetField(fieldName)?.SetValue(Object, value);
     }
@@ -182,7 +172,6 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
     /// <returns>All <see cref="ImmediateProperty"/>.</returns>
     [PublicAPI]
     [Pure]
-    [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -196,12 +185,11 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
     [PublicAPI]
     [Pure]
-    [CanBeNull]
     [ContractAnnotation("propertyName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public ImmediateProperty GetProperty([NotNull] string propertyName) => ImmediateType.Properties[propertyName];
+    public ImmediateProperty? GetProperty(string propertyName) => ImmediateType.Properties[propertyName];
 
     /// <summary>
     /// Returns the property value of the wrapped <see cref="Object"/>.
@@ -209,7 +197,7 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
     /// <param name="propertyName">Property name.</param>
     /// <returns>
     /// Property value of the <see cref="Object"/>.
-    /// It can also returns null if there is no property corresponding to <paramref name="propertyName"/> in the object.
+    /// It can also return null if there is no property corresponding to <paramref name="propertyName"/> in the object.
     /// </returns>
     /// <exception cref="T:System.ArgumentException">If this property has no getter.</exception>
     [PublicAPI]
@@ -218,7 +206,7 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public object GetPropertyValue([NotNull] string propertyName)
+    public object? GetPropertyValue(string propertyName)
     {
         return GetProperty(propertyName)?.GetValue(Object);
     }
@@ -236,7 +224,7 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public void SetPropertyValue([NotNull] string propertyName, [CanBeNull] object value)
+    public void SetPropertyValue(string propertyName, object? value)
     {
         GetProperty(propertyName)?.SetValue(Object, value);
     }
@@ -246,13 +234,13 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
     #region Equality / IEquatable<T>
 
     /// <inheritdoc />
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         return Equals(obj as ObjectWrapper);
     }
 
     /// <inheritdoc />
-    public bool Equals(ObjectWrapper other)
+    public bool Equals(ObjectWrapper? other)
     {
         if (other is null)
             return false;

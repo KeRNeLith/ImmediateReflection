@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -10,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 using JetBrains.Annotations;
+using static ImmediateReflection.GeneralHelpers;
 using static ImmediateReflection.Utils.ReflectionHelpers;
 
 namespace ImmediateReflection;
@@ -24,28 +24,26 @@ public sealed class ImmediateProperties
     , IEquatable<ImmediateProperties>
     , ISerializable
 {
-    [NotNull]
-    private readonly Dictionary<string, ImmediateProperty> _properties 
-        = new Dictionary<string, ImmediateProperty>();
+    private readonly Dictionary<string, ImmediateProperty> _properties = new(StringComparer.Ordinal);
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="properties">Enumerable of <see cref="T:System.Reflection.PropertyInfo"/> to wrap.</param>
-    internal ImmediateProperties([NotNull, ItemNotNull] IEnumerable<PropertyInfo> properties)
+    internal ImmediateProperties(IEnumerable<PropertyInfo> properties)
     {
         Init(properties);
     }
 
-    private void Init([NotNull, ItemNotNull] IEnumerable<PropertyInfo> properties)
+    private void Init(IEnumerable<PropertyInfo> properties)
     {
-        Debug.Assert(properties != null);
+        AssertNotNull(properties);
 
         foreach (PropertyInfo property in properties.Where(IsNotIndexed))
         {
             ImmediateProperty currentImmediateProperty = CachesHandler.Instance.GetProperty(property);
 
-            if (_properties.TryGetValue(property.Name, out ImmediateProperty immediateProperty))
+            if (_properties.TryGetValue(property.Name, out ImmediateProperty? immediateProperty))
             {
                 // Keep the property from the most derived type
                 if (ShouldReplacePropertyWith(immediateProperty, currentImmediateProperty))
@@ -63,19 +61,19 @@ public sealed class ImmediateProperties
 
         bool IsNotIndexed(PropertyInfo property)
         {
-            Debug.Assert(property != null);
+            AssertNotNull(property);
 
             return !IsIndexed(property);
         }
 
         bool ShouldReplacePropertyWith(ImmediateProperty property1, ImmediateProperty property2)
         {
-            Debug.Assert(property1 != null);
-            Debug.Assert(property2 != null);
+            AssertNotNull(property1);
+            AssertNotNull(property2);
 
             Type initialType = property1.DeclaringType;
-            Type currentType = property2.DeclaringType;
-            while (currentType != null)
+            Type? currentType = property2.DeclaringType;
+            while (currentType is not null)
             {
                 // If property2 is a property of a derived object of property1 declaring type
                 // => Prefer derived property
@@ -98,9 +96,8 @@ public sealed class ImmediateProperties
     /// <returns>Found <see cref="ImmediateProperty"/>, otherwise null.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
     [PublicAPI]
-    [CanBeNull]
-    public ImmediateProperty this[[NotNull] string propertyName] =>
-        _properties.TryGetValue(propertyName, out ImmediateProperty property)
+    public ImmediateProperty? this[string propertyName] =>
+        _properties.TryGetValue(propertyName, out ImmediateProperty? property)
             ? property
             : null;
 
@@ -112,23 +109,22 @@ public sealed class ImmediateProperties
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
     [PublicAPI]
     [Pure]
-    [CanBeNull]
     [ContractAnnotation("propertyName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public ImmediateProperty GetProperty([NotNull] string propertyName) => this[propertyName];
+    public ImmediateProperty? GetProperty(string propertyName) => this[propertyName];
 
     #region Equality / IEquatable<T>
 
     /// <inheritdoc />
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         return Equals(obj as ImmediateProperties);
     }
 
     /// <inheritdoc />
-    public bool Equals(ImmediateProperties other)
+    public bool Equals(ImmediateProperties? other)
     {
         if (other is null)
             return false;

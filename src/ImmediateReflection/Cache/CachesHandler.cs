@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Reflection;
 using JetBrains.Annotations;
+using static ImmediateReflection.GeneralHelpers;
 using static ImmediateReflection.Utils.ReflectionHelpers;
 
 namespace ImmediateReflection;
@@ -31,30 +31,28 @@ internal sealed class CachesHandler
         {
         }
 
-        internal static readonly CachesHandler InternalInstance = new CachesHandler();
+        internal static readonly CachesHandler InternalInstance = new();
     }
 
     #endregion
 
     #region ImmediateType cache
 
-    private struct TypeCacheKey : IEquatable<TypeCacheKey>
+    private readonly struct TypeCacheKey : IEquatable<TypeCacheKey>
     {
-        [NotNull]
         private readonly Type _type;
-
         private readonly BindingFlags _flags;
 
-        public TypeCacheKey([NotNull] Type type, BindingFlags flags)
+        public TypeCacheKey(Type type, BindingFlags flags)
         {
-            Debug.Assert(type != null);
+            AssertNotNull(type);
 
             _type = type;
             _flags = flags;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is null)
                 return false;
@@ -74,14 +72,12 @@ internal sealed class CachesHandler
         }
     }
 
-    [NotNull]
-    private volatile MemoryCache<TypeCacheKey, ImmediateType> _cachedTypes = new MemoryCache<TypeCacheKey, ImmediateType>();
+    private volatile MemoryCache<TypeCacheKey, ImmediateType> _cachedTypes = new();
 
-    [NotNull]
     [ContractAnnotation("type:null => halt")]
-    public ImmediateType GetImmediateType([NotNull] Type type, BindingFlags flags)
+    public ImmediateType GetImmediateType(Type type, BindingFlags flags)
     {
-        Debug.Assert(type != null);
+        AssertNotNull(type);
 
         return _cachedTypes.GetOrCreate(
             new TypeCacheKey(type, flags),
@@ -92,15 +88,12 @@ internal sealed class CachesHandler
 
     #region Attributes cache
 
-    [NotNull]
-    private volatile MemoryCache<MemberInfo, AttributesCache> _cachedAttributes =
-        new MemoryCache<MemberInfo, AttributesCache>(new MemberInfoEqualityComparer());
+    private volatile MemoryCache<MemberInfo, AttributesCache> _cachedAttributes = new(new MemberInfoEqualityComparer());
 
-    [NotNull]
     [ContractAnnotation("member:null => halt")]
-    public AttributesCache GetAttributesCache([NotNull] MemberInfo member)
+    public AttributesCache GetAttributesCache(MemberInfo member)
     {
-        Debug.Assert(member != null);
+        AssertNotNull(member);
 
         return _cachedAttributes.GetOrCreate(member, () => new AttributesCache(member));
     }
@@ -109,15 +102,12 @@ internal sealed class CachesHandler
 
     #region Default constructor cache
 
-    [NotNull]
-    private volatile MemoryCache<Type, ConstructorData<DefaultConstructorDelegate>> _cachedDefaultConstructors =
-        new MemoryCache<Type, ConstructorData<DefaultConstructorDelegate>>();
+    private volatile MemoryCache<Type, ConstructorData<DefaultConstructorDelegate>> _cachedDefaultConstructors = new();
 
-    [NotNull]
     [ContractAnnotation("type:null => halt")]
-    public ConstructorData<DefaultConstructorDelegate> GetDefaultConstructor([NotNull] Type type)
+    public ConstructorData<DefaultConstructorDelegate> GetDefaultConstructor(Type type)
     {
-        Debug.Assert(type != null);
+        AssertNotNull(type);
 
         return _cachedDefaultConstructors.GetOrCreate(type, () =>
         {
@@ -130,15 +120,12 @@ internal sealed class CachesHandler
 
     #region Copy constructor cache
 
-    [NotNull]
-    private volatile MemoryCache<Type, ConstructorData<CopyConstructorDelegate>> _cachedCopyConstructors =
-        new MemoryCache<Type, ConstructorData<CopyConstructorDelegate>>();
+    private volatile MemoryCache<Type, ConstructorData<CopyConstructorDelegate>> _cachedCopyConstructors = new();
 
-    [NotNull]
     [ContractAnnotation("type:null => halt")]
-    public ConstructorData<CopyConstructorDelegate> GetCopyConstructor([NotNull] Type type)
+    public ConstructorData<CopyConstructorDelegate> GetCopyConstructor(Type type)
     {
-        Debug.Assert(type != null);
+        AssertNotNull(type);
 
         return _cachedCopyConstructors.GetOrCreate(type, () =>
         {
@@ -151,14 +138,12 @@ internal sealed class CachesHandler
 
     #region Field cache
 
-    [NotNull]
-    private volatile MemoryCache<FieldInfo, ImmediateField> _cachedFields = new MemoryCache<FieldInfo, ImmediateField>();
+    private volatile MemoryCache<FieldInfo, ImmediateField> _cachedFields = new();
 
-    [NotNull]
     [ContractAnnotation("field:null => halt")]
-    public ImmediateField GetField([NotNull] FieldInfo field)
+    public ImmediateField GetField(FieldInfo field)
     {
-        Debug.Assert(field != null);
+        AssertNotNull(field);
 
         return _cachedFields.GetOrCreate(field, () => new ImmediateField(field));
     }
@@ -167,15 +152,12 @@ internal sealed class CachesHandler
 
     #region Property cache
 
-    [NotNull]
-    private volatile MemoryCache<PropertyInfo, ImmediateProperty> _cachedProperties =
-        new MemoryCache<PropertyInfo, ImmediateProperty>(new PropertyInfoEqualityComparer());
+    private volatile MemoryCache<PropertyInfo, ImmediateProperty> _cachedProperties = new(new PropertyInfoEqualityComparer());
 
-    [NotNull]
     [ContractAnnotation("property:null => halt")]
-    public ImmediateProperty GetProperty([NotNull] PropertyInfo property)
+    public ImmediateProperty GetProperty(PropertyInfo property)
     {
-        Debug.Assert(property != null);
+        AssertNotNull(property);
 
         return _cachedProperties.GetOrCreate(property, () => new ImmediateProperty(property));
     }

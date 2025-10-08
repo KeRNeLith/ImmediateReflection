@@ -8,10 +8,10 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ImmediateProperties"/>.
 /// </summary>
 [TestFixture]
-internal class ImmediatePropertiesTests : ImmediateReflectionTestsBase
+internal sealed class ImmediatePropertiesTests : ImmediateReflectionTestsBase
 {
     [Test]
-    public void ImmediatePropertiesInfo()
+    public static void ImmediatePropertiesInfo()
     {
         var immediateProperties1 = new ImmediateProperties(SmallObjectPropertyInfos);
         CollectionAssert.AreEquivalent(
@@ -30,7 +30,7 @@ internal class ImmediatePropertiesTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertiesInfoWithNew()
+    public static void ImmediatePropertiesInfoWithNew()
     {
         var immediateProperties = new ImmediateProperties(new[] { ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, BaseClassPublicGetPropertyPropertyInfo });
         CollectionAssert.AreEquivalent(
@@ -44,7 +44,7 @@ internal class ImmediatePropertiesTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void GetProperty()
+    public static void GetProperty()
     {
         var immediateProperties = new ImmediateProperties(SmallObjectPropertyInfos);
         var expectedProperty = new ImmediateProperty(SmallObjectTestProperty1PropertyInfo);
@@ -56,14 +56,14 @@ internal class ImmediatePropertiesTests : ImmediateReflectionTestsBase
 
         // ReSharper disable InconsistentNaming
         // ReSharper disable AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => { var _ = immediateProperties[null]; });
-        Assert.Throws<ArgumentNullException>(() => { var _ = immediateProperties.GetProperty(null); });
+        Assert.Throws<ArgumentNullException>(() => { _ = immediateProperties[null!]; });
+        Assert.Throws<ArgumentNullException>(() => { _ = immediateProperties.GetProperty(null!); });
         // ReSharper restore AssignNullToNotNullAttribute
         // ReSharper restore InconsistentNaming
     }
 
     [Test]
-    public void GetPropertyWithNew()
+    public static void GetPropertyWithNew()
     {
         var immediateProperties = new ImmediateProperties(new[] { ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, BaseClassPublicGetPropertyPropertyInfo });
         var expectedProperty = new ImmediateProperty(ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo);
@@ -78,14 +78,13 @@ internal class ImmediatePropertiesTests : ImmediateReflectionTestsBase
     #region Equals/HashCode/ToString
 
     [Test]
-    public void ImmediatePropertiesEquality()
+    public static void ImmediatePropertiesEquality()
     {
         var immediateProperties1 = new ImmediateProperties(SmallObjectPropertyInfos);
         var immediateProperties2 = new ImmediateProperties(SmallObjectPropertyInfos);
         Assert.IsTrue(immediateProperties1.Equals(immediateProperties1));
         Assert.IsTrue(immediateProperties1.Equals(immediateProperties2));
         Assert.IsTrue(immediateProperties1.Equals((object)immediateProperties2));
-        Assert.IsFalse(immediateProperties1.Equals(null));
 
         var immediateProperties3 = new ImmediateProperties(SecondSmallObjectPropertyInfos);
         Assert.IsFalse(immediateProperties1.Equals(immediateProperties3));
@@ -94,10 +93,12 @@ internal class ImmediatePropertiesTests : ImmediateReflectionTestsBase
         var immediateProperties4 = new ImmediateProperties(PublicNestedPropertyInfos);
         Assert.IsFalse(immediateProperties4.Equals(immediateProperties1));
         Assert.IsFalse(immediateProperties4.Equals((object)immediateProperties1));
+
+        Assert.IsFalse(immediateProperties1.Equals(null));
     }
 
     [Test]
-    public void ImmediatePropertiesHashCode()
+    public static void ImmediatePropertiesHashCode()
     {
         var immediateProperties1 = new ImmediateProperties(SmallObjectPropertyInfos);
         var immediateProperties2 = new ImmediateProperties(SmallObjectPropertyInfos);
@@ -108,7 +109,7 @@ internal class ImmediatePropertiesTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertiesToString()
+    public static void ImmediatePropertiesToString()
     {
         var immediateProperties1 = new ImmediateProperties(SmallObjectPropertyInfos);
         string expectedToString = $"[{string.Join(", ", SmallObjectPropertyInfos.Select(p => p.ToString()).ToArray())}]";

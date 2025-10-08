@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 
 namespace ImmediateReflection;
 
@@ -9,7 +10,6 @@ namespace ImmediateReflection;
 /// </summary>
 /// <returns>Newly created object.</returns>
 [PublicAPI]
-[NotNull]
 public delegate object DefaultConstructorDelegate();
 
 /// <summary>
@@ -18,8 +18,8 @@ public delegate object DefaultConstructorDelegate();
 /// <param name="other">Object to copy.</param>
 /// <returns>Newly created object.</returns>
 [PublicAPI]
-[NotNull]
-public delegate object CopyConstructorDelegate([CanBeNull] object other);
+[return: NotNullIfNotNull("other")]
+public delegate object? CopyConstructorDelegate(object? other);
 
 /// <summary>
 /// Constructor delegate.
@@ -27,8 +27,7 @@ public delegate object CopyConstructorDelegate([CanBeNull] object other);
 /// <param name="arguments">Constructor arguments.</param>
 /// <returns>Newly created object.</returns>
 [PublicAPI]
-[NotNull]
-public delegate object ConstructorDelegate([CanBeNull, ItemCanBeNull] params object[] arguments);
+public delegate object ConstructorDelegate(params object?[]? arguments);
 
 #endregion
 
@@ -40,7 +39,7 @@ public delegate object ConstructorDelegate([CanBeNull, ItemCanBeNull] params obj
 /// <typeparam name="TValue">Value type.</typeparam>
 /// <returns>Got value.</returns>
 [PublicAPI]
-public delegate TValue StaticGetterDelegate<out TValue>();
+public delegate TValue? StaticGetterDelegate<out TValue>();
 
 /// <summary>
 /// Getter delegate.
@@ -48,7 +47,7 @@ public delegate TValue StaticGetterDelegate<out TValue>();
 /// <param name="target">Object instance to get a value, null if static.</param>
 /// <returns>Got value.</returns>
 [PublicAPI]
-public delegate object GetterDelegate([CanBeNull] object target);
+public delegate object? GetterDelegate(object? target);
 
 /// <summary>
 /// Template getter delegate.
@@ -57,7 +56,7 @@ public delegate object GetterDelegate([CanBeNull] object target);
 /// <param name="target">Object instance to get a value, null if static.</param>
 /// <returns>Got value.</returns>
 [PublicAPI]
-public delegate object GetterDelegate<in TOwner>([CanBeNull] TOwner target);
+public delegate object? GetterDelegate<in TOwner>(TOwner? target);
 
 /// <summary>
 /// Template getter delegate.
@@ -67,7 +66,7 @@ public delegate object GetterDelegate<in TOwner>([CanBeNull] TOwner target);
 /// <param name="target">Object instance to get a value, null if static.</param>
 /// <returns>Got value.</returns>
 [PublicAPI]
-public delegate TValue GetterDelegate<in TOwner, out TValue>([CanBeNull] TOwner target);
+public delegate TValue? GetterDelegate<in TOwner, out TValue>(TOwner? target);
 
 /// <summary>
 /// Template getter delegate (ref).
@@ -76,7 +75,7 @@ public delegate TValue GetterDelegate<in TOwner, out TValue>([CanBeNull] TOwner 
 /// <typeparam name="TValue">Value type.</typeparam>
 /// <param name="target">Object instance to get a value, null if static.</param>
 /// <returns>Got value.</returns>
-internal delegate TValue RefGetterDelegate<TOwner, out TValue>([CanBeNull] ref TOwner target);
+internal delegate TValue? RefGetterDelegate<TOwner, out TValue>(ref TOwner? target);
 
 #endregion
 
@@ -88,7 +87,7 @@ internal delegate TValue RefGetterDelegate<TOwner, out TValue>([CanBeNull] ref T
 /// <typeparam name="TValue">Value type.</typeparam>
 /// <param name="value">Value to set.</param>
 [PublicAPI]
-public delegate void StaticSetterDelegate<in TValue>([CanBeNull] TValue value);
+public delegate void StaticSetterDelegate<in TValue>(TValue? value);
 
 /// <summary>
 /// Setter delegate.
@@ -96,7 +95,7 @@ public delegate void StaticSetterDelegate<in TValue>([CanBeNull] TValue value);
 /// <param name="target">Object instance to set a value, null if static.</param>
 /// <param name="value">Value to set.</param>
 [PublicAPI]
-public delegate void SetterDelegate([CanBeNull] object target, [CanBeNull] object value);
+public delegate void SetterDelegate(object? target, object? value);
 
 /// <summary>
 /// Template setter delegate.
@@ -105,7 +104,7 @@ public delegate void SetterDelegate([CanBeNull] object target, [CanBeNull] objec
 /// <param name="target">Object instance to set a value, null if static.</param>
 /// <param name="value">Value to set.</param>
 [PublicAPI]
-public delegate void SetterDelegate<in TOwner>([CanBeNull] TOwner target, [CanBeNull] object value);
+public delegate void SetterDelegate<in TOwner>(TOwner? target, object? value);
 
 /// <summary>
 /// Template setter delegate.
@@ -115,6 +114,6 @@ public delegate void SetterDelegate<in TOwner>([CanBeNull] TOwner target, [CanBe
 /// <param name="target">Object instance to set a value, null if static.</param>
 /// <param name="value">Value to set.</param>
 [PublicAPI]
-public delegate void SetterDelegate<in TOwner, in TValue>([CanBeNull] TOwner target, [CanBeNull] TValue value);
+public delegate void SetterDelegate<in TOwner, in TValue>(TOwner? target, TValue? value);
 
 #endregion

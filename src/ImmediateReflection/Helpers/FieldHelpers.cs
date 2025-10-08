@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using static ImmediateReflection.GeneralHelpers;
 
 namespace ImmediateReflection.Utils;
 
@@ -11,7 +11,6 @@ namespace ImmediateReflection.Utils;
 /// </summary>
 internal static class FieldHelpers
 {
-    [NotNull]
     private const string BackingFieldName = "BackingField";
 
     /// <summary>
@@ -21,9 +20,9 @@ internal static class FieldHelpers
     /// <returns>True if the <see cref="FieldInfo"/> is a backing field, false otherwise.</returns>
     [Pure]
     [ContractAnnotation("field:null => halt")]
-    internal static bool IsBackingField([NotNull] FieldInfo field)
+    private static bool IsBackingField(FieldInfo field)
     {
-        Debug.Assert(field != null);
+        AssertNotNull(field);
 
         return field.Name.Contains(BackingFieldName);
     }
@@ -34,11 +33,10 @@ internal static class FieldHelpers
     /// <param name="fields">Enumerable of <see cref="FieldInfo"/> to filter.</param>
     /// <returns>Filtered <see cref="FieldInfo"/>.</returns>
     [Pure]
-    [NotNull, ItemNotNull]
     [ContractAnnotation("fields:null => halt")]
-    internal static IEnumerable<FieldInfo> IgnoreBackingFields([NotNull, ItemNotNull] IEnumerable<FieldInfo> fields)
+    internal static IEnumerable<FieldInfo> IgnoreBackingFields(IEnumerable<FieldInfo> fields)
     {
-        Debug.Assert(fields != null);
+        AssertNotNull(fields);
 
         return fields.Where(field => !IsBackingField(field));
     }

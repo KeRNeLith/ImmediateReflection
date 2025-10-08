@@ -7,30 +7,30 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="MemberExtensions"/>.
 /// </summary>
 [TestFixture]
-internal class MemberExtensionsTests : ImmediateReflectionTestsBase
+internal sealed class MemberExtensionsTests : ImmediateReflectionTestsBase
 {
     #region Getter
 
     #region Strongly typed
 
     [Test]
-    public void TryCreateGetter_StronglyTyped()
+    public static void TryCreateGetter_StronglyTyped()
     {
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(TestStructTestPropertyPropertyInfo, out GetterDelegate<TestStruct, int> _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(TestStructTestPropertyPropertyInfo, out GetterDelegate<TestStruct, int>? _));
 
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsFalse(MemberExtensions.TryCreateGetter(PublicValueTypePublicSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypeInternalGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypeProtectedGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePrivateGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int> _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsFalse(MemberExtensions.TryCreateGetter(PublicValueTypePublicSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypeInternalGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypeProtectedGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePrivateGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, int>? _));
     }
 
     [Test]
-    public void CreateGetter_StronglyTyped_ValueType()
+    public static void CreateGetter_StronglyTyped_ValueType()
     {
         var testObject = new TestStruct
         {
@@ -46,7 +46,7 @@ internal class MemberExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void CreateGetter_StronglyTyped_ReferenceType()
+    public static void CreateGetter_StronglyTyped_ReferenceType()
     {
         var testObject = new PublicValueTypeTestClass(45, 12)
         {
@@ -71,7 +71,7 @@ internal class MemberExtensionsTests : ImmediateReflectionTestsBase
 
         getter = MemberExtensions.CreateGetter<PublicValueTypeTestClass, int>(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo);
         PublicValueTypeTestClass.PublicStaticPropertyGetSet = 1;
-        Assert.AreEqual(1, getter(null));
+        Assert.AreEqual(1, getter(null!));
 
         PublicValueTypeTestClass.PublicStaticPropertyGetSet = 2;
         Assert.AreEqual(2, getter(testObject));
@@ -90,18 +90,18 @@ internal class MemberExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void CreateGetter_StronglyTyped_Throws()
+    public static void CreateGetter_StronglyTyped_Throws()
     {
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         // ReSharper disable AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => MemberExtensions.CreateGetter<TestStruct, int>(null));
-        Assert.Throws<ArgumentNullException>(() => MemberExtensions.TryCreateGetter(null, out GetterDelegate<TestStruct, int> _));
+        Assert.Throws<ArgumentNullException>(() => MemberExtensions.CreateGetter<TestStruct, int>(null!));
+        Assert.Throws<ArgumentNullException>(() => MemberExtensions.TryCreateGetter(null!, out GetterDelegate<TestStruct, int>? _));
         // ReSharper restore AssignNullToNotNullAttribute
         // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 
     [Test]
-    public void CreateGetter_StronglyTyped_WrongType()
+    public static void CreateGetter_StronglyTyped_WrongType()
     {
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         // ReSharper disable AssignNullToNotNullAttribute
@@ -111,9 +111,9 @@ internal class MemberExtensionsTests : ImmediateReflectionTestsBase
         // ReSharper restore AssignNullToNotNullAttribute
         // ReSharper restore ReturnValueOfPureMethodIsNotUsed
 
-        Assert.IsFalse(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out GetterDelegate<PublicObjectTypeTestClass, int> _));
-        Assert.IsFalse(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, float> _));
-        Assert.IsFalse(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out GetterDelegate<PublicObjectTypeTestClass, float> _));
+        Assert.IsFalse(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out GetterDelegate<PublicObjectTypeTestClass, int>? _));
+        Assert.IsFalse(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass, float>? _));
+        Assert.IsFalse(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out GetterDelegate<PublicObjectTypeTestClass, float>? _));
     }
 
     #endregion
@@ -121,23 +121,23 @@ internal class MemberExtensionsTests : ImmediateReflectionTestsBase
     #region Partially strongly typed
 
     [Test]
-    public void TryCreateGetter()
+    public static void TryCreateGetter()
     {
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(TestStructTestPropertyPropertyInfo, out GetterDelegate<TestStruct> _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(TestStructTestPropertyPropertyInfo, out GetterDelegate<TestStruct>? _));
 
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsFalse(MemberExtensions.TryCreateGetter(PublicValueTypePublicSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypeInternalGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypeProtectedGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePrivateGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass> _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsFalse(MemberExtensions.TryCreateGetter(PublicValueTypePublicSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypeInternalGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypeProtectedGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateGetter(PublicValueTypePrivateGetSetPropertyPropertyInfo, out GetterDelegate<PublicValueTypeTestClass>? _));
     }
 
     [Test]
-    public void CreateGetter_ValueType()
+    public static void CreateGetter_ValueType()
     {
         var testObject = new TestStruct
         {
@@ -153,7 +153,7 @@ internal class MemberExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void CreateGetter_ReferenceType()
+    public static void CreateGetter_ReferenceType()
     {
         var testObject = new PublicValueTypeTestClass(45, 12)
         {
@@ -178,7 +178,7 @@ internal class MemberExtensionsTests : ImmediateReflectionTestsBase
 
         getter = MemberExtensions.CreateGetter<PublicValueTypeTestClass>(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo);
         PublicValueTypeTestClass.PublicStaticPropertyGetSet = 1;
-        Assert.AreEqual(1, getter(null));
+        Assert.AreEqual(1, getter(null!));
 
         PublicValueTypeTestClass.PublicStaticPropertyGetSet = 2;
         Assert.AreEqual(2, getter(testObject));
@@ -203,24 +203,24 @@ internal class MemberExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void CreateGetter_Throws()
+    public static void CreateGetter_Throws()
     {
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         // ReSharper disable AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => MemberExtensions.CreateGetter<TestStruct>(null));
-        Assert.Throws<ArgumentNullException>(() => MemberExtensions.TryCreateGetter(null, out GetterDelegate<TestStruct> _));
+        Assert.Throws<ArgumentNullException>(() => MemberExtensions.CreateGetter<TestStruct>(null!));
+        Assert.Throws<ArgumentNullException>(() => MemberExtensions.TryCreateGetter(null!, out GetterDelegate<TestStruct>? _));
         // ReSharper restore AssignNullToNotNullAttribute
         // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 
     [Test]
-    public void CreateGetter_WrongType()
+    public static void CreateGetter_WrongType()
     {
         // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
         // ReSharper disable once AssignNullToNotNullAttribute
         Assert.Throws<ArgumentException>(() => MemberExtensions.CreateGetter<PublicObjectTypeTestClass>(PublicValueTypePublicGetSetPropertyPropertyInfo));
 
-        Assert.IsFalse(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out GetterDelegate <PublicObjectTypeTestClass> _));
+        Assert.IsFalse(MemberExtensions.TryCreateGetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out GetterDelegate <PublicObjectTypeTestClass>? _));
     }
 
     #endregion
@@ -232,21 +232,21 @@ internal class MemberExtensionsTests : ImmediateReflectionTestsBase
     #region Strongly typed
 
     [Test]
-    public void TryCreateSetter_StronglyTyped()
+    public static void TryCreateSetter_StronglyTyped()
     {
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsFalse(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypeInternalGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypeProtectedGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int> _));
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePrivateGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int> _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsFalse(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypeInternalGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypeProtectedGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePrivateGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, int>? _));
     }
 
     [Test]
-    public void CreateSetter_StronglyTyped_ReferenceType()
+    public static void CreateSetter_StronglyTyped_ReferenceType()
     {
         var testObject = new PublicValueTypeTestClass();
 
@@ -271,7 +271,7 @@ internal class MemberExtensionsTests : ImmediateReflectionTestsBase
         Assert.AreEqual(42, testObject._publicField);       // Store the result in the public field
 
         setter = MemberExtensions.CreateSetter<PublicValueTypeTestClass, int>(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo);
-        setter(null, 1);
+        setter(null!, 1);
         Assert.AreEqual(1, PublicValueTypeTestClass.PublicStaticPropertyGetSet);
         setter(testObject, 2);
         Assert.AreEqual(2, PublicValueTypeTestClass.PublicStaticPropertyGetSet);
@@ -290,18 +290,18 @@ internal class MemberExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void CreateSetter_StronglyTyped_Throws()
+    public static void CreateSetter_StronglyTyped_Throws()
     {
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         // ReSharper disable AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => MemberExtensions.CreateSetter<PublicValueTypeTestClass, int>(null));
-        Assert.Throws<ArgumentNullException>(() => MemberExtensions.TryCreateSetter(null, out SetterDelegate<PublicValueTypeTestClass, int> _));
+        Assert.Throws<ArgumentNullException>(() => MemberExtensions.CreateSetter<PublicValueTypeTestClass, int>(null!));
+        Assert.Throws<ArgumentNullException>(() => MemberExtensions.TryCreateSetter(null!, out SetterDelegate<PublicValueTypeTestClass, int>? _));
         // ReSharper restore AssignNullToNotNullAttribute
         // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 
     [Test]
-    public void CreateSetter_StronglyTyped_WrongType()
+    public static void CreateSetter_StronglyTyped_WrongType()
     {
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         // ReSharper disable AssignNullToNotNullAttribute
@@ -311,9 +311,9 @@ internal class MemberExtensionsTests : ImmediateReflectionTestsBase
         // ReSharper restore AssignNullToNotNullAttribute
         // ReSharper restore ReturnValueOfPureMethodIsNotUsed
 
-        Assert.IsFalse(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicObjectTypeTestClass, int> _));
-        Assert.IsFalse(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, float> _));
-        Assert.IsFalse(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicObjectTypeTestClass, float> _));
+        Assert.IsFalse(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicObjectTypeTestClass, int>? _));
+        Assert.IsFalse(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass, float>? _));
+        Assert.IsFalse(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicObjectTypeTestClass, float>? _));
     }
 
     #endregion
@@ -321,21 +321,21 @@ internal class MemberExtensionsTests : ImmediateReflectionTestsBase
     #region Partially strongly typed
 
     [Test]
-    public void TryCreateSetter()
+    public static void TryCreateSetter()
     {
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsFalse(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypeInternalGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypeProtectedGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass> _));
-        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePrivateGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass> _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsFalse(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePublicSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypeInternalGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypeProtectedGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass>? _));
+        Assert.IsTrue(MemberExtensions.TryCreateSetter(PublicValueTypePrivateGetSetPropertyPropertyInfo, out SetterDelegate<PublicValueTypeTestClass>? _));
     }
 
     [Test]
-    public void CreateSetter_ReferenceType()
+    public static void CreateSetter_ReferenceType()
     {
         var testObject = new PublicValueTypeTestClass();
 
@@ -360,7 +360,7 @@ internal class MemberExtensionsTests : ImmediateReflectionTestsBase
         Assert.AreEqual(42, testObject._publicField);       // Store the result in the public field
 
         setter = MemberExtensions.CreateSetter<PublicValueTypeTestClass>(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo);
-        setter(null, 1);
+        setter(null!, 1);
         Assert.AreEqual(1, PublicValueTypeTestClass.PublicStaticPropertyGetSet);
         setter(testObject, 2);
         Assert.AreEqual(2, PublicValueTypeTestClass.PublicStaticPropertyGetSet);
@@ -379,24 +379,24 @@ internal class MemberExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void CreateSetter_Throws()
+    public static void CreateSetter_Throws()
     {
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         // ReSharper disable AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => MemberExtensions.CreateSetter<PublicValueTypeTestClass>(null));
-        Assert.Throws<ArgumentNullException>(() => MemberExtensions.TryCreateSetter(null, out SetterDelegate<PublicValueTypeTestClass> _));
+        Assert.Throws<ArgumentNullException>(() => MemberExtensions.CreateSetter<PublicValueTypeTestClass>(null!));
+        Assert.Throws<ArgumentNullException>(() => MemberExtensions.TryCreateSetter(null!, out SetterDelegate<PublicValueTypeTestClass>? _));
         // ReSharper restore AssignNullToNotNullAttribute
         // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 
     [Test]
-    public void CreateSetter_WrongType()
+    public static void CreateSetter_WrongType()
     {
         // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
         // ReSharper disable once AssignNullToNotNullAttribute
         Assert.Throws<ArgumentException>(() => MemberExtensions.CreateSetter<PublicObjectTypeTestClass>(PublicValueTypePublicGetSetPropertyPropertyInfo));
 
-        Assert.IsFalse(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicObjectTypeTestClass> _));
+        Assert.IsFalse(MemberExtensions.TryCreateSetter(PublicValueTypePublicGetSetPropertyPropertyInfo, out SetterDelegate<PublicObjectTypeTestClass>? _));
     }
 
     #endregion

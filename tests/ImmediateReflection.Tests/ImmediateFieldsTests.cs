@@ -8,10 +8,10 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ImmediateFields"/>.
 /// </summary>
 [TestFixture]
-internal class ImmediateFieldsTests : ImmediateReflectionTestsBase
+internal sealed class ImmediateFieldsTests : ImmediateReflectionTestsBase
 {
     [Test]
-    public void ImmediateFieldsInfo()
+    public static void ImmediateFieldsInfo()
     {
         var immediateFields1 = new ImmediateFields(SmallObjectFieldInfos);
         CollectionAssert.AreEquivalent(
@@ -30,7 +30,7 @@ internal class ImmediateFieldsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void GetField()
+    public static void GetField()
     {
         var immediateFields = new ImmediateFields(SmallObjectFieldInfos);
         var expectedField = new ImmediateField(SmallObjectTestField1FieldInfo);
@@ -42,8 +42,8 @@ internal class ImmediateFieldsTests : ImmediateReflectionTestsBase
 
         // ReSharper disable InconsistentNaming
         // ReSharper disable AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => { var _ = immediateFields[null]; });
-        Assert.Throws<ArgumentNullException>(() => { var _ = immediateFields.GetField(null); });
+        Assert.Throws<ArgumentNullException>(() => { _ = immediateFields[null!]; });
+        Assert.Throws<ArgumentNullException>(() => { _ = immediateFields.GetField(null!); });
         // ReSharper restore AssignNullToNotNullAttribute
         // ReSharper restore InconsistentNaming
     }
@@ -51,14 +51,13 @@ internal class ImmediateFieldsTests : ImmediateReflectionTestsBase
     #region Equals/HashCode/ToString
 
     [Test]
-    public void ImmediateFieldsEquality()
+    public static void ImmediateFieldsEquality()
     {
         var immediateFields1 = new ImmediateFields(SmallObjectFieldInfos);
         var immediateFields2 = new ImmediateFields(SmallObjectFieldInfos);
         Assert.IsTrue(immediateFields1.Equals(immediateFields1));
         Assert.IsTrue(immediateFields1.Equals(immediateFields2));
         Assert.IsTrue(immediateFields1.Equals((object)immediateFields2));
-        Assert.IsFalse(immediateFields1.Equals(null));
 
         var immediateFields3 = new ImmediateFields(SecondSmallObjectFieldInfos);
         Assert.IsFalse(immediateFields1.Equals(immediateFields3));
@@ -67,10 +66,12 @@ internal class ImmediateFieldsTests : ImmediateReflectionTestsBase
         var immediateFields4 = new ImmediateFields(PublicNestedFieldInfos);
         Assert.IsFalse(immediateFields4.Equals(immediateFields1));
         Assert.IsFalse(immediateFields4.Equals((object)immediateFields1));
+
+        Assert.IsFalse(immediateFields1.Equals(null));
     }
 
     [Test]
-    public void ImmediateFieldsHashCode()
+    public static void ImmediateFieldsHashCode()
     {
         var immediateFields1 = new ImmediateFields(SmallObjectFieldInfos);
         var immediateFields2 = new ImmediateFields(SmallObjectFieldInfos);
@@ -81,7 +82,7 @@ internal class ImmediateFieldsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediateFieldsToString()
+    public static void ImmediateFieldsToString()
     {
         var immediateFields1 = new ImmediateFields(SmallObjectFieldInfos);
         string expectedToString = $"[{string.Join(", ", SmallObjectFieldInfos.Select(p => p.ToString()).ToArray())}]";

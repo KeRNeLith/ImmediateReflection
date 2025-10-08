@@ -27,9 +27,7 @@ public static class ImmediateAttributesExtensions
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static bool IsDefinedImmediateAttribute<TAttribute>(
-        [NotNull] this MemberInfo member,
-        bool inherit = false)
+    public static bool IsDefinedImmediateAttribute<TAttribute>(this MemberInfo member, bool inherit = false)
         where TAttribute : Attribute
     {
         if (member is null)
@@ -56,8 +54,8 @@ public static class ImmediateAttributesExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
     public static bool IsDefinedImmediateAttribute(
-        [NotNull] this MemberInfo member,
-        [NotNull] Type attributeType,
+        this MemberInfo member,
+        Type attributeType,
         bool inherit = false)
     {
         if (member is null)
@@ -77,14 +75,11 @@ public static class ImmediateAttributesExtensions
     /// <returns>The first attribute matching requested type, otherwise null.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
     [PublicAPI]
-    [CanBeNull]
     [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static TAttribute GetImmediateAttribute<TAttribute>(
-        [NotNull] this MemberInfo member,
-        bool inherit = false)
+    public static TAttribute? GetImmediateAttribute<TAttribute>(this MemberInfo member, bool inherit = false)
         where TAttribute : Attribute
     {
         if (member is null)
@@ -105,14 +100,13 @@ public static class ImmediateAttributesExtensions
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="member"/> or the <paramref name="attributeType"/> is null.</exception>
     /// <exception cref="T:System.ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="T:System.Attribute"/> type.</exception>
     [PublicAPI]
-    [CanBeNull]
     [ContractAnnotation("member:null => halt;attributeType:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static Attribute GetImmediateAttribute(
-        [NotNull] this MemberInfo member,
-        [NotNull] Type attributeType,
+    public static Attribute? GetImmediateAttribute(
+        this MemberInfo member,
+        Type attributeType,
         bool inherit = false)
     {
         if (member is null)
@@ -132,14 +126,11 @@ public static class ImmediateAttributesExtensions
     /// <returns>Attributes matching requested type.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
     [PublicAPI]
-    [NotNull, ItemNotNull]
     [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static IEnumerable<TAttribute> GetImmediateAttributes<TAttribute>(
-        [NotNull] this MemberInfo member,
-        bool inherit = false)
+    public static IEnumerable<TAttribute> GetImmediateAttributes<TAttribute>(this MemberInfo member, bool inherit = false)
         where TAttribute : Attribute
     {
         if (member is null)
@@ -159,14 +150,13 @@ public static class ImmediateAttributesExtensions
     /// <returns>Attributes matching requested type.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
     [PublicAPI]
-    [NotNull, ItemNotNull]
     [ContractAnnotation("member:null => halt;attributeType:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
     public static IEnumerable<Attribute> GetImmediateAttributes(
-        [NotNull] this MemberInfo member,
-        [NotNull] Type attributeType,
+        this MemberInfo member,
+        Type attributeType,
         bool inherit = false)
     {
         if (member is null)
@@ -185,14 +175,11 @@ public static class ImmediateAttributesExtensions
     /// <returns>All attributes.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="member"/> is null.</exception>
     [PublicAPI]
-    [NotNull, ItemNotNull]
     [ContractAnnotation("member:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static IEnumerable<Attribute> GetAllImmediateAttributes(
-        [NotNull] this MemberInfo member,
-        bool inherit = false)
+    public static IEnumerable<Attribute> GetAllImmediateAttributes(this MemberInfo member, bool inherit = false)
     {
         if (member is null)
             throw new ArgumentNullException(nameof(member));

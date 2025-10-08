@@ -1,6 +1,14 @@
 ﻿#if NETFRAMEWORK || NETSTANDARD2_0
 namespace System.Diagnostics.CodeAnalysis
 {
+    /// <summary>
+    /// Specifies that a parameter is not null when a method returns a certain value.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field)]
+    internal sealed class NotNullAttribute : Attribute
+    {
+    }
+
     [AttributeUsage(AttributeTargets.Parameter)]
     internal sealed class NotNullWhenAttribute : Attribute
     {

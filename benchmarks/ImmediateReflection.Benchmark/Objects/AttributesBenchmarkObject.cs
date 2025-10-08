@@ -3,7 +3,7 @@
 /// <summary>
 /// Benchmark object for attributes.
 /// </summary>
-public class AttributesBenchmarkObject
+internal sealed class AttributesBenchmarkObject
 {
     [TestClass]
     [SecondTestClass]

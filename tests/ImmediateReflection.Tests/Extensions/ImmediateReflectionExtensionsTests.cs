@@ -7,20 +7,20 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ImmediateReflectionExtensions"/>.
 /// </summary>
 [TestFixture]
-internal class ImmediateReflectionExtensionsTests : ImmediateReflectionTestsBase
+internal sealed class ImmediateReflectionExtensionsTests : ImmediateReflectionTestsBase
 {
     [Test]
-    public void GetImmediateTypeFromObject()
+    public static void GetImmediateTypeFromObject()
     {
         object testObject1 = new PublicValueTypeTestClass();
         ImmediateType immediateType = ImmediateReflectionExtensions.GetImmediateType(testObject1);
         Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateType.Type);
 
-        PublicValueTypeTestClass testObject2 = new PublicValueTypeTestClass();
+        var testObject2 = new PublicValueTypeTestClass();
         immediateType = ImmediateReflectionExtensions.GetImmediateType(testObject2);
         Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateType.Type);
 
-        TestStruct testObject3 = new TestStruct();
+        var testObject3 = new TestStruct();
         immediateType = ImmediateReflectionExtensions.GetImmediateType(testObject3);
         Assert.AreEqual(typeof(TestStruct), immediateType.Type);
 
@@ -30,9 +30,9 @@ internal class ImmediateReflectionExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void GetImmediateTypeFromObject_Throws()
+    public static void GetImmediateTypeFromObject_Throws()
     {
-        object testObject = null;
+        object? testObject = null;
 
         // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
         // ReSharper disable once AssignNullToNotNullAttribute
@@ -40,7 +40,7 @@ internal class ImmediateReflectionExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void GetImmediateTypeFromType()
+    public static void GetImmediateTypeFromType()
     {
         Type testType = typeof(PublicValueTypeTestClass);
         ImmediateType immediateType = testType.GetImmediateType();
@@ -60,12 +60,12 @@ internal class ImmediateReflectionExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void GetImmediateTypeFromType_Throws()
+    public static void GetImmediateTypeFromType_Throws()
     {
-        Type testType = null;
+        Type? testType = null;
 
         // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
         // ReSharper disable once AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateType());
+        Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateType());
     }
 }

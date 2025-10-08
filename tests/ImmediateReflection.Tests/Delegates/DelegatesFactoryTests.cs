@@ -1,5 +1,5 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using static ImmediateReflection.DelegatesFactory;
 
 namespace ImmediateReflection.Tests;
 
@@ -7,19 +7,19 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="DelegatesFactory"/>.
 /// </summary>
 [TestFixture]
-internal class DelegatesFactoryTests : ImmediateReflectionTestsBase
+internal sealed class DelegatesFactoryTests : ImmediateReflectionTestsBase
 {
     [Test]
-    public void CreatePropertyGetter_CanRead()
+    public static void CreatePropertyGetter_CanRead()
     {
-        Assert.IsNull(DelegatesFactory.CreateGetter(PublicValueTypePublicSetPropertyPropertyInfo, PublicValueTypePublicSetPropertyPropertyInfo.GetGetMethod()));
-        Assert.IsNotNull(DelegatesFactory.CreateGetter(PublicValueTypePublicGetSetPropertyPropertyInfo, PublicValueTypePublicGetSetPropertyPropertyInfo.GetGetMethod()));
+        Assert.IsNull(CreateGetter(PublicValueTypePublicSetPropertyPropertyInfo, PublicValueTypePublicSetPropertyPropertyInfo.GetGetMethod()!));
+        Assert.IsNotNull(CreateGetter(PublicValueTypePublicGetSetPropertyPropertyInfo, PublicValueTypePublicGetSetPropertyPropertyInfo.GetGetMethod()!));
     }
 
     [Test]
-    public void CreatePropertySetter_CanWrite()
+    public static void CreatePropertySetter_CanWrite()
     {
-        Assert.IsNull(DelegatesFactory.CreateSetter(PublicValueTypePublicGetPropertyPropertyInfo, PublicValueTypePublicGetPropertyPropertyInfo.GetSetMethod()));
-        Assert.IsNotNull(DelegatesFactory.CreateSetter(PublicValueTypePublicGetSetPropertyPropertyInfo, PublicValueTypePublicGetSetPropertyPropertyInfo.GetSetMethod()));
+        Assert.IsNull(CreateSetter(PublicValueTypePublicGetPropertyPropertyInfo, PublicValueTypePublicGetPropertyPropertyInfo.GetSetMethod()!));
+        Assert.IsNotNull(CreateSetter(PublicValueTypePublicGetSetPropertyPropertyInfo, PublicValueTypePublicGetSetPropertyPropertyInfo.GetSetMethod()!));
     }
 }

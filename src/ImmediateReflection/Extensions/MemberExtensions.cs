@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using JetBrains.Annotations;
 
@@ -16,7 +17,9 @@ public static class MemberExtensions
 
     [Pure]
     [ContractAnnotation("property:null => halt;=> true, getter:notnull;=> false, getter:null")]
-    private static bool TryCreateGetterInternal<TOwner, TProperty>([NotNull] PropertyInfo property, out GetterDelegate<TOwner, TProperty> getter)
+    private static bool TryCreateGetterInternal<TOwner, TProperty>(
+        PropertyInfo property,
+        [NotNullWhen(true)] out GetterDelegate<TOwner, TProperty>? getter)
     {
         if (property is null)
             throw new ArgumentNullException(nameof(property));
@@ -33,7 +36,7 @@ public static class MemberExtensions
                     typeof(StaticGetterDelegate<TProperty>),
                     null,
                     getMethod);
-            getter = owner => staticGetter();
+            getter = _ => staticGetter();
         }
         else
         {
@@ -74,8 +77,8 @@ public static class MemberExtensions
     [Pure]
     [ContractAnnotation("property:null => halt;=> true, getter:notnull;=> false, getter:null")]
     public static bool TryCreateGetter<TOwner, TProperty>(
-        [NotNull] this PropertyInfo property,
-        out GetterDelegate<TOwner, TProperty> getter)
+        this PropertyInfo property,
+        [NotNullWhen(true)] out GetterDelegate<TOwner, TProperty>? getter)
     {
         getter = null;
 
@@ -104,13 +107,12 @@ public static class MemberExtensions
     /// <exception cref="T:System.ArgumentException">If the given template type does not match owner and property types.</exception>
     [PublicAPI]
     [Pure]
-    [NotNull]
     [ContractAnnotation("property:null => halt")]
-    public static GetterDelegate<TOwner, TProperty> CreateGetter<TOwner, TProperty>([NotNull] this PropertyInfo property)
+    public static GetterDelegate<TOwner, TProperty> CreateGetter<TOwner, TProperty>(this PropertyInfo property)
     {
-        if (TryCreateGetterInternal(property, out GetterDelegate<TOwner, TProperty> getter))
+        if (TryCreateGetterInternal(property, out GetterDelegate<TOwner, TProperty>? getter))
             return getter;
-        return owner => default(TProperty);
+        return _ => default;
     }
 
     #endregion
@@ -118,9 +120,8 @@ public static class MemberExtensions
     #region Partially strongly typed
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("method:null => halt")]
-    private static GetterDelegate<TOwner> GetterHelper<TOwner, TValue>([NotNull] MethodInfo method)
+    private static GetterDelegate<TOwner> GetterHelper<TOwner, TValue>(MethodInfo method)
     {
         if (method.IsStatic)
         {
@@ -129,7 +130,7 @@ public static class MemberExtensions
                 Delegate.CreateDelegate(typeof(StaticGetterDelegate<TValue>), method);
 
             // Create a more weakly typed delegate which will call the strongly typed one
-            return target => staticGetter();
+            return _ => staticGetter();
         }
 
         // For value type use a ref delegate
@@ -148,15 +149,13 @@ public static class MemberExtensions
     }
 
     // Fetch the generic helper
-    [NotNull]
     private static readonly MethodInfo GenericGetterHelper = typeof(MemberExtensions).GetMethod(
         nameof(GetterHelper),
         BindingFlags.Static | BindingFlags.NonPublic) ?? throw new InvalidOperationException("Cannot find the generic getter helper.");
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("method:null => halt")]
-    private static GetterDelegate<TOwner> CreateGetter<TOwner>([NotNull] MethodInfo method)
+    private static GetterDelegate<TOwner> CreateGetter<TOwner>(MethodInfo method)
     {
         // Supply type arguments
         MethodInfo delegateConstructor = GenericGetterHelper.MakeGenericMethod(
@@ -169,12 +168,14 @@ public static class MemberExtensions
 
     [Pure]
     [ContractAnnotation("property:null => halt;=> true, getter:notnull;=> false, getter:null")]
-    private static bool TryCreateGetterInternal<TOwner>([NotNull] PropertyInfo property, out GetterDelegate<TOwner> getter)
+    private static bool TryCreateGetterInternal<TOwner>(
+        PropertyInfo property,
+        [NotNullWhen(true)] out GetterDelegate<TOwner>? getter)
     {
         if (property is null)
             throw new ArgumentNullException(nameof(property));
-        // ReSharper disable once PossibleNullReferenceException, Justification: PropertyInfo always have a declaring type.
-        if (!property.DeclaringType.IsAssignableFrom(typeof(TOwner)))
+        // Justification: PropertyInfo always have a declaring type.
+        if (!property.DeclaringType!.IsAssignableFrom(typeof(TOwner)))
             throw new ArgumentException("Template is not the owner type of this property.");
 
         getter = null;
@@ -199,8 +200,8 @@ public static class MemberExtensions
     [Pure]
     [ContractAnnotation("property:null => halt;=> true, getter:notnull;=> false, getter:null")]
     public static bool TryCreateGetter<TOwner>(
-        [NotNull] this PropertyInfo property,
-        out GetterDelegate<TOwner> getter)
+        this PropertyInfo property,
+        [NotNullWhen(true)] out GetterDelegate<TOwner>? getter)
     {
         getter = null;
 
@@ -228,16 +229,15 @@ public static class MemberExtensions
     /// <exception cref="T:System.ArgumentException">If the given template type does not match owner type.</exception>
     [PublicAPI]
     [Pure]
-    [NotNull]
     [ContractAnnotation("property:null => halt")]
-    public static GetterDelegate<TOwner> CreateGetter<TOwner>([NotNull] this PropertyInfo property)
+    public static GetterDelegate<TOwner> CreateGetter<TOwner>(this PropertyInfo property)
     {
-        if (TryCreateGetterInternal(property, out GetterDelegate<TOwner> getter))
+        if (TryCreateGetterInternal(property, out GetterDelegate<TOwner>? getter))
             return getter;
 
         if (property.PropertyType.IsValueType)
-            return owner => Activator.CreateInstance(property.PropertyType);
-        return owner => null;
+            return _ => Activator.CreateInstance(property.PropertyType);
+        return _ => null;
     }
 
     #endregion
@@ -250,7 +250,9 @@ public static class MemberExtensions
 
     [Pure]
     [ContractAnnotation("property:null => halt;=> true, setter:notnull;=> false, setter:null")]
-    private static bool TryCreateSetterInternal<TOwner, TProperty>([NotNull] PropertyInfo property, out SetterDelegate<TOwner, TProperty> setter)
+    private static bool TryCreateSetterInternal<TOwner, TProperty>(
+        PropertyInfo property,
+        [NotNullWhen(true)] out SetterDelegate<TOwner, TProperty>? setter)
         where TOwner : class
     {
         if (property is null)
@@ -268,7 +270,7 @@ public static class MemberExtensions
                     typeof(StaticSetterDelegate<TProperty>),
                     null,
                     setMethod);
-            setter = (owner, value) => staticSetter(value);
+            setter = (_, value) => staticSetter(value);
         }
         else
         {
@@ -296,8 +298,8 @@ public static class MemberExtensions
     [Pure]
     [ContractAnnotation("property:null => halt;=> true, setter:notnull;=> false, setter:null")]
     public static bool TryCreateSetter<TOwner, TProperty>(
-        [NotNull] this PropertyInfo property,
-        out SetterDelegate<TOwner, TProperty> setter)
+        this PropertyInfo property,
+        [NotNullWhen(true)] out SetterDelegate<TOwner, TProperty>? setter)
         where TOwner : class
     {
         setter = null;
@@ -327,14 +329,13 @@ public static class MemberExtensions
     /// <exception cref="T:System.ArgumentException">If the given template type does not match owner and property types.</exception>
     [PublicAPI]
     [Pure]
-    [NotNull]
     [ContractAnnotation("property:null => halt")]
-    public static SetterDelegate<TOwner, TProperty> CreateSetter<TOwner, TProperty>([NotNull] this PropertyInfo property)
+    public static SetterDelegate<TOwner, TProperty> CreateSetter<TOwner, TProperty>(this PropertyInfo property)
         where TOwner : class
     {
-        if (TryCreateSetterInternal(property, out SetterDelegate<TOwner, TProperty> setter))
+        if (TryCreateSetterInternal(property, out SetterDelegate<TOwner, TProperty>? setter))
             return setter;
-        return (owner, value) => { };
+        return (_, _) => { };
     }
 
     #endregion
@@ -342,9 +343,8 @@ public static class MemberExtensions
     #region Partially strongly typed
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("method:null => halt")]
-    private static SetterDelegate<TOwner> SetterHelper<TOwner, TValue>([NotNull] MethodInfo method)
+    private static SetterDelegate<TOwner> SetterHelper<TOwner, TValue>(MethodInfo method)
         where TOwner : class
     {
         if (method.IsStatic)
@@ -354,25 +354,23 @@ public static class MemberExtensions
                 Delegate.CreateDelegate(typeof(StaticSetterDelegate<TValue>), method);
 
             // Create a more weakly typed delegate which will call the strongly typed one
-            return (target, param) => staticSetter((TValue)param);
+            return (_, param) => staticSetter((TValue?)param);
         }
 
         var setter = (SetterDelegate<TOwner, TValue>)
             Delegate.CreateDelegate(typeof(SetterDelegate<TOwner, TValue>), method);
 
-        return (target, param) => setter(target, (TValue)param);
+        return (target, param) => setter(target, (TValue?)param);
     }
 
     // Fetch the generic helper
-    [NotNull]
     private static readonly MethodInfo GenericSetterHelper = typeof(MemberExtensions).GetMethod(
         nameof(SetterHelper),
         BindingFlags.Static | BindingFlags.NonPublic) ?? throw new InvalidOperationException("Cannot find the generic setter helper.");
 
     [Pure]
-    [NotNull]
     [ContractAnnotation("method:null => halt")]
-    private static SetterDelegate<TOwner> CreateSetter<TOwner>([NotNull] MethodInfo method)
+    private static SetterDelegate<TOwner> CreateSetter<TOwner>(MethodInfo method)
         where TOwner : class
     {
         // Supply type arguments
@@ -386,13 +384,15 @@ public static class MemberExtensions
 
     [Pure]
     [ContractAnnotation("property:null => halt;=> true, setter:notnull;=> false, setter:null")]
-    private static bool TryCreateSetterInternal<TOwner>([NotNull] PropertyInfo property, out SetterDelegate<TOwner> setter)
+    private static bool TryCreateSetterInternal<TOwner>(
+        PropertyInfo property,
+        [NotNullWhen(true)] out SetterDelegate<TOwner>? setter)
         where TOwner : class
     {
         if (property is null)
             throw new ArgumentNullException(nameof(property));
-        // ReSharper disable once PossibleNullReferenceException, Justification: PropertyInfo always have a declaring type.
-        if (!property.DeclaringType.IsAssignableFrom(typeof(TOwner)))
+        // Justification: PropertyInfo always have a declaring type.
+        if (!property.DeclaringType!.IsAssignableFrom(typeof(TOwner)))
             throw new ArgumentException("Template is not the owner type of this property.");
 
         setter = null;
@@ -417,8 +417,8 @@ public static class MemberExtensions
     [Pure]
     [ContractAnnotation("property:null => halt;=> true, setter:notnull;=> false, setter:null")]
     public static bool TryCreateSetter<TOwner>(
-        [NotNull] this PropertyInfo property,
-        out SetterDelegate<TOwner> setter)
+        this PropertyInfo property,
+        [NotNullWhen(true)] out SetterDelegate<TOwner>? setter)
         where TOwner : class
     {
         setter = null;
@@ -447,14 +447,13 @@ public static class MemberExtensions
     /// <exception cref="T:System.ArgumentException">If the given template type does not match owner type.</exception>
     [PublicAPI]
     [Pure]
-    [NotNull]
     [ContractAnnotation("property:null => halt")]
-    public static SetterDelegate<TOwner> CreateSetter<TOwner>([NotNull] this PropertyInfo property)
+    public static SetterDelegate<TOwner> CreateSetter<TOwner>(this PropertyInfo property)
         where TOwner : class
     {
-        if (TryCreateSetterInternal(property, out SetterDelegate<TOwner> setter))
+        if (TryCreateSetterInternal(property, out SetterDelegate<TOwner>? setter))
             return setter;
-        return (owner, value) => { };
+        return (_, _) => { };
     }
 
     #endregion

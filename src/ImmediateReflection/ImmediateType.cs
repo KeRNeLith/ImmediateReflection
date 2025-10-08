@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -29,7 +30,6 @@ public sealed class ImmediateType
     /// Gets the wrapped <see cref="T:System.Type"/>.
     /// </summary>
     [PublicAPI]
-    [NotNull]
     public Type Type { get; }
 
     /// <summary>
@@ -38,29 +38,25 @@ public sealed class ImmediateType
     /// <see cref="T:System.Object"/> is the only <see cref="T:System.Type"/> that does not have a base class.
     /// </summary>
     [PublicAPI]
-    [CanBeNull]
-    public Type BaseType { get; }
+    public Type? BaseType { get; }
 
     /// <summary>
     /// Gets the <see cref="T:System.Type"/> owning this <see cref="T:System.Type"/> (declaring it).
     /// </summary>
     [PublicAPI]
-    [CanBeNull]
-    public Type DeclaringType { get; }
+    public Type? DeclaringType { get; }
 
     /// <summary>
     /// Gets the fully qualified name of the <see cref="T:System.Type"/>, including its namespace but not its assembly.
     /// </summary>
     /// <remarks>Fallback on the type name if full name is null.</remarks>
     [PublicAPI]
-    [NotNull]
     public string FullName { get; }
 
     /// <summary>
     /// Gets all the members of this <see cref="T:System.Type"/>.
     /// </summary>
     [PublicAPI]
-    [NotNull, ItemNotNull]
     public IEnumerable<ImmediateMember> Members
     {
         get
@@ -72,21 +68,18 @@ public sealed class ImmediateType
         }
     }
 
-    [NotNull]
     private readonly Lazy<ImmediateFields> _fields;
 
     /// <summary>
     /// Gets all the fields of this <see cref="T:System.Type"/>.
     /// </summary>
     [PublicAPI]
-    [NotNull, ItemNotNull]
     public ImmediateFields Fields => _fields.Value;
 
     /// <summary>
     /// Gets all the properties of this <see cref="T:System.Type"/>.
     /// </summary>
     [PublicAPI]
-    [NotNull, ItemNotNull]
     public ImmediateProperties Properties { get; }
 
     /// <summary>
@@ -94,7 +87,7 @@ public sealed class ImmediateType
     /// </summary>
     /// <param name="type"><see cref="T:System.Type"/> to wrap.</param>
     /// <param name="flags">Flags that must be taken into account to get members.</param>
-    internal ImmediateType([NotNull] Type type, BindingFlags flags = TypeAccessor.DefaultFlags)
+    internal ImmediateType(Type type, BindingFlags flags = TypeAccessor.DefaultFlags)
         : base(type)
     {
         _flags = flags;
@@ -133,7 +126,6 @@ public sealed class ImmediateType
     /// <returns>All <see cref="ImmediateMember"/>.</returns>
     [PublicAPI]
     [Pure]
-    [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -146,12 +138,11 @@ public sealed class ImmediateType
     /// <returns>Found <see cref="ImmediateMember"/>, otherwise null.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
     [PublicAPI]
-    [CanBeNull]
-    public ImmediateMember this[[NotNull] string memberName]
+    public ImmediateMember? this[string memberName]
     {
         get
         {
-            ImmediateField field = Fields[memberName];
+            ImmediateField? field = Fields[memberName];
             if (field is null)
                 return Properties[memberName];
             return field;
@@ -166,12 +157,11 @@ public sealed class ImmediateType
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="memberName"/> is null.</exception>
     [PublicAPI]
     [Pure]
-    [CanBeNull]
     [ContractAnnotation("memberName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public ImmediateMember GetMember([NotNull] string memberName) => this[memberName];
+    public ImmediateMember? GetMember(string memberName) => this[memberName];
 
     /// <summary>
     /// Gets all the fields of this <see cref="T:System.Type"/>.
@@ -179,7 +169,6 @@ public sealed class ImmediateType
     /// <returns>All <see cref="ImmediateField"/>.</returns>
     [PublicAPI]
     [Pure]
-    [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -193,12 +182,11 @@ public sealed class ImmediateType
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="fieldName"/> is null.</exception>
     [PublicAPI]
     [Pure]
-    [CanBeNull]
     [ContractAnnotation("fieldName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public ImmediateField GetField([NotNull] string fieldName) => Fields[fieldName];
+    public ImmediateField? GetField(string fieldName) => Fields[fieldName];
 
     /// <summary>
     /// Gets all the properties of this <see cref="T:System.Type"/>.
@@ -206,7 +194,6 @@ public sealed class ImmediateType
     /// <returns>All <see cref="ImmediateProperty"/>.</returns>
     [PublicAPI]
     [Pure]
-    [NotNull, ItemNotNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
@@ -220,16 +207,14 @@ public sealed class ImmediateType
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="propertyName"/> is null.</exception>
     [PublicAPI]
     [Pure]
-    [CanBeNull]
     [ContractAnnotation("propertyName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public ImmediateProperty GetProperty([NotNull] string propertyName) => Properties[propertyName];
+    public ImmediateProperty? GetProperty(string propertyName) => Properties[propertyName];
 
     #region New/TryNew
 
-    [NotNull]
     private readonly DefaultConstructorDelegate _constructor;
 
     /// <summary>
@@ -247,7 +232,6 @@ public sealed class ImmediateType
     /// <exception cref="T:System.Reflection.AmbiguousMatchException"><see cref="T:System.Type"/> has several constructors defining "params" parameter only.</exception>
     [PublicAPI]
     [Pure]
-    [NotNull]
     public object New()
     {
         return _constructor();
@@ -263,7 +247,7 @@ public sealed class ImmediateType
     [PublicAPI]
     [Pure]
     [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
-    public bool TryNew(out object newInstance, out Exception exception)
+    public bool TryNew([NotNullWhen(true)] out object? newInstance, [NotNullWhen(false)] out Exception? exception)
     {
         try
         {
@@ -301,8 +285,7 @@ public sealed class ImmediateType
     /// <exception cref="T:System.Reflection.TargetInvocationException">The constructor being called throws an exception.</exception>
     [PublicAPI]
     [Pure]
-    [NotNull]
-    public object New([CanBeNull, ItemCanBeNull] params object[] args)
+    public object New(params object?[]? args)
     {
         if (args is null || args.Length == 0)
             return New();
@@ -326,7 +309,7 @@ public sealed class ImmediateType
     [PublicAPI]
     [Pure]
     [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
-    public bool TryNew(out object newInstance, out Exception exception, [CanBeNull, ItemCanBeNull] params object[] args)
+    public bool TryNew([NotNullWhen(true)] out object? newInstance, [NotNullWhen(false)] out Exception? exception, params object?[]? args)
     {
         try
         {
@@ -346,7 +329,6 @@ public sealed class ImmediateType
 
     #region Copy/TryCopy
 
-    [NotNull]
     private readonly CopyConstructorDelegate _copyConstructor;
 
     /// <summary>
@@ -371,7 +353,8 @@ public sealed class ImmediateType
     [PublicAPI]
     [Pure]
     [ContractAnnotation("other:null => null; other:notnull => notnull")]
-    public object Copy([CanBeNull] object other)
+    [return: NotNullIfNotNull("other")]
+    public object? Copy(object? other)
     {
         if (other is null)
             return null;
@@ -392,7 +375,7 @@ public sealed class ImmediateType
                         + "other:notnull => true, newInstance:notnull, exception:null;"
                         + "other:null => false, newInstance:null, exception:notnull;"
                         + "other:notnull => false, newInstance:null, exception:notnull")]
-    public bool TryCopy([CanBeNull] object other, out object newInstance, out Exception exception)
+    public bool TryCopy(object? other, out object? newInstance, [NotNullWhen(false)] out Exception? exception)
     {
         try
         {
@@ -413,13 +396,13 @@ public sealed class ImmediateType
     #region Equality / IEquatable<T>
 
     /// <inheritdoc />
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         return Equals(obj as ImmediateType);
     }
 
     /// <inheritdoc />
-    public bool Equals(ImmediateType other)
+    public bool Equals(ImmediateType? other)
     {
         if (other is null)
             return false;

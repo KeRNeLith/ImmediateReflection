@@ -3,7 +3,7 @@
 /// <summary>
 /// Benchmark object.
 /// </summary>
-internal class BenchmarkObject2
+internal sealed class BenchmarkObject2
 {
     // ReSharper disable once InconsistentNaming
     public float _benchmarkField = 42.5f;

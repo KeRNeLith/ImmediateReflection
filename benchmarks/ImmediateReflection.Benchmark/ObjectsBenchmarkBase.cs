@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using JetBrains.Annotations;
 
 namespace ImmediateReflection.Benchmark;
 
@@ -12,25 +11,23 @@ public abstract class ObjectsBenchmarkBase : BenchmarkBase
 {
     #region Benchmark objects
 
-    protected class ObjectsBenchmarkObject1
+    protected sealed class ObjectsBenchmarkObject1
     {
-        public string StringProperty { get; set; }
+        public string? StringProperty { get; set; }
 
-        public uint[] UIntArray { get; set; }
+        public uint[]? UIntArray { get; set; }
     }
 
     protected class ObjectsBenchmarkObject2
     {
         public int IntProperty { get; set; }
 
-        public long[] LongArray { get; set; }
+        public long[]? LongArray { get; set; }
     }
 
-    [NotNull]
-    protected static readonly string UIntArrayPropertyName = nameof(ObjectsBenchmarkObject1.UIntArray);
+    protected const string UIntArrayPropertyName = nameof(ObjectsBenchmarkObject1.UIntArray);
 
-    [NotNull]
-    protected static readonly PropertyInfo UIntArrayPropertyInfo = typeof(ObjectsBenchmarkObject1).GetProperty(UIntArrayPropertyName) 
+    protected static readonly PropertyInfo UIntArrayPropertyInfo = typeof(ObjectsBenchmarkObject1).GetProperty(UIntArrayPropertyName)
                                                                    ?? throw new InvalidOperationException("Property does not exist.");
 
     #endregion
@@ -47,7 +44,7 @@ public abstract class ObjectsBenchmarkBase : BenchmarkBase
             .Select(i => (object)new ObjectsBenchmarkObject1
             {
                 StringProperty = $"string {i}",
-                UIntArray = new []{ 1u, 2u, 3u }
+                UIntArray = [1u, 2u, 3u]
             })
             .ToArray();
     }
@@ -66,12 +63,12 @@ public abstract class ObjectsBenchmarkBase : BenchmarkBase
                     ? (object)new ObjectsBenchmarkObject1
                     {
                         StringProperty = $"string {i}",
-                        UIntArray = new[] { 1u, 2u, 3u }
+                        UIntArray = [1u, 2u, 3u]
                     }
                     : new ObjectsBenchmarkObject2
                     {
                         IntProperty = i,
-                        LongArray = new []{ 1L, 2L, 3L }
+                        LongArray = [1L, 2L, 3L]
                     })
             .ToArray();
     }
@@ -81,12 +78,10 @@ public abstract class ObjectsBenchmarkBase : BenchmarkBase
     /// <summary>
     /// Array of <see cref="BenchmarkObject"/> objects.
     /// </summary>
-    [NotNull, ItemNotNull]
     protected static readonly object[] BenchmarkObjects = GenerateBenchmarkObjects(NbObjects);
 
     /// <summary>
     /// Array of <see cref="BenchmarkObject"/> and <see cref="BenchmarkObject2"/> objects.
     /// </summary>
-    [NotNull, ItemNotNull]
     protected static readonly object[] BenchmarkMixedObjects = GenerateMixedBenchmarkObjects(NbObjects);
 }

@@ -22,31 +22,26 @@ public sealed class ImmediateProperty
     /// Gets the wrapped <see cref="T:System.Reflection.PropertyInfo"/>.
     /// </summary>
     [PublicAPI]
-    [NotNull]
     public PropertyInfo PropertyInfo { get; }
 
     /// <summary>
     /// Gets the <see cref="T:System.Type"/> owning this property (declaring it).
     /// </summary>
     [PublicAPI]
-    [NotNull]
     public Type DeclaringType { get; }
 
     /// <summary>
     /// Gets the <see cref="T:System.Type"/> of this property.
     /// </summary>
     [PublicAPI]
-    [NotNull]
     public Type PropertyType { get; }
 
-    [NotNull]
     private readonly Lazy<ImmediateType> _propertyImmediateType;
 
     /// <summary>
     /// Gets the <see cref="ImmediateType"/> of this property.
     /// </summary>
     [PublicAPI]
-    [NotNull]
     public ImmediateType PropertyImmediateType => _propertyImmediateType.Value;
 
     /// <summary>
@@ -55,7 +50,6 @@ public sealed class ImmediateProperty
     [PublicAPI]
     public bool CanRead { get; }
 
-    [NotNull]
     private readonly GetterDelegate _getter;
 
     /// <summary>
@@ -64,14 +58,13 @@ public sealed class ImmediateProperty
     [PublicAPI]
     public bool CanWrite { get; }
 
-    [NotNull]
     private readonly SetterDelegate _setter;
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="property"><see cref="T:System.Reflection.PropertyInfo"/> to wrap.</param>
-    internal ImmediateProperty([NotNull] PropertyInfo property)
+    internal ImmediateProperty(PropertyInfo property)
         : base(property)
     {
         Debug.Assert(!IsIndexed(property), $"Cannot initialize an {nameof(ImmediateProperty)} with an indexed property.");
@@ -81,8 +74,8 @@ public sealed class ImmediateProperty
         PropertyType = property.PropertyType;
         _propertyImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(PropertyType));
 
-        // ReSharper disable once AssignNullToNotNullAttribute, Justification: A property is always declared inside a type.
-        DeclaringType = property.DeclaringType;
+        // Justification: A property is always declared inside a type.
+        DeclaringType = property.DeclaringType!;
 
         CanRead = property.CanRead;
         CanWrite = property.CanWrite;
@@ -95,26 +88,30 @@ public sealed class ImmediateProperty
 
         GetterDelegate ConfigureGetter()
         {
-            GetterDelegate getter = null;
+            GetterDelegate? getter = null;
             MethodInfo getMethod = property.GetGetMethod(true);
-            if (getMethod != null)
+            if (getMethod is not null)
+            {
                 getter = DelegatesFactory.CreateGetter(property, getMethod);
+            }
 
             if (getter is null)
-                return target => throw new ArgumentException($"No getter for property {Name}.");
+                return _ => throw new ArgumentException($"No getter for property {Name}.");
 
             return getter;
         }
 
         SetterDelegate ConfigureSetter()
         {
-            SetterDelegate setter = null;
+            SetterDelegate? setter = null;
             MethodInfo setMethod = property.GetSetMethod(true);
-            if (setMethod != null)
+            if (setMethod is not null)
+            {
                 setter = DelegatesFactory.CreateSetter(property, setMethod);
+            }
 
             if (setter is null)
-                return (target, value) => throw new ArgumentException($"No setter for property {Name}.");
+                return (_, _) => throw new ArgumentException($"No setter for property {Name}.");
 
             return setter;
         }
@@ -132,7 +129,7 @@ public sealed class ImmediateProperty
     /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the property to get is not static.</exception>
     [PublicAPI]
     [Pure]
-    public object GetValue([CanBeNull] object obj)
+    public object? GetValue(object? obj)
     {
         return _getter(obj);
     }
@@ -146,7 +143,7 @@ public sealed class ImmediateProperty
     /// <exception cref="T:System.InvalidCastException">If the <paramref name="obj"/> is not the owner of this property or if the <paramref name="value"/> is of the wrong type.</exception>
     /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the property to set is not static.</exception>
     [PublicAPI]
-    public void SetValue([CanBeNull] object obj, [CanBeNull] object value)
+    public void SetValue(object? obj, object? value)
     {
         _setter(obj, value);
     }
@@ -154,13 +151,13 @@ public sealed class ImmediateProperty
     #region Equality / IEquatable<T>
 
     /// <inheritdoc />
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         return Equals(obj as ImmediateProperty);
     }
 
     /// <inheritdoc />
-    public bool Equals(ImmediateProperty other)
+    public bool Equals(ImmediateProperty? other)
     {
         if (other is null)
             return false;

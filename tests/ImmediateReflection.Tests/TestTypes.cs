@@ -125,12 +125,12 @@ public class ConcretePublicValueTypeTestClass : AbstractPublicValueTypeTestClass
 
 public class PublicReferenceTypeTestClass
 {
-    private TestObject _privateField;
-    protected TestObject _protectedField;
-    internal TestObject _internalField;
-    public TestObject _publicField;
-    public TestObject _publicField2;
-    public static TestObject _publicStaticField;
+    private TestObject? _privateField;
+    protected TestObject? _protectedField;
+    internal TestObject? _internalField;
+    public TestObject? _publicField;
+    public TestObject? _publicField2;
+    public static TestObject? _publicStaticField;
     public static readonly TestObject _publicStaticReadonlyField = new TestObject { TestValue = 112 };
 
     public PublicReferenceTypeTestClass()
@@ -138,7 +138,7 @@ public class PublicReferenceTypeTestClass
     }
 
     // Constructor for non publicly initializable fields
-    public PublicReferenceTypeTestClass(TestObject internalField = null, TestObject protectedField = null, TestObject privateField = null)
+    public PublicReferenceTypeTestClass(TestObject? internalField = null, TestObject? protectedField = null, TestObject? privateField = null)
     {
         _internalField = internalField;
         _protectedField = protectedField;
@@ -146,47 +146,47 @@ public class PublicReferenceTypeTestClass
     }
 
     // Constructor for non publicly initializable properties
-    public PublicReferenceTypeTestClass(TestObject publicGetProperty = null, TestObject publicGetPrivateSetProperty = null)
+    public PublicReferenceTypeTestClass(TestObject? publicGetProperty = null, TestObject? publicGetPrivateSetProperty = null)
     {
         PublicPropertyGet = publicGetProperty;
         PublicPropertyGetPrivateSet = publicGetPrivateSetProperty;
     }
 
-    public TestObject PublicPropertyGetSet { get; set; }
-    public virtual TestObject PublicVirtualPropertyGetSet { get; set; }
-    internal TestObject InternalPropertyGetSet { get => _publicField; set => _publicField = value; }
-    protected TestObject ProtectedPropertyGetSet { get => _publicField; set => _publicField = value; }
-    private TestObject PrivatePropertyGetSet { get => _publicField; set => _publicField = value; }
+    public TestObject? PublicPropertyGetSet { get; set; }
+    public virtual TestObject? PublicVirtualPropertyGetSet { get; set; }
+    internal TestObject? InternalPropertyGetSet { get => _publicField; set => _publicField = value; }
+    protected TestObject? ProtectedPropertyGetSet { get => _publicField; set => _publicField = value; }
+    private TestObject? PrivatePropertyGetSet { get => _publicField; set => _publicField = value; }
 
-    public TestObject PublicPropertyGet { get; }
-    public TestObject PublicPropertyPrivateGetSet { private get => _publicField; set => _publicField = value; }
-    public TestObject PublicPropertyGetPrivateSet { get; private set; }
-    public TestObject PublicPropertySet { set => _publicField = value; }
+    public TestObject? PublicPropertyGet { get; }
+    public TestObject? PublicPropertyPrivateGetSet { private get => _publicField; set => _publicField = value; }
+    public TestObject? PublicPropertyGetPrivateSet { get; private set; }
+    public TestObject? PublicPropertySet { set => _publicField = value; }
 
-    public static TestObject PublicStaticPropertyGetSet { get; set; }
+    public static TestObject? PublicStaticPropertyGetSet { get; set; }
 
     // Test getters
-    public TestObject GetProtectedFieldValue() => _protectedField;
-    public TestObject GetPrivateFieldValue() => _privateField;
+    public TestObject? GetProtectedFieldValue() => _protectedField;
+    public TestObject? GetPrivateFieldValue() => _privateField;
 }
 
 public class PublicObjectTypeTestClass
 {
-    private object _privateField;
-    protected object _protectedField;
-    internal object _internalField;
-    public object _publicField;
-    public object _publicField2;
-    public static object _publicStaticField;
+    private object? _privateField;
+    protected object? _protectedField;
+    internal object? _internalField;
+    public object? _publicField;
+    public object? _publicField2;
+    public static object? _publicStaticField;
     public static readonly object _publicStaticReadonlyField = 112;
-    public const object _publicConstField = null;
+    public const object? _publicConstField = null;
 
     public PublicObjectTypeTestClass()
     {
     }
 
     // Constructor for non publicly initializable fields
-    public PublicObjectTypeTestClass(object internalField = null, object protectedField = null, object privateField = null)
+    public PublicObjectTypeTestClass(object? internalField = null, object? protectedField = null, object? privateField = null)
     {
         _internalField = internalField;
         _protectedField = protectedField;
@@ -194,28 +194,28 @@ public class PublicObjectTypeTestClass
     }
 
     // Constructor for non publicly initializable properties
-    public PublicObjectTypeTestClass(object publicGetProperty = null, object publicGetPrivateSetProperty = null)
+    public PublicObjectTypeTestClass(object? publicGetProperty = null, object? publicGetPrivateSetProperty = null)
     {
         PublicPropertyGet = publicGetProperty;
         PublicPropertyGetPrivateSet = publicGetPrivateSetProperty;
     }
 
-    public object PublicPropertyGetSet { get; set; }
-    public virtual object PublicVirtualPropertyGetSet { get; set; }
-    internal object InternalPropertyGetSet { get => _publicField; set => _publicField = value; }
-    protected object ProtectedPropertyGetSet { get => _publicField; set => _publicField = value; }
-    private object PrivatePropertyGetSet { get => _publicField; set => _publicField = value; }
+    public object? PublicPropertyGetSet { get; set; }
+    public virtual object? PublicVirtualPropertyGetSet { get; set; }
+    internal object? InternalPropertyGetSet { get => _publicField; set => _publicField = value; }
+    protected object? ProtectedPropertyGetSet { get => _publicField; set => _publicField = value; }
+    private object? PrivatePropertyGetSet { get => _publicField; set => _publicField = value; }
 
-    public object PublicPropertyGet { get; }
-    public object PublicPropertyPrivateGetSet { private get => _publicField; set => _publicField = value; }
-    public object PublicPropertyGetPrivateSet { get; private set; }
-    public object PublicPropertySet { set => _publicField = value; }
+    public object? PublicPropertyGet { get; }
+    public object? PublicPropertyPrivateGetSet { private get => _publicField; set => _publicField = value; }
+    public object? PublicPropertyGetPrivateSet { get; private set; }
+    public object? PublicPropertySet { set => _publicField = value; }
 
-    public static object PublicStaticPropertyGetSet { get; set; }
+    public static object? PublicStaticPropertyGetSet { get; set; }
 
     // Test getters
-    public object GetProtectedFieldValue() => _protectedField;
-    public object GetPrivateFieldValue() => _privateField;
+    public object? GetProtectedFieldValue() => _protectedField;
+    public object? GetPrivateFieldValue() => _privateField;
 }
 
 internal class InternalValueTypeTestClass
@@ -269,12 +269,12 @@ internal class InternalValueTypeTestClass
 
 internal class InternalReferenceTypeTestClass
 {
-    private TestObject _privateField;
-    protected TestObject _protectedField;
-    internal TestObject _internalField;
-    public TestObject _publicField;
-    public TestObject _publicField2;
-    public static TestObject _publicStaticField;
+    private TestObject? _privateField;
+    protected TestObject? _protectedField;
+    internal TestObject? _internalField;
+    public TestObject? _publicField;
+    public TestObject? _publicField2;
+    public static TestObject? _publicStaticField;
     public static readonly TestObject _publicStaticReadonlyField = new TestObject { TestValue = 221 };
 
     public InternalReferenceTypeTestClass()
@@ -282,7 +282,7 @@ internal class InternalReferenceTypeTestClass
     }
 
     // Constructor for non publicly initializable fields
-    public InternalReferenceTypeTestClass(TestObject internalField = null, TestObject protectedField = null, TestObject privateField = null)
+    public InternalReferenceTypeTestClass(TestObject? internalField = null, TestObject? protectedField = null, TestObject? privateField = null)
     {
         _internalField = internalField;
         _protectedField = protectedField;
@@ -290,48 +290,48 @@ internal class InternalReferenceTypeTestClass
     }
 
     // Constructor for non publicly initializable properties
-    public InternalReferenceTypeTestClass(TestObject publicGetProperty = null, TestObject publicGetPrivateSetProperty = null)
+    public InternalReferenceTypeTestClass(TestObject? publicGetProperty = null, TestObject? publicGetPrivateSetProperty = null)
     {
         PublicPropertyGet = publicGetProperty;
         PublicPropertyGetPrivateSet = publicGetPrivateSetProperty;
     }
 
-    public TestObject PublicPropertyGetSet { get; set; }
-    public virtual TestObject PublicVirtualPropertyGetSet { get; set; }
-    internal TestObject InternalPropertyGetSet { get => _publicField; set => _publicField = value; }
-    protected TestObject ProtectedPropertyGetSet { get => _publicField; set => _publicField = value; }
-    private TestObject PrivatePropertyGetSet { get => _publicField; set => _publicField = value; }
+    public TestObject? PublicPropertyGetSet { get; set; }
+    public virtual TestObject? PublicVirtualPropertyGetSet { get; set; }
+    internal TestObject? InternalPropertyGetSet { get => _publicField; set => _publicField = value; }
+    protected TestObject? ProtectedPropertyGetSet { get => _publicField; set => _publicField = value; }
+    private TestObject? PrivatePropertyGetSet { get => _publicField; set => _publicField = value; }
 
-    public TestObject PublicPropertyGet { get; }
-    public TestObject PublicPropertyPrivateGetSet { private get => _publicField; set => _publicField = value; }
-    public TestObject PublicPropertyGetPrivateSet { get; private set; }
-    public TestObject PublicPropertySet { set => _publicField = value; }
+    public TestObject? PublicPropertyGet { get; }
+    public TestObject? PublicPropertyPrivateGetSet { private get => _publicField; set => _publicField = value; }
+    public TestObject? PublicPropertyGetPrivateSet { get; private set; }
+    public TestObject? PublicPropertySet { set => _publicField = value; }
 
-    public static TestObject PublicStaticPropertyGetSet { get; set; }
+    public static TestObject? PublicStaticPropertyGetSet { get; set; }
 
 
     // Test getters
-    public TestObject GetProtectedFieldValue() => _protectedField;
-    public TestObject GetPrivateFieldValue() => _privateField;
+    public TestObject? GetProtectedFieldValue() => _protectedField;
+    public TestObject? GetPrivateFieldValue() => _privateField;
 }
 
 internal class InternalObjectTypeTestClass
 {
-    private object _privateField;
-    protected object _protectedField;
-    internal object _internalField;
-    public object _publicField;
-    public object _publicField2;
-    public static object _publicStaticField;
+    private object? _privateField;
+    protected object? _protectedField;
+    internal object? _internalField;
+    public object? _publicField;
+    public object? _publicField2;
+    public static object? _publicStaticField;
     public static readonly object _publicStaticReadonlyField = new TestObject();
-    public const object _publicConstField = null;
+    public const object? _publicConstField = null;
 
     public InternalObjectTypeTestClass()
     {
     }
 
     // Constructor for non publicly initializable fields
-    public InternalObjectTypeTestClass(object internalField = null, object protectedField = null, object privateField = null)
+    public InternalObjectTypeTestClass(object? internalField = null, object? protectedField = null, object? privateField = null)
     {
         _internalField = internalField;
         _protectedField = protectedField;
@@ -339,29 +339,29 @@ internal class InternalObjectTypeTestClass
     }
 
     // Constructor for non publicly initializable properties
-    public InternalObjectTypeTestClass(object publicGetProperty = null, object publicGetPrivateSetProperty = null)
+    public InternalObjectTypeTestClass(object? publicGetProperty = null, object? publicGetPrivateSetProperty = null)
     {
         PublicPropertyGet = publicGetProperty;
         PublicPropertyGetPrivateSet = publicGetPrivateSetProperty;
     }
 
-    public object PublicPropertyGetSet { get; set; }
-    public virtual object PublicVirtualPropertyGetSet { get; set; }
-    internal object InternalPropertyGetSet { get => _publicField; set => _publicField = value; }
-    protected object ProtectedPropertyGetSet { get => _publicField; set => _publicField = value; }
-    private object PrivatePropertyGetSet { get => _publicField; set => _publicField = value; }
+    public object? PublicPropertyGetSet { get; set; }
+    public virtual object? PublicVirtualPropertyGetSet { get; set; }
+    internal object? InternalPropertyGetSet { get => _publicField; set => _publicField = value; }
+    protected object? ProtectedPropertyGetSet { get => _publicField; set => _publicField = value; }
+    private object? PrivatePropertyGetSet { get => _publicField; set => _publicField = value; }
 
-    public object PublicPropertyGet { get; }
-    public object PublicPropertyPrivateGetSet { private get => _publicField; set => _publicField = value; }
-    public object PublicPropertyGetPrivateSet { get; private set; }
-    public object PublicPropertySet { set => _publicField = value; }
+    public object? PublicPropertyGet { get; }
+    public object? PublicPropertyPrivateGetSet { private get => _publicField; set => _publicField = value; }
+    public object? PublicPropertyGetPrivateSet { get; private set; }
+    public object? PublicPropertySet { set => _publicField = value; }
 
-    public static object PublicStaticPropertyGetSet { get; set; }
+    public static object? PublicStaticPropertyGetSet { get; set; }
 
 
     // Test getters
-    public object GetProtectedFieldValue() => _protectedField;
-    public object GetPrivateFieldValue() => _privateField;
+    public object? GetProtectedFieldValue() => _protectedField;
+    public object? GetPrivateFieldValue() => _privateField;
 }
 
 public class PublicTestClass
@@ -412,7 +412,7 @@ public class ChildTypeRedefinitionTestClass : BaseTestClass
 
 public class BaseItemTestClass
 {
-    public string Item { get; }
+    public string? Item { get; }
 }
 
 public class ChildItemTestClass : BaseItemTestClass

@@ -11,7 +11,6 @@ namespace ImmediateReflection.Benchmark;
 internal static class ExpressionHelpers
 {
     [Pure]
-    [NotNull]
     public static Func<T> CreateDefaultConstructor<T>()
     {
         Expression body = Expression.New(typeof(T));
@@ -19,10 +18,9 @@ internal static class ExpressionHelpers
     }
 
     [Pure]
-    [NotNull]
     public static Func<T, T> CreateCopyConstructor<T>()
     {
-        ConstructorInfo constructor = typeof(T).GetConstructor(new[] { typeof(T) })
+        ConstructorInfo constructor = typeof(T).GetConstructor([typeof(T)])
                                       ?? throw new InvalidOperationException("Class must have a copy constructor.");
         ParameterExpression other = Expression.Parameter(typeof(T), "other");
         Expression body = Expression.New(constructor, other);
@@ -30,8 +28,7 @@ internal static class ExpressionHelpers
     }
 
     [Pure]
-    [NotNull]
-    public static Func<T, object> CreateGetter<T>([NotNull] PropertyInfo property)
+    public static Func<T, object> CreateGetter<T>(PropertyInfo property)
     {
         if (property is null)
             throw new ArgumentNullException(nameof(property));
@@ -46,8 +43,7 @@ internal static class ExpressionHelpers
     }
 
     [Pure]
-    [NotNull]
-    public static Action<T, object> CreateSetter<T>([NotNull] PropertyInfo property)
+    public static Action<T, object> CreateSetter<T>(PropertyInfo property)
     {
         if (property is null)
             throw new ArgumentNullException(nameof(property));
@@ -56,7 +52,7 @@ internal static class ExpressionHelpers
 
         ParameterExpression target = Expression.Parameter(property.DeclaringType, "target");
         ParameterExpression value = Expression.Parameter(typeof(object), "value");
-        MethodCallExpression setterCall = Expression.Call(target, property.GetSetMethod(), Expression.Convert(value, property.PropertyType));
+        MethodCallExpression setterCall = Expression.Call(target, property.GetSetMethod()!, Expression.Convert(value, property.PropertyType));
 
         return (Action<T, object>)Expression.Lambda(setterCall, target, value).Compile();
     }

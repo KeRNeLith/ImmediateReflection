@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using JetBrains.Annotations;
 using NUnit.Framework;
 
 namespace ImmediateReflection.Tests;
@@ -10,11 +9,11 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ImmediateProperty"/>.
 /// </summary>
 [TestFixture]
-internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
+internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
 {
     #region Test classes
 
-    private class PrivateNestedClass
+    private sealed class PrivateNestedClass
     {
         // ReSharper disable once MemberCanBePrivate.Local
         // ReSharper disable once UnusedAutoPropertyAccessor.Local
@@ -24,8 +23,6 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     #region Test helpers
 
     // Properties //
-
-    [NotNull]
     private static readonly PropertyInfo PrivateNestedPublicGetSetPropertyPropertyInfo =
         typeof(PrivateNestedClass).GetProperty(nameof(PrivateNestedClass.NestedTestValue)) ?? throw new AssertionException("Cannot find property.");
 
@@ -34,7 +31,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     #endregion
 
     [Test]
-    public void ImmediatePropertyInfo()
+    public static void ImmediatePropertyInfo()
     {
         var immediateProperty1 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
         Assert.AreEqual(nameof(PublicValueTypeTestClass.PublicPropertyGetSet), immediateProperty1.Name);
@@ -64,7 +61,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     #region PropertyImmediateType
 
     [Test]
-    public void PropertyImmediateType()
+    public static void PropertyImmediateType()
     {
         CheckPropertyImmediateType(new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo));
         CheckPropertyImmediateType(new ImmediateProperty(PublicReferenceTypePublicGetSetPropertyPropertyInfo));
@@ -72,7 +69,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
 
         #region Local function
 
-        void CheckPropertyImmediateType(ImmediateProperty property)
+        static void CheckPropertyImmediateType(ImmediateProperty property)
         {
             ImmediateType immediateType = property.PropertyImmediateType;
             Assert.IsNotNull(immediateType);
@@ -89,148 +86,144 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
 
     #region CanRead
 
-    private static IEnumerable<TestCaseData> CreateImmediatePropertyCanReadTestCases
+    private static IEnumerable<TestCaseData> CreateImmediatePropertyCanReadTestCases()
     {
-        [UsedImplicitly]
-        get
+        #region Struct
+
+        yield return new TestCaseData(TestStructTestPropertyPropertyInfo, true);
+
+        #endregion
+
+        #region Value type
+
+        // Value type
+        yield return new TestCaseData(PublicValueTypePublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicValueTypePublicVirtualGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicValueTypePublicGetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, true);    // Private Get but gettable via Reflection
+        yield return new TestCaseData(PublicValueTypePublicSetPropertyPropertyInfo, false);
+        yield return new TestCaseData(PublicValueTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
+        yield return new TestCaseData(PublicValueTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
+        yield return new TestCaseData(PublicValueTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
+
+        yield return new TestCaseData(InternalValueTypePublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalValueTypePublicVirtualGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalValueTypePublicGetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalValueTypePublicGetPrivateSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalValueTypePublicPrivateGetSetPropertyPropertyInfo, true);    // Private Get but gettable via Reflection
+        yield return new TestCaseData(InternalValueTypePublicSetPropertyPropertyInfo, false);
+        yield return new TestCaseData(InternalValueTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
+        yield return new TestCaseData(InternalValueTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
+        yield return new TestCaseData(InternalValueTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
+
+        #endregion
+
+        #region Reference type
+
+        // Reference type
+        yield return new TestCaseData(PublicReferenceTypePublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicReferenceTypePublicVirtualGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicReferenceTypePublicGetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicReferenceTypePublicGetPrivateSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicReferenceTypePublicPrivateGetSetPropertyPropertyInfo, true);  // Private Get but gettable via Reflection
+        yield return new TestCaseData(PublicReferenceTypePublicSetPropertyPropertyInfo, false);
+        yield return new TestCaseData(PublicReferenceTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
+        yield return new TestCaseData(PublicReferenceTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
+        yield return new TestCaseData(PublicReferenceTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
+
+        yield return new TestCaseData(InternalReferenceTypePublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalReferenceTypePublicVirtualGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalReferenceTypePublicGetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalReferenceTypePublicGetPrivateSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalReferenceTypePublicPrivateGetSetPropertyPropertyInfo, true);  // Private Get but gettable via Reflection
+        yield return new TestCaseData(InternalReferenceTypePublicSetPropertyPropertyInfo, false);
+        yield return new TestCaseData(InternalReferenceTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
+        yield return new TestCaseData(InternalReferenceTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
+        yield return new TestCaseData(InternalReferenceTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
+
+        #endregion
+
+        #region Object type
+
+        // Object type
+        yield return new TestCaseData(PublicObjectTypePublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicObjectTypePublicVirtualGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicObjectTypePublicGetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo, true);  // Private Get but gettable via Reflection
+        yield return new TestCaseData(PublicObjectTypePublicSetPropertyPropertyInfo, false);
+        yield return new TestCaseData(PublicObjectTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
+        yield return new TestCaseData(PublicObjectTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
+        yield return new TestCaseData(PublicObjectTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
+
+        yield return new TestCaseData(InternalObjectTypePublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalObjectTypePublicVirtualGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalObjectTypePublicGetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo, true);  // Private Get but gettable via Reflection
+        yield return new TestCaseData(InternalObjectTypePublicSetPropertyPropertyInfo, false);
+        yield return new TestCaseData(InternalObjectTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
+        yield return new TestCaseData(InternalObjectTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
+        yield return new TestCaseData(InternalObjectTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
+
+        #endregion
+
+        #region Static
+
+        yield return new TestCaseData(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalValueTypeStaticPublicGetSetPropertyPropertyInfo, true);
+
+        yield return new TestCaseData(PublicReferenceTypeStaticPublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalReferenceTypeStaticPublicGetSetPropertyPropertyInfo, true);
+
+        yield return new TestCaseData(PublicObjectTypeStaticPublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalObjectTypeStaticPublicGetSetPropertyPropertyInfo, true);
+
+        #endregion
+
+        #region Nested types
+
+        // Nested types
+        yield return new TestCaseData(PublicNestedPublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalNestedPublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(ProtectedNestedPublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PrivateNestedPublicGetSetPropertyPropertyInfo, true);
+
+        #endregion
+
+        #region Abstract
+
+        yield return new TestCaseData(PublicValueTypePublicAbstractGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicValueTypePublicConcreteGetSetPropertyPropertyInfo, true);
+
+        #endregion
+
+        #region Anonymous
+
+        var testObject = new
         {
-            #region Struct
+            TestIntProperty = 12
+        };
+        Type anonymousType = testObject.GetType();
+        PropertyInfo propertyInfoOfAnonymousType = anonymousType.GetProperty(nameof(testObject.TestIntProperty))
+                                                   ?? throw new AssertionException("Property must exist.");
+        yield return new TestCaseData(propertyInfoOfAnonymousType, true);
 
-            yield return new TestCaseData(TestStructTestPropertyPropertyInfo, true);
+        #endregion
 
-            #endregion
+        #region Interfaces
 
-            #region Value type
+        yield return new TestCaseData(BaseInterfaceGetPropertyPropertyInfo, true);
+        yield return new TestCaseData(BaseInterfaceSetPropertyPropertyInfo, false);
+        yield return new TestCaseData(BaseInterfaceGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(ChildInterfaceGetSetPropertyPropertyInfo, true);
 
-            // Value type
-            yield return new TestCaseData(PublicValueTypePublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicValueTypePublicVirtualGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicValueTypePublicGetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, true);    // Private Get but gettable via Reflection
-            yield return new TestCaseData(PublicValueTypePublicSetPropertyPropertyInfo, false);
-            yield return new TestCaseData(PublicValueTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
-            yield return new TestCaseData(PublicValueTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
-            yield return new TestCaseData(PublicValueTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
-
-            yield return new TestCaseData(InternalValueTypePublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalValueTypePublicVirtualGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalValueTypePublicGetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalValueTypePublicGetPrivateSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalValueTypePublicPrivateGetSetPropertyPropertyInfo, true);    // Private Get but gettable via Reflection
-            yield return new TestCaseData(InternalValueTypePublicSetPropertyPropertyInfo, false);
-            yield return new TestCaseData(InternalValueTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
-            yield return new TestCaseData(InternalValueTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
-            yield return new TestCaseData(InternalValueTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
-
-            #endregion
-
-            #region Reference type
-
-            // Reference type
-            yield return new TestCaseData(PublicReferenceTypePublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicReferenceTypePublicVirtualGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicReferenceTypePublicGetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicReferenceTypePublicGetPrivateSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicReferenceTypePublicPrivateGetSetPropertyPropertyInfo, true);  // Private Get but gettable via Reflection
-            yield return new TestCaseData(PublicReferenceTypePublicSetPropertyPropertyInfo, false);
-            yield return new TestCaseData(PublicReferenceTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
-            yield return new TestCaseData(PublicReferenceTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
-            yield return new TestCaseData(PublicReferenceTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
-
-            yield return new TestCaseData(InternalReferenceTypePublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalReferenceTypePublicVirtualGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalReferenceTypePublicGetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalReferenceTypePublicGetPrivateSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalReferenceTypePublicPrivateGetSetPropertyPropertyInfo, true);  // Private Get but gettable via Reflection
-            yield return new TestCaseData(InternalReferenceTypePublicSetPropertyPropertyInfo, false);
-            yield return new TestCaseData(InternalReferenceTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
-            yield return new TestCaseData(InternalReferenceTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
-            yield return new TestCaseData(InternalReferenceTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
-
-            #endregion
-
-            #region Object type
-
-            // Object type
-            yield return new TestCaseData(PublicObjectTypePublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicObjectTypePublicVirtualGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicObjectTypePublicGetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo, true);  // Private Get but gettable via Reflection
-            yield return new TestCaseData(PublicObjectTypePublicSetPropertyPropertyInfo, false);
-            yield return new TestCaseData(PublicObjectTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
-            yield return new TestCaseData(PublicObjectTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
-            yield return new TestCaseData(PublicObjectTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
-
-            yield return new TestCaseData(InternalObjectTypePublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalObjectTypePublicVirtualGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalObjectTypePublicGetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo, true);  // Private Get but gettable via Reflection
-            yield return new TestCaseData(InternalObjectTypePublicSetPropertyPropertyInfo, false);
-            yield return new TestCaseData(InternalObjectTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
-            yield return new TestCaseData(InternalObjectTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
-            yield return new TestCaseData(InternalObjectTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
-
-            #endregion
-
-            #region Static
-
-            yield return new TestCaseData(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalValueTypeStaticPublicGetSetPropertyPropertyInfo, true);
-
-            yield return new TestCaseData(PublicReferenceTypeStaticPublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalReferenceTypeStaticPublicGetSetPropertyPropertyInfo, true);
-
-            yield return new TestCaseData(PublicObjectTypeStaticPublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalObjectTypeStaticPublicGetSetPropertyPropertyInfo, true);
-
-            #endregion
-
-            #region Nested types
-
-            // Nested types
-            yield return new TestCaseData(PublicNestedPublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalNestedPublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(ProtectedNestedPublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PrivateNestedPublicGetSetPropertyPropertyInfo, true);
-
-            #endregion
-
-            #region Abstract
-
-            yield return new TestCaseData(PublicValueTypePublicAbstractGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicValueTypePublicConcreteGetSetPropertyPropertyInfo, true);
-
-            #endregion
-
-            #region Anonymous
-
-            var testObject = new
-            {
-                TestIntProperty = 12
-            };
-            Type anonymousType = testObject.GetType();
-            PropertyInfo propertyInfoOfAnonymousType = anonymousType.GetProperty(nameof(testObject.TestIntProperty))
-                                                       ?? throw new AssertionException("Property must exist.");
-            yield return new TestCaseData(propertyInfoOfAnonymousType, true);
-
-            #endregion
-
-            #region Interfaces
-
-            yield return new TestCaseData(BaseInterfaceGetPropertyPropertyInfo, true);
-            yield return new TestCaseData(BaseInterfaceSetPropertyPropertyInfo, false);
-            yield return new TestCaseData(BaseInterfaceGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(ChildInterfaceGetSetPropertyPropertyInfo, true);
-
-            #endregion
-        }
+        #endregion
     }
 
     [TestCaseSource(nameof(CreateImmediatePropertyCanReadTestCases))]
-    public void ImmediatePropertyCanRead([NotNull] PropertyInfo property, bool expectedCanRead)
+    public static void ImmediatePropertyCanRead(PropertyInfo property, bool expectedCanRead)
     {
         var immediateProperty = new ImmediateProperty(property);
         Assert.AreEqual(expectedCanRead, immediateProperty.CanRead);
@@ -240,237 +233,239 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
 
     #region GetValue
 
-    private static IEnumerable<TestCaseData> CreateImmediatePropertyGetValueTestCases
+    private static IEnumerable<TestCaseData> CreateImmediatePropertyGetValueTestCases()
     {
-        [UsedImplicitly]
-        get
+        #region Struct
+
+        var testStruct = new TestStruct
         {
-            #region Struct
+            TestValue = 42
+        };
 
-            var testStruct = new TestStruct
-            {
-                TestValue = 42
-            };
+        yield return new TestCaseData(testStruct, TestStructTestPropertyPropertyInfo, 42);
 
-            yield return new TestCaseData(testStruct, TestStructTestPropertyPropertyInfo, 42);
+        #endregion
 
-            #endregion
+        #region Value type
 
-            #region Value type
+        // Value type
+        var publicValueTypeTestObject = new PublicValueTypeTestClass(3, 4)
+        {
+            PublicPropertyGetSet = 1,
+            PublicVirtualPropertyGetSet = 2,
+            PublicPropertyPrivateGetSet = 5
+        };
 
-            // Value type
-            var publicValueTypeTestObject = new PublicValueTypeTestClass(3, 4)
-            {
-                PublicPropertyGetSet = 1,
-                PublicVirtualPropertyGetSet = 2,
-                PublicPropertyPrivateGetSet = 5
-            };
+        yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetSetPropertyPropertyInfo, 1);
+        yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicVirtualGetSetPropertyPropertyInfo, 2);
+        yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetPropertyPropertyInfo, 3);
+        yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, 4);
+        yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, 5);    // Private Get but gettable via Reflection
 
-            yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetSetPropertyPropertyInfo, 1);
-            yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicVirtualGetSetPropertyPropertyInfo, 2);
-            yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetPropertyPropertyInfo, 3);
-            yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, 4);
-            yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, 5);    // Private Get but gettable via Reflection
+        var internalValueTypeTestObject = new InternalValueTypeTestClass(8, 9)
+        {
+            PublicPropertyGetSet = 6,
+            PublicVirtualPropertyGetSet = 7,
+            PublicPropertyPrivateGetSet = 10
+        };
 
-            var internalValueTypeTestObject = new InternalValueTypeTestClass(8, 9)
-            {
-                PublicPropertyGetSet = 6,
-                PublicVirtualPropertyGetSet = 7,
-                PublicPropertyPrivateGetSet = 10
-            };
+        yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetSetPropertyPropertyInfo, 6);
+        yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicVirtualGetSetPropertyPropertyInfo, 7);
+        yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetPropertyPropertyInfo, 8);
+        yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetPrivateSetPropertyPropertyInfo, 9);
+        yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicPrivateGetSetPropertyPropertyInfo, 10);    // Private Get but gettable via Reflection
 
-            yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetSetPropertyPropertyInfo, 6);
-            yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicVirtualGetSetPropertyPropertyInfo, 7);
-            yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetPropertyPropertyInfo, 8);
-            yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetPrivateSetPropertyPropertyInfo, 9);
-            yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicPrivateGetSetPropertyPropertyInfo, 10);    // Private Get but gettable via Reflection
+        #endregion
 
-            #endregion
+        #region Reference type
 
-            #region Reference type
+        // Reference type
+        var testObject1 = new TestObject { TestValue = 1 };
+        var testObject2 = new TestObject { TestValue = 2 };
+        var testObject3 = new TestObject { TestValue = 3 };
+        var testObject4 = new TestObject { TestValue = 4 };
+        var testObject5 = new TestObject { TestValue = 5 };
+        var publicReferenceTypeTestObject = new PublicReferenceTypeTestClass(testObject3, testObject4)
+        {
+            PublicPropertyGetSet = testObject1,
+            PublicVirtualPropertyGetSet = testObject2,
+            PublicPropertyPrivateGetSet = testObject5
+        };
 
-            // Reference type
-            var testObject1 = new TestObject { TestValue = 1 };
-            var testObject2 = new TestObject { TestValue = 2 };
-            var testObject3 = new TestObject { TestValue = 3 };
-            var testObject4 = new TestObject { TestValue = 4 };
-            var testObject5 = new TestObject { TestValue = 5 };
-            var publicReferenceTypeTestObject = new PublicReferenceTypeTestClass(testObject3, testObject4)
-            {
-                PublicPropertyGetSet = testObject1,
-                PublicVirtualPropertyGetSet = testObject2,
-                PublicPropertyPrivateGetSet = testObject5
-            };
+        yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicGetSetPropertyPropertyInfo, testObject1);
+        yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicVirtualGetSetPropertyPropertyInfo, testObject2);
+        yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicGetPropertyPropertyInfo, testObject3);
+        yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicGetPrivateSetPropertyPropertyInfo, testObject4);
+        yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicPrivateGetSetPropertyPropertyInfo, testObject5);  // Private Get but gettable via Reflection
 
-            yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicGetSetPropertyPropertyInfo, testObject1);
-            yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicVirtualGetSetPropertyPropertyInfo, testObject2);
-            yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicGetPropertyPropertyInfo, testObject3);
-            yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicGetPrivateSetPropertyPropertyInfo, testObject4);
-            yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicPrivateGetSetPropertyPropertyInfo, testObject5);  // Private Get but gettable via Reflection
+        var internalReferenceTypeTestObject = new InternalReferenceTypeTestClass(testObject3, testObject4)
+        {
+            PublicPropertyGetSet = testObject1,
+            PublicVirtualPropertyGetSet = testObject2,
+            PublicPropertyPrivateGetSet = testObject5
+        };
 
-            var internalReferenceTypeTestObject = new InternalReferenceTypeTestClass(testObject3, testObject4)
-            {
-                PublicPropertyGetSet = testObject1,
-                PublicVirtualPropertyGetSet = testObject2,
-                PublicPropertyPrivateGetSet = testObject5
-            };
+        yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicGetSetPropertyPropertyInfo, testObject1);
+        yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicVirtualGetSetPropertyPropertyInfo, testObject2);
+        yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicGetPropertyPropertyInfo, testObject3);
+        yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicGetPrivateSetPropertyPropertyInfo, testObject4);
+        yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicPrivateGetSetPropertyPropertyInfo, testObject5);  // Private Get but gettable via Reflection
 
-            yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicGetSetPropertyPropertyInfo, testObject1);
-            yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicVirtualGetSetPropertyPropertyInfo, testObject2);
-            yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicGetPropertyPropertyInfo, testObject3);
-            yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicGetPrivateSetPropertyPropertyInfo, testObject4);
-            yield return new TestCaseData(internalReferenceTypeTestObject, InternalReferenceTypePublicPrivateGetSetPropertyPropertyInfo, testObject5);  // Private Get but gettable via Reflection
+        #endregion
 
-            #endregion
+        #region Object type
 
-            #region Object type
+        // Object type
+        var publicObjectTypeTestObject1 = new PublicObjectTypeTestClass(3, 4)
+        {
+            PublicPropertyGetSet = 1,
+            PublicVirtualPropertyGetSet = 2,
+            PublicPropertyPrivateGetSet = 5
+        };
 
-            // Object type
-            var publicObjectTypeTestObject1 = new PublicObjectTypeTestClass(3, 4)
-            {
-                PublicPropertyGetSet = 1,
-                PublicVirtualPropertyGetSet = 2,
-                PublicPropertyPrivateGetSet = 5
-            };
+        yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypePublicGetSetPropertyPropertyInfo, 1);
+        yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypePublicVirtualGetSetPropertyPropertyInfo, 2);
+        yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypePublicGetPropertyPropertyInfo, 3);
+        yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo, 4);
+        yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo, 5);  // Private Get but gettable via Reflection
 
-            yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypePublicGetSetPropertyPropertyInfo, 1);
-            yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypePublicVirtualGetSetPropertyPropertyInfo, 2);
-            yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypePublicGetPropertyPropertyInfo, 3);
-            yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo, 4);
-            yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo, 5);  // Private Get but gettable via Reflection
+        var publicObjectTypeTestObject2 = new PublicObjectTypeTestClass(testObject3, testObject4)
+        {
+            PublicPropertyGetSet = testObject1,
+            PublicVirtualPropertyGetSet = testObject2,
+            PublicPropertyPrivateGetSet = testObject5
+        };
 
-            var publicObjectTypeTestObject2 = new PublicObjectTypeTestClass(testObject3, testObject4)
-            {
-                PublicPropertyGetSet = testObject1,
-                PublicVirtualPropertyGetSet = testObject2,
-                PublicPropertyPrivateGetSet = testObject5
-            };
+        yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypePublicGetSetPropertyPropertyInfo, testObject1);
+        yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypePublicVirtualGetSetPropertyPropertyInfo, testObject2);
+        yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypePublicGetPropertyPropertyInfo, testObject3);
+        yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo, testObject4);
+        yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo, testObject5);  // Private Get but gettable via Reflection
 
-            yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypePublicGetSetPropertyPropertyInfo, testObject1);
-            yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypePublicVirtualGetSetPropertyPropertyInfo, testObject2);
-            yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypePublicGetPropertyPropertyInfo, testObject3);
-            yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo, testObject4);
-            yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo, testObject5);  // Private Get but gettable via Reflection
+        var internalObjectTypeTestObject1 = new InternalObjectTypeTestClass(3, 4)
+        {
+            PublicPropertyGetSet = 1,
+            PublicVirtualPropertyGetSet = 2,
+            PublicPropertyPrivateGetSet = 5
+        };
 
-            var internalObjectTypeTestObject1 = new InternalObjectTypeTestClass(3, 4)
-            {
-                PublicPropertyGetSet = 1,
-                PublicVirtualPropertyGetSet = 2,
-                PublicPropertyPrivateGetSet = 5
-            };
+        yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePublicGetSetPropertyPropertyInfo, 1);
+        yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePublicVirtualGetSetPropertyPropertyInfo, 2);
+        yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePublicGetPropertyPropertyInfo, 3);
+        yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo, 4);
+        yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo, 5);  // Private Get but gettable via Reflection
 
-            yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePublicGetSetPropertyPropertyInfo, 1);
-            yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePublicVirtualGetSetPropertyPropertyInfo, 2);
-            yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePublicGetPropertyPropertyInfo, 3);
-            yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo, 4);
-            yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo, 5);  // Private Get but gettable via Reflection
+        var internalObjectTypeTestObject2 = new InternalObjectTypeTestClass(testObject3, testObject4)
+        {
+            PublicPropertyGetSet = testObject1,
+            PublicVirtualPropertyGetSet = testObject2,
+            PublicPropertyPrivateGetSet = testObject5
+        };
 
-            var internalObjectTypeTestObject2 = new InternalObjectTypeTestClass(testObject3, testObject4)
-            {
-                PublicPropertyGetSet = testObject1,
-                PublicVirtualPropertyGetSet = testObject2,
-                PublicPropertyPrivateGetSet = testObject5
-            };
+        yield return new TestCaseData(internalObjectTypeTestObject2, InternalObjectTypePublicGetSetPropertyPropertyInfo, testObject1);
+        yield return new TestCaseData(internalObjectTypeTestObject2, InternalObjectTypePublicVirtualGetSetPropertyPropertyInfo, testObject2);
+        yield return new TestCaseData(internalObjectTypeTestObject2, InternalObjectTypePublicGetPropertyPropertyInfo, testObject3);
+        yield return new TestCaseData(internalObjectTypeTestObject2, InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo, testObject4);
+        yield return new TestCaseData(internalObjectTypeTestObject2, InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo, testObject5);  // Private Get but gettable via Reflection
 
-            yield return new TestCaseData(internalObjectTypeTestObject2, InternalObjectTypePublicGetSetPropertyPropertyInfo, testObject1);
-            yield return new TestCaseData(internalObjectTypeTestObject2, InternalObjectTypePublicVirtualGetSetPropertyPropertyInfo, testObject2);
-            yield return new TestCaseData(internalObjectTypeTestObject2, InternalObjectTypePublicGetPropertyPropertyInfo, testObject3);
-            yield return new TestCaseData(internalObjectTypeTestObject2, InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo, testObject4);
-            yield return new TestCaseData(internalObjectTypeTestObject2, InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo, testObject5);  // Private Get but gettable via Reflection
+        #endregion
 
-            #endregion
+        #region Nested types
 
-            #region Nested types
+        // Nested types
+        var publicNestedTypeTestObject = new PublicTestClass.PublicNestedClass { NestedTestValue = 1 };
+        yield return new TestCaseData(publicNestedTypeTestObject, PublicNestedPublicGetSetPropertyPropertyInfo, 1);
 
-            // Nested types
-            var publicNestedTypeTestObject = new PublicTestClass.PublicNestedClass { NestedTestValue = 1 };
-            yield return new TestCaseData(publicNestedTypeTestObject, PublicNestedPublicGetSetPropertyPropertyInfo, 1);
+        var internalNestedTypeTestObject = new PublicTestClass.InternalNestedClass { NestedTestValue = 2 };
+        yield return new TestCaseData(internalNestedTypeTestObject, InternalNestedPublicGetSetPropertyPropertyInfo, 2);
 
-            var internalNestedTypeTestObject = new PublicTestClass.InternalNestedClass { NestedTestValue = 2 };
-            yield return new TestCaseData(internalNestedTypeTestObject, InternalNestedPublicGetSetPropertyPropertyInfo, 2);
+        var protectedNestedTypeTestObject = new ProtectedNestedClass { NestedTestValue = 3 };
+        yield return new TestCaseData(protectedNestedTypeTestObject, ProtectedNestedPublicGetSetPropertyPropertyInfo, 3);
 
-            var protectedNestedTypeTestObject = new ProtectedNestedClass { NestedTestValue = 3 };
-            yield return new TestCaseData(protectedNestedTypeTestObject, ProtectedNestedPublicGetSetPropertyPropertyInfo, 3);
+        var privateNestedTypeTestObject = new PrivateNestedClass { NestedTestValue = 4 };
+        yield return new TestCaseData(privateNestedTypeTestObject, PrivateNestedPublicGetSetPropertyPropertyInfo, 4);
 
-            var privateNestedTypeTestObject = new PrivateNestedClass { NestedTestValue = 4 };
-            yield return new TestCaseData(privateNestedTypeTestObject, PrivateNestedPublicGetSetPropertyPropertyInfo, 4);
+        #endregion
 
-            #endregion
+        #region Abstract
 
-            #region Abstract
+        var concreteTestObject = new ConcretePublicValueTypeTestClass
+        {
+            PublicAbstractGetSetProperty = 88
+        };
 
-            var concreteTestObject = new ConcretePublicValueTypeTestClass
-            {
-                PublicAbstractGetSetProperty = 88
-            };
+        yield return new TestCaseData(concreteTestObject, PublicValueTypePublicAbstractGetSetPropertyPropertyInfo, 88);
+        yield return new TestCaseData(concreteTestObject, PublicValueTypePublicConcreteGetSetPropertyPropertyInfo, 88);
 
-            yield return new TestCaseData(concreteTestObject, PublicValueTypePublicAbstractGetSetPropertyPropertyInfo, 88);
-            yield return new TestCaseData(concreteTestObject, PublicValueTypePublicConcreteGetSetPropertyPropertyInfo, 88);
+        #endregion
 
-            #endregion
+        #region New keyword
 
-            #region New keyword
+        var baseObject = new BaseTestClass();
+        yield return new TestCaseData(baseObject, BaseClassPublicGetPropertyPropertyInfo, "Parent");
 
-            var baseObject = new BaseTestClass();
-            yield return new TestCaseData(baseObject, BaseClassPublicGetPropertyPropertyInfo, "Parent");
+        var childObject1 = new ChildTestClass();
+        yield return new TestCaseData(childObject1, ChildClassPublicGetPropertyPropertyInfo, "Child");
+        yield return new TestCaseData(childObject1, BaseClassPublicGetPropertyPropertyInfo, "Parent");
 
-            var childObject1 = new ChildTestClass();
-            yield return new TestCaseData(childObject1, ChildClassPublicGetPropertyPropertyInfo, "Child");
-            yield return new TestCaseData(childObject1, BaseClassPublicGetPropertyPropertyInfo, "Parent");
+        var childObject2 = new ChildTypeRedefinitionTestClass();
+        yield return new TestCaseData(childObject2, ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, 12);
+        yield return new TestCaseData(childObject2, BaseClassPublicGetPropertyPropertyInfo, "Parent");
 
-            var childObject2 = new ChildTypeRedefinitionTestClass();
-            yield return new TestCaseData(childObject2, ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, 12);
-            yield return new TestCaseData(childObject2, BaseClassPublicGetPropertyPropertyInfo, "Parent");
+        #endregion
 
-            #endregion
+        #region Anonymous
 
-            #region Anonymous
+        var testObject = new
+        {
+            TestIntProperty = 42
+        };
+        Type anonymousType = testObject.GetType();
+        PropertyInfo propertyInfoOfAnonymousType = anonymousType.GetProperty(nameof(testObject.TestIntProperty))
+                                                   ?? throw new AssertionException("Property must exist.");
+        yield return new TestCaseData(testObject, propertyInfoOfAnonymousType, 42);
 
-            var testObject = new
-            {
-                TestIntProperty = 42
-            };
-            Type anonymousType = testObject.GetType();
-            PropertyInfo propertyInfoOfAnonymousType = anonymousType.GetProperty(nameof(testObject.TestIntProperty))
-                                                       ?? throw new AssertionException("Property must exist.");
-            yield return new TestCaseData(testObject, propertyInfoOfAnonymousType, 42);
+        #endregion
 
-            #endregion
+        #region Interfaces (via concrete type)
 
-            #region Interfaces (via concrete type)
+        var implementationTestObject = new ImplementationInterfacesTestClass
+        {
+            TestGetProperty = 1u,
+            TestSetProperty = 2,
+            TestGetSetProperty = 3.0,
+            TestChildProperty = 4.0f
+        };
 
-            var implementationTestObject = new ImplementationInterfacesTestClass
-            {
-                TestGetProperty = 1u,
-                TestSetProperty = 2,
-                TestGetSetProperty = 3.0,
-                TestChildProperty = 4.0f
-            };
+        yield return new TestCaseData(implementationTestObject, BaseInterfaceGetPropertyPropertyInfo, 1u);
+        yield return new TestCaseData(implementationTestObject, BaseInterfaceGetSetPropertyPropertyInfo, 3.0);
+        yield return new TestCaseData(implementationTestObject, ChildInterfaceGetSetPropertyPropertyInfo, 4.0f);
 
-            yield return new TestCaseData(implementationTestObject, BaseInterfaceGetPropertyPropertyInfo, 1u);
-            yield return new TestCaseData(implementationTestObject, BaseInterfaceGetSetPropertyPropertyInfo, 3.0);
-            yield return new TestCaseData(implementationTestObject, ChildInterfaceGetSetPropertyPropertyInfo, 4.0f);
-
-            #endregion
-        }
+        #endregion
     }
 
     [TestCaseSource(nameof(CreateImmediatePropertyGetValueTestCases))]
-    public void ImmediatePropertyGetValue([NotNull] object target, [NotNull] PropertyInfo property, [CanBeNull] object expectedValue)
+    public static void ImmediatePropertyGetValue(object target, PropertyInfo property, object? expectedValue)
     {
         var immediateProperty = new ImmediateProperty(property);
 
-        object gotValue = immediateProperty.GetValue(target);
+        object? gotValue = immediateProperty.GetValue(target);
         if (expectedValue is null)
+        {
             Assert.IsNull(gotValue);
+        }
         else if (expectedValue.GetType().IsValueType)
+        {
             Assert.AreEqual(expectedValue, gotValue);
+        }
         else
+        {
             Assert.AreSame(expectedValue, gotValue);
+        }
     }
 
     [Test]
-    public void ImmediatePropertyGetValue_Static()
+    public static void ImmediatePropertyGetValue_Static()
     {
         var testObject1 = new TestObject { TestValue = 1 };
         var testObject2 = new TestObject { TestValue = 2 };
@@ -512,7 +507,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertyGetValue_NonPublic()
+    public static void ImmediatePropertyGetValue_NonPublic()
     {
         // Value type
         var publicValueTypeTestObject = new PublicValueTypeTestClass
@@ -644,7 +639,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertyGetValue_NullInstance()
+    public static void ImmediatePropertyGetValue_NullInstance()
     {
         var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
 
@@ -654,7 +649,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertyGetValue_NoGetter()
+    public static void ImmediatePropertyGetValue_NoGetter()
     {
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         var immediateProperty = new ImmediateProperty(PublicValueTypePublicSetPropertyPropertyInfo);
@@ -670,148 +665,144 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
 
     #region CanWrite
 
-    private static IEnumerable<TestCaseData> CreateImmediatePropertyCanWriteTestCases
+    private static IEnumerable<TestCaseData> CreateImmediatePropertyCanWriteTestCases()
     {
-        [UsedImplicitly]
-        get
+        #region Struct
+
+        yield return new TestCaseData(TestStructTestPropertyPropertyInfo, true);
+
+        #endregion
+
+        #region Value type
+
+        // Value type
+        yield return new TestCaseData(PublicValueTypePublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicValueTypePublicVirtualGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicValueTypePublicGetPropertyPropertyInfo, false);
+        yield return new TestCaseData(PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
+        yield return new TestCaseData(PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicValueTypePublicSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicValueTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
+        yield return new TestCaseData(PublicValueTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
+        yield return new TestCaseData(PublicValueTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
+
+        yield return new TestCaseData(InternalValueTypePublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalValueTypePublicVirtualGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalValueTypePublicGetPropertyPropertyInfo, false);
+        yield return new TestCaseData(InternalValueTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
+        yield return new TestCaseData(InternalValueTypePublicPrivateGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalValueTypePublicSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalValueTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
+        yield return new TestCaseData(InternalValueTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
+        yield return new TestCaseData(InternalValueTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
+
+        #endregion
+
+        #region Reference type
+
+        // Reference type
+        yield return new TestCaseData(PublicReferenceTypePublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicReferenceTypePublicVirtualGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicReferenceTypePublicGetPropertyPropertyInfo, false);
+        yield return new TestCaseData(PublicReferenceTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
+        yield return new TestCaseData(PublicReferenceTypePublicPrivateGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicReferenceTypePublicSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicReferenceTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
+        yield return new TestCaseData(PublicReferenceTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
+        yield return new TestCaseData(PublicReferenceTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
+
+        yield return new TestCaseData(InternalReferenceTypePublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalReferenceTypePublicVirtualGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalReferenceTypePublicGetPropertyPropertyInfo, false);
+        yield return new TestCaseData(InternalReferenceTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
+        yield return new TestCaseData(InternalReferenceTypePublicPrivateGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalReferenceTypePublicSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalReferenceTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
+        yield return new TestCaseData(InternalReferenceTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
+        yield return new TestCaseData(InternalReferenceTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
+
+        #endregion
+
+        #region Object type
+
+        // Object type
+        yield return new TestCaseData(PublicObjectTypePublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicObjectTypePublicVirtualGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicObjectTypePublicGetPropertyPropertyInfo, false);
+        yield return new TestCaseData(PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
+        yield return new TestCaseData(PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicObjectTypePublicSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicObjectTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
+        yield return new TestCaseData(PublicObjectTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
+        yield return new TestCaseData(PublicObjectTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
+
+        yield return new TestCaseData(InternalObjectTypePublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalObjectTypePublicVirtualGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalObjectTypePublicGetPropertyPropertyInfo, false);
+        yield return new TestCaseData(InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
+        yield return new TestCaseData(InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalObjectTypePublicSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalObjectTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
+        yield return new TestCaseData(InternalObjectTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
+        yield return new TestCaseData(InternalObjectTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
+
+        #endregion
+
+        #region Static
+
+        yield return new TestCaseData(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalValueTypeStaticPublicGetSetPropertyPropertyInfo, true);
+
+        yield return new TestCaseData(PublicReferenceTypeStaticPublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalReferenceTypeStaticPublicGetSetPropertyPropertyInfo, true);
+
+        yield return new TestCaseData(PublicObjectTypeStaticPublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalObjectTypeStaticPublicGetSetPropertyPropertyInfo, true);
+
+        #endregion
+
+        #region Nested types
+
+        // Nested types
+        yield return new TestCaseData(PublicNestedPublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(InternalNestedPublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(ProtectedNestedPublicGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PrivateNestedPublicGetSetPropertyPropertyInfo, true);
+
+        #endregion
+
+        #region Abstract
+
+        yield return new TestCaseData(PublicValueTypePublicAbstractGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(PublicValueTypePublicConcreteGetSetPropertyPropertyInfo, true);
+
+        #endregion
+
+        #region Anonymous
+
+        var testObject = new
         {
-            #region Struct
+            TestDoubleProperty = 12.0
+        };
+        Type anonymousType = testObject.GetType();
+        PropertyInfo propertyInfoOfAnonymousType = anonymousType.GetProperty(nameof(testObject.TestDoubleProperty))
+                                                   ?? throw new AssertionException("Property must exist.");
+        yield return new TestCaseData(propertyInfoOfAnonymousType, false);
 
-            yield return new TestCaseData(TestStructTestPropertyPropertyInfo, true);
+        #endregion
 
-            #endregion
+        #region Interfaces
 
-            #region Value type
+        yield return new TestCaseData(BaseInterfaceGetPropertyPropertyInfo, false);
+        yield return new TestCaseData(BaseInterfaceSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(BaseInterfaceGetSetPropertyPropertyInfo, true);
+        yield return new TestCaseData(ChildInterfaceGetSetPropertyPropertyInfo, true);
 
-            // Value type
-            yield return new TestCaseData(PublicValueTypePublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicValueTypePublicVirtualGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicValueTypePublicGetPropertyPropertyInfo, false);
-            yield return new TestCaseData(PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
-            yield return new TestCaseData(PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicValueTypePublicSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicValueTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
-            yield return new TestCaseData(PublicValueTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
-            yield return new TestCaseData(PublicValueTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
-
-            yield return new TestCaseData(InternalValueTypePublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalValueTypePublicVirtualGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalValueTypePublicGetPropertyPropertyInfo, false);
-            yield return new TestCaseData(InternalValueTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
-            yield return new TestCaseData(InternalValueTypePublicPrivateGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalValueTypePublicSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalValueTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
-            yield return new TestCaseData(InternalValueTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
-            yield return new TestCaseData(InternalValueTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
-
-            #endregion
-
-            #region Reference type
-
-            // Reference type
-            yield return new TestCaseData(PublicReferenceTypePublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicReferenceTypePublicVirtualGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicReferenceTypePublicGetPropertyPropertyInfo, false);
-            yield return new TestCaseData(PublicReferenceTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
-            yield return new TestCaseData(PublicReferenceTypePublicPrivateGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicReferenceTypePublicSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicReferenceTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
-            yield return new TestCaseData(PublicReferenceTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
-            yield return new TestCaseData(PublicReferenceTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
-
-            yield return new TestCaseData(InternalReferenceTypePublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalReferenceTypePublicVirtualGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalReferenceTypePublicGetPropertyPropertyInfo, false);
-            yield return new TestCaseData(InternalReferenceTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
-            yield return new TestCaseData(InternalReferenceTypePublicPrivateGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalReferenceTypePublicSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalReferenceTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
-            yield return new TestCaseData(InternalReferenceTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
-            yield return new TestCaseData(InternalReferenceTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
-
-            #endregion
-
-            #region Object type
-
-            // Object type
-            yield return new TestCaseData(PublicObjectTypePublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicObjectTypePublicVirtualGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicObjectTypePublicGetPropertyPropertyInfo, false);
-            yield return new TestCaseData(PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
-            yield return new TestCaseData(PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicObjectTypePublicSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicObjectTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
-            yield return new TestCaseData(PublicObjectTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
-            yield return new TestCaseData(PublicObjectTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
-
-            yield return new TestCaseData(InternalObjectTypePublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalObjectTypePublicVirtualGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalObjectTypePublicGetPropertyPropertyInfo, false);
-            yield return new TestCaseData(InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo, true); // Private Set but settable via Reflection
-            yield return new TestCaseData(InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalObjectTypePublicSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalObjectTypeInternalGetSetPropertyPropertyInfo, true); // Internal property
-            yield return new TestCaseData(InternalObjectTypeProtectedGetSetPropertyPropertyInfo, true);// Protected property
-            yield return new TestCaseData(InternalObjectTypePrivateGetSetPropertyPropertyInfo, true);  // Private property
-
-            #endregion
-
-            #region Static
-
-            yield return new TestCaseData(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalValueTypeStaticPublicGetSetPropertyPropertyInfo, true);
-
-            yield return new TestCaseData(PublicReferenceTypeStaticPublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalReferenceTypeStaticPublicGetSetPropertyPropertyInfo, true);
-
-            yield return new TestCaseData(PublicObjectTypeStaticPublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalObjectTypeStaticPublicGetSetPropertyPropertyInfo, true);
-
-            #endregion
-
-            #region Nested types
-
-            // Nested types
-            yield return new TestCaseData(PublicNestedPublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(InternalNestedPublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(ProtectedNestedPublicGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PrivateNestedPublicGetSetPropertyPropertyInfo, true);
-
-            #endregion
-
-            #region Abstract
-
-            yield return new TestCaseData(PublicValueTypePublicAbstractGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(PublicValueTypePublicConcreteGetSetPropertyPropertyInfo, true);
-
-            #endregion
-
-            #region Anonymous
-
-            var testObject = new
-            {
-                TestDoubleProperty = 12.0
-            };
-            Type anonymousType = testObject.GetType();
-            PropertyInfo propertyInfoOfAnonymousType = anonymousType.GetProperty(nameof(testObject.TestDoubleProperty))
-                                                       ?? throw new AssertionException("Property must exist.");
-            yield return new TestCaseData(propertyInfoOfAnonymousType, false);
-
-            #endregion
-
-            #region Interfaces
-
-            yield return new TestCaseData(BaseInterfaceGetPropertyPropertyInfo, false);
-            yield return new TestCaseData(BaseInterfaceSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(BaseInterfaceGetSetPropertyPropertyInfo, true);
-            yield return new TestCaseData(ChildInterfaceGetSetPropertyPropertyInfo, true);
-
-            #endregion
-        }
+        #endregion
     }
 
     [TestCaseSource(nameof(CreateImmediatePropertyCanWriteTestCases))]
-    public void ImmediatePropertyCanWrite([NotNull] PropertyInfo property, bool expectedCanWrite)
+    public static void ImmediatePropertyCanWrite(PropertyInfo property, bool expectedCanWrite)
     {
         var immediateProperty = new ImmediateProperty(property);
         Assert.AreEqual(expectedCanWrite, immediateProperty.CanWrite);
@@ -822,7 +813,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     #region SetValue
 
     [Test]
-    public void ImmediatePropertySetValue_Struct()
+    public static void ImmediatePropertySetValue_Struct()
     {
         var testStruct = new TestStruct();
 
@@ -833,7 +824,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertySetValue_ValueType()
+    public static void ImmediatePropertySetValue_ValueType()
     {
         // Value type / Public
         var publicValueTypeTestObject = new PublicValueTypeTestClass();
@@ -907,7 +898,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertySetValue_ReferenceType()
+    public static void ImmediatePropertySetValue_ReferenceType()
     {
         var testObject1 = new TestObject { TestValue = 1 };
         var testObject2 = new TestObject { TestValue = 2 };
@@ -990,7 +981,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertySetValue_ObjectType()
+    public static void ImmediatePropertySetValue_ObjectType()
     {
         var testObject1 = new TestObject { TestValue = 1 };
         var testObject2 = new TestObject { TestValue = 2 };
@@ -1140,7 +1131,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertySetValue_Abstract()
+    public static void ImmediatePropertySetValue_Abstract()
     {
         var concreteTestObject = new ConcretePublicValueTypeTestClass();
 
@@ -1154,7 +1145,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertySetValue_Static()
+    public static void ImmediatePropertySetValue_Static()
     {
         var testObject = new TestObject { TestValue = 1 };
 
@@ -1195,7 +1186,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertySetValue_NestedTypes()
+    public static void ImmediatePropertySetValue_NestedTypes()
     {
         // Nested types
         var publicNestedTypeTestObject = new PublicTestClass.PublicNestedClass { NestedTestValue = 1 };
@@ -1220,7 +1211,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertySetValue_Interface()
+    public static void ImmediatePropertySetValue_Interface()
     {
         // Interfaces (via concrete type)
         var testObject = new ImplementationInterfacesTestClass
@@ -1245,7 +1236,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertySetValue_NullInstance()
+    public static void ImmediatePropertySetValue_NullInstance()
     {
         var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
 
@@ -1254,14 +1245,14 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertySetValue_WrongInstance()
+    public static void ImmediatePropertySetValue_WrongInstance()
     {
         var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
         Assert.Throws<InvalidCastException>(() => immediateProperty.SetValue(new PublicReferenceTypeTestClass(), null));
     }
 
     [Test]
-    public void ImmediatePropertySetValue_WrongValue()
+    public static void ImmediatePropertySetValue_WrongValue()
     {
         var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
         Assert.Throws<InvalidCastException>(() => immediateProperty.SetValue(new PublicValueTypeTestClass(), new TestObject()));
@@ -1274,7 +1265,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertySetValue_NoSetter()
+    public static void ImmediatePropertySetValue_NoSetter()
     {
         var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
         Assert.Throws<ArgumentException>(() => immediateProperty.SetValue(new PublicValueTypeTestClass(), 51));
@@ -1301,22 +1292,23 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     #region Equals/HashCode/ToString
 
     [Test]
-    public void ImmediatePropertyEquality()
+    public static void ImmediatePropertyEquality()
     {
         var immediateProperty1 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
         var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
         Assert.IsTrue(immediateProperty1.Equals(immediateProperty1));
         Assert.IsTrue(immediateProperty1.Equals(immediateProperty2));
         Assert.IsTrue(immediateProperty1.Equals((object)immediateProperty2));
-        Assert.IsFalse(immediateProperty1.Equals(null));
 
         var immediateProperty3 = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
         Assert.IsFalse(immediateProperty1.Equals(immediateProperty3));
         Assert.IsFalse(immediateProperty1.Equals((object)immediateProperty3));
+
+        Assert.IsFalse(immediateProperty1.Equals(null));
     }
 
     [Test]
-    public void ImmediatePropertyHashCode()
+    public static void ImmediatePropertyHashCode()
     {
         var immediateProperty1 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
         var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
@@ -1330,7 +1322,7 @@ internal class ImmediatePropertyTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ImmediatePropertyToString()
+    public static void ImmediatePropertyToString()
     {
         var immediateProperty1 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
         Assert.AreEqual(PublicValueTypePublicGetSetPropertyPropertyInfo.ToString(), immediateProperty1.ToString());

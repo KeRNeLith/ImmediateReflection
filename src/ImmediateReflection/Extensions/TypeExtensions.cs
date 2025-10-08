@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
@@ -20,7 +21,7 @@ public static class TypeExtensions
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
     [PublicAPI]
     [ContractAnnotation("type:null => halt")]
-    public static bool HasDefaultConstructor([NotNull] this Type type)
+    public static bool HasDefaultConstructor(this Type type)
     {
         if (type is null)
             throw new ArgumentNullException(nameof(type));
@@ -37,9 +38,8 @@ public static class TypeExtensions
     /// <exception cref="T:System.AmbiguousMatchException"><see cref="T:System.Type"/> has several constructors defining "params" parameter only.</exception>
     /// <exception cref="T:System.MissingMethodException">No matching public constructor was found.</exception>
     [PublicAPI]
-    [NotNull]
     [ContractAnnotation("type:null => halt")]
-    public static object New([NotNull] this Type type)
+    public static object New(this Type type)
     {
         if (type is null)
             throw new ArgumentNullException(nameof(type));
@@ -69,14 +69,11 @@ public static class TypeExtensions
     /// <exception cref="T:System.TypeLoadException">If the <see cref="T:System.Type"/> is not a valid type.</exception>
     /// <exception cref="T:System.Reflection.TargetInvocationException">The constructor being called throws an exception.</exception>
     [PublicAPI]
-    [NotNull]
     [ContractAnnotation("type:null => halt;args:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static object New(
-        [NotNull] this Type type,
-        [NotNull, ItemCanBeNull] params object[] args)
+    public static object New(this Type type, params object?[] args)
     {
         if (type is null)
             throw new ArgumentNullException(nameof(type));
@@ -97,9 +94,9 @@ public static class TypeExtensions
     [PublicAPI]
     [ContractAnnotation("=> true, newInstance:notnull, exception:null;=> false, newInstance:null, exception:notnull")]
     public static bool TryNew(
-        [NotNull] this Type type,
-        out object newInstance,
-        out Exception exception)
+        this Type type,
+        [NotNullWhen(true)] out object? newInstance,
+        [NotNullWhen(false)] out Exception? exception)
     {
         if (type is null)
             throw new ArgumentNullException(nameof(type));
@@ -140,10 +137,10 @@ public static class TypeExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
     public static bool TryNew(
-        [NotNull] this Type type,
-        out object newInstance,
-        out Exception exception,
-        [NotNull, ItemCanBeNull] params object[] args)
+        this Type type,
+        [NotNullWhen(true)] out object? newInstance,
+        [NotNullWhen(false)] out Exception? exception,
+        params object?[] args)
     {
         if (type is null)
             throw new ArgumentNullException(nameof(type));
@@ -160,22 +157,21 @@ public static class TypeExtensions
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
     [PublicAPI]
     [ContractAnnotation("type:null => halt")]
-    public static bool HasCopyConstructor([NotNull] this Type type)
+    public static bool HasCopyConstructor(this Type type)
     {
         if (type is null)
             throw new ArgumentNullException(nameof(type));
         return CachesHandler.Instance.GetCopyConstructor(type).HasConstructor;
     }
 
-    [CanBeNull]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    private static T CopyInternal<T>([NotNull] Type type, [CanBeNull] T instance)
+    private static T? CopyInternal<T>(Type type, T? instance)
     {
-        if (instance == null)
-            return default(T);
-        return (T)CachesHandler.Instance.GetCopyConstructor(type).Constructor(instance);
+        if (instance is null)
+            return default;
+        return (T?)CachesHandler.Instance.GetCopyConstructor(type).Constructor(instance);
     }
 
     /// <summary>
@@ -196,7 +192,7 @@ public static class TypeExtensions
     /// </exception>
     [PublicAPI]
     [ContractAnnotation("type:null => halt; other:null => null; other:notnull => notnull")]
-    public static T Copy<T>([NotNull] this Type type, [CanBeNull] T other)
+    public static T? Copy<T>(this Type type, T? other)
     {
         if (type is null)
             throw new ArgumentNullException(nameof(type));
@@ -221,10 +217,10 @@ public static class TypeExtensions
                         + "other:null => false, newInstance:null, exception:notnull;"
                         + "other:notnull => false, newInstance:null, exception:notnull")]
     public static bool TryCopy<T>(
-        [NotNull] this Type type,
-        [CanBeNull] T other,
-        out T newInstance,
-        out Exception exception)
+        this Type type,
+        T? other,
+        out T? newInstance,
+        [NotNullWhen(false)] out Exception? exception)
     {
         if (type is null)
             throw new ArgumentNullException(nameof(type));
@@ -237,7 +233,7 @@ public static class TypeExtensions
         }
         catch (Exception ex)
         {
-            newInstance = default(T);
+            newInstance = default;
             exception = ex;
             return false;
         }

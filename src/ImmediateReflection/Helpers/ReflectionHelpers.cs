@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
 using JetBrains.Annotations;
+using static ImmediateReflection.GeneralHelpers;
 
 namespace ImmediateReflection.Utils;
 
@@ -22,7 +22,7 @@ internal static class ReflectionHelpers
     /// <returns>True if the parameter correspond to a "params" parameter, false otherwise.</returns>
     [Pure]
     [ContractAnnotation("param:null => halt")]
-    public static bool IsParams([NotNull] ParameterInfo param)
+    public static bool IsParams(ParameterInfo param)
     {
         return param.IsDefined(typeof(ParamArrayAttribute), false);
     }
@@ -34,7 +34,7 @@ internal static class ReflectionHelpers
     /// <returns>True if the <paramref name="property"/> is an indexed property, false otherwise.</returns>
     [Pure]
     [ContractAnnotation("property:null => halt")]
-    public static bool IsIndexed([NotNull] PropertyInfo property)
+    public static bool IsIndexed(PropertyInfo property)
     {
         return property.GetIndexParameters().Length != 0;
     }
@@ -48,11 +48,11 @@ internal static class ReflectionHelpers
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static int GetPropertyInfoHashCode([NotNull] PropertyInfo property)
+    public static int GetPropertyInfoHashCode(PropertyInfo property)
     {
 #if !NETFRAMEWORK
-            if (property.ReflectedType != null && property.DeclaringType != null)
-                return HashCode.Combine(property.MetadataToken, property.DeclaringType.GetHashCode(), property.ReflectedType.GetHashCode());
+        if (property.ReflectedType is not null && property.DeclaringType is not null)
+            return HashCode.Combine(property.MetadataToken, property.DeclaringType.GetHashCode(), property.ReflectedType.GetHashCode());
 #endif
         return property.GetHashCode();
     }
@@ -67,12 +67,12 @@ internal static class ReflectionHelpers
     internal sealed class PropertyInfoEqualityComparer : IEqualityComparer, IEqualityComparer<PropertyInfo>
     {
         /// <inheritdoc />
-        bool IEqualityComparer.Equals(object x, object y)
+        bool IEqualityComparer.Equals(object? x, object? y)
         {
-            Debug.Assert(x != null);
-            Debug.Assert(y != null);
+            AssertNotNull(x);
+            AssertNotNull(y);
 
-            return Equals((PropertyInfo)x, (PropertyInfo)y);
+            return Equals((PropertyInfo)x!, (PropertyInfo)y!);
         }
 
         /// <inheritdoc />
@@ -82,12 +82,12 @@ internal static class ReflectionHelpers
         }
 
         /// <inheritdoc />
-        public bool Equals(PropertyInfo x, PropertyInfo y)
+        public bool Equals(PropertyInfo? x, PropertyInfo? y)
         {
-            Debug.Assert(x != null);
-            Debug.Assert(y != null);
+            AssertNotNull(x);
+            AssertNotNull(y);
 
-            return x.Equals(y);
+            return x!.Equals(y);
         }
 
         /// <inheritdoc />
@@ -108,12 +108,12 @@ internal static class ReflectionHelpers
     internal sealed class MemberInfoEqualityComparer : IEqualityComparer, IEqualityComparer<MemberInfo>
     {
         /// <inheritdoc />
-        bool IEqualityComparer.Equals(object x, object y)
+        bool IEqualityComparer.Equals(object? x, object? y)
         {
-            Debug.Assert(x != null);
-            Debug.Assert(y != null);
+            AssertNotNull(x);
+            AssertNotNull(y);
 
-            return Equals((MemberInfo)x, (MemberInfo)y);
+            return Equals((MemberInfo)x!, (MemberInfo)y!);
         }
 
         /// <inheritdoc />
@@ -123,12 +123,12 @@ internal static class ReflectionHelpers
         }
 
         /// <inheritdoc />
-        public bool Equals(MemberInfo x, MemberInfo y)
+        public bool Equals(MemberInfo? x, MemberInfo? y)
         {
-            Debug.Assert(x != null);
-            Debug.Assert(y != null);
+            AssertNotNull(x);
+            AssertNotNull(y);
 
-            return x.Equals(y);
+            return x!.Equals(y);
         }
 
         /// <inheritdoc />

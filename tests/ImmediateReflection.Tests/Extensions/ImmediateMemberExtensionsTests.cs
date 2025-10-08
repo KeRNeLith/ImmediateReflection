@@ -10,34 +10,34 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ImmediateMemberExtensions"/>.
 /// </summary>
 [TestFixture]
-internal class ImmediateMemberExtensionsTests : ImmediateReflectionTestsBase
+internal sealed class ImmediateMemberExtensionsTests : ImmediateReflectionTestsBase
 {
     #region Test classes
 
-    private class EmptyType
+    private sealed class EmptyType
     {
     }
 
     #endregion
 
     [Test]
-    public void GetImmediateField()
+    public static void GetImmediateField()
     {
         Type testType = typeof(PublicValueTypeTestClass);
-        ImmediateField field = testType.GetImmediateField(nameof(PublicValueTypeTestClass._publicField));
+        ImmediateField field = testType.GetImmediateField(nameof(PublicValueTypeTestClass._publicField))!;
         Assert.IsNotNull(field);
         Assert.AreEqual(PublicValueTypePublicFieldFieldsInfo, field.FieldInfo);
 
-        field = testType.GetImmediateField("_privateField", BindingFlags.NonPublic | BindingFlags.Instance);
+        field = testType.GetImmediateField("_privateField", BindingFlags.NonPublic | BindingFlags.Instance)!;
         Assert.IsNotNull(field);
         Assert.AreEqual(PublicValueTypePrivateFieldFieldsInfo, field.FieldInfo);
 
-        field = testType.GetImmediateField("_notExists");
+        field = testType.GetImmediateField("_notExists")!;
         Assert.IsNull(field);
     }
 
     [Test]
-    public void GetImmediateFields()
+    public static void GetImmediateFields()
     {
         TypeClassifiedMembers classifiedMember = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
@@ -61,52 +61,52 @@ internal class ImmediateMemberExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void GetImmediateField_Throws()
+    public static void GetImmediateField_Throws()
     {
         Type testType = typeof(PublicValueTypeTestClass);
 
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         // ReSharper disable AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateField(null));
-        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateField(null, BindingFlags.NonPublic));
+        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateField(null!));
+        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateField(null!, BindingFlags.NonPublic));
         // ReSharper restore AssignNullToNotNullAttribute
         // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 
     [Test]
-    public void GetImmediateFieldFromType_Throws()
+    public static void GetImmediateFieldFromType_Throws()
     {
-        Type testType = null;
+        Type? testType = null;
 
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         // ReSharper disable AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateField("Field"));
-        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateField("Field", BindingFlags.NonPublic));
-        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateFields());
-        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateFields(BindingFlags.NonPublic));
+        Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateField("Field"));
+        Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateField("Field", BindingFlags.NonPublic));
+        Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateFields());
+        Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateFields(BindingFlags.NonPublic));
         // ReSharper restore AssignNullToNotNullAttribute
         // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 
 
     [Test]
-    public void GetImmediateProperty()
+    public static void GetImmediateProperty()
     {
         Type testType = typeof(PublicValueTypeTestClass);
-        ImmediateProperty property = testType.GetImmediateProperty(nameof(PublicValueTypeTestClass.PublicPropertyGetSet));
+        ImmediateProperty property = testType.GetImmediateProperty(nameof(PublicValueTypeTestClass.PublicPropertyGetSet))!;
         Assert.IsNotNull(property);
         Assert.AreEqual(PublicValueTypePublicGetSetPropertyPropertyInfo, property.PropertyInfo);
 
-        property = testType.GetImmediateProperty("PrivatePropertyGetSet", BindingFlags.NonPublic | BindingFlags.Instance);
+        property = testType.GetImmediateProperty("PrivatePropertyGetSet", BindingFlags.NonPublic | BindingFlags.Instance)!;
         Assert.IsNotNull(property);
         Assert.AreEqual(PublicValueTypePrivateGetSetPropertyPropertyInfo, property.PropertyInfo);
 
-        property = testType.GetImmediateProperty("NotExists");
+        property = testType.GetImmediateProperty("NotExists")!;
         Assert.IsNull(property);
     }
 
     [Test]
-    public void GetImmediateProperties()
+    public static void GetImmediateProperties()
     {
         TypeClassifiedMembers classifiedMember = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
@@ -130,29 +130,29 @@ internal class ImmediateMemberExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void GetImmediateProperty_Throws()
+    public static void GetImmediateProperty_Throws()
     {
         Type testType = typeof(PublicValueTypeTestClass);
 
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         // ReSharper disable AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateProperty(null));
-        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateProperty(null, BindingFlags.NonPublic));
+        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateProperty(null!));
+        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateProperty(null!, BindingFlags.NonPublic));
         // ReSharper restore AssignNullToNotNullAttribute
         // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }
 
     [Test]
-    public void GetImmediatePropertyFromType_Throws()
+    public static void GetImmediatePropertyFromType_Throws()
     {
-        Type testType = null;
+        Type? testType = null;
 
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         // ReSharper disable AssignNullToNotNullAttribute
-        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateProperty("Property"));
-        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateProperty("Property", BindingFlags.NonPublic));
-        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateProperties());
-        Assert.Throws<ArgumentNullException>(() => testType.GetImmediateProperties(BindingFlags.NonPublic));
+        Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateProperty("Property"));
+        Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateProperty("Property", BindingFlags.NonPublic));
+        Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateProperties());
+        Assert.Throws<ArgumentNullException>(() => testType!.GetImmediateProperties(BindingFlags.NonPublic));
         // ReSharper restore AssignNullToNotNullAttribute
         // ReSharper restore ReturnValueOfPureMethodIsNotUsed
     }

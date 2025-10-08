@@ -20,62 +20,54 @@ public sealed class ImmediateField
     /// Gets the wrapped <see cref="T:System.Reflection.FieldInfo"/>.
     /// </summary>
     [PublicAPI]
-    [NotNull]
     public FieldInfo FieldInfo { get; }
 
     /// <summary>
     /// Gets the <see cref="T:System.Type"/> owning this field (declaring it).
     /// </summary>
     [PublicAPI]
-    [NotNull]
     public Type DeclaringType { get; }
 
     /// <summary>
     /// Gets the <see cref="T:System.Type"/> of this field.
     /// </summary>
     [PublicAPI]
-    [NotNull]
     public Type FieldType { get; }
 
-    [NotNull]
     private readonly Lazy<ImmediateType> _fieldImmediateType;
 
     /// <summary>
     /// Gets the <see cref="ImmediateType"/> of this field.
     /// </summary>
     [PublicAPI]
-    [NotNull]
     public ImmediateType FieldImmediateType => _fieldImmediateType.Value;
 
-    [NotNull]
     private readonly GetterDelegate _getter;
-
-    [NotNull]
     private readonly SetterDelegate _setter;
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="field"><see cref="T:System.Reflection.FieldInfo"/> to wrap.</param>
-    internal ImmediateField([NotNull] FieldInfo field)
+    internal ImmediateField(FieldInfo field)
         : base(field)
     {
         FieldInfo = field;
         FieldType = field.FieldType;
         _fieldImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(FieldType));
 
-        // ReSharper disable once AssignNullToNotNullAttribute, Justification: A field is always declared inside a type.
-        DeclaringType = field.DeclaringType;
+        // Justification: A field is always declared inside a type.
+        DeclaringType = field.DeclaringType!;
 
-        // ReSharper disable once PossibleNullReferenceException, Justification: Declaring type for a field is always considered not null.
+        // Justification: Declaring type for a field is always considered not null.
         // Current enum value field is not static compared to other enumeration available values fields
         // => That's why we need the static check
         if (field.IsStatic && DeclaringType.IsEnum)
         {
             // Getter / No setter
             object enumValue = field.GetValue(null);
-            _getter = target => enumValue;
-            _setter = (target, value) => throw new FieldAccessException("Cannot set an enumeration value.");
+            _getter = _ => enumValue;
+            _setter = (_, _) => throw new FieldAccessException("Cannot set an enumeration value.");
         }
         else
         {
@@ -96,7 +88,7 @@ public sealed class ImmediateField
             if (IsConstantField() && field.IsStatic)
             {
                 object fieldValue = field.GetValue(null);
-                return target => fieldValue;
+                return _ => fieldValue;
             }
 
             return DelegatesFactory.CreateGetter(field);
@@ -105,7 +97,7 @@ public sealed class ImmediateField
         SetterDelegate ConfigureSetter()
         {
             if (IsConstantField())
-                return (target, value) => throw new FieldAccessException($"Field {Name} cannot be set.");
+                return (_, _) => throw new FieldAccessException($"Field {Name} cannot be set.");
             return DelegatesFactory.CreateSetter(field);
         }
 
@@ -121,7 +113,7 @@ public sealed class ImmediateField
     /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the field to get is not static.</exception>
     [PublicAPI]
     [Pure]
-    public object GetValue([CanBeNull] object obj)
+    public object? GetValue(object? obj)
     {
         return _getter(obj);
     }
@@ -135,7 +127,7 @@ public sealed class ImmediateField
     /// <exception cref="T:System.FieldAccessException">If the field is constant or read only.</exception>
     /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the field to set is not static.</exception>
     [PublicAPI]
-    public void SetValue([CanBeNull] object obj, [CanBeNull] object value)
+    public void SetValue(object? obj, object? value)
     {
         _setter(obj, value);
     }
@@ -143,13 +135,13 @@ public sealed class ImmediateField
     #region Equality / IEquatable<T>
 
     /// <inheritdoc />
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         return Equals(obj as ImmediateField);
     }
 
     /// <inheritdoc />
-    public bool Equals(ImmediateField other)
+    public bool Equals(ImmediateField? other)
     {
         if (other is null)
             return false;

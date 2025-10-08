@@ -14,35 +14,34 @@ public class FieldGetterBenchmark : BenchmarkBase
 {
     // Benchmark methods
     [Benchmark(Baseline = true)]
-    public int GetDirect_Field()
+    public void GetDirect_Field()
     {
-        return BenchmarkObject._benchmarkField;
+        _ = BenchmarkObject._benchmarkField;
     }
 
     [Benchmark]
-    public int GetFieldInfo_Field()
+    public void GetFieldInfo_Field()
     {
         Type benchmarkType = BenchmarkObject.GetType();
-        FieldInfo benchmarkField = benchmarkType.GetField(BenchmarkObjectFieldName);
-        // ReSharper disable once PossibleNullReferenceException
-        return (int)benchmarkField.GetValue(BenchmarkObject);
+        FieldInfo benchmarkField = benchmarkType.GetField(BenchmarkObjectFieldName)!;
+        _ = (int)benchmarkField.GetValue(BenchmarkObject)!;
     }
 
     [Benchmark]
-    public int GetFieldInfoCache_Field()
+    public void GetFieldInfoCache_Field()
     {
-        return (int)FieldInfo.GetValue(BenchmarkObject);
+        _ = (int)FieldInfo.GetValue(BenchmarkObject)!;
     }
 
     [Benchmark]
-    public int GetFastMember_Field()
+    public void GetFastMember_Field()
     {
-        return (int)TypeAccessor[BenchmarkObject, BenchmarkObjectFieldName];
+        _ = (int)TypeAccessor[BenchmarkObject, BenchmarkObjectFieldName];
     }
 
     [Benchmark]
-    public int GetImmediateField_Field()
+    public void GetImmediateField_Field()
     {
-        return (int)ImmediateField.GetValue(BenchmarkObject);
+        _ = (int)ImmediateField.GetValue(BenchmarkObject)!;
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using JetBrains.Annotations;
 using NUnit.Framework;
 
 namespace ImmediateReflection.Tests;
@@ -11,12 +10,12 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ObjectWrapper"/>.
 /// </summary>
 [TestFixture]
-internal class ObjectWrapperTests : ImmediateReflectionTestsBase
+internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
 {
     #region ObjectWrapper infos
 
     [Test]
-    public void ObjectWrapperInfo()
+    public static void ObjectWrapperInfo()
     {
         var testObject = new PublicValueTypeTestClass();
 
@@ -44,7 +43,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     #region Members
 
     [Test]
-    public void ObjectWrapperGetMembers()
+    public static void ObjectWrapperGetMembers()
     {
         var testObject = new PublicValueTypeTestClass();
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
@@ -60,7 +59,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
 
         #region Local function
 
-        IEnumerable<MemberInfo> SelectAllMemberInfos(IEnumerable<ImmediateMember> members)
+        static IEnumerable<MemberInfo> SelectAllMemberInfos(IEnumerable<ImmediateMember> members)
         {
             return members.Select<ImmediateMember, MemberInfo>(member =>
             {
@@ -77,7 +76,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperGetMember()
+    public static void ObjectWrapperGetMember()
     {
         var testObject = new PublicValueTypeTestClass();
         var objectWrapper = new ObjectWrapper(testObject);
@@ -95,9 +94,9 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
 
         // ReSharper disable AssignNullToNotNullAttribute
         // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentNullException>(() => objectWrapper.GetMember(null));
+        Assert.Throws<ArgumentNullException>(() => objectWrapper.GetMember(null!));
         // ReSharper disable once UnusedVariable
-        Assert.Throws<ArgumentNullException>(() => { ImmediateMember member = objectWrapper[null]; });
+        Assert.Throws<ArgumentNullException>(() => { _ = objectWrapper[null!]; });
         // ReSharper restore AssignNullToNotNullAttribute
     }
 
@@ -106,7 +105,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     #region Fields
 
     [Test]
-    public void ObjectWrapperGetFields()
+    public static void ObjectWrapperGetFields()
     {
         var testObject1 = new PublicValueTypeTestClass();
         var testObject2 = new PublicReferenceTypeTestClass();
@@ -119,7 +118,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperGetField()
+    public static void ObjectWrapperGetField()
     {
         var testObject = new PublicValueTypeTestClass();
         var objectWrapper = new ObjectWrapper(testObject);
@@ -131,63 +130,65 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
 
         // ReSharper disable once AssignNullToNotNullAttribute
         // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentNullException>(() => objectWrapper.GetField(null));
+        Assert.Throws<ArgumentNullException>(() => objectWrapper.GetField(null!));
     }
 
     #region GetValue
 
-    private static IEnumerable<TestCaseData> CreateObjectWrapperGetFieldValueTestCases
+    private static IEnumerable<TestCaseData> CreateObjectWrapperGetFieldValueTestCases()
     {
-        [UsedImplicitly]
-        get
+        #region Struct
+
+        var testStruct = new TestStruct
         {
-            #region Struct
+            _testValue = 12
+        };
 
-            var testStruct = new TestStruct
-            {
-                _testValue = 12
-            };
+        yield return new TestCaseData(testStruct, TestStructTestFieldFieldInfo, 12);
 
-            yield return new TestCaseData(testStruct, TestStructTestFieldFieldInfo, 12);
+        #endregion
 
-            #endregion
+        #region Value type
 
-            #region Value type
+        var publicValueTypeTestObject = new PublicValueTypeTestClass
+        {
+            _publicField = 1
+        };
 
-            var publicValueTypeTestObject = new PublicValueTypeTestClass
-            {
-                _publicField = 1
-            };
+        yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicFieldFieldsInfo, 1);
 
-            yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicFieldFieldsInfo, 1);
+        var internalValueTypeTestObject = new InternalValueTypeTestClass
+        {
+            _publicField = 2
+        };
 
-            var internalValueTypeTestObject = new InternalValueTypeTestClass
-            {
-                _publicField = 2
-            };
+        yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicFieldFieldsInfo, 2);
 
-            yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicFieldFieldsInfo, 2);
-
-            #endregion
-        }
+        #endregion
     }
 
     [TestCaseSource(nameof(CreateObjectWrapperGetFieldValueTestCases))]
-    public void ObjectWrapperGetFieldValue([NotNull] object target, [NotNull] FieldInfo field, [CanBeNull] object expectedValue)
+    public static void ObjectWrapperGetFieldValue(object target, FieldInfo field, object? expectedValue)
     {
         var objectWrapper = new ObjectWrapper(target);
 
-        object gotValue = objectWrapper.GetFieldValue(field.Name);
+        object? gotValue = objectWrapper.GetFieldValue(field.Name);
         if (expectedValue is null)
+        {
             Assert.IsNull(gotValue);
+        }
         else if (expectedValue.GetType().IsValueType)
+        {
             Assert.AreEqual(expectedValue, gotValue);
+        }
         else
+        {
             Assert.AreSame(expectedValue, gotValue);
+        }
     }
 
     [Test]
-    public void ObjectWrapperGetFieldValue_NonPublic()
+    public static void ObjectWrapperGetFieldValue_NonPublic()
     {
         var publicTestObject = new PublicValueTypeTestClass();
 
@@ -205,7 +206,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperGetFieldValue_Static()
+    public static void ObjectWrapperGetFieldValue_Static()
     {
         var testObject = new PublicValueTypeTestClass();
 
@@ -215,7 +216,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperGetFieldValue_NotExists()
+    public static void ObjectWrapperGetFieldValue_NotExists()
     {
         var testObject = new PublicValueTypeTestClass();
 
@@ -228,18 +229,18 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     #region SetValue
 
     [Test]
-    public void ObjectWrapperSetFieldValue_Struct()
+    public static void ObjectWrapperSetFieldValue_Struct()
     {
         var testStruct = new TestStruct();
 
         var objectWrapper = new ObjectWrapper(testStruct);
         objectWrapper.SetFieldValue(nameof(TestStruct._testValue), 45);
         Assert.AreEqual(0, testStruct._testValue);  // Not updated there (but on the shadow copy yes) since struct are immutable
-        // Limitation is the same with classic FieldInfo
+                                                    // Limitation is the same with classic FieldInfo
     }
 
     [Test]
-    public void ObjectWrapperSetFieldValue_Class()
+    public static void ObjectWrapperSetFieldValue_Class()
     {
         var testObject = new PublicValueTypeTestClass();
 
@@ -259,7 +260,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperSetFieldValue_NotExists()
+    public static void ObjectWrapperSetFieldValue_NotExists()
     {
         var testObject = new PublicValueTypeTestClass();
 
@@ -269,7 +270,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperSetFieldValue_Static()
+    public static void ObjectWrapperSetFieldValue_Static()
     {
         var testObject = new PublicValueTypeTestClass();
 
@@ -279,7 +280,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperSetFieldValue_WrongValue()
+    public static void ObjectWrapperSetFieldValue_WrongValue()
     {
         var testObject = new PublicReferenceTypeTestClass();
 
@@ -295,7 +296,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     #region Properties
 
     [Test]
-    public void ObjectWrapperGetProperties()
+    public static void ObjectWrapperGetProperties()
     {
         var testObject1 = new PublicValueTypeTestClass();
         var testObject2 = new PublicReferenceTypeTestClass();
@@ -308,7 +309,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperGetProperty()
+    public static void ObjectWrapperGetProperty()
     {
         var testObject = new PublicValueTypeTestClass();
         var objectWrapper = new ObjectWrapper(testObject);
@@ -320,75 +321,77 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
 
         // ReSharper disable once AssignNullToNotNullAttribute
         // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentNullException>(() => objectWrapper.GetProperty(null));
+        Assert.Throws<ArgumentNullException>(() => objectWrapper.GetProperty(null!));
     }
 
     #region GetValue
 
-    private static IEnumerable<TestCaseData> CreateObjectWrapperGetPropertyValueTestCases
+    private static IEnumerable<TestCaseData> CreateObjectWrapperGetPropertyValueTestCases()
     {
-        [UsedImplicitly]
-        get
+        #region Struct
+
+        var testStruct = new TestStruct
         {
-            #region Struct
+            TestValue = 42
+        };
 
-            var testStruct = new TestStruct
-            {
-                TestValue = 42
-            };
+        yield return new TestCaseData(testStruct, TestStructTestPropertyPropertyInfo, 42);
 
-            yield return new TestCaseData(testStruct, TestStructTestPropertyPropertyInfo, 42);
+        #endregion
 
-            #endregion
+        #region Value type
 
-            #region Value type
+        var publicValueTypeTestObject = new PublicValueTypeTestClass(3, 4)
+        {
+            PublicPropertyGetSet = 1,
+            PublicVirtualPropertyGetSet = 2,
+            PublicPropertyPrivateGetSet = 5
+        };
 
-            var publicValueTypeTestObject = new PublicValueTypeTestClass(3, 4)
-            {
-                PublicPropertyGetSet = 1,
-                PublicVirtualPropertyGetSet = 2,
-                PublicPropertyPrivateGetSet = 5
-            };
+        yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetSetPropertyPropertyInfo, 1);
+        yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicVirtualGetSetPropertyPropertyInfo, 2);
+        yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetPropertyPropertyInfo, 3);
+        yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, 4);
+        yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, 5);    // Private Get but gettable via Reflection
 
-            yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetSetPropertyPropertyInfo, 1);
-            yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicVirtualGetSetPropertyPropertyInfo, 2);
-            yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetPropertyPropertyInfo, 3);
-            yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, 4);
-            yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, 5);    // Private Get but gettable via Reflection
+        var internalValueTypeTestObject = new InternalValueTypeTestClass(8, 9)
+        {
+            PublicPropertyGetSet = 6,
+            PublicVirtualPropertyGetSet = 7,
+            PublicPropertyPrivateGetSet = 10
+        };
 
-            var internalValueTypeTestObject = new InternalValueTypeTestClass(8, 9)
-            {
-                PublicPropertyGetSet = 6,
-                PublicVirtualPropertyGetSet = 7,
-                PublicPropertyPrivateGetSet = 10
-            };
+        yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetSetPropertyPropertyInfo, 6);
+        yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicVirtualGetSetPropertyPropertyInfo, 7);
+        yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetPropertyPropertyInfo, 8);
+        yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetPrivateSetPropertyPropertyInfo, 9);
+        yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicPrivateGetSetPropertyPropertyInfo, 10);    // Private Get but gettable via Reflection
 
-            yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetSetPropertyPropertyInfo, 6);
-            yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicVirtualGetSetPropertyPropertyInfo, 7);
-            yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetPropertyPropertyInfo, 8);
-            yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicGetPrivateSetPropertyPropertyInfo, 9);
-            yield return new TestCaseData(internalValueTypeTestObject, InternalValueTypePublicPrivateGetSetPropertyPropertyInfo, 10);    // Private Get but gettable via Reflection
-
-            #endregion
-        }
+        #endregion
     }
 
     [TestCaseSource(nameof(CreateObjectWrapperGetPropertyValueTestCases))]
-    public void ObjectWrapperGetPropertyValue([NotNull] object target, [NotNull] PropertyInfo property, [CanBeNull] object expectedValue)
+    public static void ObjectWrapperGetPropertyValue(object target, PropertyInfo property, object? expectedValue)
     {
         var objectWrapper = new ObjectWrapper(target);
 
-        object gotValue = objectWrapper.GetPropertyValue(property.Name);
+        object? gotValue = objectWrapper.GetPropertyValue(property.Name);
         if (expectedValue is null)
+        {
             Assert.IsNull(gotValue);
+        }
         else if (expectedValue.GetType().IsValueType)
+        {
             Assert.AreEqual(expectedValue, gotValue);
+        }
         else
+        {
             Assert.AreSame(expectedValue, gotValue);
+        }
     }
 
     [Test]
-    public void ObjectWrapperGetPropertyValue_Static()
+    public static void ObjectWrapperGetPropertyValue_Static()
     {
         var testObject = new PublicValueTypeTestClass();
 
@@ -398,7 +401,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperGetPropertyValue_NonPublic()
+    public static void ObjectWrapperGetPropertyValue_NonPublic()
     {
         var publicTestObject = new PublicValueTypeTestClass();
 
@@ -417,7 +420,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperGetPropertyValue_NotExists()
+    public static void ObjectWrapperGetPropertyValue_NotExists()
     {
         var testObject = new PublicValueTypeTestClass();
 
@@ -426,7 +429,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperGetPropertyValue_NoGetter()
+    public static void ObjectWrapperGetPropertyValue_NoGetter()
     {
         var testObject = new PublicValueTypeTestClass();
         var objectWrapper = new ObjectWrapper(testObject);
@@ -440,7 +443,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     #region SetValue
 
     [Test]
-    public void ObjectWrapperSetPropertyValue_Struct()
+    public static void ObjectWrapperSetPropertyValue_Struct()
     {
         var testStruct = new TestStruct();
 
@@ -451,7 +454,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperSetPropertyValue_Class()
+    public static void ObjectWrapperSetPropertyValue_Class()
     {
         var testObject = new PublicValueTypeTestClass();
 
@@ -483,7 +486,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperSetPropertyValue_NotExists()
+    public static void ObjectWrapperSetPropertyValue_NotExists()
     {
         var testObject = new PublicValueTypeTestClass();
 
@@ -493,7 +496,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperSetPropertyValue_Static()
+    public static void ObjectWrapperSetPropertyValue_Static()
     {
         var testObject = new PublicValueTypeTestClass();
 
@@ -503,7 +506,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperSetPropertyValue_WrongValue()
+    public static void ObjectWrapperSetPropertyValue_WrongValue()
     {
         var testObject = new PublicReferenceTypeTestClass();
         var objectWrapper = new ObjectWrapper(testObject);
@@ -513,7 +516,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperSetPropertyValue_NoSetter()
+    public static void ObjectWrapperSetPropertyValue_NoSetter()
     {
         var testObject = new PublicValueTypeTestClass();
         var objectWrapper = new ObjectWrapper(testObject);
@@ -527,7 +530,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     #region Equals/HashCode/ToString
 
     [Test]
-    public void ObjectWrapperEquality()
+    public static void ObjectWrapperEquality()
     {
         var testObject = new PublicValueTypeTestClass();
         var testObject2 = new PublicValueTypeTestClass();
@@ -537,15 +540,16 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
         Assert.IsTrue(objectWrapper1.Equals(objectWrapper1));
         Assert.IsTrue(objectWrapper1.Equals(objectWrapper2));
         Assert.IsTrue(objectWrapper1.Equals((object)objectWrapper2));
-        Assert.IsFalse(objectWrapper1.Equals(null));
 
         var objectWrapper3 = new ObjectWrapper(testObject2);
         Assert.IsFalse(objectWrapper1.Equals(objectWrapper3));
         Assert.IsFalse(objectWrapper1.Equals((object)objectWrapper3));
+
+        Assert.IsFalse(objectWrapper1.Equals(null));
     }
 
     [Test]
-    public void ObjectWrapperHashCode()
+    public static void ObjectWrapperHashCode()
     {
         var testObject = new PublicValueTypeTestClass();
         var testObject2 = new PublicValueTypeTestClass();
@@ -565,7 +569,7 @@ internal class ObjectWrapperTests : ImmediateReflectionTestsBase
     }
 
     [Test]
-    public void ObjectWrapperToString()
+    public static void ObjectWrapperToString()
     {
         var testObject = new PublicValueTypeTestClass();
         var testObject2 = new InternalValueTypeTestClass();

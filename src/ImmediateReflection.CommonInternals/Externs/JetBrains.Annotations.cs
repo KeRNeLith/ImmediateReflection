@@ -28,62 +28,6 @@ using System.Diagnostics;
 namespace JetBrains.Annotations;
 
 /// <summary>
-/// Indicates that the value of the marked element could be <c>null</c> sometimes,
-/// so the check for <c>null</c> is necessary before its usage.
-/// </summary>
-/// <example><code>
-/// [CanBeNull] object Test() => null;
-/// 
-/// void UseTest() {
-///   var p = Test();
-///   var s = p.ToString(); // Warning: Possible 'System.NullReferenceException'
-/// }
-/// </code></example>
-[AttributeUsage(
-    AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-    AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event |
-    AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.GenericParameter)]
-[Conditional("JETBRAINS_ANNOTATIONS")]
-internal sealed class CanBeNullAttribute : Attribute { }
-
-/// <summary>
-/// Indicates that the value of the marked element could never be <c>null</c>.
-/// </summary>
-/// <example><code>
-/// [NotNull] object Foo() {
-///   return null; // Warning: Possible 'null' assignment
-/// }
-/// </code></example>
-[AttributeUsage(
-    AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-    AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event |
-    AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.GenericParameter)]
-[Conditional("JETBRAINS_ANNOTATIONS")]
-internal sealed class NotNullAttribute : Attribute { }
-
-/// <summary>
-/// Can be appplied to symbols of types derived from IEnumerable as well as to symbols of Task
-/// and Lazy classes to indicate that the value of a collection item, of the Task.Result property
-/// or of the Lazy.Value property can never be null.
-/// </summary>
-[AttributeUsage(
-    AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-    AttributeTargets.Delegate | AttributeTargets.Field)]
-[Conditional("JETBRAINS_ANNOTATIONS")]
-internal sealed class ItemNotNullAttribute : Attribute { }
-
-/// <summary>
-/// Can be appplied to symbols of types derived from IEnumerable as well as to symbols of Task
-/// and Lazy classes to indicate that the value of a collection item, of the Task.Result property
-/// or of the Lazy.Value property can be null.
-/// </summary>
-[AttributeUsage(
-    AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-    AttributeTargets.Delegate | AttributeTargets.Field)]
-[Conditional("JETBRAINS_ANNOTATIONS")]
-internal sealed class ItemCanBeNullAttribute : Attribute { }
-
-/// <summary>
 /// Describes dependency between method input and output.
 /// </summary>
 /// <syntax>
@@ -131,16 +75,16 @@ internal sealed class ItemCanBeNullAttribute : Attribute { }
 [Conditional("JETBRAINS_ANNOTATIONS")]
 internal sealed class ContractAnnotationAttribute : Attribute
 {
-    public ContractAnnotationAttribute([NotNull] string contract)
+    public ContractAnnotationAttribute(string contract)
         : this(contract, false) { }
 
-    public ContractAnnotationAttribute([NotNull] string contract, bool forceFullStates)
+    public ContractAnnotationAttribute(string contract, bool forceFullStates)
     {
         Contract = contract;
         ForceFullStates = forceFullStates;
     }
 
-    [NotNull] public string Contract { get; private set; }
+    public string Contract { get; private set; }
 
     public bool ForceFullStates { get; private set; }
 }
@@ -246,12 +190,12 @@ internal sealed class PublicAPIAttribute : Attribute
 {
     public PublicAPIAttribute() { }
 
-    public PublicAPIAttribute([NotNull] string comment)
+    public PublicAPIAttribute(string comment)
     {
         Comment = comment;
     }
 
-    [CanBeNull] public string Comment { get; private set; }
+    public string? Comment { get; private set; }
 }
 #pragma warning restore S101
 

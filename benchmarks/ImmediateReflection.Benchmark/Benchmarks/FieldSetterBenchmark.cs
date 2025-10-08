@@ -25,8 +25,7 @@ public class FieldSetterBenchmark : BenchmarkBase
     public void SetFieldInfo_Field()
     {
         Type benchmarkType = BenchmarkObject.GetType();
-        FieldInfo benchmarkField = benchmarkType.GetField(BenchmarkObjectFieldName);
-        // ReSharper disable once PossibleNullReferenceException
+        FieldInfo benchmarkField = benchmarkType.GetField(BenchmarkObjectFieldName)!;
         benchmarkField.SetValue(BenchmarkObject, ValueToSet);
     }
 

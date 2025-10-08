@@ -1,7 +1,6 @@
 ﻿using System;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
-using JetBrains.Annotations;
 
 namespace ImmediateReflection.Benchmark;
 
@@ -12,35 +11,33 @@ namespace ImmediateReflection.Benchmark;
 [SimpleJob(RuntimeMoniker.Net80)]
 public class CopyConstructorBenchmark : BenchmarkBase
 {
-    [NotNull]
-    private static readonly CopyableBenchmarkObject ObjectToCopy = new CopyableBenchmarkObject("Benchmark value");
+    private static readonly CopyableBenchmarkObject ObjectToCopy = new("Benchmark value");
 
-    [NotNull]
-    private static readonly Func<CopyableBenchmarkObject, CopyableBenchmarkObject> ExpressionConstructor = 
+    private static readonly Func<CopyableBenchmarkObject, CopyableBenchmarkObject> ExpressionConstructor =
         ExpressionHelpers.CreateCopyConstructor<CopyableBenchmarkObject>();
 
     // Benchmark methods
     [Benchmark(Baseline = true)]
-    public CopyableBenchmarkObject Direct_CopyConstructor()
+    public void Direct_CopyConstructor()
     {
-        return new CopyableBenchmarkObject(ObjectToCopy);
+        _ = new CopyableBenchmarkObject(ObjectToCopy);
     }
 
     [Benchmark]
-    public CopyableBenchmarkObject Activator_CopyConstructor()
+    public void Activator_CopyConstructor()
     {
-        return (CopyableBenchmarkObject)Activator.CreateInstance(CopyableBenchmarkObjectType, ObjectToCopy);
+        _ = (CopyableBenchmarkObject)Activator.CreateInstance(CopyableBenchmarkObjectType, ObjectToCopy)!;
     }
 
     [Benchmark]
-    public CopyableBenchmarkObject Expression_CopyConstructor()
+    public void Expression_CopyConstructor()
     {
-        return ExpressionConstructor(ObjectToCopy);
+        _ = ExpressionConstructor(ObjectToCopy);
     }
 
     [Benchmark]
-    public CopyableBenchmarkObject ImmediateType_CopyConstructor()
+    public void ImmediateType_CopyConstructor()
     {
-        return (CopyableBenchmarkObject)ImmediateTypeCopyable.Copy(ObjectToCopy);
+        _ = (CopyableBenchmarkObject)ImmediateTypeCopyable.Copy(ObjectToCopy);
     }
 }

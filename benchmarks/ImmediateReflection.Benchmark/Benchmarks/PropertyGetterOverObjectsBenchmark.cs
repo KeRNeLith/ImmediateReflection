@@ -5,7 +5,6 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 using Fasterflect;
 using FlashReflection;
-using JetBrains.Annotations;
 
 namespace ImmediateReflection.Benchmark;
 
@@ -22,7 +21,7 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
     {
         foreach (object obj in BenchmarkObjects)
         {
-            GetPropertyReflection(obj);
+            _ = GetPropertyReflection(obj);
         }
     }
 
@@ -31,7 +30,7 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
     {
         foreach (object obj in BenchmarkObjects)
         {
-            GetPropertyReflectionCache(obj);
+            _ = GetPropertyReflectionCache(obj);
         }
     }
 
@@ -40,7 +39,7 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
     {
         foreach (object obj in BenchmarkObjects)
         {
-            GetPropertyTypeDescriptor(obj);
+            _ = GetPropertyTypeDescriptor(obj);
         }
     }
 
@@ -49,7 +48,7 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
     {
         foreach (object obj in BenchmarkObjects)
         {
-            GetPropertyFastMember(obj);
+            _ = GetPropertyFastMember(obj);
         }
     }
 
@@ -58,7 +57,7 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
     {
         foreach (object obj in BenchmarkObjects)
         {
-            GetPropertyFlashReflection(obj);
+            _ = GetPropertyFlashReflection(obj);
         }
     }
 
@@ -67,7 +66,7 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
     {
         foreach (object obj in BenchmarkObjects)
         {
-            GetPropertyImmediateReflection(obj);
+            _ = GetPropertyImmediateReflection(obj);
         }
     }
 
@@ -76,7 +75,7 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
     {
         foreach (object obj in BenchmarkObjects)
         {
-            GetPropertyFasterflect(obj);
+            _ = GetPropertyFasterflect(obj);
         }
     }
 
@@ -85,7 +84,7 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
     {
         foreach (object obj in BenchmarkMixedObjects)
         {
-            GetPropertyReflection(obj);
+            _ = GetPropertyReflection(obj);
         }
     }
 
@@ -94,7 +93,7 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
     {
         foreach (object obj in BenchmarkMixedObjects)
         {
-            GetPropertyReflectionCache(obj);
+            _ = GetPropertyReflectionCache(obj);
         }
     }
 
@@ -103,7 +102,7 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
     {
         foreach (object obj in BenchmarkMixedObjects)
         {
-            GetPropertyTypeDescriptor(obj);
+            _ = GetPropertyTypeDescriptor(obj);
         }
     }
 
@@ -112,7 +111,7 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
     {
         foreach (object obj in BenchmarkMixedObjects)
         {
-            GetPropertyFastMember(obj);
+            _ = GetPropertyFastMember(obj);
         }
     }
 
@@ -121,7 +120,7 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
     {
         foreach (object obj in BenchmarkMixedObjects)
         {
-            GetPropertyFlashReflection(obj);
+            _ = GetPropertyFlashReflection(obj);
         }
     }
 
@@ -130,7 +129,7 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
     {
         foreach (object obj in BenchmarkMixedObjects)
         {
-            GetPropertyImmediateReflection(obj);
+            _ = GetPropertyImmediateReflection(obj);
         }
     }
 
@@ -139,22 +138,22 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
     {
         foreach (object obj in BenchmarkMixedObjects)
         {
-            GetPropertyFasterflect(obj);
+            _ = GetPropertyFasterflect(obj);
         }
     }
 
     #region Helper methods
 
-    public object GetPropertyReflection([NotNull] object obj)
+    private static object? GetPropertyReflection(object obj)
     {
-        PropertyInfo propertyInfo = obj.GetType().GetProperty(UIntArrayPropertyName);
+        PropertyInfo? propertyInfo = obj.GetType().GetProperty(UIntArrayPropertyName);
         if (propertyInfo is null || propertyInfo.PropertyType != typeof(uint[]))
             return null;
 
         return propertyInfo.GetValue(obj);
     }
 
-    public object GetPropertyReflectionCache([NotNull] object obj)
+    private static object? GetPropertyReflectionCache(object obj)
     {
         if (obj.GetType() != typeof(ObjectsBenchmarkObject1))
             return null;
@@ -162,15 +161,15 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
         return UIntArrayPropertyInfo.GetValue(obj);
     }
 
-    public object GetPropertyTypeDescriptor([NotNull] object obj)
+    private static object? GetPropertyTypeDescriptor(object obj)
     {
-        PropertyDescriptor propertyDescriptor = TypeDescriptor.GetProperties(obj).Find(UIntArrayPropertyName, false);
+        PropertyDescriptor? propertyDescriptor = TypeDescriptor.GetProperties(obj).Find(UIntArrayPropertyName, false);
         return propertyDescriptor?.GetValue(obj);
     }
 
-    public object GetPropertyFastMember([NotNull] object obj)
+    private static object? GetPropertyFastMember(object obj)
     {
-        FastMember.TypeAccessor accessor = FastMember.TypeAccessor.Create(obj.GetType());
+        var accessor = FastMember.TypeAccessor.Create(obj.GetType());
         bool hasProperty = accessor.GetMembers().Any(m => m.Name == UIntArrayPropertyName);
         if (!hasProperty)
             return null;
@@ -178,23 +177,23 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
         return accessor[obj, UIntArrayPropertyName];
     }
 
-    public object GetPropertyFlashReflection([NotNull] object obj)
+    private static object? GetPropertyFlashReflection(object obj)
     {
         ReflectionType type = ReflectionCache.Instance.GetReflectionType(obj.GetType());
-        ReflectionProperty property = type.Properties[UIntArrayPropertyName];
+        ReflectionProperty? property = type.Properties[UIntArrayPropertyName];
 
         return property?.GetValue(obj);
     }
 
-    public object GetPropertyImmediateReflection([NotNull] object obj)
+    private static object? GetPropertyImmediateReflection(object obj)
     {
         ImmediateType accessor = ImmediateReflection.TypeAccessor.Get(obj.GetType());
-        ImmediateProperty property = accessor.GetProperty(UIntArrayPropertyName);
+        ImmediateProperty? property = accessor.GetProperty(UIntArrayPropertyName);
 
         return property?.GetValue(obj);
     }
 
-    public object GetPropertyFasterflect([NotNull] object obj)
+    private static object? GetPropertyFasterflect(object obj)
     {
         return obj.TryGetPropertyValue(UIntArrayPropertyName);
     }

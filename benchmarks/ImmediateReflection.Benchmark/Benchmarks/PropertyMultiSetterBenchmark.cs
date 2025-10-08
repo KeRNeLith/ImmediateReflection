@@ -2,7 +2,6 @@
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
-using JetBrains.Annotations;
 using Sigil;
 
 namespace ImmediateReflection.Benchmark;
@@ -16,47 +15,38 @@ public class PropertyMultiSetterBenchmark : BenchmarkBase
 {
     #region Setter Delegates
 
-    [NotNull]
     private static readonly Action<BenchmarkObject, string> SetterDelegate = (Action<BenchmarkObject, string>)
-        Delegate.CreateDelegate(typeof(Action<BenchmarkObject, string>), null, PropertyInfo.GetSetMethod());
+        Delegate.CreateDelegate(typeof(Action<BenchmarkObject, string>), null, PropertyInfo.GetSetMethod()!);
 
-    [NotNull]
     private static readonly Action<BenchmarkObject2, int> SetterDelegate2 = (Action<BenchmarkObject2, int>)
-        Delegate.CreateDelegate(typeof(Action<BenchmarkObject2, int>), null, PropertyInfo2.GetSetMethod());
+        Delegate.CreateDelegate(typeof(Action<BenchmarkObject2, int>), null, PropertyInfo2.GetSetMethod()!);
 
-    [NotNull]
     private static readonly Action<BenchmarkObject3, double> SetterDelegate3 = (Action<BenchmarkObject3, double>)
-        Delegate.CreateDelegate(typeof(Action<BenchmarkObject3, double>), null, PropertyInfo3.GetSetMethod());
+        Delegate.CreateDelegate(typeof(Action<BenchmarkObject3, double>), null, PropertyInfo3.GetSetMethod()!);
 
-    [NotNull]
     private static readonly Action<BenchmarkObject4, short> SetterDelegate4 = (Action<BenchmarkObject4, short>)
-        Delegate.CreateDelegate(typeof(Action<BenchmarkObject4, short>), null, PropertyInfo4.GetSetMethod());
+        Delegate.CreateDelegate(typeof(Action<BenchmarkObject4, short>), null, PropertyInfo4.GetSetMethod()!);
 
     #endregion
 
     #region Dynamic Delegates
 
-    [NotNull]
     private static readonly Delegate DynamicSetterDelegate = Delegate.CreateDelegate(
-        typeof(Action<BenchmarkObject, string>), null, PropertyInfo.GetSetMethod());
+        typeof(Action<BenchmarkObject, string>), null, PropertyInfo.GetSetMethod()!);
 
-    [NotNull]
     private static readonly Delegate DynamicSetterDelegate2 = Delegate.CreateDelegate(
-        typeof(Action<BenchmarkObject2, int>), null, PropertyInfo2.GetSetMethod());
+        typeof(Action<BenchmarkObject2, int>), null, PropertyInfo2.GetSetMethod()!);
 
-    [NotNull]
     private static readonly Delegate DynamicSetterDelegate3 = Delegate.CreateDelegate(
-        typeof(Action<BenchmarkObject3, double>), null, PropertyInfo3.GetSetMethod());
+        typeof(Action<BenchmarkObject3, double>), null, PropertyInfo3.GetSetMethod()!);
 
-    [NotNull]
     private static readonly Delegate DynamicSetterDelegate4 = Delegate.CreateDelegate(
-        typeof(Action<BenchmarkObject4, short>), null, PropertyInfo4.GetSetMethod());
+        typeof(Action<BenchmarkObject4, short>), null, PropertyInfo4.GetSetMethod()!);
 
     #endregion
 
     #region Sigil Delegates
 
-    [NotNull]
     private static readonly Action<BenchmarkObject, string> SigilEmitSetter = Emit<Action<BenchmarkObject, string>>
         .NewDynamicMethod("SetProperty")
         .LoadArgument(0)
@@ -65,7 +55,6 @@ public class PropertyMultiSetterBenchmark : BenchmarkBase
         .Return()
         .CreateDelegate();
 
-    [NotNull]
     private static readonly Action<BenchmarkObject2, int> SigilEmitSetter2 = Emit<Action<BenchmarkObject2, int>>
         .NewDynamicMethod("SetProperty2")
         .LoadArgument(0)
@@ -74,7 +63,6 @@ public class PropertyMultiSetterBenchmark : BenchmarkBase
         .Return()
         .CreateDelegate();
 
-    [NotNull]
     private static readonly Action<BenchmarkObject3, double> SigilEmitSetter3 = Emit<Action<BenchmarkObject3, double>>
         .NewDynamicMethod("SetProperty3")
         .LoadArgument(0)
@@ -83,7 +71,6 @@ public class PropertyMultiSetterBenchmark : BenchmarkBase
         .Return()
         .CreateDelegate();
 
-    [NotNull]
     private static readonly Action<BenchmarkObject4, short> SigilEmitSetter4 = Emit<Action<BenchmarkObject4, short>>
         .NewDynamicMethod("SetProperty4")
         .LoadArgument(0)
@@ -96,29 +83,18 @@ public class PropertyMultiSetterBenchmark : BenchmarkBase
 
     #region Expression Delegates
 
-    [NotNull]
     private static readonly Action<BenchmarkObject, object> ExpressionSetter = ExpressionHelpers.CreateSetter<BenchmarkObject>(PropertyInfo);
-
-    [NotNull]
     private static readonly Action<BenchmarkObject2, object> ExpressionSetter2 = ExpressionHelpers.CreateSetter<BenchmarkObject2>(PropertyInfo2);
-
-    [NotNull]
     private static readonly Action<BenchmarkObject3, object> ExpressionSetter3 = ExpressionHelpers.CreateSetter<BenchmarkObject3>(PropertyInfo3);
-
-    [NotNull]
     private static readonly Action<BenchmarkObject4, object> ExpressionSetter4 = ExpressionHelpers.CreateSetter<BenchmarkObject4>(PropertyInfo4);
 
     #endregion
 
     #region Values to set
 
-    [NotNull]
     private const string ValueToSet = "Updated benchmark string";
-
     private const int ValueToSet2 = 51;
-
     private const double ValueToSet3 = 72.5;
-
     private const short ValueToSet4 = 1;
 
     #endregion
@@ -155,23 +131,21 @@ public class PropertyMultiSetterBenchmark : BenchmarkBase
     public void SetPropertyInfo_Property()
     {
         Type benchmarkType = BenchmarkObject.GetType();
-        PropertyInfo benchmarkProperty = benchmarkType.GetProperty(BenchmarkObjectPropertyName);
+        PropertyInfo benchmarkProperty = benchmarkType.GetProperty(BenchmarkObjectPropertyName)!;
 
         Type benchmarkType2 = BenchmarkObject2.GetType();
-        PropertyInfo benchmarkProperty2 = benchmarkType2.GetProperty(BenchmarkObjectPropertyName2);
+        PropertyInfo benchmarkProperty2 = benchmarkType2.GetProperty(BenchmarkObjectPropertyName2)!;
 
         Type benchmarkType3 = BenchmarkObject3.GetType();
-        PropertyInfo benchmarkProperty3 = benchmarkType3.GetProperty(BenchmarkObjectPropertyName3);
+        PropertyInfo benchmarkProperty3 = benchmarkType3.GetProperty(BenchmarkObjectPropertyName3)!;
 
         Type benchmarkType4 = BenchmarkObject4.GetType();
-        PropertyInfo benchmarkProperty4 = benchmarkType4.GetProperty(BenchmarkObjectPropertyName4);
+        PropertyInfo benchmarkProperty4 = benchmarkType4.GetProperty(BenchmarkObjectPropertyName4)!;
 
-        // ReSharper disable PossibleNullReferenceException
         benchmarkProperty.SetValue(BenchmarkObject, ValueToSet);
         benchmarkProperty2.SetValue(BenchmarkObject2, ValueToSet2);
         benchmarkProperty3.SetValue(BenchmarkObject3, ValueToSet3);
         benchmarkProperty4.SetValue(BenchmarkObject4, ValueToSet4);
-        // ReSharper restore PossibleNullReferenceException
     }
 
     [Benchmark]

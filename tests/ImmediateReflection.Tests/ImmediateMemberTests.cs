@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using NUnit.Framework;
 
 namespace ImmediateReflection.Tests;
@@ -9,421 +8,421 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ImmediateMember"/>.
 /// </summary>
 [TestFixture]
-internal class ImmediateMemberTests : ImmediateAttributesTestsBase
+internal sealed class ImmediateMemberTests : ImmediateAttributesTestsBase
 {
-    private static IEnumerable<TestCaseData> CreateGetAttributeTestCases
+    private static IEnumerable<TestCaseData> CreateGetAttributeTestCases()
     {
-        [UsedImplicitly]
-        get
-        {
-            #region ImmediateType
-
-            // No attribute
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassNoAttribute)),
-                typeof(TestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassNoAttribute)),
-                typeof(TestClassAttribute),
-                true,
-                null);
-
-            // With attribute
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttribute)),
-                typeof(TestClassAttribute),
-                false,
-                new TestClassAttribute(1));
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttribute)),
-                typeof(TestClassAttribute),
-                true,
-                new TestClassAttribute(1));
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttributes)),
-                typeof(TestClassAttribute),
-                false,
-                new TestClassAttribute(4));
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttributes)),
-                typeof(TestClassAttribute),
-                true,
-                new TestClassAttribute(4));
-
-            // Without requested attribute
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttribute)),
-                typeof(SecondTestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttribute)),
-                typeof(SecondTestClassAttribute),
-                true,
-                null);
-
-            // Attribute not inherited
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassNoAttribute)),
-                typeof(TestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassNoAttribute)),
-                typeof(TestClassAttribute),
-                true,
-                null);
-
-            // Attribute inherited 1
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassWithAttribute1)),
-                typeof(TestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassWithAttribute1)),
-                typeof(TestClassAttribute),
-                true,
-                new TestClassAttribute(1));
-
-            // Attribute inherited 2
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
-                typeof(TestClassAttribute),
-                false,
-                new TestClassAttribute(11));
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
-                typeof(TestClassAttribute),
-                true,
-                new TestClassAttribute(11));
-
-            // Several attributes
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassMultiAttributes)),
-                typeof(TestClassAttribute),
-                false,
-                new TestClassAttribute(13));
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassMultiAttributes)),
-                typeof(TestClassAttribute),
-                true,
-                new TestClassAttribute(13));
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassMultiAttributes)),
-                typeof(SecondTestClassAttribute),
-                false,
-                new SecondTestClassAttribute(1));
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassMultiAttributes)),
-                typeof(SecondTestClassAttribute),
-                true,
-                new SecondTestClassAttribute(1));
-
-            // Inheriting attribute
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
-                typeof(TestBaseAttribute),
-                false,
-                new TestInheritingAttribute(17));
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
-                typeof(TestBaseAttribute),
-                true,
-                new TestInheritingAttribute(17));
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassInheritedAttribute)),
-                typeof(TestBaseAttribute),
-                false,
-                new TestBaseAttribute(22));
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassInheritedAttribute)),
-                typeof(TestBaseAttribute),
-                true,
-                new TestBaseAttribute(22));
-
-            #endregion
-
-            #region ImmediateField
-
-            // No attribute
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldNoAttributeFieldInfo),
-                typeof(TestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldNoAttributeFieldInfo),
-                typeof(TestClassAttribute),
-                true,
-                null);
-
-            // With attribute
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributeFieldInfo),
-                typeof(TestClassAttribute),
-                false,
-                new TestClassAttribute(2));
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributeFieldInfo),
-                typeof(TestClassAttribute),
-                true,
-                new TestClassAttribute(2));
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributesFieldInfo),
-                typeof(TestClassAttribute),
-                false,
-                new TestClassAttribute(7));
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributesFieldInfo),
-                typeof(TestClassAttribute),
-                true,
-                new TestClassAttribute(7));
-
-            // Without requested attribute
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributeFieldInfo),
-                typeof(SecondTestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributeFieldInfo),
-                typeof(SecondTestClassAttribute),
-                true,
-                null);
-
-            // Several attributes
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldMultiAttributesFieldInfo),
-                typeof(TestClassAttribute),
-                false,
-                new TestClassAttribute(14));
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldMultiAttributesFieldInfo),
-                typeof(TestClassAttribute),
-                true,
-                new TestClassAttribute(14));
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldMultiAttributesFieldInfo),
-                typeof(SecondTestClassAttribute),
-                false,
-                new SecondTestClassAttribute(2));
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldMultiAttributesFieldInfo),
-                typeof(SecondTestClassAttribute),
-                true,
-                new SecondTestClassAttribute(2));
-
-            // Inheriting attribute
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
-                typeof(TestBaseAttribute),
-                false,
-                new TestInheritingAttribute(19));
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
-                typeof(TestBaseAttribute),
-                true,
-                new TestInheritingAttribute(19));
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldInheritingAttributeFieldInfo),
-                typeof(TestBaseAttribute),
-                false,
-                new TestBaseAttribute(20));
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldInheritingAttributeFieldInfo),
-                typeof(TestBaseAttribute),
-                true,
-                new TestBaseAttribute(20));
-
-            #endregion
-
-            #region ImmediateProperty
-
-            // No attribute
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
-                typeof(TestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
-                typeof(TestClassAttribute),
-                true,
-                null);
-
-            // With attribute
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributePropertyInfo),
-                typeof(TestClassAttribute),
-                false,
-                new TestClassAttribute(3));
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributePropertyInfo),
-                typeof(TestClassAttribute),
-                true,
-                new TestClassAttribute(3));
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributesPropertyInfo),
-                typeof(TestClassAttribute),
-                false,
-                new TestClassAttribute(9));
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributesPropertyInfo),
-                typeof(TestClassAttribute),
-                true,
-                new TestClassAttribute(9));
-
-            // Without requested attribute
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributePropertyInfo),
-                typeof(SecondTestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributePropertyInfo),
-                typeof(SecondTestClassAttribute),
-                true,
-                null);
-
-            // Attribute not inherited
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
-                typeof(TestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
-                typeof(TestClassAttribute),
-                true,
-                null);
-
-            // Attribute inherited 1
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
-                typeof(TestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
-                typeof(TestClassAttribute),
-                true,
-                new TestClassAttribute(3));
-
-            // Attribute inherited 2
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
-                typeof(TestClassAttribute),
-                false,
-                new TestClassAttribute(12));
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
-                typeof(TestClassAttribute),
-                true,
-                new TestClassAttribute(12));
-
-            // Several attributes
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
-                typeof(TestClassAttribute),
-                false,
-                new TestClassAttribute(15));
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
-                typeof(TestClassAttribute),
-                true,
-                new TestClassAttribute(15));
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
-                typeof(SecondTestClassAttribute),
-                false,
-                new SecondTestClassAttribute(3));
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
-                typeof(SecondTestClassAttribute),
-                true,
-                new SecondTestClassAttribute(3));
-
-            // Inheriting attribute
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
-                typeof(TestBaseAttribute),
-                false,
-                new TestInheritingAttribute(25));
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
-                typeof(TestBaseAttribute),
-                true,
-                new TestInheritingAttribute(25));
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo),
-                typeof(TestBaseAttribute),
-                false,
-                new TestBaseAttribute(26));
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo),
-                typeof(TestBaseAttribute),
-                true,
-                new TestBaseAttribute(26));
-
-            #endregion
-        }
+        #region ImmediateType
+
+        // No attribute
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassNoAttribute)),
+            typeof(TestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassNoAttribute)),
+            typeof(TestClassAttribute),
+            true,
+            null);
+
+        // With attribute
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttribute)),
+            typeof(TestClassAttribute),
+            false,
+            new TestClassAttribute(1));
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttribute)),
+            typeof(TestClassAttribute),
+            true,
+            new TestClassAttribute(1));
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttributes)),
+            typeof(TestClassAttribute),
+            false,
+            new TestClassAttribute(4));
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttributes)),
+            typeof(TestClassAttribute),
+            true,
+            new TestClassAttribute(4));
+
+        // Without requested attribute
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttribute)),
+            typeof(SecondTestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttribute)),
+            typeof(SecondTestClassAttribute),
+            true,
+            null);
+
+        // Attribute not inherited
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassNoAttribute)),
+            typeof(TestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassNoAttribute)),
+            typeof(TestClassAttribute),
+            true,
+            null);
+
+        // Attribute inherited 1
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassWithAttribute1)),
+            typeof(TestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassWithAttribute1)),
+            typeof(TestClassAttribute),
+            true,
+            new TestClassAttribute(1));
+
+        // Attribute inherited 2
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
+            typeof(TestClassAttribute),
+            false,
+            new TestClassAttribute(11));
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
+            typeof(TestClassAttribute),
+            true,
+            new TestClassAttribute(11));
+
+        // Several attributes
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassMultiAttributes)),
+            typeof(TestClassAttribute),
+            false,
+            new TestClassAttribute(13));
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassMultiAttributes)),
+            typeof(TestClassAttribute),
+            true,
+            new TestClassAttribute(13));
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassMultiAttributes)),
+            typeof(SecondTestClassAttribute),
+            false,
+            new SecondTestClassAttribute(1));
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassMultiAttributes)),
+            typeof(SecondTestClassAttribute),
+            true,
+            new SecondTestClassAttribute(1));
+
+        // Inheriting attribute
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
+            typeof(TestBaseAttribute),
+            false,
+            new TestInheritingAttribute(17));
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
+            typeof(TestBaseAttribute),
+            true,
+            new TestInheritingAttribute(17));
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassInheritedAttribute)),
+            typeof(TestBaseAttribute),
+            false,
+            new TestBaseAttribute(22));
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassInheritedAttribute)),
+            typeof(TestBaseAttribute),
+            true,
+            new TestBaseAttribute(22));
+
+        #endregion
+
+        #region ImmediateField
+
+        // No attribute
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldNoAttributeFieldInfo),
+            typeof(TestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldNoAttributeFieldInfo),
+            typeof(TestClassAttribute),
+            true,
+            null);
+
+        // With attribute
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributeFieldInfo),
+            typeof(TestClassAttribute),
+            false,
+            new TestClassAttribute(2));
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributeFieldInfo),
+            typeof(TestClassAttribute),
+            true,
+            new TestClassAttribute(2));
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributesFieldInfo),
+            typeof(TestClassAttribute),
+            false,
+            new TestClassAttribute(7));
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributesFieldInfo),
+            typeof(TestClassAttribute),
+            true,
+            new TestClassAttribute(7));
+
+        // Without requested attribute
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributeFieldInfo),
+            typeof(SecondTestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributeFieldInfo),
+            typeof(SecondTestClassAttribute),
+            true,
+            null);
+
+        // Several attributes
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldMultiAttributesFieldInfo),
+            typeof(TestClassAttribute),
+            false,
+            new TestClassAttribute(14));
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldMultiAttributesFieldInfo),
+            typeof(TestClassAttribute),
+            true,
+            new TestClassAttribute(14));
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldMultiAttributesFieldInfo),
+            typeof(SecondTestClassAttribute),
+            false,
+            new SecondTestClassAttribute(2));
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldMultiAttributesFieldInfo),
+            typeof(SecondTestClassAttribute),
+            true,
+            new SecondTestClassAttribute(2));
+
+        // Inheriting attribute
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
+            typeof(TestBaseAttribute),
+            false,
+            new TestInheritingAttribute(19));
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
+            typeof(TestBaseAttribute),
+            true,
+            new TestInheritingAttribute(19));
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldInheritingAttributeFieldInfo),
+            typeof(TestBaseAttribute),
+            false,
+            new TestBaseAttribute(20));
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldInheritingAttributeFieldInfo),
+            typeof(TestBaseAttribute),
+            true,
+            new TestBaseAttribute(20));
+
+        #endregion
+
+        #region ImmediateProperty
+
+        // No attribute
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+            typeof(TestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+            typeof(TestClassAttribute),
+            true,
+            null);
+
+        // With attribute
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributePropertyInfo),
+            typeof(TestClassAttribute),
+            false,
+            new TestClassAttribute(3));
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributePropertyInfo),
+            typeof(TestClassAttribute),
+            true,
+            new TestClassAttribute(3));
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributesPropertyInfo),
+            typeof(TestClassAttribute),
+            false,
+            new TestClassAttribute(9));
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributesPropertyInfo),
+            typeof(TestClassAttribute),
+            true,
+            new TestClassAttribute(9));
+
+        // Without requested attribute
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributePropertyInfo),
+            typeof(SecondTestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributePropertyInfo),
+            typeof(SecondTestClassAttribute),
+            true,
+            null);
+
+        // Attribute not inherited
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
+            typeof(TestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
+            typeof(TestClassAttribute),
+            true,
+            null);
+
+        // Attribute inherited 1
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
+            typeof(TestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
+            typeof(TestClassAttribute),
+            true,
+            new TestClassAttribute(3));
+
+        // Attribute inherited 2
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
+            typeof(TestClassAttribute),
+            false,
+            new TestClassAttribute(12));
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
+            typeof(TestClassAttribute),
+            true,
+            new TestClassAttribute(12));
+
+        // Several attributes
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+            typeof(TestClassAttribute),
+            false,
+            new TestClassAttribute(15));
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+            typeof(TestClassAttribute),
+            true,
+            new TestClassAttribute(15));
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+            typeof(SecondTestClassAttribute),
+            false,
+            new SecondTestClassAttribute(3));
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+            typeof(SecondTestClassAttribute),
+            true,
+            new SecondTestClassAttribute(3));
+
+        // Inheriting attribute
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
+            typeof(TestBaseAttribute),
+            false,
+            new TestInheritingAttribute(25));
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
+            typeof(TestBaseAttribute),
+            true,
+            new TestInheritingAttribute(25));
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo),
+            typeof(TestBaseAttribute),
+            false,
+            new TestBaseAttribute(26));
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo),
+            typeof(TestBaseAttribute),
+            true,
+            new TestBaseAttribute(26));
+
+        #endregion
     }
 
     [TestCaseSource(nameof(CreateGetAttributeTestCases))]
-    public void IsDefinedAndGetAttribute([NotNull] ImmediateMember member, [NotNull] Type attributeType, bool inherit, [CanBeNull] Attribute expectedAttribute)
+    public static void IsDefinedAndGetAttribute(ImmediateMember member, Type attributeType, bool inherit, Attribute? expectedAttribute)
     {
         if (expectedAttribute is null)
+        {
             Assert.IsFalse(member.IsDefined(attributeType, inherit));
+        }
         else
+        {
             Assert.IsTrue(member.IsDefined(attributeType, inherit));
+        }
 
         Assert.AreEqual(expectedAttribute, member.GetAttribute(attributeType, inherit));
     }
 
     [Test]
-    public void TemplateIsDefinedAndGetAttribute()
+    public static void TemplateIsDefinedAndGetAttribute()
     {
         #region ImmediateType
 
@@ -523,13 +522,17 @@ internal class ImmediateMemberTests : ImmediateAttributesTestsBase
 
         #region Local function
 
-        void CheckHasAndGetAttribute<TAttribute>(ImmediateMember member, bool inherit, Attribute expectedAttribute)
+        static void CheckHasAndGetAttribute<TAttribute>(ImmediateMember member, bool inherit, Attribute? expectedAttribute)
             where TAttribute : Attribute
         {
             if (expectedAttribute is null)
+            {
                 Assert.IsFalse(member.IsDefined<TAttribute>(inherit));
+            }
             else
+            {
                 Assert.IsTrue(member.IsDefined<TAttribute>(inherit));
+            }
             Assert.AreEqual(expectedAttribute, member.GetAttribute<TAttribute>(inherit));
         }
 
@@ -537,14 +540,14 @@ internal class ImmediateMemberTests : ImmediateAttributesTestsBase
     }
 
     [Test]
-    public void TemplateIsDefinedAndGetAttribute_Inherited()
+    public static void TemplateIsDefinedAndGetAttribute_Inherited()
     {
         #region ImmediateType
 
         CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), false, new TestInheritingAttribute(17));
         CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), true, new TestInheritingAttribute(17));
-        CheckHasAndGetAttribute<Attribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), false, new ThirdTestClassAttribute(16));
-        CheckHasAndGetAttribute<Attribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), true, new ThirdTestClassAttribute(16));
+        CheckHasAndGetAttribute<ThirdTestClassAttribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), false, new ThirdTestClassAttribute(16));
+        CheckHasAndGetAttribute<ThirdTestClassAttribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), true, new ThirdTestClassAttribute(16));
         CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateType(typeof(TestClassInheritedAttribute)), false, new TestBaseAttribute(22));
         CheckHasAndGetAttribute<TestBaseAttribute>(new ImmediateType(typeof(TestClassInheritedAttribute)), true, new TestBaseAttribute(22));
 
@@ -574,106 +577,106 @@ internal class ImmediateMemberTests : ImmediateAttributesTestsBase
 
         #region Local function
 
-        void CheckHasAndGetAttribute<TAttribute>(ImmediateMember member, bool inherit, Attribute expectedAttribute)
+        static void CheckHasAndGetAttribute<TAttribute>(ImmediateMember member, bool inherit, Attribute? expectedAttribute)
             where TAttribute : Attribute
         {
             if (expectedAttribute is null)
+            {
                 Assert.IsFalse(member.IsDefined<TAttribute>(inherit));
+            }
             else
+            {
                 Assert.IsTrue(member.IsDefined<TAttribute>(inherit));
+            }
             Assert.AreEqual(expectedAttribute, member.GetAttribute<TAttribute>(inherit));
         }
 
         #endregion
     }
 
-    private static IEnumerable<TestCaseData> CreateWrongAttributeTestCases
+    private static IEnumerable<TestCaseData> CreateWrongAttributeTestCases()
     {
-        [UsedImplicitly]
-        get
-        {
-            #region ImmediateType
+        #region ImmediateType
 
-            // No attribute
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassNoAttribute)),
-                typeof(FakeTestClassAttribute),
-                false);
+        // No attribute
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassNoAttribute)),
+            typeof(FakeTestClassAttribute),
+            false);
 
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassNoAttribute)),
-                typeof(FakeTestClassAttribute),
-                true);
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassNoAttribute)),
+            typeof(FakeTestClassAttribute),
+            true);
 
-            // With attribute
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttribute)),
-                typeof(FakeTestClassAttribute),
-                false);
+        // With attribute
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttribute)),
+            typeof(FakeTestClassAttribute),
+            false);
 
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttribute)),
-                typeof(FakeTestClassAttribute),
-                true);
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttribute)),
+            typeof(FakeTestClassAttribute),
+            true);
 
-            #endregion
+        #endregion
 
-            #region ImmediateField
+        #region ImmediateField
 
-            // No attribute
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldNoAttributeFieldInfo),
-                typeof(FakeTestClassAttribute),
-                false);
+        // No attribute
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldNoAttributeFieldInfo),
+            typeof(FakeTestClassAttribute),
+            false);
 
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldNoAttributeFieldInfo),
-                typeof(FakeTestClassAttribute),
-                true);
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldNoAttributeFieldInfo),
+            typeof(FakeTestClassAttribute),
+            true);
 
-            // With attribute
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributeFieldInfo),
-                typeof(FakeTestClassAttribute),
-                false);
+        // With attribute
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributeFieldInfo),
+            typeof(FakeTestClassAttribute),
+            false);
 
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributeFieldInfo),
-                typeof(FakeTestClassAttribute),
-                true);
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributeFieldInfo),
+            typeof(FakeTestClassAttribute),
+            true);
 
-            #endregion
+        #endregion
 
-            #region ImmediateProperty
+        #region ImmediateProperty
 
-            // No attribute
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
-                typeof(FakeTestClassAttribute),
-                false);
+        // No attribute
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+            typeof(FakeTestClassAttribute),
+            false);
 
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
-                typeof(FakeTestClassAttribute),
-                true);
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+            typeof(FakeTestClassAttribute),
+            true);
 
-            // With attribute
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributePropertyInfo),
-                typeof(FakeTestClassAttribute),
-                false);
+        // With attribute
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributePropertyInfo),
+            typeof(FakeTestClassAttribute),
+            false);
 
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributePropertyInfo),
-                typeof(FakeTestClassAttribute),
-                true);
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributePropertyInfo),
+            typeof(FakeTestClassAttribute),
+            true);
 
-            #endregion
-        }
+        #endregion
     }
 
     [TestCaseSource(nameof(CreateWrongAttributeTestCases))]
-    public void IsDefinedAndGetAttribute_WrongType([NotNull] ImmediateMember member, [NotNull] Type attributeType, bool inherit)
+    public static void IsDefinedAndGetAttribute_WrongType(ImmediateMember member, Type attributeType, bool inherit)
     {
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
         Assert.Throws<ArgumentException>(() => member.IsDefined(attributeType, inherit));
@@ -682,7 +685,7 @@ internal class ImmediateMemberTests : ImmediateAttributesTestsBase
     }
 
     [Test]
-    public void IsDefinedAndGetAttribute_Throws_NullType()
+    public static void IsDefinedAndGetAttribute_Throws_NullType()
     {
         var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
         var immediateField = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
@@ -690,473 +693,473 @@ internal class ImmediateMemberTests : ImmediateAttributesTestsBase
 
         // ReSharper disable AssignNullToNotNullAttribute
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentNullException>(() => immediateType.IsDefined(null));
-        Assert.Throws<ArgumentNullException>(() => immediateType.GetAttribute(null));
-        Assert.Throws<ArgumentNullException>(() => immediateType.IsDefined(null, true));
-        Assert.Throws<ArgumentNullException>(() => immediateType.GetAttribute(null, true));
-        Assert.Throws<ArgumentNullException>(() => immediateField.IsDefined(null));
-        Assert.Throws<ArgumentNullException>(() => immediateField.GetAttribute(null));
-        Assert.Throws<ArgumentNullException>(() => immediateField.IsDefined(null, true));
-        Assert.Throws<ArgumentNullException>(() => immediateField.GetAttribute(null, true));
-        Assert.Throws<ArgumentNullException>(() => immediateProperty.IsDefined(null));
-        Assert.Throws<ArgumentNullException>(() => immediateProperty.GetAttribute(null));
-        Assert.Throws<ArgumentNullException>(() => immediateProperty.IsDefined(null, true));
-        Assert.Throws<ArgumentNullException>(() => immediateProperty.GetAttribute(null, true));
+        Assert.Throws<ArgumentNullException>(() => immediateType.IsDefined(null!));
+        Assert.Throws<ArgumentNullException>(() => immediateType.GetAttribute(null!));
+        Assert.Throws<ArgumentNullException>(() => immediateType.IsDefined(null!, true));
+        Assert.Throws<ArgumentNullException>(() => immediateType.GetAttribute(null!, true));
+        Assert.Throws<ArgumentNullException>(() => immediateField.IsDefined(null!));
+        Assert.Throws<ArgumentNullException>(() => immediateField.GetAttribute(null!));
+        Assert.Throws<ArgumentNullException>(() => immediateField.IsDefined(null!, true));
+        Assert.Throws<ArgumentNullException>(() => immediateField.GetAttribute(null!, true));
+        Assert.Throws<ArgumentNullException>(() => immediateProperty.IsDefined(null!));
+        Assert.Throws<ArgumentNullException>(() => immediateProperty.GetAttribute(null!));
+        Assert.Throws<ArgumentNullException>(() => immediateProperty.IsDefined(null!, true));
+        Assert.Throws<ArgumentNullException>(() => immediateProperty.GetAttribute(null!, true));
         // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         // ReSharper restore AssignNullToNotNullAttribute
     }
 
-    private static IEnumerable<TestCaseData> CreateGetAttributesTestCases
+    private static IEnumerable<TestCaseData> CreateGetAttributesTestCases()
     {
-        [UsedImplicitly]
-        get
-        {
-            #region ImmediateType
-
-            // No attribute
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassNoAttribute)),
-                typeof(TestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassNoAttribute)),
-                typeof(TestClassAttribute),
-                true,
-                null);
-
-            // With attribute
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttribute)),
-                typeof(TestClassAttribute),
-                false,
-                new[] { new TestClassAttribute(1) });
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttribute)),
-                typeof(TestClassAttribute),
-                true,
-                new[] { new TestClassAttribute(1) });
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttributes)),
-                typeof(TestClassAttribute),
-                false,
-                new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttributes)),
-                typeof(TestClassAttribute),
-                true,
-                new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
-
-            // Without requested attribute
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttribute)),
-                typeof(SecondTestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttribute)),
-                typeof(SecondTestClassAttribute),
-                true,
-                null);
-
-            // Attribute not inherited
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassNoAttribute)),
-                typeof(TestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassNoAttribute)),
-                typeof(TestClassAttribute),
-                true,
-                null);
-
-            // Attribute inherited 1
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassWithAttribute1)),
-                typeof(TestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassWithAttribute1)),
-                typeof(TestClassAttribute),
-                true,
-                new[] { new TestClassAttribute(1) });
-
-            // Attribute inherited 2
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
-                typeof(TestClassAttribute),
-                false,
-                new[] { new TestClassAttribute(11) });
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
-                typeof(TestClassAttribute),
-                true,
-                new[] { new TestClassAttribute(1), new TestClassAttribute(11) });
-
-            // Several attributes
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassMultiAttributes)),
-                typeof(TestClassAttribute),
-                false,
-                new[] { new TestClassAttribute(13) });
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassMultiAttributes)),
-                typeof(TestClassAttribute),
-                true,
-                new[] { new TestClassAttribute(13) });
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassMultiAttributes)),
-                typeof(SecondTestClassAttribute),
-                false,
-                new[] { new SecondTestClassAttribute(1) });
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassMultiAttributes)),
-                typeof(SecondTestClassAttribute),
-                true,
-                new[] { new SecondTestClassAttribute(1) });
-
-            // Inheriting attribute
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
-                typeof(TestBaseAttribute),
-                false,
-                new[] { new TestInheritingAttribute(17) });
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
-                typeof(TestBaseAttribute),
-                true,
-                new[] { new TestInheritingAttribute(17) });
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
-                typeof(Attribute),
-                false,
-                new Attribute[] { new ThirdTestClassAttribute(16), new TestInheritingAttribute(17) });
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
-                typeof(Attribute),
-                true,
-                new Attribute[] { new ThirdTestClassAttribute(16), new TestInheritingAttribute(17) });
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassInheritedAttribute)),
-                typeof(TestBaseAttribute),
-                false,
-                new[] { new TestBaseAttribute(22), new TestInheritingAttribute(23) });
-
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassInheritedAttribute)),
-                typeof(TestBaseAttribute),
-                true,
-                new[] { new TestBaseAttribute(22), new TestInheritingAttribute(23) });
-
-            #endregion
-
-            #region ImmediateField
-
-            // No attribute
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldNoAttributeFieldInfo),
-                typeof(TestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldNoAttributeFieldInfo),
-                typeof(TestClassAttribute),
-                true,
-                null);
-
-            // With attribute
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributeFieldInfo),
-                typeof(TestClassAttribute),
-                false,
-                new[] { new TestClassAttribute(2) });
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributeFieldInfo),
-                typeof(TestClassAttribute),
-                true,
-                new[] { new TestClassAttribute(2) });
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributesFieldInfo),
-                typeof(TestClassAttribute),
-                false,
-                new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributesFieldInfo),
-                typeof(TestClassAttribute),
-                true,
-                new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
-
-            // Without requested attribute
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributeFieldInfo),
-                typeof(SecondTestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributeFieldInfo),
-                typeof(SecondTestClassAttribute),
-                true,
-                null);
-
-            // Several attributes
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldMultiAttributesFieldInfo),
-                typeof(TestClassAttribute),
-                false,
-                new[] { new TestClassAttribute(14) });
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldMultiAttributesFieldInfo),
-                typeof(TestClassAttribute),
-                true,
-                new[] { new TestClassAttribute(14) });
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldMultiAttributesFieldInfo),
-                typeof(SecondTestClassAttribute),
-                false,
-                new[] { new SecondTestClassAttribute(2) });
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldMultiAttributesFieldInfo),
-                typeof(SecondTestClassAttribute),
-                true,
-                new[] { new SecondTestClassAttribute(2) });
-
-            // Inheriting attribute
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
-                typeof(TestBaseAttribute),
-                false,
-                new[] { new TestInheritingAttribute(19) });
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
-                typeof(TestBaseAttribute),
-                true,
-                new[] { new TestInheritingAttribute(19) });
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
-                typeof(Attribute),
-                false,
-                new Attribute[] { new ThirdTestClassAttribute(18), new TestInheritingAttribute(19) });
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
-                typeof(Attribute),
-                true,
-                new Attribute[] { new ThirdTestClassAttribute(18), new TestInheritingAttribute(19) });
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldInheritingAttributeFieldInfo),
-                typeof(TestBaseAttribute),
-                false,
-                new[] { new TestBaseAttribute(20), new TestInheritingAttribute(21) });
-
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldInheritingAttributeFieldInfo),
-                typeof(TestBaseAttribute),
-                true,
-                new[] { new TestBaseAttribute(20), new TestInheritingAttribute(21) });
-
-            #endregion
-
-            #region ImmediateProperty
-
-            // No attribute
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
-                typeof(TestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
-                typeof(TestClassAttribute),
-                true,
-                null);
-
-            // With attribute
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributePropertyInfo),
-                typeof(TestClassAttribute),
-                false,
-                new[] { new TestClassAttribute(3) });
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributePropertyInfo),
-                typeof(TestClassAttribute),
-                true,
-                new[] { new TestClassAttribute(3) });
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributesPropertyInfo),
-                typeof(TestClassAttribute),
-                false,
-                new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributesPropertyInfo),
-                typeof(TestClassAttribute),
-                true,
-                new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
-
-            // Without requested attribute
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributePropertyInfo),
-                typeof(SecondTestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributePropertyInfo),
-                typeof(SecondTestClassAttribute),
-                true,
-                null);
-
-            // Attribute not inherited
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
-                typeof(TestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
-                typeof(TestClassAttribute),
-                true,
-                null);
-
-            // Attribute inherited 1
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
-                typeof(TestClassAttribute),
-                false,
-                null);
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
-                typeof(TestClassAttribute),
-                true,
-                new[] { new TestClassAttribute(3) });
-
-            // Attribute inherited 2
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
-                typeof(TestClassAttribute),
-                false,
-                new[] { new TestClassAttribute(12) });
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
-                typeof(TestClassAttribute),
-                true,
-                new[] { new TestClassAttribute(3), new TestClassAttribute(12) });
-
-            // Several attributes
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
-                typeof(TestClassAttribute),
-                false,
-                new[] { new TestClassAttribute(15) });
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
-                typeof(TestClassAttribute),
-                true,
-                new[] { new TestClassAttribute(15) });
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
-                typeof(SecondTestClassAttribute),
-                false,
-                new[] { new SecondTestClassAttribute(3) });
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
-                typeof(SecondTestClassAttribute),
-                true,
-                new[] { new SecondTestClassAttribute(3) });
-
-            // Inheriting attribute
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
-                typeof(TestBaseAttribute),
-                false,
-                new[] { new TestInheritingAttribute(25) });
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
-                typeof(TestBaseAttribute),
-                true,
-                new[] { new TestInheritingAttribute(25) });
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
-                typeof(Attribute),
-                false,
-                new Attribute[] { new ThirdTestClassAttribute(24), new TestInheritingAttribute(25) });
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
-                typeof(Attribute),
-                true,
-                new Attribute[] { new ThirdTestClassAttribute(24), new TestInheritingAttribute(25) });
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo),
-                typeof(TestBaseAttribute),
-                false,
-                new[] { new TestBaseAttribute(26), new TestInheritingAttribute(27) });
-
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo),
-                typeof(TestBaseAttribute),
-                true,
-                new[] { new TestBaseAttribute(26), new TestInheritingAttribute(27) });
-
-            #endregion
-        }
+        #region ImmediateType
+
+        // No attribute
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassNoAttribute)),
+            typeof(TestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassNoAttribute)),
+            typeof(TestClassAttribute),
+            true,
+            null);
+
+        // With attribute
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttribute)),
+            typeof(TestClassAttribute),
+            false,
+            new[] { new TestClassAttribute(1) });
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttribute)),
+            typeof(TestClassAttribute),
+            true,
+            new[] { new TestClassAttribute(1) });
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttributes)),
+            typeof(TestClassAttribute),
+            false,
+            new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttributes)),
+            typeof(TestClassAttribute),
+            true,
+            new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
+
+        // Without requested attribute
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttribute)),
+            typeof(SecondTestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttribute)),
+            typeof(SecondTestClassAttribute),
+            true,
+            null);
+
+        // Attribute not inherited
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassNoAttribute)),
+            typeof(TestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassNoAttribute)),
+            typeof(TestClassAttribute),
+            true,
+            null);
+
+        // Attribute inherited 1
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassWithAttribute1)),
+            typeof(TestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassWithAttribute1)),
+            typeof(TestClassAttribute),
+            true,
+            new[] { new TestClassAttribute(1) });
+
+        // Attribute inherited 2
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
+            typeof(TestClassAttribute),
+            false,
+            new[] { new TestClassAttribute(11) });
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
+            typeof(TestClassAttribute),
+            true,
+            new[] { new TestClassAttribute(1), new TestClassAttribute(11) });
+
+        // Several attributes
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassMultiAttributes)),
+            typeof(TestClassAttribute),
+            false,
+            new[] { new TestClassAttribute(13) });
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassMultiAttributes)),
+            typeof(TestClassAttribute),
+            true,
+            new[] { new TestClassAttribute(13) });
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassMultiAttributes)),
+            typeof(SecondTestClassAttribute),
+            false,
+            new[] { new SecondTestClassAttribute(1) });
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassMultiAttributes)),
+            typeof(SecondTestClassAttribute),
+            true,
+            new[] { new SecondTestClassAttribute(1) });
+
+        // Inheriting attribute
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
+            typeof(TestBaseAttribute),
+            false,
+            new[] { new TestInheritingAttribute(17) });
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
+            typeof(TestBaseAttribute),
+            true,
+            new[] { new TestInheritingAttribute(17) });
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
+            typeof(Attribute),
+            false,
+            new Attribute[] { new ThirdTestClassAttribute(16), new TestInheritingAttribute(17) });
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
+            typeof(Attribute),
+            true,
+            new Attribute[] { new ThirdTestClassAttribute(16), new TestInheritingAttribute(17) });
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassInheritedAttribute)),
+            typeof(TestBaseAttribute),
+            false,
+            new[] { new TestBaseAttribute(22), new TestInheritingAttribute(23) });
+
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassInheritedAttribute)),
+            typeof(TestBaseAttribute),
+            true,
+            new[] { new TestBaseAttribute(22), new TestInheritingAttribute(23) });
+
+        #endregion
+
+        #region ImmediateField
+
+        // No attribute
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldNoAttributeFieldInfo),
+            typeof(TestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldNoAttributeFieldInfo),
+            typeof(TestClassAttribute),
+            true,
+            null);
+
+        // With attribute
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributeFieldInfo),
+            typeof(TestClassAttribute),
+            false,
+            new[] { new TestClassAttribute(2) });
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributeFieldInfo),
+            typeof(TestClassAttribute),
+            true,
+            new[] { new TestClassAttribute(2) });
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributesFieldInfo),
+            typeof(TestClassAttribute),
+            false,
+            new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributesFieldInfo),
+            typeof(TestClassAttribute),
+            true,
+            new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
+
+        // Without requested attribute
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributeFieldInfo),
+            typeof(SecondTestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributeFieldInfo),
+            typeof(SecondTestClassAttribute),
+            true,
+            null);
+
+        // Several attributes
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldMultiAttributesFieldInfo),
+            typeof(TestClassAttribute),
+            false,
+            new[] { new TestClassAttribute(14) });
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldMultiAttributesFieldInfo),
+            typeof(TestClassAttribute),
+            true,
+            new[] { new TestClassAttribute(14) });
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldMultiAttributesFieldInfo),
+            typeof(SecondTestClassAttribute),
+            false,
+            new[] { new SecondTestClassAttribute(2) });
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldMultiAttributesFieldInfo),
+            typeof(SecondTestClassAttribute),
+            true,
+            new[] { new SecondTestClassAttribute(2) });
+
+        // Inheriting attribute
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
+            typeof(TestBaseAttribute),
+            false,
+            new[] { new TestInheritingAttribute(19) });
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
+            typeof(TestBaseAttribute),
+            true,
+            new[] { new TestInheritingAttribute(19) });
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
+            typeof(Attribute),
+            false,
+            new Attribute[] { new ThirdTestClassAttribute(18), new TestInheritingAttribute(19) });
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
+            typeof(Attribute),
+            true,
+            new Attribute[] { new ThirdTestClassAttribute(18), new TestInheritingAttribute(19) });
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldInheritingAttributeFieldInfo),
+            typeof(TestBaseAttribute),
+            false,
+            new[] { new TestBaseAttribute(20), new TestInheritingAttribute(21) });
+
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldInheritingAttributeFieldInfo),
+            typeof(TestBaseAttribute),
+            true,
+            new[] { new TestBaseAttribute(20), new TestInheritingAttribute(21) });
+
+        #endregion
+
+        #region ImmediateProperty
+
+        // No attribute
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+            typeof(TestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+            typeof(TestClassAttribute),
+            true,
+            null);
+
+        // With attribute
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributePropertyInfo),
+            typeof(TestClassAttribute),
+            false,
+            new[] { new TestClassAttribute(3) });
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributePropertyInfo),
+            typeof(TestClassAttribute),
+            true,
+            new[] { new TestClassAttribute(3) });
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributesPropertyInfo),
+            typeof(TestClassAttribute),
+            false,
+            new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributesPropertyInfo),
+            typeof(TestClassAttribute),
+            true,
+            new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
+
+        // Without requested attribute
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributePropertyInfo),
+            typeof(SecondTestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributePropertyInfo),
+            typeof(SecondTestClassAttribute),
+            true,
+            null);
+
+        // Attribute not inherited
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
+            typeof(TestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
+            typeof(TestClassAttribute),
+            true,
+            null);
+
+        // Attribute inherited 1
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
+            typeof(TestClassAttribute),
+            false,
+            null);
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
+            typeof(TestClassAttribute),
+            true,
+            new[] { new TestClassAttribute(3) });
+
+        // Attribute inherited 2
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
+            typeof(TestClassAttribute),
+            false,
+            new[] { new TestClassAttribute(12) });
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
+            typeof(TestClassAttribute),
+            true,
+            new[] { new TestClassAttribute(3), new TestClassAttribute(12) });
+
+        // Several attributes
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+            typeof(TestClassAttribute),
+            false,
+            new[] { new TestClassAttribute(15) });
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+            typeof(TestClassAttribute),
+            true,
+            new[] { new TestClassAttribute(15) });
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+            typeof(SecondTestClassAttribute),
+            false,
+            new[] { new SecondTestClassAttribute(3) });
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+            typeof(SecondTestClassAttribute),
+            true,
+            new[] { new SecondTestClassAttribute(3) });
+
+        // Inheriting attribute
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
+            typeof(TestBaseAttribute),
+            false,
+            new[] { new TestInheritingAttribute(25) });
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
+            typeof(TestBaseAttribute),
+            true,
+            new[] { new TestInheritingAttribute(25) });
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
+            typeof(Attribute),
+            false,
+            new Attribute[] { new ThirdTestClassAttribute(24), new TestInheritingAttribute(25) });
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
+            typeof(Attribute),
+            true,
+            new Attribute[] { new ThirdTestClassAttribute(24), new TestInheritingAttribute(25) });
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo),
+            typeof(TestBaseAttribute),
+            false,
+            new[] { new TestBaseAttribute(26), new TestInheritingAttribute(27) });
+
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo),
+            typeof(TestBaseAttribute),
+            true,
+            new[] { new TestBaseAttribute(26), new TestInheritingAttribute(27) });
+
+        #endregion
     }
 
     [TestCaseSource(nameof(CreateGetAttributesTestCases))]
-    public void GetAttributes(
-        [NotNull] ImmediateMember member,
-        [NotNull] Type attributeType,
+    public static void GetAttributes(
+        ImmediateMember member,
+        Type attributeType,
         bool inherit,
-        [CanBeNull, ItemNotNull] IEnumerable<Attribute> expectedAttributes)
+        IEnumerable<Attribute>? expectedAttributes)
     {
         if (expectedAttributes is null)
-            CollectionAssert.IsEmpty(member.GetAttributes(attributeType, inherit));
+        {
+            CollectionAssert.IsEmpty(TestHelpers.GetAttributes(member, attributeType, inherit));
+        }
         else
-            CollectionAssert.AreEquivalent(expectedAttributes, member.GetAttributes(attributeType, inherit));
+        {
+            CollectionAssert.AreEquivalent(expectedAttributes, TestHelpers.GetAttributes(member, attributeType, inherit));
+        }
     }
 
     [Test]
-    public void TemplateGetAttributes()
+    public static void TemplateGetAttributes()
     {
         #region ImmediateType
 
@@ -1259,20 +1262,24 @@ internal class ImmediateMemberTests : ImmediateAttributesTestsBase
 
         #region Local function
 
-        void CheckGetAttributes<TAttribute>(ImmediateMember member, bool inherit, IEnumerable<TAttribute> expectedAttributes)
+        static void CheckGetAttributes<TAttribute>(ImmediateMember member, bool inherit, IEnumerable<TAttribute>? expectedAttributes)
             where TAttribute : Attribute
         {
             if (expectedAttributes is null)
+            {
                 CollectionAssert.IsEmpty(member.GetAttributes<TAttribute>(inherit));
+            }
             else
+            {
                 CollectionAssert.AreEquivalent(expectedAttributes, member.GetAttributes<TAttribute>(inherit));
+            }
         }
 
         #endregion
     }
 
     [Test]
-    public void TemplateGetAttributes_Inherited()
+    public static void TemplateGetAttributes_Inherited()
     {
         #region ImmediateType
 
@@ -1309,27 +1316,31 @@ internal class ImmediateMemberTests : ImmediateAttributesTestsBase
 
         #region Local function
 
-        void CheckGetAttributes<TAttribute>(ImmediateMember member, bool inherit, IEnumerable<TAttribute> expectedAttributes)
+        static void CheckGetAttributes<TAttribute>(ImmediateMember member, bool inherit, IEnumerable<TAttribute>? expectedAttributes)
             where TAttribute : Attribute
         {
             if (expectedAttributes is null)
-                CollectionAssert.IsEmpty(member.GetAttributes<TAttribute>(inherit));
+            {
+                CollectionAssert.IsEmpty(TestHelpers.GetAttributes<TAttribute>(member, inherit));
+            }
             else
-                CollectionAssert.AreEquivalent(expectedAttributes, member.GetAttributes<TAttribute>(inherit));
+            {
+                CollectionAssert.AreEquivalent(expectedAttributes, TestHelpers.GetAttributes<TAttribute>(member, inherit));
+            }
         }
 
         #endregion
     }
 
     [TestCaseSource(nameof(CreateWrongAttributeTestCases))]
-    public void GetAttributes_WrongType([NotNull] ImmediateMember member, [NotNull] Type attributeType, bool inherit)
+    public static void GetAttributes_WrongType(ImmediateMember member, Type attributeType, bool inherit)
     {
         // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
         Assert.Throws<ArgumentException>(() => member.GetAttributes(attributeType, inherit));
     }
 
     [Test]
-    public void GetAttributes_Throws_NullType()
+    public static void GetAttributes_Throws_NullType()
     {
         var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
         var immediateField = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
@@ -1337,322 +1348,322 @@ internal class ImmediateMemberTests : ImmediateAttributesTestsBase
 
         // ReSharper disable AssignNullToNotNullAttribute
         // ReSharper disable ReturnValueOfPureMethodIsNotUsed
-        Assert.Throws<ArgumentNullException>(() => immediateType.GetAttributes(null));
-        Assert.Throws<ArgumentNullException>(() => immediateType.GetAttributes(null, true));
-        Assert.Throws<ArgumentNullException>(() => immediateField.GetAttributes(null));
-        Assert.Throws<ArgumentNullException>(() => immediateField.GetAttributes(null, true));
-        Assert.Throws<ArgumentNullException>(() => immediateProperty.GetAttributes(null));
-        Assert.Throws<ArgumentNullException>(() => immediateProperty.GetAttributes(null, true));
+        Assert.Throws<ArgumentNullException>(() => immediateType.GetAttributes(null!));
+        Assert.Throws<ArgumentNullException>(() => immediateType.GetAttributes(null!, true));
+        Assert.Throws<ArgumentNullException>(() => immediateField.GetAttributes(null!));
+        Assert.Throws<ArgumentNullException>(() => immediateField.GetAttributes(null!, true));
+        Assert.Throws<ArgumentNullException>(() => immediateProperty.GetAttributes(null!));
+        Assert.Throws<ArgumentNullException>(() => immediateProperty.GetAttributes(null!, true));
         // ReSharper restore ReturnValueOfPureMethodIsNotUsed
         // ReSharper restore AssignNullToNotNullAttribute
     }
 
-    private static IEnumerable<TestCaseData> CreateGetAllAttributesTestCases
+    private static IEnumerable<TestCaseData> CreateGetAllAttributesTestCases()
     {
-        [UsedImplicitly]
-        get
-        {
-            #region ImmediateType
+        #region ImmediateType
 
-            // No attribute
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassNoAttribute)),
-                false,
-                null);
+        // No attribute
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassNoAttribute)),
+            false,
+            null);
 
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassNoAttribute)),
-                true,
-                null);
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassNoAttribute)),
+            true,
+            null);
 
-            // With attribute
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttribute)),
-                false,
-                new[] { new TestClassAttribute(1) });
+        // With attribute
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttribute)),
+            false,
+            new[] { new TestClassAttribute(1) });
 
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttribute)),
-                true,
-                new[] { new TestClassAttribute(1) });
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttribute)),
+            true,
+            new[] { new TestClassAttribute(1) });
 
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttributes)),
-                false,
-                new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttributes)),
+            false,
+            new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
 
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassWithAttributes)),
-                true,
-                new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassWithAttributes)),
+            true,
+            new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
 
-            // Attribute not inherited
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassNoAttribute)),
-                false,
-                null);
+        // Attribute not inherited
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassNoAttribute)),
+            false,
+            null);
 
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassNoAttribute)),
-                true,
-                null);
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassNoAttribute)),
+            true,
+            null);
 
-            // Attribute inherited 1
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassWithAttribute1)),
-                false,
-                null);
+        // Attribute inherited 1
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassWithAttribute1)),
+            false,
+            null);
 
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassWithAttribute1)),
-                true,
-                new[] { new TestClassAttribute(1) });
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassWithAttribute1)),
+            true,
+            new[] { new TestClassAttribute(1) });
 
-            // Attribute inherited 2
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
-                false,
-                new[] { new TestClassAttribute(11) });
+        // Attribute inherited 2
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
+            false,
+            new[] { new TestClassAttribute(11) });
 
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
-                true,
-                new[] { new TestClassAttribute(1), new TestClassAttribute(11) });
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassWithAttribute2)),
+            true,
+            new[] { new TestClassAttribute(1), new TestClassAttribute(11) });
 
-            // Several attributes
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassMultiAttributes)),
-                false,
-                new Attribute[] { new TestClassAttribute(13), new SecondTestClassAttribute(1) });
+        // Several attributes
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassMultiAttributes)),
+            false,
+            new Attribute[] { new TestClassAttribute(13), new SecondTestClassAttribute(1) });
 
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassMultiAttributes)),
-                true,
-                new Attribute[] { new TestClassAttribute(13), new SecondTestClassAttribute(1) });
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassMultiAttributes)),
+            true,
+            new Attribute[] { new TestClassAttribute(13), new SecondTestClassAttribute(1) });
 
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassMultiAttributes)),
-                false,
-                null);
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassMultiAttributes)),
+            false,
+            null);
 
-            yield return new TestCaseData(
-                new ImmediateType(typeof(InheritedTestClassMultiAttributes)),
-                true,
-                new Attribute[] { new TestClassAttribute(13), new SecondTestClassAttribute(1) });
+        yield return new TestCaseData(
+            new ImmediateType(typeof(InheritedTestClassMultiAttributes)),
+            true,
+            new Attribute[] { new TestClassAttribute(13), new SecondTestClassAttribute(1) });
 
-            // Inheriting attribute
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
-                false,
-                new Attribute[] { new ThirdTestClassAttribute(16), new TestInheritingAttribute(17) });
+        // Inheriting attribute
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
+            false,
+            new Attribute[] { new ThirdTestClassAttribute(16), new TestInheritingAttribute(17) });
 
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
-                true,
-                new Attribute[] { new ThirdTestClassAttribute(16), new TestInheritingAttribute(17) });
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassOnlyInheritedAttribute)),
+            true,
+            new Attribute[] { new ThirdTestClassAttribute(16), new TestInheritingAttribute(17) });
 
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassInheritedAttribute)),
-                false,
-                new[] { new TestBaseAttribute(22), new TestInheritingAttribute(23) });
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassInheritedAttribute)),
+            false,
+            new[] { new TestBaseAttribute(22), new TestInheritingAttribute(23) });
 
-            yield return new TestCaseData(
-                new ImmediateType(typeof(TestClassInheritedAttribute)),
-                true,
-                new[] { new TestBaseAttribute(22), new TestInheritingAttribute(23) });
+        yield return new TestCaseData(
+            new ImmediateType(typeof(TestClassInheritedAttribute)),
+            true,
+            new[] { new TestBaseAttribute(22), new TestInheritingAttribute(23) });
 
-            #endregion
+        #endregion
 
-            #region ImmediateField
+        #region ImmediateField
 
-            // No attribute
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldNoAttributeFieldInfo),
-                false,
-                null);
+        // No attribute
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldNoAttributeFieldInfo),
+            false,
+            null);
 
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldNoAttributeFieldInfo),
-                true,
-                null);
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldNoAttributeFieldInfo),
+            true,
+            null);
 
-            // With attribute
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributeFieldInfo),
-                false,
-                new[] { new TestClassAttribute(2) });
+        // With attribute
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributeFieldInfo),
+            false,
+            new[] { new TestClassAttribute(2) });
 
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributeFieldInfo),
-                true,
-                new[] { new TestClassAttribute(2) });
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributeFieldInfo),
+            true,
+            new[] { new TestClassAttribute(2) });
 
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributesFieldInfo),
-                false,
-                new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributesFieldInfo),
+            false,
+            new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
 
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldAttributesFieldInfo),
-                true,
-                new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldAttributesFieldInfo),
+            true,
+            new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
 
-            // Several attributes
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldMultiAttributesFieldInfo),
-                false,
-                new Attribute[] { new TestClassAttribute(14), new SecondTestClassAttribute(2) });
+        // Several attributes
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldMultiAttributesFieldInfo),
+            false,
+            new Attribute[] { new TestClassAttribute(14), new SecondTestClassAttribute(2) });
 
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldMultiAttributesFieldInfo),
-                true,
-                new Attribute[] { new TestClassAttribute(14), new SecondTestClassAttribute(2) });
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldMultiAttributesFieldInfo),
+            true,
+            new Attribute[] { new TestClassAttribute(14), new SecondTestClassAttribute(2) });
 
-            // Inheriting attribute
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
-                false,
-                new Attribute[] { new ThirdTestClassAttribute(18), new TestInheritingAttribute(19) });
+        // Inheriting attribute
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
+            false,
+            new Attribute[] { new ThirdTestClassAttribute(18), new TestInheritingAttribute(19) });
 
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
-                true,
-                new Attribute[] { new ThirdTestClassAttribute(18), new TestInheritingAttribute(19) });
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo),
+            true,
+            new Attribute[] { new ThirdTestClassAttribute(18), new TestInheritingAttribute(19) });
 
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldInheritingAttributeFieldInfo),
-                false,
-                new[] { new TestBaseAttribute(20), new TestInheritingAttribute(21) });
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldInheritingAttributeFieldInfo),
+            false,
+            new[] { new TestBaseAttribute(20), new TestInheritingAttribute(21) });
 
-            yield return new TestCaseData(
-                new ImmediateField(TestFieldInheritingAttributeFieldInfo),
-                true,
-                new[] { new TestBaseAttribute(20), new TestInheritingAttribute(21) });
+        yield return new TestCaseData(
+            new ImmediateField(TestFieldInheritingAttributeFieldInfo),
+            true,
+            new[] { new TestBaseAttribute(20), new TestInheritingAttribute(21) });
 
-            #endregion
+        #endregion
 
-            #region ImmediateProperty
+        #region ImmediateProperty
 
-            // No attribute
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
-                false,
-                null);
+        // No attribute
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+            false,
+            null);
 
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
-                true,
-                null);
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyNoAttributePropertyInfo),
+            true,
+            null);
 
-            // With attribute
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributePropertyInfo),
-                false,
-                new[] { new TestClassAttribute(3) });
+        // With attribute
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributePropertyInfo),
+            false,
+            new[] { new TestClassAttribute(3) });
 
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributePropertyInfo),
-                true,
-                new[] { new TestClassAttribute(3) });
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributePropertyInfo),
+            true,
+            new[] { new TestClassAttribute(3) });
 
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributesPropertyInfo),
-                false,
-                new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributesPropertyInfo),
+            false,
+            new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
 
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyAttributesPropertyInfo),
-                true,
-                new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyAttributesPropertyInfo),
+            true,
+            new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
 
-            // Attribute not inherited
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
-                false,
-                null);
+        // Attribute not inherited
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
+            false,
+            null);
 
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
-                true,
-                null);
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedNoAttributePropertyInfo),
+            true,
+            null);
 
-            // Attribute inherited 1
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
-                false,
-                null);
+        // Attribute inherited 1
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
+            false,
+            null);
 
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
-                true,
-                new[] { new TestClassAttribute(3) });
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo),
+            true,
+            new[] { new TestClassAttribute(3) });
 
-            // Attribute inherited 2
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
-                false,
-                new[] { new TestClassAttribute(12) });
+        // Attribute inherited 2
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
+            false,
+            new[] { new TestClassAttribute(12) });
 
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
-                true,
-                new[] { new TestClassAttribute(3), new TestClassAttribute(12) });
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo),
+            true,
+            new[] { new TestClassAttribute(3), new TestClassAttribute(12) });
 
-            // Several attributes
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
-                false,
-                new Attribute[] { new TestClassAttribute(15), new SecondTestClassAttribute(3) });
+        // Several attributes
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+            false,
+            new Attribute[] { new TestClassAttribute(15), new SecondTestClassAttribute(3) });
 
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
-                true,
-                new Attribute[] { new TestClassAttribute(15), new SecondTestClassAttribute(3) });
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
+            true,
+            new Attribute[] { new TestClassAttribute(15), new SecondTestClassAttribute(3) });
 
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedMultiAttributesPropertyInfo),
-                false,
-                null);
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedMultiAttributesPropertyInfo),
+            false,
+            null);
 
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritedMultiAttributesPropertyInfo),
-                true,
-                new Attribute[] { new TestClassAttribute(15), new SecondTestClassAttribute(3) });
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritedMultiAttributesPropertyInfo),
+            true,
+            new Attribute[] { new TestClassAttribute(15), new SecondTestClassAttribute(3) });
 
-            // Inheriting attribute
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
-                false,
-                new Attribute[] { new ThirdTestClassAttribute(24), new TestInheritingAttribute(25) });
+        // Inheriting attribute
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
+            false,
+            new Attribute[] { new ThirdTestClassAttribute(24), new TestInheritingAttribute(25) });
 
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
-                true,
-                new Attribute[] { new ThirdTestClassAttribute(24), new TestInheritingAttribute(25) });
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo),
+            true,
+            new Attribute[] { new ThirdTestClassAttribute(24), new TestInheritingAttribute(25) });
 
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo),
-                false,
-                new[] { new TestBaseAttribute(26), new TestInheritingAttribute(27) });
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo),
+            false,
+            new[] { new TestBaseAttribute(26), new TestInheritingAttribute(27) });
 
-            yield return new TestCaseData(
-                new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo),
-                true,
-                new[] { new TestBaseAttribute(26), new TestInheritingAttribute(27) });
+        yield return new TestCaseData(
+            new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo),
+            true,
+            new[] { new TestBaseAttribute(26), new TestInheritingAttribute(27) });
 
-            #endregion
-        }
+        #endregion
     }
 
     [TestCaseSource(nameof(CreateGetAllAttributesTestCases))]
     public void GetAllAttributes(
-        [NotNull] ImmediateMember member,
+        ImmediateMember member,
         bool inherit,
-        [CanBeNull, ItemNotNull] IEnumerable<Attribute> expectedAttributes)
+        IEnumerable<Attribute>? expectedAttributes)
     {
         if (expectedAttributes is null)
-            CollectionAssert.IsEmpty(member.GetAllAttributes(inherit));
+        {
+            CollectionAssert.IsEmpty(TestHelpers.GetAllAttributes(member, inherit));
+        }
         else
-            CollectionAssert.AreEquivalent(expectedAttributes, member.GetAllAttributes(inherit));
+        {
+            CollectionAssert.AreEquivalent(expectedAttributes, TestHelpers.GetAllAttributes(member, inherit));
+        }
     }
 }

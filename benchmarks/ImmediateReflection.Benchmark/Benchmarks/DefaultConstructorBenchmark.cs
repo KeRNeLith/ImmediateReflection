@@ -1,7 +1,6 @@
 ﻿using System;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
-using JetBrains.Annotations;
 
 namespace ImmediateReflection.Benchmark;
 
@@ -12,37 +11,37 @@ namespace ImmediateReflection.Benchmark;
 [SimpleJob(RuntimeMoniker.Net80)]
 public class DefaultConstructorBenchmark : BenchmarkBase
 {
-    [NotNull]
-    private static readonly Func<BenchmarkObject> ExpressionConstructor = ExpressionHelpers.CreateDefaultConstructor<BenchmarkObject>();
+    private static readonly Func<BenchmarkObject> ExpressionConstructor =
+        ExpressionHelpers.CreateDefaultConstructor<BenchmarkObject>();
 
     // Benchmark methods
     [Benchmark(Baseline = true)]
-    public BenchmarkObject Direct_Constructor()
+    public void Direct_Constructor()
     {
-        return new BenchmarkObject();
+        _ = new BenchmarkObject();
     }
 
     [Benchmark]
-    public BenchmarkObject Activator_Constructor()
+    public void Activator_Constructor()
     {
-        return (BenchmarkObject)Activator.CreateInstance(BenchmarkObjectType);
+        _ = (BenchmarkObject)Activator.CreateInstance(BenchmarkObjectType)!;
     }
 
     [Benchmark]
-    public BenchmarkObject Expression_Constructor()
+    public void Expression_Constructor()
     {
-        return ExpressionConstructor();
+        _ = ExpressionConstructor();
     }
 
     [Benchmark]
-    public BenchmarkObject FastMember_Constructor()
+    public void FastMember_Constructor()
     {
-        return (BenchmarkObject)TypeAccessor.CreateNew();
+        _ = (BenchmarkObject)TypeAccessor.CreateNew();
     }
 
     [Benchmark]
-    public BenchmarkObject ImmediateType_Constructor()
+    public void ImmediateType_Constructor()
     {
-        return (BenchmarkObject)ImmediateType.New();
+        _ = (BenchmarkObject)ImmediateType.New();
     }
 }

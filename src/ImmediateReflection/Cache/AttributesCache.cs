@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
 using JetBrains.Annotations;
+using static ImmediateReflection.GeneralHelpers;
 
 namespace ImmediateReflection;
 
@@ -15,15 +15,12 @@ namespace ImmediateReflection;
 /// </summary>
 internal sealed class AttributesCache
 {
-    [NotNull, ItemNotNull]
     private readonly Attribute[] _attributesWithInherited;
-
-    [NotNull, ItemNotNull]
     private readonly Attribute[] _attributesWithoutInherited;
 
-    public AttributesCache([NotNull] MemberInfo member)
+    public AttributesCache(MemberInfo member)
     {
-        Debug.Assert(member != null);
+        AssertNotNull(member);
 
         _attributesWithoutInherited = Attribute.GetCustomAttributes(member, false);
         _attributesWithInherited = Attribute.GetCustomAttributes(member, true);
@@ -42,7 +39,7 @@ internal sealed class AttributesCache
     public bool IsDefined<TAttribute>(bool inherit)
         where TAttribute : Attribute
     {
-        return GetAttribute<TAttribute>(inherit) != null;
+        return GetAttribute<TAttribute>(inherit) is not null;
     }
 
     /// <summary>
@@ -58,9 +55,9 @@ internal sealed class AttributesCache
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public bool IsDefined([NotNull] Type attributeType, bool inherit)
+    public bool IsDefined(Type attributeType, bool inherit)
     {
-        return GetAttribute(attributeType, inherit) != null;
+        return GetAttribute(attributeType, inherit) is not null;
     }
 
     /// <summary>
@@ -70,8 +67,7 @@ internal sealed class AttributesCache
     /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
     /// <returns>The first attribute matching requested type, otherwise null.</returns>
     [Pure]
-    [CanBeNull]
-    public TAttribute GetAttribute<TAttribute>(bool inherit)
+    public TAttribute? GetAttribute<TAttribute>(bool inherit)
         where TAttribute : Attribute
     {
         if (inherit)
@@ -80,7 +76,7 @@ internal sealed class AttributesCache
 
         #region Local function
 
-        TAttribute FindAttribute(Attribute[] attributes)
+        static TAttribute? FindAttribute(Attribute[] attributes)
         {
             foreach (Attribute attribute in attributes)
             {
@@ -103,9 +99,8 @@ internal sealed class AttributesCache
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="attributeType"/> is null.</exception>
     /// <exception cref="T:System.ArgumentException">If the given <paramref name="attributeType"/> is not an <see cref="Attribute"/> type.</exception>
     [Pure]
-    [CanBeNull]
     [ContractAnnotation("attributeType:null => halt")]
-    public Attribute GetAttribute([NotNull] Type attributeType, bool inherit)
+    public Attribute? GetAttribute(Type attributeType, bool inherit)
     {
         if (attributeType is null)
             throw new ArgumentNullException(nameof(attributeType));
@@ -118,7 +113,7 @@ internal sealed class AttributesCache
 
         #region Local function
 
-        Attribute FindAttribute(Attribute[] attributes)
+        Attribute? FindAttribute(Attribute[] attributes)
         {
             foreach (Attribute attribute in attributes)
             {
@@ -139,7 +134,6 @@ internal sealed class AttributesCache
     /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
     /// <returns>Attributes matching requested type.</returns>
     [Pure]
-    [NotNull, ItemNotNull]
     public IEnumerable<TAttribute> GetAttributes<TAttribute>(bool inherit)
         where TAttribute : Attribute
     {
@@ -149,10 +143,7 @@ internal sealed class AttributesCache
 
         #region Local function
 
-        IEnumerable<TAttribute> FindAttributes(Attribute[] attributes)
-        {
-            return attributes.OfType<TAttribute>();
-        }
+        static IEnumerable<TAttribute> FindAttributes(Attribute[] attributes) => attributes.OfType<TAttribute>();
 
         #endregion
     }
@@ -164,9 +155,8 @@ internal sealed class AttributesCache
     /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
     /// <returns>Attributes matching requested type.</returns>
     [Pure]
-    [NotNull, ItemNotNull]
     [ContractAnnotation("attributeType:null => halt")]
-    public IEnumerable<Attribute> GetAttributes([NotNull] Type attributeType, bool inherit)
+    public IEnumerable<Attribute> GetAttributes(Type attributeType, bool inherit)
     {
         if (attributeType is null)
             throw new ArgumentNullException(nameof(attributeType));
@@ -179,10 +169,7 @@ internal sealed class AttributesCache
 
         #region Local function
 
-        IEnumerable<Attribute> FindAttributes(Attribute[] attributes)
-        {
-            return attributes.Where(attributeType.IsInstanceOfType);
-        }
+        IEnumerable<Attribute> FindAttributes(Attribute[] attributes) => attributes.Where(attributeType.IsInstanceOfType);
 
         #endregion
     }
@@ -193,16 +180,15 @@ internal sealed class AttributesCache
     /// <param name="inherit">Indicates if inherited attributes should be taken into account.</param>
     /// <returns>All attributes.</returns>
     [Pure]
-    [NotNull, ItemNotNull]
     public IEnumerable<Attribute> GetAllAttributes(bool inherit)
     {
         if (inherit)
-            return GetAllAttributes(_attributesWithInherited);
-        return GetAllAttributes(_attributesWithoutInherited);
+            return EnumerateAttributes(_attributesWithInherited);
+        return EnumerateAttributes(_attributesWithoutInherited);
 
         #region Local function
 
-        IEnumerable<Attribute> GetAllAttributes(Attribute[] attributes)
+        static IEnumerable<Attribute> EnumerateAttributes(Attribute[] attributes)
         {
             foreach (Attribute attribute in attributes)
             {

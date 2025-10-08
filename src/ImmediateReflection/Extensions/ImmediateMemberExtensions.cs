@@ -24,12 +24,11 @@ public static class ImmediateMemberExtensions
     /// <returns>The corresponding <see cref="ImmediateField"/>, otherwise null.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> or <paramref name="fieldName"/> is null.</exception>
     [PublicAPI]
-    [CanBeNull]
     [ContractAnnotation("type:null => halt;fieldName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static ImmediateField GetImmediateField([NotNull] this Type type, [NotNull] string fieldName)
+    public static ImmediateField? GetImmediateField(this Type type, string fieldName)
     {
         return TypeAccessor.Get(type).GetField(fieldName);
     }
@@ -43,12 +42,11 @@ public static class ImmediateMemberExtensions
     /// <returns>The corresponding <see cref="ImmediateField"/>, otherwise null.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> or <paramref name="fieldName"/> is null.</exception>
     [PublicAPI]
-    [CanBeNull]
     [ContractAnnotation("type:null => halt;fieldName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static ImmediateField GetImmediateField([NotNull] this Type type, [NotNull] string fieldName, BindingFlags flags)
+    public static ImmediateField? GetImmediateField(this Type type, string fieldName, BindingFlags flags)
     {
         return TypeAccessor.Get(type, flags).GetField(fieldName);
     }
@@ -60,12 +58,11 @@ public static class ImmediateMemberExtensions
     /// <returns>All <see cref="ImmediateField"/>.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
     [PublicAPI]
-    [NotNull, ItemNotNull]
     [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static IEnumerable<ImmediateField> GetImmediateFields([NotNull] this Type type)
+    public static IEnumerable<ImmediateField> GetImmediateFields(this Type type)
     {
         return TypeAccessor.Get(type).GetFields();
     }
@@ -78,12 +75,11 @@ public static class ImmediateMemberExtensions
     /// <returns>All <see cref="ImmediateField"/>.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
     [PublicAPI]
-    [NotNull, ItemNotNull]
     [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static IEnumerable<ImmediateField> GetImmediateFields([NotNull] this Type type, BindingFlags flags)
+    public static IEnumerable<ImmediateField> GetImmediateFields(this Type type, BindingFlags flags)
     {
         return TypeAccessor.Get(type, flags).GetFields();
     }
@@ -100,12 +96,11 @@ public static class ImmediateMemberExtensions
     /// <returns>The corresponding <see cref="ImmediateProperty"/>, otherwise null.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> or <paramref name="propertyName"/> is null.</exception>
     [PublicAPI]
-    [CanBeNull]
     [ContractAnnotation("type:null => halt;propertyName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static ImmediateProperty GetImmediateProperty([NotNull] this Type type, [NotNull] string propertyName)
+    public static ImmediateProperty? GetImmediateProperty(this Type type, string propertyName)
     {
         return TypeAccessor.Get(type).GetProperty(propertyName);
     }
@@ -119,12 +114,11 @@ public static class ImmediateMemberExtensions
     /// <returns>The corresponding <see cref="ImmediateProperty"/>, otherwise null.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> or <paramref name="propertyName"/> is null.</exception>
     [PublicAPI]
-    [CanBeNull]
     [ContractAnnotation("type:null => halt;propertyName:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static ImmediateProperty GetImmediateProperty([NotNull] this Type type, [NotNull] string propertyName, BindingFlags flags)
+    public static ImmediateProperty? GetImmediateProperty(this Type type, string propertyName, BindingFlags flags)
     {
         return TypeAccessor.Get(type, flags).GetProperty(propertyName);
     }
@@ -136,12 +130,11 @@ public static class ImmediateMemberExtensions
     /// <returns>All <see cref="ImmediateProperty"/>.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
     [PublicAPI]
-    [NotNull, ItemNotNull]
     [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static IEnumerable<ImmediateProperty> GetImmediateProperties([NotNull] this Type type)
+    public static IEnumerable<ImmediateProperty> GetImmediateProperties(this Type type)
     {
         return TypeAccessor.Get(type).GetProperties();
     }
@@ -154,12 +147,11 @@ public static class ImmediateMemberExtensions
     /// <returns>All <see cref="ImmediateProperty"/>.</returns>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
     [PublicAPI]
-    [NotNull, ItemNotNull]
     [ContractAnnotation("type:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static IEnumerable<ImmediateProperty> GetImmediateProperties([NotNull] this Type type, BindingFlags flags)
+    public static IEnumerable<ImmediateProperty> GetImmediateProperties(this Type type, BindingFlags flags)
     {
         return TypeAccessor.Get(type, flags).GetProperties();
     }

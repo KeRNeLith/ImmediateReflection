@@ -1,18 +1,16 @@
-﻿using JetBrains.Annotations;
-
-namespace ImmediateReflection.Benchmark;
+﻿namespace ImmediateReflection.Benchmark;
 
 /// <summary>
 /// Copyable benchmark object.
 /// </summary>
-public class CopyableBenchmarkObject
+internal sealed class CopyableBenchmarkObject
 {
-    public CopyableBenchmarkObject([NotNull] string str)
+    public CopyableBenchmarkObject(string str)
     {
         Property = str;
     }
 
-    public CopyableBenchmarkObject([NotNull] CopyableBenchmarkObject other)
+    public CopyableBenchmarkObject(CopyableBenchmarkObject other)
     {
         Property = other.Property;
     }

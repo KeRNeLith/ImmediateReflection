@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
 namespace ImmediateReflection;
@@ -18,9 +19,9 @@ public static class ObjectExtensions
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="instance"/> is null.</exception>
     [PublicAPI]
     [ContractAnnotation("instance:null => halt")]
-    public static bool HasCopyConstructor<T>([NotNull] this T instance)
+    public static bool HasCopyConstructor<T>(this T instance)
     {
-        if (instance == null)
+        if (instance is null)
             throw new ArgumentNullException(nameof(instance));
         if (instance is Type)
             return true;
@@ -40,13 +41,13 @@ public static class ObjectExtensions
     /// </exception>
     [PublicAPI]
     [ContractAnnotation("instance:null => null;instance:notnull => notnull")]
-    public static T Copy<T>([CanBeNull] this T instance)
+    public static T? Copy<T>(this T? instance)
     {
-        if (instance == null)
-            return default(T);
+        if (instance is null)
+            return default;
         if (instance is Type)
             return instance;
-        return (T)CachesHandler.Instance.GetCopyConstructor(instance.GetType()).Constructor(instance);
+        return (T?)CachesHandler.Instance.GetCopyConstructor(instance.GetType()).Constructor(instance);
     }
 
     /// <summary>
@@ -65,9 +66,9 @@ public static class ObjectExtensions
                         + "instance:null => false, newInstance:null, exception:notnull;"
                         + "instance:notnull => false, newInstance:null, exception:notnull")]
     public static bool TryCopy<T>(
-        [CanBeNull] this T instance,
-        out T newInstance,
-        out Exception exception)
+        this T? instance,
+        out T? newInstance,
+        [NotNullWhen(false)] out Exception? exception)
     {
         try
         {
@@ -77,7 +78,7 @@ public static class ObjectExtensions
         }
         catch (Exception ex)
         {
-            newInstance = default(T);
+            newInstance = default;
             exception = ex;
             return false;
         }
