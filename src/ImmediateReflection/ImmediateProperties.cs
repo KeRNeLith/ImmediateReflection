@@ -37,9 +37,11 @@ public sealed class ImmediateProperties
 
     private void Init(IEnumerable<PropertyInfo> properties)
     {
+        // ReSharper disable PossibleMultipleEnumeration, Justification: Only in debug and not really enumerating whole enumerable
         AssertNotNull(properties);
 
         foreach (PropertyInfo property in properties.Where(IsNotIndexed))
+        // ReSharper restore PossibleMultipleEnumeration
         {
             ImmediateProperty currentImmediateProperty = CachesHandler.Instance.GetProperty(property);
 

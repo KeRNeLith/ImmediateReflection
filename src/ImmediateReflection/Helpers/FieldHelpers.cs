@@ -36,8 +36,10 @@ internal static class FieldHelpers
     [ContractAnnotation("fields:null => halt")]
     internal static IEnumerable<FieldInfo> IgnoreBackingFields(IEnumerable<FieldInfo> fields)
     {
+        // ReSharper disable PossibleMultipleEnumeration, Justification: Only in debug and not really enumerating whole enumerable
         AssertNotNull(fields);
 
         return fields.Where(field => !IsBackingField(field));
+        // ReSharper restore PossibleMultipleEnumeration
     }
 }

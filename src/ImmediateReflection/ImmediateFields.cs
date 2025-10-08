@@ -36,9 +36,11 @@ public sealed class ImmediateFields
 
     private void Init(IEnumerable<FieldInfo> fields)
     {
+        // ReSharper disable PossibleMultipleEnumeration, Justification: Only in debug and not really enumerating whole enumerable
         AssertNotNull(fields);
 
         foreach (FieldInfo field in fields)
+        // ReSharper restore PossibleMultipleEnumeration
         {
             AssertNotNull(field);
 
