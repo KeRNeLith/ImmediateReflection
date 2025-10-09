@@ -1162,11 +1162,11 @@ internal sealed class ImmediateMemberTests : ImmediateAttributesTestsBase
         CheckGetAttributes<TestClassAttribute>(new ImmediateType(typeof(TestClassNoAttribute)), true, null);
 
         // With attribute
-        CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttribute)), false, new[] { new TestClassAttribute(1) });
-        CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttribute)), true, new[] { new TestClassAttribute(1) });
+        CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttribute)), false, [new TestClassAttribute(1)]);
+        CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttribute)), true, [new TestClassAttribute(1)]);
 
-        CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttributes)), false, new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
-        CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttributes)), true, new[] { new TestClassAttribute(4), new TestClassAttribute(5) });
+        CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttributes)), false, [new TestClassAttribute(4), new TestClassAttribute(5)]);
+        CheckGetAttributes(new ImmediateType(typeof(TestClassWithAttributes)), true, [new TestClassAttribute(4), new TestClassAttribute(5)]);
 
         // Without requested attribute
         CheckGetAttributes<SecondTestClassAttribute>(new ImmediateType(typeof(TestClassWithAttribute)), false, null);
@@ -1178,17 +1178,17 @@ internal sealed class ImmediateMemberTests : ImmediateAttributesTestsBase
 
         // Attribute inherited 1
         CheckGetAttributes<TestClassAttribute>(new ImmediateType(typeof(InheritedTestClassWithAttribute1)), false, null);
-        CheckGetAttributes(new ImmediateType(typeof(InheritedTestClassWithAttribute1)), true, new[] { new TestClassAttribute(1) });
+        CheckGetAttributes(new ImmediateType(typeof(InheritedTestClassWithAttribute1)), true, [new TestClassAttribute(1)]);
 
         // Attribute inherited 2
-        CheckGetAttributes(new ImmediateType(typeof(InheritedTestClassWithAttribute2)), false, new[] { new TestClassAttribute(11) });
-        CheckGetAttributes(new ImmediateType(typeof(InheritedTestClassWithAttribute2)), true, new[] { new TestClassAttribute(1), new TestClassAttribute(11) });
+        CheckGetAttributes(new ImmediateType(typeof(InheritedTestClassWithAttribute2)), false, [new TestClassAttribute(11)]);
+        CheckGetAttributes(new ImmediateType(typeof(InheritedTestClassWithAttribute2)), true, [new TestClassAttribute(1), new TestClassAttribute(11)]);
 
         // Several attributes
-        CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), false, new[] { new TestClassAttribute(13) });
-        CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), true, new[] { new TestClassAttribute(13) });
-        CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), false, new[] { new SecondTestClassAttribute(1) });
-        CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), true, new[] { new SecondTestClassAttribute(1) });
+        CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), false, [new TestClassAttribute(13)]);
+        CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), true, [new TestClassAttribute(13)]);
+        CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), false, [new SecondTestClassAttribute(1)]);
+        CheckGetAttributes(new ImmediateType(typeof(TestClassMultiAttributes)), true, [new SecondTestClassAttribute(1)]);
 
         #endregion
 
@@ -1199,21 +1199,21 @@ internal sealed class ImmediateMemberTests : ImmediateAttributesTestsBase
         CheckGetAttributes<TestClassAttribute>(new ImmediateField(TestFieldNoAttributeFieldInfo), true, null);
 
         // With attribute
-        CheckGetAttributes(new ImmediateField(TestFieldAttributeFieldInfo), false, new[] { new TestClassAttribute(2) });
-        CheckGetAttributes(new ImmediateField(TestFieldAttributeFieldInfo), true, new[] { new TestClassAttribute(2) });
+        CheckGetAttributes(new ImmediateField(TestFieldAttributeFieldInfo), false, [new TestClassAttribute(2)]);
+        CheckGetAttributes(new ImmediateField(TestFieldAttributeFieldInfo), true, [new TestClassAttribute(2)]);
 
-        CheckGetAttributes(new ImmediateField(TestFieldAttributesFieldInfo), false, new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
-        CheckGetAttributes(new ImmediateField(TestFieldAttributesFieldInfo), true, new[] { new TestClassAttribute(7), new TestClassAttribute(8) });
+        CheckGetAttributes(new ImmediateField(TestFieldAttributesFieldInfo), false, [new TestClassAttribute(7), new TestClassAttribute(8)]);
+        CheckGetAttributes(new ImmediateField(TestFieldAttributesFieldInfo), true, [new TestClassAttribute(7), new TestClassAttribute(8)]);
 
         // Without requested attribute
         CheckGetAttributes<SecondTestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), false, null);
         CheckGetAttributes<SecondTestClassAttribute>(new ImmediateField(TestFieldAttributeFieldInfo), true, null);
 
         // Several attributes
-        CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, new[] { new TestClassAttribute(14) });
-        CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, new[] { new TestClassAttribute(14) });
-        CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, new[] { new SecondTestClassAttribute(2) });
-        CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, new[] { new SecondTestClassAttribute(2) });
+        CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, [new TestClassAttribute(14)]);
+        CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, [new TestClassAttribute(14)]);
+        CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), false, [new SecondTestClassAttribute(2)]);
+        CheckGetAttributes(new ImmediateField(TestFieldMultiAttributesFieldInfo), true, [new SecondTestClassAttribute(2)]);
 
         #endregion
 
@@ -1224,11 +1224,11 @@ internal sealed class ImmediateMemberTests : ImmediateAttributesTestsBase
         CheckGetAttributes<TestClassAttribute>(new ImmediateProperty(TestPropertyNoAttributePropertyInfo), true, null);
 
         // With attribute
-        CheckGetAttributes(new ImmediateProperty(TestPropertyAttributePropertyInfo), false, new[] { new TestClassAttribute(3) });
-        CheckGetAttributes(new ImmediateProperty(TestPropertyAttributePropertyInfo), true, new[] { new TestClassAttribute(3) });
+        CheckGetAttributes(new ImmediateProperty(TestPropertyAttributePropertyInfo), false, [new TestClassAttribute(3)]);
+        CheckGetAttributes(new ImmediateProperty(TestPropertyAttributePropertyInfo), true, [new TestClassAttribute(3)]);
 
-        CheckGetAttributes(new ImmediateProperty(TestPropertyAttributesPropertyInfo), false, new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
-        CheckGetAttributes(new ImmediateProperty(TestPropertyAttributesPropertyInfo), true, new[] { new TestClassAttribute(9), new TestClassAttribute(10) });
+        CheckGetAttributes(new ImmediateProperty(TestPropertyAttributesPropertyInfo), false, [new TestClassAttribute(9), new TestClassAttribute(10)]);
+        CheckGetAttributes(new ImmediateProperty(TestPropertyAttributesPropertyInfo), true, [new TestClassAttribute(9), new TestClassAttribute(10)]);
 
         // Without requested attribute
         CheckGetAttributes<SecondTestClassAttribute>(new ImmediateProperty(TestPropertyAttributePropertyInfo), false, null);
@@ -1240,17 +1240,17 @@ internal sealed class ImmediateMemberTests : ImmediateAttributesTestsBase
 
         // Attribute inherited 1
         CheckGetAttributes<TestClassAttribute>(new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo), false, null);
-        CheckGetAttributes(new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo), true, new[] { new TestClassAttribute(3) });
+        CheckGetAttributes(new ImmediateProperty(TestPropertyInheritedAttribute1PropertyInfo), true, [new TestClassAttribute(3)]);
 
         // Attribute inherited 2
-        CheckGetAttributes(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), false, new[] { new TestClassAttribute(12) });
-        CheckGetAttributes(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), true, new[] { new TestClassAttribute(3), new TestClassAttribute(12) });
+        CheckGetAttributes(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), false, [new TestClassAttribute(12)]);
+        CheckGetAttributes(new ImmediateProperty(TestPropertyInheritedAttribute2PropertyInfo), true, [new TestClassAttribute(3), new TestClassAttribute(12)]);
 
         // Several attributes
-        CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, new[] { new TestClassAttribute(15) });
-        CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, new[] { new TestClassAttribute(15) });
-        CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, new[] { new SecondTestClassAttribute(3) });
-        CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, new[] { new SecondTestClassAttribute(3) });
+        CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, [new TestClassAttribute(15)]);
+        CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, [new TestClassAttribute(15)]);
+        CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), false, [new SecondTestClassAttribute(3)]);
+        CheckGetAttributes(new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo), true, [new SecondTestClassAttribute(3)]);
 
         #endregion
 
@@ -1277,34 +1277,34 @@ internal sealed class ImmediateMemberTests : ImmediateAttributesTestsBase
     {
         #region ImmediateType
 
-        CheckGetAttributes<TestBaseAttribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), false, new[] { new TestInheritingAttribute(17) });
-        CheckGetAttributes<TestBaseAttribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), true, new[] { new TestInheritingAttribute(17) });
-        CheckGetAttributes<Attribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), false, new Attribute[] { new ThirdTestClassAttribute(16), new TestInheritingAttribute(17) });
-        CheckGetAttributes<Attribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), true, new Attribute[] { new ThirdTestClassAttribute(16), new TestInheritingAttribute(17) });
-        CheckGetAttributes<TestBaseAttribute>(new ImmediateType(typeof(TestClassInheritedAttribute)), false, new[] { new TestBaseAttribute(22), new TestInheritingAttribute(23) });
-        CheckGetAttributes<TestBaseAttribute>(new ImmediateType(typeof(TestClassInheritedAttribute)), true, new[] { new TestBaseAttribute(22), new TestInheritingAttribute(23) });
+        CheckGetAttributes<TestBaseAttribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), false, [new TestInheritingAttribute(17)]);
+        CheckGetAttributes<TestBaseAttribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), true, [new TestInheritingAttribute(17)]);
+        CheckGetAttributes<Attribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), false, [new ThirdTestClassAttribute(16), new TestInheritingAttribute(17)]);
+        CheckGetAttributes<Attribute>(new ImmediateType(typeof(TestClassOnlyInheritedAttribute)), true, [new ThirdTestClassAttribute(16), new TestInheritingAttribute(17)]);
+        CheckGetAttributes<TestBaseAttribute>(new ImmediateType(typeof(TestClassInheritedAttribute)), false, [new TestBaseAttribute(22), new TestInheritingAttribute(23)]);
+        CheckGetAttributes<TestBaseAttribute>(new ImmediateType(typeof(TestClassInheritedAttribute)), true, [new TestBaseAttribute(22), new TestInheritingAttribute(23)]);
 
         #endregion
 
         #region ImmediateField
 
-        CheckGetAttributes<TestBaseAttribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), false, new[] { new TestInheritingAttribute(19) });
-        CheckGetAttributes<TestBaseAttribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), true, new[] { new TestInheritingAttribute(19) });
-        CheckGetAttributes<Attribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), false, new Attribute[] { new ThirdTestClassAttribute(18), new TestInheritingAttribute(19) });
-        CheckGetAttributes<Attribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), true, new Attribute[] { new ThirdTestClassAttribute(18), new TestInheritingAttribute(19) });
-        CheckGetAttributes<TestBaseAttribute>(new ImmediateField(TestFieldInheritingAttributeFieldInfo), false, new[] { new TestBaseAttribute(20), new TestInheritingAttribute(21) });
-        CheckGetAttributes<TestBaseAttribute>(new ImmediateField(TestFieldInheritingAttributeFieldInfo), true, new[] { new TestBaseAttribute(20), new TestInheritingAttribute(21) });
+        CheckGetAttributes<TestBaseAttribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), false, [new TestInheritingAttribute(19)]);
+        CheckGetAttributes<TestBaseAttribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), true, [new TestInheritingAttribute(19)]);
+        CheckGetAttributes<Attribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), false, [new ThirdTestClassAttribute(18), new TestInheritingAttribute(19)]);
+        CheckGetAttributes<Attribute>(new ImmediateField(TestFieldOnlyInheritingAttributeFieldInfo), true, [new ThirdTestClassAttribute(18), new TestInheritingAttribute(19)]);
+        CheckGetAttributes<TestBaseAttribute>(new ImmediateField(TestFieldInheritingAttributeFieldInfo), false, [new TestBaseAttribute(20), new TestInheritingAttribute(21)]);
+        CheckGetAttributes<TestBaseAttribute>(new ImmediateField(TestFieldInheritingAttributeFieldInfo), true, [new TestBaseAttribute(20), new TestInheritingAttribute(21)]);
 
         #endregion
 
         #region ImmediateProperty
 
-        CheckGetAttributes<TestBaseAttribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), false, new[] { new TestInheritingAttribute(25) });
-        CheckGetAttributes<TestBaseAttribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), true, new[] { new TestInheritingAttribute(25) });
-        CheckGetAttributes<Attribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), false, new Attribute[] { new ThirdTestClassAttribute(24), new TestInheritingAttribute(25) });
-        CheckGetAttributes<Attribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), true, new Attribute[] { new ThirdTestClassAttribute(24), new TestInheritingAttribute(25) });
-        CheckGetAttributes<TestBaseAttribute>(new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo), false, new[] { new TestBaseAttribute(26), new TestInheritingAttribute(27) });
-        CheckGetAttributes<TestBaseAttribute>(new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo), true, new[] { new TestBaseAttribute(26), new TestInheritingAttribute(27) });
+        CheckGetAttributes<TestBaseAttribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), false, [new TestInheritingAttribute(25)]);
+        CheckGetAttributes<TestBaseAttribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), true, [new TestInheritingAttribute(25)]);
+        CheckGetAttributes<Attribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), false, [new ThirdTestClassAttribute(24), new TestInheritingAttribute(25)]);
+        CheckGetAttributes<Attribute>(new ImmediateProperty(TestPropertyOnlyInheritingAttributePropertyInfo), true, [new ThirdTestClassAttribute(24), new TestInheritingAttribute(25)]);
+        CheckGetAttributes<TestBaseAttribute>(new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo), false, [new TestBaseAttribute(26), new TestInheritingAttribute(27)]);
+        CheckGetAttributes<TestBaseAttribute>(new ImmediateProperty(TestPropertyInheritingAttributePropertyInfo), true, [new TestBaseAttribute(26), new TestInheritingAttribute(27)]);
 
         #endregion
 

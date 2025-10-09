@@ -32,12 +32,12 @@ internal sealed class ImmediatePropertiesTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertiesInfoWithNew()
     {
-        var immediateProperties = new ImmediateProperties(new[] { ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, BaseClassPublicGetPropertyPropertyInfo });
+        var immediateProperties = new ImmediateProperties([ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, BaseClassPublicGetPropertyPropertyInfo]);
         CollectionAssert.AreEquivalent(
             new[] { new ImmediateProperty(ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo) },
             immediateProperties);
 
-        immediateProperties = new ImmediateProperties(new[] { BaseClassPublicGetPropertyPropertyInfo, ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo });
+        immediateProperties = new ImmediateProperties([BaseClassPublicGetPropertyPropertyInfo, ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo]);
         CollectionAssert.AreEquivalent(
             new[] { new ImmediateProperty(ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo) },
             immediateProperties);
@@ -61,12 +61,12 @@ internal sealed class ImmediatePropertiesTests : ImmediateReflectionTestsBase
     [Test]
     public static void GetPropertyWithNew()
     {
-        var immediateProperties = new ImmediateProperties(new[] { ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, BaseClassPublicGetPropertyPropertyInfo });
+        var immediateProperties = new ImmediateProperties([ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, BaseClassPublicGetPropertyPropertyInfo]);
         var expectedProperty = new ImmediateProperty(ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo);
         Assert.AreEqual(expectedProperty, immediateProperties[nameof(ChildTypeRedefinitionTestClass.Property)]);
         Assert.AreEqual(expectedProperty, immediateProperties.GetProperty(nameof(ChildTypeRedefinitionTestClass.Property)));
 
-        immediateProperties = new ImmediateProperties(new[] { BaseClassPublicGetPropertyPropertyInfo, ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo });
+        immediateProperties = new ImmediateProperties([BaseClassPublicGetPropertyPropertyInfo, ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo]);
         Assert.AreEqual(expectedProperty, immediateProperties[nameof(ChildTypeRedefinitionTestClass.Property)]);
         Assert.AreEqual(expectedProperty, immediateProperties.GetProperty(nameof(ChildTypeRedefinitionTestClass.Property)));
     }

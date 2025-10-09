@@ -881,7 +881,7 @@ internal static class ConstructorTestHelpers
         yield return new TestCaseData(typeof(Dictionary<int, string>), null);
     }
 
-    private static readonly object[] NoArgs = {};
+    private static readonly object[] NoArgs = [];
 
     public static IEnumerable<TestCaseData> CreateNotDefaultConstructorNotNullParamsTestCases()
     {

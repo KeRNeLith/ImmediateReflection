@@ -52,12 +52,12 @@ internal sealed class SerializationTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertiesSerialization()
     {
-        var properties = new ImmediateProperties(new[] 
-        {
+        var properties = new ImmediateProperties(
+        [
             PublicValueTypePublicGetSetPropertyPropertyInfo,
             PublicReferenceTypePublicGetPropertyPropertyInfo,
             PublicObjectTypePublicSetPropertyPropertyInfo
-        });
+        ]);
         ImmediateProperties deserializedProperties = SerializeAndDeserialize(properties);
 
         CollectionAssert.AreEquivalent(
@@ -103,14 +103,14 @@ internal sealed class SerializationTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldsSerialization()
     {
-        var fields = new ImmediateFields(new[]
-        {
+        var fields = new ImmediateFields(
+        [
             PublicValueTypePublicFieldFieldsInfo,
             PublicReferenceTypePublicField2FieldsInfo,
             PublicObjectTypeInternalFieldFieldsInfo,
             TestEnumField1FieldInfo,
             TestEnumULongFieldValueFieldInfo
-        });
+        ]);
         ImmediateFields deserializedFields = SerializeAndDeserialize(fields);
 
         CollectionAssert.AreEquivalent(

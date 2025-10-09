@@ -24,10 +24,10 @@ internal abstract class ImmediateReflectionTestsBase
     #region Test Helpers
 
     // Properties //
-    protected static readonly PropertyInfo[] EmptyPropertyInfo = { };
+    protected static readonly PropertyInfo[] EmptyPropertyInfo = [];
 
     // Fields //
-    protected static readonly FieldInfo[] EmptyFieldInfo = { };
+    protected static readonly FieldInfo[] EmptyFieldInfo = [];
 
     [Pure]
     protected static bool IsAnonymousType(Type type)
@@ -93,45 +93,45 @@ internal abstract class ImmediateReflectionTestsBase
         {
             return new TypeClassifiedMembers
             {
-                PublicInstanceFields = new[]
-                {
+                PublicInstanceFields =
+                [
                     PublicValueTypePublicFieldFieldsInfo,
                     PublicValueTypePublicField2FieldsInfo
-                },
-                NonPublicInstanceFields = new[]
-                {
+                ],
+                NonPublicInstanceFields =
+                [
                     PublicValueTypeInternalFieldFieldsInfo,
                     PublicValueTypeProtectedFieldFieldsInfo,
                     PublicValueTypePrivateFieldFieldsInfo
-                },
-                StaticFields = new[]
-                {
+                ],
+                StaticFields =
+                [
                     PublicValueTypeStaticPublicFieldFieldsInfo,
                     PublicValueTypeStaticReadonlyPublicFieldFieldsInfo
-                },
-                ConstFields = new[]
-                {
+                ],
+                ConstFields =
+                [
                     PublicValueTypeConstPublicFieldFieldsInfo
-                },
-                PublicInstanceProperties = new[]
-                {
+                ],
+                PublicInstanceProperties =
+                [
                     PublicValueTypePublicGetSetPropertyPropertyInfo,
                     PublicValueTypePublicVirtualGetSetPropertyPropertyInfo,
                     PublicValueTypePublicGetPropertyPropertyInfo,
                     PublicValueTypePublicPrivateGetSetPropertyPropertyInfo,
                     PublicValueTypePublicGetPrivateSetPropertyPropertyInfo,
                     PublicValueTypePublicSetPropertyPropertyInfo
-                },
-                NonPublicInstanceProperties = new[]
-                {
+                ],
+                NonPublicInstanceProperties =
+                [
                     PublicValueTypeInternalGetSetPropertyPropertyInfo,
                     PublicValueTypeProtectedGetSetPropertyPropertyInfo,
                     PublicValueTypePrivateGetSetPropertyPropertyInfo
-                },
-                StaticProperties = new[]
-                {
+                ],
+                StaticProperties =
+                [
                     PublicValueTypeStaticPublicGetSetPropertyPropertyInfo
-                }
+                ]
             };
         }
 
@@ -139,45 +139,45 @@ internal abstract class ImmediateReflectionTestsBase
         {
             return new TypeClassifiedMembers
             {
-                PublicInstanceFields = new[]
-                {
+                PublicInstanceFields =
+                [
                     InternalValueTypePublicFieldFieldsInfo,
                     InternalValueTypePublicField2FieldsInfo
-                },
-                NonPublicInstanceFields = new[]
-                {
+                ],
+                NonPublicInstanceFields =
+                [
                     InternalValueTypeInternalFieldFieldsInfo,
                     InternalValueTypeProtectedFieldFieldsInfo,
                     InternalValueTypePrivateFieldFieldsInfo
-                },
-                StaticFields = new[]
-                {
+                ],
+                StaticFields =
+                [
                     InternalValueTypeStaticPublicFieldFieldsInfo,
                     InternalValueTypeStaticReadonlyPublicFieldFieldsInfo
-                },
-                ConstFields = new[]
-                {
+                ],
+                ConstFields =
+                [
                     InternalValueTypeConstPublicFieldFieldsInfo
-                },
-                PublicInstanceProperties = new[]
-                {
+                ],
+                PublicInstanceProperties =
+                [
                     InternalValueTypePublicGetSetPropertyPropertyInfo,
                     InternalValueTypePublicVirtualGetSetPropertyPropertyInfo,
                     InternalValueTypePublicGetPropertyPropertyInfo,
                     InternalValueTypePublicPrivateGetSetPropertyPropertyInfo,
                     InternalValueTypePublicGetPrivateSetPropertyPropertyInfo,
                     InternalValueTypePublicSetPropertyPropertyInfo
-                },
-                NonPublicInstanceProperties = new[]
-                {
+                ],
+                NonPublicInstanceProperties =
+                [
                     InternalValueTypeInternalGetSetPropertyPropertyInfo,
                     InternalValueTypeProtectedGetSetPropertyPropertyInfo,
                     InternalValueTypePrivateGetSetPropertyPropertyInfo
-                },
-                StaticProperties = new[]
-                {
+                ],
+                StaticProperties =
+                [
                     InternalValueTypeStaticPublicGetSetPropertyPropertyInfo
-                }
+                ]
             };
         }
 
@@ -185,44 +185,44 @@ internal abstract class ImmediateReflectionTestsBase
         {
             return new TypeClassifiedMembers
             {
-                PublicInstanceFields = new[]
-                {
+                PublicInstanceFields =
+                [
                     PublicReferenceTypePublicFieldFieldsInfo,
                     PublicReferenceTypePublicField2FieldsInfo
-                },
-                NonPublicInstanceFields = new[]
-                {
+                ],
+                NonPublicInstanceFields =
+                [
                     PublicReferenceTypeInternalFieldFieldsInfo,
                     PublicReferenceTypeProtectedFieldFieldsInfo,
                     PublicReferenceTypePrivateFieldFieldsInfo
-                },
-                StaticFields = new[]
-                {
+                ],
+                StaticFields =
+                [
                     PublicReferenceTypeStaticPublicFieldFieldsInfo,
                     PublicReferenceTypeStaticReadonlyPublicFieldFieldsInfo
-                },
-                ConstFields = new FieldInfo[]
-                {
-                },
-                PublicInstanceProperties = new[]
-                {
+                ],
+                ConstFields =
+                [
+                ],
+                PublicInstanceProperties =
+                [
                     PublicReferenceTypePublicGetSetPropertyPropertyInfo,
                     PublicReferenceTypePublicVirtualGetSetPropertyPropertyInfo,
                     PublicReferenceTypePublicGetPropertyPropertyInfo,
                     PublicReferenceTypePublicPrivateGetSetPropertyPropertyInfo,
                     PublicReferenceTypePublicGetPrivateSetPropertyPropertyInfo,
                     PublicReferenceTypePublicSetPropertyPropertyInfo
-                },
-                NonPublicInstanceProperties = new[]
-                {
+                ],
+                NonPublicInstanceProperties =
+                [
                     PublicReferenceTypeInternalGetSetPropertyPropertyInfo,
                     PublicReferenceTypeProtectedGetSetPropertyPropertyInfo,
                     PublicReferenceTypePrivateGetSetPropertyPropertyInfo
-                },
-                StaticProperties = new[]
-                {
+                ],
+                StaticProperties =
+                [
                     PublicReferenceTypeStaticPublicGetSetPropertyPropertyInfo
-                }
+                ]
             };
         }
 
@@ -230,44 +230,44 @@ internal abstract class ImmediateReflectionTestsBase
         {
             return new TypeClassifiedMembers
             {
-                PublicInstanceFields = new[]
-                {
+                PublicInstanceFields =
+                [
                     InternalReferenceTypePublicFieldFieldsInfo,
                     InternalReferenceTypePublicField2FieldsInfo
-                },
-                NonPublicInstanceFields = new[]
-                {
+                ],
+                NonPublicInstanceFields =
+                [
                     InternalReferenceTypeInternalFieldFieldsInfo,
                     InternalReferenceTypeProtectedFieldFieldsInfo,
                     InternalReferenceTypePrivateFieldFieldsInfo
-                },
-                StaticFields = new[]
-                {
+                ],
+                StaticFields =
+                [
                     InternalReferenceTypeStaticPublicFieldFieldsInfo,
                     InternalReferenceTypeStaticReadonlyPublicFieldFieldsInfo
-                },
-                ConstFields = new FieldInfo[]
-                {
-                },
-                PublicInstanceProperties = new[]
-                {
+                ],
+                ConstFields =
+                [
+                ],
+                PublicInstanceProperties =
+                [
                     InternalReferenceTypePublicGetSetPropertyPropertyInfo,
                     InternalReferenceTypePublicVirtualGetSetPropertyPropertyInfo,
                     InternalReferenceTypePublicGetPropertyPropertyInfo,
                     InternalReferenceTypePublicPrivateGetSetPropertyPropertyInfo,
                     InternalReferenceTypePublicGetPrivateSetPropertyPropertyInfo,
                     InternalReferenceTypePublicSetPropertyPropertyInfo
-                },
-                NonPublicInstanceProperties = new[]
-                {
+                ],
+                NonPublicInstanceProperties =
+                [
                     InternalReferenceTypeInternalGetSetPropertyPropertyInfo,
                     InternalReferenceTypeProtectedGetSetPropertyPropertyInfo,
                     InternalReferenceTypePrivateGetSetPropertyPropertyInfo
-                },
-                StaticProperties = new[]
-                {
+                ],
+                StaticProperties =
+                [
                     InternalReferenceTypeStaticPublicGetSetPropertyPropertyInfo
-                }
+                ]
             };
         }
 
@@ -275,45 +275,45 @@ internal abstract class ImmediateReflectionTestsBase
         {
             return new TypeClassifiedMembers
             {
-                PublicInstanceFields = new[]
-                {
+                PublicInstanceFields =
+                [
                     PublicObjectTypePublicFieldFieldsInfo,
                     PublicObjectTypePublicField2FieldsInfo
-                },
-                NonPublicInstanceFields = new[]
-                {
+                ],
+                NonPublicInstanceFields =
+                [
                     PublicObjectTypeInternalFieldFieldsInfo,
                     PublicObjectTypeProtectedFieldFieldsInfo,
                     PublicObjectTypePrivateFieldFieldsInfo
-                },
-                StaticFields = new[]
-                {
+                ],
+                StaticFields =
+                [
                     PublicObjectTypeStaticPublicFieldFieldsInfo,
                     PublicObjectTypeStaticReadonlyPublicFieldFieldsInfo
-                },
-                ConstFields = new[]
-                {
+                ],
+                ConstFields =
+                [
                     PublicObjectTypeConstPublicFieldFieldsInfo
-                },
-                PublicInstanceProperties = new[]
-                {
+                ],
+                PublicInstanceProperties =
+                [
                     PublicObjectTypePublicGetSetPropertyPropertyInfo,
                     PublicObjectTypePublicVirtualGetSetPropertyPropertyInfo,
                     PublicObjectTypePublicGetPropertyPropertyInfo,
                     PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo,
                     PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo,
                     PublicObjectTypePublicSetPropertyPropertyInfo
-                },
-                NonPublicInstanceProperties = new[]
-                {
+                ],
+                NonPublicInstanceProperties =
+                [
                     PublicObjectTypeInternalGetSetPropertyPropertyInfo,
                     PublicObjectTypeProtectedGetSetPropertyPropertyInfo,
                     PublicObjectTypePrivateGetSetPropertyPropertyInfo
-                },
-                StaticProperties = new[]
-                {
+                ],
+                StaticProperties =
+                [
                     PublicObjectTypeStaticPublicGetSetPropertyPropertyInfo
-                }
+                ]
             };
         }
 
@@ -321,45 +321,45 @@ internal abstract class ImmediateReflectionTestsBase
         {
             return new TypeClassifiedMembers
             {
-                PublicInstanceFields = new[]
-                {
+                PublicInstanceFields =
+                [
                     InternalObjectTypePublicFieldFieldsInfo,
                     InternalObjectTypePublicField2FieldsInfo
-                },
-                NonPublicInstanceFields = new[]
-                {
+                ],
+                NonPublicInstanceFields =
+                [
                     InternalObjectTypeInternalFieldFieldsInfo,
                     InternalObjectTypeProtectedFieldFieldsInfo,
                     InternalObjectTypePrivateFieldFieldsInfo
-                },
-                StaticFields = new[]
-                {
+                ],
+                StaticFields =
+                [
                     InternalObjectTypeStaticPublicFieldFieldsInfo,
                     InternalObjectTypeStaticReadonlyPublicFieldFieldsInfo
-                },
-                ConstFields = new[]
-                {
+                ],
+                ConstFields =
+                [
                     InternalObjectTypeConstPublicFieldFieldsInfo
-                },
-                PublicInstanceProperties = new[]
-                {
+                ],
+                PublicInstanceProperties =
+                [
                     InternalObjectTypePublicGetSetPropertyPropertyInfo,
                     InternalObjectTypePublicVirtualGetSetPropertyPropertyInfo,
                     InternalObjectTypePublicGetPropertyPropertyInfo,
                     InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo,
                     InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo,
                     InternalObjectTypePublicSetPropertyPropertyInfo
-                },
-                NonPublicInstanceProperties = new[]
-                {
+                ],
+                NonPublicInstanceProperties =
+                [
                     InternalObjectTypeInternalGetSetPropertyPropertyInfo,
                     InternalObjectTypeProtectedGetSetPropertyPropertyInfo,
                     InternalObjectTypePrivateGetSetPropertyPropertyInfo
-                },
-                StaticProperties = new[]
-                {
+                ],
+                StaticProperties =
+                [
                     InternalObjectTypeStaticPublicGetSetPropertyPropertyInfo
-                }
+                ]
             };
         }
 
@@ -892,12 +892,12 @@ internal abstract class ImmediateReflectionTestsBase
 
     protected static readonly PropertyInfo ChildItemClassPublicGetPropertyPropertyInfo =
         typeof(ChildItemTestClass).GetProperties().FirstOrDefault(
-            p => p.Name == nameof(ChildItemTestClass.Item) && p.GetIndexParameters().Length == 0) 
+            p => p.Name == nameof(ChildItemTestClass.Item) && p.GetIndexParameters().Length == 0)
         ?? throw new AssertionException("Cannot find property.");
 
     protected static readonly PropertyInfo ChildIndexedItemClassPublicGetPropertyPropertyInfo =
         typeof(ChildItemTestClass).GetProperties().FirstOrDefault(
-            p => p.Name == "Item" && p.GetIndexParameters().Length > 0) 
+            p => p.Name == "Item" && p.GetIndexParameters().Length > 0)
         ?? throw new AssertionException("Cannot find property.");
 
     #endregion

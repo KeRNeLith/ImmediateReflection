@@ -311,33 +311,30 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         // Simple test enum
         CheckEnumType(
             typeof(TestEnum),
-            new[]
-            {
+            [
                 TestEnumFieldValueFieldInfo,
                 TestEnumField1FieldInfo,
                 TestEnumField2FieldInfo
-            });
+            ]);
 
         // Test enum (inherit ulong)
         CheckEnumType(
             typeof(TestEnumULong),
-            new[]
-            {
+            [
                 TestEnumULongFieldValueFieldInfo,
                 TestEnumULongField1FieldInfo,
                 TestEnumULongField2FieldInfo
-            });
+            ]);
 
         // Flags test enum
         CheckEnumType(
             typeof(TestEnumFlags),
-            new[]
-            {
+            [
                 TestEnumFlagsFieldValueFieldInfo,
                 TestEnumFlagsField1FieldInfo,
                 TestEnumFlagsField2FieldInfo,
                 TestEnumFlagsField3FieldInfo
-            });
+            ]);
 
         #region Local function
 

@@ -34,19 +34,19 @@ internal sealed class MemoryCache<TKey, TValue>
         AssertNotNull(valueFactory);
 
         // ReSharper disable once InconsistentlySynchronizedField, Justification: HashTable is thread safe for reading
-        var cachedValue = (TValue?)_cache[key];
+        var cachedValue = (TValue?)_cache[key!];
         if (cachedValue is not null)
             return cachedValue;
 
         lock (_cache)
         {
             // Double check (init during lock wait)
-            cachedValue = (TValue?)_cache[key];
+            cachedValue = (TValue?)_cache[key!];
             if (cachedValue is not null)
                 return cachedValue;
 
             cachedValue = valueFactory();
-            _cache[key] = cachedValue;
+            _cache[key!] = cachedValue;
             return cachedValue;
         }
     }
