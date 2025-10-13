@@ -12,6 +12,47 @@ namespace ImmediateReflection;
 /// <remarks>This is a singleton implementation.</remarks>
 internal sealed class CachesHandler
 {
+    public readonly struct MemberIdentity : IEquatable<MemberIdentity>
+    {
+        public readonly int MetadataToken;
+        public readonly Module Module;
+        public readonly Type? DeclaringType;
+        public readonly string? Name;
+
+        public MemberIdentity(MemberInfo member)
+        {
+            MetadataToken = member.MetadataToken;
+            Module = member.Module;
+            DeclaringType = member.DeclaringType;
+            Name = member.Name;
+        }
+
+        public bool Equals(MemberIdentity other)
+        {
+            if (MetadataToken != 0 && other.MetadataToken != 0)
+                return MetadataToken == other.MetadataToken && Module.Equals(other.Module);
+
+            // Fallback for dynamic members
+            return Module.Equals(other.Module)
+                   && DeclaringType == other.DeclaringType
+                   && Name == other.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 17;
+                hash = hash * 31 + Module.GetHashCode();
+                hash = hash * 31 + (DeclaringType?.GetHashCode() ?? 0);
+                hash = hash * 31 + (MetadataToken != 0 ? MetadataToken : (Name?.GetHashCode() ?? 0));
+                return hash;
+            }
+        }
+
+        public override bool Equals(object? obj) => obj is MemberIdentity other && Equals(other);
+    }
+
     #region Singleton management
 
     private CachesHandler()
@@ -88,7 +129,7 @@ internal sealed class CachesHandler
 
     #region Attributes cache
 
-    private volatile MemoryCache<MemberInfo, AttributesCache> _cachedAttributes = new(new MemberInfoEqualityComparer());
+    private volatile MemoryCache</*MemberIdentity*/MemberInfo, AttributesCache> _cachedAttributes = new(new MemberInfoEqualityComparer());
 
     [ContractAnnotation("member:null => halt")]
     public AttributesCache GetAttributesCache(MemberInfo member)

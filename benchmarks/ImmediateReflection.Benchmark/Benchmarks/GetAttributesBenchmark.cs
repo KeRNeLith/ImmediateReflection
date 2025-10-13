@@ -20,6 +20,10 @@ public class GetAttributesBenchmark : BenchmarkBase
         AttributesBenchmarkObjectType.GetProperty(nameof(AttributesBenchmarkObject.TestProperty))
         ?? throw new InvalidOperationException("Property does not exist.");
 
+    private static readonly FieldInfo AttributesBenchmarkField =
+        AttributesBenchmarkObjectType.GetField(nameof(AttributesBenchmarkObject._TestField))
+        ?? throw new InvalidOperationException("Field does not exist.");
+
     private static readonly Attribute[] CachedAttributes = AttributesBenchmarkProperty
         .GetCustomAttributes(false)
         .OfType<Attribute>()
@@ -36,26 +40,26 @@ public class GetAttributesBenchmark : BenchmarkBase
     private static readonly ImmediateProperty AttributesImmediateProperty = new(AttributesBenchmarkProperty);
 
     // Benchmark methods
-    [Benchmark(Baseline = true)]
-    public void Property_GetAttribute()
-    {
-        _ = AttributesBenchmarkProperty.GetCustomAttribute<TestClassAttribute>(false);
-        _ = AttributesBenchmarkProperty.GetCustomAttribute<ThirdTestClassAttribute>(false);
-    }
+    //[Benchmark(Baseline = true)]
+    //public void Property_GetAttribute()
+    //{
+    //    _ = AttributesBenchmarkProperty.GetCustomAttribute<TestClassAttribute>(false);
+    //    _ = AttributesBenchmarkProperty.GetCustomAttribute<ThirdTestClassAttribute>(false);
+    //}
 
-    [Benchmark]
+    [Benchmark(Baseline = true)]
     public void PropertyCache_GetAttribute()
     {
         _ = GetAttributeFromCache<TestClassAttribute>();
         _ = GetAttributeFromCache<ThirdTestClassAttribute>();
     }
 
-    [Benchmark]
-    public void FastMember_GetAttribute()
-    {
-        _ = FastMemberProperty.GetAttribute(typeof(TestClassAttribute), false);
-        _ = FastMemberProperty.GetAttribute(typeof(ThirdTestClassAttribute), false);
-    }
+    ////[Benchmark]
+    ////public void FastMember_GetAttribute()
+    ////{
+    ////    _ = FastMemberProperty.GetAttribute(typeof(TestClassAttribute), false);
+    ////    _ = FastMemberProperty.GetAttribute(typeof(ThirdTestClassAttribute), false);
+    ////}
 
     [Benchmark]
     public void ImmediateProperty_GetAttribute()
@@ -69,5 +73,12 @@ public class GetAttributesBenchmark : BenchmarkBase
     {
         _ = AttributesBenchmarkProperty.GetImmediateAttribute<TestClassAttribute>();
         _ = AttributesBenchmarkProperty.GetImmediateAttribute<ThirdTestClassAttribute>();
+    }
+
+    [Benchmark]
+    public void Field_ByImmediateReflection_GetAttribute()
+    {
+        _ = AttributesBenchmarkField.GetImmediateAttribute<TestClassAttribute>();
+        _ = AttributesBenchmarkField.GetImmediateAttribute<ThirdTestClassAttribute>();
     }
 }
