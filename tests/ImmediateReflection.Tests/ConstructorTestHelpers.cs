@@ -740,6 +740,10 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateHasDefaultConstructorTestCases()
     {
+        yield return new TestCaseData(typeof(int?)) { ExpectedResult = true };
+        yield return new TestCaseData(typeof(TestStruct?)) { ExpectedResult = true };
+        yield return new TestCaseData(typeof(TestEnum?)) { ExpectedResult = true };
+
         yield return new TestCaseData(typeof(int)) { ExpectedResult = true };
         yield return new TestCaseData(typeof(TestStruct)) { ExpectedResult = true };
         yield return new TestCaseData(typeof(TestEnum)) { ExpectedResult = true };
@@ -774,6 +778,10 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateDefaultConstructorTestCases()
     {
+        yield return new TestCaseData(typeof(int?));
+        yield return new TestCaseData(typeof(TestStruct?));
+        yield return new TestCaseData(typeof(TestEnum?));
+
         yield return new TestCaseData(typeof(int));
         yield return new TestCaseData(typeof(TestStruct));
         yield return new TestCaseData(typeof(TestEnum));
@@ -804,6 +812,10 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateDefaultConstructorNoThrowTestCases()
     {
+        yield return new TestCaseData(typeof(int?), false);
+        yield return new TestCaseData(typeof(TestStruct?), false);
+        yield return new TestCaseData(typeof(TestEnum?), false);
+
         yield return new TestCaseData(typeof(int), false);
         yield return new TestCaseData(typeof(TestStruct), false);
         yield return new TestCaseData(typeof(TestEnum), false);
@@ -866,6 +878,10 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateNotDefaultConstructorNullParamsTestCases()
     {
+        yield return new TestCaseData(typeof(int?), null);
+        yield return new TestCaseData(typeof(TestStruct?), null);
+        yield return new TestCaseData(typeof(TestEnum?), null);
+
         yield return new TestCaseData(typeof(int), null);
         yield return new TestCaseData(typeof(TestStruct), null);
         yield return new TestCaseData(typeof(TestEnum), null);
@@ -885,6 +901,10 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateNotDefaultConstructorNotNullParamsTestCases()
     {
+        yield return new TestCaseData(typeof(int?), NoArgs);
+        yield return new TestCaseData(typeof(TestStruct?), NoArgs);
+        yield return new TestCaseData(typeof(TestEnum?), NoArgs);
+
         yield return new TestCaseData(typeof(int), NoArgs);
         yield return new TestCaseData(typeof(TestStruct), NoArgs);
         yield return new TestCaseData(typeof(TestEnum), NoArgs);
@@ -899,6 +919,14 @@ internal static class ConstructorTestHelpers
         yield return new TestCaseData(typeof(List<int>), NoArgs);
         yield return new TestCaseData(typeof(Dictionary<int, string>), NoArgs);
 
+
+        yield return new TestCaseData(typeof(int?), new object?[] { null });
+        yield return new TestCaseData(typeof(int?), new object[] { 12 });
+        yield return new TestCaseData(typeof(TestEnum?), new object[] { TestEnum.EnumValue2 });
+        yield return new TestCaseData(typeof(TestEnum?), new object?[] { null });
+
+        yield return new TestCaseData(typeof(int), new object[] { 12 });
+        yield return new TestCaseData(typeof(TestEnum), new object[] { TestEnum.EnumValue2 });
         yield return new TestCaseData(typeof(ParameterConstructorStruct), new object[] { 12 });
         yield return new TestCaseData(typeof(NoDefaultConstructor), new object[] { 12 });
         yield return new TestCaseData(typeof(MultiParametersConstructor), new object[] { 12, 42.5f });
@@ -940,6 +968,10 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateNotDefaultConstructorNoThrowNullParamsTestCases()
     {
+        yield return new TestCaseData(typeof(int?), false, null);
+        yield return new TestCaseData(typeof(TestStruct?), false, null);
+        yield return new TestCaseData(typeof(TestEnum?), false, null);
+
         yield return new TestCaseData(typeof(int), false, null);
         yield return new TestCaseData(typeof(TestStruct), false, null);
         yield return new TestCaseData(typeof(TestEnum), false, null);
@@ -972,6 +1004,10 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateNotDefaultConstructorNoThrowNotNullParamsTestCases()
     {
+        yield return new TestCaseData(typeof(int?), false, NoArgs);
+        yield return new TestCaseData(typeof(TestStruct?), false, NoArgs);
+        yield return new TestCaseData(typeof(TestEnum?), false, NoArgs);
+
         yield return new TestCaseData(typeof(int), false, NoArgs);
         yield return new TestCaseData(typeof(TestStruct), false, NoArgs);
         yield return new TestCaseData(typeof(TestEnum), false, NoArgs);
@@ -999,6 +1035,13 @@ internal static class ConstructorTestHelpers
         yield return new TestCaseData(typeof(List<int>), false, new object[] { Enumerable.Range(0, 5) });
         yield return new TestCaseData(typeof(Dictionary<int, string>), false, NoArgs);
         yield return new TestCaseData(typeof(Dictionary<int, string>), false, new object[] { 3 });
+
+        yield return new TestCaseData(typeof(int?), false, new object[] { 42 });
+        yield return new TestCaseData(typeof(int?), false, new object?[] { null });
+        yield return new TestCaseData(typeof(TestStruct?), false, new object[] { 42 });
+        yield return new TestCaseData(typeof(TestStruct?), false, new object?[] { null });
+        yield return new TestCaseData(typeof(TestEnum?), false, new object[] { TestEnum.EnumValue2 });
+        yield return new TestCaseData(typeof(TestEnum?), false, new object?[] { null });
 
         yield return new TestCaseData(typeof(int), true, new object[] { 12 });
         yield return new TestCaseData(typeof(TestStruct), true, new object[] { 12 });
@@ -1063,6 +1106,9 @@ internal static class ConstructorTestHelpers
     public static IEnumerable<TestCaseData> CreateHasCopyConstructorTestCases()
     {
         // Not has a real copy constructor, but it's more convenient
+        yield return new TestCaseData(typeof(int?)) { ExpectedResult = true };
+        yield return new TestCaseData(typeof(TestStruct?)) { ExpectedResult = true };
+        yield return new TestCaseData(typeof(TestEnum?)) { ExpectedResult = true };
         yield return new TestCaseData(typeof(int)) { ExpectedResult = true };
         yield return new TestCaseData(typeof(TestStruct)) { ExpectedResult = true };
         yield return new TestCaseData(typeof(TestEnum)) { ExpectedResult = true };
@@ -1097,10 +1143,18 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateCopyConstructorTestCases()
     {
+        yield return new TestCaseData(typeof(int?), null);
+        yield return new TestCaseData(typeof(TestStruct?), null);
+        yield return new TestCaseData(typeof(TestEnum?), null);
+        yield return new TestCaseData(typeof(string), null);
+        yield return new TestCaseData(typeof(Type), null);
         yield return new TestCaseData(typeof(CopyConstructorClass), null);
         yield return new TestCaseData(typeof(NoCopyConstructorClass), null);
         yield return new TestCaseData(typeof(AbstractCopyConstructor), null);
 
+        yield return new TestCaseData(typeof(int?), 42);
+        yield return new TestCaseData(typeof(TestStruct?), new TestStruct { TestValue = 42 });
+        yield return new TestCaseData(typeof(TestEnum?), TestEnum.EnumValue2);
         yield return new TestCaseData(typeof(int), 25);
         yield return new TestCaseData(typeof(TestStruct), new TestStruct { TestValue = 12 });
         yield return new TestCaseData(typeof(TestEnum), TestEnum.EnumValue2);
@@ -1137,6 +1191,13 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateCopyConstructorNoThrowTestCases()
     {
+        yield return new TestCaseData(typeof(int?), null, false);
+        yield return new TestCaseData(typeof(TestStruct?), null, false);
+        yield return new TestCaseData(typeof(TestEnum?), null, false);
+        yield return new TestCaseData(typeof(int?), 42, false);
+        yield return new TestCaseData(typeof(TestStruct?), new TestStruct { TestValue = 2 }, false);
+        yield return new TestCaseData(typeof(TestEnum?), TestEnum.EnumValue2, false);
+        yield return new TestCaseData(typeof(string), null, false);
         yield return new TestCaseData(typeof(CopyConstructorClass), null, false);
         yield return new TestCaseData(typeof(NoCopyConstructorClass), null, false);
         yield return new TestCaseData(typeof(AbstractCopyConstructor), null, false);

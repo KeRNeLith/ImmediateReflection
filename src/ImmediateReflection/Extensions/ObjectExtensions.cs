@@ -42,12 +42,32 @@ public static class ObjectExtensions
     [PublicAPI]
     [ContractAnnotation("instance:null => null;instance:notnull => notnull")]
     public static T? Copy<T>(this T? instance)
+        where T : class
     {
         if (instance is null)
-            return default;
+            return null;
         if (instance is Type)
             return instance;
         return (T?)CachesHandler.Instance.GetCopyConstructor(instance.GetType()).Constructor(instance);
+    }
+
+    /// <summary>
+    /// Creates a copy instance of this <paramref name="instance"/> with its copy constructor.
+    /// </summary>
+    /// <typeparam name="T">Instance type.</typeparam>
+    /// <param name="instance">Object to copy.</param>
+    /// <returns>A reference to the newly created object.</returns>
+    /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="instance"/> is null.</exception>
+    /// <exception cref="T:System.MissingMethodException">
+    /// No matching public copy constructor was found,
+    /// or constructor exists but was not considered as copy constructor.
+    /// </exception>
+    [PublicAPI]
+    [ContractAnnotation("instance:null => null;instance:notnull => notnull")]
+    public static T Copy<T>(this T instance)
+        where T : struct
+    {
+        return (T)CachesHandler.Instance.GetCopyConstructor(instance.GetType()).Constructor(instance);
     }
 
     /// <summary>

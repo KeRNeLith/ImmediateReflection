@@ -167,9 +167,19 @@ internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
     #region Copy/TryCopy
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorTestCases))]
-    public static void Copy(Type type, object? other)
+    public static void Copy_FromObject(Type type, object? other)
     {
-        ConstructorTestHelpers.Copy(
+        Copy(
+            type,
+            other,
+            o => TypeExtensions.Copy(type, o));
+    }
+
+    [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorTestCases))]
+    public static void Copy_FromTemplatedType(Type type, object? other)
+    {
+        // TODO
+        Copy(
             type,
             other,
             o => TypeExtensions.Copy(type, o));
@@ -205,9 +215,20 @@ internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
     }
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorNoThrowTestCases))]
-    public static void TryCopy(Type type, object? other, bool expectFail)
+    public static void TryCopy_FromObject(Type type, object? other, bool expectFail)
     {
-        ConstructorTestHelpers.TryCopy(
+        TryCopy(
+            type,
+            other,
+            expectFail,
+            (object? o, out object? instance, out Exception? exception) => TypeExtensions.TryCopy(type, o, out instance, out exception));
+    }
+
+    [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorNoThrowTestCases))]
+    public static void TryCopy_FromTemplatedType(Type type, object? other, bool expectFail)
+    {
+        // TODO
+        TryCopy(
             type,
             other,
             expectFail,
