@@ -1320,11 +1320,18 @@ namespace ImmediateReflection.Tests
         {
             var immediateProperty1 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
             var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
-            Assert.AreEqual(PublicValueTypePublicGetSetPropertyPropertyInfo.GetHashCode(), immediateProperty1.GetHashCode());
             Assert.AreEqual(immediateProperty1.GetHashCode(), immediateProperty2.GetHashCode());
 
             var immediateProperty3 = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
             Assert.AreNotEqual(immediateProperty1.GetHashCode(), immediateProperty3.GetHashCode());
+
+            // Same inherited property reflected from different types
+            var baseProperty = new ImmediateProperty(
+                typeof(PublicValueTypeTestClass).GetProperty(nameof(PublicValueTypeTestClass.PublicPropertyGetSet)));
+            var derivedProperty = new ImmediateProperty(
+                typeof(ConcretePublicValueTypeTestClass).GetProperty(nameof(PublicValueTypeTestClass.PublicPropertyGetSet)));
+            Assert.IsFalse(baseProperty.Equals(derivedProperty));
+            Assert.AreNotEqual(baseProperty.GetHashCode(), derivedProperty.GetHashCode());
         }
 
         [Test]

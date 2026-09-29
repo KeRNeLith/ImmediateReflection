@@ -14,7 +14,7 @@ namespace ImmediateReflection
         where TValue : class
     {
         [NotNull]
-        private readonly Hashtable _cache = new Hashtable();
+        private readonly Hashtable _cache = new Hashtable(MemberInfoEqualityComparer.Instance);
 
         /// <summary>
         /// Gets the cached value corresponding to the given <paramref name="key"/> if already cached, or creates

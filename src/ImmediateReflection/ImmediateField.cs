@@ -161,7 +161,7 @@ namespace ImmediateReflection
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return FieldInfo.GetHashCode();
+            return MemberInfoEqualityComparer.GetMemberHashCode(FieldInfo);
         }
 
         #endregion

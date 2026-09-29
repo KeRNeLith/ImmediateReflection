@@ -695,11 +695,18 @@ namespace ImmediateReflection.Tests
         {
             var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
             var immediateField2 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
-            Assert.AreEqual(PublicValueTypePublicFieldFieldsInfo.GetHashCode(), immediateField1.GetHashCode());
             Assert.AreEqual(immediateField1.GetHashCode(), immediateField2.GetHashCode());
 
             var immediateField3 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
             Assert.AreNotEqual(immediateField1.GetHashCode(), immediateField3.GetHashCode());
+
+            // Same inherited field reflected from different types
+            var baseField = new ImmediateField(
+                typeof(PublicValueTypeTestClass).GetField(nameof(PublicValueTypeTestClass._publicField)));
+            var derivedField = new ImmediateField(
+                typeof(ConcretePublicValueTypeTestClass).GetField(nameof(PublicValueTypeTestClass._publicField)));
+            Assert.IsFalse(baseField.Equals(derivedField));
+            Assert.AreNotEqual(baseField.GetHashCode(), derivedField.GetHashCode());
         }
 
         [Test]

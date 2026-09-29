@@ -172,7 +172,7 @@ namespace ImmediateReflection
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return PropertyInfo.GetHashCode();
+            return MemberInfoEqualityComparer.GetMemberHashCode(PropertyInfo);
         }
 
         #endregion
