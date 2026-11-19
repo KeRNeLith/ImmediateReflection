@@ -72,7 +72,7 @@ internal sealed class CachesHandler
         }
     }
 
-    private volatile MemoryCache<TypeCacheKey, ImmediateType> _cachedTypes = new();
+    private readonly MemoryCache<TypeCacheKey, ImmediateType> _cachedTypes = new();
 
     [ContractAnnotation("type:null => halt")]
     public ImmediateType GetImmediateType(Type type, BindingFlags flags)
@@ -88,7 +88,7 @@ internal sealed class CachesHandler
 
     #region Attributes cache
 
-    private volatile MemoryCache<MemberInfo, AttributesCache> _cachedAttributes = new(new MemberInfoEqualityComparer());
+    private readonly MemoryCache<MemberInfo, AttributesCache> _cachedAttributes = new(new MemberInfoEqualityComparer());
 
     [ContractAnnotation("member:null => halt")]
     public AttributesCache GetAttributesCache(MemberInfo member)
@@ -102,7 +102,7 @@ internal sealed class CachesHandler
 
     #region Default constructor cache
 
-    private volatile MemoryCache<Type, ConstructorData<DefaultConstructorDelegate>> _cachedDefaultConstructors = new();
+    private readonly MemoryCache<Type, ConstructorData<DefaultConstructorDelegate>> _cachedDefaultConstructors = new();
 
     [ContractAnnotation("type:null => halt")]
     public ConstructorData<DefaultConstructorDelegate> GetDefaultConstructor(Type type)
@@ -120,7 +120,7 @@ internal sealed class CachesHandler
 
     #region Copy constructor cache
 
-    private volatile MemoryCache<Type, ConstructorData<CopyConstructorDelegate>> _cachedCopyConstructors = new();
+    private readonly MemoryCache<Type, ConstructorData<CopyConstructorDelegate>> _cachedCopyConstructors = new();
 
     [ContractAnnotation("type:null => halt")]
     public ConstructorData<CopyConstructorDelegate> GetCopyConstructor(Type type)
@@ -138,7 +138,7 @@ internal sealed class CachesHandler
 
     #region Field cache
 
-    private volatile MemoryCache<FieldInfo, ImmediateField> _cachedFields = new();
+    private readonly MemoryCache<FieldInfo, ImmediateField> _cachedFields = new();
 
     [ContractAnnotation("field:null => halt")]
     public ImmediateField GetField(FieldInfo field)
@@ -152,7 +152,7 @@ internal sealed class CachesHandler
 
     #region Property cache
 
-    private volatile MemoryCache<PropertyInfo, ImmediateProperty> _cachedProperties = new(new PropertyInfoEqualityComparer());
+    private readonly MemoryCache<PropertyInfo, ImmediateProperty> _cachedProperties = new(new PropertyInfoEqualityComparer());
 
     [ContractAnnotation("property:null => halt")]
     public ImmediateProperty GetProperty(PropertyInfo property)

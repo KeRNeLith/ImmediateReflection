@@ -73,7 +73,7 @@ public static class ObjectExtensions
         try
         {
             exception = null;
-            newInstance = Copy(instance);
+            newInstance = instance.Copy();
             return true;
         }
         catch (Exception ex)

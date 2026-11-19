@@ -35,7 +35,7 @@ public static class TypeExtensions
     /// <returns>A reference to the newly created object.</returns>
     /// <exception cref="T:System.ArgumentException"><see cref="T:System.Type"/> a RuntimeType or is an open generic type (that is, the ContainsGenericParameters property returns true).</exception>
     /// <exception cref="T:System.ArgumentNullException">If the given <paramref name="type"/> is null.</exception>
-    /// <exception cref="T:System.AmbiguousMatchException"><see cref="T:System.Type"/> has several constructors defining "params" parameter only.</exception>
+    /// <exception cref="T:System.Reflection.AmbiguousMatchException"><see cref="T:System.Type"/> has several constructors defining "params" parameter only.</exception>
     /// <exception cref="T:System.MissingMethodException">No matching public constructor was found.</exception>
     [PublicAPI]
     [ContractAnnotation("type:null => halt")]
