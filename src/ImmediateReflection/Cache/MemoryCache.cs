@@ -11,6 +11,7 @@ namespace ImmediateReflection;
 /// <typeparam name="TKey">Cache key type.</typeparam>
 /// <typeparam name="TValue">Cache value type.</typeparam>
 internal sealed class MemoryCache<TKey, TValue>
+    where TKey : notnull
     where TValue : class
 {
     private readonly Hashtable _cache;
@@ -28,25 +29,25 @@ internal sealed class MemoryCache<TKey, TValue>
     /// <param name="valueFactory">Factory method to create the value if it does not exist.</param>
     /// <returns>The value.</returns>
     [ContractAnnotation("key:null => halt;valueFactory:null => halt")]
-    public TValue GetOrCreate(TKey key, [InstantHandle] Func<TValue> valueFactory)
+    public TValue GetOrCreate(TKey key, [InstantHandle] Func<TKey, TValue> valueFactory)
     {
         AssertNotNull(key);
         AssertNotNull(valueFactory);
 
         // ReSharper disable once InconsistentlySynchronizedField, Justification: HashTable is thread safe for reading
-        var cachedValue = (TValue?)_cache[key!];
+        var cachedValue = (TValue?)_cache[key];
         if (cachedValue is not null)
             return cachedValue;
 
         lock (_cache)
         {
             // Double check (init during lock wait)
-            cachedValue = (TValue?)_cache[key!];
+            cachedValue = (TValue?)_cache[key];
             if (cachedValue is not null)
                 return cachedValue;
 
-            cachedValue = valueFactory();
-            _cache[key!] = cachedValue;
+            cachedValue = valueFactory(key);
+            _cache[key] = cachedValue;
             return cachedValue;
         }
     }

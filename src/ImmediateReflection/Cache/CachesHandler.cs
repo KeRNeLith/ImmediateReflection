@@ -38,50 +38,16 @@ internal sealed class CachesHandler
 
     #region ImmediateType cache
 
-    private readonly struct TypeCacheKey : IEquatable<TypeCacheKey>
-    {
-        private readonly Type _type;
-        private readonly BindingFlags _flags;
-
-        public TypeCacheKey(Type type, BindingFlags flags)
-        {
-            AssertNotNull(type);
-
-            _type = type;
-            _flags = flags;
-        }
-
-        /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            if (obj is null)
-                return false;
-            return obj is TypeCacheKey other && Equals(other);
-        }
-
-        /// <inheritdoc />
-        public bool Equals(TypeCacheKey other)
-        {
-            return _type == other._type && _flags == other._flags;
-        }
-
-        /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return (_type.GetHashCode() * 397) ^ (int)_flags;
-        }
-    }
-
-    private readonly MemoryCache<TypeCacheKey, ImmediateType> _cachedTypes = new();
+    private readonly MemoryCache<Type, ImmediateTypeCache> _cachedTypes = new();
 
     [ContractAnnotation("type:null => halt")]
     public ImmediateType GetImmediateType(Type type, BindingFlags flags)
     {
         AssertNotNull(type);
 
-        return _cachedTypes.GetOrCreate(
-            new TypeCacheKey(type, flags),
-            () => new ImmediateType(type, flags));
+        return _cachedTypes
+            .GetOrCreate(type, static t => new ImmediateTypeCache(t))
+            .GetOrCreate(flags);
     }
 
     #endregion
@@ -95,7 +61,7 @@ internal sealed class CachesHandler
     {
         AssertNotNull(member);
 
-        return _cachedAttributes.GetOrCreate(member, () => new AttributesCache(member));
+        return _cachedAttributes.GetOrCreate(member, static m => new AttributesCache(m));
     }
 
     #endregion
@@ -109,9 +75,9 @@ internal sealed class CachesHandler
     {
         AssertNotNull(type);
 
-        return _cachedDefaultConstructors.GetOrCreate(type, () =>
+        return _cachedDefaultConstructors.GetOrCreate(type, static t =>
         {
-            DefaultConstructorDelegate ctor = DelegatesFactory.CreateDefaultConstructor(type, out bool hasConstructor);
+            DefaultConstructorDelegate ctor = DelegatesFactory.CreateDefaultConstructor(t, out bool hasConstructor);
             return new ConstructorData<DefaultConstructorDelegate>(ctor, hasConstructor);
         });
     }
@@ -127,9 +93,9 @@ internal sealed class CachesHandler
     {
         AssertNotNull(type);
 
-        return _cachedCopyConstructors.GetOrCreate(type, () =>
+        return _cachedCopyConstructors.GetOrCreate(type, static t =>
         {
-            CopyConstructorDelegate ctor = DelegatesFactory.CreateCopyConstructor(type, out bool hasConstructor);
+            CopyConstructorDelegate ctor = DelegatesFactory.CreateCopyConstructor(t, out bool hasConstructor);
             return new ConstructorData<CopyConstructorDelegate>(ctor, hasConstructor);
         });
     }
@@ -145,7 +111,7 @@ internal sealed class CachesHandler
     {
         AssertNotNull(field);
 
-        return _cachedFields.GetOrCreate(field, () => new ImmediateField(field));
+        return _cachedFields.GetOrCreate(field, static f => new ImmediateField(f));
     }
 
     #endregion
@@ -159,7 +125,7 @@ internal sealed class CachesHandler
     {
         AssertNotNull(property);
 
-        return _cachedProperties.GetOrCreate(property, () => new ImmediateProperty(property));
+        return _cachedProperties.GetOrCreate(property, static p => new ImmediateProperty(p));
     }
 
     #endregion
