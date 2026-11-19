@@ -69,8 +69,8 @@ internal abstract class ImmediateReflectionTestsBase
         {
             get
             {
-                foreach (FieldInfo field in AllPublicFields)
-                    yield return field;
+                foreach (FieldInfo @field in AllPublicFields)
+                    yield return @field;
                 foreach (PropertyInfo property in AllPublicProperties)
                     yield return property;
             }
@@ -80,8 +80,8 @@ internal abstract class ImmediateReflectionTestsBase
         {
             get
             {
-                foreach (FieldInfo field in AllFields)
-                    yield return field;
+                foreach (FieldInfo @field in AllFields)
+                    yield return @field;
                 foreach (PropertyInfo property in AllProperties)
                     yield return property;
             }
