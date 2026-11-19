@@ -14,6 +14,9 @@ internal sealed class ObjectExtensionsTests : ImmediateReflectionTestsBase
     private static IEnumerable<TestCaseData> CreateObjectHasCopyConstructorTestCases()
     {
         // Not has a real copy constructor but it's more convenient
+        yield return new TestCaseData((int?)42) { ExpectedResult = true };
+        yield return new TestCaseData((TestStruct?)new TestStruct { TestValue = 12 }) { ExpectedResult = true };
+        yield return new TestCaseData((TestEnum?)TestEnum.EnumValue2) { ExpectedResult = true };
         yield return new TestCaseData(42) { ExpectedResult = true };
         yield return new TestCaseData(new TestStruct { TestValue = 12 }) { ExpectedResult = true };
         yield return new TestCaseData(TestEnum.EnumValue2) { ExpectedResult = true };
@@ -55,13 +58,24 @@ internal sealed class ObjectExtensionsTests : ImmediateReflectionTestsBase
 
     #region Copy/TryCopy
 
+    // T is object (untyped reference)
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorTestCases))]
-    public static void Copy(Type type, object? other)
+    public static void Copy_AsObject(Type type, object? other, ICopyCase _)
     {
-        ConstructorTestHelpers.Copy(
+        Copy(
             type,
             other,
             ObjectExtensions.Copy);
+    }
+
+    // T is the type of the test case
+    [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorTestCases))]
+    public static void Copy_AsCaseType(Type type, object? other, ICopyCase copyCase)
+    {
+        Copy(
+            type,
+            other,
+            _ => copyCase.CopyFromObjectExtensions());
     }
 
     [Test]
@@ -81,43 +95,62 @@ internal sealed class ObjectExtensionsTests : ImmediateReflectionTestsBase
     private static IEnumerable<TestCaseData> CreateObjectTryCopyConstructorTestCases()
     {
         // Null instance always return null
-        yield return new TestCaseData(typeof(CopyConstructorClass), null, false);
-        yield return new TestCaseData(typeof(NoCopyConstructorClass), null, false);
-        yield return new TestCaseData(typeof(AbstractCopyConstructor), null, false);
+        yield return CopyCase<int?>(null, false);
+        yield return CopyCase<TestStruct?>(null, false);
+        yield return CopyCase<TestEnum?>(null, false);
+        yield return CopyCase<string>(null, false);
+        yield return CopyCase<CopyConstructorClass>(null, false);
+        yield return CopyCase<NoCopyConstructorClass>(null, false);
+        yield return CopyCase<AbstractCopyConstructor>(null, false);
 
         // Not has a real copy constructor but it's more convenient
-        yield return new TestCaseData(typeof(int), 42, false);
-        yield return new TestCaseData(typeof(TestStruct), new TestStruct { TestValue = 12 }, false);
-        yield return new TestCaseData(typeof(TestEnum), TestEnum.EnumValue2, false);
-        yield return new TestCaseData(typeof(string), "string test", false);
-        yield return new TestCaseData(typeof(Type), typeof(float), false);
+        yield return CopyCase<int?>(42, false);
+        yield return CopyCase<TestStruct?>(new TestStruct { TestValue = 12 }, false);
+        yield return CopyCase<TestEnum?>(TestEnum.EnumValue2, false);
+        yield return CopyCase(42, false);
+        yield return CopyCase(new TestStruct { TestValue = 12 }, false);
+        yield return CopyCase(TestEnum.EnumValue2, false);
+        yield return CopyCase<string>("string test", false);
+        yield return CopyCase(typeof(float), false);
 
         // Normal copy constructor
-        yield return new TestCaseData(typeof(CopyConstructorClass), new CopyConstructorClass(25), false);
-        yield return new TestCaseData(typeof(CopyInheritedCopyConstructorClass), new CopyInheritedCopyConstructorClass(66), false);
-        yield return new TestCaseData(typeof(MultipleCopyConstructorClass), new MultipleCopyConstructorClass(33), false);
-        yield return new TestCaseData(typeof(TemplateCopyConstructor<double>), new TemplateCopyConstructor<double>(7.5), false);
+        yield return CopyCase(new CopyConstructorClass(25), false);
+        yield return CopyCase(new CopyInheritedCopyConstructorClass(66), false);
+        yield return CopyCase(new MultipleCopyConstructorClass(33), false);
+        yield return CopyCase(new TemplateCopyConstructor<double>(7.5), false);
 
         // No copy constructor
-        yield return new TestCaseData(typeof(NoCopyConstructorClass), new NoCopyConstructorClass(), true);
-        yield return new TestCaseData(typeof(NoCopyInheritedCopyConstructorClass), new NoCopyInheritedCopyConstructorClass(1), true);
-        yield return new TestCaseData(typeof(BaseCopyInheritedCopyConstructorClass), new BaseCopyInheritedCopyConstructorClass(2), true);
-        yield return new TestCaseData(typeof(SpecializedCopyConstructorClass), new SpecializedCopyConstructorClass(3), true);
-        yield return new TestCaseData(typeof(SpecializedCopyConstructorClass), new InheritedSpecializedCopyConstructorClass(4), true);
-        yield return new TestCaseData(typeof(NotAccessibleCopyConstructor), new NotAccessibleCopyConstructor(), true);
-        yield return new TestCaseData(typeof(List<int>), new List<int> { 1, 2 }, true);
-        yield return new TestCaseData(typeof(Dictionary<int, string>), new Dictionary<int, string> { [1] = "1", [2] = "2" }, true);
-        yield return new TestCaseData(typeof(int[]), new[] { 1, 2 }, true);
+        yield return CopyCase(new NoCopyConstructorClass(), true);
+        yield return CopyCase(new NoCopyInheritedCopyConstructorClass(1), true);
+        yield return CopyCase(new BaseCopyInheritedCopyConstructorClass(2), true);
+        yield return CopyCase(new SpecializedCopyConstructorClass(3), true);
+        yield return CopyCase<SpecializedCopyConstructorClass>(new InheritedSpecializedCopyConstructorClass(4), true);
+        yield return CopyCase(new NotAccessibleCopyConstructor(), true);
+        yield return CopyCase(new List<int> { 1, 2 }, true);
+        yield return CopyCase(new Dictionary<int, string> { [1] = "1", [2] = "2" }, true);
+        yield return CopyCase(new[] { 1, 2 }, true);
     }
 
+    // T is object (untyped reference)
     [TestCaseSource(nameof(CreateObjectTryCopyConstructorTestCases))]
-    public static void TryCopy(Type type, object? other, bool expectFail)
+    public static void TryCopy_AsObject(Type type, object? other, bool expectFail, ICopyCase _)
     {
-        ConstructorTestHelpers.TryCopy(
+        TryCopy(
             type,
             other,
             expectFail,
-            (object? o, out object? instance, out Exception? exception) => ObjectExtensions.TryCopy(o, out instance, out exception));
+            (obj, out instance, out exception) => ObjectExtensions.TryCopy(obj, out instance, out exception));
+    }
+
+    // T is the type of the test case
+    [TestCaseSource(nameof(CreateObjectTryCopyConstructorTestCases))]
+    public static void TryCopy_AsCaseType(Type type, object? other, bool expectFail, ICopyCase copyCase)
+    {
+        TryCopy(
+            type,
+            other,
+            expectFail,
+            (_, out instance, out exception) => copyCase.TryCopyFromObjectExtensions(out instance, out exception));
     }
 
     #endregion

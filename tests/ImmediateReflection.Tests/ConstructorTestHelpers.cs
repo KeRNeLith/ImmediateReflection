@@ -740,6 +740,10 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateHasDefaultConstructorTestCases()
     {
+        yield return new TestCaseData(typeof(int?)) { ExpectedResult = true };
+        yield return new TestCaseData(typeof(TestStruct?)) { ExpectedResult = true };
+        yield return new TestCaseData(typeof(TestEnum?)) { ExpectedResult = true };
+
         yield return new TestCaseData(typeof(int)) { ExpectedResult = true };
         yield return new TestCaseData(typeof(TestStruct)) { ExpectedResult = true };
         yield return new TestCaseData(typeof(TestEnum)) { ExpectedResult = true };
@@ -774,6 +778,10 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateDefaultConstructorTestCases()
     {
+        yield return new TestCaseData(typeof(int?));
+        yield return new TestCaseData(typeof(TestStruct?));
+        yield return new TestCaseData(typeof(TestEnum?));
+
         yield return new TestCaseData(typeof(int));
         yield return new TestCaseData(typeof(TestStruct));
         yield return new TestCaseData(typeof(TestEnum));
@@ -791,7 +799,6 @@ internal static class ConstructorTestHelpers
     public static void NewParameterLess(Type type, [InstantHandle] Func<object> ctor)
     {
         object instance = ctor();
-        Assert.IsNotNull(instance);
         Assert.AreEqual(Activator.CreateInstance(type), instance);
     }
 
@@ -804,6 +811,10 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateDefaultConstructorNoThrowTestCases()
     {
+        yield return new TestCaseData(typeof(int?), false);
+        yield return new TestCaseData(typeof(TestStruct?), false);
+        yield return new TestCaseData(typeof(TestEnum?), false);
+
         yield return new TestCaseData(typeof(int), false);
         yield return new TestCaseData(typeof(TestStruct), false);
         yield return new TestCaseData(typeof(TestEnum), false);
@@ -847,7 +858,6 @@ internal static class ConstructorTestHelpers
         }
         else
         {
-            Assert.IsNotNull(instance);
             Assert.AreEqual(Activator.CreateInstance(type), instance);
             Assert.IsNull(ex);
         }
@@ -866,6 +876,10 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateNotDefaultConstructorNullParamsTestCases()
     {
+        yield return new TestCaseData(typeof(int?), null);
+        yield return new TestCaseData(typeof(TestStruct?), null);
+        yield return new TestCaseData(typeof(TestEnum?), null);
+
         yield return new TestCaseData(typeof(int), null);
         yield return new TestCaseData(typeof(TestStruct), null);
         yield return new TestCaseData(typeof(TestEnum), null);
@@ -885,6 +899,10 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateNotDefaultConstructorNotNullParamsTestCases()
     {
+        yield return new TestCaseData(typeof(int?), NoArgs);
+        yield return new TestCaseData(typeof(TestStruct?), NoArgs);
+        yield return new TestCaseData(typeof(TestEnum?), NoArgs);
+
         yield return new TestCaseData(typeof(int), NoArgs);
         yield return new TestCaseData(typeof(TestStruct), NoArgs);
         yield return new TestCaseData(typeof(TestEnum), NoArgs);
@@ -898,6 +916,12 @@ internal static class ConstructorTestHelpers
         yield return new TestCaseData(typeof(DefaultInheritedFromAbstractClass), NoArgs);
         yield return new TestCaseData(typeof(List<int>), NoArgs);
         yield return new TestCaseData(typeof(Dictionary<int, string>), NoArgs);
+
+
+        yield return new TestCaseData(typeof(int?), new object?[] { null });
+        yield return new TestCaseData(typeof(int?), new object[] { 12 });
+        yield return new TestCaseData(typeof(TestEnum?), new object[] { TestEnum.EnumValue2 });
+        yield return new TestCaseData(typeof(TestEnum?), new object?[] { null });
 
         yield return new TestCaseData(typeof(ParameterConstructorStruct), new object[] { 12 });
         yield return new TestCaseData(typeof(NoDefaultConstructor), new object[] { 12 });
@@ -934,12 +958,15 @@ internal static class ConstructorTestHelpers
     public static void NewWithParameters(Type type, [InstantHandle] ArgsCtor ctor, params object?[] args)
     {
         object instance = ctor(args);
-        Assert.IsNotNull(instance);
         Assert.AreEqual(Activator.CreateInstance(type, args), instance);
     }
 
     public static IEnumerable<TestCaseData> CreateNotDefaultConstructorNoThrowNullParamsTestCases()
     {
+        yield return new TestCaseData(typeof(int?), false, null);
+        yield return new TestCaseData(typeof(TestStruct?), false, null);
+        yield return new TestCaseData(typeof(TestEnum?), false, null);
+
         yield return new TestCaseData(typeof(int), false, null);
         yield return new TestCaseData(typeof(TestStruct), false, null);
         yield return new TestCaseData(typeof(TestEnum), false, null);
@@ -972,6 +999,10 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateNotDefaultConstructorNoThrowNotNullParamsTestCases()
     {
+        yield return new TestCaseData(typeof(int?), false, NoArgs);
+        yield return new TestCaseData(typeof(TestStruct?), false, NoArgs);
+        yield return new TestCaseData(typeof(TestEnum?), false, NoArgs);
+
         yield return new TestCaseData(typeof(int), false, NoArgs);
         yield return new TestCaseData(typeof(TestStruct), false, NoArgs);
         yield return new TestCaseData(typeof(TestEnum), false, NoArgs);
@@ -999,6 +1030,13 @@ internal static class ConstructorTestHelpers
         yield return new TestCaseData(typeof(List<int>), false, new object[] { Enumerable.Range(0, 5) });
         yield return new TestCaseData(typeof(Dictionary<int, string>), false, NoArgs);
         yield return new TestCaseData(typeof(Dictionary<int, string>), false, new object[] { 3 });
+
+        yield return new TestCaseData(typeof(int?), false, new object[] { 42 });
+        yield return new TestCaseData(typeof(int?), false, new object?[] { null });
+        yield return new TestCaseData(typeof(TestStruct?), true, new object[] { 42 });
+        yield return new TestCaseData(typeof(TestStruct?), false, new object?[] { null });
+        yield return new TestCaseData(typeof(TestEnum?), false, new object[] { TestEnum.EnumValue2 });
+        yield return new TestCaseData(typeof(TestEnum?), false, new object?[] { null });
 
         yield return new TestCaseData(typeof(int), true, new object[] { 12 });
         yield return new TestCaseData(typeof(TestStruct), true, new object[] { 12 });
@@ -1050,7 +1088,6 @@ internal static class ConstructorTestHelpers
         }
         else
         {
-            Assert.IsNotNull(instance);
             Assert.AreEqual(Activator.CreateInstance(type, args), instance);
             Assert.IsNull(ex);
         }
@@ -1063,6 +1100,9 @@ internal static class ConstructorTestHelpers
     public static IEnumerable<TestCaseData> CreateHasCopyConstructorTestCases()
     {
         // Not has a real copy constructor, but it's more convenient
+        yield return new TestCaseData(typeof(int?)) { ExpectedResult = true };
+        yield return new TestCaseData(typeof(TestStruct?)) { ExpectedResult = true };
+        yield return new TestCaseData(typeof(TestEnum?)) { ExpectedResult = true };
         yield return new TestCaseData(typeof(int)) { ExpectedResult = true };
         yield return new TestCaseData(typeof(TestStruct)) { ExpectedResult = true };
         yield return new TestCaseData(typeof(TestEnum)) { ExpectedResult = true };
@@ -1097,19 +1137,27 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateCopyConstructorTestCases()
     {
-        yield return new TestCaseData(typeof(CopyConstructorClass), null);
-        yield return new TestCaseData(typeof(NoCopyConstructorClass), null);
-        yield return new TestCaseData(typeof(AbstractCopyConstructor), null);
+        yield return CopyCase<int?>(null);
+        yield return CopyCase<TestStruct?>(null);
+        yield return CopyCase<TestEnum?>(null);
+        yield return CopyCase<string>(null);
+        yield return CopyCase<Type>(null);
+        yield return CopyCase<CopyConstructorClass>(null);
+        yield return CopyCase<NoCopyConstructorClass>(null);
+        yield return CopyCase<AbstractCopyConstructor>(null);
 
-        yield return new TestCaseData(typeof(int), 25);
-        yield return new TestCaseData(typeof(TestStruct), new TestStruct { TestValue = 12 });
-        yield return new TestCaseData(typeof(TestEnum), TestEnum.EnumValue2);
-        yield return new TestCaseData(typeof(string), "string test value");
-        yield return new TestCaseData(typeof(Type), typeof(int));
-        yield return new TestCaseData(typeof(CopyConstructorClass), new CopyConstructorClass(42));
-        yield return new TestCaseData(typeof(CopyInheritedCopyConstructorClass), new CopyInheritedCopyConstructorClass(28));
-        yield return new TestCaseData(typeof(MultipleCopyConstructorClass), new MultipleCopyConstructorClass(56));
-        yield return new TestCaseData(typeof(TemplateCopyConstructor<char>), new TemplateCopyConstructor<char>('A'));
+        yield return CopyCase<int?>(42);
+        yield return CopyCase<TestStruct?>(new TestStruct { TestValue = 42 });
+        yield return CopyCase<TestEnum?>(TestEnum.EnumValue2);
+        yield return CopyCase(25);
+        yield return CopyCase(new TestStruct { TestValue = 12 });
+        yield return CopyCase(TestEnum.EnumValue2);
+        yield return CopyCase<string>("string test value");
+        yield return CopyCase(typeof(int));
+        yield return CopyCase(new CopyConstructorClass(42));
+        yield return CopyCase(new CopyInheritedCopyConstructorClass(28));
+        yield return CopyCase(new MultipleCopyConstructorClass(56));
+        yield return CopyCase(new TemplateCopyConstructor<char>('A'));
     }
 
     private static void AssertEqualInstances(Type type, object? other, object? instance)
@@ -1137,39 +1185,46 @@ internal static class ConstructorTestHelpers
 
     public static IEnumerable<TestCaseData> CreateCopyConstructorNoThrowTestCases()
     {
-        yield return new TestCaseData(typeof(CopyConstructorClass), null, false);
-        yield return new TestCaseData(typeof(NoCopyConstructorClass), null, false);
-        yield return new TestCaseData(typeof(AbstractCopyConstructor), null, false);
+        yield return CopyCase<int?>(null, false);
+        yield return CopyCase<TestStruct?>(null, false);
+        yield return CopyCase<TestEnum?>(null, false);
+        yield return CopyCase<int?>(42, false);
+        yield return CopyCase<TestStruct?>(new TestStruct { TestValue = 2 }, false);
+        yield return CopyCase<TestEnum?>(TestEnum.EnumValue2, false);
+        yield return CopyCase<string>(null, false);
+        yield return CopyCase<CopyConstructorClass>(null, false);
+        yield return CopyCase<NoCopyConstructorClass>(null, false);
+        yield return CopyCase<AbstractCopyConstructor>(null, false);
 
-        yield return new TestCaseData(typeof(int), 1, false);
-        yield return new TestCaseData(typeof(TestStruct), new TestStruct { TestValue = 2 }, false);
-        yield return new TestCaseData(typeof(TestEnum), TestEnum.EnumValue2, false);
-        yield return new TestCaseData(typeof(string), "string test value", false);
-        yield return new TestCaseData(typeof(Type), typeof(int), false);
-        yield return new TestCaseData(typeof(CopyConstructorClass), new CopyConstructorClass(3), false);
-        yield return new TestCaseData(typeof(CopyInheritedCopyConstructorClass), new CopyInheritedCopyConstructorClass(4), false);
-        yield return new TestCaseData(typeof(MultipleCopyConstructorClass), new MultipleCopyConstructorClass(5), false);
-        yield return new TestCaseData(typeof(TemplateCopyConstructor<char>), new TemplateCopyConstructor<char>('B'), false);
+        yield return CopyCase(1, false);
+        yield return CopyCase(new TestStruct { TestValue = 2 }, false);
+        yield return CopyCase(TestEnum.EnumValue2, false);
+        yield return CopyCase<string>("string test value", false);
+        yield return CopyCase(typeof(int), false);
+        yield return CopyCase(new CopyConstructorClass(3), false);
+        yield return CopyCase(new CopyInheritedCopyConstructorClass(4), false);
+        yield return CopyCase(new MultipleCopyConstructorClass(5), false);
+        yield return CopyCase(new TemplateCopyConstructor<char>('B'), false);
 
-        yield return new TestCaseData(typeof(NoCopyConstructorClass), new NoCopyConstructorClass(), true);
-        yield return new TestCaseData(typeof(NoCopyInheritedCopyConstructorClass), new NoCopyInheritedCopyConstructorClass(1), true);
-        yield return new TestCaseData(typeof(NoCopyInheritedCopyConstructorClass), new CopyConstructorClass(2), true);
-        yield return new TestCaseData(typeof(BaseCopyInheritedCopyConstructorClass), new BaseCopyInheritedCopyConstructorClass(3), true);
-        yield return new TestCaseData(typeof(BaseCopyInheritedCopyConstructorClass), new CopyConstructorClass(4), true);   // Constructor exists but is not considered as copy constructor
-        yield return new TestCaseData(typeof(SpecializedCopyConstructorClass), new SpecializedCopyConstructorClass(5), true);
-        yield return new TestCaseData(typeof(SpecializedCopyConstructorClass), new InheritedSpecializedCopyConstructorClass(6), true); // Constructor exists but is not considered as copy constructor
-        yield return new TestCaseData(typeof(MultipleCopyConstructorClass), new InheritedMultipleCopyConstructorClass(7), true);       // Constructor exists but is not considered as copy constructor
-        yield return new TestCaseData(typeof(NotAccessibleCopyConstructor), new NotAccessibleCopyConstructor(), true);
-        yield return new TestCaseData(typeof(IList<int>), new List<int>(), true);
-        yield return new TestCaseData(typeof(IDictionary<int, string>), new Dictionary<int, string>(), true);
-        yield return new TestCaseData(typeof(int[]), new int[0], true);
-        yield return new TestCaseData(typeof(AbstractCopyConstructor), new CopyConstructorClass(12), true);
-        yield return new TestCaseData(typeof(StaticClass), new CopyConstructorClass(12), true);
-        yield return new TestCaseData(typeof(TemplateStruct<>), new CopyConstructorClass(12), true);
-        yield return new TestCaseData(typeof(TemplateCopyConstructor<>), new CopyConstructorClass(12), true);
+        yield return CopyCase(new NoCopyConstructorClass(), true);
+        yield return CopyCase(new NoCopyInheritedCopyConstructorClass(1), true);
+        yield return CopyCaseWithType(typeof(NoCopyInheritedCopyConstructorClass), new CopyConstructorClass(2), true);
+        yield return CopyCase(new BaseCopyInheritedCopyConstructorClass(3), true);
+        yield return CopyCaseWithType(typeof(BaseCopyInheritedCopyConstructorClass), new CopyConstructorClass(4), true);   // Constructor exists but is not considered as copy constructor
+        yield return CopyCase(new SpecializedCopyConstructorClass(5), true);
+        yield return CopyCase<SpecializedCopyConstructorClass>(new InheritedSpecializedCopyConstructorClass(6), true); // Constructor exists but is not considered as copy constructor
+        yield return CopyCase<MultipleCopyConstructorClass>(new InheritedMultipleCopyConstructorClass(7), true);       // Constructor exists but is not considered as copy constructor
+        yield return CopyCase(new NotAccessibleCopyConstructor(), true);
+        yield return CopyCase<IList<int>>(new List<int>(), true);
+        yield return CopyCase<IDictionary<int, string>>(new Dictionary<int, string>(), true);
+        yield return CopyCase(new int[0], true);
+        yield return CopyCaseWithType(typeof(AbstractCopyConstructor), new CopyConstructorClass(12), true);
+        yield return CopyCaseWithType(typeof(StaticClass), new CopyConstructorClass(12), true);
+        yield return CopyCaseWithType(typeof(TemplateStruct<>), new CopyConstructorClass(12), true);
+        yield return CopyCaseWithType(typeof(TemplateCopyConstructor<>), new CopyConstructorClass(12), true);
         // ReSharper disable once PossibleMistakenCallToGetType.2
-        yield return new TestCaseData(typeof(CopyConstructorClass).GetType(), new CopyConstructorClass(12), true);
-        yield return new TestCaseData(typeof(CopyConstructorThrows), new CopyConstructorThrows(), true);
+        yield return CopyCaseWithType(typeof(CopyConstructorClass).GetType(), new CopyConstructorClass(12), true);
+        yield return CopyCase(new CopyConstructorThrows(), true);
     }
 
     public delegate bool TryCopyCtor(object? other, out object? instance, out Exception? exception);
@@ -1188,6 +1243,79 @@ internal static class ConstructorTestHelpers
             Assert.IsNull(ex);
         }
     }
+
+    /// <summary>
+    /// A copy test case where the static type T is already bound.
+    /// </summary>
+    public interface ICopyCase
+    {
+        object? CopyFromObjectExtensions();
+
+        bool TryCopyFromObjectExtensions(out object? instance, out Exception? exception);
+
+        object? CopyFromTypeExtensions(Type type);
+
+        bool TryCopyFromTypeExtensions(Type type, out object? instance, out Exception? exception);
+    }
+
+    private sealed class TypedCopyCase<T>(T? other) : ICopyCase
+    {
+        /// <inheritdoc />
+        public object? CopyFromObjectExtensions() => ObjectExtensions.Copy(other);
+
+        /// <inheritdoc />
+        public bool TryCopyFromObjectExtensions(out object? instance, out Exception? exception)
+        {
+            bool result = ObjectExtensions.TryCopy(other, out T? copy, out exception);
+            instance = copy;
+            return result;
+        }
+
+        /// <inheritdoc />
+        public object? CopyFromTypeExtensions(Type type) => TypeExtensions.Copy(type, other);
+
+        /// <inheritdoc />
+        public bool TryCopyFromTypeExtensions(Type type, out object? instance, out Exception? exception)
+        {
+            bool result = TypeExtensions.TryCopy(type, other, out T? copy, out exception);
+            instance = copy;
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return $"Copy<{FormatTypeName(typeof(T))}>";
+
+            #region Local function
+
+            static string FormatTypeName(Type type)
+            {
+                Type? underlying = Nullable.GetUnderlyingType(type);
+                return underlying is null ? type.Name : $"{underlying.Name}?";
+            }
+
+            #endregion
+        }
+    }
+
+    /// <summary>
+    /// Creates a test case [type, other, copy case] with <typeparamref name="T"/> as type.
+    /// </summary>
+    public static TestCaseData CopyCase<T>(T? other)
+        => new(typeof(T), other, new TypedCopyCase<T>(other));
+
+    /// <summary>
+    /// Creates a test case [type, other, expectFail, copy case] with <typeparamref name="T"/> as type.
+    /// </summary>
+    public static TestCaseData CopyCase<T>(T? other, bool expectFail)
+        => new(typeof(T), other, expectFail, new TypedCopyCase<T>(other));
+
+    /// <summary>
+    /// Creates a test case [type, other, expectFail, copy case] with a <paramref name="type"/> that is not <typeparamref name="T"/>.
+    /// </summary>
+    public static TestCaseData CopyCaseWithType<T>(Type type, T? other, bool expectFail)
+        => new(type, other, expectFail, new TypedCopyCase<T>(other));
 
     #endregion
 }

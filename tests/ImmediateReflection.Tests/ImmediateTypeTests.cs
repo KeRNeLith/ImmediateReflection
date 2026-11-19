@@ -840,6 +840,13 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         immediateType = new ImmediateType(typeof(NoDefaultInheritedDefaultConstructor));
         Assert.Throws<MissingMethodException>(() => _ = immediateType.New(12f));
 
+        // Primitives and enums have no constructor taking a value
+        immediateType = new ImmediateType(typeof(int));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New(12));
+
+        immediateType = new ImmediateType(typeof(TestEnum));
+        Assert.Throws<MissingMethodException>(() => _ = immediateType.New(TestEnum.EnumValue2));
+
         immediateType = new ImmediateType(typeof(AbstractNoConstructor));
         Assert.Throws<MemberAccessException>(() => _ = immediateType.New(12));
 
@@ -884,7 +891,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     #region Copy/TryCopy
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorTestCases))]
-    public static void Copy(Type type, object? other)
+    public static void Copy(Type type, object? other, ICopyCase _)
     {
         ConstructorTestHelpers.Copy(
             type,
@@ -960,7 +967,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorNoThrowTestCases))]
-    public static void TryCopy(Type type, object? other, bool expectFail)
+    public static void TryCopy(Type type, object? other, bool expectFail, ICopyCase _)
     {
         ConstructorTestHelpers.TryCopy(
             type,

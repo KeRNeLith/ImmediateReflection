@@ -127,6 +127,9 @@ internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
         Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(MultiParametersConstructor), 12f, 12));
         Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(ParamsConstructor), 12f, 12));
         Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(NoDefaultInheritedDefaultConstructor), 12f));
+        // Primitives and enums have no constructor taking a value
+        Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(int), 12));
+        Assert.Throws<MissingMethodException>(() => TypeExtensions.New(typeof(TestEnum), TestEnum.EnumValue2));
         Assert.Throws<MemberAccessException>(() => TypeExtensions.New(typeof(AbstractNoConstructor), 12));
         Assert.Throws<ArgumentException>(() => TypeExtensions.New(typeof(TemplateNoDefaultConstructor<>), 12));
         Assert.Throws<TargetInvocationException>(() => TypeExtensions.New(typeof(NotDefaultConstructorThrows), 12));
@@ -166,13 +169,24 @@ internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
 
     #region Copy/TryCopy
 
+    // T is object (untyped reference)
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorTestCases))]
-    public static void Copy(Type type, object? other)
+    public static void Copy_AsObject(Type type, object? other, ICopyCase _)
     {
-        ConstructorTestHelpers.Copy(
+        Copy(
             type,
             other,
             o => TypeExtensions.Copy(type, o));
+    }
+
+    // T is the type of the test case
+    [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorTestCases))]
+    public static void Copy_AsCaseType(Type type, object? other, ICopyCase copyCase)
+    {
+        Copy(
+            type,
+            other,
+            _ => copyCase.CopyFromTypeExtensions(type));
     }
 
     [Test]
@@ -192,7 +206,7 @@ internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
         Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(NoCopyInheritedCopyConstructorClass), new CopyConstructorClass(2)));
         Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(BaseCopyInheritedCopyConstructorClass), new BaseCopyInheritedCopyConstructorClass(3)));
         Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(BaseCopyInheritedCopyConstructorClass), new CopyConstructorClass(4)));               // Constructor exists but is not considered as copy constructor
-        Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(SpecializedCopyConstructorClass),  new SpecializedCopyConstructorClass(5)));
+        Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(SpecializedCopyConstructorClass), new SpecializedCopyConstructorClass(5)));
         Assert.Throws<MissingMethodException>(() => TypeExtensions.Copy(typeof(SpecializedCopyConstructorClass), new InheritedSpecializedCopyConstructorClass(6))); // Constructor exists but is not considered as copy constructor
         Assert.Throws<ArgumentException>(() => TypeExtensions.Copy(typeof(MultipleCopyConstructorClass), new InheritedMultipleCopyConstructorClass(12)));           // Constructor exists but is not considered as copy constructor
         // ReSharper disable once PossibleMistakenCallToGetType.2
@@ -204,14 +218,26 @@ internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
         Assert.Throws<ArgumentException>(() => TypeExtensions.Copy(typeof(CopyConstructorClass), new NoCopyConstructorClass()));
     }
 
+    // T is object (untyped reference)
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorNoThrowTestCases))]
-    public static void TryCopy(Type type, object? other, bool expectFail)
+    public static void TryCopy_AsObject(Type type, object? other, bool expectFail, ICopyCase _)
     {
-        ConstructorTestHelpers.TryCopy(
+        TryCopy(
             type,
             other,
             expectFail,
-            (object? o, out object? instance, out Exception? exception) => TypeExtensions.TryCopy(type, o, out instance, out exception));
+            (obj, out instance, out exception) => TypeExtensions.TryCopy(type, obj, out instance, out exception));
+    }
+
+    // T is the type of the test case
+    [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateCopyConstructorNoThrowTestCases))]
+    public static void TryCopy_AsCaseType(Type type, object? other, bool expectFail, ICopyCase copyCase)
+    {
+        TryCopy(
+            type,
+            other,
+            expectFail,
+            (_, out instance, out exception) => copyCase.TryCopyFromTypeExtensions(type, out instance, out exception));
     }
 
     [Test]
