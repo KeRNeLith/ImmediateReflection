@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using JetBrains.Annotations;
 using NUnit.Framework;
 
 namespace ImmediateReflection.Tests;
@@ -691,7 +690,9 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     {
         var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
         var immediateField2 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+#if NETFRAMEWORK
         Assert.AreEqual(PublicValueTypePublicFieldFieldsInfo.GetHashCode(), immediateField1.GetHashCode());
+#endif
         Assert.AreEqual(immediateField1.GetHashCode(), immediateField2.GetHashCode());
 
         var immediateField3 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);

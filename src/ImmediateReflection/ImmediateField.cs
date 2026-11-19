@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 using JetBrains.Annotations;
+using static ImmediateReflection.Utils.ReflectionHelpers;
 
 namespace ImmediateReflection;
 
@@ -153,7 +154,7 @@ public sealed class ImmediateField
     /// <inheritdoc />
     public override int GetHashCode()
     {
-        return FieldInfo.GetHashCode();
+        return GetFieldInfoHashCode(FieldInfo);
     }
 
     #endregion

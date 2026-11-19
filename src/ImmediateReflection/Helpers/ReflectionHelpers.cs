@@ -39,30 +39,79 @@ internal static class ReflectionHelpers
         return property.GetIndexParameters().Length != 0;
     }
 
+    // Remarks on hashcodes of reflection members:
+    // Under NET5.0+ the runtime creates one distinct instance per reflected type for inherited members
+    // (properties, fields, events, methods, constructors), but their default hashcode only depends on the member
+    // definition (metadata token and declaring type). Using such members as dictionary keys then leads to a massive
+    // amount of hashcode collisions (one per reflected type), making lookups quadratic,
+    // see https://github.com/dotnet/runtime/issues/114280.
+
     /// <summary>
     /// Computes the hashcode for given <paramref name="property"/>.
     /// </summary>
     /// <param name="property">A <see cref="T:System.Reflection.PropertyInfo"/>.</param>
     /// <returns>A hashcode corresponding to <paramref name="property"/>.</returns>
     [Pure]
+    [ContractAnnotation("property:null => halt")]
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
     public static int GetPropertyInfoHashCode(PropertyInfo property)
     {
 #if !NETFRAMEWORK
-        if (property.ReflectedType is not null && property.DeclaringType is not null)
-            return HashCode.Combine(property.MetadataToken, property.DeclaringType.GetHashCode(), property.ReflectedType.GetHashCode());
+        Type? declaringType = property.DeclaringType;
+        Type? reflectedType = property.ReflectedType;
+        if (declaringType is not null && reflectedType is not null)
+            return HashCode.Combine(property.MetadataToken, declaringType.GetHashCode(), reflectedType.GetHashCode());
 #endif
         return property.GetHashCode();
+    }
+
+    /// <summary>
+    /// Computes the hashcode for given <paramref name="field"/>.
+    /// </summary>
+    /// <param name="field">A <see cref="T:System.Reflection.FieldInfo"/>.</param>
+    /// <returns>A hashcode corresponding to <paramref name="field"/>.</returns>
+    [Pure]
+    [ContractAnnotation("field:null => halt")]
+#if SUPPORTS_AGGRESSIVE_INLINING
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+    public static int GetFieldInfoHashCode(FieldInfo field)
+    {
+#if !NETFRAMEWORK
+        Type? declaringType = field.DeclaringType;
+        Type? reflectedType = field.ReflectedType;
+        if (declaringType is not null && reflectedType is not null)
+            return HashCode.Combine(field.MetadataToken, declaringType.GetHashCode(), reflectedType.GetHashCode());
+#endif
+        return field.GetHashCode();
+    }
+
+    /// <summary>
+    /// Computes the hashcode for given <paramref name="member"/>. Properties and fields get a specialized hash, other kinds (including types) use the default one.
+    /// </summary>
+    /// <remarks>Prefer <see cref="GetPropertyInfoHashCode"/> and <see cref="GetFieldInfoHashCode"/> when the kind is known.</remarks>
+    /// <param name="member">A <see cref="MemberInfo"/>.</param>
+    /// <returns>A hashcode corresponding to <paramref name="member"/>.</returns>
+    [Pure]
+    [ContractAnnotation("member:null => halt")]
+    public static int GetMemberInfoHashCode(MemberInfo member)
+    {
+        if (member is PropertyInfo property)
+            return GetPropertyInfoHashCode(property);
+        if (member is FieldInfo field)
+            return GetFieldInfoHashCode(field);
+        // Types hash by identity, efficient enough; other kinds (methods, constructors, events) are not targeted by the library
+        return member.GetHashCode();
     }
 
     /// <summary>
     /// <see cref="IEqualityComparer"/> implementation for <see cref="PropertyInfo"/>.
     /// </summary>
     /// <remarks>
-    /// Overrides the default equality comparer for <see cref="PropertyInfo"/> since it has a drastic performance issue under NET5.0+ target.
-    /// as described here: https://github.com/dotnet/runtime/issues/114280.
+    /// Overrides the default equality comparer for <see cref="PropertyInfo"/> since it has a drastic performance issue
+    /// under NET5.0+ target for inherited properties as described here: https://github.com/dotnet/runtime/issues/114280.
     /// </remarks>
     internal sealed class PropertyInfoEqualityComparer : IEqualityComparer, IEqualityComparer<PropertyInfo>
     {
@@ -72,7 +121,7 @@ internal static class ReflectionHelpers
             AssertNotNull(x);
             AssertNotNull(y);
 
-            return Equals((PropertyInfo)x!, (PropertyInfo)y!);
+            return ((PropertyInfo)x!).Equals(y);
         }
 
         /// <inheritdoc />
@@ -98,12 +147,52 @@ internal static class ReflectionHelpers
     }
 
     /// <summary>
-    /// <see cref="IEqualityComparer"/> implementation for <see cref="MemberInfo"/>.
+    /// <see cref="IEqualityComparer"/> implementation for <see cref="FieldInfo"/>.
     /// </summary>
     /// <remarks>
-    /// Overrides the default equality comparer for <see cref="PropertyInfo"/> (similarly to <see cref="PropertyInfoEqualityComparer"/>)
-    /// since it has a drastic performance issue under NET5.0+ target as described here:
-    /// https://github.com/dotnet/runtime/issues/114280.
+    /// Overrides the default equality comparer for <see cref="FieldInfo"/> since it has a drastic performance issue
+    /// under NET5.0+ target for inherited fields (same as <see cref="PropertyInfoEqualityComparer"/>).
+    /// </remarks>
+    internal sealed class FieldInfoEqualityComparer : IEqualityComparer, IEqualityComparer<FieldInfo>
+    {
+        /// <inheritdoc />
+        bool IEqualityComparer.Equals(object? x, object? y)
+        {
+            AssertNotNull(x);
+            AssertNotNull(y);
+
+            return ((FieldInfo)x!).Equals(y);
+        }
+
+        /// <inheritdoc />
+        int IEqualityComparer.GetHashCode(object obj)
+        {
+            return GetFieldInfoHashCode((FieldInfo)obj);
+        }
+
+        /// <inheritdoc />
+        public bool Equals(FieldInfo? x, FieldInfo? y)
+        {
+            AssertNotNull(x);
+            AssertNotNull(y);
+
+            return x!.Equals(y);
+        }
+
+        /// <inheritdoc />
+        public int GetHashCode(FieldInfo obj)
+        {
+            return GetFieldInfoHashCode(obj);
+        }
+    }
+
+    /// <summary>
+    /// <see cref="IEqualityComparer"/> implementation for <see cref="MemberInfo"/> of any kind
+    /// (used by caches mixing member kinds).
+    /// </summary>
+    /// <remarks>
+    /// Overrides the default equality comparer for <see cref="MemberInfo"/> since it has a drastic performance issue
+    /// under NET5.0+ target for inherited members as described here: https://github.com/dotnet/runtime/issues/114280.
     /// </remarks>
     internal sealed class MemberInfoEqualityComparer : IEqualityComparer, IEqualityComparer<MemberInfo>
     {
@@ -119,7 +208,7 @@ internal static class ReflectionHelpers
         /// <inheritdoc />
         int IEqualityComparer.GetHashCode(object obj)
         {
-            return GetHashCode((MemberInfo)obj);
+            return GetMemberInfoHashCode((MemberInfo)obj);
         }
 
         /// <inheritdoc />
@@ -134,9 +223,7 @@ internal static class ReflectionHelpers
         /// <inheritdoc />
         public int GetHashCode(MemberInfo obj)
         {
-            if (obj is PropertyInfo property)
-                return GetPropertyInfoHashCode(property);
-            return obj.GetHashCode();
+            return GetMemberInfoHashCode(obj);
         }
     }
 }

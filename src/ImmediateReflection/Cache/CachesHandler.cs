@@ -138,7 +138,7 @@ internal sealed class CachesHandler
 
     #region Field cache
 
-    private readonly MemoryCache<FieldInfo, ImmediateField> _cachedFields = new();
+    private readonly MemoryCache<FieldInfo, ImmediateField> _cachedFields = new(new FieldInfoEqualityComparer());
 
     [ContractAnnotation("field:null => halt")]
     public ImmediateField GetField(FieldInfo field)
