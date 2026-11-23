@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Reflection;
+#if SUPPORTS_AGGRESSIVE_INLINING
+using System.Runtime.CompilerServices;
+#endif
 using System.Runtime.Serialization;
 using System.Security.Permissions;
+using System.Threading;
 using JetBrains.Annotations;
 using static ImmediateReflection.Utils.ReflectionHelpers;
 
@@ -43,8 +47,12 @@ public sealed class ImmediateField
     [PublicAPI]
     public ImmediateType FieldImmediateType => _fieldImmediateType.Value;
 
-    private readonly GetterDelegate _getter;
-    private readonly SetterDelegate _setter;
+    // Getter/Setter are generated on first use as emitting them is costly, and they may never be used.
+    // Concurrent first uses may both create a delegate (the extra one is simply discarded), this avoids
+    // running user code (static constructors, ...) or serializing creations under a lock.
+
+    private GetterDelegate? _getter;
+    private SetterDelegate? _setter;
 
     /// <summary>
     /// Constructor.
@@ -57,36 +65,33 @@ public sealed class ImmediateField
         FieldType = field.FieldType;
         _fieldImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(FieldType));
 
-        // Justification: A field is always declared inside a type.
+        // Justification: A field is always declared inside a type
         DeclaringType = field.DeclaringType!;
+    }
 
-        // Justification: Declaring type for a field is always considered not null.
-        // Current enum value field is not static compared to other enumeration available values fields
-        // => That's why we need the static check
-        if (field.IsStatic && DeclaringType.IsEnum)
-        {
-            // Getter / No setter
-            object enumValue = field.GetValue(null);
-            _getter = _ => enumValue;
-            _setter = (_, _) => throw new FieldAccessException("Cannot set an enumeration value.");
-        }
-        else
-        {
-            // Getter / Setter
-            _getter = ConfigureGetter();
-            _setter = ConfigureSetter();
-        }
+    // Current enum value field is not static compared to other enumeration available values fields
+    // => That's why we need the static check
+    // Justification: Declaring type for a field is always considered not null
+#if SUPPORTS_AGGRESSIVE_INLINING
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+    private static bool IsEnumValueField(FieldInfo field) => field.IsStatic && field.DeclaringType!.IsEnum;
 
-        #region Local functions
+#if SUPPORTS_AGGRESSIVE_INLINING
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+    private static bool IsConstantField(FieldInfo field) => field.IsLiteral || field.IsInitOnly;
 
-        bool IsConstantField()
-        {
-            return field.IsLiteral || field.IsInitOnly;
-        }
+    private GetterDelegate GetOrCreateGetter()
+    {
+        GetterDelegate getter = CreateGetter(FieldInfo);
+        return Interlocked.CompareExchange(ref _getter, getter, null) ?? getter;
 
-        GetterDelegate ConfigureGetter()
+        #region Local function
+
+        static GetterDelegate CreateGetter(FieldInfo field)
         {
-            if (IsConstantField() && field.IsStatic)
+            if (IsEnumValueField(field) || (IsConstantField(field) && field.IsStatic))
             {
                 object fieldValue = field.GetValue(null);
                 return _ => fieldValue;
@@ -95,10 +100,22 @@ public sealed class ImmediateField
             return DelegatesFactory.CreateGetter(field);
         }
 
-        SetterDelegate ConfigureSetter()
+        #endregion
+    }
+
+    private SetterDelegate GetOrCreateSetter()
+    {
+        SetterDelegate setter = CreateSetter(FieldInfo, Name);
+        return Interlocked.CompareExchange(ref _setter, setter, null) ?? setter;
+
+        #region Local function
+
+        static SetterDelegate CreateSetter(FieldInfo field, string name)
         {
-            if (IsConstantField())
-                return (_, _) => throw new FieldAccessException($"Field {Name} cannot be set.");
+            if (IsEnumValueField(field))
+                return (_, _) => throw new FieldAccessException("Cannot set an enumeration value.");
+            if (IsConstantField(field))
+                return (_, _) => throw new FieldAccessException($"Field {name} cannot be set.");
             return DelegatesFactory.CreateSetter(field);
         }
 
@@ -116,7 +133,7 @@ public sealed class ImmediateField
     [Pure]
     public object? GetValue(object? obj)
     {
-        return _getter(obj);
+        return (_getter ?? GetOrCreateGetter())(obj);
     }
 
     /// <summary>
@@ -130,7 +147,7 @@ public sealed class ImmediateField
     [PublicAPI]
     public void SetValue(object? obj, object? value)
     {
-        _setter(obj, value);
+        (_setter ?? GetOrCreateSetter())(obj, value);
     }
 
     #region Equality / IEquatable<T>

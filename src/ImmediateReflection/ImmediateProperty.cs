@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
+using System.Threading;
 using JetBrains.Annotations;
 using static ImmediateReflection.Utils.ReflectionHelpers;
 
@@ -50,7 +51,11 @@ public sealed class ImmediateProperty
     [PublicAPI]
     public bool CanRead { get; }
 
-    private readonly GetterDelegate _getter;
+    // Getter/Setter are generated on first use as emitting them is costly, and they may never be used.
+    // Concurrent first uses may both create a delegate (the extra one is simply discarded), this avoids
+    // running user code (static constructors, ...) or serializing creations under a lock.
+
+    private GetterDelegate? _getter;
 
     /// <summary>
     /// Gets the writable state of this property.
@@ -58,7 +63,7 @@ public sealed class ImmediateProperty
     [PublicAPI]
     public bool CanWrite { get; }
 
-    private readonly SetterDelegate _setter;
+    private SetterDelegate? _setter;
 
     /// <summary>
     /// Constructor.
@@ -74,19 +79,21 @@ public sealed class ImmediateProperty
         PropertyType = property.PropertyType;
         _propertyImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(PropertyType));
 
-        // Justification: A property is always declared inside a type.
+        // Justification: A property is always declared inside a type
         DeclaringType = property.DeclaringType!;
 
         CanRead = property.CanRead;
         CanWrite = property.CanWrite;
+    }
 
-        // Getter / Setter
-        _getter = ConfigureGetter();
-        _setter = ConfigureSetter();
+    private GetterDelegate GetOrCreateGetter()
+    {
+        GetterDelegate getter = CreateGetter(PropertyInfo, Name);
+        return Interlocked.CompareExchange(ref _getter, getter, null) ?? getter;
 
-        #region Local functions
+        #region Local function
 
-        GetterDelegate ConfigureGetter()
+        static GetterDelegate CreateGetter(PropertyInfo property, string name)
         {
             GetterDelegate? getter = null;
             MethodInfo getMethod = property.GetGetMethod(true);
@@ -96,12 +103,22 @@ public sealed class ImmediateProperty
             }
 
             if (getter is null)
-                return _ => throw new ArgumentException($"No getter for property {Name}.");
+                return _ => throw new ArgumentException($"No getter for property {name}.");
 
             return getter;
         }
 
-        SetterDelegate ConfigureSetter()
+        #endregion
+    }
+
+    private SetterDelegate GetOrCreateSetter()
+    {
+        SetterDelegate setter = CreateSetter(PropertyInfo, Name);
+        return Interlocked.CompareExchange(ref _setter, setter, null) ?? setter;
+
+        #region Local function
+
+        static SetterDelegate CreateSetter(PropertyInfo property, string name)
         {
             SetterDelegate? setter = null;
             MethodInfo setMethod = property.GetSetMethod(true);
@@ -111,7 +128,7 @@ public sealed class ImmediateProperty
             }
 
             if (setter is null)
-                return (_, _) => throw new ArgumentException($"No setter for property {Name}.");
+                return (_, _) => throw new ArgumentException($"No setter for property {name}.");
 
             return setter;
         }
@@ -131,7 +148,7 @@ public sealed class ImmediateProperty
     [Pure]
     public object? GetValue(object? obj)
     {
-        return _getter(obj);
+        return (_getter ?? GetOrCreateGetter())(obj);
     }
 
     /// <summary>
@@ -145,7 +162,7 @@ public sealed class ImmediateProperty
     [PublicAPI]
     public void SetValue(object? obj, object? value)
     {
-        _setter(obj, value);
+        (_setter ?? GetOrCreateSetter())(obj, value);
     }
 
     #region Equality / IEquatable<T>

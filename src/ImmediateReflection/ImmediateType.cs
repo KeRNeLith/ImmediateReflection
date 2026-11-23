@@ -76,11 +76,13 @@ public sealed class ImmediateType
     [PublicAPI]
     public ImmediateFields Fields => _fields.Value;
 
+    private readonly Lazy<ImmediateProperties> _properties;
+
     /// <summary>
     /// Gets all the properties of this <see cref="T:System.Type"/>.
     /// </summary>
     [PublicAPI]
-    public ImmediateProperties Properties { get; }
+    public ImmediateProperties Properties => _properties.Value;
 
     /// <summary>
     /// Constructor.
@@ -96,27 +98,18 @@ public sealed class ImmediateType
         DeclaringType = type.DeclaringType;
         FullName = type.FullName ?? Name;
 
-        // Default constructor
-        ConstructorData<DefaultConstructorDelegate> defaultCtorData = CachesHandler.Instance.GetDefaultConstructor(Type);
-        _constructor = defaultCtorData.Constructor;
-        HasDefaultConstructor = defaultCtorData.HasConstructor;
+        // Constructors (default and copy) are retrieved on first use, see below
 
-        // Copy constructor
-        ConstructorData<CopyConstructorDelegate> copyCtorData = CachesHandler.Instance.GetCopyConstructor(Type);
-        _copyConstructor = copyCtorData.Constructor;
-        HasCopyConstructor = copyCtorData.HasConstructor;
-
+        // Fields and properties are created on first use
         if (type.IsEnum)
         {
             _fields = new Lazy<ImmediateFields>(() => new ImmediateFields(type.GetFields()));
-
-            Properties = new ImmediateProperties(Enumerable.Empty<PropertyInfo>());
+            _properties = new Lazy<ImmediateProperties>(() => new ImmediateProperties(Enumerable.Empty<PropertyInfo>()));
         }
         else
         {
             _fields = new Lazy<ImmediateFields>(() => new ImmediateFields(IgnoreBackingFields(type.GetFields(_flags))));
-
-            Properties = new ImmediateProperties(type.GetProperties(_flags));
+            _properties = new Lazy<ImmediateProperties>(() => new ImmediateProperties(type.GetProperties(_flags)));
         }
     }
 
@@ -215,13 +208,17 @@ public sealed class ImmediateType
 
     #region New/TryNew
 
-    private readonly DefaultConstructorDelegate _constructor;
+    // Retrieved from the (thread safe) cache on first use, concurrent initializations get the same instance
+    private ConstructorData<DefaultConstructorDelegate>? _defaultConstructorData;
+
+    private ConstructorData<DefaultConstructorDelegate> DefaultConstructorData
+        => _defaultConstructorData ??= CachesHandler.Instance.GetDefaultConstructor(Type);
 
     /// <summary>
     /// Indicates if this <see cref="T:System.Type"/> has a default constructor.
     /// </summary>
     [PublicAPI]
-    public bool HasDefaultConstructor { get; }
+    public bool HasDefaultConstructor => DefaultConstructorData.HasConstructor;
 
     /// <summary>
     /// Creates an instance of this <see cref="T:System.Type"/> with that type's default constructor.
@@ -234,7 +231,7 @@ public sealed class ImmediateType
     [Pure]
     public object New()
     {
-        return _constructor();
+        return DefaultConstructorData.Constructor();
     }
 
     /// <summary>
@@ -252,7 +249,7 @@ public sealed class ImmediateType
         try
         {
             exception = null;
-            newInstance = _constructor();
+            newInstance = DefaultConstructorData.Constructor();
             return true;
         }
         catch (Exception ex)
@@ -329,13 +326,17 @@ public sealed class ImmediateType
 
     #region Copy/TryCopy
 
-    private readonly CopyConstructorDelegate _copyConstructor;
+    // Retrieved from the (thread safe) cache on first use, concurrent initializations get the same instance
+    private ConstructorData<CopyConstructorDelegate>? _copyConstructorData;
+
+    private ConstructorData<CopyConstructorDelegate> CopyConstructorData
+        => _copyConstructorData ??= CachesHandler.Instance.GetCopyConstructor(Type);
 
     /// <summary>
     /// Indicates if this <see cref="T:System.Type"/> has a copy constructor.
     /// </summary>
     [PublicAPI]
-    public bool HasCopyConstructor { get; }
+    public bool HasCopyConstructor => CopyConstructorData.HasConstructor;
 
     /// <summary>
     /// Creates a copy instance of <paramref name="other"/> with this <see cref="T:System.Type"/>'s copy constructor.
@@ -358,7 +359,7 @@ public sealed class ImmediateType
     {
         if (other is null)
             return null;
-        return _copyConstructor(other);
+        return CopyConstructorData.Constructor(other);
     }
 
     /// <summary>
