@@ -139,7 +139,7 @@ internal sealed class ObjectExtensionsTests : ImmediateReflectionTestsBase
             type,
             other,
             expectFail,
-            (obj, out instance, out exception) => ObjectExtensions.TryCopy(obj, out instance, out exception));
+            (object? obj, out object? instance, out Exception? exception) => ObjectExtensions.TryCopy(obj, out instance, out exception));
     }
 
     // T is the type of the test case
@@ -150,7 +150,7 @@ internal sealed class ObjectExtensionsTests : ImmediateReflectionTestsBase
             type,
             other,
             expectFail,
-            (_, out instance, out exception) => copyCase.TryCopyFromObjectExtensions(out instance, out exception));
+            (object? _, out object? instance, out Exception? exception) => copyCase.TryCopyFromObjectExtensions(out instance, out exception));
     }
 
     #endregion

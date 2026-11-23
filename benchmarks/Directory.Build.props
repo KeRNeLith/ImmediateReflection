@@ -11,6 +11,6 @@
 
   <!-- C# configuration -->
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>13</LangVersion>
   </PropertyGroup>
 </Project>
