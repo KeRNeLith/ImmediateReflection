@@ -19,7 +19,7 @@ internal static class DelegatesFactory
     #region Constructor
 
     private const string RuntimeTypeName = "System.RuntimeType";
-    private static readonly Type RuntimeType = Type.GetType(RuntimeTypeName)!;  // Justification: This type must exist.
+    private static readonly Type RuntimeType = Type.GetType(RuntimeTypeName)!;  // Justification: This type must exist
 
     [Pure]
     [ContractAnnotation("type:null => halt")]
@@ -36,7 +36,7 @@ internal static class DelegatesFactory
         if (type.IsAbstract)
             return () => throw new MissingMethodException($"Abstract class {type.Name} cannot be instantiated.");
         if (type.IsArray)
-            // Justification: Type is an array so it must have an element type.
+            // Justification: Type is an array so it must have an element type
             return () => throw new MissingMethodException($"There is no default constructor for array of {type.GetElementType()!.Name}.");
 
         DynamicMethod dynamicConstructor = CreateDynamicDefaultConstructor(type.Name);
@@ -76,7 +76,7 @@ internal static class DelegatesFactory
         MethodReturn(generator);
 
         hasConstructor = true;
-        return (DefaultConstructorDelegate)dynamicConstructor.CreateDelegate(typeof(DefaultConstructorDelegate));
+        return CreateClosedDelegate<DefaultConstructorDelegate>(dynamicConstructor);
     }
 
     [Pure]
@@ -192,13 +192,13 @@ internal static class DelegatesFactory
 
         CheckParameterIsOfRightType();
 
-        generator.Emit(OpCodes.Ldarg_0);
+        LoadFirstArgument(generator);
         generator.Emit(OpCodes.Newobj, constructor);
 
         MethodReturn(generator);
 
         hasConstructor = true;
-        return (CopyConstructorDelegate)dynamicConstructor.CreateDelegate(typeof(CopyConstructorDelegate));
+        return CreateClosedDelegate<CopyConstructorDelegate>(dynamicConstructor);
 
         #region Local function
 
@@ -207,7 +207,7 @@ internal static class DelegatesFactory
             Label paramIsValid = generator.DefineLabel();
 
             // other is not null there
-            generator.Emit(OpCodes.Ldarg_0);
+            LoadFirstArgument(generator);
             CallMethod(generator, GetTypeMethod);
             generator.Emit(OpCodes.Ldtoken, type);
             CallMethod(generator, GetTypeFromHandleMethod);
@@ -257,7 +257,7 @@ internal static class DelegatesFactory
 
         MethodReturn(generator);
 
-        return (GetterDelegate)dynamicGetter.CreateDelegate(typeof(GetterDelegate));
+        return CreateClosedDelegate<GetterDelegate>(dynamicGetter);
     }
 
     [Pure]
@@ -287,7 +287,7 @@ internal static class DelegatesFactory
 
         MethodReturn(generator);
 
-        return (GetterDelegate)dynamicGetter.CreateDelegate(typeof(GetterDelegate));
+        return CreateClosedDelegate<GetterDelegate>(dynamicGetter);
     }
 
     #endregion
@@ -314,7 +314,7 @@ internal static class DelegatesFactory
         }
 
         // Load second argument to the stack
-        generator.Emit(OpCodes.Ldarg_1);
+        LoadSecondArgument(generator);
 
         // Unbox the set value if needed
         UnboxIfNeeded(generator, fieldInfo.FieldType);
@@ -324,7 +324,7 @@ internal static class DelegatesFactory
 
         MethodReturn(generator);
 
-        return (SetterDelegate)dynamicSetter.CreateDelegate(typeof(SetterDelegate));
+        return CreateClosedDelegate<SetterDelegate>(dynamicSetter);
     }
 
     [Pure]
@@ -348,7 +348,7 @@ internal static class DelegatesFactory
         }
 
         // Load second argument to the stack
-        generator.Emit(OpCodes.Ldarg_1);
+        LoadSecondArgument(generator);
 
         // Unbox the set value if needed
         UnboxIfNeeded(generator, propertyInfo.PropertyType);
@@ -357,7 +357,7 @@ internal static class DelegatesFactory
 
         MethodReturn(generator);
 
-        return (SetterDelegate)dynamicSetter.CreateDelegate(typeof(SetterDelegate));
+        return CreateClosedDelegate<SetterDelegate>(dynamicSetter);
     }
 
     #endregion
@@ -372,7 +372,41 @@ internal static class DelegatesFactory
     {
         AssertNotNull(name);
 
-        return new DynamicMethod($"{DynamicMethodPrefix}{name}", returnType, parameterTypes, typeof(DelegatesFactory).Module, true);
+        // Dynamic methods have an additional (dummy) first parameter that is never used (see CreateClosedDelegate)
+        Type[] parameters;
+        if (parameterTypes is null || parameterTypes.Length == 0)
+        {
+            parameters = new[] { typeof(object) };
+        }
+        else
+        {
+            parameters = new Type[parameterTypes.Length + 1];
+            parameters[0] = typeof(object);
+            Array.Copy(parameterTypes, 0, parameters, 1, parameterTypes.Length);
+        }
+
+        return new DynamicMethod($"{DynamicMethodPrefix}{name}", returnType, parameters, typeof(DelegatesFactory).Module, true);
+    }
+
+    // Instance the delegates are bound to
+    private static readonly object DelegateClosure = new();
+
+    /// <summary>
+    /// Creates the delegate of the given <paramref name="dynamicMethod"/> bound to a dummy first argument.
+    /// </summary>
+    /// <remarks>
+    /// Invoking a delegate on a static method (what a dynamic method is) goes through a shuffle thunk that moves
+    /// all the arguments, this is avoided with a delegate "closed" over its first argument (measured faster call).
+    /// The dynamic method must declare the dummy parameter first (see <see cref="CreateDynamicMethod"/>).
+    /// </remarks>
+    [Pure]
+    [ContractAnnotation("dynamicMethod:null => halt")]
+    private static TDelegate CreateClosedDelegate<TDelegate>(DynamicMethod dynamicMethod)
+        where TDelegate : Delegate
+    {
+        AssertNotNull(dynamicMethod);
+
+        return (TDelegate)dynamicMethod.CreateDelegate(typeof(TDelegate), DelegateClosure);
     }
 
     [Pure]
@@ -469,6 +503,21 @@ internal static class DelegatesFactory
 
     #region ILGenerator Helpers
 
+    // Dynamic methods have a leading closure parameter (see CreateDynamicMethod)
+    // so the first argument of the delegate is the argument 1 of the method and so on
+
+    [ContractAnnotation("generator:null => halt")]
+    private static void LoadFirstArgument(ILGenerator generator)
+    {
+        generator.Emit(OpCodes.Ldarg_1);
+    }
+
+    [ContractAnnotation("generator:null => halt")]
+    private static void LoadSecondArgument(ILGenerator generator)
+    {
+        generator.Emit(OpCodes.Ldarg_2);
+    }
+
     [ContractAnnotation("generator:null => halt;field:null => halt")]
     private static void RegisterStaticTargetArgument(ILGenerator generator, FieldInfo field)
     {
@@ -480,7 +529,7 @@ internal static class DelegatesFactory
     private static void NullCheckTarget(ILGenerator generator)
     {
         Label notNull = generator.DefineLabel();
-        generator.Emit(OpCodes.Ldarg_0);
+        LoadFirstArgument(generator);
         generator.Emit(OpCodes.Ldnull);
         generator.Emit(OpCodes.Ceq);
         generator.Emit(OpCodes.Brfalse_S, notNull);
@@ -495,7 +544,7 @@ internal static class DelegatesFactory
         NullCheckTarget(generator);
 
         // Load first argument to the stack
-        generator.Emit(OpCodes.Ldarg_0);
+        LoadFirstArgument(generator);
 
         // Cast the object on the stack to the appropriate type
         generator.Emit(
