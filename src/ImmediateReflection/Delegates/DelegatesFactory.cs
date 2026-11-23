@@ -568,12 +568,40 @@ internal static class DelegatesFactory
         }
     }
 
+    // Shared boxed booleans, read by the emitted getters (see BoxIfNeeded)
+    private static readonly object BoxedTrue = true;
+    private static readonly object BoxedFalse = false;
+
+    private static readonly FieldInfo BoxedTrueField =
+        typeof(DelegatesFactory).GetField(nameof(BoxedTrue), BindingFlags.Static | BindingFlags.NonPublic)
+        ?? throw new InvalidOperationException($"{nameof(BoxedTrue)} not found.");
+
+    private static readonly FieldInfo BoxedFalseField =
+        typeof(DelegatesFactory).GetField(nameof(BoxedFalse), BindingFlags.Static | BindingFlags.NonPublic)
+        ?? throw new InvalidOperationException($"{nameof(BoxedFalse)} not found.");
+
     [ContractAnnotation("generator:null => halt;valueType:null => halt")]
     private static void BoxIfNeeded(ILGenerator generator, Type valueType)
     {
         // Already the right type
         if (valueType == typeof(object))
             return;
+
+        // Booleans have only 2 possible boxes, reuse them instead of allocating on each call
+        if (valueType == typeof(bool))
+        {
+            // Basically equivalent to do: value ? BoxedTrue : BoxedFalse
+            Label isTrue = generator.DefineLabel();
+            Label end = generator.DefineLabel();
+
+            generator.Emit(OpCodes.Brtrue_S, isTrue);
+            generator.Emit(OpCodes.Ldsfld, BoxedFalseField);
+            generator.Emit(OpCodes.Br_S, end);
+            generator.MarkLabel(isTrue);
+            generator.Emit(OpCodes.Ldsfld, BoxedTrueField);
+            generator.MarkLabel(end);
+            return;
+        }
 
         // If the type is a value type (int/DateTime/..) box it, otherwise cast it
         generator.Emit(
