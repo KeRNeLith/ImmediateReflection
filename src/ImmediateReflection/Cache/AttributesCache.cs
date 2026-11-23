@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 #if SUPPORTS_AGGRESSIVE_INLINING
@@ -18,12 +19,19 @@ internal sealed class AttributesCache
     private readonly Attribute[] _attributesWithInherited;
     private readonly Attribute[] _attributesWithoutInherited;
 
+    // Read only views exposed to callers (arrays are never exposed), created once to avoid allocating on each call
+    private readonly ReadOnlyCollection<Attribute> _allAttributesWithInherited;
+    private readonly ReadOnlyCollection<Attribute> _allAttributesWithoutInherited;
+
     public AttributesCache(MemberInfo member)
     {
         AssertNotNull(member);
 
         _attributesWithoutInherited = Attribute.GetCustomAttributes(member, false);
         _attributesWithInherited = Attribute.GetCustomAttributes(member, true);
+
+        _allAttributesWithoutInherited = Array.AsReadOnly(_attributesWithoutInherited);
+        _allAttributesWithInherited = Array.AsReadOnly(_attributesWithInherited);
     }
 
     /// <summary>
@@ -143,7 +151,33 @@ internal sealed class AttributesCache
 
         #region Local function
 
-        static IEnumerable<TAttribute> FindAttributes(Attribute[] attributes) => attributes.OfType<TAttribute>();
+        static IEnumerable<TAttribute> FindAttributes(Attribute[] attributes)
+        {
+            int count = 0;
+            foreach (Attribute attribute in attributes)
+            {
+                if (attribute is TAttribute)
+                {
+                    ++count;
+                }
+            }
+
+            if (count == 0)
+                return Enumerable.Empty<TAttribute>();
+
+            // Exact size array filled in a single pass, not shared with the cache
+            var result = new TAttribute[count];
+            int index = 0;
+            foreach (Attribute attribute in attributes)
+            {
+                if (attribute is TAttribute attr)
+                {
+                    result[index++] = attr;
+                }
+            }
+
+            return result;
+        }
 
         #endregion
     }
@@ -164,12 +198,38 @@ internal sealed class AttributesCache
             throw new ArgumentException($"{nameof(attributeType)} must be an {nameof(Attribute)} type.");
 
         if (inherit)
-            return FindAttributes(_attributesWithInherited);
-        return FindAttributes(_attributesWithoutInherited);
+            return FindAttributes(_attributesWithInherited, attributeType);
+        return FindAttributes(_attributesWithoutInherited, attributeType);
 
         #region Local function
 
-        IEnumerable<Attribute> FindAttributes(Attribute[] attributes) => attributes.Where(attributeType.IsInstanceOfType);
+        static IEnumerable<Attribute> FindAttributes(Attribute[] attributes, Type type)
+        {
+            int count = 0;
+            foreach (Attribute attribute in attributes)
+            {
+                if (type.IsInstanceOfType(attribute))
+                {
+                    ++count;
+                }
+            }
+
+            if (count == 0)
+                return Enumerable.Empty<Attribute>();
+
+            // Exact size array filled in a single pass, not shared with the cache
+            var result = new Attribute[count];
+            int index = 0;
+            foreach (Attribute attribute in attributes)
+            {
+                if (type.IsInstanceOfType(attribute))
+                {
+                    result[index++] = attribute;
+                }
+            }
+
+            return result;
+        }
 
         #endregion
     }
@@ -182,20 +242,8 @@ internal sealed class AttributesCache
     [Pure]
     public IEnumerable<Attribute> GetAllAttributes(bool inherit)
     {
-        if (inherit)
-            return EnumerateAttributes(_attributesWithInherited);
-        return EnumerateAttributes(_attributesWithoutInherited);
-
-        #region Local function
-
-        static IEnumerable<Attribute> EnumerateAttributes(Attribute[] attributes)
-        {
-            foreach (Attribute attribute in attributes)
-            {
-                yield return attribute;
-            }
-        }
-
-        #endregion
+        return inherit
+            ? _allAttributesWithInherited
+            : _allAttributesWithoutInherited;
     }
 }
