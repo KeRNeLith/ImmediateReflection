@@ -45,8 +45,12 @@ public static class ObjectExtensions
     {
         if (instance is null)
             return default;
-        if (instance is Type)
+
+        // Value types, strings and types are copied by returning the value itself (see DelegatesFactory.CreateCopyConstructor),
+        // when known statically this avoids the boxing, the type lookup and the delegate call
+        if (typeof(T).IsValueType || typeof(T) == typeof(string) || instance is Type)
             return instance;
+
         return (T?)CachesHandler.Instance.GetCopyConstructor(instance.GetType()).Constructor(instance);
     }
 
