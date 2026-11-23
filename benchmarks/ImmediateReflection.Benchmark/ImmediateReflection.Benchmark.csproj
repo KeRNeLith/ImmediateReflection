@@ -30,4 +30,9 @@
     <PackageReference Include="FlashReflection" Version="1.0.2" />
     <PackageReference Include="Sigil" Version="5.0.0" />
   </ItemGroup>
+
+  <!-- Override vulnerable transitive dependency (due to TreatWarningsAsErrors related to FlashReflection dependency) -->
+  <ItemGroup>
+    <PackageReference Include="System.Private.Uri" Version="4.3.2" />
+  </ItemGroup>
 </Project>
