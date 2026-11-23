@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
+#if SUPPORTS_AGGRESSIVE_INLINING
+using System.Runtime.CompilerServices;
+#endif
 using JetBrains.Annotations;
 using static ImmediateReflection.GeneralHelpers;
 
@@ -19,6 +20,9 @@ internal static class FieldHelpers
     /// <param name="field">The <see cref="FieldInfo"/>.</param>
     /// <returns>True if the <see cref="FieldInfo"/> is a backing field, false otherwise.</returns>
     [Pure]
+#if SUPPORTS_AGGRESSIVE_INLINING
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
     [ContractAnnotation("field:null => halt")]
     private static bool IsBackingField(FieldInfo field)
     {
@@ -28,18 +32,38 @@ internal static class FieldHelpers
     }
 
     /// <summary>
-    /// Gets an enumerable of <see cref="FieldInfo"/> without backing fields.
+    /// Gets an array of <see cref="FieldInfo"/> without backing fields.
     /// </summary>
-    /// <param name="fields">Enumerable of <see cref="FieldInfo"/> to filter.</param>
-    /// <returns>Filtered <see cref="FieldInfo"/>.</returns>
+    /// <param name="fields">Array of <see cref="FieldInfo"/> to filter.</param>
+    /// <returns>Filtered <see cref="FieldInfo"/> (the given array itself if there is nothing to filter).</returns>
     [Pure]
     [ContractAnnotation("fields:null => halt")]
-    internal static IEnumerable<FieldInfo> IgnoreBackingFields(IEnumerable<FieldInfo> fields)
+    internal static FieldInfo[] IgnoreBackingFields(FieldInfo[] fields)
     {
-        // ReSharper disable PossibleMultipleEnumeration, Justification: Only in debug and not really enumerating whole enumerable
         AssertNotNull(fields);
 
-        return fields.Where(field => !IsBackingField(field));
-        // ReSharper restore PossibleMultipleEnumeration
+        int backingFieldsCount = 0;
+        foreach (FieldInfo field in fields)
+        {
+            if (IsBackingField(field))
+            {
+                ++backingFieldsCount;
+            }
+        }
+
+        if (backingFieldsCount == 0)
+            return fields;
+
+        var filtered = new FieldInfo[fields.Length - backingFieldsCount];
+        int index = 0;
+        foreach (FieldInfo field in fields)
+        {
+            if (!IsBackingField(field))
+            {
+                filtered[index++] = field;
+            }
+        }
+
+        return filtered;
     }
 }

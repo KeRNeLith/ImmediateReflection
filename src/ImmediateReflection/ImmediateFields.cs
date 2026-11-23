@@ -23,7 +23,7 @@ public sealed class ImmediateFields
     , IEquatable<ImmediateFields>
     , ISerializable
 {
-    private readonly Dictionary<string, ImmediateField> _fields = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, ImmediateField> _fields;
 
     /// <summary>
     /// Constructor.
@@ -31,7 +31,19 @@ public sealed class ImmediateFields
     /// <param name="fields">Enumerable of <see cref="FieldInfo"/> to wrap.</param>
     internal ImmediateFields(IEnumerable<FieldInfo> fields)
     {
+        // ReSharper disable PossibleMultipleEnumeration, Justification: Only checking count, not really enumerating whole enumerable
+        _fields = new Dictionary<string, ImmediateField>(GetCapacity(fields), StringComparer.Ordinal);
         Init(fields);
+        // ReSharper restore PossibleMultipleEnumeration
+
+        #region Local function
+
+        static int GetCapacity(IEnumerable<FieldInfo> fields)
+        {
+            return fields is ICollection<FieldInfo> collection ? collection.Count : 0;
+        }
+
+        #endregion
     }
 
     private void Init(IEnumerable<FieldInfo> fields)
@@ -143,6 +155,7 @@ public sealed class ImmediateFields
 
     private ImmediateFields(SerializationInfo info, StreamingContext context)
     {
+        _fields = new Dictionary<string, ImmediateField>(StringComparer.Ordinal);
         Init(ExtractFields());
 
         #region Local function

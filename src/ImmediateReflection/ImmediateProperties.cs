@@ -24,7 +24,7 @@ public sealed class ImmediateProperties
     , IEquatable<ImmediateProperties>
     , ISerializable
 {
-    private readonly Dictionary<string, ImmediateProperty> _properties = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, ImmediateProperty> _properties;
 
     /// <summary>
     /// Constructor.
@@ -32,7 +32,19 @@ public sealed class ImmediateProperties
     /// <param name="properties">Enumerable of <see cref="T:System.Reflection.PropertyInfo"/> to wrap.</param>
     internal ImmediateProperties(IEnumerable<PropertyInfo> properties)
     {
+        // ReSharper disable PossibleMultipleEnumeration, Justification: Only checking count, not really enumerating whole enumerable
+        _properties = new Dictionary<string, ImmediateProperty>(GetCapacity(properties), StringComparer.Ordinal);
         Init(properties);
+        // ReSharper restore PossibleMultipleEnumeration
+
+        #region Local function
+
+        static int GetCapacity(IEnumerable<PropertyInfo> properties)
+        {
+            return properties is ICollection<PropertyInfo> collection ? collection.Count : 0;
+        }
+
+        #endregion
     }
 
     private void Init(IEnumerable<PropertyInfo> properties)
@@ -40,9 +52,14 @@ public sealed class ImmediateProperties
         // ReSharper disable PossibleMultipleEnumeration, Justification: Only in debug and not really enumerating whole enumerable
         AssertNotNull(properties);
 
-        foreach (PropertyInfo property in properties.Where(IsNotIndexed))
+        foreach (PropertyInfo property in properties)
         // ReSharper restore PossibleMultipleEnumeration
         {
+            AssertNotNull(property);
+
+            if (IsIndexed(property))
+                continue;
+
             ImmediateProperty currentImmediateProperty = CachesHandler.Instance.GetProperty(property);
 
             if (_properties.TryGetValue(property.Name, out ImmediateProperty? immediateProperty))
@@ -59,16 +76,9 @@ public sealed class ImmediateProperties
             }
         }
 
-        #region Local functions
+        #region Local function
 
-        bool IsNotIndexed(PropertyInfo property)
-        {
-            AssertNotNull(property);
-
-            return !IsIndexed(property);
-        }
-
-        bool ShouldReplacePropertyWith(ImmediateProperty property1, ImmediateProperty property2)
+        static bool ShouldReplacePropertyWith(ImmediateProperty property1, ImmediateProperty property2)
         {
             AssertNotNull(property1);
             AssertNotNull(property2);
@@ -186,6 +196,7 @@ public sealed class ImmediateProperties
 
     private ImmediateProperties(SerializationInfo info, StreamingContext context)
     {
+        _properties = new Dictionary<string, ImmediateProperty>(StringComparer.Ordinal);
         Init(ExtractProperties());
 
         #region Local function

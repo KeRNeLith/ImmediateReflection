@@ -21,10 +21,13 @@ internal static class ReflectionHelpers
     /// <param name="param">A <see cref="ParameterInfo"/>.</param>
     /// <returns>True if the parameter correspond to a "params" parameter, false otherwise.</returns>
     [Pure]
+#if SUPPORTS_AGGRESSIVE_INLINING
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
     [ContractAnnotation("param:null => halt")]
     public static bool IsParams(ParameterInfo param)
     {
-        return param.IsDefined(typeof(ParamArrayAttribute), false);
+        return param.IsDefined(typeof(ParamArrayAttribute), inherit: false);
     }
 
     /// <summary>
@@ -33,6 +36,9 @@ internal static class ReflectionHelpers
     /// <param name="property">A <see cref="T:System.Reflection.PropertyInfo"/>.</param>
     /// <returns>True if the <paramref name="property"/> is an indexed property, false otherwise.</returns>
     [Pure]
+#if SUPPORTS_AGGRESSIVE_INLINING
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
     [ContractAnnotation("property:null => halt")]
     public static bool IsIndexed(PropertyInfo property)
     {
