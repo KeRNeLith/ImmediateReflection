@@ -39,13 +39,13 @@ public sealed class ImmediateField
     [PublicAPI]
     public Type FieldType { get; }
 
-    private readonly Lazy<ImmediateType> _fieldImmediateType;
+    private ImmediateType? _fieldImmediateType;
 
     /// <summary>
     /// Gets the <see cref="ImmediateType"/> of this field.
     /// </summary>
     [PublicAPI]
-    public ImmediateType FieldImmediateType => _fieldImmediateType.Value;
+    public ImmediateType FieldImmediateType => _fieldImmediateType ??= TypeAccessor.Get(FieldType);
 
     // Getter/Setter are generated on first use as emitting them is costly, and they may never be used.
     // Concurrent first uses may both create a delegate (the extra one is simply discarded), this avoids
@@ -63,7 +63,6 @@ public sealed class ImmediateField
     {
         FieldInfo = field;
         FieldType = field.FieldType;
-        _fieldImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(FieldType));
 
         // Justification: A field is always declared inside a type
         DeclaringType = field.DeclaringType!;

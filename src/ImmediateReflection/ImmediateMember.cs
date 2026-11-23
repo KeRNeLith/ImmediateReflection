@@ -16,13 +16,18 @@ namespace ImmediateReflection;
 [Serializable]
 public abstract class ImmediateMember
 {
+    private readonly MemberInfo _member;
+
     /// <summary>
     /// Gets the name of the current member.
     /// </summary>
     [PublicAPI]
     public string Name { get; }
 
-    private readonly AttributesCache _attributeCache;
+    // Attributes are scanned on first use (costly and not needed to only browse members or get/set their values)
+    private AttributesCache? _attributeCache;
+
+    private AttributesCache AttributeCache => _attributeCache ??= CachesHandler.Instance.GetAttributesCache(_member);
 
     /// <summary>
     /// Constructor.
@@ -32,10 +37,9 @@ public abstract class ImmediateMember
     {
         AssertNotNull(member);
 
+        // Attributes cache is retrieved on first use
+        _member = member;
         Name = member.Name;
-
-        // Attributes
-        _attributeCache = CachesHandler.Instance.GetAttributesCache(member);
     }
 
     /// <summary>
@@ -52,7 +56,7 @@ public abstract class ImmediateMember
     public bool IsDefined<TAttribute>(bool inherit = false)
         where TAttribute : Attribute
     {
-        return _attributeCache.IsDefined<TAttribute>(inherit);
+        return AttributeCache.IsDefined<TAttribute>(inherit);
     }
 
     /// <summary>
@@ -71,7 +75,7 @@ public abstract class ImmediateMember
 #endif
     public bool IsDefined(Type attributeType, bool inherit = false)
     {
-        return _attributeCache.IsDefined(attributeType, inherit);
+        return AttributeCache.IsDefined(attributeType, inherit);
     }
 
     /// <summary>
@@ -88,7 +92,7 @@ public abstract class ImmediateMember
     public TAttribute? GetAttribute<TAttribute>(bool inherit = false)
         where TAttribute : Attribute
     {
-        return _attributeCache.GetAttribute<TAttribute>(inherit);
+        return AttributeCache.GetAttribute<TAttribute>(inherit);
     }
 
     /// <summary>
@@ -107,7 +111,7 @@ public abstract class ImmediateMember
 #endif
     public Attribute? GetAttribute(Type attributeType, bool inherit = false)
     {
-        return _attributeCache.GetAttribute(attributeType, inherit);
+        return AttributeCache.GetAttribute(attributeType, inherit);
     }
 
     /// <summary>
@@ -124,7 +128,7 @@ public abstract class ImmediateMember
     public IEnumerable<TAttribute> GetAttributes<TAttribute>(bool inherit = false)
         where TAttribute : Attribute
     {
-        return _attributeCache.GetAttributes<TAttribute>(inherit);
+        return AttributeCache.GetAttributes<TAttribute>(inherit);
     }
 
     /// <summary>
@@ -141,7 +145,7 @@ public abstract class ImmediateMember
 #endif
     public IEnumerable<Attribute> GetAttributes(Type attributeType, bool inherit = false)
     {
-        return _attributeCache.GetAttributes(attributeType, inherit);
+        return AttributeCache.GetAttributes(attributeType, inherit);
     }
 
     /// <summary>
@@ -156,6 +160,6 @@ public abstract class ImmediateMember
 #endif
     public IEnumerable<Attribute> GetAllAttributes(bool inherit = false)
     {
-        return _attributeCache.GetAllAttributes(inherit);
+        return AttributeCache.GetAllAttributes(inherit);
     }
 }

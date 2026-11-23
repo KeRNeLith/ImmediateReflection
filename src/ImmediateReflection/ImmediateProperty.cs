@@ -37,13 +37,13 @@ public sealed class ImmediateProperty
     [PublicAPI]
     public Type PropertyType { get; }
 
-    private readonly Lazy<ImmediateType> _propertyImmediateType;
+    private ImmediateType? _propertyImmediateType;
 
     /// <summary>
     /// Gets the <see cref="ImmediateType"/> of this property.
     /// </summary>
     [PublicAPI]
-    public ImmediateType PropertyImmediateType => _propertyImmediateType.Value;
+    public ImmediateType PropertyImmediateType => _propertyImmediateType ??= TypeAccessor.Get(PropertyType);
 
     /// <summary>
     /// Gets the readable state of this property.
@@ -77,7 +77,6 @@ public sealed class ImmediateProperty
         // General property info
         PropertyInfo = property;
         PropertyType = property.PropertyType;
-        _propertyImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(PropertyType));
 
         // Justification: A property is always declared inside a type
         DeclaringType = property.DeclaringType!;
