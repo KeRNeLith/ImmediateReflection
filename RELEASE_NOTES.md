@@ -1,5 +1,19 @@
 # Release notes
 
+## What's new in 3.0.0 November 25 2026
+### Updates:
+* Big cold start improvement: getters/setters of ImmediateProperty and ImmediateField are now generated on first use, as are the constructors and attributes of ImmediateType and members (creating an ImmediateProperty/ImmediateField is now ~100x faster and allocates far less).
+* Accesses to the internal caches through the public API (TypeAccessor, ImmediateType, attributes, ...) no longer allocate on a cache hit and are ~2x faster.
+* TypeAccessor.Get<T>() has a dedicated fast path when the type is known at compile time.
+* Faster access to the attributes of types and members (fewer allocations on GetAttribute(s)/GetAllAttributes).
+* Copy of value types, string and Type is faster and no longer boxes needlessly.
+* Getters returning a boolean no longer allocate (boxed true/false values are cached).
+* Generated dynamic methods are now bound to a closed delegate, which makes calling the generated getters/setters faster.
+* Improve Equals and hash code computation of ImmediateFields and ImmediateProperties.
+
+### Misc:
+* Library code migrated to C# 10 (file scoped namespaces, nullable enabled, polyfills for old targets).
+
 ## What's new in 2.0.0 September 5 2022
 ### Updates:
 * Update some serialization implementations for ImmediateReflection core types.
