@@ -27,7 +27,10 @@ public abstract class ImmediateMember
     // Attributes are scanned on first use (costly and not needed to only browse members or get/set their values)
     private AttributesCache? _attributeCache;
 
-    private AttributesCache AttributeCache => _attributeCache ??= CachesHandler.Instance.GetAttributesCache(_member);
+    private AttributesCache AttributeCache => _attributeCache ?? CreateAttributeCache();
+
+    // Kept out of the property so that the fast path stays small enough to be inlined
+    private AttributesCache CreateAttributeCache() => _attributeCache = CachesHandler.Instance.GetAttributesCache(_member);
 
     /// <summary>
     /// Constructor.
