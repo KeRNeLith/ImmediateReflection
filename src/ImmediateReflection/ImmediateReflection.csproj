@@ -14,7 +14,7 @@
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <FileVersion>1.0.0</FileVersion>
 
-    <Copyright>Copyright © 2019</Copyright>
+    <Copyright>Copyright © 2019-2026</Copyright>
     <Description>.NET library that aims to provide a faster usage of C# reflection features.
 Especially the usage of constructors, members accessors (get/set) and attributes.
 
