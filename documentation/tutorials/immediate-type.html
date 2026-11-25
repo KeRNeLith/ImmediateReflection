@@ -1,29 +1,29 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
-  
+
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>ImmediateType and TypeAccessor </title>
-    <meta name="viewport" content="width=device-width">
-    <meta name="title" content="ImmediateType and TypeAccessor ">
-    <meta name="generator" content="docfx 2.59.2.0">
-    
-    <link rel="shortcut icon" href="../../images/favicon.ico">
-    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../../styles/docfx.css">
-    <link rel="stylesheet" href="../../styles/main.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
-    <meta property="docfx:navrel" content="../../toc.html">
-    <meta property="docfx:tocrel" content="../toc.html">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>ImmediateType and TypeAccessor </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="ImmediateType and TypeAccessor ">
     
     
+      <link rel="shortcut icon" href="../../images/favicon.ico">
+      <link rel="stylesheet" href="../../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../../styles/docfx.css">
+      <link rel="stylesheet" href="../../styles/main.css">
+      <meta property="docfx:navrel" content="../../toc.html">
+      <meta property="docfx:tocrel" content="../toc.html">
     
-  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <meta property="docfx:rel" content="../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -33,7 +33,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              
+
               <a class="navbar-brand" href="../../index.html">
                 <img id="logo" class="svg" src="../../images/logo.svg" alt="">
               </a>
@@ -47,7 +47,7 @@
             </div>
           </div>
         </nav>
-        
+
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -56,8 +56,18 @@
           </div>
         </div>
       </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -87,6 +97,7 @@ ImmediateType type = TypeAccessor.Get&lt;MySuperType&gt;();
 ImmediateType type = TypeAccessor.Get&lt;MySuperType&gt;(BindingFlags.Public | BindingFlags.Static);
 </code></pre>
 <p>Note: there is a built-in cache behind the <code>TypeAccessor</code>.</p>
+<p>Note: To keep creation cheap, the getters/setters of <code>ImmediateProperty</code> and <code>ImmediateField</code> (as well as constructors and attributes) are created lazily, on first use. The very first <code>GetValue</code>/<code>SetValue</code> on a member pays the delegate creation cost, then following calls are immediate.</p>
 <h2 id="instantiate-a-type">Instantiate a type</h2>
 <p>The <code>ImmediateType</code> allows to instantiate types via their default constructor if available. This feature is faster than making a traditional call to <code>Activator.CreateInstance(Type)</code>.</p>
 <p>Here is a quick example:</p>
@@ -124,27 +135,28 @@ bool succeed = type.TryCopy(instance, out object newInstance, out Exception _);
 MySuperType newInstance = instance.Copy();
 </code></pre>
 <p>Obviously in such situation you would have directly called the copy constructor of <code>MySuperType</code>, but we have to keep in mind that it is designed to be use when the instance we manipulate has not been created in such explicit way.</p>
+
 </article>
           </div>
-          
+
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/docs/documentation/tutorials/immediate-type.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/docs/documentation/tutorials/immediate-type.md/#L1" class="contribution-link">Edit this page</a>
                   </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In This Article</h5>
+                <h5>In this article</h5>
                 <div></div>
               </nav>
             </div>
           </div>
         </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -152,14 +164,14 @@ MySuperType newInstance = instance.Copy();
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            ImmediateReflection
-            
+      ImmediateReflection
+      
           </div>
         </div>
       </footer>
     </div>
-    
-    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+
+    <script type="text/javascript" src="../../styles/docfx.vendor.min.js"></script>
     <script type="text/javascript" src="../../styles/docfx.js"></script>
     <script type="text/javascript" src="../../styles/main.js"></script>
   </body>

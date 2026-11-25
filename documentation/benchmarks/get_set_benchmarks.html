@@ -1,29 +1,29 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
-  
+
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Benchmarks </title>
-    <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Benchmarks ">
-    <meta name="generator" content="docfx 2.59.2.0">
-    
-    <link rel="shortcut icon" href="../../images/favicon.ico">
-    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../../styles/docfx.css">
-    <link rel="stylesheet" href="../../styles/main.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
-    <meta property="docfx:navrel" content="../../toc.html">
-    <meta property="docfx:tocrel" content="../toc.html">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Benchmarks </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Benchmarks ">
     
     
+      <link rel="shortcut icon" href="../../images/favicon.ico">
+      <link rel="stylesheet" href="../../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../../styles/docfx.css">
+      <link rel="stylesheet" href="../../styles/main.css">
+      <meta property="docfx:navrel" content="../../toc.html">
+      <meta property="docfx:tocrel" content="../toc.html">
     
-  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <meta property="docfx:rel" content="../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -33,7 +33,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              
+
               <a class="navbar-brand" href="../../index.html">
                 <img id="logo" class="svg" src="../../images/logo.svg" alt="">
               </a>
@@ -47,7 +47,7 @@
             </div>
           </div>
         </nav>
-        
+
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -56,8 +56,18 @@
           </div>
         </div>
       </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -71,16 +81,17 @@
 
 <p>Benchmarks have been implemented with <a href="https://github.com/dotnet/BenchmarkDotNet">BenchmarkDotNet</a>.</p>
 <h2 id="configuration">Configuration</h2>
-<pre><code class="lang-ini">BenchmarkDotNet=v0.11.5
-OS=Windows 10.0.18362
-Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-  [Host]     : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.8.3815.0
-  DefaultJob : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.8.3815.0
+<pre><code class="lang-ini">BenchmarkDotNet v0.15.4, Windows 11 (10.0.26200.9711)
+AMD Ryzen Threadripper PRO 5945WX 12-Cores 4.10GHz, 1 CPU, 24 logical and 12 physical cores
+  [Host]             : .NET Framework 4.8.1 (4.8.9363.0), X64 RyuJIT VectorSize=256
+  .NET 8.0           : .NET 8.0.34 (8.0.34, 8.0.3426.52217), X64 RyuJIT x86-64-v3
+  .NET Framework 4.8 : .NET Framework 4.8.1 (4.8.9363.0), X64 RyuJIT VectorSize=256
 </code></pre>
 <h2 id="implementation-details">Implementation details</h2>
 <p>The Field or Property cache implementations consider as a cache the fact of having the right <code>PropertyInfo</code> ready to use with GetValue/SetValue.</p>
 <h2 id="results">Results</h2>
 <h3 id="get-a-field-value">Get a field value</h3>
+<p><strong>.NET 8</strong></p>
 <table>
 <thead>
 <tr>
@@ -95,48 +106,103 @@ Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 ph
 <tbody>
 <tr>
 <td>GetDirect_Field</td>
-<td style="text-align: right;">0.0000 ns</td>
-<td style="text-align: right;">0.0000 ns</td>
-<td style="text-align: right;">0.0000 ns</td>
-<td style="text-align: right;">?</td>
-<td style="text-align: right;">?</td>
+<td style="text-align: right;">2.132 ns</td>
+<td style="text-align: right;">0.0500 ns</td>
+<td style="text-align: right;">0.1475 ns</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.10</td>
 </tr>
 <tr>
 <td>GetFieldInfo_Field</td>
-<td style="text-align: right;">100.6782 ns</td>
-<td style="text-align: right;">0.1422 ns</td>
-<td style="text-align: right;">0.1261 ns</td>
-<td style="text-align: right;">?</td>
-<td style="text-align: right;">?</td>
+<td style="text-align: right;">54.608 ns</td>
+<td style="text-align: right;">1.7228 ns</td>
+<td style="text-align: right;">5.0527 ns</td>
+<td style="text-align: right;">25.74</td>
+<td style="text-align: right;">3.02</td>
 </tr>
 <tr>
 <td>GetFieldInfoCache_Field</td>
-<td style="text-align: right;">60.4257 ns</td>
-<td style="text-align: right;">0.7904 ns</td>
-<td style="text-align: right;">0.7393 ns</td>
-<td style="text-align: right;">?</td>
-<td style="text-align: right;">?</td>
+<td style="text-align: right;">39.251 ns</td>
+<td style="text-align: right;">1.5068 ns</td>
+<td style="text-align: right;">4.4429 ns</td>
+<td style="text-align: right;">18.50</td>
+<td style="text-align: right;">2.48</td>
 </tr>
 <tr>
 <td>GetFastMember_Field</td>
-<td style="text-align: right;">29.9598 ns</td>
-<td style="text-align: right;">0.4392 ns</td>
-<td style="text-align: right;">0.3894 ns</td>
-<td style="text-align: right;">?</td>
-<td style="text-align: right;">?</td>
+<td style="text-align: right;">19.781 ns</td>
+<td style="text-align: right;">0.6826 ns</td>
+<td style="text-align: right;">2.0127 ns</td>
+<td style="text-align: right;">9.32</td>
+<td style="text-align: right;">1.16</td>
 </tr>
 <tr>
 <td><strong>GetImmediateField_Field</strong></td>
-<td style="text-align: right;"><strong>5.2535 ns</strong></td>
-<td style="text-align: right;"><strong>0.1314 ns</strong></td>
-<td style="text-align: right;"><strong>0.3018 ns</strong></td>
-<td style="text-align: right;"><strong>?</strong></td>
-<td style="text-align: right;"><strong>?</strong></td>
+<td style="text-align: right;"><strong>5.592 ns</strong></td>
+<td style="text-align: right;"><strong>0.1391 ns</strong></td>
+<td style="text-align: right;"><strong>0.3386 ns</strong></td>
+<td style="text-align: right;"><strong>2.64</strong></td>
+<td style="text-align: right;"><strong>0.25</strong></td>
 </tr>
 </tbody>
 </table>
-<p><strong>GetDirect_Field</strong> is a too quick action to be benchmark, considering it as immediate!</p>
+<p><strong>.NET Framework 4.8</strong></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">StdDev</th>
+<th style="text-align: right;">Ratio</th>
+<th style="text-align: right;">RatioSD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GetDirect_Field</td>
+<td style="text-align: right;">1.662 ns</td>
+<td style="text-align: right;">0.0332 ns</td>
+<td style="text-align: right;">0.0925 ns</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.08</td>
+</tr>
+<tr>
+<td>GetFieldInfo_Field</td>
+<td style="text-align: right;">110.691 ns</td>
+<td style="text-align: right;">3.9028 ns</td>
+<td style="text-align: right;">11.5075 ns</td>
+<td style="text-align: right;">66.79</td>
+<td style="text-align: right;">7.82</td>
+</tr>
+<tr>
+<td>GetFieldInfoCache_Field</td>
+<td style="text-align: right;">59.468 ns</td>
+<td style="text-align: right;">2.0769 ns</td>
+<td style="text-align: right;">6.1239 ns</td>
+<td style="text-align: right;">35.88</td>
+<td style="text-align: right;">4.17</td>
+</tr>
+<tr>
+<td>GetFastMember_Field</td>
+<td style="text-align: right;">26.620 ns</td>
+<td style="text-align: right;">0.9029 ns</td>
+<td style="text-align: right;">2.5170 ns</td>
+<td style="text-align: right;">16.06</td>
+<td style="text-align: right;">1.75</td>
+</tr>
+<tr>
+<td><strong>GetImmediateField_Field</strong></td>
+<td style="text-align: right;"><strong>4.405 ns</strong></td>
+<td style="text-align: right;"><strong>0.1057 ns</strong></td>
+<td style="text-align: right;"><strong>0.0989 ns</strong></td>
+<td style="text-align: right;"><strong>2.66</strong></td>
+<td style="text-align: right;"><strong>0.16</strong></td>
+</tr>
+</tbody>
+</table>
 <h3 id="set-a-field-value">Set a field value</h3>
+<p><strong>.NET 8</strong></p>
 <table>
 <thead>
 <tr>
@@ -151,48 +217,104 @@ Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 ph
 <tbody>
 <tr>
 <td>SetDirect_Field</td>
-<td style="text-align: right;">0.0051 ns</td>
-<td style="text-align: right;">0.0085 ns</td>
-<td style="text-align: right;">0.0075 ns</td>
-<td style="text-align: right;">?</td>
-<td style="text-align: right;">?</td>
+<td style="text-align: right;">1.671 ns</td>
+<td style="text-align: right;">0.0147 ns</td>
+<td style="text-align: right;">0.0145 ns</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.01</td>
 </tr>
 <tr>
 <td>SetFieldInfo_Field</td>
-<td style="text-align: right;">129.9163 ns</td>
-<td style="text-align: right;">0.3037 ns</td>
-<td style="text-align: right;">0.2371 ns</td>
-<td style="text-align: right;">?</td>
-<td style="text-align: right;">?</td>
+<td style="text-align: right;">45.179 ns</td>
+<td style="text-align: right;">0.4532 ns</td>
+<td style="text-align: right;">0.4017 ns</td>
+<td style="text-align: right;">27.03</td>
+<td style="text-align: right;">0.32</td>
 </tr>
 <tr>
 <td>SetFieldInfoCache_Field</td>
-<td style="text-align: right;">81.8266 ns</td>
-<td style="text-align: right;">0.2578 ns</td>
-<td style="text-align: right;">0.2153 ns</td>
-<td style="text-align: right;">?</td>
-<td style="text-align: right;">?</td>
+<td style="text-align: right;">35.066 ns</td>
+<td style="text-align: right;">0.6594 ns</td>
+<td style="text-align: right;">0.6168 ns</td>
+<td style="text-align: right;">20.98</td>
+<td style="text-align: right;">0.40</td>
 </tr>
 <tr>
 <td>SetFastMember_Field</td>
-<td style="text-align: right;">28.8047 ns</td>
-<td style="text-align: right;">0.0672 ns</td>
-<td style="text-align: right;">0.0524 ns</td>
-<td style="text-align: right;">?</td>
-<td style="text-align: right;">?</td>
+<td style="text-align: right;">17.670 ns</td>
+<td style="text-align: right;">0.3511 ns</td>
+<td style="text-align: right;">0.3903 ns</td>
+<td style="text-align: right;">10.57</td>
+<td style="text-align: right;">0.24</td>
 </tr>
 <tr>
 <td><strong>SetImmediateField_Field</strong></td>
-<td style="text-align: right;"><strong>5.2266 ns</strong></td>
-<td style="text-align: right;"><strong>0.1288 ns</strong></td>
-<td style="text-align: right;"><strong>0.1205 ns</strong></td>
-<td style="text-align: right;"><strong>?</strong></td>
-<td style="text-align: right;"><strong>?</strong></td>
+<td style="text-align: right;"><strong>4.521 ns</strong></td>
+<td style="text-align: right;"><strong>0.0995 ns</strong></td>
+<td style="text-align: right;"><strong>0.1106 ns</strong></td>
+<td style="text-align: right;"><strong>2.71</strong></td>
+<td style="text-align: right;"><strong>0.07</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>.NET Framework 4.8</strong></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">StdDev</th>
+<th style="text-align: right;">Ratio</th>
+<th style="text-align: right;">RatioSD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SetDirect_Field</td>
+<td style="text-align: right;">1.411 ns</td>
+<td style="text-align: right;">0.0204 ns</td>
+<td style="text-align: right;">0.0191 ns</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.02</td>
+</tr>
+<tr>
+<td>SetFieldInfo_Field</td>
+<td style="text-align: right;">108.350 ns</td>
+<td style="text-align: right;">1.2394 ns</td>
+<td style="text-align: right;">1.1593 ns</td>
+<td style="text-align: right;">76.79</td>
+<td style="text-align: right;">1.28</td>
+</tr>
+<tr>
+<td>SetFieldInfoCache_Field</td>
+<td style="text-align: right;">75.953 ns</td>
+<td style="text-align: right;">1.3994 ns</td>
+<td style="text-align: right;">1.2406 ns</td>
+<td style="text-align: right;">53.83</td>
+<td style="text-align: right;">1.10</td>
+</tr>
+<tr>
+<td>SetFastMember_Field</td>
+<td style="text-align: right;">24.493 ns</td>
+<td style="text-align: right;">0.4616 ns</td>
+<td style="text-align: right;">0.4092 ns</td>
+<td style="text-align: right;">17.36</td>
+<td style="text-align: right;">0.36</td>
+</tr>
+<tr>
+<td><strong>SetImmediateField_Field</strong></td>
+<td style="text-align: right;"><strong>3.953 ns</strong></td>
+<td style="text-align: right;"><strong>0.0742 ns</strong></td>
+<td style="text-align: right;"><strong>0.0694 ns</strong></td>
+<td style="text-align: right;"><strong>2.80</strong></td>
+<td style="text-align: right;"><strong>0.06</strong></td>
 </tr>
 </tbody>
 </table>
 <hr>
 <h3 id="get-a-property-value">Get a property value</h3>
+<p><strong>.NET 8</strong></p>
 <table>
 <thead>
 <tr>
@@ -207,80 +329,167 @@ Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 ph
 <tbody>
 <tr>
 <td>GetDirect_Property</td>
-<td style="text-align: right;">0.3030 ns</td>
-<td style="text-align: right;">0.0389 ns</td>
-<td style="text-align: right;">0.0363 ns</td>
+<td style="text-align: right;">1.658 ns</td>
+<td style="text-align: right;">0.0103 ns</td>
+<td style="text-align: right;">0.0091 ns</td>
 <td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.01</td>
 </tr>
 <tr>
 <td>GetDelegate_Property</td>
-<td style="text-align: right;">4.9874 ns</td>
-<td style="text-align: right;">0.0986 ns</td>
-<td style="text-align: right;">0.1247 ns</td>
-<td style="text-align: right;">16.76</td>
-<td style="text-align: right;">1.97</td>
+<td style="text-align: right;">3.606 ns</td>
+<td style="text-align: right;">0.0666 ns</td>
+<td style="text-align: right;">0.0623 ns</td>
+<td style="text-align: right;">2.18</td>
+<td style="text-align: right;">0.04</td>
 </tr>
 <tr>
 <td>GetDynamicDelegate_Property</td>
-<td style="text-align: right;">537.3377 ns</td>
-<td style="text-align: right;">8.8565 ns</td>
-<td style="text-align: right;">8.2843 ns</td>
-<td style="text-align: right;">1,796.26</td>
-<td style="text-align: right;">207.81</td>
+<td style="text-align: right;">128.436 ns</td>
+<td style="text-align: right;">2.5062 ns</td>
+<td style="text-align: right;">2.4614 ns</td>
+<td style="text-align: right;">77.47</td>
+<td style="text-align: right;">1.50</td>
 </tr>
 <tr>
 <td>GetPropertyInfo_Property</td>
-<td style="text-align: right;">142.9487 ns</td>
-<td style="text-align: right;">0.7985 ns</td>
-<td style="text-align: right;">0.7469 ns</td>
-<td style="text-align: right;">477.96</td>
-<td style="text-align: right;">55.61</td>
+<td style="text-align: right;">24.779 ns</td>
+<td style="text-align: right;">0.3351 ns</td>
+<td style="text-align: right;">0.3134 ns</td>
+<td style="text-align: right;">14.95</td>
+<td style="text-align: right;">0.20</td>
 </tr>
 <tr>
 <td>GetPropertyInfoCache_Property</td>
-<td style="text-align: right;">87.2921 ns</td>
-<td style="text-align: right;">0.9230 ns</td>
-<td style="text-align: right;">0.8182 ns</td>
-<td style="text-align: right;">288.61</td>
-<td style="text-align: right;">32.69</td>
+<td style="text-align: right;">7.896 ns</td>
+<td style="text-align: right;">0.1324 ns</td>
+<td style="text-align: right;">0.1239 ns</td>
+<td style="text-align: right;">4.76</td>
+<td style="text-align: right;">0.08</td>
 </tr>
 <tr>
 <td>GetSigilEmit_Property</td>
-<td style="text-align: right;">5.9783 ns</td>
-<td style="text-align: right;">0.1159 ns</td>
-<td style="text-align: right;">0.1190 ns</td>
-<td style="text-align: right;">19.97</td>
-<td style="text-align: right;">2.35</td>
+<td style="text-align: right;">3.819 ns</td>
+<td style="text-align: right;">0.0284 ns</td>
+<td style="text-align: right;">0.0379 ns</td>
+<td style="text-align: right;">2.30</td>
+<td style="text-align: right;">0.03</td>
 </tr>
 <tr>
 <td>GetExpression_Property</td>
-<td style="text-align: right;">9.7760 ns</td>
-<td style="text-align: right;">0.1546 ns</td>
-<td style="text-align: right;">0.1446 ns</td>
-<td style="text-align: right;">32.71</td>
-<td style="text-align: right;">4.03</td>
+<td style="text-align: right;">3.092 ns</td>
+<td style="text-align: right;">0.0325 ns</td>
+<td style="text-align: right;">0.0304 ns</td>
+<td style="text-align: right;">1.87</td>
+<td style="text-align: right;">0.02</td>
 </tr>
 <tr>
 <td>GetFastMember_Property</td>
-<td style="text-align: right;">29.1414 ns</td>
-<td style="text-align: right;">0.3692 ns</td>
-<td style="text-align: right;">0.3453 ns</td>
-<td style="text-align: right;">97.45</td>
-<td style="text-align: right;">11.57</td>
+<td style="text-align: right;">13.500 ns</td>
+<td style="text-align: right;">0.1078 ns</td>
+<td style="text-align: right;">0.0900 ns</td>
+<td style="text-align: right;">8.14</td>
+<td style="text-align: right;">0.07</td>
 </tr>
 <tr>
 <td><strong>GetImmediateProperty_Property</strong></td>
-<td style="text-align: right;"><strong>5.1417 ns</strong></td>
-<td style="text-align: right;"><strong>0.1690 ns</strong></td>
-<td style="text-align: right;"><strong>0.4271 ns</strong></td>
-<td style="text-align: right;"><strong>17.20</strong></td>
-<td style="text-align: right;"><strong>2.52</strong></td>
+<td style="text-align: right;"><strong>1.941 ns</strong></td>
+<td style="text-align: right;"><strong>0.0293 ns</strong></td>
+<td style="text-align: right;"><strong>0.0274 ns</strong></td>
+<td style="text-align: right;"><strong>1.17</strong></td>
+<td style="text-align: right;"><strong>0.02</strong></td>
 </tr>
 </tbody>
 </table>
-<p><strong>GetDirect_Property</strong> is a too quick action to be benchmark, considering it as immediate!</p>
+<p><strong>.NET Framework 4.8</strong></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">StdDev</th>
+<th style="text-align: right;">Ratio</th>
+<th style="text-align: right;">RatioSD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GetDirect_Property</td>
+<td style="text-align: right;">1.404 ns</td>
+<td style="text-align: right;">0.0089 ns</td>
+<td style="text-align: right;">0.0069 ns</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.01</td>
+</tr>
+<tr>
+<td>GetDelegate_Property</td>
+<td style="text-align: right;">3.866 ns</td>
+<td style="text-align: right;">0.0571 ns</td>
+<td style="text-align: right;">0.0534 ns</td>
+<td style="text-align: right;">2.75</td>
+<td style="text-align: right;">0.04</td>
+</tr>
+<tr>
+<td>GetDynamicDelegate_Property</td>
+<td style="text-align: right;">609.315 ns</td>
+<td style="text-align: right;">9.9388 ns</td>
+<td style="text-align: right;">9.2968 ns</td>
+<td style="text-align: right;">434.14</td>
+<td style="text-align: right;">6.74</td>
+</tr>
+<tr>
+<td>GetPropertyInfo_Property</td>
+<td style="text-align: right;">139.493 ns</td>
+<td style="text-align: right;">2.2604 ns</td>
+<td style="text-align: right;">2.1144 ns</td>
+<td style="text-align: right;">99.39</td>
+<td style="text-align: right;">1.53</td>
+</tr>
+<tr>
+<td>GetPropertyInfoCache_Property</td>
+<td style="text-align: right;">84.206 ns</td>
+<td style="text-align: right;">1.6152 ns</td>
+<td style="text-align: right;">1.5863 ns</td>
+<td style="text-align: right;">60.00</td>
+<td style="text-align: right;">1.13</td>
+</tr>
+<tr>
+<td>GetSigilEmit_Property</td>
+<td style="text-align: right;">4.350 ns</td>
+<td style="text-align: right;">0.0636 ns</td>
+<td style="text-align: right;">0.0595 ns</td>
+<td style="text-align: right;">3.10</td>
+<td style="text-align: right;">0.04</td>
+</tr>
+<tr>
+<td>GetExpression_Property</td>
+<td style="text-align: right;">8.542 ns</td>
+<td style="text-align: right;">0.1356 ns</td>
+<td style="text-align: right;">0.1202 ns</td>
+<td style="text-align: right;">6.09</td>
+<td style="text-align: right;">0.09</td>
+</tr>
+<tr>
+<td>GetFastMember_Property</td>
+<td style="text-align: right;">25.788 ns</td>
+<td style="text-align: right;">0.5080 ns</td>
+<td style="text-align: right;">0.4989 ns</td>
+<td style="text-align: right;">18.37</td>
+<td style="text-align: right;">0.36</td>
+</tr>
+<tr>
+<td><strong>GetImmediateProperty_Property</strong></td>
+<td style="text-align: right;"><strong>2.872 ns</strong></td>
+<td style="text-align: right;"><strong>0.0514 ns</strong></td>
+<td style="text-align: right;"><strong>0.0429 ns</strong></td>
+<td style="text-align: right;"><strong>2.05</strong></td>
+<td style="text-align: right;"><strong>0.03</strong></td>
+</tr>
+</tbody>
+</table>
 <h3 id="set-a-property-value">Set a property value</h3>
+<p><strong>.NET 8</strong></p>
 <table>
 <thead>
 <tr>
@@ -295,101 +504,189 @@ Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 ph
 <tbody>
 <tr>
 <td>SetDirect_Property</td>
-<td style="text-align: right;">1.165 ns</td>
-<td style="text-align: right;">0.0101 ns</td>
-<td style="text-align: right;">0.0094 ns</td>
+<td style="text-align: right;">1.664 ns</td>
+<td style="text-align: right;">0.0181 ns</td>
+<td style="text-align: right;">0.0160 ns</td>
 <td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.01</td>
 </tr>
 <tr>
 <td>SetDelegate_Property</td>
-<td style="text-align: right;">4.596 ns</td>
-<td style="text-align: right;">0.0915 ns</td>
-<td style="text-align: right;">0.1785 ns</td>
-<td style="text-align: right;">3.92</td>
-<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">3.805 ns</td>
+<td style="text-align: right;">0.0441 ns</td>
+<td style="text-align: right;">0.0413 ns</td>
+<td style="text-align: right;">2.29</td>
+<td style="text-align: right;">0.03</td>
 </tr>
 <tr>
 <td>SetDynamicDelegate_Property</td>
-<td style="text-align: right;">571.378 ns</td>
-<td style="text-align: right;">6.8747 ns</td>
-<td style="text-align: right;">6.4306 ns</td>
-<td style="text-align: right;">490.65</td>
-<td style="text-align: right;">6.76</td>
+<td style="text-align: right;">131.993 ns</td>
+<td style="text-align: right;">2.5947 ns</td>
+<td style="text-align: right;">3.0888 ns</td>
+<td style="text-align: right;">79.35</td>
+<td style="text-align: right;">1.96</td>
 </tr>
 <tr>
 <td>SetPropertyInfo_Property</td>
-<td style="text-align: right;">198.768 ns</td>
-<td style="text-align: right;">1.2488 ns</td>
-<td style="text-align: right;">1.1681 ns</td>
-<td style="text-align: right;">170.69</td>
-<td style="text-align: right;">2.07</td>
+<td style="text-align: right;">30.744 ns</td>
+<td style="text-align: right;">0.2841 ns</td>
+<td style="text-align: right;">0.5265 ns</td>
+<td style="text-align: right;">18.48</td>
+<td style="text-align: right;">0.36</td>
 </tr>
 <tr>
 <td>SetPropertyInfoCache_Property</td>
-<td style="text-align: right;">141.481 ns</td>
-<td style="text-align: right;">0.8785 ns</td>
-<td style="text-align: right;">0.7788 ns</td>
-<td style="text-align: right;">121.51</td>
-<td style="text-align: right;">1.46</td>
+<td style="text-align: right;">13.238 ns</td>
+<td style="text-align: right;">0.1005 ns</td>
+<td style="text-align: right;">0.0891 ns</td>
+<td style="text-align: right;">7.96</td>
+<td style="text-align: right;">0.09</td>
 </tr>
 <tr>
 <td>SetSigilEmit_Property</td>
-<td style="text-align: right;">4.644 ns</td>
-<td style="text-align: right;">0.0911 ns</td>
-<td style="text-align: right;">0.1152 ns</td>
-<td style="text-align: right;">4.00</td>
-<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">3.811 ns</td>
+<td style="text-align: right;">0.0542 ns</td>
+<td style="text-align: right;">0.0481 ns</td>
+<td style="text-align: right;">2.29</td>
+<td style="text-align: right;">0.04</td>
 </tr>
 <tr>
 <td>SetExpression_Property</td>
-<td style="text-align: right;">7.622 ns</td>
-<td style="text-align: right;">0.0195 ns</td>
-<td style="text-align: right;">0.0183 ns</td>
-<td style="text-align: right;">6.55</td>
-<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">3.358 ns</td>
+<td style="text-align: right;">0.0496 ns</td>
+<td style="text-align: right;">0.0464 ns</td>
+<td style="text-align: right;">2.02</td>
+<td style="text-align: right;">0.03</td>
 </tr>
 <tr>
 <td>SetFastMember_Property</td>
-<td style="text-align: right;">31.451 ns</td>
-<td style="text-align: right;">0.1225 ns</td>
-<td style="text-align: right;">0.1086 ns</td>
-<td style="text-align: right;">27.01</td>
-<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">14.350 ns</td>
+<td style="text-align: right;">0.2972 ns</td>
+<td style="text-align: right;">0.2634 ns</td>
+<td style="text-align: right;">8.63</td>
+<td style="text-align: right;">0.17</td>
 </tr>
 <tr>
 <td><strong>SetImmediateProperty_Property</strong></td>
-<td style="text-align: right;"><strong>4.526 ns</strong></td>
-<td style="text-align: right;"><strong>0.0966 ns</strong></td>
-<td style="text-align: right;"><strong>0.0857 ns</strong></td>
-<td style="text-align: right;"><strong>3.89</strong></td>
-<td style="text-align: right;"><strong>0.08</strong></td>
+<td style="text-align: right;"><strong>2.222 ns</strong></td>
+<td style="text-align: right;"><strong>0.0389 ns</strong></td>
+<td style="text-align: right;"><strong>0.0558 ns</strong></td>
+<td style="text-align: right;"><strong>1.34</strong></td>
+<td style="text-align: right;"><strong>0.04</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>.NET Framework 4.8</strong></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">StdDev</th>
+<th style="text-align: right;">Ratio</th>
+<th style="text-align: right;">RatioSD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SetDirect_Property</td>
+<td style="text-align: right;">2.840 ns</td>
+<td style="text-align: right;">0.0506 ns</td>
+<td style="text-align: right;">0.0473 ns</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.02</td>
+</tr>
+<tr>
+<td>SetDelegate_Property</td>
+<td style="text-align: right;">4.896 ns</td>
+<td style="text-align: right;">0.0475 ns</td>
+<td style="text-align: right;">0.0444 ns</td>
+<td style="text-align: right;">1.72</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr>
+<td>SetDynamicDelegate_Property</td>
+<td style="text-align: right;">580.750 ns</td>
+<td style="text-align: right;">9.7414 ns</td>
+<td style="text-align: right;">8.6355 ns</td>
+<td style="text-align: right;">204.54</td>
+<td style="text-align: right;">4.42</td>
+</tr>
+<tr>
+<td>SetPropertyInfo_Property</td>
+<td style="text-align: right;">186.662 ns</td>
+<td style="text-align: right;">3.5653 ns</td>
+<td style="text-align: right;">3.3350 ns</td>
+<td style="text-align: right;">65.74</td>
+<td style="text-align: right;">1.56</td>
+</tr>
+<tr>
+<td>SetPropertyInfoCache_Property</td>
+<td style="text-align: right;">140.676 ns</td>
+<td style="text-align: right;">1.6180 ns</td>
+<td style="text-align: right;">1.5135 ns</td>
+<td style="text-align: right;">49.55</td>
+<td style="text-align: right;">0.95</td>
+</tr>
+<tr>
+<td>SetSigilEmit_Property</td>
+<td style="text-align: right;">4.871 ns</td>
+<td style="text-align: right;">0.0566 ns</td>
+<td style="text-align: right;">0.0529 ns</td>
+<td style="text-align: right;">1.72</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr>
+<td>SetExpression_Property</td>
+<td style="text-align: right;">7.376 ns</td>
+<td style="text-align: right;">0.1043 ns</td>
+<td style="text-align: right;">0.0925 ns</td>
+<td style="text-align: right;">2.60</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr>
+<td>SetFastMember_Property</td>
+<td style="text-align: right;">33.201 ns</td>
+<td style="text-align: right;">0.6840 ns</td>
+<td style="text-align: right;">1.9069 ns</td>
+<td style="text-align: right;">11.69</td>
+<td style="text-align: right;">0.69</td>
+</tr>
+<tr>
+<td><strong>SetImmediateProperty_Property</strong></td>
+<td style="text-align: right;"><strong>4.042 ns</strong></td>
+<td style="text-align: right;"><strong>0.2865 ns</strong></td>
+<td style="text-align: right;"><strong>0.8447 ns</strong></td>
+<td style="text-align: right;"><strong>1.42</strong></td>
+<td style="text-align: right;"><strong>0.30</strong></td>
 </tr>
 </tbody>
 </table>
 <hr>
 <p>As expected <strong>ImmediateReflection</strong> library provides get/set access in a very fast way, while also keeping the standard interface of .NET Reflection.</p>
+
 </article>
           </div>
-          
+
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/docs/documentation/benchmarks/get_set_benchmarks.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/docs/documentation/benchmarks/get_set_benchmarks.md/#L1" class="contribution-link">Edit this page</a>
                   </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In This Article</h5>
+                <h5>In this article</h5>
                 <div></div>
               </nav>
             </div>
           </div>
         </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -397,14 +694,14 @@ Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 ph
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            ImmediateReflection
-            
+      ImmediateReflection
+      
           </div>
         </div>
       </footer>
     </div>
-    
-    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+
+    <script type="text/javascript" src="../../styles/docfx.vendor.min.js"></script>
     <script type="text/javascript" src="../../styles/docfx.js"></script>
     <script type="text/javascript" src="../../styles/main.js"></script>
   </body>

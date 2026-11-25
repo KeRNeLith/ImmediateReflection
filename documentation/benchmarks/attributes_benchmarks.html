@@ -1,29 +1,29 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
-  
+
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Benchmarks </title>
-    <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Benchmarks ">
-    <meta name="generator" content="docfx 2.59.2.0">
-    
-    <link rel="shortcut icon" href="../../images/favicon.ico">
-    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
-    <link rel="stylesheet" href="../../styles/docfx.css">
-    <link rel="stylesheet" href="../../styles/main.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
-    <meta property="docfx:navrel" content="../../toc.html">
-    <meta property="docfx:tocrel" content="../toc.html">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Benchmarks </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Benchmarks ">
     
     
+      <link rel="shortcut icon" href="../../images/favicon.ico">
+      <link rel="stylesheet" href="../../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../../styles/docfx.css">
+      <link rel="stylesheet" href="../../styles/main.css">
+      <meta property="docfx:navrel" content="../../toc.html">
+      <meta property="docfx:tocrel" content="../toc.html">
     
-  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <meta property="docfx:rel" content="../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -33,7 +33,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              
+
               <a class="navbar-brand" href="../../index.html">
                 <img id="logo" class="svg" src="../../images/logo.svg" alt="">
               </a>
@@ -47,7 +47,7 @@
             </div>
           </div>
         </nav>
-        
+
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -56,8 +56,18 @@
           </div>
         </div>
       </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -71,17 +81,18 @@
 
 <p>Benchmarks have been implemented with <a href="https://github.com/dotnet/BenchmarkDotNet">BenchmarkDotNet</a>.</p>
 <h2 id="configuration">Configuration</h2>
-<pre><code class="lang-ini">BenchmarkDotNet=v0.11.5
-OS=Windows 10.0.18362
-Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-  [Host]     : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.8.3815.0
-  DefaultJob : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.8.3815.0
+<pre><code class="lang-ini">BenchmarkDotNet v0.15.4, Windows 11 (10.0.26200.9711)
+AMD Ryzen Threadripper PRO 5945WX 12-Cores 4.10GHz, 1 CPU, 24 logical and 12 physical cores
+  [Host]             : .NET Framework 4.8.1 (4.8.9363.0), X64 RyuJIT VectorSize=256
+  .NET 8.0           : .NET 8.0.34 (8.0.34, 8.0.3426.52217), X64 RyuJIT x86-64-v3
+  .NET Framework 4.8 : .NET Framework 4.8.1 (4.8.9363.0), X64 RyuJIT VectorSize=256
 </code></pre>
 <h2 id="implementation-details">Implementation details</h2>
 <p>These benchmarks have been done by making multiple get of attribute.</p>
 <p>The property cache is implemented with an array storing all attributes of a given property.</p>
 <p>The Property_ByImmediateReflection_GetAttribute benchmark by getting attributes from a standard <code>PropertyInfo</code> with ImmediateReflection helpers.</p>
 <h2 id="results">Results</h2>
+<p><strong>.NET 8</strong></p>
 <table>
 <thead>
 <tr>
@@ -96,42 +107,97 @@ Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 ph
 <tbody>
 <tr>
 <td>Property_GetAttribute</td>
-<td style="text-align: right;">3,189.22 ns</td>
-<td style="text-align: right;">78.6381 ns</td>
-<td style="text-align: right;">102.2517 ns</td>
+<td style="text-align: right;">1,011.10 ns</td>
+<td style="text-align: right;">11.210 ns</td>
+<td style="text-align: right;">9.361 ns</td>
 <td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.01</td>
 </tr>
 <tr>
 <td>PropertyCache_GetAttribute</td>
-<td style="text-align: right;">76.40 ns</td>
-<td style="text-align: right;">0.6781 ns</td>
-<td style="text-align: right;">0.5294 ns</td>
-<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">44.65 ns</td>
+<td style="text-align: right;">0.829 ns</td>
+<td style="text-align: right;">0.776 ns</td>
+<td style="text-align: right;">0.04</td>
 <td style="text-align: right;">0.00</td>
 </tr>
 <tr>
 <td>FastMember_GetAttribute</td>
-<td style="text-align: right;">3,188.79 ns</td>
-<td style="text-align: right;">62.4070 ns</td>
-<td style="text-align: right;">66.7748 ns</td>
-<td style="text-align: right;">0.99</td>
-<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">1,016.26 ns</td>
+<td style="text-align: right;">19.724 ns</td>
+<td style="text-align: right;">21.923 ns</td>
+<td style="text-align: right;">1.01</td>
+<td style="text-align: right;">0.02</td>
 </tr>
 <tr>
 <td><strong>ImmediateProperty_GetAttribute</strong></td>
-<td style="text-align: right;"><strong>75.92 ns</strong></td>
-<td style="text-align: right;"><strong>0.3393 ns</strong></td>
-<td style="text-align: right;"><strong>0.3174 ns</strong></td>
-<td style="text-align: right;"><strong>0.02</strong></td>
+<td style="text-align: right;"><strong>12.50 ns</strong></td>
+<td style="text-align: right;"><strong>0.193 ns</strong></td>
+<td style="text-align: right;"><strong>0.181 ns</strong></td>
+<td style="text-align: right;"><strong>0.01</strong></td>
 <td style="text-align: right;"><strong>0.00</strong></td>
 </tr>
 <tr>
 <td><em>Property_ByImmediateReflection_GetAttribute</em></td>
-<td style="text-align: right;"><em>111.50 ns</em></td>
-<td style="text-align: right;"><em>1.2293 ns</em></td>
-<td style="text-align: right;"><em>1.1498 ns</em></td>
-<td style="text-align: right;"><em>0.03</em></td>
+<td style="text-align: right;"><em>43.95 ns</em></td>
+<td style="text-align: right;"><em>0.696 ns</em></td>
+<td style="text-align: right;"><em>0.651 ns</em></td>
+<td style="text-align: right;"><em>0.04</em></td>
+<td style="text-align: right;"><em>0.00</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>.NET Framework 4.8</strong></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Error</th>
+<th style="text-align: right;">StdDev</th>
+<th style="text-align: right;">Ratio</th>
+<th style="text-align: right;">RatioSD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Property_GetAttribute</td>
+<td style="text-align: right;">3,095.36 ns</td>
+<td style="text-align: right;">55.037 ns</td>
+<td style="text-align: right;">51.482 ns</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.02</td>
+</tr>
+<tr>
+<td>PropertyCache_GetAttribute</td>
+<td style="text-align: right;">68.98 ns</td>
+<td style="text-align: right;">1.402 ns</td>
+<td style="text-align: right;">1.773 ns</td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr>
+<td>FastMember_GetAttribute</td>
+<td style="text-align: right;">3,082.28 ns</td>
+<td style="text-align: right;">44.513 ns</td>
+<td style="text-align: right;">41.638 ns</td>
+<td style="text-align: right;">0.996</td>
+<td style="text-align: right;">0.02</td>
+</tr>
+<tr>
+<td><strong>ImmediateProperty_GetAttribute</strong></td>
+<td style="text-align: right;"><strong>28.79 ns</strong></td>
+<td style="text-align: right;"><strong>0.298 ns</strong></td>
+<td style="text-align: right;"><strong>0.264 ns</strong></td>
+<td style="text-align: right;"><strong>0.009</strong></td>
+<td style="text-align: right;"><strong>0.00</strong></td>
+</tr>
+<tr>
+<td><em>Property_ByImmediateReflection_GetAttribute</em></td>
+<td style="text-align: right;"><em>67.13 ns</em></td>
+<td style="text-align: right;"><em>1.358 ns</em></td>
+<td style="text-align: right;"><em>1.334 ns</em></td>
+<td style="text-align: right;"><em>0.022</em></td>
 <td style="text-align: right;"><em>0.00</em></td>
 </tr>
 </tbody>
@@ -139,27 +205,28 @@ Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 ph
 <hr>
 <p>Results demonstrate that keeping the use of <strong>ImmediateReflection</strong> as much as possible provide the fastest access to <code>Type</code>, <code>FieldInfo</code> and <code>PropertyInfo</code> attributes.</p>
 <p>It also shows that getting attributes from standard code is always possible but has a slightly higher cost.</p>
+
 </article>
           </div>
-          
+
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/docs/documentation/benchmarks/attributes_benchmarks.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/docs/documentation/benchmarks/attributes_benchmarks.md/#L1" class="contribution-link">Edit this page</a>
                   </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In This Article</h5>
+                <h5>In this article</h5>
                 <div></div>
               </nav>
             </div>
           </div>
         </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -167,14 +234,14 @@ Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 ph
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            ImmediateReflection
-            
+      ImmediateReflection
+      
           </div>
         </div>
       </footer>
     </div>
-    
-    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+
+    <script type="text/javascript" src="../../styles/docfx.vendor.min.js"></script>
     <script type="text/javascript" src="../../styles/docfx.js"></script>
     <script type="text/javascript" src="../../styles/main.js"></script>
   </body>

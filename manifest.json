@@ -1,33 +1,411 @@
 {
-  "homepages": [],
+  "docfx_version": "2.81.0+ba844df625370a6bd7c1ecab0d0ec4d1d9128ac4",
   "source_base_path": "C:/projects/immediatereflection/docs",
   "xrefmap": "xrefmap.yml",
   "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
     {
       "type": "Conceptual",
       "source_relative_path": "../RELEASE_NOTES.md",
       "output": {
         ".html": {
-          "relative_path": "RELEASE_NOTES.html",
-          "hash": "mwoSTTis7LNu+w9UCN+WxH4iICgxg8Arbl+oJNJsUko="
+          "relative_path": "RELEASE_NOTES.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.ConstructorDelegate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.ConstructorDelegate.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.ConstructorDelegate",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.ConstructorDelegate.yml\" sourcestartlinenumber=\"1\">Constructor delegate.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.CopyConstructorDelegate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.CopyConstructorDelegate.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.CopyConstructorDelegate",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.CopyConstructorDelegate.yml\" sourcestartlinenumber=\"1\">Copy constructor delegate.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.DefaultConstructorDelegate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.DefaultConstructorDelegate.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.DefaultConstructorDelegate",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.DefaultConstructorDelegate.yml\" sourcestartlinenumber=\"1\">Default constructor delegate.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.GetterDelegate-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.GetterDelegate-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.GetterDelegate<TOwner>",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.GetterDelegate-1.yml\" sourcestartlinenumber=\"1\">Template getter delegate.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.GetterDelegate-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.GetterDelegate-2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.GetterDelegate<TOwner, TValue>",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.GetterDelegate-2.yml\" sourcestartlinenumber=\"1\">Template getter delegate.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.GetterDelegate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.GetterDelegate.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.GetterDelegate",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.GetterDelegate.yml\" sourcestartlinenumber=\"1\">Getter delegate.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.ImmediateAttributesExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.ImmediateAttributesExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.ImmediateAttributesExtensions",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.ImmediateAttributesExtensions.yml\" sourcestartlinenumber=\"1\">Extensions to easily work with attributes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.ImmediateField.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.ImmediateField.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.ImmediateField",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.ImmediateField.yml\" sourcestartlinenumber=\"1\">Represents a field and provides access to its metadata in a faster way.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.ImmediateFields.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.ImmediateFields.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.ImmediateFields",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.ImmediateFields.yml\" sourcestartlinenumber=\"1\">Represents a collection of fields and provides access to its metadata in a faster way.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.ImmediateMember.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.ImmediateMember.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.ImmediateMember",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.ImmediateMember.yml\" sourcestartlinenumber=\"1\">Represents information about the attributes of a member or <xref href=\"System.Type\" data-throw-if-not-resolved=\"false\"></xref> and provides access to its metadata in a faster way.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.ImmediateMemberExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.ImmediateMemberExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.ImmediateMemberExtensions",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.ImmediateMemberExtensions.yml\" sourcestartlinenumber=\"1\">Extensions to easily work with <xref href=\"ImmediateReflection.ImmediateProperty\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.ImmediateProperties.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.ImmediateProperties.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.ImmediateProperties",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.ImmediateProperties.yml\" sourcestartlinenumber=\"1\">Represents a collection of properties and provides access to property metadata in a faster way.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.ImmediateProperty.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.ImmediateProperty.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.ImmediateProperty",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.ImmediateProperty.yml\" sourcestartlinenumber=\"1\">Represents a property and provides access to property metadata in a faster way.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.ImmediateReflectionExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.ImmediateReflectionExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.ImmediateReflectionExtensions",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.ImmediateReflectionExtensions.yml\" sourcestartlinenumber=\"1\">Extensions to easily work with Immediate Reflection.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.ImmediateType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.ImmediateType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.ImmediateType",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.ImmediateType.yml\" sourcestartlinenumber=\"1\">Represents type declarations (class types, interface types, array types, value types, enumeration types,\ntype parameters, generic type definitions, and open or closed constructed generic types) in a faster way.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.MemberExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.MemberExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.MemberExtensions",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.MemberExtensions.yml\" sourcestartlinenumber=\"1\">Extensions to work with <xref href=\"System.Reflection.MemberInfo\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.ObjectExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.ObjectExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.ObjectExtensions",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.ObjectExtensions.yml\" sourcestartlinenumber=\"1\">Extensions to work with object instance.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.ObjectWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.ObjectWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.ObjectWrapper",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.ObjectWrapper.yml\" sourcestartlinenumber=\"1\">Provides a wrapper over an <xref href=\"System.Object\" data-throw-if-not-resolved=\"false\"></xref> that gives access to its Reflection features in a faster way than standard stuff.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.SetterDelegate-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.SetterDelegate-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.SetterDelegate<TOwner>",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.SetterDelegate-1.yml\" sourcestartlinenumber=\"1\">Template setter delegate.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.SetterDelegate-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.SetterDelegate-2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.SetterDelegate<TOwner, TValue>",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.SetterDelegate-2.yml\" sourcestartlinenumber=\"1\">Template setter delegate.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.SetterDelegate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.SetterDelegate.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.SetterDelegate",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.SetterDelegate.yml\" sourcestartlinenumber=\"1\">Setter delegate.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.StaticGetterDelegate-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.StaticGetterDelegate-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.StaticGetterDelegate<TValue>",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.StaticGetterDelegate-1.yml\" sourcestartlinenumber=\"1\">Static getter delegate.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.StaticSetterDelegate-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.StaticSetterDelegate-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.StaticSetterDelegate<TValue>",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.StaticSetterDelegate-1.yml\" sourcestartlinenumber=\"1\">Static setter delegate.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.TypeAccessor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.TypeAccessor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.TypeAccessor",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.TypeAccessor.yml\" sourcestartlinenumber=\"1\">Provides access to a <xref href=\"System.Type\" data-throw-if-not-resolved=\"false\"></xref> Reflection information via an <xref href=\"ImmediateReflection.ImmediateType\" data-throw-if-not-resolved=\"false\"></xref>.\n<xref href=\"ImmediateReflection.ImmediateType\" data-throw-if-not-resolved=\"false\"></xref> gives access to Reflection features in a faster way than standard stuff.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.TypeExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.TypeExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection.TypeExtensions",
+      "Summary": "<p sourcefile=\"api/ImmediateReflection.TypeExtensions.yml\" sourcestartlinenumber=\"1\">Extensions to work with <xref href=\"System.Type\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ImmediateReflection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ImmediateReflection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "ImmediateReflection",
+      "Summary": null
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "api/index.md",
       "output": {
         ".html": {
-          "relative_path": "api/index.html",
-          "hash": "3Fr0kgTL3GWri+K8WtFfmHfC/UwtKa9tYGXb0h6KTRI="
+          "relative_path": "api/index.html"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
       "version": ""
     },
     {
@@ -35,11 +413,9 @@
       "source_relative_path": "documentation/benchmarks.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/benchmarks.html",
-          "hash": "jLP4f0+j0QfjCyGJLq8oqR5KhQcrZmO1jjWzs5lVKx4="
+          "relative_path": "documentation/benchmarks.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -47,11 +423,9 @@
       "source_relative_path": "documentation/benchmarks/attributes_benchmarks.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/benchmarks/attributes_benchmarks.html",
-          "hash": "U6mptJhatdaiNQDEN0Jilf4o4cEzYK760nqBdHlh3Gc="
+          "relative_path": "documentation/benchmarks/attributes_benchmarks.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -59,11 +433,9 @@
       "source_relative_path": "documentation/benchmarks/copy_constructor_benchmarks.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/benchmarks/copy_constructor_benchmarks.html",
-          "hash": "e0brFg+whGOoYgRdcsUWAe0EzF8fppJKa0+cFewdZ3M="
+          "relative_path": "documentation/benchmarks/copy_constructor_benchmarks.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -71,11 +443,9 @@
       "source_relative_path": "documentation/benchmarks/default_constructor_benchmarks.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/benchmarks/default_constructor_benchmarks.html",
-          "hash": "+DdVRbjzyUGbf1o40eBhQL8jPmkWkZgsyhqy9bT79/o="
+          "relative_path": "documentation/benchmarks/default_constructor_benchmarks.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -83,11 +453,9 @@
       "source_relative_path": "documentation/benchmarks/get_set_benchmarks.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/benchmarks/get_set_benchmarks.html",
-          "hash": "tT65XIFhzxawGSzYiBqKqBoBB70ZUswKinP+/V3Hvck="
+          "relative_path": "documentation/benchmarks/get_set_benchmarks.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -95,11 +463,9 @@
       "source_relative_path": "documentation/benchmarks/get_set_multiple_objects_benchmarks.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/benchmarks/get_set_multiple_objects_benchmarks.html",
-          "hash": "7ilSIJU9K1vecVaiBkoIzgK5ipjVgO3aT2HmHmuBBZA="
+          "relative_path": "documentation/benchmarks/get_set_multiple_objects_benchmarks.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -107,11 +473,22 @@
       "source_relative_path": "documentation/benchmarks/multiple_get_set_benchmarks.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/benchmarks/multiple_get_set_benchmarks.html",
-          "hash": "++ocQr56EWBJsXhtClBZVIb/Ui4XG3QAy1z0HkqZ9Yg="
+          "relative_path": "documentation/benchmarks/multiple_get_set_benchmarks.html"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "documentation/benchmarks/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "documentation/benchmarks/toc.html"
+        },
+        ".json": {
+          "relative_path": "documentation/benchmarks/toc.json"
+        }
+      },
       "version": ""
     },
     {
@@ -119,11 +496,9 @@
       "source_relative_path": "documentation/general-coding-guidelines.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/general-coding-guidelines.html",
-          "hash": "PF+RCGWTfG3mTaTCw/2H4Q+c79MgZ3IeoF7J2iw8Q8Q="
+          "relative_path": "documentation/general-coding-guidelines.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -131,11 +506,9 @@
       "source_relative_path": "documentation/getting-started.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/getting-started.html",
-          "hash": "hIzgRAJ1Z4I+zCjSqXmpkGYkd1Wknrwaf0ltDcCuWT4="
+          "relative_path": "documentation/getting-started.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -143,11 +516,9 @@
       "source_relative_path": "documentation/guidelines/csharp-best-practices.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/guidelines/csharp-best-practices.html",
-          "hash": "qxNLUAjedlKUk7v30YZEK3rWdKGTbiPXm4xqGKSn9FM="
+          "relative_path": "documentation/guidelines/csharp-best-practices.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -155,11 +526,22 @@
       "source_relative_path": "documentation/guidelines/csharp-coding-guidelines.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/guidelines/csharp-coding-guidelines.html",
-          "hash": "ASmcSGIxgwtxUikYEVmk4/R/mUPcdnhMzBUrLHyPA6I="
+          "relative_path": "documentation/guidelines/csharp-coding-guidelines.html"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "documentation/guidelines/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "documentation/guidelines/toc.html"
+        },
+        ".json": {
+          "relative_path": "documentation/guidelines/toc.json"
+        }
+      },
       "version": ""
     },
     {
@@ -167,11 +549,12 @@
       "source_relative_path": "documentation/toc.yml",
       "output": {
         ".html": {
-          "relative_path": "documentation/toc.html",
-          "hash": "1fk7im2hK6urUdPb+PsEE5SxZ5epG5IeX1bE3kgRkfg="
+          "relative_path": "documentation/toc.html"
+        },
+        ".json": {
+          "relative_path": "documentation/toc.json"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -179,11 +562,9 @@
       "source_relative_path": "documentation/tutorials/immediate-field.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/tutorials/immediate-field.html",
-          "hash": "sztmudOulmwc24T2NDQBh9A7h16jbRiKm73yf0RusuQ="
+          "relative_path": "documentation/tutorials/immediate-field.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -191,11 +572,9 @@
       "source_relative_path": "documentation/tutorials/immediate-member.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/tutorials/immediate-member.html",
-          "hash": "aDvZTPZux8ledGHbSrtd4imRozSrRyWnFNocvntDXJM="
+          "relative_path": "documentation/tutorials/immediate-member.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -203,11 +582,9 @@
       "source_relative_path": "documentation/tutorials/immediate-property.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/tutorials/immediate-property.html",
-          "hash": "teILcDrR73xOnCdiRCXGXpeP2YQJfjF3EkB8irA5Gxw="
+          "relative_path": "documentation/tutorials/immediate-property.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -215,11 +592,9 @@
       "source_relative_path": "documentation/tutorials/immediate-type.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/tutorials/immediate-type.html",
-          "hash": "jPvcURUybLem5YIWp5CnGnxwTrPu8Tjn+67f/vveX5g="
+          "relative_path": "documentation/tutorials/immediate-type.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -227,11 +602,9 @@
       "source_relative_path": "documentation/tutorials/object-wrapper.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/tutorials/object-wrapper.html",
-          "hash": "Qnz0bKp0d5qPMt6iawro/clBiM7APspI6rXyEydBpwE="
+          "relative_path": "documentation/tutorials/object-wrapper.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -239,11 +612,22 @@
       "source_relative_path": "documentation/tutorials/open-delegates.md",
       "output": {
         ".html": {
-          "relative_path": "documentation/tutorials/open-delegates.html",
-          "hash": "HyjuDo10NEDd5RrtAiaXUlgIOULd1vhOMbJgiAoAUlQ="
+          "relative_path": "documentation/tutorials/open-delegates.html"
         }
       },
-      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "documentation/tutorials/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "documentation/tutorials/toc.html"
+        },
+        ".json": {
+          "relative_path": "documentation/tutorials/toc.json"
+        }
+      },
       "version": ""
     },
     {
@@ -254,7 +638,6 @@
           "relative_path": "images/check.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -265,7 +648,6 @@
           "relative_path": "images/cross.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -276,7 +658,6 @@
           "relative_path": "images/favicon.ico"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -287,7 +668,6 @@
           "relative_path": "images/immediate_reflection_logo.png"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -298,7 +678,6 @@
           "relative_path": "images/logo.svg"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -306,11 +685,9 @@
       "source_relative_path": "index.md",
       "output": {
         ".html": {
-          "relative_path": "index.html",
-          "hash": "E/vie+486wDt/jRICQxukNQ31ewRT26v7hK0QiqbWQg="
+          "relative_path": "index.html"
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -318,59 +695,15 @@
       "source_relative_path": "toc.yml",
       "output": {
         ".html": {
-          "relative_path": "toc.html",
-          "hash": "pKZD0W5vUY3/8IiprsXV+SZKkF8ViP4ZvP7CU1KlD/o="
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
         }
       },
-      "is_incremental": false,
       "version": ""
     }
   ],
-  "incremental_info": [
-    {
-      "status": {
-        "can_incremental": false,
-        "details": "Cannot build incrementally because last build info is missing.",
-        "incrementalPhase": "build",
-        "total_file_count": 0,
-        "skipped_file_count": 0,
-        "full_build_reason_code": "NoAvailableBuildCache"
-      },
-      "processors": {
-        "ConceptualDocumentProcessor": {
-          "can_incremental": false,
-          "incrementalPhase": "build",
-          "total_file_count": 20,
-          "skipped_file_count": 0
-        },
-        "ResourceDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
-        },
-        "TocDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
-        }
-      }
-    },
-    {
-      "status": {
-        "can_incremental": false,
-        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
-        "incrementalPhase": "postProcessing",
-        "total_file_count": 0,
-        "skipped_file_count": 0
-      },
-      "processors": {}
-    }
-  ],
-  "version_info": {},
   "groups": [
     {
       "xrefmap": "xrefmap.yml"

@@ -1,29 +1,29 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
-  
+
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Release notes </title>
-    <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Release notes ">
-    <meta name="generator" content="docfx 2.59.2.0">
-    
-    <link rel="shortcut icon" href="images/favicon.ico">
-    <link rel="stylesheet" href="styles/docfx.vendor.css">
-    <link rel="stylesheet" href="styles/docfx.css">
-    <link rel="stylesheet" href="styles/main.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
-    <meta property="docfx:navrel" content="toc.html">
-    <meta property="docfx:tocrel" content="documentation/toc.html">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Release notes </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Release notes ">
     
     
+      <link rel="shortcut icon" href="images/favicon.ico">
+      <link rel="stylesheet" href="styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="styles/docfx.css">
+      <link rel="stylesheet" href="styles/main.css">
+      <meta property="docfx:navrel" content="toc.html">
+      <meta property="docfx:tocrel" content="documentation/toc.html">
     
-  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <meta property="docfx:rel" content="">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -33,7 +33,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              
+
               <a class="navbar-brand" href="index.html">
                 <img id="logo" class="svg" src="images/logo.svg" alt="">
               </a>
@@ -47,7 +47,7 @@
             </div>
           </div>
         </nav>
-        
+
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -56,8 +56,18 @@
           </div>
         </div>
       </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -69,13 +79,29 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="release-notes">Release notes</h1>
 
-<h2 id="whats-new-in-200-september-5-2022">What's new in 2.0.0 September 5 2022</h2>
+<h2 id="whats-new-in-300-november-25-2026">What's new in 3.0.0 November 25 2026</h2>
 <h3 id="updates">Updates:</h3>
+<ul>
+<li>Big cold start improvement: getters/setters of ImmediateProperty and ImmediateField are now generated on first use, as are the constructors and attributes of ImmediateType and members (creating an ImmediateProperty/ImmediateField is now ~100x faster and allocates far less).</li>
+<li>Accesses to the internal caches through the public API (TypeAccessor, ImmediateType, attributes, ...) no longer allocate on a cache hit and are ~2x faster.</li>
+<li>TypeAccessor.Get<t>() has a dedicated fast path when the type is known at compile time.</t></li>
+<li>Faster access to the attributes of types and members (fewer allocations on GetAttribute(s)/GetAllAttributes).</li>
+<li>Copy of value types, string and Type is faster and no longer boxes needlessly.</li>
+<li>Getters returning a boolean no longer allocate (boxed true/false values are cached).</li>
+<li>Generated dynamic methods are now bound to a closed delegate, which makes calling the generated getters/setters faster.</li>
+<li>Improve Equals and hash code computation of ImmediateFields and ImmediateProperties.</li>
+</ul>
+<h3 id="misc">Misc:</h3>
+<ul>
+<li>Library code migrated to C# 10 (file scoped namespaces, nullable enabled, polyfills for old targets).</li>
+</ul>
+<h2 id="whats-new-in-200-september-5-2022">What's new in 2.0.0 September 5 2022</h2>
+<h3 id="updates-1">Updates:</h3>
 <ul>
 <li>Update some serialization implementations for ImmediateReflection core types.</li>
 <li>Dynamic methods generated by ImmediateReflection always use the ImmediateReflection module.</li>
 </ul>
-<h3 id="misc">Misc:</h3>
+<h3 id="misc-1">Misc:</h3>
 <ul>
 <li>Get rid of targets anterior to .NET Framework 4.0.</li>
 <li>Add target .NET Standard 2.1 to simplify dependency tree when used.</li>
@@ -95,7 +121,7 @@
 <ul>
 <li>Use signing key to strong name library assemby.</li>
 </ul>
-<h3 id="misc-1">Misc:</h3>
+<h3 id="misc-2">Misc:</h3>
 <ul>
 <li>JetBrains.Annotations are embedded in the assembly (internal).</li>
 </ul>
@@ -108,7 +134,7 @@
 <ul>
 <li>All ImmediateReflection types are serializable via C# standard serialization.</li>
 </ul>
-<h3 id="misc-2">Misc:</h3>
+<h3 id="misc-3">Misc:</h3>
 <ul>
 <li>JetBrains.Annotations are no more embedded in the assembly, replaced by a private reference to official NuGet.</li>
 <li>Minor optimization.</li>
@@ -118,7 +144,7 @@
 <ul>
 <li>Properly handle null parameter for Copy and TryCopy (return null).</li>
 </ul>
-<h3 id="updates-1">Updates:</h3>
+<h3 id="updates-2">Updates:</h3>
 <ul>
 <li>Copy and TryCopy consider string and Type as copyable types and return themselves if asked.</li>
 </ul>
@@ -133,7 +159,7 @@
 <li>Add type extensions to check if a type has a copy constructor and to directly call it.</li>
 <li>Add object extensions to check if an instance can be copied by a copy constructor and to directly call it.</li>
 </ul>
-<h3 id="updates-2">Updates:</h3>
+<h3 id="updates-3">Updates:</h3>
 <ul>
 <li>Globally optimize the library by reducing the number of redundant null checks.</li>
 <li>Slightly optimize the branching in generated code.</li>
@@ -149,7 +175,7 @@
 <ul>
 <li>ImmediateType properly handle arrays which were crashing before.</li>
 </ul>
-<h3 id="updates-3">Updates:</h3>
+<h3 id="updates-4">Updates:</h3>
 <ul>
 <li>Default constructor delegates available via ImmediateType are now cached and shared across several instance of ImmediateType.</li>
 <li>ImmediateProperty are now cached and shared across several instance of ImmediateType.</li>
@@ -165,20 +191,20 @@
 <ul>
 <li>Classes with indexed properties does not crash anymore.</li>
 </ul>
-<h3 id="updates-4">Updates:</h3>
+<h3 id="updates-5">Updates:</h3>
 <ul>
 <li>Lazily initialize fields property of ImmediateType.</li>
 </ul>
 <hr>
 <h2 id="whats-new-in-110-june-24-2019">What's new in 1.1.0 June 24 2019</h2>
-<h3 id="updates-5">Updates:</h3>
+<h3 id="updates-6">Updates:</h3>
 <ul>
 <li>Improve performances of memory caching within the library.</li>
 <li>Extend support of built-in cache to every target.</li>
 <li>Make some methods only available as extensions accessible as normal methods on targets not supporting extensions.</li>
 <li>IL generated methods are now prefixed to help identify them.</li>
 </ul>
-<h3 id="misc-3">Misc:</h3>
+<h3 id="misc-4">Misc:</h3>
 <ul>
 <li>API Reference and documentation generated based on sources.</li>
 </ul>
@@ -189,7 +215,7 @@
 <li>Properly supports static readonly and constant fields.</li>
 <li>Properly handle reflection on enumeration types.</li>
 </ul>
-<h3 id="updates-6">Updates:</h3>
+<h3 id="updates-7">Updates:</h3>
 <ul>
 <li>Default flags taken into account when getting an ImmediateType are Public | Instance | Static</li>
 <li>Get rid of cache system references replaced by a simpler internal caching system.</li>
@@ -205,7 +231,7 @@
 <li>Provide helpers to easily create strongly typed delegate to get/set properties.</li>
 <li>Add an object wrapper that allows to get/set value on a specific object instance.</li>
 </ul>
-<h3 id="misc-4">Misc:</h3>
+<h3 id="misc-5">Misc:</h3>
 <ul>
 <li>Improve library documentation.</li>
 <li>Library is fully ReSharper annotated.</li>
@@ -216,27 +242,28 @@
 <li>First implementation of a fast (&quot;immediate&quot;) access and usage of C# Reflection features.</li>
 <li>Supports Type fields and properties getter/setter.</li>
 </ul>
+
 </article>
           </div>
-          
+
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/RELEASE_NOTES.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/KeRNeLith/ImmediateReflection/blob/master/RELEASE_NOTES.md/#L1" class="contribution-link">Edit this page</a>
                   </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In This Article</h5>
+                <h5>In this article</h5>
                 <div></div>
               </nav>
             </div>
           </div>
         </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -244,14 +271,14 @@
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            ImmediateReflection
-            
+      ImmediateReflection
+      
           </div>
         </div>
       </footer>
     </div>
-    
-    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+
+    <script type="text/javascript" src="styles/docfx.vendor.min.js"></script>
     <script type="text/javascript" src="styles/docfx.js"></script>
     <script type="text/javascript" src="styles/main.js"></script>
   </body>
