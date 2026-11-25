@@ -10,6 +10,7 @@ using System.Runtime.Serialization;
 using System.Security.Permissions;
 using JetBrains.Annotations;
 using static ImmediateReflection.Utils.FieldHelpers;
+using static ImmediateReflection.Utils.SerializationHelpers;
 
 namespace ImmediateReflection;
 
@@ -61,10 +62,10 @@ public sealed class ImmediateType
     {
         get
         {
-            foreach (ImmediateField field in Fields)
-                yield return field;
-            foreach (ImmediateProperty property in Properties)
-                yield return property;
+            foreach (ImmediateField iField in Fields)
+                yield return iField;
+            foreach (ImmediateProperty iProperty in Properties)
+                yield return iProperty;
         }
     }
 
@@ -423,7 +424,7 @@ public sealed class ImmediateType
     #region ISerializable
 
     private ImmediateType(SerializationInfo info, StreamingContext context)
-        : this((Type)info.GetValue("Type", typeof(Type)), (BindingFlags)info.GetValue("Flags", typeof(BindingFlags)))
+        : this(ReadType(info, "Type"), ReadFlags(info, "Flags"))
     {
     }
 

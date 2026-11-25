@@ -131,7 +131,7 @@ article h4 {
   background-color: var(--header-bg-color);
   border-bottom: 3px solid transparent;
   padding-bottom: 12px;
-  transition: 350ms;
+  transition: border-bottom-color var(--transition);
 }
 
 .navbar-inverse .navbar-nav > li > a:focus,
@@ -153,7 +153,7 @@ article h4 {
   border: 0;
   border-radius: 4px;
   box-shadow: var(--search-box-shadow);
-  transition: var(--transition);
+  transition: background-color var(--transition);
 }
 
 .navbar-form .form-control:hover {
@@ -192,17 +192,11 @@ article h4 {
   border-right: none;
 }
 
-.sidefilter {
-  background-color: #fff;
-  border-left: none;
-  border-right: none;
-}
-
 .toc-filter {
   padding: 5px;
   margin: 0;
   box-shadow: var(--card-box-shadow);
-  transition: var(--transition);
+  transition: background-color var(--transition);
 }
 
 .toc-filter:hover {
@@ -258,19 +252,19 @@ article h4 {
 }
 
 .alert-info > h5 {
-  color: #1976d2;
+  color: #1565c0;
   border-bottom: 4px solid #1976d2;
   background-color: #e3f2fd;
 }
 
 .alert-warning > h5 {
-  color: #f57f17;
+  color: #b45309;
   border-bottom: 4px solid #f57f17;
   background-color: #fff3e0;
 }
 
 .alert-danger > h5 {
-  color: #d32f2f;
+  color: #c62828;
   border-bottom: 4px solid #d32f2f;
   background-color: #ffebee;
 }

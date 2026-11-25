@@ -10,6 +10,7 @@ using System.Runtime.Serialization;
 using System.Security.Permissions;
 using JetBrains.Annotations;
 using static ImmediateReflection.GeneralHelpers;
+using static ImmediateReflection.Utils.SerializationHelpers;
 
 namespace ImmediateReflection;
 
@@ -155,21 +156,11 @@ public sealed class ImmediateFields
 
     private ImmediateFields(SerializationInfo info, StreamingContext context)
     {
-        _fields = new Dictionary<string, ImmediateField>(StringComparer.Ordinal);
-        Init(ExtractFields());
+        // Serialized data is untrusted: validated (count, nulls, duplicates, consistency) before use
+        List<FieldInfo> fields = ReadMembers<FieldInfo>(info, "Field");
 
-        #region Local function
-
-        IEnumerable<FieldInfo> ExtractFields()
-        {
-            int count = (int)info.GetValue("Count", typeof(int));
-            for (int i = 0; i < count; ++i)
-            {
-                yield return (FieldInfo)info.GetValue($"Field{i}", typeof(FieldInfo));
-            }
-        }
-
-        #endregion
+        _fields = new Dictionary<string, ImmediateField>(fields.Count, StringComparer.Ordinal);
+        Init(fields);
     }
 
     /// <inheritdoc />

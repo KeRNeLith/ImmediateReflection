@@ -37,7 +37,7 @@ else
 {
     $env:Build_Version = "$($env:APPVEYOR_BUILD_VERSION)";
     $env:Build_Assembly_Version = "$env:Build_Version" -replace "\-.*","";
-    $env:IsFullIntegrationBuild = "$env:APPVEYOR_PULL_REQUEST_NUMBER" -eq "" -And $env:Configuration -eq "Release";
+    $env:IsFullIntegrationBuild = "$env:APPVEYOR_PULL_REQUEST_NUMBER" -eq "" -and $env:Configuration -eq "Release";
 }
 
 UpdateAllPackagesGeneration;

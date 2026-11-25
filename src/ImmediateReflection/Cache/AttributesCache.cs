@@ -116,16 +116,16 @@ internal sealed class AttributesCache
             throw new ArgumentException($"{nameof(attributeType)} must be an {nameof(Attribute)} type.");
 
         if (inherit)
-            return FindAttribute(_attributesWithInherited);
-        return FindAttribute(_attributesWithoutInherited);
+            return FindAttribute(_attributesWithInherited, attributeType);
+        return FindAttribute(_attributesWithoutInherited, attributeType);
 
         #region Local function
 
-        Attribute? FindAttribute(Attribute[] attributes)
+        static Attribute? FindAttribute(Attribute[] attributes, Type type)
         {
             foreach (Attribute attribute in attributes)
             {
-                if (attributeType.IsInstanceOfType(attribute))
+                if (type.IsInstanceOfType(attribute))
                     return attribute;
             }
 
