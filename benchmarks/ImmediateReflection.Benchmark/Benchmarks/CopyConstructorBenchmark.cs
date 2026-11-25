@@ -1,44 +1,40 @@
-using System;
+﻿using System;
 using BenchmarkDotNet.Attributes;
-using JetBrains.Annotations;
 
-namespace ImmediateReflection.Benchmark
+namespace ImmediateReflection.Benchmark;
+
+/// <summary>
+/// Copy constructor benchmark class.
+/// </summary>
+public class CopyConstructorBenchmark : BenchmarkBase
 {
-    /// <summary>
-    /// Copy constructor benchmark class.
-    /// </summary>
-    public class CopyConstructorBenchmark : BenchmarkBase
+    private static readonly CopyableBenchmarkObject ObjectToCopy = new("Benchmark value");
+
+    private static readonly Func<CopyableBenchmarkObject, CopyableBenchmarkObject> ExpressionConstructor =
+        ExpressionHelpers.CreateCopyConstructor<CopyableBenchmarkObject>();
+
+    // Benchmark methods
+    [Benchmark(Baseline = true)]
+    public void Direct_CopyConstructor()
     {
-        [NotNull]
-        private static readonly CopyableBenchmarkObject ObjectToCopy = new CopyableBenchmarkObject("Benchmark value");
+        _ = new CopyableBenchmarkObject(ObjectToCopy);
+    }
 
-        [NotNull]
-        private static readonly Func<CopyableBenchmarkObject, CopyableBenchmarkObject> ExpressionConstructor = 
-            ExpressionHelpers.CreateCopyConstructor<CopyableBenchmarkObject>();
+    [Benchmark]
+    public void Activator_CopyConstructor()
+    {
+        _ = (CopyableBenchmarkObject)Activator.CreateInstance(CopyableBenchmarkObjectType, ObjectToCopy)!;
+    }
 
-        // Benchmark methods
-        [Benchmark(Baseline = true)]
-        public CopyableBenchmarkObject Direct_CopyConstructor()
-        {
-            return new CopyableBenchmarkObject(ObjectToCopy);
-        }
+    [Benchmark]
+    public void Expression_CopyConstructor()
+    {
+        _ = ExpressionConstructor(ObjectToCopy);
+    }
 
-        [Benchmark]
-        public CopyableBenchmarkObject Activator_CopyConstructor()
-        {
-            return (CopyableBenchmarkObject)Activator.CreateInstance(CopyableBenchmarkObjectType, ObjectToCopy);
-        }
-
-        [Benchmark]
-        public CopyableBenchmarkObject Expression_CopyConstructor()
-        {
-            return ExpressionConstructor(ObjectToCopy);
-        }
-
-        [Benchmark]
-        public CopyableBenchmarkObject ImmediateType_CopyConstructor()
-        {
-            return (CopyableBenchmarkObject)ImmediateTypeCopyable.Copy(ObjectToCopy);
-        }
+    [Benchmark]
+    public void ImmediateType_CopyConstructor()
+    {
+        _ = (CopyableBenchmarkObject)ImmediateTypeCopyable.Copy(ObjectToCopy);
     }
 }

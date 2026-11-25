@@ -286,3 +286,9 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
+# Nuget tools
+tools/
+
+# BenchmarkDotNet results
+BenchmarkDotNet.Artifacts/

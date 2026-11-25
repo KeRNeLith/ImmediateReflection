@@ -37,7 +37,7 @@ else
 {
     $env:Build_Version = "$($env:APPVEYOR_BUILD_VERSION)";
     $env:Build_Assembly_Version = "$env:Build_Version" -replace "\-.*","";
-    $env:IsFullIntegrationBuild = "$env:APPVEYOR_PULL_REQUEST_NUMBER" -eq "" -And $env:Configuration -eq "Release";
+    $env:IsFullIntegrationBuild = "$env:APPVEYOR_PULL_REQUEST_NUMBER" -eq "" -and $env:Configuration -eq "Release";
 }
 
 UpdateAllPackagesGeneration;
@@ -50,9 +50,9 @@ if ($env:IsFullIntegrationBuild -eq $true)
 {
     "With full integration";
 
-    $env:PATH="C:\Program Files\Java\jdk15\bin;$($env:PATH)"
-    $env:JAVA_HOME_11_X64='C:\Program Files\Java\jdk15'
-    $env:JAVA_HOME='C:\Program Files\Java\jdk15'
+    $env:PATH="C:\Program Files\Java\jdk21\bin;$($env:PATH)"
+    $env:JAVA_HOME_11_X64='C:\Program Files\Java\jdk21'
+    $env:JAVA_HOME='C:\Program Files\Java\jdk21'
 }
 else
 {

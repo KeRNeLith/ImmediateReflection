@@ -1,31 +1,28 @@
-﻿using System.Diagnostics;
-using JetBrains.Annotations;
+﻿using static ImmediateReflection.GeneralHelpers;
 
-namespace ImmediateReflection
+namespace ImmediateReflection;
+
+/// <summary>
+/// Data stored in a constructor cache.
+/// </summary>
+/// <typeparam name="TConstructorDelegate">Constructor delegate type.</typeparam>
+internal sealed class ConstructorData<TConstructorDelegate>
 {
     /// <summary>
-    /// Data stored in a constructor cache.
+    /// Indicates if there is a constructor.
     /// </summary>
-    /// <typeparam name="TConstructorDelegate">Constructor delegate type.</typeparam>
-    internal sealed class ConstructorData<TConstructorDelegate>
+    public bool HasConstructor { get; }
+
+    /// <summary>
+    /// Constructor delegate.
+    /// </summary>
+    public TConstructorDelegate Constructor { get; }
+
+    public ConstructorData(TConstructorDelegate constructor, bool hasConstructor)
     {
-        /// <summary>
-        /// Indicates if there is a constructor.
-        /// </summary>
-        public bool HasConstructor { get; }
+        AssertNotNull(constructor);
 
-        /// <summary>
-        /// Constructor delegate.
-        /// </summary>
-        [NotNull]
-        public TConstructorDelegate Constructor { get; }
-
-        public ConstructorData([NotNull] TConstructorDelegate constructor, bool hasConstructor)
-        {
-            Debug.Assert(constructor != null);
-
-            HasConstructor = hasConstructor;
-            Constructor = constructor;
-        }
+        HasConstructor = hasConstructor;
+        Constructor = constructor;
     }
 }

@@ -1,191 +1,199 @@
 ﻿using System;
 using System.Reflection;
+#if SUPPORTS_AGGRESSIVE_INLINING
+using System.Runtime.CompilerServices;
+#endif
 using System.Runtime.Serialization;
 using System.Security.Permissions;
+using System.Threading;
 using JetBrains.Annotations;
+using static ImmediateReflection.Utils.ReflectionHelpers;
 
-namespace ImmediateReflection
+namespace ImmediateReflection;
+
+/// <summary>
+/// Represents a field and provides access to its metadata in a faster way.
+/// </summary>
+[PublicAPI]
+[Serializable]
+public sealed class ImmediateField
+    : ImmediateMember
+    , IEquatable<ImmediateField>
+    , ISerializable
 {
     /// <summary>
-    /// Represents a field and provides access to its metadata in a faster way.
+    /// Gets the wrapped <see cref="T:System.Reflection.FieldInfo"/>.
     /// </summary>
     [PublicAPI]
-    [Serializable]
-    public sealed class ImmediateField
-        : ImmediateMember
-        , IEquatable<ImmediateField>
-        , ISerializable
+    public FieldInfo FieldInfo { get; }
+
+    /// <summary>
+    /// Gets the <see cref="T:System.Type"/> owning this field (declaring it).
+    /// </summary>
+    [PublicAPI]
+    public Type DeclaringType { get; }
+
+    /// <summary>
+    /// Gets the <see cref="T:System.Type"/> of this field.
+    /// </summary>
+    [PublicAPI]
+    public Type FieldType { get; }
+
+    private ImmediateType? _fieldImmediateType;
+
+    /// <summary>
+    /// Gets the <see cref="ImmediateType"/> of this field.
+    /// </summary>
+    [PublicAPI]
+    public ImmediateType FieldImmediateType => _fieldImmediateType ??= TypeAccessor.Get(FieldType);
+
+    // Getter/Setter are generated on first use as emitting them is costly, and they may never be used.
+    // Concurrent first uses may both create a delegate (the extra one is simply discarded), this avoids
+    // running user code (static constructors, ...) or serializing creations under a lock.
+
+    private GetterDelegate? _getter;
+    private SetterDelegate? _setter;
+
+    /// <summary>
+    /// Constructor.
+    /// </summary>
+    /// <param name="field"><see cref="T:System.Reflection.FieldInfo"/> to wrap.</param>
+    internal ImmediateField(FieldInfo field)
+        : base(field)
     {
-        /// <summary>
-        /// Gets the wrapped <see cref="T:System.Reflection.FieldInfo"/>.
-        /// </summary>
-        [PublicAPI]
-        [NotNull]
-        public FieldInfo FieldInfo { get; }
+        FieldInfo = field;
+        FieldType = field.FieldType;
 
-        /// <summary>
-        /// Gets the <see cref="T:System.Type"/> owning this field (declaring it).
-        /// </summary>
-        [PublicAPI]
-        [NotNull]
-        public Type DeclaringType { get; }
+        // Justification: A field is always declared inside a type
+        DeclaringType = field.DeclaringType!;
+    }
 
-        /// <summary>
-        /// Gets the <see cref="T:System.Type"/> of this field.
-        /// </summary>
-        [PublicAPI]
-        [NotNull]
-        public Type FieldType { get; }
+    // Current enum value field is not static compared to other enumeration available values fields
+    // => That's why we need the static check
+    // Justification: Declaring type for a field is always considered not null
+#if SUPPORTS_AGGRESSIVE_INLINING
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+    private static bool IsEnumValueField(FieldInfo field) => field.IsStatic && field.DeclaringType!.IsEnum;
 
-        [NotNull]
-        private readonly Lazy<ImmediateType> _fieldImmediateType;
+#if SUPPORTS_AGGRESSIVE_INLINING
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+    private static bool IsConstantField(FieldInfo field) => field.IsLiteral || field.IsInitOnly;
 
-        /// <summary>
-        /// Gets the <see cref="ImmediateType"/> of this field.
-        /// </summary>
-        [PublicAPI]
-        [NotNull]
-        public ImmediateType FieldImmediateType => _fieldImmediateType.Value;
+    private GetterDelegate GetOrCreateGetter()
+    {
+        GetterDelegate getter = CreateGetter(FieldInfo);
+        return Interlocked.CompareExchange(ref _getter, getter, null) ?? getter;
 
-        [NotNull]
-        private readonly GetterDelegate _getter;
+        #region Local function
 
-        [NotNull]
-        private readonly SetterDelegate _setter;
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="field"><see cref="T:System.Reflection.FieldInfo"/> to wrap.</param>
-        internal ImmediateField([NotNull] FieldInfo field)
-            : base(field)
+        static GetterDelegate CreateGetter(FieldInfo field)
         {
-            FieldInfo = field;
-            FieldType = field.FieldType;
-            _fieldImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(FieldType));
-
-            // ReSharper disable once AssignNullToNotNullAttribute, Justification: A field is always declared inside a type.
-            DeclaringType = field.DeclaringType;
-
-            // ReSharper disable once PossibleNullReferenceException, Justification: Declaring type for a field is always considered not null.
-            // Current enum value field is not static compared to other enumeration available values fields
-            // => That's why we need the static check
-            if (field.IsStatic && DeclaringType.IsEnum)
+            if (IsEnumValueField(field) || (IsConstantField(field) && field.IsStatic))
             {
-                // Getter / No setter
-                object enumValue = field.GetValue(null);
-                _getter = target => enumValue;
-                _setter = (target, value) => throw new FieldAccessException("Cannot set an enumeration value.");
-            }
-            else
-            {
-                // Getter / Setter
-                _getter = ConfigureGetter();
-                _setter = ConfigureSetter();
+                object fieldValue = field.GetValue(null);
+                return _ => fieldValue;
             }
 
-            #region Local functions
-
-            bool IsConstantField()
-            {
-                return field.IsLiteral || field.IsInitOnly;
-            }
-
-            GetterDelegate ConfigureGetter()
-            {
-                if (IsConstantField() && field.IsStatic)
-                {
-                    object fieldValue = field.GetValue(null);
-                    return target => fieldValue;
-                }
-
-                return DelegatesFactory.CreateGetter(field);
-            }
-
-            SetterDelegate ConfigureSetter()
-            {
-                if (IsConstantField())
-                    return (target, value) => throw new FieldAccessException($"Field {Name} cannot be set.");
-                return DelegatesFactory.CreateSetter(field);
-            }
-
-            #endregion
-        }
-
-        /// <summary>
-        /// Returns the field value of the specified object.
-        /// </summary>
-        /// <param name="obj">Object that field value will be returned.</param>
-        /// <returns>Field value of the specified object.</returns>
-        /// <exception cref="T:System.InvalidCastException">If the <paramref name="obj"/> is not the owner of this field.</exception>
-        /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the field to get is not static.</exception>
-        [PublicAPI]
-        [Pure]
-        public object GetValue([CanBeNull] object obj)
-        {
-            return _getter(obj);
-        }
-
-        /// <summary>
-        /// Sets the field value of the specified object.
-        /// </summary>
-        /// <param name="obj">Object that field value will be set.</param>
-        /// <param name="value">New field value.</param>
-        /// <exception cref="T:System.InvalidCastException">If the <paramref name="obj"/> is not the owner of this field or if the <paramref name="value"/> is of the wrong type.</exception>
-        /// <exception cref="T:System.FieldAccessException">If the field is constant or read only.</exception>
-        /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the field to set is not static.</exception>
-        [PublicAPI]
-        public void SetValue([CanBeNull] object obj, [CanBeNull] object value)
-        {
-            _setter(obj, value);
-        }
-
-        #region Equality / IEquatable<T>
-
-        /// <inheritdoc />
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as ImmediateField);
-        }
-
-        /// <inheritdoc />
-        public bool Equals(ImmediateField other)
-        {
-            if (other is null)
-                return false;
-            if (ReferenceEquals(this, other))
-                return true;
-            return FieldInfo == other.FieldInfo;
-        }
-
-        /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return FieldInfo.GetHashCode();
+            return DelegatesFactory.CreateGetter(field);
         }
 
         #endregion
+    }
 
-        #region ISerializable
+    private SetterDelegate GetOrCreateSetter()
+    {
+        SetterDelegate setter = CreateSetter(FieldInfo, Name);
+        return Interlocked.CompareExchange(ref _setter, setter, null) ?? setter;
 
-        private ImmediateField(SerializationInfo info, StreamingContext context)
-            : this((FieldInfo)info.GetValue("Field", typeof(FieldInfo)))
+        #region Local function
+
+        static SetterDelegate CreateSetter(FieldInfo field, string name)
         {
-        }
-
-        /// <inheritdoc />
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Field", FieldInfo);
+            if (IsEnumValueField(field))
+                return (_, _) => throw new FieldAccessException("Cannot set an enumeration value.");
+            if (IsConstantField(field))
+                return (_, _) => throw new FieldAccessException($"Field {name} cannot be set.");
+            return DelegatesFactory.CreateSetter(field);
         }
 
         #endregion
+    }
 
-        /// <inheritdoc />
-        public override string ToString()
-        {
-            return FieldInfo.ToString();
-        }
+    /// <summary>
+    /// Returns the field value of the specified object.
+    /// </summary>
+    /// <param name="obj">Object that field value will be returned.</param>
+    /// <returns>Field value of the specified object.</returns>
+    /// <exception cref="T:System.InvalidCastException">If the <paramref name="obj"/> is not the owner of this field.</exception>
+    /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the field to get is not static.</exception>
+    [PublicAPI]
+    [Pure]
+    public object? GetValue(object? obj)
+    {
+        return (_getter ?? GetOrCreateGetter())(obj);
+    }
+
+    /// <summary>
+    /// Sets the field value of the specified object.
+    /// </summary>
+    /// <param name="obj">Object that field value will be set.</param>
+    /// <param name="value">New field value.</param>
+    /// <exception cref="T:System.InvalidCastException">If the <paramref name="obj"/> is not the owner of this field or if the <paramref name="value"/> is of the wrong type.</exception>
+    /// <exception cref="T:System.FieldAccessException">If the field is constant or read only.</exception>
+    /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the field to set is not static.</exception>
+    [PublicAPI]
+    public void SetValue(object? obj, object? value)
+    {
+        (_setter ?? GetOrCreateSetter())(obj, value);
+    }
+
+    #region Equality / IEquatable<T>
+
+    /// <inheritdoc />
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as ImmediateField);
+    }
+
+    /// <inheritdoc />
+    public bool Equals(ImmediateField? other)
+    {
+        if (other is null)
+            return false;
+        if (ReferenceEquals(this, other))
+            return true;
+        return FieldInfo.Equals(other.FieldInfo);
+    }
+
+    /// <inheritdoc />
+    public override int GetHashCode()
+    {
+        return GetFieldInfoHashCode(FieldInfo);
+    }
+
+    #endregion
+
+    #region ISerializable
+
+    private ImmediateField(SerializationInfo info, StreamingContext context)
+        : this((FieldInfo)info.GetValue("Field", typeof(FieldInfo)))
+    {
+    }
+
+    /// <inheritdoc />
+    [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
+    void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        info.AddValue("Field", FieldInfo);
+    }
+
+    #endregion
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return FieldInfo.ToString();
     }
 }

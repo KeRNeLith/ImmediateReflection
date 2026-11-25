@@ -27,6 +27,8 @@ ImmediateType type = TypeAccessor.Get<MySuperType>(BindingFlags.Public | Binding
 
 Note: there is a built-in cache behind the `TypeAccessor`.
 
+Note: To keep creation cheap, the getters/setters of `ImmediateProperty` and `ImmediateField` (as well as constructors and attributes) are created lazily, on first use. The very first `GetValue`/`SetValue` on a member pays the delegate creation cost, then following calls are immediate.
+
 ## Instantiate a type
 
 The `ImmediateType` allows to instantiate types via their default constructor if available. This feature is faster than making a traditional call to `Activator.CreateInstance(Type)`.

@@ -1,91 +1,84 @@
-using System;
+﻿using System;
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
-using JetBrains.Annotations;
 using Sigil;
 
-namespace ImmediateReflection.Benchmark
+namespace ImmediateReflection.Benchmark;
+
+/// <summary>
+/// Property getter benchmark class.
+/// </summary>
+public class PropertyGetterBenchmark : BenchmarkBase
 {
-    /// <summary>
-    /// Property getter benchmark class.
-    /// </summary>
-    public class PropertyGetterBenchmark : BenchmarkBase
+    private static readonly Func<BenchmarkObject, string> GetterDelegate = (Func<BenchmarkObject, string>)
+        Delegate.CreateDelegate(typeof(Func<BenchmarkObject, string>), null, PropertyInfo.GetGetMethod()!);
+
+    private static readonly Delegate DynamicGetterDelegate = Delegate.CreateDelegate(
+        typeof(Func<BenchmarkObject, string>), null, PropertyInfo.GetGetMethod()!);
+
+    private static readonly Func<BenchmarkObject, string> SigilEmitGetter = Emit<Func<BenchmarkObject, string>>
+        .NewDynamicMethod("GetProperty")
+        .LoadArgument(0)
+        .Call(PropertyInfo.GetGetMethod())
+        .Return()
+        .CreateDelegate();
+
+    private static readonly Func<BenchmarkObject, object> ExpressionGetter = ExpressionHelpers.CreateGetter<BenchmarkObject>(PropertyInfo);
+
+    // Benchmark methods
+    [Benchmark(Baseline = true)]
+    public void GetDirect_Property()
     {
-        [NotNull]
-        private static readonly Func<BenchmarkObject, string> GetterDelegate = (Func<BenchmarkObject, string>)
-            Delegate.CreateDelegate(typeof(Func<BenchmarkObject, string>), null, PropertyInfo.GetGetMethod());
+        _ = BenchmarkObject.BenchmarkProperty;
+    }
 
-        [NotNull]
-        private static readonly Delegate DynamicGetterDelegate = Delegate.CreateDelegate(
-            typeof(Func<BenchmarkObject, string>), null, PropertyInfo.GetGetMethod());
+    [Benchmark]
+    public void GetDelegate_Property()
+    {
+        _ = GetterDelegate(BenchmarkObject);
+    }
 
-        [NotNull]
-        private static readonly Func<BenchmarkObject, string> SigilEmitGetter = Emit<Func<BenchmarkObject, string>>
-            .NewDynamicMethod("GetProperty")
-            .LoadArgument(0)
-            .Call(PropertyInfo.GetGetMethod())
-            .Return()
-            .CreateDelegate();
+    [Benchmark]
+    public void GetDynamicDelegate_Property()
+    {
+        _ = (string)DynamicGetterDelegate.DynamicInvoke(BenchmarkObject)!;
+    }
 
-        [NotNull]
-        private static readonly Func<BenchmarkObject, object> ExpressionGetter = ExpressionHelpers.CreateGetter<BenchmarkObject>(PropertyInfo);
+    [Benchmark]
+    public void GetPropertyInfo_Property()
+    {
+        Type benchmarkType = BenchmarkObject.GetType();
+        PropertyInfo benchmarkProperty = benchmarkType.GetProperty(BenchmarkObjectPropertyName)!;
+        _ = (string)benchmarkProperty.GetValue(BenchmarkObject)!;
+    }
 
-        // Benchmark methods
-        [Benchmark(Baseline = true)]
-        public string GetDirect_Property()
-        {
-            return BenchmarkObject.BenchmarkProperty;
-        }
+    [Benchmark]
+    public void GetPropertyInfoCache_Property()
+    {
+        _ = (string)PropertyInfo.GetValue(BenchmarkObject)!;
+    }
 
-        [Benchmark]
-        public string GetDelegate_Property()
-        {
-            return GetterDelegate(BenchmarkObject);
-        }
+    [Benchmark]
+    public void GetSigilEmit_Property()
+    {
+        _ = SigilEmitGetter(BenchmarkObject);
+    }
 
-        [Benchmark]
-        public string GetDynamicDelegate_Property()
-        {
-            return (string)DynamicGetterDelegate.DynamicInvoke(BenchmarkObject);
-        }
+    [Benchmark]
+    public void GetExpression_Property()
+    {
+        _ = (string)ExpressionGetter(BenchmarkObject);
+    }
 
-        [Benchmark]
-        public string GetPropertyInfo_Property()
-        {
-            Type benchmarkType = BenchmarkObject.GetType();
-            PropertyInfo benchmarkProperty = benchmarkType.GetProperty(BenchmarkObjectPropertyName);
-            // ReSharper disable once PossibleNullReferenceException
-            return (string)benchmarkProperty.GetValue(BenchmarkObject);
-        }
+    [Benchmark]
+    public void GetFastMember_Property()
+    {
+        _ = (string)TypeAccessor[BenchmarkObject, BenchmarkObjectPropertyName];
+    }
 
-        [Benchmark]
-        public string GetPropertyInfoCache_Property()
-        {
-            return (string)PropertyInfo.GetValue(BenchmarkObject);
-        }
-
-        [Benchmark]
-        public string GetSigilEmit_Property()
-        {
-            return SigilEmitGetter(BenchmarkObject);
-        }
-
-        [Benchmark]
-        public string GetExpression_Property()
-        {
-            return (string)ExpressionGetter(BenchmarkObject);
-        }
-
-        [Benchmark]
-        public string GetFastMember_Property()
-        {
-            return (string)TypeAccessor[BenchmarkObject, BenchmarkObjectPropertyName];
-        }
-
-        [Benchmark]
-        public string GetImmediateProperty_Property()
-        {
-            return (string)ImmediateProperty.GetValue(BenchmarkObject);
-        }
+    [Benchmark]
+    public void GetImmediateProperty_Property()
+    {
+        _ = (string)ImmediateProperty.GetValue(BenchmarkObject)!;
     }
 }

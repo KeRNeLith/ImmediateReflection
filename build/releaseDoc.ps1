@@ -9,20 +9,20 @@
     Invoke-Git push
 
 .Example
-    Invoke-Git "add ."
+    Invoke-Git @("add", ".")
 #>
 function Invoke-Git
 {
 param(
 [Parameter(Mandatory)]
-[string] $Command )
+[string[]] $Arguments )
 
     try {
 
         $exit = 0
         $path = [System.IO.Path]::GetTempFileName()
 
-        Invoke-Expression "git $Command 2> $path"
+        & git @Arguments 2> $path
         $exit = $LASTEXITCODE
         if ( $exit -gt 0 )
         {
@@ -36,7 +36,7 @@ param(
     }
     catch
     {
-        Write-Host "Error: $_`n$($_.ScriptStackTrace)"
+        Write-Error "Error: $_`n$($_.ScriptStackTrace)"
     }
     finally
     {
@@ -51,17 +51,18 @@ param(
 if ($env:Configuration -ne "Release")
 {
     "Documentation update ignored: Not Release build.";
-    Return;
+    return;
 }
 
 if ($env:APPVEYOR_REPO_BRANCH -ne "master")
 {
     "Documentation update ignored: Not master branch.";
-    Return;
+    return;
 }
 
 # Chocolatey DocFX
-cinst docfx --version $env:DocFXVersion -y
+dotnet tool install --tool-path tools --version $env:DocFXVersion docfx
+$docFx = (Resolve-Path "tools\docfx.exe").ToString();
 
 git config --global core.autocrlf true
 git config --global core.eol lf
@@ -70,7 +71,7 @@ git config --global user.email $env:GITHUB_EMAIL
 git config --global user.name "KeRNeLith"
 
 "Generating documentation site..."
-docfx ./docs/docfx.json
+& $docFx ./docs/docfx.json
 
 $SOURCE_DIR=$pwd.Path
 $TEMP_REPO_DIR="$pwd/../ImmediateReflection-gh-pages"
@@ -78,7 +79,7 @@ $TEMP_REPO_DIR="$pwd/../ImmediateReflection-gh-pages"
 if (Test-Path $TEMP_REPO_DIR)
 {
     "Removing temporary documentation directory $TEMP_REPO_DIR..."
-    rm -recurse $TEMP_REPO_DIR
+    Remove-Item -Recurse $TEMP_REPO_DIR
 }
 
 mkdir $TEMP_REPO_DIR
@@ -88,13 +89,13 @@ mkdir $TEMP_REPO_DIR
 git clone -q https://github.com/KeRNeLith/ImmediateReflection.git --branch gh-pages $TEMP_REPO_DIR
 
 "Clear local repository gh-pages directory..."
-cd $TEMP_REPO_DIR
+Set-Location $TEMP_REPO_DIR
 git rm -r *
 
 "Copying documentation into the local repository gh-pages directory..."
-cp -recurse $SOURCE_DIR/docs/_site/* .
+Copy-Item -Recurse $SOURCE_DIR/docs/_site/* .
 
-Invoke-Git "add -A ."
+Invoke-Git @("add", "-A", ".")
 
 "Checking if there are changes in the documentation..."
 if (-not [string]::IsNullOrEmpty($(git status --porcelain)))

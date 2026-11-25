@@ -3,200 +3,212 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
+using System.Threading;
 using JetBrains.Annotations;
 using static ImmediateReflection.Utils.ReflectionHelpers;
 
-namespace ImmediateReflection
+namespace ImmediateReflection;
+
+/// <summary>
+/// Represents a property and provides access to property metadata in a faster way.
+/// </summary>
+[PublicAPI]
+[Serializable]
+public sealed class ImmediateProperty
+    : ImmediateMember
+    , IEquatable<ImmediateProperty>
+    , ISerializable
 {
     /// <summary>
-    /// Represents a property and provides access to property metadata in a faster way.
+    /// Gets the wrapped <see cref="T:System.Reflection.PropertyInfo"/>.
     /// </summary>
     [PublicAPI]
-    [Serializable]
-    public sealed class ImmediateProperty
-        : ImmediateMember
-        , IEquatable<ImmediateProperty>
-        , ISerializable
+    public PropertyInfo PropertyInfo { get; }
+
+    /// <summary>
+    /// Gets the <see cref="T:System.Type"/> owning this property (declaring it).
+    /// </summary>
+    [PublicAPI]
+    public Type DeclaringType { get; }
+
+    /// <summary>
+    /// Gets the <see cref="T:System.Type"/> of this property.
+    /// </summary>
+    [PublicAPI]
+    public Type PropertyType { get; }
+
+    private ImmediateType? _propertyImmediateType;
+
+    /// <summary>
+    /// Gets the <see cref="ImmediateType"/> of this property.
+    /// </summary>
+    [PublicAPI]
+    public ImmediateType PropertyImmediateType => _propertyImmediateType ??= TypeAccessor.Get(PropertyType);
+
+    /// <summary>
+    /// Gets the readable state of this property.
+    /// </summary>
+    [PublicAPI]
+    public bool CanRead { get; }
+
+    // Getter/Setter are generated on first use as emitting them is costly, and they may never be used.
+    // Concurrent first uses may both create a delegate (the extra one is simply discarded), this avoids
+    // running user code (static constructors, ...) or serializing creations under a lock.
+
+    private GetterDelegate? _getter;
+
+    /// <summary>
+    /// Gets the writable state of this property.
+    /// </summary>
+    [PublicAPI]
+    public bool CanWrite { get; }
+
+    private SetterDelegate? _setter;
+
+    /// <summary>
+    /// Constructor.
+    /// </summary>
+    /// <param name="property"><see cref="T:System.Reflection.PropertyInfo"/> to wrap.</param>
+    internal ImmediateProperty(PropertyInfo property)
+        : base(property)
     {
-        /// <summary>
-        /// Gets the wrapped <see cref="T:System.Reflection.PropertyInfo"/>.
-        /// </summary>
-        [PublicAPI]
-        [NotNull]
-        public PropertyInfo PropertyInfo { get; }
+        Debug.Assert(!IsIndexed(property), $"Cannot initialize an {nameof(ImmediateProperty)} with an indexed property.");
 
-        /// <summary>
-        /// Gets the <see cref="T:System.Type"/> owning this property (declaring it).
-        /// </summary>
-        [PublicAPI]
-        [NotNull]
-        public Type DeclaringType { get; }
+        // General property info
+        PropertyInfo = property;
+        PropertyType = property.PropertyType;
 
-        /// <summary>
-        /// Gets the <see cref="T:System.Type"/> of this property.
-        /// </summary>
-        [PublicAPI]
-        [NotNull]
-        public Type PropertyType { get; }
+        // Justification: A property is always declared inside a type
+        DeclaringType = property.DeclaringType!;
 
-        [NotNull]
-        private readonly Lazy<ImmediateType> _propertyImmediateType;
+        CanRead = property.CanRead;
+        CanWrite = property.CanWrite;
+    }
 
-        /// <summary>
-        /// Gets the <see cref="ImmediateType"/> of this property.
-        /// </summary>
-        [PublicAPI]
-        [NotNull]
-        public ImmediateType PropertyImmediateType => _propertyImmediateType.Value;
+    private GetterDelegate GetOrCreateGetter()
+    {
+        GetterDelegate getter = CreateGetter(PropertyInfo, Name);
+        return Interlocked.CompareExchange(ref _getter, getter, null) ?? getter;
 
-        /// <summary>
-        /// Gets the readable state of this property.
-        /// </summary>
-        [PublicAPI]
-        public bool CanRead { get; }
+        #region Local function
 
-        [NotNull]
-        private readonly GetterDelegate _getter;
-
-        /// <summary>
-        /// Gets the writable state of this property.
-        /// </summary>
-        [PublicAPI]
-        public bool CanWrite { get; }
-
-        [NotNull]
-        private readonly SetterDelegate _setter;
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="property"><see cref="T:System.Reflection.PropertyInfo"/> to wrap.</param>
-        internal ImmediateProperty([NotNull] PropertyInfo property)
-            : base(property)
+        static GetterDelegate CreateGetter(PropertyInfo property, string name)
         {
-            Debug.Assert(!IsIndexed(property), $"Cannot initialize an {nameof(ImmediateProperty)} with an indexed property.");
-
-            // General property info
-            PropertyInfo = property;
-            PropertyType = property.PropertyType;
-            _propertyImmediateType = new Lazy<ImmediateType>(() => TypeAccessor.Get(PropertyType));
-
-            // ReSharper disable once AssignNullToNotNullAttribute, Justification: A property is always declared inside a type.
-            DeclaringType = property.DeclaringType;
-
-            CanRead = property.CanRead;
-            CanWrite = property.CanWrite;
-
-            // Getter / Setter
-            _getter = ConfigureGetter();
-            _setter = ConfigureSetter();
-
-            #region Local functions
-
-            GetterDelegate ConfigureGetter()
+            GetterDelegate? getter = null;
+            MethodInfo getMethod = property.GetGetMethod(true);
+            if (getMethod is not null)
             {
-                GetterDelegate getter = null;
-                MethodInfo getMethod = property.GetGetMethod(true);
-                if (getMethod != null)
-                    getter = DelegatesFactory.CreateGetter(property, getMethod);
-
-                if (getter is null)
-                    return target => throw new ArgumentException($"No getter for property {Name}.");
-
-                return getter;
+                getter = DelegatesFactory.CreateGetter(property, getMethod);
             }
 
-            SetterDelegate ConfigureSetter()
-            {
-                SetterDelegate setter = null;
-                MethodInfo setMethod = property.GetSetMethod(true);
-                if (setMethod != null)
-                    setter = DelegatesFactory.CreateSetter(property, setMethod);
+            if (getter is null)
+                return _ => throw new ArgumentException($"No getter for property {name}.");
 
-                if (setter is null)
-                    return (target, value) => throw new ArgumentException($"No setter for property {Name}.");
-
-                return setter;
-            }
-
-            #endregion
-        }
-
-        /// <summary>
-        /// Returns the property value of the specified object.
-        /// </summary>
-        /// <param name="obj">Object that property value will be returned.</param>
-        /// <returns>Property value of the specified object.</returns>
-        /// <exception cref="T:System.ArgumentException">If this property has no getter.</exception>
-        /// <exception cref="T:System.InvalidCastException">If the <paramref name="obj"/> is not the owner of this property.</exception>
-        /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the property to get is not static.</exception>
-        [PublicAPI]
-        [Pure]
-        public object GetValue([CanBeNull] object obj)
-        {
-            return _getter(obj);
-        }
-
-        /// <summary>
-        /// Sets the property value of the specified object.
-        /// </summary>
-        /// <param name="obj">Object that property value will be set.</param>
-        /// <param name="value">New property value.</param>
-        /// <exception cref="T:System.ArgumentException">If this property has no setter.</exception>
-        /// <exception cref="T:System.InvalidCastException">If the <paramref name="obj"/> is not the owner of this property or if the <paramref name="value"/> is of the wrong type.</exception>
-        /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the property to set is not static.</exception>
-        [PublicAPI]
-        public void SetValue([CanBeNull] object obj, [CanBeNull] object value)
-        {
-            _setter(obj, value);
-        }
-
-        #region Equality / IEquatable<T>
-
-        /// <inheritdoc />
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as ImmediateProperty);
-        }
-
-        /// <inheritdoc />
-        public bool Equals(ImmediateProperty other)
-        {
-            if (other is null)
-                return false;
-            if (ReferenceEquals(this, other))
-                return true;
-            return PropertyInfo == other.PropertyInfo;
-        }
-
-        /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return PropertyInfo.GetHashCode();
+            return getter;
         }
 
         #endregion
+    }
 
-        #region ISerializable
+    private SetterDelegate GetOrCreateSetter()
+    {
+        SetterDelegate setter = CreateSetter(PropertyInfo, Name);
+        return Interlocked.CompareExchange(ref _setter, setter, null) ?? setter;
 
-        private ImmediateProperty(SerializationInfo info, StreamingContext context)
-            : this((PropertyInfo)info.GetValue("Property", typeof(PropertyInfo)))
+        #region Local function
+
+        static SetterDelegate CreateSetter(PropertyInfo property, string name)
         {
-        }
+            SetterDelegate? setter = null;
+            MethodInfo setMethod = property.GetSetMethod(true);
+            if (setMethod is not null)
+            {
+                setter = DelegatesFactory.CreateSetter(property, setMethod);
+            }
 
-        /// <inheritdoc />
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Property", PropertyInfo);
+            if (setter is null)
+                return (_, _) => throw new ArgumentException($"No setter for property {name}.");
+
+            return setter;
         }
 
         #endregion
+    }
 
-        /// <inheritdoc />
-        public override string ToString()
-        {
-            return PropertyInfo.ToString();
-        }
+    /// <summary>
+    /// Returns the property value of the specified object.
+    /// </summary>
+    /// <param name="obj">Object that property value will be returned.</param>
+    /// <returns>Property value of the specified object.</returns>
+    /// <exception cref="T:System.ArgumentException">If this property has no getter.</exception>
+    /// <exception cref="T:System.InvalidCastException">If the <paramref name="obj"/> is not the owner of this property.</exception>
+    /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the property to get is not static.</exception>
+    [PublicAPI]
+    [Pure]
+    public object? GetValue(object? obj)
+    {
+        return (_getter ?? GetOrCreateGetter())(obj);
+    }
+
+    /// <summary>
+    /// Sets the property value of the specified object.
+    /// </summary>
+    /// <param name="obj">Object that property value will be set.</param>
+    /// <param name="value">New property value.</param>
+    /// <exception cref="T:System.ArgumentException">If this property has no setter.</exception>
+    /// <exception cref="T:System.InvalidCastException">If the <paramref name="obj"/> is not the owner of this property or if the <paramref name="value"/> is of the wrong type.</exception>
+    /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the property to set is not static.</exception>
+    [PublicAPI]
+    public void SetValue(object? obj, object? value)
+    {
+        (_setter ?? GetOrCreateSetter())(obj, value);
+    }
+
+    #region Equality / IEquatable<T>
+
+    /// <inheritdoc />
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as ImmediateProperty);
+    }
+
+    /// <inheritdoc />
+    public bool Equals(ImmediateProperty? other)
+    {
+        if (other is null)
+            return false;
+        if (ReferenceEquals(this, other))
+            return true;
+        return PropertyInfo.Equals(other.PropertyInfo);
+    }
+
+    /// <inheritdoc />
+    public override int GetHashCode()
+    {
+        return GetPropertyInfoHashCode(PropertyInfo);
+    }
+
+    #endregion
+
+    #region ISerializable
+
+    private ImmediateProperty(SerializationInfo info, StreamingContext context)
+        : this((PropertyInfo)info.GetValue("Property", typeof(PropertyInfo)))
+    {
+    }
+
+    /// <inheritdoc />
+    [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
+    void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        info.AddValue("Property", PropertyInfo);
+    }
+
+    #endregion
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return PropertyInfo.ToString();
     }
 }

@@ -9,11 +9,11 @@
 
   <!-- C# configuration -->
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>13</LangVersion>
   </PropertyGroup>
 
   <!-- Dependencies -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.3" />
   </ItemGroup>
 </Project>

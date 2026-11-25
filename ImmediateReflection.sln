@@ -9,8 +9,31 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmediateReflection.Tests", "tests\ImmediateReflection.Tests\ImmediateReflection.Tests.csproj", "{125C0F86-EA89-B12B-AEDF-B83E2B9623AC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Benchmark", "Benchmark", "{22937B93-4129-4F68-AB14-F7AFE020BA8F}"
+	ProjectSection(SolutionItems) = preProject
+		benchmarks\Directory.Build.props = benchmarks\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmediateReflection.Benchmark", "benchmarks\ImmediateReflection.Benchmark\ImmediateReflection.Benchmark.csproj", "{952EA9EF-9206-4BD8-8F9E-3CBAB655BCD0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		tests\Directory.Build.props = tests\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{5B9C2911-76F5-4E2C-8DA9-34E25F12CDAB}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		Directory.Build.props = Directory.Build.props
+		README.md = README.md
+		RELEASE_NOTES.md = RELEASE_NOTES.md
+		SonarQube.Analysis.xml = SonarQube.Analysis.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{B76CE89C-8CF5-4A41-9265-77A13A936CA4}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+		src\PackagesGeneration.props = src\PackagesGeneration.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,9 +58,16 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{CE984360-54F0-406F-B8A9-E75897DAED3B} = {B76CE89C-8CF5-4A41-9265-77A13A936CA4}
+		{D5762C6B-C87B-28BB-C2A8-60B33343641D} = {B76CE89C-8CF5-4A41-9265-77A13A936CA4}
+		{125C0F86-EA89-B12B-AEDF-B83E2B9623AC} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{952EA9EF-9206-4BD8-8F9E-3CBAB655BCD0} = {22937B93-4129-4F68-AB14-F7AFE020BA8F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D51F43F6-C27F-40EE-A4F2-CA21506D9B97}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\ImmediateReflection.CommonInternals\ImmediateReflection.CommonInternals.projitems*{ce984360-54f0-406f-b8a9-e75897daed3b}*SharedItemsImports = 13
+		src\ImmediateReflection.CommonInternals\ImmediateReflection.CommonInternals.projitems*{d5762c6b-c87b-28bb-c2a8-60b33343641d}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

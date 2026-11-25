@@ -1,95 +1,87 @@
-using System;
+﻿using System;
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
-using JetBrains.Annotations;
 using Sigil;
 
-namespace ImmediateReflection.Benchmark
+namespace ImmediateReflection.Benchmark;
+
+/// <summary>
+/// Property setter benchmark class.
+/// </summary>
+public class PropertySetterBenchmark : BenchmarkBase
 {
-    /// <summary>
-    /// Property setter benchmark class.
-    /// </summary>
-    public class PropertySetterBenchmark : BenchmarkBase
+    private static readonly Action<BenchmarkObject, string> SetterDelegate = (Action<BenchmarkObject, string>)
+        Delegate.CreateDelegate(typeof(Action<BenchmarkObject, string>), null, PropertyInfo.GetSetMethod()!);
+
+    private static readonly Delegate DynamicSetterDelegate = Delegate.CreateDelegate(
+        typeof(Action<BenchmarkObject, string>), null, PropertyInfo.GetSetMethod()!);
+
+    private static readonly Action<BenchmarkObject, string> SigilEmitSetter = Emit<Action<BenchmarkObject, string>>
+        .NewDynamicMethod("SetProperty")
+        .LoadArgument(0)
+        .LoadArgument(1)
+        .Call(PropertyInfo.GetSetMethod())
+        .Return()
+        .CreateDelegate();
+
+    private static readonly Action<BenchmarkObject, object> ExpressionSetter = ExpressionHelpers.CreateSetter<BenchmarkObject>(PropertyInfo);
+
+    private const string ValueToSet = "Updated benchmark string";
+
+    // Benchmark methods
+    [Benchmark(Baseline = true)]
+    public void SetDirect_Property()
     {
-        [NotNull]
-        private static readonly Action<BenchmarkObject, string> SetterDelegate = (Action<BenchmarkObject, string>)
-            Delegate.CreateDelegate(typeof(Action<BenchmarkObject, string>), null, PropertyInfo.GetSetMethod());
+        BenchmarkObject.BenchmarkProperty = ValueToSet;
+    }
 
-        [NotNull]
-        private static readonly Delegate DynamicSetterDelegate = Delegate.CreateDelegate(
-            typeof(Action<BenchmarkObject, string>), null, PropertyInfo.GetSetMethod());
+    [Benchmark]
+    public void SetDelegate_Property()
+    {
+        SetterDelegate(BenchmarkObject, ValueToSet);
+    }
 
-        [NotNull]
-        private static readonly Action<BenchmarkObject, string> SigilEmitSetter = Emit<Action<BenchmarkObject, string>>
-            .NewDynamicMethod("SetProperty")
-            .LoadArgument(0)
-            .LoadArgument(1)
-            .Call(PropertyInfo.GetSetMethod())
-            .Return()
-            .CreateDelegate();
+    [Benchmark]
+    public void SetDynamicDelegate_Property()
+    {
+        DynamicSetterDelegate.DynamicInvoke(BenchmarkObject, ValueToSet);
+    }
 
-        [NotNull]
-        private static readonly Action<BenchmarkObject, object> ExpressionSetter = ExpressionHelpers.CreateSetter<BenchmarkObject>(PropertyInfo);
+    [Benchmark]
+    public void SetPropertyInfo_Property()
+    {
+        Type benchmarkType = BenchmarkObject.GetType();
+        PropertyInfo benchmarkProperty = benchmarkType.GetProperty(BenchmarkObjectPropertyName)!;
+        benchmarkProperty.SetValue(BenchmarkObject, ValueToSet);
+    }
 
-        [NotNull]
-        private const string ValueToSet = "Updated benchmark string";
+    [Benchmark]
+    public void SetPropertyInfoCache_Property()
+    {
+        PropertyInfo.SetValue(BenchmarkObject, ValueToSet);
+    }
 
-        // Benchmark methods
-        [Benchmark(Baseline = true)]
-        public void SetDirect_Property()
-        {
-            BenchmarkObject.BenchmarkProperty = ValueToSet;
-        }
+    [Benchmark]
+    public void SetSigilEmit_Property()
+    {
+        SigilEmitSetter(BenchmarkObject, ValueToSet);
+    }
 
-        [Benchmark]
-        public void SetDelegate_Property()
-        {
-            SetterDelegate(BenchmarkObject, ValueToSet);
-        }
+    [Benchmark]
+    public void SetExpression_Property()
+    {
+        ExpressionSetter(BenchmarkObject, ValueToSet);
+    }
 
-        [Benchmark]
-        public void SetDynamicDelegate_Property()
-        {
-            DynamicSetterDelegate.DynamicInvoke(BenchmarkObject, ValueToSet);
-        }
+    [Benchmark]
+    public void SetFastMember_Property()
+    {
+        TypeAccessor[BenchmarkObject, BenchmarkObjectPropertyName] = ValueToSet;
+    }
 
-        [Benchmark]
-        public void SetPropertyInfo_Property()
-        {
-            Type benchmarkType = BenchmarkObject.GetType();
-            PropertyInfo benchmarkProperty = benchmarkType.GetProperty(BenchmarkObjectPropertyName);
-            // ReSharper disable once PossibleNullReferenceException
-            benchmarkProperty.SetValue(BenchmarkObject, ValueToSet);
-        }
-
-        [Benchmark]
-        public void SetPropertyInfoCache_Property()
-        {
-            PropertyInfo.SetValue(BenchmarkObject, ValueToSet);
-        }
-
-        [Benchmark]
-        public void SetSigilEmit_Property()
-        {
-            SigilEmitSetter(BenchmarkObject, ValueToSet);
-        }
-
-        [Benchmark]
-        public void SetExpression_Property()
-        {
-            ExpressionSetter(BenchmarkObject, ValueToSet);
-        }
-
-        [Benchmark]
-        public void SetFastMember_Property()
-        {
-            TypeAccessor[BenchmarkObject, BenchmarkObjectPropertyName] = ValueToSet;
-        }
-
-        [Benchmark]
-        public void SetImmediateProperty_Property()
-        {
-            ImmediateProperty.SetValue(BenchmarkObject, ValueToSet);
-        }
+    [Benchmark]
+    public void SetImmediateProperty_Property()
+    {
+        ImmediateProperty.SetValue(BenchmarkObject, ValueToSet);
     }
 }
