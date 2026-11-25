@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
 
 namespace ImmediateReflection.Benchmark;
 
 /// <summary>
 /// Field multi getter benchmark class.
 /// </summary>
-[SimpleJob(RuntimeMoniker.Net48)]
-[SimpleJob(RuntimeMoniker.Net80)]
 public class FieldMultiGetterBenchmark : BenchmarkBase
 {
     // Benchmark methods

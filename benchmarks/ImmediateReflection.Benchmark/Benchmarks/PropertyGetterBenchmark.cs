@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
 using Sigil;
 
 namespace ImmediateReflection.Benchmark;
@@ -9,8 +8,6 @@ namespace ImmediateReflection.Benchmark;
 /// <summary>
 /// Property getter benchmark class.
 /// </summary>
-[SimpleJob(RuntimeMoniker.Net48)]
-[SimpleJob(RuntimeMoniker.Net80)]
 public class PropertyGetterBenchmark : BenchmarkBase
 {
     private static readonly Func<BenchmarkObject, string> GetterDelegate = (Func<BenchmarkObject, string>)

@@ -1,14 +1,11 @@
 ﻿using System;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
 
 namespace ImmediateReflection.Benchmark;
 
 /// <summary>
 /// Copy constructor benchmark class.
 /// </summary>
-[SimpleJob(RuntimeMoniker.Net48)]
-[SimpleJob(RuntimeMoniker.Net80)]
 public class MultiCopyConstructorBenchmark : BenchmarkBase
 {
     private static readonly CopyableBenchmarkObject ObjectToCopy = new("Benchmark value");

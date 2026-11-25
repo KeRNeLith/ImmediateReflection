@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
 using Sigil;
 
 namespace ImmediateReflection.Benchmark;
@@ -9,8 +8,6 @@ namespace ImmediateReflection.Benchmark;
 /// <summary>
 /// Property setter benchmark class.
 /// </summary>
-[SimpleJob(RuntimeMoniker.Net48)]
-[SimpleJob(RuntimeMoniker.Net80)]
 public class PropertySetterBenchmark : BenchmarkBase
 {
     private static readonly Action<BenchmarkObject, string> SetterDelegate = (Action<BenchmarkObject, string>)

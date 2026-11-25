@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Reflection;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
 
 namespace ImmediateReflection.Benchmark;
 
 /// <summary>
 /// Field multi setter benchmark class.
 /// </summary>
-[SimpleJob(RuntimeMoniker.Net48)]
-[SimpleJob(RuntimeMoniker.Net80)]
 public class FieldMultiSetterBenchmark : BenchmarkBase
 {
     private const int ValueToSet = 12;
