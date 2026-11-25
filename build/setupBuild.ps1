@@ -50,9 +50,9 @@ if ($env:IsFullIntegrationBuild -eq $true)
 {
     "With full integration";
 
-    $env:PATH="C:\Program Files\Java\jdk15\bin;$($env:PATH)"
-    $env:JAVA_HOME_11_X64='C:\Program Files\Java\jdk15'
-    $env:JAVA_HOME='C:\Program Files\Java\jdk15'
+    $env:PATH="C:\Program Files\Java\jdk21\bin;$($env:PATH)"
+    $env:JAVA_HOME_11_X64='C:\Program Files\Java\jdk21'
+    $env:JAVA_HOME='C:\Program Files\Java\jdk21'
 }
 else
 {
