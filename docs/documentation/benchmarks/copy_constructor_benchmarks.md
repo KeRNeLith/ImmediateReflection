@@ -5,32 +5,54 @@ Benchmarks have been implemented with [BenchmarkDotNet](https://github.com/dotne
 ## Configuration
 
 ```ini
-BenchmarkDotNet=v0.11.5
-OS=Windows 10.0.18362
-Processor=Intel Core i7-7700K CPU 4.20GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-  [Host]     : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.8.3815.0
-  DefaultJob : .NET Framework 4.7.2 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.8.3815.0
+BenchmarkDotNet v0.15.4, Windows 11 (10.0.26200.9711)
+AMD Ryzen Threadripper PRO 5945WX 12-Cores 4.10GHz, 1 CPU, 24 logical and 12 physical cores
+  [Host]             : .NET Framework 4.8.1 (4.8.9363.0), X64 RyuJIT VectorSize=256
+  .NET 8.0           : .NET 8.0.34 (8.0.34, 8.0.3426.52217), X64 RyuJIT x86-64-v3
+  .NET Framework 4.8 : .NET Framework 4.8.1 (4.8.9363.0), X64 RyuJIT VectorSize=256
 ```
 
 ## Results
 
 ### Single constructor call
 
-|                        Method |       Mean |      Error |     StdDev |  Ratio | RatioSD |
-|------------------------------ |-----------:|-----------:|-----------:|-------:|--------:|
-|        Direct_CopyConstructor |   2.953 ns |  0.1308 ns |  0.2488 ns |   1.00 |    0.00 |
-|     Activator_CopyConstructor | 566.443 ns | 11.2951 ns | 13.0075 ns | 185.85 |   19.21 |
-|    Expression_CopyConstructor |   7.727 ns |  0.2140 ns |  0.2548 ns |   2.54 |    0.21 |
-| **ImmediateType_CopyConstructor** |   **6.313 ns** |  **0.1977 ns** |  **0.4774 ns** |   **2.18** |    **0.27** |
+**.NET 8**
+
+| Method | Mean | Error | StdDev | Ratio | RatioSD |
+|--- |---:|---:|---:|---:|---:|
+| Direct_CopyConstructor | 3.311 ns | 0.0879 ns | 0.0976 ns | 1.00 | 0.04 |
+| Activator_CopyConstructor | 197.833 ns | 3.0528 ns | 2.8556 ns | 59.79 | 1.90 |
+| Expression_CopyConstructor | 4.846 ns | 0.0780 ns | 0.0730 ns | 1.46 | 0.05 |
+| **ImmediateType_CopyConstructor** | **6.003 ns** | **0.1134 ns** | **0.1061 ns** | **1.81** | **0.06** |
+
+**.NET Framework 4.8**
+
+| Method | Mean | Error | StdDev | Ratio | RatioSD |
+|--- |---:|---:|---:|---:|---:|
+| Direct_CopyConstructor | 3.164 ns | 0.0778 ns | 0.0728 ns | 1.00 | 0.03 |
+| Activator_CopyConstructor | 645.532 ns | 11.0261 ns | 9.7743 ns | 204.13 | 5.40 |
+| Expression_CopyConstructor | 7.853 ns | 0.1311 ns | 0.1095 ns | 2.48 | 0.06 |
+| **ImmediateType_CopyConstructor** | **7.067 ns** | **0.0559 ns** | **0.0437 ns** | **2.23** | **0.05** |
 
 ### Multiple constructor calls
 
-|                        Method |         Mean |      Error |     StdDev |  Ratio | RatioSD |
-|------------------------------ |-------------:|-----------:|-----------:|-------:|--------:|
-|        Direct_CopyConstructor |     8.716 ns |  0.1260 ns |  0.1178 ns |   1.00 |    0.00 |
-|     Activator_CopyConstructor | 2,255.524 ns | 18.1062 ns | 16.9366 ns | 258.83 |    4.22 |
-|    Expression_CopyConstructor |    30.300 ns |  0.1712 ns |  0.1602 ns |   3.48 |    0.05 |
-| **ImmediateType_CopyConstructor** |    **23.860 ns** |  **0.4966 ns** |  **0.4147 ns** |   **2.74** |    **0.05** |
+**.NET 8**
+
+| Method | Mean | Error | StdDev | Ratio | RatioSD |
+|--- |---:|---:|---:|---:|---:|
+| Direct_CopyConstructor | 15.738 ns | 0.3105 ns | 0.4453 ns | 1.00 | 0.04 |
+| Activator_CopyConstructor | 862.996 ns | 16.5907 ns | 14.7072 ns | 54.88 | 1.74 |
+| Expression_CopyConstructor | 21.046 ns | 0.4237 ns | 0.4161 ns | 1.34 | 0.04 |
+| **ImmediateType_CopyConstructor** | **21.764 ns** | **0.4524 ns** | **1.0486 ns** | **1.38** | **0.08** |
+
+**.NET Framework 4.8**
+
+| Method | Mean | Error | StdDev | Ratio | RatioSD |
+|--- |---:|---:|---:|---:|---:|
+| Direct_CopyConstructor | 8.480 ns | 0.1510 ns | 0.1339 ns | 1.00 | 0.02 |
+| Activator_CopyConstructor | 2,542.604 ns | 47.9770 ns | 49.2689 ns | 299.89 | 7.26 |
+| Expression_CopyConstructor | 29.722 ns | 0.2741 ns | 0.2430 ns | 3.51 | 0.06 |
+| **ImmediateType_CopyConstructor** | **29.271 ns** | **0.6044 ns** | **0.5358 ns** | **3.45** | **0.08** |
 
 ---
 
