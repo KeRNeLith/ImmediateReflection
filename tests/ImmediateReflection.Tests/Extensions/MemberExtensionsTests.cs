@@ -33,8 +33,7 @@ internal sealed class MemberExtensionsTests : ImmediateReflectionTestsBase
     [Test]
     public static void CreateGetter_StronglyTyped_ValueType()
     {
-        var testObject = new TestStruct
-        {
+        TestStruct testObject = new()        {
             TestValue = 12
         };
 
@@ -49,7 +48,7 @@ internal sealed class MemberExtensionsTests : ImmediateReflectionTestsBase
     [Test]
     public static void CreateGetter_StronglyTyped_ReferenceType()
     {
-        var testObject = new PublicValueTypeTestClass(45, 12)
+        PublicValueTypeTestClass testObject = new(45, 12)
         {
             PublicPropertyGetSet = 51,
             PublicPropertyPrivateGetSet = 25
@@ -132,8 +131,7 @@ internal sealed class MemberExtensionsTests : ImmediateReflectionTestsBase
     [Test]
     public static void CreateGetter_ValueType()
     {
-        var testObject = new TestStruct
-        {
+        TestStruct testObject = new()        {
             TestValue = 12
         };
 
@@ -148,7 +146,7 @@ internal sealed class MemberExtensionsTests : ImmediateReflectionTestsBase
     [Test]
     public static void CreateGetter_ReferenceType()
     {
-        var testObject = new PublicValueTypeTestClass(45, 12)
+        PublicValueTypeTestClass testObject = new(45, 12)
         {
             PublicPropertyGetSet = 51,
             PublicPropertyPrivateGetSet = 25
@@ -189,7 +187,7 @@ internal sealed class MemberExtensionsTests : ImmediateReflectionTestsBase
         Assert.AreEqual(112, getter(testObject));
 
         // Reference Type
-        var testObject2 = new PublicReferenceTypeTestClass();
+        PublicReferenceTypeTestClass testObject2 = new();
 
         GetterDelegate<PublicReferenceTypeTestClass> getter2 = MemberExtensions.CreateGetter<PublicReferenceTypeTestClass>(PublicReferenceTypePublicSetPropertyPropertyInfo);
         Assert.AreEqual(null, getter2(testObject2)); // No get
@@ -235,7 +233,7 @@ internal sealed class MemberExtensionsTests : ImmediateReflectionTestsBase
     [Test]
     public static void CreateSetter_StronglyTyped_ReferenceType()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
 
         SetterDelegate<PublicValueTypeTestClass, int> setter = MemberExtensions.CreateSetter<PublicValueTypeTestClass, int>(PublicValueTypePublicGetSetPropertyPropertyInfo);
         setter(testObject, 51);
@@ -316,7 +314,7 @@ internal sealed class MemberExtensionsTests : ImmediateReflectionTestsBase
     [Test]
     public static void CreateSetter_ReferenceType()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
 
         SetterDelegate<PublicValueTypeTestClass> setter = MemberExtensions.CreateSetter<PublicValueTypeTestClass>(PublicValueTypePublicGetSetPropertyPropertyInfo);
         setter(testObject, 51);

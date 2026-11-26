@@ -34,13 +34,13 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertyInfo()
     {
-        var immediateProperty1 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty1 = new(PublicValueTypePublicGetSetPropertyPropertyInfo);
         Assert.AreEqual(nameof(PublicValueTypeTestClass.PublicPropertyGetSet), immediateProperty1.Name);
         Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateProperty1.DeclaringType);
         Assert.AreEqual(typeof(int), immediateProperty1.PropertyType);
         Assert.AreEqual(PublicValueTypePublicGetSetPropertyPropertyInfo, immediateProperty1.PropertyInfo);
 
-        var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty2 = new(PublicValueTypePublicGetPropertyPropertyInfo);
         Assert.AreNotEqual(immediateProperty1.PropertyInfo, immediateProperty2.PropertyInfo);
 
         // Property from anonymous type
@@ -52,7 +52,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         PropertyInfo propertyInfoOfAnonymousType = anonymousType.GetProperty(nameof(testObject.TestIntProperty))
                                                    ?? throw new AssertionException("Property must exist.");
 
-        var immediatePropertyOfAnonymousType = new ImmediateProperty(propertyInfoOfAnonymousType);
+        ImmediateProperty immediatePropertyOfAnonymousType = new(propertyInfoOfAnonymousType);
         Assert.AreEqual(nameof(testObject.TestIntProperty), immediatePropertyOfAnonymousType.Name);
         Assert.IsTrue(IsAnonymousType(immediatePropertyOfAnonymousType.DeclaringType));
         Assert.AreEqual(typeof(int), immediatePropertyOfAnonymousType.PropertyType);
@@ -226,7 +226,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [TestCaseSource(nameof(CreateImmediatePropertyCanReadTestCases))]
     public static void ImmediatePropertyCanRead(PropertyInfo property, bool expectedCanRead)
     {
-        var immediateProperty = new ImmediateProperty(property);
+        ImmediateProperty immediateProperty = new(property);
         Assert.AreEqual(expectedCanRead, immediateProperty.CanRead);
     }
 
@@ -238,8 +238,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     {
         #region Struct
 
-        var testStruct = new TestStruct
-        {
+        TestStruct testStruct = new()        {
             TestValue = 42
         };
 
@@ -250,7 +249,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         #region Value type
 
         // Value type
-        var publicValueTypeTestObject = new PublicValueTypeTestClass(3, 4)
+        PublicValueTypeTestClass publicValueTypeTestObject = new(3, 4)
         {
             PublicPropertyGetSet = 1,
             PublicVirtualPropertyGetSet = 2,
@@ -263,7 +262,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, 4);
         yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, 5);    // Private Get but gettable via Reflection
 
-        var internalValueTypeTestObject = new InternalValueTypeTestClass(8, 9)
+        InternalValueTypeTestClass internalValueTypeTestObject = new(8, 9)
         {
             PublicPropertyGetSet = 6,
             PublicVirtualPropertyGetSet = 7,
@@ -281,12 +280,12 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         #region Reference type
 
         // Reference type
-        var testObject1 = new TestObject { TestValue = 1 };
-        var testObject2 = new TestObject { TestValue = 2 };
-        var testObject3 = new TestObject { TestValue = 3 };
-        var testObject4 = new TestObject { TestValue = 4 };
-        var testObject5 = new TestObject { TestValue = 5 };
-        var publicReferenceTypeTestObject = new PublicReferenceTypeTestClass(testObject3, testObject4)
+        TestObject testObject1 = new() { TestValue = 1 };
+        TestObject testObject2 = new() { TestValue = 2 };
+        TestObject testObject3 = new() { TestValue = 3 };
+        TestObject testObject4 = new() { TestValue = 4 };
+        TestObject testObject5 = new() { TestValue = 5 };
+        PublicReferenceTypeTestClass publicReferenceTypeTestObject = new(testObject3, testObject4)
         {
             PublicPropertyGetSet = testObject1,
             PublicVirtualPropertyGetSet = testObject2,
@@ -299,7 +298,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicGetPrivateSetPropertyPropertyInfo, testObject4);
         yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePublicPrivateGetSetPropertyPropertyInfo, testObject5);  // Private Get but gettable via Reflection
 
-        var internalReferenceTypeTestObject = new InternalReferenceTypeTestClass(testObject3, testObject4)
+        InternalReferenceTypeTestClass internalReferenceTypeTestObject = new(testObject3, testObject4)
         {
             PublicPropertyGetSet = testObject1,
             PublicVirtualPropertyGetSet = testObject2,
@@ -317,7 +316,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         #region Object type
 
         // Object type
-        var publicObjectTypeTestObject1 = new PublicObjectTypeTestClass(3, 4)
+        PublicObjectTypeTestClass publicObjectTypeTestObject1 = new(3, 4)
         {
             PublicPropertyGetSet = 1,
             PublicVirtualPropertyGetSet = 2,
@@ -330,7 +329,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo, 4);
         yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo, 5);  // Private Get but gettable via Reflection
 
-        var publicObjectTypeTestObject2 = new PublicObjectTypeTestClass(testObject3, testObject4)
+        PublicObjectTypeTestClass publicObjectTypeTestObject2 = new(testObject3, testObject4)
         {
             PublicPropertyGetSet = testObject1,
             PublicVirtualPropertyGetSet = testObject2,
@@ -343,7 +342,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypePublicGetPrivateSetPropertyPropertyInfo, testObject4);
         yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypePublicPrivateGetSetPropertyPropertyInfo, testObject5);  // Private Get but gettable via Reflection
 
-        var internalObjectTypeTestObject1 = new InternalObjectTypeTestClass(3, 4)
+        InternalObjectTypeTestClass internalObjectTypeTestObject1 = new(3, 4)
         {
             PublicPropertyGetSet = 1,
             PublicVirtualPropertyGetSet = 2,
@@ -356,7 +355,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePublicGetPrivateSetPropertyPropertyInfo, 4);
         yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePublicPrivateGetSetPropertyPropertyInfo, 5);  // Private Get but gettable via Reflection
 
-        var internalObjectTypeTestObject2 = new InternalObjectTypeTestClass(testObject3, testObject4)
+        InternalObjectTypeTestClass internalObjectTypeTestObject2 = new(testObject3, testObject4)
         {
             PublicPropertyGetSet = testObject1,
             PublicVirtualPropertyGetSet = testObject2,
@@ -374,24 +373,23 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         #region Nested types
 
         // Nested types
-        var publicNestedTypeTestObject = new PublicTestClass.PublicNestedClass { NestedTestValue = 1 };
+        PublicTestClass.PublicNestedClass publicNestedTypeTestObject = new() { NestedTestValue = 1 };
         yield return new TestCaseData(publicNestedTypeTestObject, PublicNestedPublicGetSetPropertyPropertyInfo, 1);
 
-        var internalNestedTypeTestObject = new PublicTestClass.InternalNestedClass { NestedTestValue = 2 };
+        PublicTestClass.InternalNestedClass internalNestedTypeTestObject = new() { NestedTestValue = 2 };
         yield return new TestCaseData(internalNestedTypeTestObject, InternalNestedPublicGetSetPropertyPropertyInfo, 2);
 
-        var protectedNestedTypeTestObject = new ProtectedNestedClass { NestedTestValue = 3 };
+        ProtectedNestedClass protectedNestedTypeTestObject = new() { NestedTestValue = 3 };
         yield return new TestCaseData(protectedNestedTypeTestObject, ProtectedNestedPublicGetSetPropertyPropertyInfo, 3);
 
-        var privateNestedTypeTestObject = new PrivateNestedClass { NestedTestValue = 4 };
+        PrivateNestedClass privateNestedTypeTestObject = new() { NestedTestValue = 4 };
         yield return new TestCaseData(privateNestedTypeTestObject, PrivateNestedPublicGetSetPropertyPropertyInfo, 4);
 
         #endregion
 
         #region Abstract
 
-        var concreteTestObject = new ConcretePublicValueTypeTestClass
-        {
+        ConcretePublicValueTypeTestClass concreteTestObject = new()        {
             PublicAbstractGetSetProperty = 88
         };
 
@@ -399,8 +397,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         yield return new TestCaseData(concreteTestObject, PublicValueTypePublicConcreteGetSetPropertyPropertyInfo, 88);
 
         // Sealed override (final and virtual accessors)
-        var sealedTestObject = new SealedPublicValueTypeTestClass
-        {
+        SealedPublicValueTypeTestClass sealedTestObject = new()        {
             PublicAbstractGetSetProperty = 99
         };
 
@@ -410,14 +407,14 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
 
         #region New keyword
 
-        var baseObject = new BaseTestClass();
+        BaseTestClass baseObject = new();
         yield return new TestCaseData(baseObject, BaseClassPublicGetPropertyPropertyInfo, "Parent");
 
-        var childObject1 = new ChildTestClass();
+        ChildTestClass childObject1 = new();
         yield return new TestCaseData(childObject1, ChildClassPublicGetPropertyPropertyInfo, "Child");
         yield return new TestCaseData(childObject1, BaseClassPublicGetPropertyPropertyInfo, "Parent");
 
-        var childObject2 = new ChildTypeRedefinitionTestClass();
+        ChildTypeRedefinitionTestClass childObject2 = new();
         yield return new TestCaseData(childObject2, ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, 12);
         yield return new TestCaseData(childObject2, BaseClassPublicGetPropertyPropertyInfo, "Parent");
 
@@ -438,8 +435,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
 
         #region Interfaces (via concrete type)
 
-        var implementationTestObject = new ImplementationInterfacesTestClass
-        {
+        ImplementationInterfacesTestClass implementationTestObject = new()        {
             TestGetProperty = 1u,
             TestSetProperty = 2,
             TestGetSetProperty = 3.0,
@@ -456,7 +452,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [TestCaseSource(nameof(CreateImmediatePropertyGetValueTestCases))]
     public static void ImmediatePropertyGetValue(object target, PropertyInfo property, object? expectedValue)
     {
-        var immediateProperty = new ImmediateProperty(property);
+        ImmediateProperty immediateProperty = new(property);
 
         object? gotValue = immediateProperty.GetValue(target);
         if (expectedValue is null)
@@ -476,12 +472,12 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertyGetValue_Static()
     {
-        var testObject1 = new TestObject { TestValue = 1 };
-        var testObject2 = new TestObject { TestValue = 2 };
+        TestObject testObject1 = new() { TestValue = 1 };
+        TestObject testObject2 = new() { TestValue = 2 };
 
         // Value type
         PublicValueTypeTestClass.PublicStaticPropertyGetSet = 12;
-        var immediateProperty = new ImmediateProperty(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty = new(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo);
         Assert.AreEqual(12, immediateProperty.GetValue(null));
 
         InternalValueTypeTestClass.PublicStaticPropertyGetSet = 24;
@@ -519,12 +515,11 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     public static void ImmediatePropertyGetValue_NonPublic()
     {
         // Value type
-        var publicValueTypeTestObject = new PublicValueTypeTestClass
-        {
+        PublicValueTypeTestClass publicValueTypeTestObject = new()        {
             _publicField = 12
         };
 
-        var immediateProperty = new ImmediateProperty(PublicValueTypeInternalGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty = new(PublicValueTypeInternalGetSetPropertyPropertyInfo);
         Assert.AreEqual(12, immediateProperty.GetValue(publicValueTypeTestObject));
 
         publicValueTypeTestObject._publicField = 24;
@@ -535,8 +530,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         immediateProperty = new ImmediateProperty(PublicValueTypePrivateGetSetPropertyPropertyInfo);
         Assert.AreEqual(48, immediateProperty.GetValue(publicValueTypeTestObject));
 
-        var internalValueTypeTestObject = new InternalValueTypeTestClass
-        {
+        InternalValueTypeTestClass internalValueTypeTestObject = new()        {
             _publicField = 12
         };
 
@@ -552,12 +546,11 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         Assert.AreEqual(48, immediateProperty.GetValue(internalValueTypeTestObject));
 
         // Reference type
-        var testObject1 = new TestObject { TestValue = 1 };
-        var testObject2 = new TestObject { TestValue = 2 };
-        var testObject3 = new TestObject { TestValue = 3 };
+        TestObject testObject1 = new() { TestValue = 1 };
+        TestObject testObject2 = new() { TestValue = 2 };
+        TestObject testObject3 = new() { TestValue = 3 };
 
-        var publicReferenceTypeTestObject = new PublicReferenceTypeTestClass
-        {
+        PublicReferenceTypeTestClass publicReferenceTypeTestObject = new()        {
             _publicField = testObject1
         };
 
@@ -572,8 +565,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         immediateProperty = new ImmediateProperty(PublicReferenceTypePrivateGetSetPropertyPropertyInfo);
         Assert.AreSame(testObject3, immediateProperty.GetValue(publicReferenceTypeTestObject));
 
-        var internalReferenceTypeTestObject = new InternalReferenceTypeTestClass
-        {
+        InternalReferenceTypeTestClass internalReferenceTypeTestObject = new()        {
             _publicField = testObject1
         };
 
@@ -589,8 +581,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         Assert.AreSame(testObject3, immediateProperty.GetValue(internalReferenceTypeTestObject));
 
         // Object type
-        var publicObjectTypeTestObject = new PublicObjectTypeTestClass
-        {
+        PublicObjectTypeTestClass publicObjectTypeTestObject = new()        {
             _publicField = 12
         };
 
@@ -618,8 +609,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         Assert.AreSame(testObject3, immediateProperty.GetValue(publicObjectTypeTestObject));
 
 
-        var internalObjectTypeTestObject = new InternalObjectTypeTestClass
-        {
+        InternalObjectTypeTestClass internalObjectTypeTestObject = new()        {
             _publicField = 12
         };
 
@@ -650,7 +640,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertyGetValue_NullInstance()
     {
-        var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty = new(PublicValueTypePublicGetSetPropertyPropertyInfo);
 
         Assert.Throws<TargetException>(() => _ = immediateProperty.GetValue(null));
     }
@@ -658,7 +648,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertyGetValue_NoGetter()
     {
-        var immediateProperty = new ImmediateProperty(PublicValueTypePublicSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty = new(PublicValueTypePublicSetPropertyPropertyInfo);
         Assert.Throws<ArgumentException>(() => _ = immediateProperty.GetValue(new PublicValueTypeTestClass()));
 
         immediateProperty = new ImmediateProperty(BaseInterfaceSetPropertyPropertyInfo);
@@ -809,7 +799,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [TestCaseSource(nameof(CreateImmediatePropertyCanWriteTestCases))]
     public static void ImmediatePropertyCanWrite(PropertyInfo property, bool expectedCanWrite)
     {
-        var immediateProperty = new ImmediateProperty(property);
+        ImmediateProperty immediateProperty = new(property);
         Assert.AreEqual(expectedCanWrite, immediateProperty.CanWrite);
     }
 
@@ -820,9 +810,9 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertySetValue_Struct()
     {
-        var testStruct = new TestStruct();
+        TestStruct testStruct = new();
 
-        var immediateProperty = new ImmediateProperty(TestStructTestPropertyPropertyInfo);
+        ImmediateProperty immediateProperty = new(TestStructTestPropertyPropertyInfo);
         immediateProperty.SetValue(testStruct, 51);
         Assert.AreEqual(0, testStruct.TestValue);   // Not updated there (but on the shadow copy yes) since struct are immutable
         // Limitation is the same with classic PropertyInfo
@@ -832,9 +822,9 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     public static void ImmediatePropertySetValue_ValueType()
     {
         // Value type / Public
-        var publicValueTypeTestObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass publicValueTypeTestObject = new();
 
-        var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty = new(PublicValueTypePublicGetSetPropertyPropertyInfo);
         immediateProperty.SetValue(publicValueTypeTestObject, 12);
         Assert.AreEqual(12, publicValueTypeTestObject.PublicPropertyGetSet);
 
@@ -867,7 +857,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         Assert.AreEqual(1536, publicValueTypeTestObject._publicField);    // => Setter set the public field value (for check)
 
         // Value type / Internal
-        var internalValueTypeTestObject = new InternalValueTypeTestClass();
+        InternalValueTypeTestClass internalValueTypeTestObject = new();
 
         immediateProperty = new ImmediateProperty(InternalValueTypePublicGetSetPropertyPropertyInfo);
         immediateProperty.SetValue(internalValueTypeTestObject, 12);
@@ -905,19 +895,19 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertySetValue_ReferenceType()
     {
-        var testObject1 = new TestObject { TestValue = 1 };
-        var testObject2 = new TestObject { TestValue = 2 };
-        var testObject3 = new TestObject { TestValue = 3 };
-        var testObject4 = new TestObject { TestValue = 4 };
-        var testObject5 = new TestObject { TestValue = 5 };
-        var testObject6 = new TestObject { TestValue = 6 };
-        var testObject7 = new TestObject { TestValue = 7 };
-        var testObject8 = new TestObject { TestValue = 8 };
+        TestObject testObject1 = new() { TestValue = 1 };
+        TestObject testObject2 = new() { TestValue = 2 };
+        TestObject testObject3 = new() { TestValue = 3 };
+        TestObject testObject4 = new() { TestValue = 4 };
+        TestObject testObject5 = new() { TestValue = 5 };
+        TestObject testObject6 = new() { TestValue = 6 };
+        TestObject testObject7 = new() { TestValue = 7 };
+        TestObject testObject8 = new() { TestValue = 8 };
 
         // Reference type / Public
-        var publicReferenceTypeTestObject = new PublicReferenceTypeTestClass();
+        PublicReferenceTypeTestClass publicReferenceTypeTestObject = new();
 
-        var immediateProperty = new ImmediateProperty(PublicReferenceTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty = new(PublicReferenceTypePublicGetSetPropertyPropertyInfo);
         immediateProperty.SetValue(publicReferenceTypeTestObject, testObject1);
         Assert.AreSame(testObject1, publicReferenceTypeTestObject.PublicPropertyGetSet);
 
@@ -950,7 +940,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         Assert.AreSame(testObject8, publicReferenceTypeTestObject._publicField);    // => Setter set the public field value (for check)
 
         // Reference type / Internal
-        var internalReferenceTypeTestObject = new InternalReferenceTypeTestClass();
+        InternalReferenceTypeTestClass internalReferenceTypeTestObject = new();
 
         immediateProperty = new ImmediateProperty(InternalReferenceTypePublicGetSetPropertyPropertyInfo);
         immediateProperty.SetValue(internalReferenceTypeTestObject, testObject1);
@@ -988,19 +978,19 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertySetValue_ObjectType()
     {
-        var testObject1 = new TestObject { TestValue = 1 };
-        var testObject2 = new TestObject { TestValue = 2 };
-        var testObject3 = new TestObject { TestValue = 3 };
-        var testObject4 = new TestObject { TestValue = 4 };
-        var testObject5 = new TestObject { TestValue = 5 };
-        var testObject6 = new TestObject { TestValue = 6 };
-        var testObject7 = new TestObject { TestValue = 7 };
-        var testObject8 = new TestObject { TestValue = 8 };
+        TestObject testObject1 = new() { TestValue = 1 };
+        TestObject testObject2 = new() { TestValue = 2 };
+        TestObject testObject3 = new() { TestValue = 3 };
+        TestObject testObject4 = new() { TestValue = 4 };
+        TestObject testObject5 = new() { TestValue = 5 };
+        TestObject testObject6 = new() { TestValue = 6 };
+        TestObject testObject7 = new() { TestValue = 7 };
+        TestObject testObject8 = new() { TestValue = 8 };
 
         // Object type / Public
-        var publicObjectTypeTestObject = new PublicObjectTypeTestClass();
+        PublicObjectTypeTestClass publicObjectTypeTestObject = new();
 
-        var immediateProperty = new ImmediateProperty(PublicObjectTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty = new(PublicObjectTypePublicGetSetPropertyPropertyInfo);
         immediateProperty.SetValue(publicObjectTypeTestObject, 1);
         Assert.AreEqual(1, publicObjectTypeTestObject.PublicPropertyGetSet);
 
@@ -1067,7 +1057,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
 
 
         // Object type / Internal
-        var internalObjectTypeTestObject = new InternalObjectTypeTestClass();
+        InternalObjectTypeTestClass internalObjectTypeTestObject = new();
 
         immediateProperty = new ImmediateProperty(InternalObjectTypePublicGetSetPropertyPropertyInfo);
         immediateProperty.SetValue(internalObjectTypeTestObject, 1);
@@ -1138,9 +1128,9 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertySetValue_Abstract()
     {
-        var concreteTestObject = new ConcretePublicValueTypeTestClass();
+        ConcretePublicValueTypeTestClass concreteTestObject = new();
 
-        var immediateProperty = new ImmediateProperty(PublicValueTypePublicAbstractGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty = new(PublicValueTypePublicAbstractGetSetPropertyPropertyInfo);
         immediateProperty.SetValue(concreteTestObject, 123456);
         Assert.AreEqual(123456, concreteTestObject.PublicAbstractGetSetProperty);
 
@@ -1149,7 +1139,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         Assert.AreEqual(456789, concreteTestObject.PublicAbstractGetSetProperty);
 
         // Sealed override (final and virtual accessors)
-        var sealedTestObject = new SealedPublicValueTypeTestClass();
+        SealedPublicValueTypeTestClass sealedTestObject = new();
 
         immediateProperty = new ImmediateProperty(PublicValueTypePublicSealedGetSetPropertyPropertyInfo);
         immediateProperty.SetValue(sealedTestObject, 789123);
@@ -1159,10 +1149,10 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertySetValue_Static()
     {
-        var testObject = new TestObject { TestValue = 1 };
+        TestObject testObject = new() { TestValue = 1 };
 
         // Value type
-        var immediateProperty = new ImmediateProperty(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty = new(PublicValueTypeStaticPublicGetSetPropertyPropertyInfo);
         immediateProperty.SetValue(null, 12);
         Assert.AreEqual(12, PublicValueTypeTestClass.PublicStaticPropertyGetSet);
 
@@ -1201,22 +1191,22 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     public static void ImmediatePropertySetValue_NestedTypes()
     {
         // Nested types
-        var publicNestedTypeTestObject = new PublicTestClass.PublicNestedClass { NestedTestValue = 1 };
-        var immediateProperty = new ImmediateProperty(PublicNestedPublicGetSetPropertyPropertyInfo);
+        PublicTestClass.PublicNestedClass publicNestedTypeTestObject = new() { NestedTestValue = 1 };
+        ImmediateProperty immediateProperty = new(PublicNestedPublicGetSetPropertyPropertyInfo);
         immediateProperty.SetValue(publicNestedTypeTestObject, 12);
         Assert.AreEqual(12, publicNestedTypeTestObject.NestedTestValue);
 
-        var internalNestedTypeTestObject = new PublicTestClass.InternalNestedClass { NestedTestValue = 2 };
+        PublicTestClass.InternalNestedClass internalNestedTypeTestObject = new() { NestedTestValue = 2 };
         immediateProperty = new ImmediateProperty(InternalNestedPublicGetSetPropertyPropertyInfo);
         immediateProperty.SetValue(internalNestedTypeTestObject, 24);
         Assert.AreEqual(24, internalNestedTypeTestObject.NestedTestValue);
 
-        var protectedNestedTypeTestObject = new ProtectedNestedClass { NestedTestValue = 3 };
+        ProtectedNestedClass protectedNestedTypeTestObject = new() { NestedTestValue = 3 };
         immediateProperty = new ImmediateProperty(ProtectedNestedPublicGetSetPropertyPropertyInfo);
         immediateProperty.SetValue(protectedNestedTypeTestObject, 48);
         Assert.AreEqual(48, protectedNestedTypeTestObject.NestedTestValue);
 
-        var privateNestedTypeTestObject = new PrivateNestedClass { NestedTestValue = 4 };
+        PrivateNestedClass privateNestedTypeTestObject = new() { NestedTestValue = 4 };
         immediateProperty = new ImmediateProperty(PrivateNestedPublicGetSetPropertyPropertyInfo);
         immediateProperty.SetValue(privateNestedTypeTestObject, 96);
         Assert.AreEqual(96, privateNestedTypeTestObject.NestedTestValue);
@@ -1226,15 +1216,14 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     public static void ImmediatePropertySetValue_Interface()
     {
         // Interfaces (via concrete type)
-        var testObject = new ImplementationInterfacesTestClass
-        {
+        ImplementationInterfacesTestClass testObject = new()        {
             TestGetProperty = 1u,
             TestSetProperty = 2,
             TestGetSetProperty = 3.0,
             TestChildProperty = 4.0f
         };
 
-        var immediateProperty = new ImmediateProperty(BaseInterfaceSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty = new(BaseInterfaceSetPropertyPropertyInfo);
         immediateProperty.SetValue(testObject, 12);
         Assert.AreEqual(12, testObject.TestSetProperty);
 
@@ -1250,7 +1239,7 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertySetValue_NullInstance()
     {
-        var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty = new(PublicValueTypePublicGetSetPropertyPropertyInfo);
 
         Assert.Throws<TargetException>(() => immediateProperty.SetValue(null, null));
     }
@@ -1258,27 +1247,27 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertySetValue_WrongInstance()
     {
-        var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty = new(PublicValueTypePublicGetSetPropertyPropertyInfo);
         Assert.Throws<InvalidCastException>(() => immediateProperty.SetValue(new PublicReferenceTypeTestClass(), null));
     }
 
     [Test]
     public static void ImmediatePropertySetValue_WrongValue()
     {
-        var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty = new(PublicValueTypePublicGetSetPropertyPropertyInfo);
         Assert.Throws<InvalidCastException>(() => immediateProperty.SetValue(new PublicValueTypeTestClass(), new TestObject()));
 
-        var immediateProperty2 = new ImmediateProperty(PublicReferenceTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty2 = new(PublicReferenceTypePublicGetSetPropertyPropertyInfo);
         Assert.Throws<InvalidCastException>(() => immediateProperty2.SetValue(new PublicReferenceTypeTestClass(), 12));
 
-        var immediateProperty3 = new ImmediateProperty(PublicReferenceTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty3 = new(PublicReferenceTypePublicGetSetPropertyPropertyInfo);
         Assert.Throws<InvalidCastException>(() => immediateProperty3.SetValue(new PublicReferenceTypeTestClass(), new SmallObject()));
     }
 
     [Test]
     public static void ImmediatePropertySetValue_NoSetter()
     {
-        var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty = new(PublicValueTypePublicGetPropertyPropertyInfo);
         Assert.Throws<ArgumentException>(() => immediateProperty.SetValue(new PublicValueTypeTestClass(), 51));
 
         // Anonymous type
@@ -1305,13 +1294,13 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertyEquality()
     {
-        var immediateProperty1 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
-        var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty1 = new(PublicValueTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty2 = new(PublicValueTypePublicGetSetPropertyPropertyInfo);
         Assert.IsTrue(immediateProperty1.Equals(immediateProperty1));
         Assert.IsTrue(immediateProperty1.Equals(immediateProperty2));
         Assert.IsTrue(immediateProperty1.Equals((object)immediateProperty2));
 
-        var immediateProperty3 = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty3 = new(PublicValueTypePublicGetPropertyPropertyInfo);
         Assert.IsFalse(immediateProperty1.Equals(immediateProperty3));
         Assert.IsFalse(immediateProperty1.Equals((object)immediateProperty3));
 
@@ -1321,24 +1310,24 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertyHashCode()
     {
-        var immediateProperty1 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
-        var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty1 = new(PublicValueTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty2 = new(PublicValueTypePublicGetSetPropertyPropertyInfo);
 #if NETFRAMEWORK
         Assert.AreEqual(PublicValueTypePublicGetSetPropertyPropertyInfo.GetHashCode(), immediateProperty1.GetHashCode());
 #endif
         Assert.AreEqual(immediateProperty1.GetHashCode(), immediateProperty2.GetHashCode());
 
-        var immediateProperty3 = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty3 = new(PublicValueTypePublicGetPropertyPropertyInfo);
         Assert.AreNotEqual(immediateProperty1.GetHashCode(), immediateProperty3.GetHashCode());
     }
 
     [Test]
     public static void ImmediatePropertyToString()
     {
-        var immediateProperty1 = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty1 = new(PublicValueTypePublicGetSetPropertyPropertyInfo);
         Assert.AreEqual(PublicValueTypePublicGetSetPropertyPropertyInfo.ToString(), immediateProperty1.ToString());
 
-        var immediateProperty2 = new ImmediateProperty(PublicValueTypePublicGetPropertyPropertyInfo);
+        ImmediateProperty immediateProperty2 = new(PublicValueTypePublicGetPropertyPropertyInfo);
         Assert.AreNotEqual(immediateProperty1.ToString(), immediateProperty2.ToString());
     }
 

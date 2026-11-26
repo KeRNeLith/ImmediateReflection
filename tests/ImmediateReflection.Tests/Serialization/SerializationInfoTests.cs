@@ -48,11 +48,11 @@ internal sealed class SerializationInfoTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldSerializationInfo()
     {
-        ImmediateField field = new(SmallObjectTestField1FieldInfo);
-        SerializationInfo info = GetObjectData(field);
+        ImmediateField immediateField = new(SmallObjectTestField1FieldInfo);
+        SerializationInfo info = GetObjectData(immediateField);
 
         ImmediateField deserialized = Deserialize<ImmediateField>(info);
-        Assert.AreEqual(field, deserialized);
+        Assert.AreEqual(immediateField, deserialized);
     }
 
     [Test]

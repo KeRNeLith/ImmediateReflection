@@ -14,7 +14,7 @@ internal sealed class ImmediatePropertiesTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertiesInfo()
     {
-        var immediateProperties1 = new ImmediateProperties(SmallObjectPropertyInfos);
+        ImmediateProperties immediateProperties1 = new(SmallObjectPropertyInfos);
         CollectionAssert.AreEquivalent(
             new[]
             {
@@ -23,17 +23,17 @@ internal sealed class ImmediatePropertiesTests : ImmediateReflectionTestsBase
             },
             immediateProperties1);
 
-        var immediateProperties2 = new ImmediateProperties(SecondSmallObjectPropertyInfos);
+        ImmediateProperties immediateProperties2 = new(SecondSmallObjectPropertyInfos);
         CollectionAssert.AreNotEquivalent(immediateProperties1, immediateProperties2);
 
-        var immediateProperties3 = new ImmediateProperties(EmptyPropertyInfo);
+        ImmediateProperties immediateProperties3 = new(EmptyPropertyInfo);
         CollectionAssert.IsEmpty(immediateProperties3);
     }
 
     [Test]
     public static void ImmediatePropertiesInfoWithNew()
     {
-        var immediateProperties = new ImmediateProperties([ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, BaseClassPublicGetPropertyPropertyInfo]);
+        ImmediateProperties immediateProperties = new([ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, BaseClassPublicGetPropertyPropertyInfo]);
         CollectionAssert.AreEquivalent(
             new[] { new ImmediateProperty(ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo) },
             immediateProperties);
@@ -47,8 +47,8 @@ internal sealed class ImmediatePropertiesTests : ImmediateReflectionTestsBase
     [Test]
     public static void GetProperty()
     {
-        var immediateProperties = new ImmediateProperties(SmallObjectPropertyInfos);
-        var expectedProperty = new ImmediateProperty(SmallObjectTestProperty1PropertyInfo);
+        ImmediateProperties immediateProperties = new(SmallObjectPropertyInfos);
+        ImmediateProperty expectedProperty = new(SmallObjectTestProperty1PropertyInfo);
         Assert.AreEqual(expectedProperty, immediateProperties[nameof(SmallObject.TestProperty1)]);
         Assert.AreEqual(expectedProperty, immediateProperties.GetProperty(nameof(SmallObject.TestProperty1)));
 
@@ -62,8 +62,8 @@ internal sealed class ImmediatePropertiesTests : ImmediateReflectionTestsBase
     [Test]
     public static void GetPropertyWithNew()
     {
-        var immediateProperties = new ImmediateProperties([ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, BaseClassPublicGetPropertyPropertyInfo]);
-        var expectedProperty = new ImmediateProperty(ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo);
+        ImmediateProperties immediateProperties = new([ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo, BaseClassPublicGetPropertyPropertyInfo]);
+        ImmediateProperty expectedProperty = new(ChildTypeRedefinitionClassPublicGetPropertyPropertyInfo);
         Assert.AreEqual(expectedProperty, immediateProperties[nameof(ChildTypeRedefinitionTestClass.Property)]);
         Assert.AreEqual(expectedProperty, immediateProperties.GetProperty(nameof(ChildTypeRedefinitionTestClass.Property)));
 
@@ -77,27 +77,27 @@ internal sealed class ImmediatePropertiesTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertiesEquality()
     {
-        var immediateProperties1 = new ImmediateProperties(SmallObjectPropertyInfos);
-        var immediateProperties2 = new ImmediateProperties(SmallObjectPropertyInfos);
+        ImmediateProperties immediateProperties1 = new(SmallObjectPropertyInfos);
+        ImmediateProperties immediateProperties2 = new(SmallObjectPropertyInfos);
         Assert.IsTrue(immediateProperties1.Equals(immediateProperties1));
         Assert.IsTrue(immediateProperties1.Equals(immediateProperties2));
         Assert.IsTrue(immediateProperties1.Equals((object)immediateProperties2));
 
-        var immediateProperties3 = new ImmediateProperties(SecondSmallObjectPropertyInfos);
+        ImmediateProperties immediateProperties3 = new(SecondSmallObjectPropertyInfos);
         Assert.IsFalse(immediateProperties1.Equals(immediateProperties3));
         Assert.IsFalse(immediateProperties1.Equals((object)immediateProperties3));
 
-        var immediateProperties4 = new ImmediateProperties(PublicNestedPropertyInfos);
+        ImmediateProperties immediateProperties4 = new(PublicNestedPropertyInfos);
         Assert.IsFalse(immediateProperties4.Equals(immediateProperties1));
         Assert.IsFalse(immediateProperties4.Equals((object)immediateProperties1));
 
         // Same names but not the same properties
-        var immediateProperties5 = new ImmediateProperties([SameNamesTestClassAPropPropertyInfo]);
-        var immediateProperties6 = new ImmediateProperties([SameNamesTestClassBPropPropertyInfo]);
+        ImmediateProperties immediateProperties5 = new([SameNamesTestClassAPropPropertyInfo]);
+        ImmediateProperties immediateProperties6 = new([SameNamesTestClassBPropPropertyInfo]);
         Assert.IsFalse(immediateProperties5.Equals(immediateProperties6));
 
         // Same count but not the same names
-        var immediateProperties7 = new ImmediateProperties([OtherNamesTestClassOtherPropPropertyInfo]);
+        ImmediateProperties immediateProperties7 = new([OtherNamesTestClassOtherPropPropertyInfo]);
         Assert.IsFalse(immediateProperties5.Equals(immediateProperties7));
 
         Assert.IsFalse(immediateProperties1.Equals(null));
@@ -106,22 +106,22 @@ internal sealed class ImmediatePropertiesTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertiesHashCode()
     {
-        var immediateProperties1 = new ImmediateProperties(SmallObjectPropertyInfos);
-        var immediateProperties2 = new ImmediateProperties(SmallObjectPropertyInfos);
+        ImmediateProperties immediateProperties1 = new(SmallObjectPropertyInfos);
+        ImmediateProperties immediateProperties2 = new(SmallObjectPropertyInfos);
         Assert.AreEqual(immediateProperties1.GetHashCode(), immediateProperties2.GetHashCode());
 
-        var immediateProperties3 = new ImmediateProperties(SecondSmallObjectPropertyInfos);
+        ImmediateProperties immediateProperties3 = new(SecondSmallObjectPropertyInfos);
         Assert.AreNotEqual(immediateProperties1.GetHashCode(), immediateProperties3.GetHashCode());
     }
 
     [Test]
     public static void ImmediatePropertiesToString()
     {
-        var immediateProperties1 = new ImmediateProperties(SmallObjectPropertyInfos);
+        ImmediateProperties immediateProperties1 = new(SmallObjectPropertyInfos);
         string expectedToString = $"[{string.Join(", ", SmallObjectPropertyInfos.Select(p => p.ToString()).ToArray())}]";
         Assert.AreEqual(expectedToString, immediateProperties1.ToString());
 
-        var immediateProperties2 = new ImmediateProperties(EmptyPropertyInfo);
+        ImmediateProperties immediateProperties2 = new(EmptyPropertyInfo);
         Assert.AreEqual("[]", immediateProperties2.ToString());
     }
 

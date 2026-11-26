@@ -35,22 +35,22 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldInfo()
     {
-        var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+        ImmediateField immediateField1 = new(PublicValueTypePublicFieldFieldsInfo);
         Assert.AreEqual(nameof(PublicValueTypeTestClass._publicField), immediateField1.Name);
         Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateField1.DeclaringType);
         Assert.AreEqual(typeof(int), immediateField1.FieldType);
         Assert.AreEqual(PublicValueTypePublicFieldFieldsInfo, immediateField1.FieldInfo);
 
-        var immediateField2 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
+        ImmediateField immediateField2 = new(PublicValueTypePublicField2FieldsInfo);
         Assert.AreNotEqual(immediateField1.FieldInfo, immediateField2.FieldInfo);
 
-        var enumImmediateField = new ImmediateField(TestEnumField1FieldInfo);
+        ImmediateField enumImmediateField = new(TestEnumField1FieldInfo);
         Assert.AreEqual(nameof(TestEnum.EnumValue1), enumImmediateField.Name);
         Assert.AreEqual(typeof(TestEnum), enumImmediateField.DeclaringType);
         Assert.AreEqual(typeof(TestEnum), enumImmediateField.FieldType);
         Assert.AreEqual(TestEnumField1FieldInfo, enumImmediateField.FieldInfo);
 
-        var currentEnumValueImmediateField = new ImmediateField(TestEnumULongFieldValueFieldInfo);
+        ImmediateField currentEnumValueImmediateField = new(TestEnumULongFieldValueFieldInfo);
         Assert.AreEqual(EnumValueFieldName, currentEnumValueImmediateField.Name);
         Assert.AreEqual(typeof(TestEnumULong), currentEnumValueImmediateField.DeclaringType);
         Assert.AreEqual(typeof(ulong), currentEnumValueImmediateField.FieldType);
@@ -89,8 +89,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     {
         #region Struct
 
-        var testStruct = new TestStruct
-        {
+        TestStruct testStruct = new()        {
             _testValue = 12
         };
 
@@ -101,7 +100,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
         #region Value type
 
         // Value type
-        var publicValueTypeTestObject = new PublicValueTypeTestClass(2, 3, 4)
+        PublicValueTypeTestClass publicValueTypeTestObject = new(2, 3, 4)
         {
             _publicField = 1
         };
@@ -111,7 +110,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
         yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypeProtectedFieldFieldsInfo, 3);
         yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePrivateFieldFieldsInfo, 4);
 
-        var internalValueTypeTestObject = new InternalValueTypeTestClass(6, 7, 8)
+        InternalValueTypeTestClass internalValueTypeTestObject = new(6, 7, 8)
         {
             _publicField = 5
         };
@@ -126,11 +125,11 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
         #region Reference type
 
         // Reference type
-        var testObject1 = new TestObject { TestValue = 1 };
-        var testObject2 = new TestObject { TestValue = 2 };
-        var testObject3 = new TestObject { TestValue = 3 };
-        var testObject4 = new TestObject { TestValue = 4 };
-        var publicReferenceTypeTestObject = new PublicReferenceTypeTestClass(testObject2, testObject3, testObject4)
+        TestObject testObject1 = new() { TestValue = 1 };
+        TestObject testObject2 = new() { TestValue = 2 };
+        TestObject testObject3 = new() { TestValue = 3 };
+        TestObject testObject4 = new() { TestValue = 4 };
+        PublicReferenceTypeTestClass publicReferenceTypeTestObject = new(testObject2, testObject3, testObject4)
         {
             _publicField = testObject1
         };
@@ -140,11 +139,11 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
         yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypeProtectedFieldFieldsInfo, testObject3);
         yield return new TestCaseData(publicReferenceTypeTestObject, PublicReferenceTypePrivateFieldFieldsInfo, testObject4);
 
-        var testObject5 = new TestObject { TestValue = 5 };
-        var testObject6 = new TestObject { TestValue = 6 };
-        var testObject7 = new TestObject { TestValue = 7 };
-        var testObject8 = new TestObject { TestValue = 8 };
-        var internalReferenceTypeTestObject = new InternalReferenceTypeTestClass(testObject6, testObject7, testObject8)
+        TestObject testObject5 = new() { TestValue = 5 };
+        TestObject testObject6 = new() { TestValue = 6 };
+        TestObject testObject7 = new() { TestValue = 7 };
+        TestObject testObject8 = new() { TestValue = 8 };
+        InternalReferenceTypeTestClass internalReferenceTypeTestObject = new(testObject6, testObject7, testObject8)
         {
             _publicField = testObject5
         };
@@ -159,7 +158,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
         #region Object type
 
         // Object type
-        var publicObjectTypeTestObject1 = new PublicObjectTypeTestClass(24, 48, 96)
+        PublicObjectTypeTestClass publicObjectTypeTestObject1 = new(24, 48, 96)
         {
             _publicField = 12
         };
@@ -169,7 +168,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
         yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypeProtectedFieldFieldsInfo, 48);
         yield return new TestCaseData(publicObjectTypeTestObject1, PublicObjectTypePrivateFieldFieldsInfo, 96);
 
-        var publicObjectTypeTestObject2 = new PublicObjectTypeTestClass(testObject2, testObject3, testObject4)
+        PublicObjectTypeTestClass publicObjectTypeTestObject2 = new(testObject2, testObject3, testObject4)
         {
             _publicField = testObject1
         };
@@ -179,7 +178,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
         yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypeProtectedFieldFieldsInfo, testObject3);
         yield return new TestCaseData(publicObjectTypeTestObject2, PublicObjectTypePrivateFieldFieldsInfo, testObject4);
 
-        var internalObjectTypeTestObject1 = new InternalObjectTypeTestClass(384, 768, 1536)
+        InternalObjectTypeTestClass internalObjectTypeTestObject1 = new(384, 768, 1536)
         {
             _publicField = 192
         };
@@ -189,7 +188,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
         yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypeProtectedFieldFieldsInfo, 768);
         yield return new TestCaseData(internalObjectTypeTestObject1, InternalObjectTypePrivateFieldFieldsInfo, 1536);
 
-        var internalObjectTypeTestObject2 = new InternalObjectTypeTestClass(testObject6, testObject7, testObject8)
+        InternalObjectTypeTestClass internalObjectTypeTestObject2 = new(testObject6, testObject7, testObject8)
         {
             _publicField = testObject5
         };
@@ -204,16 +203,16 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
         #region Nested types
 
         // Nested types
-        var publicNestedTypeTestObject = new PublicTestClass.PublicNestedClass { _nestedTestValue = 1 };
+        PublicTestClass.PublicNestedClass publicNestedTypeTestObject = new() { _nestedTestValue = 1 };
         yield return new TestCaseData(publicNestedTypeTestObject, PublicNestedPublicFieldFieldInfo, 1);
 
-        var internalNestedTypeTestObject = new PublicTestClass.InternalNestedClass { _nestedTestValue = 2 };
+        PublicTestClass.InternalNestedClass internalNestedTypeTestObject = new() { _nestedTestValue = 2 };
         yield return new TestCaseData(internalNestedTypeTestObject, InternalNestedPublicFieldFieldInfo, 2);
 
-        var protectedNestedTypeTestObject = new ProtectedNestedClass { _nestedTestValue = 3 };
+        ProtectedNestedClass protectedNestedTypeTestObject = new() { _nestedTestValue = 3 };
         yield return new TestCaseData(protectedNestedTypeTestObject, ProtectedNestedPublicFieldFieldInfo, 3);
 
-        var privateNestedTypeTestObject = new PrivateNestedClass { _nestedTestValue = 4 };
+        PrivateNestedClass privateNestedTypeTestObject = new() { _nestedTestValue = 4 };
         yield return new TestCaseData(privateNestedTypeTestObject, PrivateNestedPublicFieldFieldInfo, 4);
 
         #endregion
@@ -222,7 +221,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     [TestCaseSource(nameof(CreateImmediateFieldGetValueTestCases))]
     public static void ImmediateFieldGetValue(object target, FieldInfo field, object? expectedValue)
     {
-        var immediateField = new ImmediateField(field);
+        ImmediateField immediateField = new(field);
 
         object? gotValue = immediateField.GetValue(target);
         if (expectedValue is null)
@@ -242,12 +241,12 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldGetValue_Static()
     {
-        var testObject1 = new TestObject { TestValue = 1 };
-        var testObject2 = new TestObject { TestValue = 2 };
+        TestObject testObject1 = new() { TestValue = 1 };
+        TestObject testObject2 = new() { TestValue = 2 };
 
         // Value type
         PublicValueTypeTestClass._publicStaticField = 12;
-        var immediateField = new ImmediateField(PublicValueTypeStaticPublicFieldFieldsInfo);
+        ImmediateField immediateField = new(PublicValueTypeStaticPublicFieldFieldsInfo);
         Assert.AreEqual(12, immediateField.GetValue(null));
 
         InternalValueTypeTestClass._publicStaticField = 24;
@@ -287,7 +286,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
         // Simple TestEnum
         const TestEnum testEnum1 = TestEnum.EnumValue2;
 
-        var immediateField = new ImmediateField(TestEnumFieldValueFieldInfo);
+        ImmediateField immediateField = new(TestEnumFieldValueFieldInfo);
         Assert.AreEqual((int)TestEnum.EnumValue2, immediateField.GetValue(testEnum1));
 
         immediateField = new ImmediateField(TestEnumField2FieldInfo);
@@ -315,17 +314,17 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldGetValue_EnumThrows()
     {
-        var immediateField = new ImmediateField(TestEnumFieldValueFieldInfo);
+        ImmediateField immediateField = new(TestEnumFieldValueFieldInfo);
         Assert.Throws<TargetException>(() => _ = immediateField.GetValue(null));
     }
 
     [Test]
     public static void ImmediateFieldGetValue_Constant()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
 
         // Static readonly
-        var immediateField = new ImmediateField(PublicValueTypeStaticReadonlyPublicFieldFieldsInfo);
+        ImmediateField immediateField = new(PublicValueTypeStaticReadonlyPublicFieldFieldsInfo);
         Assert.AreEqual(112, immediateField.GetValue(testObject));
         Assert.AreEqual(112, immediateField.GetValue(null));
 
@@ -338,7 +337,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldGetValue_NullInstance()
     {
-        var immediateField = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+        ImmediateField immediateField = new(PublicValueTypePublicFieldFieldsInfo);
 
         Assert.Throws<TargetException>(() => _ = immediateField.GetValue(null));
     }
@@ -350,9 +349,9 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldSetValue_Struct()
     {
-        var testStruct = new TestStruct();
+        TestStruct testStruct = new();
 
-        var immediateField = new ImmediateField(TestStructTestFieldFieldInfo);
+        ImmediateField immediateField = new(TestStructTestFieldFieldInfo);
         immediateField.SetValue(testStruct, 45);
         Assert.AreEqual(0, testStruct._testValue);  // Not updated there (but on the shadow copy yes) since struct are immutable
         // Limitation is the same with classic FieldInfo
@@ -362,9 +361,9 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     public static void ImmediateFieldSetValue_ValueType()
     {
         // Value type / Public
-        var publicValueTypeTestObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass publicValueTypeTestObject = new();
 
-        var immediateField = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+        ImmediateField immediateField = new(PublicValueTypePublicFieldFieldsInfo);
         immediateField.SetValue(publicValueTypeTestObject, 12);
         Assert.AreEqual(12, publicValueTypeTestObject._publicField);
 
@@ -381,7 +380,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
         Assert.AreEqual(96, publicValueTypeTestObject.GetPrivateFieldValue());
 
         // Value type / Internal
-        var internalValueTypeTestObject = new InternalValueTypeTestClass();
+        InternalValueTypeTestClass internalValueTypeTestObject = new();
 
         immediateField = new ImmediateField(InternalValueTypePublicFieldFieldsInfo);
         immediateField.SetValue(internalValueTypeTestObject, 192);
@@ -404,18 +403,18 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     public static void ImmediateFieldSetValue_ReferenceType()
     {
         // Reference type / Public
-        var testObject1 = new TestObject { TestValue = 1 };
-        var testObject2 = new TestObject { TestValue = 2 };
-        var testObject3 = new TestObject { TestValue = 3 };
-        var testObject4 = new TestObject { TestValue = 4 };
-        var testObject5 = new TestObject { TestValue = 5 };
-        var testObject6 = new TestObject { TestValue = 6 };
-        var testObject7 = new TestObject { TestValue = 7 };
-        var testObject8 = new TestObject { TestValue = 8 };
+        TestObject testObject1 = new() { TestValue = 1 };
+        TestObject testObject2 = new() { TestValue = 2 };
+        TestObject testObject3 = new() { TestValue = 3 };
+        TestObject testObject4 = new() { TestValue = 4 };
+        TestObject testObject5 = new() { TestValue = 5 };
+        TestObject testObject6 = new() { TestValue = 6 };
+        TestObject testObject7 = new() { TestValue = 7 };
+        TestObject testObject8 = new() { TestValue = 8 };
 
-        var publicReferenceTypeTestObject = new PublicReferenceTypeTestClass();
+        PublicReferenceTypeTestClass publicReferenceTypeTestObject = new();
 
-        var immediateField = new ImmediateField(PublicReferenceTypePublicFieldFieldsInfo);
+        ImmediateField immediateField = new(PublicReferenceTypePublicFieldFieldsInfo);
         immediateField.SetValue(publicReferenceTypeTestObject, testObject1);
         Assert.AreSame(testObject1, publicReferenceTypeTestObject._publicField);
 
@@ -432,7 +431,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
         Assert.AreSame(testObject4, publicReferenceTypeTestObject.GetPrivateFieldValue());
 
         // Reference type / Internal
-        var internalReferenceTypeTestObject = new InternalReferenceTypeTestClass();
+        InternalReferenceTypeTestClass internalReferenceTypeTestObject = new();
 
         immediateField = new ImmediateField(InternalReferenceTypePublicFieldFieldsInfo);
         immediateField.SetValue(internalReferenceTypeTestObject, testObject5);
@@ -454,19 +453,19 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldSetValue_ObjectType()
     {
-        var testObject1 = new TestObject { TestValue = 1 };
-        var testObject2 = new TestObject { TestValue = 2 };
-        var testObject3 = new TestObject { TestValue = 3 };
-        var testObject4 = new TestObject { TestValue = 4 };
-        var testObject5 = new TestObject { TestValue = 5 };
-        var testObject6 = new TestObject { TestValue = 6 };
-        var testObject7 = new TestObject { TestValue = 7 };
-        var testObject8 = new TestObject { TestValue = 8 };
+        TestObject testObject1 = new() { TestValue = 1 };
+        TestObject testObject2 = new() { TestValue = 2 };
+        TestObject testObject3 = new() { TestValue = 3 };
+        TestObject testObject4 = new() { TestValue = 4 };
+        TestObject testObject5 = new() { TestValue = 5 };
+        TestObject testObject6 = new() { TestValue = 6 };
+        TestObject testObject7 = new() { TestValue = 7 };
+        TestObject testObject8 = new() { TestValue = 8 };
 
         // Object type / Public
-        var publicObjectTypeTestObject = new PublicObjectTypeTestClass();
+        PublicObjectTypeTestClass publicObjectTypeTestObject = new();
 
-        var immediateField = new ImmediateField(PublicObjectTypePublicFieldFieldsInfo);
+        ImmediateField immediateField = new(PublicObjectTypePublicFieldFieldsInfo);
         immediateField.SetValue(publicObjectTypeTestObject, 1);
         Assert.AreEqual(1, publicObjectTypeTestObject._publicField);
 
@@ -501,7 +500,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
 
 
         // Object type / Internal
-        var internalObjectTypeTestObject = new InternalObjectTypeTestClass();
+        InternalObjectTypeTestClass internalObjectTypeTestObject = new();
 
         immediateField = new ImmediateField(InternalObjectTypePublicFieldFieldsInfo);
         immediateField.SetValue(internalObjectTypeTestObject, 1);
@@ -540,10 +539,10 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldSetValue_Static()
     {
-        var testObject = new TestObject { TestValue = 1 };
+        TestObject testObject = new() { TestValue = 1 };
 
         // Value type
-        var immediateProperty = new ImmediateField(PublicValueTypeStaticPublicFieldFieldsInfo);
+        ImmediateField immediateProperty = new(PublicValueTypeStaticPublicFieldFieldsInfo);
         immediateProperty.SetValue(null, 12);
         Assert.AreEqual(12, PublicValueTypeTestClass._publicStaticField);
 
@@ -583,7 +582,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     {
         TestEnum testEnum = TestEnum.EnumValue2;
 
-        var immediateField = new ImmediateField(TestEnumFieldValueFieldInfo);
+        ImmediateField immediateField = new(TestEnumFieldValueFieldInfo);
         immediateField.SetValue(testEnum, TestEnum.EnumValue1);
         Assert.AreEqual(TestEnum.EnumValue2, testEnum);     // Enum internal value cannot be set
     }
@@ -591,7 +590,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldSetValue_EnumThrows()
     {
-        var immediateField = new ImmediateField(TestEnumFieldValueFieldInfo);
+        ImmediateField immediateField = new(TestEnumFieldValueFieldInfo);
         Assert.Throws<TargetException>(() => immediateField.SetValue(null, TestEnum.EnumValue2));
 
         immediateField = new ImmediateField(TestEnumField1FieldInfo);
@@ -601,10 +600,10 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldSetValue_Constant()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
 
         // Static readonly
-        var immediateField = new ImmediateField(PublicValueTypeStaticReadonlyPublicFieldFieldsInfo);
+        ImmediateField immediateField = new(PublicValueTypeStaticReadonlyPublicFieldFieldsInfo);
         Assert.Throws<FieldAccessException>(() => immediateField.SetValue(testObject, 123456));
         Assert.Throws<FieldAccessException>(() => immediateField.SetValue(null, 123456));
 
@@ -617,22 +616,22 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldSetValue_NestedTypes()
     {
-        var publicNestedTypeTestObject = new PublicTestClass.PublicNestedClass { _nestedTestValue = 1 };
-        var immediateField = new ImmediateField(PublicNestedPublicFieldFieldInfo);
+        PublicTestClass.PublicNestedClass publicNestedTypeTestObject = new() { _nestedTestValue = 1 };
+        ImmediateField immediateField = new(PublicNestedPublicFieldFieldInfo);
         immediateField.SetValue(publicNestedTypeTestObject, 12);
         Assert.AreEqual(12, publicNestedTypeTestObject._nestedTestValue);
 
-        var internalNestedTypeTestObject = new PublicTestClass.InternalNestedClass { _nestedTestValue = 2 };
+        PublicTestClass.InternalNestedClass internalNestedTypeTestObject = new() { _nestedTestValue = 2 };
         immediateField = new ImmediateField(InternalNestedPublicFieldFieldInfo);
         immediateField.SetValue(internalNestedTypeTestObject, 24);
         Assert.AreEqual(24, internalNestedTypeTestObject._nestedTestValue);
 
-        var protectedNestedTypeTestObject = new ProtectedNestedClass { _nestedTestValue = 3 };
+        ProtectedNestedClass protectedNestedTypeTestObject = new() { _nestedTestValue = 3 };
         immediateField = new ImmediateField(ProtectedNestedPublicFieldFieldInfo);
         immediateField.SetValue(protectedNestedTypeTestObject, 48);
         Assert.AreEqual(48, protectedNestedTypeTestObject._nestedTestValue);
 
-        var privateNestedTypeTestObject = new PrivateNestedClass { _nestedTestValue = 4 };
+        PrivateNestedClass privateNestedTypeTestObject = new() { _nestedTestValue = 4 };
         immediateField = new ImmediateField(PrivateNestedPublicFieldFieldInfo);
         immediateField.SetValue(privateNestedTypeTestObject, 96);
         Assert.AreEqual(96, privateNestedTypeTestObject._nestedTestValue);
@@ -641,7 +640,7 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldSetValue_NullInstance()
     {
-        var immediateField = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+        ImmediateField immediateField = new(PublicValueTypePublicFieldFieldsInfo);
 
         Assert.Throws<TargetException>(() => immediateField.SetValue(null, null));
     }
@@ -649,20 +648,20 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldSetValue_WrongInstance()
     {
-        var immediateField = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+        ImmediateField immediateField = new(PublicValueTypePublicFieldFieldsInfo);
         Assert.Throws<InvalidCastException>(() => immediateField.SetValue(new PublicReferenceTypeTestClass(), null));
     }
 
     [Test]
     public static void ImmediateFieldSetValue_WrongValue()
     {
-        var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+        ImmediateField immediateField1 = new(PublicValueTypePublicFieldFieldsInfo);
         Assert.Throws<InvalidCastException>(() => immediateField1.SetValue(new PublicValueTypeTestClass(), new TestObject()));
 
-        var immediateField2 = new ImmediateField(PublicReferenceTypePublicFieldFieldsInfo);
+        ImmediateField immediateField2 = new(PublicReferenceTypePublicFieldFieldsInfo);
         Assert.Throws<InvalidCastException>(() => immediateField2.SetValue(new PublicReferenceTypeTestClass(), 12));
 
-        var immediateField3 = new ImmediateField(PublicReferenceTypePublicFieldFieldsInfo);
+        ImmediateField immediateField3 = new(PublicReferenceTypePublicFieldFieldsInfo);
         Assert.Throws<InvalidCastException>(() => immediateField3.SetValue(new PublicReferenceTypeTestClass(), new SmallObject()));
     }
 
@@ -673,13 +672,13 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldEquality()
     {
-        var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
-        var immediateField2 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+        ImmediateField immediateField1 = new(PublicValueTypePublicFieldFieldsInfo);
+        ImmediateField immediateField2 = new(PublicValueTypePublicFieldFieldsInfo);
         Assert.IsTrue(immediateField1.Equals(immediateField1));
         Assert.IsTrue(immediateField1.Equals(immediateField2));
         Assert.IsTrue(immediateField1.Equals((object)immediateField2));
 
-        var immediateField3 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
+        ImmediateField immediateField3 = new(PublicValueTypePublicField2FieldsInfo);
         Assert.IsFalse(immediateField1.Equals(immediateField3));
         Assert.IsFalse(immediateField1.Equals((object)immediateField3));
 
@@ -689,24 +688,24 @@ internal sealed class ImmediateFieldTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldHashCode()
     {
-        var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
-        var immediateField2 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+        ImmediateField immediateField1 = new(PublicValueTypePublicFieldFieldsInfo);
+        ImmediateField immediateField2 = new(PublicValueTypePublicFieldFieldsInfo);
 #if NETFRAMEWORK
         Assert.AreEqual(PublicValueTypePublicFieldFieldsInfo.GetHashCode(), immediateField1.GetHashCode());
 #endif
         Assert.AreEqual(immediateField1.GetHashCode(), immediateField2.GetHashCode());
 
-        var immediateField3 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
+        ImmediateField immediateField3 = new(PublicValueTypePublicField2FieldsInfo);
         Assert.AreNotEqual(immediateField1.GetHashCode(), immediateField3.GetHashCode());
     }
 
     [Test]
     public static void ImmediateFieldToString()
     {
-        var immediateField1 = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
+        ImmediateField immediateField1 = new(PublicValueTypePublicFieldFieldsInfo);
         Assert.AreEqual(PublicValueTypePublicFieldFieldsInfo.ToString(), immediateField1.ToString());
 
-        var immediateField2 = new ImmediateField(PublicValueTypePublicField2FieldsInfo);
+        ImmediateField immediateField2 = new(PublicValueTypePublicField2FieldsInfo);
         Assert.AreNotEqual(immediateField1.ToString(), immediateField2.ToString());
     }
 

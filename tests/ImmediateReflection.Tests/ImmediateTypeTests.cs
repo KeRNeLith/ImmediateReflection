@@ -51,7 +51,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateTypeEmptyType()
     {
-        var emptyType = new ImmediateType(typeof(EmptyType));
+        ImmediateType emptyType = new(typeof(EmptyType));
         Assert.AreEqual(typeof(EmptyType), emptyType.Type);
         Assert.AreEqual(typeof(object), emptyType.BaseType);
         Assert.AreEqual(typeof(ImmediateTypeTests), emptyType.DeclaringType);
@@ -69,7 +69,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         // Public class
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
-        var immediateTypePublic = new ImmediateType(typeof(PublicValueTypeTestClass));
+        ImmediateType immediateTypePublic = new(typeof(PublicValueTypeTestClass));
         Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateTypePublic.Type);
         Assert.AreEqual(typeof(object), immediateTypePublic.BaseType);
         Assert.IsNull(immediateTypePublic.DeclaringType);
@@ -87,7 +87,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         // Internal class
         classifiedMembers = TypeClassifiedMembers.GetForInternalValueTypeTestObject();
 
-        var immediateTypeInternal = new ImmediateType(typeof(InternalValueTypeTestClass));
+        ImmediateType immediateTypeInternal = new(typeof(InternalValueTypeTestClass));
         Assert.AreEqual(typeof(InternalValueTypeTestClass), immediateTypeInternal.Type);
         Assert.AreEqual(typeof(object), immediateTypeInternal.BaseType);
         Assert.IsNull(immediateTypeInternal.DeclaringType);
@@ -109,7 +109,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         // Public class
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicReferenceTypeTestObject();
 
-        var immediateTypePublic = new ImmediateType(typeof(PublicReferenceTypeTestClass));
+        ImmediateType immediateTypePublic = new(typeof(PublicReferenceTypeTestClass));
         Assert.AreEqual(typeof(PublicReferenceTypeTestClass), immediateTypePublic.Type);
         Assert.AreEqual(typeof(object), immediateTypePublic.BaseType);
         Assert.IsNull(immediateTypePublic.DeclaringType);
@@ -127,7 +127,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         // Internal class
         classifiedMembers = TypeClassifiedMembers.GetForInternalReferenceTypeTestObject();
 
-        var immediateTypeInternal = new ImmediateType(typeof(InternalReferenceTypeTestClass));
+        ImmediateType immediateTypeInternal = new(typeof(InternalReferenceTypeTestClass));
         Assert.AreEqual(typeof(InternalReferenceTypeTestClass), immediateTypeInternal.Type);
         Assert.AreEqual(typeof(object), immediateTypeInternal.BaseType);
         Assert.IsNull(immediateTypeInternal.DeclaringType);
@@ -149,7 +149,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         // Public class
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicObjectTypeTestObject();
 
-        var immediateTypePublic = new ImmediateType(typeof(PublicObjectTypeTestClass));
+        ImmediateType immediateTypePublic = new(typeof(PublicObjectTypeTestClass));
         Assert.AreEqual(typeof(PublicObjectTypeTestClass), immediateTypePublic.Type);
         Assert.AreEqual(typeof(object), immediateTypePublic.BaseType);
         Assert.IsNull(immediateTypePublic.DeclaringType);
@@ -167,7 +167,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         // Internal class
         classifiedMembers = TypeClassifiedMembers.GetForInternalObjectTypeTestObject();
 
-        var immediateTypeInternal = new ImmediateType(typeof(InternalObjectTypeTestClass));
+        ImmediateType immediateTypeInternal = new(typeof(InternalObjectTypeTestClass));
         Assert.AreEqual(typeof(InternalObjectTypeTestClass), immediateTypeInternal.Type);
         Assert.AreEqual(typeof(object), immediateTypeInternal.BaseType);
         Assert.IsNull(immediateTypeInternal.DeclaringType);
@@ -187,7 +187,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     public static void ImmediateTypeNestedType()
     {
         // Public class
-        var nestedImmediateTypePublic = new ImmediateType(typeof(PublicTestClass.PublicNestedClass));
+        ImmediateType nestedImmediateTypePublic = new(typeof(PublicTestClass.PublicNestedClass));
         Assert.AreEqual(typeof(PublicTestClass.PublicNestedClass), nestedImmediateTypePublic.Type);
         Assert.AreEqual(typeof(object), nestedImmediateTypePublic.BaseType);
         Assert.AreEqual(typeof(PublicTestClass), nestedImmediateTypePublic.DeclaringType);
@@ -209,7 +209,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
             nestedImmediateTypePublic.Properties.Select(property => property.PropertyInfo));
 
         // Internal class
-        var nestedImmediateTypeInternal = new ImmediateType(typeof(PublicTestClass.InternalNestedClass));
+        ImmediateType nestedImmediateTypeInternal = new(typeof(PublicTestClass.InternalNestedClass));
         Assert.AreEqual(typeof(PublicTestClass.InternalNestedClass), nestedImmediateTypeInternal.Type);
         Assert.AreEqual(typeof(object), nestedImmediateTypeInternal.BaseType);
         Assert.AreEqual(typeof(PublicTestClass), nestedImmediateTypeInternal.DeclaringType);
@@ -231,7 +231,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
             nestedImmediateTypeInternal.Properties.Select(property => property.PropertyInfo));
 
         // Protected class
-        var nestedImmediateTypeProtected = new ImmediateType(typeof(ProtectedNestedClass));
+        ImmediateType nestedImmediateTypeProtected = new(typeof(ProtectedNestedClass));
         Assert.AreEqual(typeof(ProtectedNestedClass), nestedImmediateTypeProtected.Type);
         Assert.AreEqual(typeof(object), nestedImmediateTypeProtected.BaseType);
         Assert.AreEqual(typeof(ImmediateReflectionTestsBase), nestedImmediateTypeProtected.DeclaringType);
@@ -253,7 +253,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
             nestedImmediateTypeProtected.Properties.Select(property => property.PropertyInfo));
 
         // Private class
-        var nestedImmediateTypePrivate = new ImmediateType(typeof(PrivateNestedClass));
+        ImmediateType nestedImmediateTypePrivate = new(typeof(PrivateNestedClass));
         Assert.AreEqual(typeof(PrivateNestedClass), nestedImmediateTypePrivate.Type);
         Assert.AreEqual(typeof(object), nestedImmediateTypePrivate.BaseType);
         Assert.AreEqual(typeof(ImmediateTypeTests), nestedImmediateTypePrivate.DeclaringType);
@@ -278,7 +278,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateTypeInheritedType()
     {
-        var immediateType = new ImmediateType(typeof(object));
+        ImmediateType immediateType = new(typeof(object));
         Assert.AreEqual(typeof(object), immediateType.Type);
         Assert.IsNull(immediateType.BaseType);
         Assert.IsNull(immediateType.DeclaringType);
@@ -341,7 +341,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
 
         static void CheckEnumType(Type enumType, IEnumerable<FieldInfo> enumFields)
         {
-            var immediateType = new ImmediateType(enumType);
+            ImmediateType immediateType = new(enumType);
             Assert.AreEqual(enumType, immediateType.Type);
             Assert.AreEqual(typeof(Enum), immediateType.BaseType);
             Assert.IsNull(immediateType.DeclaringType);
@@ -363,7 +363,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     public static void ImmediateTypeInterface()
     {
         // Base interface
-        var immediateType = new ImmediateType(typeof(IBaseTestInterface));
+        ImmediateType immediateType = new(typeof(IBaseTestInterface));
         Assert.AreEqual(typeof(IBaseTestInterface), immediateType.Type);
         Assert.IsNull(immediateType.BaseType);
         Assert.IsNull(immediateType.DeclaringType);
@@ -430,7 +430,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         };
         Type anonymousType = testObject.GetType();
 
-        var immediateAnonymousType = new ImmediateType(anonymousType);
+        ImmediateType immediateAnonymousType = new(anonymousType);
         Assert.IsTrue(IsAnonymousType(immediateAnonymousType.Type));
         Assert.AreEqual(typeof(object), immediateAnonymousType.BaseType);
         Assert.IsNull(immediateAnonymousType.DeclaringType);
@@ -457,7 +457,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     {
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
-        var testType = new ImmediateType(typeof(PublicValueTypeTestClass)); // BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static
+        ImmediateType testType = new(typeof(PublicValueTypeTestClass)); // BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static
         CollectionAssert.AreEquivalent(
             classifiedMembers.PublicInstanceFields.Concat(classifiedMembers.StaticFields).Concat(classifiedMembers.ConstFields),
             testType.Fields.Select(field => field.FieldInfo));
@@ -497,7 +497,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateTypeNewKeyword()
     {
-        var immediateType = new ImmediateType(typeof(BaseTestClass));
+        ImmediateType immediateType = new(typeof(BaseTestClass));
         Assert.AreEqual(typeof(BaseTestClass), immediateType.Type);
         Assert.AreEqual(nameof(BaseTestClass), immediateType.Name);
         Assert.AreEqual(
@@ -546,7 +546,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateTypeIndexedProperties()
     {
-        var immediateType = new ImmediateType(typeof(ChildItemTestClass));
+        ImmediateType immediateType = new(typeof(ChildItemTestClass));
         Assert.AreEqual(typeof(ChildItemTestClass), immediateType.Type);
         Assert.AreEqual(nameof(ChildItemTestClass), immediateType.Name);
         Assert.AreEqual(
@@ -571,7 +571,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     {
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
-        var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass), TypeAccessor.DefaultFlags | BindingFlags.NonPublic);
+        ImmediateType immediateType = new(typeof(PublicValueTypeTestClass), TypeAccessor.DefaultFlags | BindingFlags.NonPublic);
 
         CollectionAssert.AreEquivalent(
             classifiedMembers.AllMembers,
@@ -601,7 +601,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateTypeGetMember()
     {
-        var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
+        ImmediateType immediateType = new(typeof(PublicValueTypeTestClass));
         string memberName = nameof(PublicValueTypeTestClass._publicField);
         Assert.AreEqual(immediateType.Fields[memberName], immediateType.GetMember(memberName));
         Assert.AreEqual(immediateType.Fields[memberName], immediateType[memberName]);
@@ -625,17 +625,17 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateTypeGetFields()
     {
-        var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
+        ImmediateType immediateType1 = new(typeof(PublicValueTypeTestClass));
         CollectionAssert.AreEquivalent(immediateType1.Fields, immediateType1.GetFields());
 
-        var immediateType2 = new ImmediateType(typeof(PublicReferenceTypeTestClass));
+        ImmediateType immediateType2 = new(typeof(PublicReferenceTypeTestClass));
         CollectionAssert.AreNotEquivalent(immediateType1.GetFields(), immediateType2.GetFields());
     }
 
     [Test]
     public static void ImmediateTypeGetField()
     {
-        var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
+        ImmediateType immediateType = new(typeof(PublicValueTypeTestClass));
         string fieldName = nameof(PublicValueTypeTestClass._publicField);
         Assert.AreEqual(immediateType.Fields[fieldName], immediateType.GetField(fieldName));
 
@@ -652,17 +652,17 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateTypeGetProperties()
     {
-        var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
+        ImmediateType immediateType1 = new(typeof(PublicValueTypeTestClass));
         CollectionAssert.AreEquivalent(immediateType1.Properties, immediateType1.GetProperties());
 
-        var immediateType2 = new ImmediateType(typeof(PublicReferenceTypeTestClass));
+        ImmediateType immediateType2 = new(typeof(PublicReferenceTypeTestClass));
         CollectionAssert.AreNotEquivalent(immediateType1.GetProperties(), immediateType2.GetProperties());
     }
 
     [Test]
     public static void ImmediateTypeGetProperty()
     {
-        var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
+        ImmediateType immediateType = new(typeof(PublicValueTypeTestClass));
         string propertyName = nameof(PublicValueTypeTestClass.PublicPropertyGetSet);
         Assert.AreEqual(immediateType.Properties[propertyName], immediateType.GetProperty(propertyName));
 
@@ -681,7 +681,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateHasDefaultConstructorTestCases))]
     public static bool HasDefaultConstructor(Type type)
     {
-        var immediateType = new ImmediateType(type);
+        ImmediateType immediateType = new(type);
         return immediateType.HasDefaultConstructor;
     }
 
@@ -696,7 +696,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
             type,
             () =>
             {
-                var immediateType = new ImmediateType(type);
+                ImmediateType immediateType = new(type);
                 return immediateType.New();
             });
     }
@@ -707,7 +707,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         ConstructorTestHelpers.NewParamsOnly(
             () =>
             {
-                var immediateType = new ImmediateType(typeof(ParamsOnlyConstructor));
+                ImmediateType immediateType = new(typeof(ParamsOnlyConstructor));
                 return immediateType.New();
             },
             () => new ParamsOnlyConstructor());
@@ -715,7 +715,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         ConstructorTestHelpers.NewParamsOnly(
             () =>
             {
-                var immediateType = new ImmediateType(typeof(IntParamsOnlyConstructor));
+                ImmediateType immediateType = new(typeof(IntParamsOnlyConstructor));
                 return immediateType.New();
             },
             () => new IntParamsOnlyConstructor());
@@ -723,7 +723,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         ConstructorTestHelpers.NewParamsOnly(
             () =>
             {
-                var immediateType = new ImmediateType(typeof(NullableIntParamsOnlyConstructor));
+                ImmediateType immediateType = new(typeof(NullableIntParamsOnlyConstructor));
                 return immediateType.New();
             },
             () => new NullableIntParamsOnlyConstructor());
@@ -732,7 +732,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [Test]
     public static void NewParameterLess_Throws()
     {
-        var immediateType = new ImmediateType(typeof(NoDefaultConstructor));
+        ImmediateType immediateType = new(typeof(NoDefaultConstructor));
         Assert.Throws<MissingMethodException>(() => _ = immediateType.New());
 
         immediateType = new ImmediateType(typeof(NotAccessibleDefaultConstructor));
@@ -784,7 +784,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
             expectFail,
             (out object? instance, out Exception? exception) =>
             {
-                var immediateType = new ImmediateType(type);
+                ImmediateType immediateType = new(type);
                 return immediateType.TryNew(out instance, out exception);
             });
     }
@@ -795,7 +795,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         ConstructorTestHelpers.TryNewParameterLess(
             (out object? instance, out Exception? exception) =>
             {
-                var immediateType = new ImmediateType(typeof(ParamsOnlyConstructor));
+                ImmediateType immediateType = new(typeof(ParamsOnlyConstructor));
                 return immediateType.TryNew(out instance, out exception);
             },
             () => new ParamsOnlyConstructor());
@@ -803,7 +803,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         ConstructorTestHelpers.TryNewParameterLess(
             (out object? instance, out Exception? exception) =>
             {
-                var immediateType = new ImmediateType(typeof(IntParamsOnlyConstructor));
+                ImmediateType immediateType = new(typeof(IntParamsOnlyConstructor));
                 return immediateType.TryNew(out instance, out exception);
             },
             () => new IntParamsOnlyConstructor());
@@ -811,7 +811,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
         ConstructorTestHelpers.TryNewParameterLess(
             (out object? instance, out Exception? exception) =>
             {
-                var immediateType = new ImmediateType(typeof(NullableIntParamsOnlyConstructor));
+                ImmediateType immediateType = new(typeof(NullableIntParamsOnlyConstructor));
                 return immediateType.TryNew(out instance, out exception);
             },
             () => new NullableIntParamsOnlyConstructor());
@@ -828,7 +828,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
             type,
             args =>
             {
-                var immediateType = new ImmediateType(type);
+                ImmediateType immediateType = new(type);
                 return immediateType.New(args);
             },
             arguments);
@@ -837,7 +837,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [Test]
     public static void NewWithParameters_Throws()
     {
-        var immediateType = new ImmediateType(typeof(NoDefaultConstructor));
+        ImmediateType immediateType = new(typeof(NoDefaultConstructor));
         Assert.Throws<MissingMethodException>(() => _ = immediateType.New(12, 42));
 
         immediateType = new ImmediateType(typeof(NotAccessibleConstructor));
@@ -877,7 +877,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
             expectFail,
             (out object? instance, out Exception? exception, object?[] args) =>
             {
-                var immediateType = new ImmediateType(type);
+                ImmediateType immediateType = new(type);
                 return immediateType.TryNew(out instance, out exception, args);
             },
             arguments);
@@ -894,7 +894,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateHasCopyConstructorTestCases))]
     public static bool HasCopyConstructor(Type type)
     {
-        var immediateType = new ImmediateType(type);
+        ImmediateType immediateType = new(type);
         return immediateType.HasCopyConstructor;
     }
 
@@ -910,7 +910,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
             other,
             o =>
             {
-                var immediateType = new ImmediateType(type);
+                ImmediateType immediateType = new(type);
                 return immediateType.Copy(o);
             });
     }
@@ -918,7 +918,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [Test]
     public static void Copy_Throws()
     {
-        var immediateType = new ImmediateType(typeof(NoCopyConstructorClass));
+        ImmediateType immediateType = new(typeof(NoCopyConstructorClass));
         Assert.Throws<MissingMethodException>(() => _ = immediateType.Copy(new NoCopyConstructorClass()));
 
         immediateType = new ImmediateType(typeof(NotAccessibleCopyConstructor));
@@ -987,7 +987,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
             expectFail,
             (object? o, out object? instance, out Exception? exception) =>
             {
-                var immediateType = new ImmediateType(type);
+                ImmediateType immediateType = new(type);
                 return immediateType.TryCopy(o, out instance, out exception);
             });
     }
@@ -1001,13 +1001,13 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateTypeEquality()
     {
-        var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
-        var immediateType2 = new ImmediateType(typeof(PublicValueTypeTestClass));
+        ImmediateType immediateType1 = new(typeof(PublicValueTypeTestClass));
+        ImmediateType immediateType2 = new(typeof(PublicValueTypeTestClass));
         Assert.IsTrue(immediateType1.Equals(immediateType1));
         Assert.IsTrue(immediateType1.Equals(immediateType2));
         Assert.IsTrue(immediateType1.Equals((object)immediateType2));
 
-        var immediateType3 = new ImmediateType(typeof(InternalValueTypeTestClass));
+        ImmediateType immediateType3 = new(typeof(InternalValueTypeTestClass));
         Assert.IsFalse(immediateType1.Equals(immediateType3));
         Assert.IsFalse(immediateType1.Equals((object)immediateType3));
 
@@ -1017,22 +1017,22 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateTypeHashCode()
     {
-        var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
-        var immediateType2 = new ImmediateType(typeof(PublicValueTypeTestClass));
+        ImmediateType immediateType1 = new(typeof(PublicValueTypeTestClass));
+        ImmediateType immediateType2 = new(typeof(PublicValueTypeTestClass));
         Assert.AreEqual(typeof(PublicValueTypeTestClass).GetHashCode(), immediateType1.GetHashCode());
         Assert.AreEqual(immediateType1.GetHashCode(), immediateType2.GetHashCode());
 
-        var immediateType3 = new ImmediateType(typeof(InternalValueTypeTestClass));
+        ImmediateType immediateType3 = new(typeof(InternalValueTypeTestClass));
         Assert.AreNotEqual(immediateType1.GetHashCode(), immediateType3.GetHashCode());
     }
 
     [Test]
     public static void ImmediateTypeToString()
     {
-        var immediateType1 = new ImmediateType(typeof(PublicValueTypeTestClass));
+        ImmediateType immediateType1 = new(typeof(PublicValueTypeTestClass));
         Assert.AreEqual(typeof(PublicValueTypeTestClass).ToString(), immediateType1.ToString());
 
-        var immediateType2 = new ImmediateType(typeof(InternalValueTypeTestClass));
+        ImmediateType immediateType2 = new(typeof(InternalValueTypeTestClass));
         Assert.AreNotEqual(immediateType1.ToString(), immediateType2.ToString());
     }
 

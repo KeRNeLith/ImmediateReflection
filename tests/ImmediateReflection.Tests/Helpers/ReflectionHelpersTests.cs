@@ -69,7 +69,7 @@ internal sealed class ReflectionHelpersTests : ImmediateReflectionTestsBase
     // Builds distinct closed generic types deriving from HashBase
     private static Type[] CreateDerivedTypes()
     {
-        var arguments = new List<Type> { typeof(int) };
+        List<Type> arguments = new() { typeof(int) };
         while (arguments.Count < TypesCount)
         {
             arguments.Add(typeof(HashWrapper<>).MakeGenericType(arguments[arguments.Count - 1]));

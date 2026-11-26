@@ -20,7 +20,7 @@ internal sealed class SerializationTests : ImmediateReflectionTestsBase
     private static T SerializeAndDeserialize<T>(T @object)
     {
         // Round-trip the exception: Serialize and de-serialize with a BinaryFormatter
-        BinaryFormatter bf = new BinaryFormatter();
+        BinaryFormatter bf = new();
         using (MemoryStream ms = new MemoryStream())
         {
             // "Save" object state
@@ -39,7 +39,7 @@ internal sealed class SerializationTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertySerialization()
     {
-        var property = new ImmediateProperty(PublicReferenceTypePublicGetSetPropertyPropertyInfo);
+        ImmediateProperty property = new(PublicReferenceTypePublicGetSetPropertyPropertyInfo);
         ImmediateProperty deserializedProperty = SerializeAndDeserialize(property);
 
         Assert.AreEqual(nameof(PublicReferenceTypeTestClass.PublicPropertyGetSet), deserializedProperty.Name);
@@ -53,7 +53,7 @@ internal sealed class SerializationTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediatePropertiesSerialization()
     {
-        var properties = new ImmediateProperties(
+        ImmediateProperties properties = new(
         [
             PublicValueTypePublicGetSetPropertyPropertyInfo,
             PublicReferenceTypePublicGetPropertyPropertyInfo,
@@ -74,7 +74,7 @@ internal sealed class SerializationTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldSerialization()
     {
-        var field = new ImmediateField(PublicReferenceTypePublicFieldFieldsInfo);
+        ImmediateField field = new(PublicReferenceTypePublicFieldFieldsInfo);
         ImmediateField deserializedField = SerializeAndDeserialize(field);
 
         Assert.AreEqual(nameof(PublicReferenceTypeTestClass._publicField), deserializedField.Name);
@@ -104,7 +104,7 @@ internal sealed class SerializationTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldsSerialization()
     {
-        var fields = new ImmediateFields(
+        ImmediateFields fields = new(
         [
             PublicValueTypePublicFieldFieldsInfo,
             PublicReferenceTypePublicField2FieldsInfo,
@@ -131,7 +131,7 @@ internal sealed class SerializationTests : ImmediateReflectionTestsBase
     {
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
-        var type = new ImmediateType(typeof(PublicValueTypeTestClass));
+        ImmediateType type = new(typeof(PublicValueTypeTestClass));
         ImmediateType deserializedType = SerializeAndDeserialize(type);
 
         Assert.AreEqual(typeof(PublicValueTypeTestClass), deserializedType.Type);

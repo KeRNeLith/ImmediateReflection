@@ -686,9 +686,9 @@ internal sealed class ImmediateMemberTests : ImmediateAttributesTestsBase
     [Test]
     public static void IsDefinedAndGetAttribute_Throws_NullType()
     {
-        var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
-        var immediateField = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
-        var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
+        ImmediateType immediateType = new(typeof(PublicValueTypeTestClass));
+        ImmediateField immediateField = new(PublicValueTypePublicFieldFieldsInfo);
+        ImmediateProperty immediateProperty = new(PublicValueTypePublicGetSetPropertyPropertyInfo);
 
         Assert.Throws<ArgumentNullException>(() => _ = immediateType.IsDefined(null!));
         Assert.Throws<ArgumentNullException>(() => _ = immediateType.GetAttribute(null!));
@@ -1336,9 +1336,9 @@ internal sealed class ImmediateMemberTests : ImmediateAttributesTestsBase
     [Test]
     public static void GetAttributes_Throws_NullType()
     {
-        var immediateType = new ImmediateType(typeof(PublicValueTypeTestClass));
-        var immediateField = new ImmediateField(PublicValueTypePublicFieldFieldsInfo);
-        var immediateProperty = new ImmediateProperty(PublicValueTypePublicGetSetPropertyPropertyInfo);
+        ImmediateType immediateType = new(typeof(PublicValueTypeTestClass));
+        ImmediateField immediateField = new(PublicValueTypePublicFieldFieldsInfo);
+        ImmediateProperty immediateProperty = new(PublicValueTypePublicGetSetPropertyPropertyInfo);
 
         Assert.Throws<ArgumentNullException>(() => _ = immediateType.GetAttributes(null!));
         Assert.Throws<ArgumentNullException>(() => _ = immediateType.GetAttributes(null!, true));

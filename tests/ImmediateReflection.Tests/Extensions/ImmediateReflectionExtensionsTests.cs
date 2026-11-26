@@ -17,11 +17,11 @@ internal sealed class ImmediateReflectionExtensionsTests : ImmediateReflectionTe
         ImmediateType immediateType = ImmediateReflectionExtensions.GetImmediateType(testObject1);
         Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateType.Type);
 
-        var testObject2 = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject2 = new();
         immediateType = ImmediateReflectionExtensions.GetImmediateType(testObject2);
         Assert.AreEqual(typeof(PublicValueTypeTestClass), immediateType.Type);
 
-        var testObject3 = new TestStruct();
+        TestStruct testObject3 = new();
         immediateType = ImmediateReflectionExtensions.GetImmediateType(testObject3);
         Assert.AreEqual(typeof(TestStruct), immediateType.Type);
 

@@ -24,11 +24,11 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperInfo()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
 
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
-        var objectWrapper = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper = new(testObject);
         Assert.AreSame(testObject, objectWrapper.Object);
         Assert.AreEqual(typeof(PublicValueTypeTestClass), objectWrapper.Type);
         Assert.AreEqual(
@@ -52,10 +52,10 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperGetMembers()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();
 
-        var objectWrapper = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper = new(testObject);
 
         CollectionAssert.AreEquivalent(
             classifiedMembers.AllPublicMembers,
@@ -85,8 +85,8 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperGetMember()
     {
-        var testObject = new PublicValueTypeTestClass();
-        var objectWrapper = new ObjectWrapper(testObject);
+        PublicValueTypeTestClass testObject = new();
+        ObjectWrapper objectWrapper = new(testObject);
         string memberName = nameof(PublicValueTypeTestClass._publicField);
         Assert.AreEqual(objectWrapper.Fields[memberName], objectWrapper.GetMember(memberName));
         Assert.AreEqual(objectWrapper.Fields[memberName], objectWrapper[memberName]);
@@ -111,21 +111,21 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperGetFields()
     {
-        var testObject1 = new PublicValueTypeTestClass();
-        var testObject2 = new PublicReferenceTypeTestClass();
+        PublicValueTypeTestClass testObject1 = new();
+        PublicReferenceTypeTestClass testObject2 = new();
 
-        var objectWrapper1 = new ObjectWrapper(testObject1);
+        ObjectWrapper objectWrapper1 = new(testObject1);
         CollectionAssert.AreEquivalent(objectWrapper1.Fields, objectWrapper1.GetFields());
 
-        var objectWrapper2 = new ObjectWrapper(testObject2);
+        ObjectWrapper objectWrapper2 = new(testObject2);
         CollectionAssert.AreNotEquivalent(objectWrapper1.GetFields(), objectWrapper2.GetFields());
     }
 
     [Test]
     public static void ObjectWrapperGetField()
     {
-        var testObject = new PublicValueTypeTestClass();
-        var objectWrapper = new ObjectWrapper(testObject);
+        PublicValueTypeTestClass testObject = new();
+        ObjectWrapper objectWrapper = new(testObject);
         string fieldName = nameof(PublicValueTypeTestClass._publicField);
         Assert.AreEqual(objectWrapper.Fields[fieldName], objectWrapper.GetField(fieldName));
 
@@ -141,8 +141,7 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     {
         #region Struct
 
-        var testStruct = new TestStruct
-        {
+        TestStruct testStruct = new()        {
             _testValue = 12
         };
 
@@ -152,15 +151,13 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
 
         #region Value type
 
-        var publicValueTypeTestObject = new PublicValueTypeTestClass
-        {
+        PublicValueTypeTestClass publicValueTypeTestObject = new()        {
             _publicField = 1
         };
 
         yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicFieldFieldsInfo, 1);
 
-        var internalValueTypeTestObject = new InternalValueTypeTestClass
-        {
+        InternalValueTypeTestClass internalValueTypeTestObject = new()        {
             _publicField = 2
         };
 
@@ -172,7 +169,7 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [TestCaseSource(nameof(CreateObjectWrapperGetFieldValueTestCases))]
     public static void ObjectWrapperGetFieldValue(object target, FieldInfo field, object? expectedValue)
     {
-        var objectWrapper = new ObjectWrapper(target);
+        ObjectWrapper objectWrapper = new(target);
 
         object? gotValue = objectWrapper.GetFieldValue(field.Name);
         if (expectedValue is null)
@@ -192,14 +189,14 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperGetFieldValue_NonPublic()
     {
-        var publicTestObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass publicTestObject = new();
 
-        var objectWrapper = new ObjectWrapper(publicTestObject);
+        ObjectWrapper objectWrapper = new(publicTestObject);
         Assert.IsNull(objectWrapper.GetFieldValue(nameof(PublicValueTypeTestClass._internalField)));
         Assert.IsNull(objectWrapper.GetFieldValue("_protectedField"));
         Assert.IsNull(objectWrapper.GetFieldValue("_privateField"));
 
-        var internalTestObject = new InternalValueTypeTestClass();
+        InternalValueTypeTestClass internalTestObject = new();
 
         objectWrapper = new ObjectWrapper(internalTestObject);
         Assert.IsNull(objectWrapper.GetFieldValue(nameof(InternalValueTypeTestClass._internalField)));
@@ -210,19 +207,19 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperGetFieldValue_Static()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
 
         PublicValueTypeTestClass._publicStaticField = 12;
-        var objectWrapper = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper = new(testObject);
         Assert.AreEqual(12, objectWrapper.GetFieldValue(nameof(PublicValueTypeTestClass._publicStaticField)));
     }
 
     [Test]
     public static void ObjectWrapperGetFieldValue_NotExists()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
 
-        var objectWrapper = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper = new(testObject);
         Assert.IsNull(objectWrapper.GetFieldValue("NotExists"));
     }
 
@@ -233,9 +230,9 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperSetFieldValue_Struct()
     {
-        var testStruct = new TestStruct();
+        TestStruct testStruct = new();
 
-        var objectWrapper = new ObjectWrapper(testStruct);
+        ObjectWrapper objectWrapper = new(testStruct);
         objectWrapper.SetFieldValue(nameof(TestStruct._testValue), 45);
         Assert.AreEqual(0, testStruct._testValue);  // Not updated there (but on the shadow copy yes) since struct are immutable
                                                     // Limitation is the same with classic FieldInfo
@@ -244,9 +241,9 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperSetFieldValue_Class()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
 
-        var objectWrapper = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper = new(testObject);
         objectWrapper.SetFieldValue(nameof(PublicValueTypeTestClass._publicField), 12);
         Assert.AreEqual(12, testObject._publicField);
 
@@ -264,9 +261,9 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperSetFieldValue_NotExists()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
 
-        var objectWrapper = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper = new(testObject);
         // Nothing set but not throw
         Assert.DoesNotThrow(() => objectWrapper.SetFieldValue("NotExists", 12));
     }
@@ -274,9 +271,9 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperSetFieldValue_Static()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
 
-        var objectWrapper = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper = new(testObject);
         objectWrapper.SetFieldValue(nameof(PublicValueTypeTestClass._publicStaticField), 36);
         Assert.AreEqual(36, PublicValueTypeTestClass._publicStaticField);
     }
@@ -284,9 +281,9 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperSetFieldValue_WrongValue()
     {
-        var testObject = new PublicReferenceTypeTestClass();
+        PublicReferenceTypeTestClass testObject = new();
 
-        var objectWrapper = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper = new(testObject);
         Assert.Throws<InvalidCastException>(() => objectWrapper.SetFieldValue(nameof(PublicReferenceTypeTestClass._publicField), 12));
         Assert.Throws<InvalidCastException>(() => objectWrapper.SetFieldValue(nameof(PublicReferenceTypeTestClass._publicField), new SmallObject()));
     }
@@ -300,21 +297,21 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperGetProperties()
     {
-        var testObject1 = new PublicValueTypeTestClass();
-        var testObject2 = new PublicReferenceTypeTestClass();
+        PublicValueTypeTestClass testObject1 = new();
+        PublicReferenceTypeTestClass testObject2 = new();
 
-        var objectWrapper1 = new ObjectWrapper(testObject1);
+        ObjectWrapper objectWrapper1 = new(testObject1);
         CollectionAssert.AreEquivalent(objectWrapper1.Properties, objectWrapper1.GetProperties());
 
-        var objectWrapper2 = new ObjectWrapper(testObject2);
+        ObjectWrapper objectWrapper2 = new(testObject2);
         CollectionAssert.AreNotEquivalent(objectWrapper1.GetProperties(), objectWrapper2.GetProperties());
     }
 
     [Test]
     public static void ObjectWrapperGetProperty()
     {
-        var testObject = new PublicValueTypeTestClass();
-        var objectWrapper = new ObjectWrapper(testObject);
+        PublicValueTypeTestClass testObject = new();
+        ObjectWrapper objectWrapper = new(testObject);
         string propertyName = nameof(PublicValueTypeTestClass.PublicPropertyGetSet);
         Assert.AreEqual(objectWrapper.Properties[propertyName], objectWrapper.GetProperty(propertyName));
 
@@ -330,8 +327,7 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     {
         #region Struct
 
-        var testStruct = new TestStruct
-        {
+        TestStruct testStruct = new()        {
             TestValue = 42
         };
 
@@ -341,7 +337,7 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
 
         #region Value type
 
-        var publicValueTypeTestObject = new PublicValueTypeTestClass(3, 4)
+        PublicValueTypeTestClass publicValueTypeTestObject = new(3, 4)
         {
             PublicPropertyGetSet = 1,
             PublicVirtualPropertyGetSet = 2,
@@ -354,7 +350,7 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
         yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicGetPrivateSetPropertyPropertyInfo, 4);
         yield return new TestCaseData(publicValueTypeTestObject, PublicValueTypePublicPrivateGetSetPropertyPropertyInfo, 5);    // Private Get but gettable via Reflection
 
-        var internalValueTypeTestObject = new InternalValueTypeTestClass(8, 9)
+        InternalValueTypeTestClass internalValueTypeTestObject = new(8, 9)
         {
             PublicPropertyGetSet = 6,
             PublicVirtualPropertyGetSet = 7,
@@ -373,7 +369,7 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [TestCaseSource(nameof(CreateObjectWrapperGetPropertyValueTestCases))]
     public static void ObjectWrapperGetPropertyValue(object target, PropertyInfo property, object? expectedValue)
     {
-        var objectWrapper = new ObjectWrapper(target);
+        ObjectWrapper objectWrapper = new(target);
 
         object? gotValue = objectWrapper.GetPropertyValue(property.Name);
         if (expectedValue is null)
@@ -393,25 +389,25 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperGetPropertyValue_Static()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
 
         PublicValueTypeTestClass.PublicStaticPropertyGetSet = 66;
-        var objectWrapper = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper = new(testObject);
         Assert.AreEqual(66, objectWrapper.GetPropertyValue(nameof(PublicValueTypeTestClass.PublicStaticPropertyGetSet)));
     }
 
     [Test]
     public static void ObjectWrapperGetPropertyValue_NonPublic()
     {
-        var publicTestObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass publicTestObject = new();
 
-        var objectWrapper = new ObjectWrapper(publicTestObject);
+        ObjectWrapper objectWrapper = new(publicTestObject);
         Assert.IsNull(objectWrapper.GetPropertyValue(nameof(PublicValueTypeTestClass.InternalPropertyGetSet)));
         Assert.IsNull(objectWrapper.GetPropertyValue("ProtectedPropertyGetSet"));
         Assert.IsNull(objectWrapper.GetPropertyValue("PrivatePropertyGetSet"));
 
 
-        var internalTestObject = new InternalValueTypeTestClass();
+        InternalValueTypeTestClass internalTestObject = new();
 
         objectWrapper = new ObjectWrapper(internalTestObject);
         Assert.IsNull(objectWrapper.GetPropertyValue(nameof(InternalValueTypeTestClass.InternalPropertyGetSet)));
@@ -422,17 +418,17 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperGetPropertyValue_NotExists()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
 
-        var objectWrapper = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper = new(testObject);
         Assert.IsNull(objectWrapper.GetPropertyValue("NotExists"));
     }
 
     [Test]
     public static void ObjectWrapperGetPropertyValue_NoGetter()
     {
-        var testObject = new PublicValueTypeTestClass();
-        var objectWrapper = new ObjectWrapper(testObject);
+        PublicValueTypeTestClass testObject = new();
+        ObjectWrapper objectWrapper = new(testObject);
 
         Assert.Throws<ArgumentException>(() => _ = objectWrapper.GetPropertyValue(nameof(PublicValueTypeTestClass.PublicPropertySet)));
     }
@@ -444,9 +440,9 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperSetPropertyValue_Struct()
     {
-        var testStruct = new TestStruct();
+        TestStruct testStruct = new();
 
-        var objectWrapper = new ObjectWrapper(testStruct);
+        ObjectWrapper objectWrapper = new(testStruct);
         objectWrapper.SetPropertyValue(nameof(TestStruct.TestValue), 51);
         Assert.AreEqual(0, testStruct.TestValue);   // Not updated there (but on the shadow copy yes) since struct are immutable
         // Limitation is the same with classic PropertyInfo
@@ -455,9 +451,9 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperSetPropertyValue_Class()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
 
-        var objectWrapper = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper = new(testObject);
         objectWrapper.SetPropertyValue(nameof(PublicValueTypeTestClass.PublicPropertyGetSet), 12);
         Assert.AreEqual(12, testObject.PublicPropertyGetSet);
 
@@ -487,9 +483,9 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperSetPropertyValue_NotExists()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
 
-        var objectWrapper = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper = new(testObject);
         // Nothing set but not throw
         Assert.DoesNotThrow(() => objectWrapper.SetPropertyValue("NotExists", 12));
     }
@@ -497,9 +493,9 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperSetPropertyValue_Static()
     {
-        var testObject = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
 
-        var objectWrapper = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper = new(testObject);
         objectWrapper.SetPropertyValue(nameof(PublicValueTypeTestClass.PublicStaticPropertyGetSet), 77);
         Assert.AreEqual(77, PublicValueTypeTestClass.PublicStaticPropertyGetSet);
     }
@@ -507,8 +503,8 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperSetPropertyValue_WrongValue()
     {
-        var testObject = new PublicReferenceTypeTestClass();
-        var objectWrapper = new ObjectWrapper(testObject);
+        PublicReferenceTypeTestClass testObject = new();
+        ObjectWrapper objectWrapper = new(testObject);
 
         Assert.Throws<InvalidCastException>(() => objectWrapper.SetPropertyValue(nameof(PublicReferenceTypeTestClass.PublicPropertyGetSet), 12));
         Assert.Throws<InvalidCastException>(() => objectWrapper.SetPropertyValue(nameof(PublicReferenceTypeTestClass.PublicPropertyGetSet), new SmallObject()));
@@ -517,8 +513,8 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperSetPropertyValue_NoSetter()
     {
-        var testObject = new PublicValueTypeTestClass();
-        var objectWrapper = new ObjectWrapper(testObject);
+        PublicValueTypeTestClass testObject = new();
+        ObjectWrapper objectWrapper = new(testObject);
         Assert.Throws<ArgumentException>(() => objectWrapper.SetPropertyValue(nameof(PublicValueTypeTestClass.PublicPropertyGet), 51));
     }
 
@@ -531,16 +527,16 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperEquality()
     {
-        var testObject = new PublicValueTypeTestClass();
-        var testObject2 = new PublicValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
+        PublicValueTypeTestClass testObject2 = new();
 
-        var objectWrapper1 = new ObjectWrapper(testObject);
-        var objectWrapper2 = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper1 = new(testObject);
+        ObjectWrapper objectWrapper2 = new(testObject);
         Assert.IsTrue(objectWrapper1.Equals(objectWrapper1));
         Assert.IsTrue(objectWrapper1.Equals(objectWrapper2));
         Assert.IsTrue(objectWrapper1.Equals((object)objectWrapper2));
 
-        var objectWrapper3 = new ObjectWrapper(testObject2);
+        ObjectWrapper objectWrapper3 = new(testObject2);
         Assert.IsFalse(objectWrapper1.Equals(objectWrapper3));
         Assert.IsFalse(objectWrapper1.Equals((object)objectWrapper3));
 
@@ -550,33 +546,33 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
     [Test]
     public static void ObjectWrapperHashCode()
     {
-        var testObject = new PublicValueTypeTestClass();
-        var testObject2 = new PublicValueTypeTestClass();
-        var testObject3 = new PublicValueTypeTestClass { PublicPropertyGetSet = 25 };
+        PublicValueTypeTestClass testObject = new();
+        PublicValueTypeTestClass testObject2 = new();
+        PublicValueTypeTestClass testObject3 = new() { PublicPropertyGetSet = 25 };
 
-        var objectWrapper1 = new ObjectWrapper(testObject);
-        var objectWrapper2 = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper1 = new(testObject);
+        ObjectWrapper objectWrapper2 = new(testObject);
         Assert.AreEqual(testObject.GetHashCode(), objectWrapper1.GetHashCode());
         Assert.AreEqual(objectWrapper1.GetHashCode(), objectWrapper2.GetHashCode());
 
-        var objectWrapper3 = new ObjectWrapper(testObject2);
+        ObjectWrapper objectWrapper3 = new(testObject2);
         Assert.AreEqual(testObject2.GetHashCode(), objectWrapper3.GetHashCode());
         Assert.AreNotEqual(objectWrapper1.GetHashCode(), objectWrapper3.GetHashCode());
 
-        var objectWrapper4 = new ObjectWrapper(testObject3);
+        ObjectWrapper objectWrapper4 = new(testObject3);
         Assert.AreNotEqual(objectWrapper1.GetHashCode(), objectWrapper4.GetHashCode());
     }
 
     [Test]
     public static void ObjectWrapperToString()
     {
-        var testObject = new PublicValueTypeTestClass();
-        var testObject2 = new InternalValueTypeTestClass();
+        PublicValueTypeTestClass testObject = new();
+        InternalValueTypeTestClass testObject2 = new();
 
-        var objectWrapper1 = new ObjectWrapper(testObject);
+        ObjectWrapper objectWrapper1 = new(testObject);
         Assert.AreEqual(testObject.ToString(), objectWrapper1.ToString());
 
-        var objectWrapper2 = new ObjectWrapper(testObject2);
+        ObjectWrapper objectWrapper2 = new(testObject2);
         Assert.AreNotEqual(objectWrapper1.ToString(), objectWrapper2.ToString());
     }
 

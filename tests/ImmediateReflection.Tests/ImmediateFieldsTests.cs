@@ -14,7 +14,7 @@ internal sealed class ImmediateFieldsTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldsInfo()
     {
-        var immediateFields1 = new ImmediateFields(SmallObjectFieldInfos);
+        ImmediateFields immediateFields1 = new(SmallObjectFieldInfos);
         CollectionAssert.AreEquivalent(
             new[]
             {
@@ -23,18 +23,18 @@ internal sealed class ImmediateFieldsTests : ImmediateReflectionTestsBase
             },
             immediateFields1);
 
-        var immediateFields2 = new ImmediateFields(SecondSmallObjectFieldInfos);
+        ImmediateFields immediateFields2 = new(SecondSmallObjectFieldInfos);
         CollectionAssert.AreNotEquivalent(immediateFields1, immediateFields2);
 
-        var immediateFields3 = new ImmediateFields(EmptyFieldInfo);
+        ImmediateFields immediateFields3 = new(EmptyFieldInfo);
         CollectionAssert.IsEmpty(immediateFields3);
     }
 
     [Test]
     public static void GetField()
     {
-        var immediateFields = new ImmediateFields(SmallObjectFieldInfos);
-        var expectedField = new ImmediateField(SmallObjectTestField1FieldInfo);
+        ImmediateFields immediateFields = new(SmallObjectFieldInfos);
+        ImmediateField expectedField = new(SmallObjectTestField1FieldInfo);
         Assert.AreEqual(expectedField, immediateFields[nameof(SmallObject._testField1)]);
         Assert.AreEqual(expectedField, immediateFields.GetField(nameof(SmallObject._testField1)));
 
@@ -50,27 +50,27 @@ internal sealed class ImmediateFieldsTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldsEquality()
     {
-        var immediateFields1 = new ImmediateFields(SmallObjectFieldInfos);
-        var immediateFields2 = new ImmediateFields(SmallObjectFieldInfos);
+        ImmediateFields immediateFields1 = new(SmallObjectFieldInfos);
+        ImmediateFields immediateFields2 = new(SmallObjectFieldInfos);
         Assert.IsTrue(immediateFields1.Equals(immediateFields1));
         Assert.IsTrue(immediateFields1.Equals(immediateFields2));
         Assert.IsTrue(immediateFields1.Equals((object)immediateFields2));
 
-        var immediateFields3 = new ImmediateFields(SecondSmallObjectFieldInfos);
+        ImmediateFields immediateFields3 = new(SecondSmallObjectFieldInfos);
         Assert.IsFalse(immediateFields1.Equals(immediateFields3));
         Assert.IsFalse(immediateFields1.Equals((object)immediateFields3));
 
-        var immediateFields4 = new ImmediateFields(PublicNestedFieldInfos);
+        ImmediateFields immediateFields4 = new(PublicNestedFieldInfos);
         Assert.IsFalse(immediateFields4.Equals(immediateFields1));
         Assert.IsFalse(immediateFields4.Equals((object)immediateFields1));
 
         // Same names but not the same fields
-        var immediateFields5 = new ImmediateFields([SameNamesTestClassAValueFieldInfo]);
-        var immediateFields6 = new ImmediateFields([SameNamesTestClassBValueFieldInfo]);
+        ImmediateFields immediateFields5 = new([SameNamesTestClassAValueFieldInfo]);
+        ImmediateFields immediateFields6 = new([SameNamesTestClassBValueFieldInfo]);
         Assert.IsFalse(immediateFields5.Equals(immediateFields6));
 
         // Same count but not the same names
-        var immediateFields7 = new ImmediateFields([OtherNamesTestClassOtherValueFieldInfo]);
+        ImmediateFields immediateFields7 = new([OtherNamesTestClassOtherValueFieldInfo]);
         Assert.IsFalse(immediateFields5.Equals(immediateFields7));
 
         Assert.IsFalse(immediateFields1.Equals(null));
@@ -79,22 +79,22 @@ internal sealed class ImmediateFieldsTests : ImmediateReflectionTestsBase
     [Test]
     public static void ImmediateFieldsHashCode()
     {
-        var immediateFields1 = new ImmediateFields(SmallObjectFieldInfos);
-        var immediateFields2 = new ImmediateFields(SmallObjectFieldInfos);
+        ImmediateFields immediateFields1 = new(SmallObjectFieldInfos);
+        ImmediateFields immediateFields2 = new(SmallObjectFieldInfos);
         Assert.AreEqual(immediateFields1.GetHashCode(), immediateFields2.GetHashCode());
 
-        var immediateFields3 = new ImmediateFields(SecondSmallObjectFieldInfos);
+        ImmediateFields immediateFields3 = new(SecondSmallObjectFieldInfos);
         Assert.AreNotEqual(immediateFields1.GetHashCode(), immediateFields3.GetHashCode());
     }
 
     [Test]
     public static void ImmediateFieldsToString()
     {
-        var immediateFields1 = new ImmediateFields(SmallObjectFieldInfos);
+        ImmediateFields immediateFields1 = new(SmallObjectFieldInfos);
         string expectedToString = $"[{string.Join(", ", SmallObjectFieldInfos.Select(p => p.ToString()).ToArray())}]";
         Assert.AreEqual(expectedToString, immediateFields1.ToString());
 
-        var immediateFields2 = new ImmediateFields(EmptyFieldInfo);
+        ImmediateFields immediateFields2 = new(EmptyFieldInfo);
         Assert.AreEqual("[]", immediateFields2.ToString());
     }
 

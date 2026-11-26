@@ -20,7 +20,7 @@ internal sealed class BooleanMembersTests
     [TestCase(false)]
     public static void BooleanFieldGetValue(bool value)
     {
-        var container = new BooleanContainer { Field = value };
+        BooleanContainer container = new() { Field = value };
         ImmediateField field = TypeAccessor.Get<BooleanContainer>().GetField(nameof(BooleanContainer.Field))!;
 
         object? gotValue = field.GetValue(container);
@@ -33,7 +33,7 @@ internal sealed class BooleanMembersTests
     [TestCase(false)]
     public static void BooleanPropertyGetValue(bool value)
     {
-        var container = new BooleanContainer { Property = value };
+        BooleanContainer container = new() { Property = value };
         ImmediateProperty property = TypeAccessor.Get<BooleanContainer>().GetProperty(nameof(BooleanContainer.Property))!;
 
         object? gotValue = property.GetValue(container);
