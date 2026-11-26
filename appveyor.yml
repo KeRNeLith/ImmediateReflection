@@ -130,7 +130,7 @@ test_script:
           $opencover = (Resolve-Path "tools\OpenCover.*\tools\OpenCover.Console.exe").ToString();
           $coveralls = (Resolve-Path "tools\csmacnz.Coveralls.exe").ToString();
           
-          & $opencover -register:Path64 -filter:"+[*]* -[*.Benchmark*]* -[*.Test*]* -[*]JetBrains.Annotations*" -target:"$nunitConsole" -targetargs:"$testAssemblies --result=\`"TestResult.xml\`"" -returntargetcode -log:Warn -output:coverage.xml;
+          & $opencover -register:Path64 -filter:"+[*]* -[*.Benchmark*]* -[*.Test*]* -[*]JetBrains.Annotations* -[*]System.Diagnostics.CodeAnalysis.*" -excludebyfile:"*GeneralHelpers.cs" -target:"$nunitConsole" -targetargs:"$testAssemblies --result=\`"TestResult.xml\`"" -returntargetcode -log:Warn -output:coverage.xml;
           $testsPassed = $?;
           
           & $sonarScanner end /d:"sonar.token=$env:SONARQUBE_TOKEN"
