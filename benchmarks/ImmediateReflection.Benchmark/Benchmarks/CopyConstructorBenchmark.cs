@@ -15,26 +15,14 @@ public class CopyConstructorBenchmark : BenchmarkBase
 
     // Benchmark methods
     [Benchmark(Baseline = true)]
-    public void Direct_CopyConstructor()
-    {
-        _ = new CopyableBenchmarkObject(ObjectToCopy);
-    }
+    public void Direct_CopyConstructor() => _ = new CopyableBenchmarkObject(ObjectToCopy);
 
     [Benchmark]
-    public void Activator_CopyConstructor()
-    {
-        _ = (CopyableBenchmarkObject)Activator.CreateInstance(CopyableBenchmarkObjectType, ObjectToCopy)!;
-    }
+    public void Activator_CopyConstructor() => _ = (CopyableBenchmarkObject)Activator.CreateInstance(CopyableBenchmarkObjectType, ObjectToCopy)!;
 
     [Benchmark]
-    public void Expression_CopyConstructor()
-    {
-        _ = ExpressionConstructor(ObjectToCopy);
-    }
+    public void Expression_CopyConstructor() => _ = ExpressionConstructor(ObjectToCopy);
 
     [Benchmark]
-    public void ImmediateType_CopyConstructor()
-    {
-        _ = (CopyableBenchmarkObject)ImmediateTypeCopyable.Copy(ObjectToCopy);
-    }
+    public void ImmediateType_CopyConstructor() => _ = (CopyableBenchmarkObject)ImmediateTypeCopyable.Copy(ObjectToCopy);
 }

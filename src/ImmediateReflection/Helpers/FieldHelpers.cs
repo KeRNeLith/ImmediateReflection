@@ -54,7 +54,7 @@ internal static class FieldHelpers
         if (backingFieldsCount == 0)
             return fields;
 
-        var filtered = new FieldInfo[fields.Length - backingFieldsCount];
+        FieldInfo[] filtered = new FieldInfo[fields.Length - backingFieldsCount];
         int index = 0;
         foreach (FieldInfo field in fields)
         {

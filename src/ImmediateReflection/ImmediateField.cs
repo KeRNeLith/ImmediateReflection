@@ -130,10 +130,7 @@ public sealed class ImmediateField
     /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the field to get is not static.</exception>
     [PublicAPI]
     [Pure]
-    public object? GetValue(object? obj)
-    {
-        return (_getter ?? GetOrCreateGetter())(obj);
-    }
+    public object? GetValue(object? obj) => (_getter ?? GetOrCreateGetter())(obj);
 
     /// <summary>
     /// Sets the field value of the specified object.
@@ -144,18 +141,12 @@ public sealed class ImmediateField
     /// <exception cref="T:System.FieldAccessException">If the field is constant or read only.</exception>
     /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the field to set is not static.</exception>
     [PublicAPI]
-    public void SetValue(object? obj, object? value)
-    {
-        (_setter ?? GetOrCreateSetter())(obj, value);
-    }
+    public void SetValue(object? obj, object? value) => (_setter ?? GetOrCreateSetter())(obj, value);
 
     #region Equality / IEquatable<T>
 
     /// <inheritdoc />
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as ImmediateField);
-    }
+    public override bool Equals(object? obj) => Equals(obj as ImmediateField);
 
     /// <inheritdoc />
     public bool Equals(ImmediateField? other)
@@ -168,10 +159,7 @@ public sealed class ImmediateField
     }
 
     /// <inheritdoc />
-    public override int GetHashCode()
-    {
-        return GetFieldInfoHashCode(FieldInfo);
-    }
+    public override int GetHashCode() => GetFieldInfoHashCode(FieldInfo);
 
     #endregion
 
@@ -192,8 +180,5 @@ public sealed class ImmediateField
     #endregion
 
     /// <inheritdoc />
-    public override string ToString()
-    {
-        return FieldInfo.ToString();
-    }
+    public override string ToString() => FieldInfo.ToString();
 }

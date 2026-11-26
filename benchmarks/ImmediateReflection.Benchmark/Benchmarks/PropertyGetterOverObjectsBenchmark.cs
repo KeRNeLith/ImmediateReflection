@@ -190,10 +190,7 @@ public class PropertyGetterOverObjectsBenchmark : ObjectsBenchmarkBase
         return property?.GetValue(obj);
     }
 
-    private static object? GetPropertyFasterflect(object obj)
-    {
-        return obj.TryGetPropertyValue(UIntArrayPropertyName);
-    }
+    private static object? GetPropertyFasterflect(object obj) => obj.TryGetPropertyValue(UIntArrayPropertyName);
 
     #endregion
 }

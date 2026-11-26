@@ -17,10 +17,7 @@ internal sealed class SerializationHelpersTests : ImmediateReflectionTestsBase
 {
     #region Test helpers
 
-    internal static SerializationInfo CreateInfo(Type type)
-    {
-        return new SerializationInfo(type, new FormatterConverter());
-    }
+    internal static SerializationInfo CreateInfo(Type type) => new SerializationInfo(type, new FormatterConverter());
 
     internal static SerializationInfo CreateMembersInfo(Type type, string prefix, params MemberInfo?[] members)
     {

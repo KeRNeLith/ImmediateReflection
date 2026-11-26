@@ -13,10 +13,7 @@ public class FieldSetterBenchmark : BenchmarkBase
 
     // Benchmark methods
     [Benchmark(Baseline = true)]
-    public void SetDirect_Field()
-    {
-        BenchmarkObject._benchmarkField = ValueToSet;
-    }
+    public void SetDirect_Field() => BenchmarkObject._benchmarkField = ValueToSet;
 
     [Benchmark]
     public void SetFieldInfo_Field()
@@ -27,20 +24,11 @@ public class FieldSetterBenchmark : BenchmarkBase
     }
 
     [Benchmark]
-    public void SetFieldInfoCache_Field()
-    {
-        FieldInfo.SetValue(BenchmarkObject, ValueToSet);
-    }
+    public void SetFieldInfoCache_Field() => FieldInfo.SetValue(BenchmarkObject, ValueToSet);
 
     [Benchmark]
-    public void SetFastMember_Field()
-    {
-        TypeAccessor[BenchmarkObject, BenchmarkObjectFieldName] = ValueToSet;
-    }
+    public void SetFastMember_Field() => TypeAccessor[BenchmarkObject, BenchmarkObjectFieldName] = ValueToSet;
 
     [Benchmark]
-    public void SetImmediateField_Field()
-    {
-        ImmediateField.SetValue(BenchmarkObject, ValueToSet);
-    }
+    public void SetImmediateField_Field() => ImmediateField.SetValue(BenchmarkObject, ValueToSet);
 }

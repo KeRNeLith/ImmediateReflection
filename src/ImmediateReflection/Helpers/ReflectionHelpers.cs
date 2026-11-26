@@ -25,10 +25,7 @@ internal static class ReflectionHelpers
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
     [ContractAnnotation("param:null => halt")]
-    public static bool IsParams(ParameterInfo param)
-    {
-        return param.IsDefined(typeof(ParamArrayAttribute), inherit: false);
-    }
+    public static bool IsParams(ParameterInfo param) => param.IsDefined(typeof(ParamArrayAttribute), inherit: false);
 
     /// <summary>
     /// Checks if the given <paramref name="property"/> is an indexed one.
@@ -40,10 +37,7 @@ internal static class ReflectionHelpers
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
     [ContractAnnotation("property:null => halt")]
-    public static bool IsIndexed(PropertyInfo property)
-    {
-        return property.GetIndexParameters().Length != 0;
-    }
+    public static bool IsIndexed(PropertyInfo property) => property.GetIndexParameters().Length != 0;
 
     // Remarks on hashcodes of reflection members:
     // Under NET5.0+ the runtime creates one distinct instance per reflected type for inherited members
@@ -131,10 +125,7 @@ internal static class ReflectionHelpers
         }
 
         /// <inheritdoc />
-        int IEqualityComparer.GetHashCode(object obj)
-        {
-            return GetPropertyInfoHashCode((PropertyInfo)obj);
-        }
+        int IEqualityComparer.GetHashCode(object obj) => GetPropertyInfoHashCode((PropertyInfo)obj);
 
         /// <inheritdoc />
         public bool Equals(PropertyInfo? x, PropertyInfo? y)
@@ -146,10 +137,7 @@ internal static class ReflectionHelpers
         }
 
         /// <inheritdoc />
-        public int GetHashCode(PropertyInfo obj)
-        {
-            return GetPropertyInfoHashCode(obj);
-        }
+        public int GetHashCode(PropertyInfo obj) => GetPropertyInfoHashCode(obj);
     }
 
     /// <summary>
@@ -171,10 +159,7 @@ internal static class ReflectionHelpers
         }
 
         /// <inheritdoc />
-        int IEqualityComparer.GetHashCode(object obj)
-        {
-            return GetFieldInfoHashCode((FieldInfo)obj);
-        }
+        int IEqualityComparer.GetHashCode(object obj) => GetFieldInfoHashCode((FieldInfo)obj);
 
         /// <inheritdoc />
         public bool Equals(FieldInfo? x, FieldInfo? y)
@@ -186,10 +171,7 @@ internal static class ReflectionHelpers
         }
 
         /// <inheritdoc />
-        public int GetHashCode(FieldInfo obj)
-        {
-            return GetFieldInfoHashCode(obj);
-        }
+        public int GetHashCode(FieldInfo obj) => GetFieldInfoHashCode(obj);
     }
 
     /// <summary>
@@ -212,10 +194,7 @@ internal static class ReflectionHelpers
         }
 
         /// <inheritdoc />
-        int IEqualityComparer.GetHashCode(object obj)
-        {
-            return GetMemberInfoHashCode((MemberInfo)obj);
-        }
+        int IEqualityComparer.GetHashCode(object obj) => GetMemberInfoHashCode((MemberInfo)obj);
 
         /// <inheritdoc />
         public bool Equals(MemberInfo? x, MemberInfo? y)
@@ -227,9 +206,6 @@ internal static class ReflectionHelpers
         }
 
         /// <inheritdoc />
-        public int GetHashCode(MemberInfo obj)
-        {
-            return GetMemberInfoHashCode(obj);
-        }
+        public int GetHashCode(MemberInfo obj) => GetMemberInfoHashCode(obj);
     }
 }

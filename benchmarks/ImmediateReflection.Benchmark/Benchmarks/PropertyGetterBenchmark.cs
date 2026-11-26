@@ -27,22 +27,13 @@ public class PropertyGetterBenchmark : BenchmarkBase
 
     // Benchmark methods
     [Benchmark(Baseline = true)]
-    public void GetDirect_Property()
-    {
-        _ = BenchmarkObject.BenchmarkProperty;
-    }
+    public void GetDirect_Property() => _ = BenchmarkObject.BenchmarkProperty;
 
     [Benchmark]
-    public void GetDelegate_Property()
-    {
-        _ = GetterDelegate(BenchmarkObject);
-    }
+    public void GetDelegate_Property() => _ = GetterDelegate(BenchmarkObject);
 
     [Benchmark]
-    public void GetDynamicDelegate_Property()
-    {
-        _ = (string)DynamicGetterDelegate.DynamicInvoke(BenchmarkObject)!;
-    }
+    public void GetDynamicDelegate_Property() => _ = (string)DynamicGetterDelegate.DynamicInvoke(BenchmarkObject)!;
 
     [Benchmark]
     public void GetPropertyInfo_Property()
@@ -53,32 +44,17 @@ public class PropertyGetterBenchmark : BenchmarkBase
     }
 
     [Benchmark]
-    public void GetPropertyInfoCache_Property()
-    {
-        _ = (string)PropertyInfo.GetValue(BenchmarkObject)!;
-    }
+    public void GetPropertyInfoCache_Property() => _ = (string)PropertyInfo.GetValue(BenchmarkObject)!;
 
     [Benchmark]
-    public void GetSigilEmit_Property()
-    {
-        _ = SigilEmitGetter(BenchmarkObject);
-    }
+    public void GetSigilEmit_Property() => _ = SigilEmitGetter(BenchmarkObject);
 
     [Benchmark]
-    public void GetExpression_Property()
-    {
-        _ = (string)ExpressionGetter(BenchmarkObject);
-    }
+    public void GetExpression_Property() => _ = (string)ExpressionGetter(BenchmarkObject);
 
     [Benchmark]
-    public void GetFastMember_Property()
-    {
-        _ = (string)TypeAccessor[BenchmarkObject, BenchmarkObjectPropertyName];
-    }
+    public void GetFastMember_Property() => _ = (string)TypeAccessor[BenchmarkObject, BenchmarkObjectPropertyName];
 
     [Benchmark]
-    public void GetImmediateProperty_Property()
-    {
-        _ = (string)ImmediateProperty.GetValue(BenchmarkObject)!;
-    }
+    public void GetImmediateProperty_Property() => _ = (string)ImmediateProperty.GetValue(BenchmarkObject)!;
 }

@@ -13,32 +13,17 @@ public class DefaultConstructorBenchmark : BenchmarkBase
 
     // Benchmark methods
     [Benchmark(Baseline = true)]
-    public void Direct_Constructor()
-    {
-        _ = new BenchmarkObject();
-    }
+    public void Direct_Constructor() => _ = new BenchmarkObject();
 
     [Benchmark]
-    public void Activator_Constructor()
-    {
-        _ = (BenchmarkObject)Activator.CreateInstance(BenchmarkObjectType)!;
-    }
+    public void Activator_Constructor() => _ = (BenchmarkObject)Activator.CreateInstance(BenchmarkObjectType)!;
 
     [Benchmark]
-    public void Expression_Constructor()
-    {
-        _ = ExpressionConstructor();
-    }
+    public void Expression_Constructor() => _ = ExpressionConstructor();
 
     [Benchmark]
-    public void FastMember_Constructor()
-    {
-        _ = (BenchmarkObject)TypeAccessor.CreateNew();
-    }
+    public void FastMember_Constructor() => _ = (BenchmarkObject)TypeAccessor.CreateNew();
 
     [Benchmark]
-    public void ImmediateType_Constructor()
-    {
-        _ = (BenchmarkObject)ImmediateType.New();
-    }
+    public void ImmediateType_Constructor() => _ = (BenchmarkObject)ImmediateType.New();
 }

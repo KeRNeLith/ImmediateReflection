@@ -230,10 +230,7 @@ public sealed class ImmediateType
     /// <exception cref="T:System.Reflection.AmbiguousMatchException"><see cref="T:System.Type"/> has several constructors defining "params" parameter only.</exception>
     [PublicAPI]
     [Pure]
-    public object New()
-    {
-        return DefaultConstructorData.Constructor();
-    }
+    public object New() => DefaultConstructorData.Constructor();
 
     /// <summary>
     /// Tries to create an instance of this <see cref="T:System.Type"/> with that type's default constructor.
@@ -398,10 +395,7 @@ public sealed class ImmediateType
     #region Equality / IEquatable<T>
 
     /// <inheritdoc />
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as ImmediateType);
-    }
+    public override bool Equals(object? obj) => Equals(obj as ImmediateType);
 
     /// <inheritdoc />
     public bool Equals(ImmediateType? other)
@@ -414,10 +408,7 @@ public sealed class ImmediateType
     }
 
     /// <inheritdoc />
-    public override int GetHashCode()
-    {
-        return Type.GetHashCode();
-    }
+    public override int GetHashCode() => Type.GetHashCode();
 
     #endregion
 
@@ -439,8 +430,5 @@ public sealed class ImmediateType
     #endregion
 
     /// <inheritdoc />
-    public override string ToString()
-    {
-        return Type.ToString();
-    }
+    public override string ToString() => Type.ToString();
 }

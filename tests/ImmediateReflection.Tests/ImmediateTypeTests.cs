@@ -18,9 +18,7 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
 
     #region Test classes
 
-    private sealed class EmptyType
-    {
-    }
+    private sealed class EmptyType;
 
     private sealed class PrivateNestedClass
     {

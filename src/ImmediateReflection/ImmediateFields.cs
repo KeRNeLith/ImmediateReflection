@@ -90,10 +90,7 @@ public sealed class ImmediateFields
     #region Equality / IEquatable<T>
 
     /// <inheritdoc />
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as ImmediateFields);
-    }
+    public override bool Equals(object? obj) => Equals(obj as ImmediateFields);
 
     /// <inheritdoc />
     public bool Equals(ImmediateFields? other)
@@ -135,20 +132,14 @@ public sealed class ImmediateFields
     #region IEnumerable
 
     /// <inheritdoc />
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     #endregion
 
     #region IEnumerable<T>
 
     /// <inheritdoc />
-    public IEnumerator<ImmediateField> GetEnumerator()
-    {
-        return _fields.Values.GetEnumerator();
-    }
+    public IEnumerator<ImmediateField> GetEnumerator() => _fields.Values.GetEnumerator();
 
     #endregion
 
@@ -179,8 +170,5 @@ public sealed class ImmediateFields
     #endregion
 
     /// <inheritdoc />
-    public override string ToString()
-    {
-        return $"[{string.Join(", ", _fields.Values)}]";
-    }
+    public override string ToString() => $"[{string.Join(", ", _fields.Values)}]";
 }

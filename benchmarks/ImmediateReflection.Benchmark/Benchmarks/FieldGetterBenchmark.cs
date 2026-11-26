@@ -11,10 +11,7 @@ public class FieldGetterBenchmark : BenchmarkBase
 {
     // Benchmark methods
     [Benchmark(Baseline = true)]
-    public void GetDirect_Field()
-    {
-        _ = BenchmarkObject._benchmarkField;
-    }
+    public void GetDirect_Field() => _ = BenchmarkObject._benchmarkField;
 
     [Benchmark]
     public void GetFieldInfo_Field()
@@ -25,20 +22,11 @@ public class FieldGetterBenchmark : BenchmarkBase
     }
 
     [Benchmark]
-    public void GetFieldInfoCache_Field()
-    {
-        _ = (int)FieldInfo.GetValue(BenchmarkObject)!;
-    }
+    public void GetFieldInfoCache_Field() => _ = (int)FieldInfo.GetValue(BenchmarkObject)!;
 
     [Benchmark]
-    public void GetFastMember_Field()
-    {
-        _ = (int)TypeAccessor[BenchmarkObject, BenchmarkObjectFieldName];
-    }
+    public void GetFastMember_Field() => _ = (int)TypeAccessor[BenchmarkObject, BenchmarkObjectFieldName];
 
     [Benchmark]
-    public void GetImmediateField_Field()
-    {
-        _ = (int)ImmediateField.GetValue(BenchmarkObject)!;
-    }
+    public void GetImmediateField_Field() => _ = (int)ImmediateField.GetValue(BenchmarkObject)!;
 }

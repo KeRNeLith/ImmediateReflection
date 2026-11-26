@@ -28,7 +28,7 @@ internal sealed class ImmediateTypeCache
     private readonly object _lock = new();
 
     // Never mutated, replaced as a whole when an entry is added
-    private volatile Entry[] _entries = new Entry[0];
+    private volatile Entry[] _entries = [];
 
     public ImmediateTypeCache(Type type)
     {
@@ -39,10 +39,7 @@ internal sealed class ImmediateTypeCache
     /// Gets the <see cref="ImmediateType"/> corresponding to the given <paramref name="flags"/>
     /// or creates it if not already cached.
     /// </summary>
-    public ImmediateType GetOrCreate(BindingFlags flags)
-    {
-        return TryFind(_entries, flags) ?? Create(flags);
-    }
+    public ImmediateType GetOrCreate(BindingFlags flags) => TryFind(_entries, flags) ?? Create(flags);
 
     private static ImmediateType? TryFind(Entry[] entries, BindingFlags flags)
     {
@@ -74,7 +71,7 @@ internal sealed class ImmediateTypeCache
             if (existing is not null)
                 return existing;
 
-            var newEntries = new Entry[entries.Length + 1];
+            Entry[] newEntries = new Entry[entries.Length + 1];
             Array.Copy(entries, newEntries, entries.Length);
             newEntries[entries.Length] = new Entry(flags, type);
             _entries = newEntries;

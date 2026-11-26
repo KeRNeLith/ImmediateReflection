@@ -26,10 +26,7 @@ public static class TypeAccessor
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static ImmediateType Get<T>()
-    {
-        return DefaultTypeHolder<T>.GetOrInitialize();
-    }
+    public static ImmediateType Get<T>() => DefaultTypeHolder<T>.GetOrInitialize();
 
     // Per type T shortcut to the default ImmediateType, it avoids the lookups in the caches.
     // Not a static initializer on purpose: nothing can fail in a type initializer and concurrent initializations
@@ -42,15 +39,9 @@ public static class TypeAccessor
 #if SUPPORTS_AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        public static ImmediateType GetOrInitialize()
-        {
-            return _instance ?? Initialize();
-        }
+        public static ImmediateType GetOrInitialize() => _instance ?? Initialize();
 
-        private static ImmediateType Initialize()
-        {
-            return _instance = Get(typeof(T), DefaultFlags);
-        }
+        private static ImmediateType Initialize() => _instance = Get(typeof(T), DefaultFlags);
     }
 
     /// <summary>
@@ -65,10 +56,7 @@ public static class TypeAccessor
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static ImmediateType Get(Type type)
-    {
-        return Get(type, DefaultFlags);
-    }
+    public static ImmediateType Get(Type type) => Get(type, DefaultFlags);
 
     /// <summary>
     /// Provides access to a <see cref="T:System.Type"/> Reflection information via an <see cref="ImmediateType"/>.
@@ -118,10 +106,7 @@ public static class TypeAccessor
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static ImmediateType Get<T>(BindingFlags flags)
-    {
-        return Get(typeof(T), flags);
-    }
+    public static ImmediateType Get<T>(BindingFlags flags) => Get(typeof(T), flags);
 
     /// <summary>
     /// Provides access to a <see cref="T:System.Type"/> Reflection information via an <see cref="ImmediateType"/>.

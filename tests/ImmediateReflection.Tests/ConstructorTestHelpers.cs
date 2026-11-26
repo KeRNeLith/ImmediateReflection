@@ -33,10 +33,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as DefaultConstructor);
-        }
+        public override bool Equals(object? obj) => Equals(obj as DefaultConstructor);
 
         private bool Equals(DefaultConstructor? other)
         {
@@ -46,10 +43,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return _baseValue.GetHashCode();
-        }
+        public override int GetHashCode() => _baseValue.GetHashCode();
     }
 
     public abstract class AbstractDefaultConstructor
@@ -63,10 +57,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as AbstractDefaultConstructor);
-        }
+        public override bool Equals(object? obj) => Equals(obj as AbstractDefaultConstructor);
 
         private bool Equals(AbstractDefaultConstructor? other)
         {
@@ -76,10 +67,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return _baseValue.GetHashCode();
-        }
+        public override int GetHashCode() => _baseValue.GetHashCode();
     }
 
     public abstract class AbstractNoConstructor
@@ -102,10 +90,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as NoDefaultConstructor);
-        }
+        public override bool Equals(object? obj) => Equals(obj as NoDefaultConstructor);
 
         private bool Equals(NoDefaultConstructor? other)
         {
@@ -115,10 +100,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return _baseValue.GetHashCode();
-        }
+        public override int GetHashCode() => _baseValue.GetHashCode();
     }
 
     public class MultiParametersConstructor
@@ -130,10 +112,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as MultiParametersConstructor);
-        }
+        public override bool Equals(object? obj) => Equals(obj as MultiParametersConstructor);
 
         private static bool Equals(MultiParametersConstructor? other)
         {
@@ -162,18 +141,13 @@ internal static class ConstructorTestHelpers
     }
 
     // ReSharper disable once UnusedTypeParameter
-    public struct TemplateStruct<TTemplate>
-    {
-    }
+    public struct TemplateStruct<TTemplate>;
 
     // ReSharper disable once UnusedTypeParameter
     public class TemplateDefaultConstructor<TTemplate>
     {
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as TemplateDefaultConstructor<TTemplate>);
-        }
+        public override bool Equals(object? obj) => Equals(obj as TemplateDefaultConstructor<TTemplate>);
 
         private static bool Equals(TemplateDefaultConstructor<TTemplate>? other)
         {
@@ -195,10 +169,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as TemplateNoDefaultConstructor<TTemplate>);
-        }
+        public override bool Equals(object? obj) => Equals(obj as TemplateNoDefaultConstructor<TTemplate>);
 
         private static bool Equals(TemplateNoDefaultConstructor<TTemplate>? other)
         {
@@ -234,10 +205,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as DefaultConstructorThrows);
-        }
+        public override bool Equals(object? obj) => Equals(obj as DefaultConstructorThrows);
 
         private static bool Equals(DefaultConstructorThrows? other)
         {
@@ -278,10 +246,7 @@ internal static class ConstructorTestHelpers
         // ReSharper restore UnusedMember.Local
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as MultipleConstructors);
-        }
+        public override bool Equals(object? obj) => Equals(obj as MultipleConstructors);
 
         private static bool Equals(MultipleConstructors? other)
         {
@@ -302,10 +267,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as ParamsOnlyConstructor);
-        }
+        public override bool Equals(object? obj) => Equals(obj as ParamsOnlyConstructor);
 
         private static bool Equals(ParamsOnlyConstructor? other)
         {
@@ -327,10 +289,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as ParamsConstructor);
-        }
+        public override bool Equals(object? obj) => Equals(obj as ParamsConstructor);
 
         private static bool Equals(ParamsConstructor? other)
         {
@@ -358,10 +317,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as ParamsOnlyConstructor);
-        }
+        public override bool Equals(object? obj) => Equals(obj as ParamsOnlyConstructor);
 
         private static bool Equals(ParamsOnlyConstructor? other)
         {
@@ -382,10 +338,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as IntParamsOnlyConstructor);
-        }
+        public override bool Equals(object? obj) => Equals(obj as IntParamsOnlyConstructor);
 
         private static bool Equals(IntParamsOnlyConstructor? other)
         {
@@ -406,10 +359,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as NullableIntParamsOnlyConstructor);
-        }
+        public override bool Equals(object? obj) => Equals(obj as NullableIntParamsOnlyConstructor);
 
         private static bool Equals(NullableIntParamsOnlyConstructor? other)
         {
@@ -422,9 +372,7 @@ internal static class ConstructorTestHelpers
         public override int GetHashCode() => 1;
     }
 
-    public class DefaultInheritedDefaultConstructor : DefaultConstructor
-    {
-    }
+    public class DefaultInheritedDefaultConstructor : DefaultConstructor;
 
     public class DefaultInheritedNoDefaultConstructor : NoDefaultConstructor
     {
@@ -434,10 +382,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as DefaultInheritedNoDefaultConstructor);
-        }
+        public override bool Equals(object? obj) => Equals(obj as DefaultInheritedNoDefaultConstructor);
 
         private static bool Equals(DefaultInheritedNoDefaultConstructor? other)
         {
@@ -450,9 +395,7 @@ internal static class ConstructorTestHelpers
         public override int GetHashCode() => 1;
     }
 
-    public class DefaultInheritedFromAbstractClass : AbstractDefaultConstructor
-    {
-    }
+    public class DefaultInheritedFromAbstractClass : AbstractDefaultConstructor;
 
     public class NoDefaultInheritedDefaultConstructor : DefaultConstructor
     {
@@ -478,9 +421,7 @@ internal static class ConstructorTestHelpers
         }
     }
 
-    public class NoCopyConstructorClass
-    {
-    }
+    public class NoCopyConstructorClass;
 
     public class CopyConstructorClass
     {
@@ -497,10 +438,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as CopyConstructorClass);
-        }
+        public override bool Equals(object? obj) => Equals(obj as CopyConstructorClass);
 
         private bool Equals(CopyConstructorClass? other)
         {
@@ -510,10 +448,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return _value.GetHashCode();
-        }
+        public override int GetHashCode() => _value.GetHashCode();
     }
 
     public class NoCopyInheritedCopyConstructorClass : CopyConstructorClass
@@ -565,10 +500,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as SpecializedCopyConstructorClass);
-        }
+        public override bool Equals(object? obj) => Equals(obj as SpecializedCopyConstructorClass);
 
         private bool Equals(SpecializedCopyConstructorClass? other)
         {
@@ -578,10 +510,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return _value.GetHashCode();
-        }
+        public override int GetHashCode() => _value.GetHashCode();
     }
 
     public class InheritedSpecializedCopyConstructorClass : SpecializedCopyConstructorClass
@@ -615,10 +544,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as MultipleCopyConstructorClass);
-        }
+        public override bool Equals(object? obj) => Equals(obj as MultipleCopyConstructorClass);
 
         private bool Equals(MultipleCopyConstructorClass? other)
         {
@@ -628,10 +554,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return _value.GetHashCode();
-        }
+        public override int GetHashCode() => _value.GetHashCode();
     }
 
     public class InheritedMultipleCopyConstructorClass : MultipleCopyConstructorClass
@@ -657,10 +580,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as TemplateCopyConstructor<TTemplate>);
-        }
+        public override bool Equals(object? obj) => Equals(obj as TemplateCopyConstructor<TTemplate>);
 
         private bool Equals(TemplateCopyConstructor<TTemplate>? other)
         {
@@ -670,10 +590,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return _value?.GetHashCode() ?? 0;
-        }
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
     }
 
     public abstract class AbstractCopyConstructor
@@ -714,10 +631,7 @@ internal static class ConstructorTestHelpers
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as CopyConstructorThrows);
-        }
+        public override bool Equals(object? obj) => Equals(obj as CopyConstructorThrows);
 
         private static bool Equals(CopyConstructorThrows? other)
         {
@@ -730,9 +644,7 @@ internal static class ConstructorTestHelpers
         public override int GetHashCode() => 1;
     }
 
-    public static class StaticClass
-    {
-    }
+    public static class StaticClass;
 
     #endregion
 

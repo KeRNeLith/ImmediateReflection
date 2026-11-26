@@ -23,10 +23,7 @@ public class GetAttributesBenchmark : BenchmarkBase
         .ToArray();
 
     private static TAttribute? GetAttributeFromCache<TAttribute>()
-        where TAttribute : Attribute
-    {
-        return (TAttribute?)CachedAttributes.FirstOrDefault(attribute => attribute is TAttribute);
-    }
+        where TAttribute : Attribute => (TAttribute?)CachedAttributes.FirstOrDefault(attribute => attribute is TAttribute);
 
     private static readonly Member FastMemberProperty = FastMember.TypeAccessor.Create(AttributesBenchmarkObjectType).GetMembers()[0];
 

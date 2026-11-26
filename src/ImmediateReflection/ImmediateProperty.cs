@@ -145,10 +145,7 @@ public sealed class ImmediateProperty
     /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the property to get is not static.</exception>
     [PublicAPI]
     [Pure]
-    public object? GetValue(object? obj)
-    {
-        return (_getter ?? GetOrCreateGetter())(obj);
-    }
+    public object? GetValue(object? obj) => (_getter ?? GetOrCreateGetter())(obj);
 
     /// <summary>
     /// Sets the property value of the specified object.
@@ -159,18 +156,12 @@ public sealed class ImmediateProperty
     /// <exception cref="T:System.InvalidCastException">If the <paramref name="obj"/> is not the owner of this property or if the <paramref name="value"/> is of the wrong type.</exception>
     /// <exception cref="T:System.Reflection.TargetException">If the given <paramref name="obj"/> is null and the property to set is not static.</exception>
     [PublicAPI]
-    public void SetValue(object? obj, object? value)
-    {
-        (_setter ?? GetOrCreateSetter())(obj, value);
-    }
+    public void SetValue(object? obj, object? value) => (_setter ?? GetOrCreateSetter())(obj, value);
 
     #region Equality / IEquatable<T>
 
     /// <inheritdoc />
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as ImmediateProperty);
-    }
+    public override bool Equals(object? obj) => Equals(obj as ImmediateProperty);
 
     /// <inheritdoc />
     public bool Equals(ImmediateProperty? other)
@@ -183,10 +174,7 @@ public sealed class ImmediateProperty
     }
 
     /// <inheritdoc />
-    public override int GetHashCode()
-    {
-        return GetPropertyInfoHashCode(PropertyInfo);
-    }
+    public override int GetHashCode() => GetPropertyInfoHashCode(PropertyInfo);
 
     #endregion
 
@@ -207,8 +195,5 @@ public sealed class ImmediateProperty
     #endregion
 
     /// <inheritdoc />
-    public override string ToString()
-    {
-        return PropertyInfo.ToString();
-    }
+    public override string ToString() => PropertyInfo.ToString();
 }

@@ -15,8 +15,5 @@ internal static class GeneralHelpers
     /// <typeparam name="T">Value type.</typeparam>
     /// <param name="value">Value to assert not null.</param>
     [Conditional("DEBUG")]
-    public static void AssertNotNull<T>([NotNullIfNotNull("value")] T? value)
-    {
-        Debug.Assert(value is not null);
-    }
+    public static void AssertNotNull<T>([NotNullIfNotNull("value")] T? value) => Debug.Assert(value is not null);
 }

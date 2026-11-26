@@ -166,7 +166,7 @@ internal sealed class AttributesCache
                 return Enumerable.Empty<TAttribute>();
 
             // Exact size array filled in a single pass, not shared with the cache
-            var result = new TAttribute[count];
+            TAttribute[] result = new TAttribute[count];
             int index = 0;
             foreach (Attribute attribute in attributes)
             {
@@ -218,7 +218,7 @@ internal sealed class AttributesCache
                 return Enumerable.Empty<Attribute>();
 
             // Exact size array filled in a single pass, not shared with the cache
-            var result = new Attribute[count];
+            Attribute[] result = new Attribute[count];
             int index = 0;
             foreach (Attribute attribute in attributes)
             {

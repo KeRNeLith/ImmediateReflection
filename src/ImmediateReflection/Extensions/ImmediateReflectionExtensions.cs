@@ -42,8 +42,5 @@ public static class ImmediateReflectionExtensions
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public static ImmediateType GetImmediateType(this Type type)
-    {
-        return TypeAccessor.Get(type);
-    }
+    public static ImmediateType GetImmediateType(this Type type) => TypeAccessor.Get(type);
 }

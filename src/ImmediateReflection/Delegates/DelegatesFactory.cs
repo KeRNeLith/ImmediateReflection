@@ -507,16 +507,10 @@ internal static class DelegatesFactory
     // so the first argument of the delegate is the argument 1 of the method and so on
 
     [ContractAnnotation("generator:null => halt")]
-    private static void LoadFirstArgument(ILGenerator generator)
-    {
-        generator.Emit(OpCodes.Ldarg_1);
-    }
+    private static void LoadFirstArgument(ILGenerator generator) => generator.Emit(OpCodes.Ldarg_1);
 
     [ContractAnnotation("generator:null => halt")]
-    private static void LoadSecondArgument(ILGenerator generator)
-    {
-        generator.Emit(OpCodes.Ldarg_2);
-    }
+    private static void LoadSecondArgument(ILGenerator generator) => generator.Emit(OpCodes.Ldarg_2);
 
     [ContractAnnotation("generator:null => halt;field:null => halt")]
     private static void RegisterStaticTargetArgument(ILGenerator generator, FieldInfo field)

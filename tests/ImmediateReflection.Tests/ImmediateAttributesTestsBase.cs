@@ -34,16 +34,10 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as TestClassAttribute);
-        }
+        public override bool Equals(object? obj) => Equals(obj as TestClassAttribute);
 
         /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return (base.GetHashCode() * 397) ^ _id;
-        }
+        public override int GetHashCode() => (base.GetHashCode() * 397) ^ _id;
     }
 
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
@@ -67,16 +61,10 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as SecondTestClassAttribute);
-        }
+        public override bool Equals(object? obj) => Equals(obj as SecondTestClassAttribute);
 
         /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return (base.GetHashCode() * 397) ^ _id;
-        }
+        public override int GetHashCode() => (base.GetHashCode() * 397) ^ _id;
     }
 
     [AttributeUsage(AttributeTargets.All)]
@@ -100,21 +88,13 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as ThirdTestClassAttribute);
-        }
+        public override bool Equals(object? obj) => Equals(obj as ThirdTestClassAttribute);
 
         /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return (base.GetHashCode() * 397) ^ _id;
-        }
+        public override int GetHashCode() => (base.GetHashCode() * 397) ^ _id;
     }
 
-    protected sealed class FakeTestClassAttribute
-    {
-    }
+    protected sealed class FakeTestClassAttribute;
 
     [AttributeUsage(AttributeTargets.All)]
     protected class TestBaseAttribute : Attribute
@@ -136,16 +116,10 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as TestBaseAttribute);
-        }
+        public override bool Equals(object? obj) => Equals(obj as TestBaseAttribute);
 
         /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return (base.GetHashCode() * 397) ^ _id;
-        }
+        public override int GetHashCode() => (base.GetHashCode() * 397) ^ _id;
     }
 
     [AttributeUsage(AttributeTargets.All)]
@@ -157,16 +131,10 @@ internal class ImmediateAttributesTestsBase : ImmediateReflectionTestsBase
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as TestInheritingAttribute);
-        }
+        public override bool Equals(object? obj) => Equals(obj as TestInheritingAttribute);
 
         /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return base.GetHashCode() * 397;
-        }
+        public override int GetHashCode() => base.GetHashCode() * 397;
     }
 
     #endregion

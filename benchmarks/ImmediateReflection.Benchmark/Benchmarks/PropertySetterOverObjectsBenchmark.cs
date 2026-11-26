@@ -192,10 +192,7 @@ public class PropertySetterOverObjectsBenchmark : ObjectsBenchmarkBase
         property?.SetValue(obj, ValueToSet);
     }
 
-    private static void SetPropertyFasterflect(object obj)
-    {
-        obj.TrySetPropertyValue(UIntArrayPropertyName, ValueToSet);
-    }
+    private static void SetPropertyFasterflect(object obj) => obj.TrySetPropertyValue(UIntArrayPropertyName, ValueToSet);
 
     #endregion
 }

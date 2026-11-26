@@ -131,10 +131,7 @@ public sealed class ImmediateProperties
     #region Equality / IEquatable<T>
 
     /// <inheritdoc />
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as ImmediateProperties);
-    }
+    public override bool Equals(object? obj) => Equals(obj as ImmediateProperties);
 
     /// <inheritdoc />
     public bool Equals(ImmediateProperties? other)
@@ -176,20 +173,14 @@ public sealed class ImmediateProperties
     #region IEnumerable
 
     /// <inheritdoc />
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     #endregion
 
     #region IEnumerable<T>
 
     /// <inheritdoc />
-    public IEnumerator<ImmediateProperty> GetEnumerator()
-    {
-        return _properties.Values.GetEnumerator();
-    }
+    public IEnumerator<ImmediateProperty> GetEnumerator() => _properties.Values.GetEnumerator();
 
     #endregion
 
@@ -220,8 +211,5 @@ public sealed class ImmediateProperties
     #endregion
 
     /// <inheritdoc />
-    public override string ToString()
-    {
-        return $"[{string.Join(", ", _properties.Values)}]";
-    }
+    public override string ToString() => $"[{string.Join(", ", _properties.Values)}]";
 }

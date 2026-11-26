@@ -30,22 +30,13 @@ public class PropertySetterBenchmark : BenchmarkBase
 
     // Benchmark methods
     [Benchmark(Baseline = true)]
-    public void SetDirect_Property()
-    {
-        BenchmarkObject.BenchmarkProperty = ValueToSet;
-    }
+    public void SetDirect_Property() => BenchmarkObject.BenchmarkProperty = ValueToSet;
 
     [Benchmark]
-    public void SetDelegate_Property()
-    {
-        SetterDelegate(BenchmarkObject, ValueToSet);
-    }
+    public void SetDelegate_Property() => SetterDelegate(BenchmarkObject, ValueToSet);
 
     [Benchmark]
-    public void SetDynamicDelegate_Property()
-    {
-        DynamicSetterDelegate.DynamicInvoke(BenchmarkObject, ValueToSet);
-    }
+    public void SetDynamicDelegate_Property() => DynamicSetterDelegate.DynamicInvoke(BenchmarkObject, ValueToSet);
 
     [Benchmark]
     public void SetPropertyInfo_Property()
@@ -56,32 +47,17 @@ public class PropertySetterBenchmark : BenchmarkBase
     }
 
     [Benchmark]
-    public void SetPropertyInfoCache_Property()
-    {
-        PropertyInfo.SetValue(BenchmarkObject, ValueToSet);
-    }
+    public void SetPropertyInfoCache_Property() => PropertyInfo.SetValue(BenchmarkObject, ValueToSet);
 
     [Benchmark]
-    public void SetSigilEmit_Property()
-    {
-        SigilEmitSetter(BenchmarkObject, ValueToSet);
-    }
+    public void SetSigilEmit_Property() => SigilEmitSetter(BenchmarkObject, ValueToSet);
 
     [Benchmark]
-    public void SetExpression_Property()
-    {
-        ExpressionSetter(BenchmarkObject, ValueToSet);
-    }
+    public void SetExpression_Property() => ExpressionSetter(BenchmarkObject, ValueToSet);
 
     [Benchmark]
-    public void SetFastMember_Property()
-    {
-        TypeAccessor[BenchmarkObject, BenchmarkObjectPropertyName] = ValueToSet;
-    }
+    public void SetFastMember_Property() => TypeAccessor[BenchmarkObject, BenchmarkObjectPropertyName] = ValueToSet;
 
     [Benchmark]
-    public void SetImmediateProperty_Property()
-    {
-        ImmediateProperty.SetValue(BenchmarkObject, ValueToSet);
-    }
+    public void SetImmediateProperty_Property() => ImmediateProperty.SetValue(BenchmarkObject, ValueToSet);
 }

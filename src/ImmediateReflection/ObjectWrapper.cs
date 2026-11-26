@@ -140,10 +140,7 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public object? GetFieldValue(string fieldName)
-    {
-        return GetField(fieldName)?.GetValue(Object);
-    }
+    public object? GetFieldValue(string fieldName) => GetField(fieldName)?.GetValue(Object);
 
     /// <summary>
     /// Sets the field value of the wrapped <see cref="Object"/>.
@@ -157,10 +154,7 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public void SetFieldValue(string fieldName, object? value)
-    {
-        GetField(fieldName)?.SetValue(Object, value);
-    }
+    public void SetFieldValue(string fieldName, object? value) => GetField(fieldName)?.SetValue(Object, value);
 
     #endregion
 
@@ -206,10 +200,7 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public object? GetPropertyValue(string propertyName)
-    {
-        return GetProperty(propertyName)?.GetValue(Object);
-    }
+    public object? GetPropertyValue(string propertyName) => GetProperty(propertyName)?.GetValue(Object);
 
     /// <summary>
     /// Sets the property value of the wrapped <see cref="Object"/>.
@@ -224,20 +215,14 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
 #if SUPPORTS_AGGRESSIVE_INLINING
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    public void SetPropertyValue(string propertyName, object? value)
-    {
-        GetProperty(propertyName)?.SetValue(Object, value);
-    }
+    public void SetPropertyValue(string propertyName, object? value) => GetProperty(propertyName)?.SetValue(Object, value);
 
     #endregion
 
     #region Equality / IEquatable<T>
 
     /// <inheritdoc />
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as ObjectWrapper);
-    }
+    public override bool Equals(object? obj) => Equals(obj as ObjectWrapper);
 
     /// <inheritdoc />
     public bool Equals(ObjectWrapper? other)
@@ -250,16 +235,10 @@ public sealed class ObjectWrapper : IEquatable<ObjectWrapper>
     }
 
     /// <inheritdoc />
-    public override int GetHashCode()
-    {
-        return Object.GetHashCode();
-    }
+    public override int GetHashCode() => Object.GetHashCode();
 
     #endregion
 
     /// <inheritdoc />
-    public override string ToString()
-    {
-        return Object.ToString();
-    }
+    public override string ToString() => Object.ToString();
 }

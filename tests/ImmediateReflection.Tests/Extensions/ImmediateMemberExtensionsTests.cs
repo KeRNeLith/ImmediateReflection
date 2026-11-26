@@ -15,9 +15,7 @@ internal sealed class ImmediateMemberExtensionsTests : ImmediateReflectionTestsB
 {
     #region Test classes
 
-    private sealed class EmptyType
-    {
-    }
+    private sealed class EmptyType;
 
     #endregion
 
