@@ -28,7 +28,7 @@ public static class TypeAccessor
 #endif
     public static ImmediateType Get<T>()
     {
-        return DefaultTypeHolder<T>.Instance ?? DefaultTypeHolder<T>.Initialize();
+        return DefaultTypeHolder<T>.GetOrInitialize();
     }
 
     // Per type T shortcut to the default ImmediateType, it avoids the lookups in the caches.
@@ -37,11 +37,19 @@ public static class TypeAccessor
     private static class DefaultTypeHolder<T>
     {
         // ReSharper disable once StaticMemberInGenericType, Justification: This is a per-type cache, it is not a static member of the outer class
-        public static ImmediateType? Instance;
+        private static ImmediateType? _instance;
 
-        public static ImmediateType Initialize()
+#if SUPPORTS_AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public static ImmediateType GetOrInitialize()
         {
-            return Instance = Get(typeof(T), DefaultFlags);
+            return _instance ?? Initialize();
+        }
+
+        private static ImmediateType Initialize()
+        {
+            return _instance = Get(typeof(T), DefaultFlags);
         }
     }
 

@@ -6,7 +6,7 @@ namespace ImmediateReflection.Benchmark;
 /// <summary>
 /// Benchmark base class.
 /// </summary>
-public class BenchmarkBase
+public abstract class BenchmarkBase
 {
     #region Types
 

@@ -289,3 +289,6 @@ __pycache__/
 
 # Nuget tools
 tools/
+
+# BenchmarkDotNet results
+BenchmarkDotNet.Artifacts/

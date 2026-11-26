@@ -11,6 +11,7 @@ using System.Security.Permissions;
 using JetBrains.Annotations;
 using static ImmediateReflection.GeneralHelpers;
 using static ImmediateReflection.Utils.ReflectionHelpers;
+using static ImmediateReflection.Utils.SerializationHelpers;
 
 namespace ImmediateReflection;
 
@@ -196,21 +197,11 @@ public sealed class ImmediateProperties
 
     private ImmediateProperties(SerializationInfo info, StreamingContext context)
     {
-        _properties = new Dictionary<string, ImmediateProperty>(StringComparer.Ordinal);
-        Init(ExtractProperties());
+        // Serialized data is untrusted: validated (count, nulls, duplicates, consistency) before use
+        List<PropertyInfo> properties = ReadMembers<PropertyInfo>(info, "Property");
 
-        #region Local function
-
-        IEnumerable<PropertyInfo> ExtractProperties()
-        {
-            int count = (int)info.GetValue("Count", typeof(int));
-            for (int i = 0; i < count; ++i)
-            {
-                yield return (PropertyInfo)info.GetValue($"Property{i}", typeof(PropertyInfo));
-            }
-        }
-
-        #endregion
+        _properties = new Dictionary<string, ImmediateProperty>(properties.Count, StringComparer.Ordinal);
+        Init(properties);
     }
 
     /// <inheritdoc />

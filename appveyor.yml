@@ -27,14 +27,14 @@ skip_commits:
 environment:
   SONARQUBE_TOKEN:
     secure: JpQQp3qCQx5WrxUwM8zN3xSTKyckG5CQtckH7A7tGATTlxsvh7aw+6vIMt36opI7
-  DocFXVersion: 2.74.1
+  DocFXVersion: 2.81.0
   NUnitConsoleVersion: 3.16.3
   OpenCoverVersion: 4.7.1221
   CoverallsVersion: 4.0.1
   COVERALLS_REPO_TOKEN:
     secure: +DiJ+F7GIX0MMo/rtIRXO8GSdyYHa1CWKLw4H2Rx3AP27Shr6mZMC6l+muu2H/Dg
   GITHUB_ACCESS_TOKEN:
-    secure: fLTTmcGOM55kigJC4vErpObFmybCtzQtwb4QN55BTNq3GDGaOCoHDoIPxexzO59d
+    secure: kkPEmLGb3zPI3oQiLvsvfe/dPNSVfdEgLm+lbGf067szAbsHT3qungh9Akm4xeXV
   GITHUB_EMAIL:
     secure: wcfqCHOmeRLZf/BX6u6qQSV89Q4jFs9fHNDgMpKAcqE=
 
@@ -180,7 +180,7 @@ deploy:
     server: https://nuget.pkg.github.com/KeRNeLith/index.json
     username: KeRNeLith
     api_key:
-      secure: 6N37NtnuKSzKQXlPOCtPSFJGOvJUdJjPK8LcuWx2PjHs2WVdngenZvYixk6br72b
+      secure: kkPEmLGb3zPI3oQiLvsvfe/dPNSVfdEgLm+lbGf067szAbsHT3qungh9Akm4xeXV
     skip_symbols: true
     artifact: NuGet
     on:
@@ -189,14 +189,14 @@ deploy:
 # NuGet
   - provider: NuGet
     api_key:
-      secure: oFnALyCb2Y/Ls9YXoDlQgsLiaHLIVoZmS9d3Ip/+HQy3Z/0AtNl46nfyhvS5CB99
+      secure: SiqQWLU/fa9NeRRG1lt1ywfpiv5JDVCov3Udt//wnxM7arOmEnKwHDwAKXULhVuL
     on:
       configuration: Release
       APPVEYOR_REPO_TAG: true
 # GitHub
   - provider: GitHub
     auth_token:
-      secure: fLTTmcGOM55kigJC4vErpObFmybCtzQtwb4QN55BTNq3GDGaOCoHDoIPxexzO59d
+      secure: kkPEmLGb3zPI3oQiLvsvfe/dPNSVfdEgLm+lbGf067szAbsHT3qungh9Akm4xeXV
     release: '${APPVEYOR_REPO_TAG_NAME}'
     description: 'Version ${Release_Name}'
     draft: false
