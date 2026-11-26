@@ -16,6 +16,7 @@ namespace ImmediateReflection.Tests;
 /// the same default hashcode (https://github.com/dotnet/runtime/issues/114280).
 /// </remarks>
 [TestFixture]
+[Parallelizable]
 internal sealed class ReflectionHelpersTests : ImmediateReflectionTestsBase
 {
     #region Test classes

@@ -11,6 +11,7 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ImmediateType"/>.
 /// </summary>
 [TestFixture]
+[Parallelizable]
 internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
 {
     #region ImmediateType infos

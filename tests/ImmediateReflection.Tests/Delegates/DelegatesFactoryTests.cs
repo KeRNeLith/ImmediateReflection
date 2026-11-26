@@ -7,6 +7,7 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="DelegatesFactory"/>.
 /// </summary>
 [TestFixture]
+[Parallelizable]
 internal sealed class DelegatesFactoryTests : ImmediateReflectionTestsBase
 {
     [Test]

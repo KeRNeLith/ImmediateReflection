@@ -8,6 +8,7 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ImmediateMember"/>.
 /// </summary>
 [TestFixture]
+[Parallelizable]
 internal sealed class ImmediateMemberTests : ImmediateAttributesTestsBase
 {
     private static IEnumerable<TestCaseData> CreateGetAttributeTestCases()
@@ -1641,7 +1642,7 @@ internal sealed class ImmediateMemberTests : ImmediateAttributesTestsBase
     }
 
     [TestCaseSource(nameof(CreateGetAllAttributesTestCases))]
-    public void GetAllAttributes(
+    public static void GetAllAttributes(
         ImmediateMember member,
         bool inherit,
         IEnumerable<Attribute>? expectedAttributes)

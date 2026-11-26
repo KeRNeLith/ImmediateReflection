@@ -9,6 +9,7 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ImmediateProperty"/>.
 /// </summary>
 [TestFixture]
+[NonParallelizable] // Modifies static members of shared test types
 internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
 {
     #region Test classes

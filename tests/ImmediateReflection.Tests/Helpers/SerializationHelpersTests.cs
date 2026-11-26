@@ -12,6 +12,7 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="SerializationHelpers"/>.
 /// </summary>
 [TestFixture]
+[Parallelizable]
 internal sealed class SerializationHelpersTests : ImmediateReflectionTestsBase
 {
     #region Test helpers

@@ -9,6 +9,7 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="TypeAccessor"/>.
 /// </summary>
 [TestFixture]
+[Parallelizable]
 internal sealed class TypeAccessorTests : ImmediateReflectionTestsBase
 {
     [Test]

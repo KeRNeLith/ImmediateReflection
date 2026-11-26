@@ -10,6 +10,7 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ImmediateTypeCache"/>.
 /// </summary>
 [TestFixture]
+[Parallelizable]
 internal sealed class ImmediateTypeCacheTests : ImmediateReflectionTestsBase
 {
     [Test]

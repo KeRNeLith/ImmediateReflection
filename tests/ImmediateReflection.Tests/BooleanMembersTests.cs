@@ -6,6 +6,7 @@ namespace ImmediateReflection.Tests;
 /// Tests related to get/set of boolean members (booleans are boxed with shared instances by the getters).
 /// </summary>
 [TestFixture]
+[Parallelizable]
 internal sealed class BooleanMembersTests
 {
     private sealed class BooleanContainer

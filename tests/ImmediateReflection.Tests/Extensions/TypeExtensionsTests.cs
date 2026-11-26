@@ -10,6 +10,7 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="TypeExtensions"/>.
 /// </summary>
 [TestFixture]
+[Parallelizable]
 internal sealed class TypeExtensionsTests : ImmediateReflectionTestsBase
 {
     [TestCaseSource(typeof(ConstructorTestHelpers), nameof(CreateHasDefaultConstructorTestCases))]

@@ -10,6 +10,7 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ObjectWrapper"/>.
 /// </summary>
 [TestFixture]
+[NonParallelizable] // Modifies static members of shared test types
 internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
 {
     [Test]

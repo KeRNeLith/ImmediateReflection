@@ -8,6 +8,7 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ImmediateProperties"/>.
 /// </summary>
 [TestFixture]
+[Parallelizable]
 internal sealed class ImmediatePropertiesTests : ImmediateReflectionTestsBase
 {
     [Test]

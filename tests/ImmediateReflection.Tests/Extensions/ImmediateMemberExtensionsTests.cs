@@ -10,6 +10,7 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ImmediateMemberExtensions"/>.
 /// </summary>
 [TestFixture]
+[Parallelizable]
 internal sealed class ImmediateMemberExtensionsTests : ImmediateReflectionTestsBase
 {
     #region Test classes

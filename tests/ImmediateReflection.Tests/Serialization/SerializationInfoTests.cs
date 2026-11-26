@@ -12,6 +12,7 @@ namespace ImmediateReflection.Tests;
 /// so it can run on every target (including the ones without a binary formatter).
 /// </summary>
 [TestFixture]
+[Parallelizable]
 internal sealed class SerializationInfoTests : ImmediateReflectionTestsBase
 {
     #region Test helpers

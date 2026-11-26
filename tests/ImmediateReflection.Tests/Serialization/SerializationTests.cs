@@ -11,6 +11,7 @@ namespace ImmediateReflection.Tests;
 /// Tests relative to the serialization of certain types.
 /// </summary>
 [TestFixture]
+[Parallelizable]
 internal sealed class SerializationTests : ImmediateReflectionTestsBase
 {
     #region Test helpers

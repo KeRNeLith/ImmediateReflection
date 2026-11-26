@@ -8,6 +8,7 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="MemoryCache{TKey,TValue}"/>.
 /// </summary>
 [TestFixture]
+[Parallelizable]
 internal sealed class MemoryCacheTests : ImmediateReflectionTestsBase
 {
     [Test]

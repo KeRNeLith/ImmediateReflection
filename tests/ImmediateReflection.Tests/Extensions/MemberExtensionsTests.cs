@@ -7,6 +7,7 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="MemberExtensions"/>.
 /// </summary>
 [TestFixture]
+[NonParallelizable] // Modifies static members of shared test types
 internal sealed class MemberExtensionsTests : ImmediateReflectionTestsBase
 {
     #region Getter

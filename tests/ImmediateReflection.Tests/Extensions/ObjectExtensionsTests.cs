@@ -9,6 +9,7 @@ namespace ImmediateReflection.Tests;
 /// Tests related to <see cref="ObjectExtensions"/>.
 /// </summary>
 [TestFixture]
+[Parallelizable]
 internal sealed class ObjectExtensionsTests : ImmediateReflectionTestsBase
 {
     private static IEnumerable<TestCaseData> CreateObjectHasCopyConstructorTestCases()
