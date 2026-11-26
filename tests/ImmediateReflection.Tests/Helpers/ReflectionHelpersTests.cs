@@ -162,6 +162,24 @@ internal sealed class ReflectionHelpersTests : ImmediateReflectionTestsBase
         }
     }
 
+    [Test]
+    public static void PropertyInfoEqualityComparerMembers()
+    {
+        PropertyInfo property = SameNamesTestClassAPropPropertyInfo;
+        PropertyInfo otherProperty = SameNamesTestClassBPropPropertyInfo;
+
+        PropertyInfoEqualityComparer comparer = new();
+        Assert.IsTrue(comparer.Equals(property, property));
+        Assert.IsFalse(comparer.Equals(property, otherProperty));
+        Assert.AreEqual(GetPropertyInfoHashCode(property), comparer.GetHashCode(property));
+
+        // Non generic implementation
+        IEqualityComparer nonGeneric = comparer;
+        Assert.IsTrue(nonGeneric.Equals(property, property));
+        Assert.IsFalse(nonGeneric.Equals(property, otherProperty));
+        Assert.AreEqual(GetPropertyInfoHashCode(property), nonGeneric.GetHashCode(property));
+    }
+
     #endregion
 
     #region FieldInfo
@@ -212,6 +230,24 @@ internal sealed class ReflectionHelpersTests : ImmediateReflectionTestsBase
         }
     }
 
+    [Test]
+    public static void FieldInfoEqualityComparerMembers()
+    {
+        FieldInfo field = SameNamesTestClassAValueFieldInfo;
+        FieldInfo otherField = SameNamesTestClassBValueFieldInfo;
+
+        FieldInfoEqualityComparer comparer = new();
+        Assert.IsTrue(comparer.Equals(field, field));
+        Assert.IsFalse(comparer.Equals(field, otherField));
+        Assert.AreEqual(GetFieldInfoHashCode(field), comparer.GetHashCode(field));
+
+        // Non generic implementation
+        IEqualityComparer nonGeneric = comparer;
+        Assert.IsTrue(nonGeneric.Equals(field, field));
+        Assert.IsFalse(nonGeneric.Equals(field, otherField));
+        Assert.AreEqual(GetFieldInfoHashCode(field), nonGeneric.GetHashCode(field));
+    }
+
     #endregion
 
     #region MemberInfo
@@ -239,6 +275,18 @@ internal sealed class ReflectionHelpersTests : ImmediateReflectionTestsBase
         Assert.IsFalse(comparer.Equals(property, typeof(HashDerived<long>).GetProperty(nameof(HashBase.Plain))));
         Assert.IsFalse(comparer.Equals(property, field));
         Assert.AreEqual(GetMemberInfoHashCode(field), comparer.GetHashCode(field));
+    }
+
+    [Test]
+    public static void MemberInfoEqualityComparerNonGeneric()
+    {
+        PropertyInfo property = SameNamesTestClassAPropPropertyInfo;
+        PropertyInfo otherProperty = SameNamesTestClassBPropPropertyInfo;
+
+        IEqualityComparer nonGeneric = new MemberInfoEqualityComparer();
+        Assert.IsTrue(nonGeneric.Equals(property, property));
+        Assert.IsFalse(nonGeneric.Equals(property, otherProperty));
+        Assert.AreEqual(GetMemberInfoHashCode(property), nonGeneric.GetHashCode(property));
     }
 
     #endregion

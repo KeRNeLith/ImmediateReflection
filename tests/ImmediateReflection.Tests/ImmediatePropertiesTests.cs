@@ -90,6 +90,15 @@ internal sealed class ImmediatePropertiesTests : ImmediateReflectionTestsBase
         Assert.IsFalse(immediateProperties4.Equals(immediateProperties1));
         Assert.IsFalse(immediateProperties4.Equals((object)immediateProperties1));
 
+        // Same names but not the same properties
+        var immediateProperties5 = new ImmediateProperties([SameNamesTestClassAPropPropertyInfo]);
+        var immediateProperties6 = new ImmediateProperties([SameNamesTestClassBPropPropertyInfo]);
+        Assert.IsFalse(immediateProperties5.Equals(immediateProperties6));
+
+        // Same count but not the same names
+        var immediateProperties7 = new ImmediateProperties([OtherNamesTestClassOtherPropPropertyInfo]);
+        Assert.IsFalse(immediateProperties5.Equals(immediateProperties7));
+
         Assert.IsFalse(immediateProperties1.Equals(null));
     }
 

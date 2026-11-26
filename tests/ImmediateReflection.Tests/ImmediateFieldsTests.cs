@@ -63,6 +63,15 @@ internal sealed class ImmediateFieldsTests : ImmediateReflectionTestsBase
         Assert.IsFalse(immediateFields4.Equals(immediateFields1));
         Assert.IsFalse(immediateFields4.Equals((object)immediateFields1));
 
+        // Same names but not the same fields
+        var immediateFields5 = new ImmediateFields([SameNamesTestClassAValueFieldInfo]);
+        var immediateFields6 = new ImmediateFields([SameNamesTestClassBValueFieldInfo]);
+        Assert.IsFalse(immediateFields5.Equals(immediateFields6));
+
+        // Same count but not the same names
+        var immediateFields7 = new ImmediateFields([OtherNamesTestClassOtherValueFieldInfo]);
+        Assert.IsFalse(immediateFields5.Equals(immediateFields7));
+
         Assert.IsFalse(immediateFields1.Equals(null));
     }
 

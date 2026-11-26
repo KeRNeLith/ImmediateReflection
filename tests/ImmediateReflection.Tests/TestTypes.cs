@@ -123,6 +123,11 @@ public class ConcretePublicValueTypeTestClass : AbstractPublicValueTypeTestClass
     public override int PublicAbstractGetSetProperty { get; set; }
 }
 
+public class SealedPublicValueTypeTestClass : ConcretePublicValueTypeTestClass
+{
+    public sealed override int PublicAbstractGetSetProperty { get; set; }
+}
+
 public class PublicReferenceTypeTestClass
 {
     private TestObject? _privateField;

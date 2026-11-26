@@ -441,6 +441,17 @@ internal sealed class ImmediateTypeTests : ImmediateReflectionTestsBase
     }
 
     [Test]
+    public static void ImmediateTypeWithoutFullName()
+    {
+        // Generic parameters have no full name
+        Type genericParameter = typeof(List<>).GetGenericArguments()[0];
+        Assert.IsNull(genericParameter.FullName);
+
+        ImmediateType immediateType = new(genericParameter);
+        Assert.AreEqual(genericParameter.Name, immediateType.FullName);
+    }
+
+    [Test]
     public static void ImmediateTypeWithFlags()
     {
         TypeClassifiedMembers classifiedMembers = TypeClassifiedMembers.GetForPublicValueTypeTestObject();

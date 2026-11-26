@@ -21,6 +21,25 @@ internal abstract class ImmediateReflectionTestsBase
         public int NestedTestValue { get; set; } = 25;
     }
 
+    // Classes sharing the same member names (but not the same members)
+    protected sealed class SameNamesTestClassA
+    {
+        public int Value = 1;
+        public int Prop { get; set; }
+    }
+
+    protected sealed class SameNamesTestClassB
+    {
+        public int Value = 1;
+        public int Prop { get; set; }
+    }
+
+    protected sealed class OtherNamesTestClass
+    {
+        public int OtherValue = 1;
+        public int OtherProp { get; set; }
+    }
+
     #region Test Helpers
 
     // Properties //
@@ -462,6 +481,32 @@ internal abstract class ImmediateReflectionTestsBase
 
     #endregion
 
+    #region Same names objects
+
+    // Properties //
+
+    protected static readonly PropertyInfo SameNamesTestClassAPropPropertyInfo =
+        typeof(SameNamesTestClassA).GetProperty(nameof(SameNamesTestClassA.Prop)) ?? throw new AssertionException("Cannot find property.");
+
+    protected static readonly PropertyInfo SameNamesTestClassBPropPropertyInfo =
+        typeof(SameNamesTestClassB).GetProperty(nameof(SameNamesTestClassB.Prop)) ?? throw new AssertionException("Cannot find property.");
+
+    protected static readonly PropertyInfo OtherNamesTestClassOtherPropPropertyInfo =
+        typeof(OtherNamesTestClass).GetProperty(nameof(OtherNamesTestClass.OtherProp)) ?? throw new AssertionException("Cannot find property.");
+
+    // Fields //
+
+    protected static readonly FieldInfo SameNamesTestClassAValueFieldInfo =
+        typeof(SameNamesTestClassA).GetField(nameof(SameNamesTestClassA.Value)) ?? throw new AssertionException("Cannot find field.");
+
+    protected static readonly FieldInfo SameNamesTestClassBValueFieldInfo =
+        typeof(SameNamesTestClassB).GetField(nameof(SameNamesTestClassB.Value)) ?? throw new AssertionException("Cannot find field.");
+
+    protected static readonly FieldInfo OtherNamesTestClassOtherValueFieldInfo =
+        typeof(OtherNamesTestClass).GetField(nameof(OtherNamesTestClass.OtherValue)) ?? throw new AssertionException("Cannot find field.");
+
+    #endregion
+
     #region Get/Set objects
 
     #region Public TestClass
@@ -505,6 +550,9 @@ internal abstract class ImmediateReflectionTestsBase
 
     protected static readonly PropertyInfo PublicValueTypePublicConcreteGetSetPropertyPropertyInfo =
         typeof(ConcretePublicValueTypeTestClass).GetProperty(nameof(ConcretePublicValueTypeTestClass.PublicAbstractGetSetProperty)) ?? throw new AssertionException("Cannot find property.");
+
+    protected static readonly PropertyInfo PublicValueTypePublicSealedGetSetPropertyPropertyInfo =
+        typeof(SealedPublicValueTypeTestClass).GetProperty(nameof(SealedPublicValueTypeTestClass.PublicAbstractGetSetProperty)) ?? throw new AssertionException("Cannot find property.");
 
     // Fields //
 

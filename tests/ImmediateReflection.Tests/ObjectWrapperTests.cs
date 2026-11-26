@@ -12,6 +12,12 @@ namespace ImmediateReflection.Tests;
 [TestFixture]
 internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
 {
+    [Test]
+    public static void ObjectWrapperNullObject()
+    {
+        Assert.Throws<ArgumentNullException>(() => _ = new ObjectWrapper(null!));
+    }
+
     #region ObjectWrapper infos
 
     [Test]
@@ -25,7 +31,7 @@ internal sealed class ObjectWrapperTests : ImmediateReflectionTestsBase
         Assert.AreSame(testObject, objectWrapper.Object);
         Assert.AreEqual(typeof(PublicValueTypeTestClass), objectWrapper.Type);
         Assert.AreEqual(
-            new ImmediateType(typeof(PublicValueTypeTestClass)), 
+            new ImmediateType(typeof(PublicValueTypeTestClass)),
             objectWrapper.ImmediateType);
         CollectionAssert.AreEquivalent(
             classifiedMembers.AllPublicMembers.Select(member => member.Name),

@@ -397,6 +397,14 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         yield return new TestCaseData(concreteTestObject, PublicValueTypePublicAbstractGetSetPropertyPropertyInfo, 88);
         yield return new TestCaseData(concreteTestObject, PublicValueTypePublicConcreteGetSetPropertyPropertyInfo, 88);
 
+        // Sealed override (final and virtual accessors)
+        var sealedTestObject = new SealedPublicValueTypeTestClass
+        {
+            PublicAbstractGetSetProperty = 99
+        };
+
+        yield return new TestCaseData(sealedTestObject, PublicValueTypePublicSealedGetSetPropertyPropertyInfo, 99);
+
         #endregion
 
         #region New keyword
@@ -1138,6 +1146,13 @@ internal sealed class ImmediatePropertyTests : ImmediateReflectionTestsBase
         immediateProperty = new ImmediateProperty(PublicValueTypePublicConcreteGetSetPropertyPropertyInfo);
         immediateProperty.SetValue(concreteTestObject, 456789);
         Assert.AreEqual(456789, concreteTestObject.PublicAbstractGetSetProperty);
+
+        // Sealed override (final and virtual accessors)
+        var sealedTestObject = new SealedPublicValueTypeTestClass();
+
+        immediateProperty = new ImmediateProperty(PublicValueTypePublicSealedGetSetPropertyPropertyInfo);
+        immediateProperty.SetValue(sealedTestObject, 789123);
+        Assert.AreEqual(789123, sealedTestObject.PublicAbstractGetSetProperty);
     }
 
     [Test]
