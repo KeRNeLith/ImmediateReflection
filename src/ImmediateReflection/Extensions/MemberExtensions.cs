@@ -163,7 +163,7 @@ public static class MemberExtensions
             method.ReturnType);
 
         // Call the helper to generate the delegate
-        return (GetterDelegate<TOwner>)delegateConstructor.Invoke(null, new object[] { method });
+        return (GetterDelegate<TOwner>)delegateConstructor.Invoke(null, [method]);
     }
 
     [Pure]
@@ -379,7 +379,7 @@ public static class MemberExtensions
             method.GetParameters()[0].ParameterType);
 
         // Call the helper to generate the delegate
-        return (SetterDelegate<TOwner>)delegateConstructor.Invoke(null, new object[] { method });
+        return (SetterDelegate<TOwner>)delegateConstructor.Invoke(null, [method]);
     }
 
     [Pure]

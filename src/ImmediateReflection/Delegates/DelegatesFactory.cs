@@ -133,7 +133,7 @@ internal static class DelegatesFactory
     }
 
     private static readonly ConstructorInfo ArgumentExceptionCtor =
-        typeof(ArgumentException).GetConstructor(new[] { typeof(string), typeof(string) })
+        typeof(ArgumentException).GetConstructor([typeof(string), typeof(string)])
         ?? throw new InvalidOperationException($"{nameof(ArgumentException)} must have a (String, String) constructor.");
 
     private static readonly MethodInfo GetTypeMethod =
@@ -145,7 +145,7 @@ internal static class DelegatesFactory
             "op_Equality",
             BindingFlags.Static | BindingFlags.Public,
             null,
-            new[] { typeof(Type), typeof(Type) },
+            [typeof(Type), typeof(Type)],
             null) ?? throw new InvalidOperationException("Cannot find == operator method on Type.");
 
     private static readonly MethodInfo GetTypeFromHandleMethod =
@@ -181,7 +181,7 @@ internal static class DelegatesFactory
             return _ => throw new MissingMethodException($"Abstract class {type.Name} cannot be copied.");
 
         // Get the copy constructor if available (with exact type matching for the parameter)
-        ConstructorInfo? constructor = type.GetConstructor(new[] { type });
+        ConstructorInfo? constructor = type.GetConstructor([type]);
         if (constructor is null || constructor.GetParameters()[0].ParameterType != type)
             return _ => throw new MissingMethodException($"Class {type.Name} does not contain any copy constructor.");
 
@@ -376,7 +376,7 @@ internal static class DelegatesFactory
         Type[] parameters;
         if (parameterTypes is null || parameterTypes.Length == 0)
         {
-            parameters = new[] { typeof(object) };
+            parameters = [typeof(object)];
         }
         else
         {
@@ -436,7 +436,7 @@ internal static class DelegatesFactory
 #endif
     private static DynamicMethod CreateDynamicCopyConstructor(string name)
     {
-        return CreateDynamicMethod($"CopyConstructor_{name}", typeof(object), new[] { typeof(object) });
+        return CreateDynamicMethod($"CopyConstructor_{name}", typeof(object), [typeof(object)]);
     }
 
     /// <summary>
@@ -464,7 +464,7 @@ internal static class DelegatesFactory
 #endif
     private static DynamicMethod CreateDynamicGetter(string name)
     {
-        return CreateDynamicMethod($"Get_{name}", typeof(object), new[] { typeof(object) });
+        return CreateDynamicMethod($"Get_{name}", typeof(object), [typeof(object)]);
     }
 
     [Pure]
@@ -485,7 +485,7 @@ internal static class DelegatesFactory
 #endif
     private static DynamicMethod CreateDynamicSetter(string name)
     {
-        return CreateDynamicProcedure($"Set_{name}", new[] { typeof(object), typeof(object) });
+        return CreateDynamicProcedure($"Set_{name}", [typeof(object), typeof(object)]);
     }
 
     [Pure]

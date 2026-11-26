@@ -31,7 +31,7 @@ internal static class Benchmark
         // Without arguments run every benchmark of the assembly
         if (args.Length == 0)
         {
-            args = new[] { "--filter", "*" };
+            args = ["--filter", "*"];
         }
 
         Console.WriteLine(isFast ? "Fast mode (short jobs)." : "Full mode (default jobs).");

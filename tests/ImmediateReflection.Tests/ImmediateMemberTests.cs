@@ -815,13 +815,13 @@ internal sealed class ImmediateMemberTests : ImmediateAttributesTestsBase
             new ImmediateType(typeof(TestClassMultiAttributes)),
             typeof(SecondTestClassAttribute),
             false,
-            new[] { new SecondTestClassAttribute(1) });
+            new Attribute[] { new SecondTestClassAttribute(1) });
 
         yield return new TestCaseData(
             new ImmediateType(typeof(TestClassMultiAttributes)),
             typeof(SecondTestClassAttribute),
             true,
-            new[] { new SecondTestClassAttribute(1) });
+            new Attribute[] { new SecondTestClassAttribute(1) });
 
         // Inheriting attribute
         yield return new TestCaseData(
@@ -932,13 +932,13 @@ internal sealed class ImmediateMemberTests : ImmediateAttributesTestsBase
             new ImmediateField(TestFieldMultiAttributesFieldInfo),
             typeof(SecondTestClassAttribute),
             false,
-            new[] { new SecondTestClassAttribute(2) });
+            new Attribute[] { new SecondTestClassAttribute(2) });
 
         yield return new TestCaseData(
             new ImmediateField(TestFieldMultiAttributesFieldInfo),
             typeof(SecondTestClassAttribute),
             true,
-            new[] { new SecondTestClassAttribute(2) });
+            new Attribute[] { new SecondTestClassAttribute(2) });
 
         // Inheriting attribute
         yield return new TestCaseData(
@@ -1088,13 +1088,13 @@ internal sealed class ImmediateMemberTests : ImmediateAttributesTestsBase
             new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
             typeof(SecondTestClassAttribute),
             false,
-            new[] { new SecondTestClassAttribute(3) });
+            new Attribute[] { new SecondTestClassAttribute(3) });
 
         yield return new TestCaseData(
             new ImmediateProperty(TestPropertyMultiAttributesPropertyInfo),
             typeof(SecondTestClassAttribute),
             true,
-            new[] { new SecondTestClassAttribute(3) });
+            new Attribute[] { new SecondTestClassAttribute(3) });
 
         // Inheriting attribute
         yield return new TestCaseData(
